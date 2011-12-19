@@ -1,4 +1,4 @@
-﻿# Product Backlog
+# Product Backlog
 * Definición de la arquitectura y diseños generales, estrategia técnica de la aplicación 
   * _Estimado:_ 10 horas
 * Selección de la herramienta a utilizar para repositorio del código fuente 
