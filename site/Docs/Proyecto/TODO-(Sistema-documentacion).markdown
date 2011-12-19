@@ -1,4 +1,4 @@
-﻿#NuGet
+# NuGet
 
 * Reemplazar todas las referencias a NuGet por CommonJobs, 
 * Revisar la licencia
