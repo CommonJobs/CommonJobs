@@ -35,7 +35,10 @@ namespace Docs.Core {
                                    let subTitle = GetTitle(file)
                                    let subMetadata = getSubTopicMetadata(subTitle)
                                    where !subTitle.Equals(MetadataFile, StringComparison.OrdinalIgnoreCase)
-                                        && Path.GetExtension(file.Name) == ".markdown"
+                                        && (
+                                        Path.GetExtension(file.Name) == ".markdown"
+                                        || Path.GetExtension(file.Name) == ".cshtml"
+                                        )
                                    orderby subMetadata.Order, subTitle
                                    select new Topic {
                                        Title = subTitle,
