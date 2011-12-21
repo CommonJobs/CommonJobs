@@ -1,4 +1,4 @@
-﻿# Introducción 
+# Introducción 
 
 ## Propósito de este documento
 
