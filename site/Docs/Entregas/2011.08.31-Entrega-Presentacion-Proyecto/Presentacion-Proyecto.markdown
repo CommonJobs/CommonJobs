@@ -1,4 +1,4 @@
-﻿# Nombre del Proyecto
+# Nombre del Proyecto
 
 Sistema de seguimiento de candidatos.
 
