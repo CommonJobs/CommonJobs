@@ -1,7 +1,7 @@
 ﻿@using System.Globalization
 
 @{
-    Page.Title = "NuGet Docs | Search";
+    Page.Title = "CommonJobs Docs | Search";
 
     const int resultsPerPage = 10;
     const string bingSearchUrlTemplate = "http://api.search.live.net/json.aspx?AppId={0}&query={1}&sources=web&web.count={2}&web.offset={3}";
@@ -20,7 +20,7 @@
     PageData["query"] = originalQuery;
 
     // append site:docs.nuget.org to the query
-    string query = originalQuery + " site:docs.nuget.org";
+    string query = originalQuery + " site:docs.commonjobs.getcs.com";
 
     // result offset
     string page = Request.QueryString["p"];
