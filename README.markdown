@@ -1,1 +1,1 @@
-The documents will be here
+This branch contains the documents and a ASP.NET Web Pages site to render them as a web site.
