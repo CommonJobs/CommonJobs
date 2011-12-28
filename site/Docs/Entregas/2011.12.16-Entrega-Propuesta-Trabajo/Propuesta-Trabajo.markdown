@@ -148,12 +148,17 @@ de tiempo tal que el objetivo de generar búsquedas externas quede fuera del _l�
 del proyecto_. El propio dinamismo del proceso le permite al cliente re-priorizar las 
 características que sean de mayor importancia para el desempeño su trabajo.
 
-#### Carácterísticas Mínimas (incluídas en el _límite del proyecto_)
+#### Características Mínimas (incluídas en el _límite del proyecto_)
 
 * Mantener información e histórico de los postulantes que hayan aplicado a la empresa.
+* Registro de las entrevistas en la base de datos de postulantes
+* Permitir búsquedas flexibles e inteligentes sobre la base de datos de postulantes. 
 * Mantener información e histórico de búsqueda de postulantes y ofertas de trabajo.
+* Relacionar postulantes con búsquedas realizadas
 * Seguridad para el acceso al sistema.
 * Agilizar las búsquedas en dicha información.
+* Migrar datos actuales (menos de 300 postulantes) del actual proyecto de Jira "Recruit" a nuestra base de datos
+* Migrar datos de la planilla actual de legajos a nuestra base de datos (alrededor de 50 items)
 
 ### Análisis FODA
 
