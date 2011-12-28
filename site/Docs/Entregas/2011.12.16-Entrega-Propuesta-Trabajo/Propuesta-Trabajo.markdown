@@ -163,6 +163,8 @@ características que sean de mayor importancia para el desempeño su trabajo.
 
 * Los alumnos Andrés Moschini y Juan Diego Raimondi forman parte de la empresa 
   _CommonSense_, conociendo los métodos internos y teniendo fácil acceso a información.
+* Los alumnos ya poseen experiencia laboral en cuanto a desarrollo de aplicaciones y 
+  proyectos de software.
 * La empresa posee licencias y herramientas que podrán ser utilizadas en el desarrollo 
   del proyecto.
 * Siendo la herramienta creada en base al proceso que _CommonSense_ posee actualmente, 
@@ -181,8 +183,6 @@ características que sean de mayor importancia para el desempeño su trabajo.
 
 ##### Oportunidades
 
-* Los alumnos ya poseen experiencia laboral en cuanto a desarrollo de aplicaciones y 
-  proyectos de software.
 * El desarrollo de este sistema podría permitir a _CommonSense_ utilizarlo como base 
   para futuras herramientas para mejorar otros procesos internos.
 * Algunas de las tecnologías a utilizar serán nuevas para los miembros del equipo, esto
