@@ -178,6 +178,8 @@ características que sean de mayor importancia para el desempeño su trabajo.
 
 * El proceso de RRHH se ha ajustado según las herramientas disponibles, con lo cual 
   puede que cambie al implementarse la nueva herramienta.
+* Algunas de las tecnologías a utilizar serán nuevas para los miembros del equipo, esto
+  dará la oportunidad de conocerlas y aplicarlas en otros proyectos.
 
 #### Análisis del Entorno
 
@@ -185,8 +187,6 @@ características que sean de mayor importancia para el desempeño su trabajo.
 
 * El desarrollo de este sistema podría permitir a _CommonSense_ utilizarlo como base 
   para futuras herramientas para mejorar otros procesos internos.
-* Algunas de las tecnologías a utilizar serán nuevas para los miembros del equipo, esto
-  dará la oportunidad de conocerlas y aplicarlas en otros proyectos.
 * Podría darse la oportunidad de, mediante algunas adaptaciones, empaquetar el producto
   para el uso de terceros.
 
