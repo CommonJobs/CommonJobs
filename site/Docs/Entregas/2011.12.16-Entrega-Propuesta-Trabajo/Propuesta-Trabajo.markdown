@@ -109,8 +109,6 @@ para contar con su apoyo en el desarrollo de este proyecto final.
   de Recursos Humanos de _CommonSense_.
 * Implantación del sistema a medida de que se vayan agregando características útiles al
   cliente.
-* Permitir a _CommonSense_ acceso libre al código fuente del sistema para desarrollos 
-  futuros o paralelos.
 
 ### Límites
 
