@@ -398,7 +398,7 @@ tareas.
 * Migrar datos de la planilla actual de legajos a nuestra base de datos (alrededor de 
   50 items)
 
-#### Backlog Sprint 1 (Preliminar)
+#### Backlog Sprint 0 (Preliminar)
 
 __Nota:__ Este _Sprint Backlog_ es temporal, que realizemos la _Reunión de 
 Planificación del Sprint_. En ese momento cada integrante comprometerá una cantidad de 
@@ -419,5 +419,5 @@ horas y se analizará cada uno de los items incluyendo más detalles.
 * Creación de los entornos de trabajo y su configuración (Matías - 15 hrs)
 
 Incluyendo 5 horas aproximadas para las reuniones de _planificación_, _revisión_ y 
-_retrospectiva_, el total de tiempo estimado para el _Sprint 1_: 87 horas efectivas de 
+_retrospectiva_, el total de tiempo estimado para el _Sprint 0_: 87 horas efectivas de 
 trabajo.
