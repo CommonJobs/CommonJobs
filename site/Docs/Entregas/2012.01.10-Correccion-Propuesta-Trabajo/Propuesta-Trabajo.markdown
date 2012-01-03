@@ -182,8 +182,7 @@ características que sean de mayor importancia para el desempeño su trabajo.
 
 * El proceso de RRHH se ha ajustado según las herramientas disponibles, con lo cual 
   puede que cambie al implementarse la nueva herramienta.
-* Algunas de las tecnologías a utilizar serán nuevas para los miembros del equipo, esto
-  dará la oportunidad de conocerlas y aplicarlas en otros proyectos.
+* Algunas de las tecnologías a utilizar serán nuevas para los miembros del equipo.
 
 #### Análisis del Entorno
 
