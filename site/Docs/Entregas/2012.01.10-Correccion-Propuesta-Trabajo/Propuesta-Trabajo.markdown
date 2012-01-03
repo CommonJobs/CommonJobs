@@ -158,7 +158,6 @@ características que sean de mayor importancia para el desempeño su trabajo.
 * Seguridad para el acceso al sistema.
 * Agilizar las búsquedas en dicha información.
 * Migrar datos actuales (menos de 300 postulantes) del actual proyecto de Jira "Recruit" a nuestra base de datos
-* Migrar datos de la planilla actual de legajos a nuestra base de datos (alrededor de 50 items)
 
 ### Análisis FODA
 
