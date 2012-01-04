@@ -109,10 +109,6 @@ para contar con su apoyo en el desarrollo de este proyecto final.
   de Recursos Humanos de _CommonSense_.
 * Implantación del sistema a medida de que se vayan agregando características útiles al
   cliente.
-* Dar soporte y capacitación para la utilización del sistema a medida que se vaya 
-  instalando.
-* Permitir a _CommonSense_ acceso libre al código fuente del sistema para desarrollos 
-  futuros o paralelos.
 
 ### Límites
 
@@ -152,12 +148,16 @@ de tiempo tal que el objetivo de generar búsquedas externas quede fuera del _l�
 del proyecto_. El propio dinamismo del proceso le permite al cliente re-priorizar las 
 características que sean de mayor importancia para el desempeño su trabajo.
 
-#### Carácterísticas Mínimas (incluídas en el _límite del proyecto_)
+#### Características Mínimas (incluídas en el _límite del proyecto_)
 
 * Mantener información e histórico de los postulantes que hayan aplicado a la empresa.
+* Registro de las entrevistas en la base de datos de postulantes
+* Permitir búsquedas flexibles e inteligentes sobre la base de datos de postulantes. 
 * Mantener información e histórico de búsqueda de postulantes y ofertas de trabajo.
+* Relacionar postulantes con búsquedas realizadas
 * Seguridad para el acceso al sistema.
 * Agilizar las búsquedas en dicha información.
+* Migrar datos actuales (menos de 300 postulantes) del actual proyecto de Jira "Recruit" a nuestra base de datos
 
 ### Análisis FODA
 
@@ -167,6 +167,8 @@ características que sean de mayor importancia para el desempeño su trabajo.
 
 * Los alumnos Andrés Moschini y Juan Diego Raimondi forman parte de la empresa 
   _CommonSense_, conociendo los métodos internos y teniendo fácil acceso a información.
+* Los alumnos ya poseen experiencia laboral en cuanto a desarrollo de aplicaciones y 
+  proyectos de software.
 * La empresa posee licencias y herramientas que podrán ser utilizadas en el desarrollo 
   del proyecto.
 * Siendo la herramienta creada en base al proceso que _CommonSense_ posee actualmente, 
@@ -180,17 +182,14 @@ características que sean de mayor importancia para el desempeño su trabajo.
 
 * El proceso de RRHH se ha ajustado según las herramientas disponibles, con lo cual 
   puede que cambie al implementarse la nueva herramienta.
+* Algunas de las tecnologías a utilizar serán nuevas para los miembros del equipo.
 
 #### Análisis del Entorno
 
 ##### Oportunidades
 
-* Los alumnos ya poseen experiencia laboral en cuanto a desarrollo de aplicaciones y 
-  proyectos de software.
 * El desarrollo de este sistema podría permitir a _CommonSense_ utilizarlo como base 
   para futuras herramientas para mejorar otros procesos internos.
-* Algunas de las tecnologías a utilizar serán nuevas para los miembros del equipo, esto
-  dará la oportunidad de conocerlas y aplicarlas en otros proyectos.
 * Podría darse la oportunidad de, mediante algunas adaptaciones, empaquetar el producto
   para el uso de terceros.
 
@@ -397,7 +396,7 @@ tareas.
 * Migrar datos de la planilla actual de legajos a nuestra base de datos (alrededor de 
   50 items)
 
-#### Backlog Sprint 1 (Preliminar)
+#### Backlog Sprint 0 (Preliminar)
 
 __Nota:__ Este _Sprint Backlog_ es temporal, que realizemos la _Reunión de 
 Planificación del Sprint_. En ese momento cada integrante comprometerá una cantidad de 
@@ -418,5 +417,5 @@ horas y se analizará cada uno de los items incluyendo más detalles.
 * Creación de los entornos de trabajo y su configuración (Matías - 15 hrs)
 
 Incluyendo 5 horas aproximadas para las reuniones de _planificación_, _revisión_ y 
-_retrospectiva_, el total de tiempo estimado para el _Sprint 1_: 87 horas efectivas de 
+_retrospectiva_, el total de tiempo estimado para el _Sprint 0_: 87 horas efectivas de 
 trabajo.
