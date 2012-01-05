@@ -1,6 +1,6 @@
-Esta reunión tomó 2 horas (Planificación + decisión de repositorio).
+# Planificación de Sprint 0
 
-#Tareas
+## Tareas
 
 * Definición de la arquitectura y diseños generales, estrategia técnica de la aplicación (3 hrs)
 * Selección de la herramienta a utilizar para repositorio del código fuente (4 hrs)
@@ -21,9 +21,23 @@ Esta reunión tomó 2 horas (Planificación + decisión de repositorio).
 * Selección del sistema de base de datos a utilizar (7 hrs)
 * Migrar Product Backlog al sistema de tracking del proyecto (1 hrs)
 * Creación de los entornos de trabajo y su configuración -- investigación de las tecnologías (~40 hrs, todos)
-
-# Horas Comprometidas
+ 
+## Horas Comprometidas
 
 * JD: 30 hs
 * Matias: 30 hs 
 * Andres: 30 hs (-2 hs meeting actual, -2 hs de revisión del sprint y retrospectiva)
+
+## Otros temas
+
+* La idea que Gabriel se vaya involucrando cada vez más.
+* Usaremos GitHub/Git para repositorio de código fuente y documentación.
+* Matías tendrá problemas de conectividad, pero eso es algo que el repositorio puede manejar.
+* Por lo general trabajaremos los fines de semana.
+* Miércoles serán los días de reuniones.
+* Martes, Jueves y Viernes cada uno debe enviar un email sobre su progreso, en qué va a trabajar y cómo va a proximar su trabajo. Se espera feedback de este tipo de mails. Los mails de cada uno deberían estar enviados durante la mañana, deberíamos tener todo el feedback resuelto para la noche. En el caso del viernes, hay plazo a cerrar los temas hasta el Sábado a la mañana.
+* Trataremos que las reuniones de Planificación de Sprint duren 1:30 hs.
+* Trataremos que las reuniones de Revisión de Sprint duren 1:30 hs. (Podría variar por el demo)
+* Trataremos que las reuniones de Retrospectiva duren 30 mins.
+* Esperamos no tener reuniones de auditoría no seguidas.
+* Ante cada pull request al repositorio central, habrá dos revisores. El primero aceptará / rechazará el pull request. Si ea persona lo acepta, el segundo revisor entonces lo cierra y hace el merge. Siempre dejaremos un comentario explicando qué se está haciendo y por qué.
