@@ -40,4 +40,4 @@
 * Trataremos que las reuniones de Revisión de Sprint duren 1:30 hs. (Podría variar por el demo)
 * Trataremos que las reuniones de Retrospectiva duren 30 mins.
 * Esperamos no tener reuniones de auditoría no seguidas.
-* Ante cada pull request al repositorio central, habrá dos revisores. El primero aceptará / rechazará el pull request. Si ea persona lo acepta, el segundo revisor entonces lo cierra y hace el merge. Siempre dejaremos un comentario explicando qué se está haciendo y por qué.
+* Ante cada pull request al repositorio central, habrá dos revisores. El primero aceptará / rechazará el pull request. Si la persona lo acepta, el segundo revisor entonces lo cierra y hace el merge. Siempre dejaremos un comentario explicando qué se está haciendo y por qué.
