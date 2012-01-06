@@ -21,12 +21,6 @@
 * Selección del sistema de base de datos a utilizar (7 hrs)
 * Migrar Product Backlog al sistema de tracking del proyecto (1 hrs)
 * Creación de los entornos de trabajo y su configuración -- investigación de las tecnologías (~40 hrs, todos)
- 
-## Horas Comprometidas
-
-* JD: 30 hs
-* Matias: 30 hs 
-* Andres: 30 hs (-2 hs meeting actual, -2 hs de revisión del sprint y retrospectiva)
 
 ## Otros temas
 
