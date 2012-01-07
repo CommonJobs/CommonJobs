@@ -1,0 +1,45 @@
+﻿@using Docs.Core
+@helper OneLevelPage(WebPage page)
+    {
+        page.Layout = "~/_Layout.cshtml";
+        var directory = Path.GetDirectoryName(page.VirtualPath);
+        @SubTopicList(directory)
+}
+
+@helper TwoLevelsPage(WebPage page)
+    {
+        page.Layout = "~/_Layout.cshtml";
+        var directory = Path.GetDirectoryName(page.VirtualPath);
+        @TopicList(directory)
+}
+
+@helper TopicList(string virtualPath)
+    {
+        <ol class="topics">
+            @foreach (var topic in Topic.GetTopics(virtualPath))
+            {
+                <li class="topic">
+                <h2>@topic.Title</h2>
+                @if (topic.SubTopics.Any())
+                {
+                    <ol class="subTopics">
+                        @foreach (var subTopic in topic.SubTopics)
+                        {
+                            <li class="subTopic"><h3><a href="@subTopic.Url">@subTopic.Title</a></h3></li>
+                        }
+                    </ol>
+                }
+                </li>
+            }
+        </ol>
+}
+
+@helper SubTopicList(string virtualPath)
+{
+    <ol class="subTopics">
+        @foreach (var subTopic in Topic.GetSubTopics(virtualPath))
+        {
+            <li class="subTopic"><h3><a href="@subTopic.Url">@subTopic.Title</a></h3></li>
+        }
+    </ol>
+}
