@@ -22,6 +22,7 @@ namespace RavenPOC1
             {
                 var demo = new Demo(documentStore);
                 demo.Run();
+                Console.ReadLine();
             }
         }
     }
