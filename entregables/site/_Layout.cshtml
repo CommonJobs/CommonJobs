@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" /> 
+    <title>@Page.Title</title>
+    <link href="@Href("~/favicon.ico")" rel="shortcut icon" type="image/x-icon" />
+    <link href="@Href("~/Content/Site.css")" rel="stylesheet" type="text/css" />
+    <script src="http://ajax.cdnjs.com/ajax/libs/modernizr/1.7/modernizr-1.7.min.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.5.2.min.js"></script>
+    <script src="@Href("~/Scripts/autocolumn.min.js")"></script>
+    <script src="@Href("~/Scripts/Helpers.js")"></script>
+    @RenderSection("head", required: false)
+</head>
+<body>
+    <div id="content-wraper">
+        <header>
+            <div id="logo"><a href="@Href("~/")">CommonJobs Docs</a></div>
+        </header>
+        <nav>
+            <ul id="menu">
+                <li><a href="@Href("~/")">Home</a> </li>
+                <li>
+                    <a id="overview-trigger" href="#">Quick View</a>
+                    @RenderPage("~/_Overview.cshtml")
+                </li>
+@*                <li><a href="@Href("~/docs/Contribute/Contributing-to-NuGet-Documentation")">Contribute</a></li> *@
+@*                <li><a href="http://nuget.org">NuGet Gallery</a> </li>*@
+@*                <li><a href="http://visualstudiogallery.msdn.microsoft.com/27077b70-9dad-4c64-adcf-c7cf6bc9970c">Install NuGet</a></li>*@
+            </ul>
+            @RenderPage("~/_searchbox.cshtml")
+        </nav>
+        <div id="body">
+        @RenderBody()
+        </div>
+    </div>
+<div id="layout-footer" class="group">
+    <footer id="footer">
+        <ul class="recommended">
+            <li>
+                <a href="@Href("~/docs/proyecto/propuesta-trabajo")">Propuesta de Trabajo</a>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean felis dolor, ultrices quis faucibus quis, lacinia ut lectus. </p>
+            </li>
+            <li>
+                <a href="@Href("~/docs/scrum/product-backlog")">Product Backlog</a>
+                <p>Vestibulum mattis tellus vitae nunc facilisis fermentum. Vestibulum rhoncus, mi non euismod pretium.</p>
+            </li>
+            <li>
+                <a href="@Href("~/docs/proyecto/propuesta-trabajo")">Propuesta de Trabajo</a>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean felis dolor, ultrices quis faucibus quis, lacinia ut lectus. </p>
+            </li>
+            <li>
+                <a href="@Href("~/docs/scrum/product-backlog")">Product Backlog</a>
+                <p>Vestibulum mattis tellus vitae nunc facilisis fermentum. Vestibulum rhoncus, mi non euismod pretium.</p>
+            </li>
+        </ul>
+        <div class="license">
+            <p>
+                <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/" title="CC BY-NC-ND 3.0">
+                    <img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-nd/3.0/80x15.png" />
+                </a>
+            </p>
+            <p>
+                <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">CommonJobs Documentation</span> 
+                is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/">Creative Commons Attribution-NonCommercial-NoDerivs 3.0 Unported License</a> 
+                except where otherwise noted.
+            </p>
+        </div>
+    </footer>
+</div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            SetUpQuickView("#overview-trigger", "#overview");
+        });
+    </script>
+    @Microsoft.Web.Helpers.Analytics.GetGoogleAsyncHtml("UA-12268721-4")
+</body>
+</html>
