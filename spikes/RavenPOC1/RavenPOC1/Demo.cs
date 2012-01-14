@@ -68,24 +68,20 @@ namespace RavenPOC1
                 session.Store(advert1);
 
                 var applicant1 = new Applicant()
-                                     {
-                                         Name = "Juan Perez",
-                                         Country = "Argentina",
-                                         City = "Mar del Plata",
-                                         Address = "Calle Falsa 123",
-                                         BirthDate = new DateTime(1978, 1, 1),
-                                         MaritalStatus = MaritalStatus.Single,
-                                         Phones = new List<string> { "477-7777", "155-555555" },
-                                         Skills = new List<string> { "Javascript", "jQuery", "HTML", "CSS", "PHP", "json" },
-                                         AdvertisementResponses = new List<AdvertisementResponse>()
-                                        {
-                                            new AdvertisementResponse()
-                                            {
-                                                AdvertisementId = advert1.Id,
-                                                AdvertisementMediaName = advert1.MediaName,
-                                            }
-                                        }
-                                     };
+                {
+                    Name = "Juan Perez",
+                    Country = "Argentina",
+                    City = "Mar del Plata",
+                    Address = "Calle Falsa 123",
+                    BirthDate = new DateTime(1978, 1, 1),
+                    MaritalStatus = MaritalStatus.Single,
+                    Phones = new List<string> { "477-7777", "155-555555" },
+                    Skills = new List<string> { "Javascript", "jQuery", "HTML", "CSS", "PHP", "json" },
+                    AdvertisementIds = new List<string>()
+                    {
+                        advert1.Id
+                    }
+                };
 
                 session.Store(applicant1);
                 session.SaveChanges();
@@ -95,8 +91,7 @@ namespace RavenPOC1
 
         internal void Run()
         {
-            IndexCreation.CreateIndexes(typeof(Skills_All).Assembly, _documentStore);
-            CreateData1();
+            IndexCreation.CreateIndexes(this.GetType().Assembly, _documentStore);
             SkillsInputAutocomplete();
             SearchOfWorkerSearcs();
             GetsAnApplicantWithAllRelatedDataInOneRequest();
@@ -106,23 +101,23 @@ namespace RavenPOC1
         {
             using (var session = _documentStore.OpenSession())
             {
-                //Console.ReadLine();
-                //var ad = session.Query<Advertisement>().Include(x => x.WorkerSearchId).First();
-                //var ad = session.Query<Advertisement>().First();
-                var adid = "";
-                var ad = session.Include("WorkerSearchId").Load<Advertisement>(adid);
-                Console.WriteLine("ad");
-                //Console.ReadLine();
-                var search = session.Load<WorkerSearch>(ad.WorkerSearchId);
-                Console.WriteLine("search");
-                //Console.ReadLine();
+                var app = session.Query<Applicant>()
+                    .Include(x => x.AdvertisementIds)
+                    //.Customize(x => x.Include("AdvertisementIds")) Is the same
+                    //.Customize(x => x.Include<Advertisement>(y => y.WorkerSearchId))
+                    //.Customize(x => x.Include("WorkerSearchId")) Is the same
+                    .Where(x => x.Name == "Juan Perez")
+                    .First();
 
-                //TODO: it generates an temporal index, I should generate a permanent index before.
-                //session.Query<Applicant>().Where(x => x.Name == "Juan Perez").Include(x => x.AdvertisementResponses)
+                //var ads = session.Include("WorkerSearchId").Load<Advertisement>(app.AdvertisementIds.First()); //raise a request because the include
+                var ads = session.Load<Advertisement>(app.AdvertisementIds.First()); //do not raise a request
+                
+                var srch = session.Load<WorkerSearch> (ads.WorkerSearchId); //if ads have raised a query it does not
 
-                //var advertisments = session.Query<AdvertisementResponse>().Include(x => x.ApplicantId).ToArray();
-                //var applicants = session.Load<Applicant>(advertisments.Select(x => x.))
-                //Console.ReadLine();
+                //No way... TWO QUERIES
+                //the first query is ok:
+                //  http://localhost:8080/indexes/dynamic/Applicants?query=Name%253A%2522Juan%2520Perez%2522&start=0&pageSize=1&aggregation=None&include=AdvertisementIds&include=WorkerSearchId
+                //but the server only return Advertisements
             }
         }
 

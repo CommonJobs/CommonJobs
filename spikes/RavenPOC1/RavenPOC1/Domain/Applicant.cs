@@ -16,6 +16,6 @@ namespace RavenPOC1.Domain
         public List<string> Skills { get; set; }
         public DateTime BirthDate { get; set; }
         public MaritalStatus MaritalStatus { get; set; }
-        public List<AdvertisementResponse> AdvertisementResponses { get; set; }
+        public List<string> AdvertisementIds { get; set; }
     }
 }
