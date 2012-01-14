@@ -17,9 +17,10 @@ namespace RavenPOC1
             {
                 RunInMemory = true,
                 //DataDirectory = "Data",
-                UseEmbeddedHttpServer = true
+                UseEmbeddedHttpServer = true,
             }.Initialize())
             {
+                //documentStore.DisableAggressiveCaching();
                 var demo = new Demo(documentStore);
                 demo.Run();
                 Console.ReadLine();

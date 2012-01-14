@@ -7,7 +7,7 @@ namespace RavenPOC1.Domain
 {
     public class Applicant
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }
         public string City { get; set; }
@@ -16,5 +16,6 @@ namespace RavenPOC1.Domain
         public List<string> Skills { get; set; }
         public DateTime BirthDate { get; set; }
         public MaritalStatus MaritalStatus { get; set; }
+        public List<AdvertisementResponse> AdvertisementResponses { get; set; }
     }
 }

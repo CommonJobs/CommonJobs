@@ -7,8 +7,7 @@ namespace RavenPOC1.Domain
 {
     public class AdvertisementResponse
     {
-        public int Id { get; set; }
-        public int AdvertisementId { get; set; }
-        public int ApplicantId { get; set; }
+        public string AdvertisementId { get; set; }
+        public string AdvertisementMediaName { get; set; }
     }
 }

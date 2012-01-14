@@ -62,7 +62,7 @@ namespace RavenPOC1
                                       Start = new DateTime(2011, 10, 20),
                                       End = new DateTime(2011, 11, 10),
                                       MediaName = "Diario La Capital",
-                                      SearchId = search1.Id
+                                      WorkerSearchId = search1.Id
                                   };
                 
                 session.Store(advert1);
@@ -77,18 +77,17 @@ namespace RavenPOC1
                                          MaritalStatus = MaritalStatus.Single,
                                          Phones = new List<string> { "477-7777", "155-555555" },
                                          Skills = new List<string> { "Javascript", "jQuery", "HTML", "CSS", "PHP", "json" },
+                                         AdvertisementResponses = new List<AdvertisementResponse>()
+                                        {
+                                            new AdvertisementResponse()
+                                            {
+                                                AdvertisementId = advert1.Id,
+                                                AdvertisementMediaName = advert1.MediaName,
+                                            }
+                                        }
                                      };
 
                 session.Store(applicant1);
-
-                var response1 = new AdvertisementResponse()
-                                   {
-                                       ApplicantId = applicant1.Id,
-                                       AdvertisementId = advert1.Id
-                                   };
-
-                session.Store(response1);
-
                 session.SaveChanges();
             }
         }
@@ -100,18 +99,42 @@ namespace RavenPOC1
             CreateData1();
             SkillsInputAutocomplete();
             SearchOfWorkerSearcs();
+            GetsAnApplicantWithAllRelatedDataInOneRequest();
+        }
+
+        private void GetsAnApplicantWithAllRelatedDataInOneRequest()
+        {
+            using (var session = _documentStore.OpenSession())
+            {
+                //Console.ReadLine();
+                //var ad = session.Query<Advertisement>().Include(x => x.WorkerSearchId).First();
+                //var ad = session.Query<Advertisement>().First();
+                var adid = "";
+                var ad = session.Include("WorkerSearchId").Load<Advertisement>(adid);
+                Console.WriteLine("ad");
+                //Console.ReadLine();
+                var search = session.Load<WorkerSearch>(ad.WorkerSearchId);
+                Console.WriteLine("search");
+                //Console.ReadLine();
+
+                //TODO: it generates an temporal index, I should generate a permanent index before.
+                //session.Query<Applicant>().Where(x => x.Name == "Juan Perez").Include(x => x.AdvertisementResponses)
+
+                //var advertisments = session.Query<AdvertisementResponse>().Include(x => x.ApplicantId).ToArray();
+                //var applicants = session.Load<Applicant>(advertisments.Select(x => x.))
+                //Console.ReadLine();
+            }
         }
 
         private void SearchOfWorkerSearcs()
         {
             using (var session = _documentStore.OpenSession())
             {
-                var a = session.Query<WorkerSearch_Search.ReduceResult, WorkerSearch_Search>().Where(x => x.Query.StartsWith("programador")).As<WorkerSearch>().ToList(); //Generates 'Query:programador*'
-                var b = session.Query<WorkerSearch_Search.ReduceResult, WorkerSearch_Search>().Where(x => x.Query.Contains("programador")).As<WorkerSearch>().ToList(); //RavenDB bug: generates 'Query:programador' in place of 'Query:*programador*'
+                var a = session.Query<WorkerSearch_Search.ReduceResult, WorkerSearch_Search>().Where(x => x.Query.StartsWith("programa")).As<WorkerSearch>().ToList(); //Generates 'Query:programa*'
+                var b = session.Query<WorkerSearch_Search.ReduceResult, WorkerSearch_Search>().Where(x => x.Query.Contains("programa")).As<WorkerSearch>().ToList(); //RavenDB bug: generates 'Query:programa' in place of 'Query:*programa*'
                 var c = session.Query<WorkerSearch_Search.ReduceResult, WorkerSearch_Search>().Where(x => x.Query == "programador javascript").As<WorkerSearch>().ToList(); //Generates 'Query:"programador javascript"' 
                 var d = session.Query<WorkerSearch_Search.ReduceResult, WorkerSearch_Search>().Where(x => x.Query == "OTRONOMBRE1").As<WorkerSearch>().ToList();
                 var e = session.Query<WorkerSearch_Search.ReduceResult, WorkerSearch_Search>().Where(x => x.Query.StartsWith("OTRONOMBRE*")).As<WorkerSearch>().ToList(); 
-                Console.ReadLine();
             }
         }
 
