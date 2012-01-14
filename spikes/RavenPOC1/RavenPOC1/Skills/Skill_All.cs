@@ -8,7 +8,7 @@ namespace RavenPOC1.Skills
     {
         public Skills_All()
         {
-            AddMap<Search>(searches =>  
+            AddMap<WorkerSearch>(searches =>  
                 from search in searches
                 from skill in search.Skills
                 select new

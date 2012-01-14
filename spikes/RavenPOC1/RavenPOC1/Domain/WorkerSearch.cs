@@ -5,7 +5,7 @@ using System.Text;
 
 namespace RavenPOC1.Domain
 {
-    public class Search
+    public class WorkerSearch
     {
         public int Id { get; set; }
         public DateTime Date { get; set; }

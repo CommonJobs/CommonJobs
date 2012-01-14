@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using Raven.Client;
 using Raven.Client.Indexes;
+using Raven.Client.Linq;
 using RavenPOC1.Domain;
 using RavenPOC1.Skills;
 
@@ -21,15 +22,38 @@ namespace RavenPOC1
         {
             using (var session = _documentStore.OpenSession())
             {
-                var search1 = new Search()
-                                  {
-                                      Date = new DateTime(2011, 10, 5),
-                                      Title = "Programador Javascript",
-                                      Description = "Se necesita un programador de javascript que conozca de arriba a abajo jQuery.",
-                                      Skills = new List<string> { "Javascript", "jQuery", "C#" }
-                                  };
+                var search1 = new WorkerSearch()
+                {
+                    Date = new DateTime(2011, 10, 5),
+                    Title = "Programador Javascript",
+                    Description = "Se necesita un programador de javascript que conozca de arriba a abajo jQuery.",
+                    Skills = new List<string> { "Javascript", "jQuery", "C#" }
+                };
 
                 session.Store(search1);
+
+                session.Store(new WorkerSearch()
+                {
+                    Date = new DateTime(2011, 11, 15),
+                    Title = "Experto en COBOL",
+                    Description = "Se necesita un programador de COBOL.",
+                    Skills = new List<string> { "COBOL", "OTRONOMBRE1" }
+                });
+
+                session.Store(new WorkerSearch()
+                {
+                    Date = new DateTime(2011, 11, 20),
+                    Title = "Programador FORTRAN",
+                    Description = "Se necesita alguien que conozca al menos algo de FORTRAN 77.",
+                    Skills = new List<string> { "FORTRAN", "OTRONOMBRE2" }
+                });
+
+                session.Store(new WorkerSearch()
+                {
+                    Date = new DateTime(2011, 11, 20),
+                    Title = "Che Pibe",
+                    Description = "Se necesita alquien que ayude con cualquier cosa, no es necesario que sepa programar"
+                });
 
                 var advert1 = new Advertisement()
                                   {
@@ -75,6 +99,20 @@ namespace RavenPOC1
             IndexCreation.CreateIndexes(typeof(Skills_All).Assembly, _documentStore);
             CreateData1();
             SkillsInputAutocomplete();
+            SearchOfWorkerSearcs();
+        }
+
+        private void SearchOfWorkerSearcs()
+        {
+            using (var session = _documentStore.OpenSession())
+            {
+                var a = session.Query<WorkerSearch_Search.ReduceResult, WorkerSearch_Search>().Where(x => x.Query.StartsWith("programador")).As<WorkerSearch>().ToList(); //Generates 'Query:programador*'
+                var b = session.Query<WorkerSearch_Search.ReduceResult, WorkerSearch_Search>().Where(x => x.Query.Contains("programador")).As<WorkerSearch>().ToList(); //RavenDB bug: generates 'Query:programador' in place of 'Query:*programador*'
+                var c = session.Query<WorkerSearch_Search.ReduceResult, WorkerSearch_Search>().Where(x => x.Query == "programador javascript").As<WorkerSearch>().ToList(); //Generates 'Query:"programador javascript"' 
+                var d = session.Query<WorkerSearch_Search.ReduceResult, WorkerSearch_Search>().Where(x => x.Query == "OTRONOMBRE1").As<WorkerSearch>().ToList();
+                var e = session.Query<WorkerSearch_Search.ReduceResult, WorkerSearch_Search>().Where(x => x.Query.StartsWith("OTRONOMBRE*")).As<WorkerSearch>().ToList(); 
+                Console.ReadLine();
+            }
         }
 
         private void SkillsInputAutocomplete()
@@ -82,7 +120,7 @@ namespace RavenPOC1
             using (var session = _documentStore.OpenSession())
             {
                 //Este no aparece en los tags
-                var search2 = new Search()
+                var search2 = new WorkerSearch()
                                   {
                                       Date = new DateTime(2011, 10, 5),
                                       Title = "Programador .NET",
