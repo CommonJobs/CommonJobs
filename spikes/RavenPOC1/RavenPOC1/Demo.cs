@@ -129,7 +129,10 @@ namespace RavenPOC1
                 var b = session.Query<WorkerSearch_Search.ReduceResult, WorkerSearch_Search>().Where(x => x.Query.Contains("programa")).As<WorkerSearch>().ToList(); //RavenDB bug: generates 'Query:programa' in place of 'Query:*programa*'
                 var c = session.Query<WorkerSearch_Search.ReduceResult, WorkerSearch_Search>().Where(x => x.Query == "programador javascript").As<WorkerSearch>().ToList(); //Generates 'Query:"programador javascript"' 
                 var d = session.Query<WorkerSearch_Search.ReduceResult, WorkerSearch_Search>().Where(x => x.Query == "OTRONOMBRE1").As<WorkerSearch>().ToList();
-                var e = session.Query<WorkerSearch_Search.ReduceResult, WorkerSearch_Search>().Where(x => x.Query.StartsWith("OTRONOMBRE*")).As<WorkerSearch>().ToList(); 
+                var e = session.Query<WorkerSearch_Search.ReduceResult, WorkerSearch_Search>().Where(x => x.Query.StartsWith("OTRONOMBRE*")).As<WorkerSearch>().ToList();
+                var f = session.Query<WorkerSearch>().Where(x => x.Description.Contains("programa")).ToList(); //Generates 'Query:programa*'
+                var g = session.Query<WorkerSearch>().Where(x => x.Description.StartsWith("programa")).ToList(); //Generates 'Query:programa*'
+                var h = session.Advanced.LuceneQuery<WorkerSearch>().Where("Description:*programa*").ToList();
             }
         }
 
