@@ -21,3 +21,7 @@ TestResults
 *~
 App_Data
 [Tt]humbs.db
+
+#RavenDB server //TODO: enhace it
+Data
+Logs
