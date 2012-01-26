@@ -1,7 +1,22 @@
 # ¿Qué ha ido bien?
 
-//TODO: Completar y mergear (creo que en general no debería estar dividido por persona)
+JD
+  Balance positivo
 
+    Organización del grupo y nivel de comunicación eficiente
+    Capacidad de autoorganización
+    Liderazgo natural en andrés
+
+  Mejorar 
+    muchas tecnologias nuevas
+    Tenemos que tener cuidado con no 
+  
+Andres
+  Negativo scrum meetings
+    
+
+
+//TODO: Completar y mergear (creo que en general no debería estar dividido por persona)
 * Matias
   * Me parece que los Scrums diarios(mails) de los días Martes, Jueves y Sábados va andar bien aunque no se trabaje tanto los días de semana.
   * Por ser la primera vez que armamos los US salieron bien y se van a ir refinado de la misma manera.
