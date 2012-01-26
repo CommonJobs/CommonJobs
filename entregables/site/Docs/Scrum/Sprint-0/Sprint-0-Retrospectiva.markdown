@@ -1,31 +1,31 @@
-# ¿Qué ha ido bien?
+# Â¿QuÃ© ha ido bien?
 
-//TODO: Completar y mergear (creo que en general no debería estar dividido por persona)
+//TODO: Completar y mergear (creo que en general no deberÃ­a estar dividido por persona)
 
 * Matias
-  * Me parece que los Scrums diarios(mails) de los días Martes, Jueves y Sábados va andar bien aunque no se trabaje tanto los días de semana.
+  * Me parece que los Scrums diarios(mails) de los dÃ­as Martes, Jueves y SÃ¡bados va andar bien aunque no se trabaje tanto los dÃ­as de semana.
   * Por ser la primera vez que armamos los US salieron bien y se van a ir refinado de la misma manera.
   * La comunicacion entre nosotros fue fluida salvo excepciones (imprevistos que nos van a surgir).
-  * La metodología de selección de herramientas a utilizar me pareció correcta.
-  * 30 Hs por integrante  me parece una buena elección para los sprint. 
-  * Aunque todavía no participé, me parece correcta la  forma en que vamos a actualizar la documentación en el repocitorio. 
+  * La metodologÃ­a de selecciÃ³n de herramientas a utilizar me pareciÃ³ correcta.
+  * 30 Hs por integrante  me parece una buena elecciÃ³n para los sprint. 
+  * Aunque todavÃ­a no participÃ©, me parece correcta la  forma en que vamos a actualizar la documentaciÃ³n en el repocitorio. 
 
 * Andres 
   * En general me gustanlos de Matias, aunque estoy desconforme con los _Scrums diarios_. Estoy empezando a dudar de su utilidad y me los olvido.
 
-# ¿Qué podría mejorarse?
+# Â¿QuÃ© podrÃ­a mejorarse?
 
-//TODO: Completar y mergear (creo que en general no debería estar dividido por persona)
+//TODO: Completar y mergear (creo que en general no deberÃ­a estar dividido por persona)
 
 * Matias
-  * Por mi parte no puedo decir exactamente la duración de cada una de las tareas. Esto seria fácil de  mejorar para el próximo sprint, llevando un registro en 
+  * Por mi parte no puedo decir exactamente la duraciÃ³n de cada una de las tareas. Esto seria fÃ¡cil de  mejorar para el prÃ³ximo sprint, llevando un registro en 
     tiempo insumido para cada una de las tareas en el momento que las estoy realizando.
-  * No me sentí  productivo comparado a los otros integrantes del equipo a pesar de acercarme al total de horas planeado. Esto me va a pasar hasta que me aceite
-    un poco y tenga mas acentuados los conocimientos. Tendré que intentar  meter mas horas a parte del de las tareas asignadas.
-  * Para que no me pase lo de la fecha de  mis vacaciones tendría que organizarme mejor ya que una vez planificado el sprint no deberíamos realizar cambios. 
-    Esto lo voy a tener que tener en cuenta cuando tenga las fechas de mis examenes finales y demás.
-  * En el  siguiente link (ya se los había enviado) nos muestra alternativas para manejar las tareas técnicas o no funcionales: 
+  * No me sentÃ­  productivo comparado a los otros integrantes del equipo a pesar de acercarme al total de horas planeado. Esto me va a pasar hasta que me aceite
+    un poco y tenga mas acentuados los conocimientos. TendrÃ© que intentar  meter mas horas a parte del de las tareas asignadas.
+  * Para que no me pase lo de la fecha de  mis vacaciones tendrÃ­a que organizarme mejor ya que una vez planificado el sprint no deberÃ­amos realizar cambios. 
+    Esto lo voy a tener que tener en cuenta cuando tenga las fechas de mis examenes finales y demÃ¡s.
+  * En el  siguiente link (ya se los habÃ­a enviado) nos muestra alternativas para manejar las tareas tÃ©cnicas o no funcionales: 
     http://devnettips.blogspot.com/2009/03/definiendo-historias-de-usuario-en.html
 
 * Andres
-  * Por lo menos en mi caso, siento que hay algo de dispersión. Tengo que prestar mas atención a las tareas pendientes.
+  * Por lo menos en mi caso, siento que hay algo de dispersiÃ³n. Tengo que prestar mas atenciÃ³n a las tareas pendientes.
