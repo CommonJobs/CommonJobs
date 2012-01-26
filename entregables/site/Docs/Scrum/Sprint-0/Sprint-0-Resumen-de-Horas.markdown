@@ -13,7 +13,7 @@ _Se incluyen las reuniones de planificación, revisión y retrospectiva_
   * Documentación (incluyendo mails) `4:00`
   * Aprendizaje/investigación `15:00`
 * Matias (total `30:00`)
-  * Reuniones `7:00'
+  * Reuniones `7:00`
   * Documentación (incluyendo mails): `1:30`
   * Aprendizaje/investigación: `21:30`
 * Andres (total `30:30`)
