@@ -9,7 +9,7 @@ _Se incluyen las reuniones de planificación, revisión y retrospectiva_
 ## Horas realmente trabajadas y en qué
 
 * JD (total `30:00`)//TODO: revisar
-  * Reuniones `11:00'
+  * Reuniones `11:00`
   * Documentación (incluyendo mails) `4:00`
   * Aprendizaje/investigación `15:00`
 * Matias (total `30:00`)
