@@ -11,7 +11,7 @@
   * Aunque todavía no participé, me parece correcta la  forma en que vamos a actualizar la documentación en el repocitorio. 
 
 * Andres 
-  * En general me gustanlos de Matias, aunque estoy desconforme con los _Scrums diarios_. Estoy empezando a dudar de su utilidad y me los olvido.
+  * En general me gustan los de Matias, aunque estoy desconforme con los _Scrums diarios_. Estoy empezando a dudar de su utilidad y me los olvido.
 
 # ¿Qué podría mejorarse?
 
@@ -29,3 +29,9 @@
 
 * Andres
   * Por lo menos en mi caso, siento que hay algo de dispersión. Tengo que prestar mas atención a las tareas pendientes.
+  * Me parece que la clasificación del tiempo trabajado no es la correcta, yo haría algo más parecido a:
+    * Analisis y Planificación (Con esto de Agile se nos mezclan ambas)
+    * Documentación
+    * Diseño / Código
+    * Aprendizaje / investigación / pruebas
+    * Definición de forma de trabajo
