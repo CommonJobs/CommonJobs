@@ -16,7 +16,7 @@ namespace EmployeeFile.Controllers
 
         public ViewResult Index()
         {
-            var list = RavenSession.Query<Employee>().ToList();
+            var list = RavenSession.Query<Employee>().Customize(x => x.WaitForNonStaleResultsAsOfLastWrite()).ToList();
             return View(list);
         }
 
