@@ -1,0 +1,195 @@
+﻿@model IEnumerable<EmployeeFile.Models.Employee>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table>
+    <tr>
+        <th>
+            FirstName
+        </th>
+        <th>
+            LastName
+        </th>
+        <th>
+            WorkingSince
+        </th>
+        <th>
+            BirthDate
+        </th>
+        <th>
+            InitialRemuneration
+        </th>
+        <th>
+            CurrentRemuneration
+        </th>
+        <th>
+            Schedule
+        </th>
+        <th>
+            WorkingHours
+        </th>
+        <th>
+            FileId
+        </th>
+        <th>
+            Lunch
+        </th>
+        <th>
+            BankAccount
+        </th>
+        <th>
+            HealthInsurance
+        </th>
+        <th>
+            Platform
+        </th>
+        <th>
+            Skills
+        </th>
+        <th>
+            SkillLevel
+        </th>
+        <th>
+            Certifications
+        </th>
+        <th>
+            University
+        </th>
+        <th>
+            Title
+        </th>
+        <th>
+            Received
+        </th>
+        <th>
+            InitialPosition
+        </th>
+        <th>
+            CurrentPosition
+        </th>
+        <th>
+            Seniority
+        </th>
+        <th>
+            EnglishLevel
+        </th>
+        <th>
+            SalaryIncreases
+        </th>
+        <th>
+            CurrentProyect
+        </th>
+        <th>
+            Agreement
+        </th>
+        <th>
+            Vacations
+        </th>
+        <th>
+            Comments
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.WorkingSince)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BirthDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.InitialRemuneration)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CurrentRemuneration)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Schedule)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.WorkingHours)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FileId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Lunch)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BankAccount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HealthInsurance)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Platform)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Skills)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SkillLevel)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Certifications)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.University)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Received)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.InitialPosition)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CurrentPosition)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Seniority)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EnglishLevel)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SalaryIncreases)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CurrentProyect)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Agreement)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Vacations)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Comments)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>
