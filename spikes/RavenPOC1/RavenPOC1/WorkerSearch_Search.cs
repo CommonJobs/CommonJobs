@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Raven.Client.Indexes;
 using RavenPOC1.Domain;
+using Raven.Abstractions.Indexing;
 
 namespace RavenPOC1
 {
@@ -28,6 +29,7 @@ namespace RavenPOC1
                                 },
                                 Date = search.Date
                             };
+            Indexes.Add(x => x.Query, FieldIndexing.Analyzed);
         }
     }
 
