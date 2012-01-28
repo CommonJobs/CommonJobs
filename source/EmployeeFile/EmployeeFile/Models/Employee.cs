@@ -20,12 +20,12 @@ namespace EmployeeFile.Models
         
         [Display(Name = "Fecha Inicio")]
         [DataType(DataType.Date)]
-        public DateTimeOffset WorkingSince { get; set; }
+        public DateTime WorkingSince { get; set; }
 
         [Display(Name = "Fecha Nacimiento")]
         [DataType(DataType.Date)]
         //Only in detailed view
-        public DateTimeOffset BirthDate { get; set; }
+        public DateTime BirthDate { get; set; }
         
         [Display(Name = "Rem.Inicial")]
         [DataType(DataType.Currency)]
