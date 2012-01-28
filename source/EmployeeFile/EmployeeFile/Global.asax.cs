@@ -7,11 +7,13 @@ using System.Web.Routing;
 
 namespace EmployeeFile
 {
-    // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
-    // visit http://go.microsoft.com/?LinkId=9394801
-
-    public class MvcApplication : System.Web.HttpApplication
+    public class MvcApplication : HttpApplication
     {
+        public MvcApplication()
+        {
+            EndRequest += (sender, args) => RavenSessionManager.CloseCurrentSession();
+        }
+
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
@@ -34,6 +36,9 @@ namespace EmployeeFile
             AreaRegistration.RegisterAllAreas();
 
             RegisterGlobalFilters(GlobalFilters.Filters);
+
+            RavenSessionManager.InitializeDocumentStore();
+
             RegisterRoutes(RouteTable.Routes);
         }
     }
