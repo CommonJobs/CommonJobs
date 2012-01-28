@@ -5,7 +5,9 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using EmployeeFile.Infrastructure.Indexes;
 using EmployeeFile.Models;
+using Raven.Client.Linq;
 
 namespace EmployeeFile.Controllers
 {
@@ -16,7 +18,11 @@ namespace EmployeeFile.Controllers
 
         public ViewResult Index()
         {
-            var list = RavenSession.Query<Employee>().Customize(x => x.WaitForNonStaleResultsAsOfLastWrite()).ToList();
+            var list = RavenSession
+                .Query<Employee>()
+                .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite())
+                .AsProjection<EmployeeListView>()
+                .ToList();
             return View(list);
         }
 

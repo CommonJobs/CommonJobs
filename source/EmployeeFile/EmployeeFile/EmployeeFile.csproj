@@ -91,7 +91,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\Indexes\Employee_QuickSearch.cs" />
     <Compile Include="Infrastructure\Indexes\NullIndex.cs" />
+    <Compile Include="Models\EmployeeListView.cs" />
     <Compile Include="Models\DatedNote.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
