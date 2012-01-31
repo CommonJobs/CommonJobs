@@ -2,8 +2,102 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+@if (false)
+{
+    <script type="text/javascript" src="../../Scripts/jquery-1.7.1-vsdoc.js"></script>
+    <script type="text/javascript" src="../../Scripts/underscore.js"></script>
+    <script type="text/javascript" src="../../Scripts/backbone.js"></script>
+}
 
-<div id="categorySelection">
+<script type="text/template" id="categorySelection_template">
+    <label for="categorySelection">Category:</label>
+    <select id="categorySelection">
+        <option value="All">Mixed</option>
+        <option value="Processor">Processor</option>
+        <option value="GraphicCard">Graphic Card</option>
+        <option value="Motherboard">Motherboard</option>
+        <option value="Desktop">Desktop</option>
+    </select>
+</script>
 
+<script type="text/template" id="categoryConfiguration_template">
+</script>
+
+<script language="javascript">
+    $(function () {
+        window.Category = Backbone.Model.extend({
+            defaults: {
+                code: '',
+                description: '',
+                facets: []
+            },
+            initialize: function () {
+                console.debug("Creating '" + this.get("code") + "' category.");
+            }
+        });
+
+        window.CategoryCollection = Backbone.Collection.extend({
+            model: Category
+        });
+
+        window.CategorySelectionView = Backbone.View.extend({
+
+            template: _.template($('#categorySelection_template').html()),
+
+            render: function () {
+                $(this.el).html(this.template());
+                return this;
+            },
+
+            initialize: function () {
+                console.debug("Creating a View");
+                console.debug(this);
+            }
+        });
+
+
+        var all = new Category({ code: 'All', description: 'Mixed' });
+        var processor = new Category({ code: 'Processor', description: 'Processor' });
+        var graphicCard = new Category({ code: 'GraphicCard', description: 'Graphic Card' });
+        var motherboard = new Category({ code: 'Motherboard', description: 'Motherboard' });
+        var desktop = new Category({ code: 'Desktop', description: 'Desktop' });
+
+        var categories = new CategoryCollection([all, processor, graphicCard, motherboard, desktop]);
+
+        console.debug(categories.toJSON());
+
+        for (var i in categories.models) {
+            console.debug(categories.models[i].toJSON());
+        }
+
+        var categorySelectionView = new CategorySelectionView({ el: $("#categorySelection_container"), model : desktop });
+        categorySelectionView.render();
+
+    });
+</script>
+
+<div id="categorySelection_container">
 </div>
+
+<hr />
+
+<div class="categoryConfiguration_container">
+    <h2>Mixed</h2>
+
+    <label for="searchResultsView">Search Results View:</label>
+    <select id="searchResultsView">
+        <option value="List">List</option>
+        <option value="Grid">Grid</option>
+    </select>
+
+    <div class="categoryFacetList">
+        <label>Facets</label>
+        <ul> 
+            <li>Category</li>
+            <li>Manufacturer</li>
+        </ul>
+    </div>
+
+    <button class="categoryConfigurationSave">Save</button>
+</div>
+
