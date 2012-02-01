@@ -12,9 +12,10 @@
 <!-- we passed a "categories" context variable (array), we now have a categories free variable over to iterate -->
 <!-- each of them is a model with the fields to display -->
 <!-- also, these comments are outside because underscode.js breaks with comments in the template -->
+<!-- //a/ no convendría hacer acá? _.each(categories.model, ... -->
 <script type="text/template" id="categorySelection_template">
-    <label for="categorySelection">Category:</label>
-    <select id="categorySelection">
+    <label>Category:</label>
+    <select class="categorySelection">
         <% 
             _.each(categories, function(category) { 
 
@@ -24,10 +25,11 @@
             });
         %>
     </select>
+    <button class="edit">Edit</button>
 </script>
 
 <script type="text/template" id="categoryDetails_template">
-    <h2><%= name %></h2>
+    <h2><%= category.get('code') %></h2>
 
     <label>Search Results View:</label>
     <select class="searchResultsView">
@@ -42,8 +44,8 @@
             <li>Manufacturer</li>
         </ul>
     </div>
-    <button class="categoryConfigurationSave">Save</button>
-    <button class="categoryConfigurationCancel">Cancel</button>
+    <button class="save">Save</button>
+    <button class="cancel">Cancel</button>
 </script>
 
 <script type="text/javascript">
@@ -64,14 +66,19 @@
             model: Category,
             url: "/rest/categories"
         });
-        
+
         window.CategorySelectionView = Backbone.View.extend({
             el: $("#categorySelection_container"),
+            $template: $('#categorySelection_template'),
             template: function (categories) {
-                return _.template($('#categorySelection_template').html(), { categories: categories }); // we return the same function with the context object assigned
+                return _.template(this.$template.html(), { categories: categories }); // we return the same function with the context object assigned
+                //                                                                                      //a/ es necesario hacer esto? ..., { categories: categories });
+                //                                                                                      //a/ no alcanza con? ..., categories);
+                //                                                                                      //a/ no se debería llamar model en lugar de categories?
+
             },
             render: function () {
-                $(this.el).html(
+                this.$el.html(
                     this.template(this.model) // we pass the model (array) to the template, for some reason the template function does not have automatic access to this.model
                 );
                 return this;
@@ -84,17 +91,20 @@
 
             /* beginning of event handlers */
             events: {
-                "change #categorySelection": "selectCategory"
+                "click .edit": "editCategory"
             },
 
-            selectCategory: function (e) {
-                var newVal = $(e.currentTarget).val();
-                console.log("CategorySelectionView: Category changed to " + newVal);
+            editCategory: function (e) {
+                var newVal = this.$(".categorySelection").val();
+                console.log("Editing category: " + newVal);
 
                 var newModel = _.filter(this.model, function (m) { return m.get('code') == newVal }); // filter to the correct one, based on the code
-                if (!newModel) return; // if we didn't find it, abort
+                if (!newModel) {
+                    console.debug("we didn't find it, abort: " + newVal);
+                    return; // if we didn't find it, abort
+                }
 
-                var newView = new CategoryDetailsView({ model: newModel });
+                var newView = new CategoryDetailsView({ model: newModel[0] });
                 newView.render();
             }
             /* end of event handlers */
@@ -102,9 +112,13 @@
 
         window.CategoryDetailsView = Backbone.View.extend({
             el: $('#categoryDetails_container'),
-            template: _.template($('#categoryDetails_template').html()),
-            render: function () {
-                $(this.el).html(
+            $template: $('#categoryDetails_template'),
+            template: function (category) {
+                return _.template(this.$template.html(), { category: category })
+            },
+            render: function (category) {
+                console.debug(this.model);
+                this.$el.html(
                     this.template(this.model)
                 );
                 return this;
@@ -147,7 +161,7 @@
         categories.fetch({ // bring the data from the server
             success: function () { // only when we get the data back
                 console.log('Categories retrieved from server and instantiated.');
-                var categorySelectionView = new CategorySelectionView({ model: categories.models });
+                var categorySelectionView = new CategorySelectionView({ model: categories.models }); //a/ porque se mandan models y no la collection?
                 categorySelectionView.render();
             }
         });
