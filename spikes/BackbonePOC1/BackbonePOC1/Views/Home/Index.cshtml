@@ -46,10 +46,6 @@
     %>
     </select>
 
-    
-        
-    
-
     <div class="categoryFacetList">
         <label>Facets</label>
         <ul> 
@@ -106,6 +102,11 @@
                 this._currentlyDisplayedDetailsView = null;
             },
 
+            enable: function (enabled) {
+                this.$(".categorySelection").attr("disabled", enabled);
+                this.$(".edit").attr("disabled", enabled);
+            },
+
             /* beginning of event handlers */
             events: {
                 "click .edit": "editCategory"
@@ -125,6 +126,8 @@
                 newView.render();
             }
             /* end of event handlers */
+
+
         });
 
         window.CategoryDetailsView = Backbone.View.extend({
@@ -154,8 +157,8 @@
             events: {
                 'change #searchResultsView': 'changeSearchResultsView',
                 'click .categoryFacetList li': 'clickFacet',
-                'click .categoryConfigurationSave': 'clickSave',
-                'click .categoryConfigurationCancel': 'clickCancel'
+                'click .save': 'clickSave',
+                'click .cancel': 'clickCancel'
             },
             changeSearchResultsView: function (e) {
                 console.log('CategoryDetailsView: changeSearchResultsView');
