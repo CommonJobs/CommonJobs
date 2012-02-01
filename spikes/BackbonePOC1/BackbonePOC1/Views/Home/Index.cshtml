@@ -28,12 +28,13 @@
 
 <script type="text/template" id="categoryDetails_template">
     <h2><%= name %></h2>
-    <label for="searchResultsView">Search Results View:</label>
 
-    <select id="searchResultsView">
+    <label>Search Results View:</label>
+    <select class="searchResultsView">
         <option value="List">List</option>
         <option value="Grid">Grid</option>
     </select>
+
     <div class="categoryFacetList">
         <label>Facets</label>
         <ul> 
@@ -41,17 +42,17 @@
             <li>Manufacturer</li>
         </ul>
     </div>
-
     <button class="categoryConfigurationSave">Save</button>
     <button class="categoryConfigurationCancel">Cancel</button>
 </script>
 
-<script language="javascript">
+<script type="text/javascript">
     $(function () {
         window.Category = Backbone.Model.extend({
             defaults: {
                 code: '',
                 description: '',
+                searchResultsView: 'List',
                 facets: []
             },
             initialize: function () {
@@ -61,9 +62,9 @@
 
         window.CategoryCollection = Backbone.Collection.extend({
             model: Category,
-            url: "/Home/getCategories"
+            url: "/rest/categories"
         });
-
+        
         window.CategorySelectionView = Backbone.View.extend({
             el: $("#categorySelection_container"),
             template: function (categories) {
