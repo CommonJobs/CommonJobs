@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using System.Web.Routing;
 
 namespace BackbonePOC1.Areas.Rest
 {
@@ -6,18 +7,22 @@ namespace BackbonePOC1.Areas.Rest
     {
         public override string AreaName
         {
-            get
-            {
-                return "Rest";
-            }
+            get { return "rest"; }
         }
 
         public override void RegisterArea(AreaRegistrationContext context)
         {
             context.MapRoute(
                 "Rest_Get",
-                "rest/categories",
-                new { controller = "Categories", action = "Get" }
+                "rest/{controller}",
+                new { action = "Get" },
+                new { httpMethod = new HttpMethodConstraint("GET") }
+            );
+            context.MapRoute(
+                "Rest_Post",
+                "rest/{controller}",
+                new { action = "Post" },
+                new { httpMethod = new HttpMethodConstraint("POST") }
             );
         }
     }

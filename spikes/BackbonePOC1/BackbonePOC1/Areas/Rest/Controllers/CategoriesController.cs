@@ -25,5 +25,11 @@ namespace BackbonePOC1.Areas.Rest.Controllers
                             },
                 JsonRequestBehavior.AllowGet);
         }
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        public JsonResult Post()
+        {
+            return Json(true);
+        }
     }
 }
