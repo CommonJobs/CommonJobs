@@ -17,7 +17,7 @@
     <label>Category:</label>
     <select class="categorySelection">
         <% 
-            _.each(categories, function(category) { 
+            _(categories).each(function(category) { 
 
         %>
                 <option value="<%= category.get('code') %>"><%= category.get('description') %></option> 
@@ -29,7 +29,7 @@
 </script>
 
 <script type="text/template" id="categoryDetails_template">
-    <h2><%= category.get('code') %></h2>
+    <h2><%= category.get('description') %></h2>
 
     <label>Search Results View:</label>
     <select class="searchResultsView">
@@ -71,11 +71,10 @@
             el: $("#categorySelection_container"),
             $template: $('#categorySelection_template'),
             template: function (categories) {
-                return _.template(this.$template.html(), { categories: categories }); // we return the same function with the context object assigned
-                //                                                                                      //a/ es necesario hacer esto? ..., { categories: categories });
-                //                                                                                      //a/ no alcanza con? ..., categories);
-                //                                                                                      //a/ no se debería llamar model en lugar de categories?
-
+                return _(this.$template.html()).template({ categories: categories }); // we return the same function with the context object assigned
+                //                                                                    //a/ es necesario hacer esto? ..., { categories: categories });
+                //                                                                    //a/ no alcanza con? ..., categories);
+                //                                                                    //a/ no se debería llamar model en lugar de categories?
             },
             render: function () {
                 this.$el.html(
@@ -98,13 +97,13 @@
                 var newVal = this.$(".categorySelection").val();
                 console.log("Editing category: " + newVal);
 
-                var newModel = _.filter(this.model, function (m) { return m.get('code') == newVal }); // filter to the correct one, based on the code
+                var newModel = _(this.model).filter(function (m) { return m.get('code') == newVal }); // filter to the correct one, based on the code
                 if (!newModel) {
                     console.debug("we didn't find it, abort: " + newVal);
                     return; // if we didn't find it, abort
                 }
 
-                var newView = new CategoryDetailsView({ model: newModel[0] });
+                var newView = new CategoryDetailsView({ model: newModel[0] }); //a/ acá debería pasar el objeto o el modelo está bien?
                 newView.render();
             }
             /* end of event handlers */
@@ -114,7 +113,7 @@
             el: $('#categoryDetails_container'),
             $template: $('#categoryDetails_template'),
             template: function (category) {
-                return _.template(this.$template.html(), { category: category })
+                return _(this.$template.html()).template({ category: category })
             },
             render: function (category) {
                 console.debug(this.model);
