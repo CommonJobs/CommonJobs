@@ -26,7 +26,24 @@
     </select>
 </script>
 
-<script type="text/template" id="categoryConfiguration_template">
+<script type="text/template" id="categoryDetails_template">
+    <h2><%= name %></h2>
+    <label for="searchResultsView">Search Results View:</label>
+
+    <select id="searchResultsView">
+        <option value="List">List</option>
+        <option value="Grid">Grid</option>
+    </select>
+    <div class="categoryFacetList">
+        <label>Facets</label>
+        <ul> 
+            <li>Category</li>
+            <li>Manufacturer</li>
+        </ul>
+    </div>
+
+    <button class="categoryConfigurationSave">Save</button>
+    <button class="categoryConfigurationCancel">Cancel</button>
 </script>
 
 <script language="javascript">
@@ -144,22 +161,3 @@
 <div id="categoryDetails_container">
 </div>
 
-<script type="text/template" id="categoryDetails_template">
-    <h2><%= name %></h2>
-    <label for="searchResultsView">Search Results View:</label>
-
-    <select id="searchResultsView">
-        <option value="List">List</option>
-        <option value="Grid">Grid</option>
-    </select>
-    <div class="categoryFacetList">
-        <label>Facets</label>
-        <ul> 
-            <li>Category</li>
-            <li>Manufacturer</li>
-        </ul>
-    </div>
-
-    <button class="categoryConfigurationSave">Save</button>
-    <button class="categoryConfigurationCancel">Cancel</button>
-</script>
