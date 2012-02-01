@@ -32,10 +32,23 @@
     <h2><%= category.get('description') %></h2>
 
     <label>Search Results View:</label>
+
     <select class="searchResultsView">
-        <option value="List">List</option>
-        <option value="Grid">Grid</option>
+    <% 
+        _(PosibleSearchResultsView).each(function(value) { 
+            var selected = _(value.code).isEqual(category.get('searchResultsView')) 
+                ? selected="selected"
+                : "";
+    %>
+            <option <%= selected %> value="<%= value.code %>"><%= value.description %></option>
+    <% 
+        });
+    %>
     </select>
+
+    
+        
+    
 
     <div class="categoryFacetList">
         <label>Facets</label>
@@ -50,6 +63,11 @@
 
 <script type="text/javascript">
     $(function () {
+        window.PosibleSearchResultsView = [
+            { code: 'List', description: 'List' },
+            { code: 'Grid', description: 'Grid' }
+        ];
+
         window.Category = Backbone.Model.extend({
             defaults: {
                 code: '',
