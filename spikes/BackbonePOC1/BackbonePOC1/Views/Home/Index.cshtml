@@ -9,14 +9,20 @@
     <script type="text/javascript" src="../../Scripts/backbone.js"></script>
 }
 
+<!-- we passed a "categories" context variable (array), we now have a categories free variable over to iterate -->
+<!-- each of them is a model with the fields to display -->
+<!-- also, these comments are outside because underscode.js breaks with comments in the template -->
 <script type="text/template" id="categorySelection_template">
     <label for="categorySelection">Category:</label>
     <select id="categorySelection">
-        <option value="All">Mixed</option>
-        <option value="Processor">Processor</option>
-        <option value="GraphicCard">Graphic Card</option>
-        <option value="Motherboard">Motherboard</option>
-        <option value="Desktop">Desktop</option>
+        <% 
+            _.each(categories, function(category) { 
+
+        %>
+                <option value="<%= category.get('code') %>"><%= category.get('description') %></option> 
+        <% 
+            });
+        %>
     </select>
 </script>
 
@@ -32,47 +38,101 @@
                 facets: []
             },
             initialize: function () {
-                console.debug("Creating '" + this.get("code") + "' category.");
+                console.debug("CategoryModel: Initializing '" + this.get("code") + "' category.");
             }
         });
 
         window.CategoryCollection = Backbone.Collection.extend({
-            model: Category
+            model: Category,
+            url: "/Home/getCategories"
         });
 
         window.CategorySelectionView = Backbone.View.extend({
-
-            template: _.template($('#categorySelection_template').html()),
-
+            el: $("#categorySelection_container"),
+            template: function (categories) {
+                return _.template($('#categorySelection_template').html(), { categories: categories }); // we return the same function with the context object assigned
+            },
             render: function () {
-                $(this.el).html(this.template());
+                $(this.el).html(
+                    this.template(this.model) // we pass the model (array) to the template, for some reason the template function does not have automatic access to this.model
+                );
                 return this;
             },
 
             initialize: function () {
-                console.debug("Creating a View");
-                console.debug(this);
+                console.debug("CategorySelectionView: Initializing");
+                this._currentlyDisplayedDetailsView = null;
+            },
+
+            /* beginning of event handlers */
+            events: {
+                "change #categorySelection": "selectCategory"
+            },
+
+            selectCategory: function (e) {
+                var newVal = $(e.currentTarget).val();
+                console.log("CategorySelectionView: Category changed to " + newVal);
+
+                var newModel = _.filter(this.model, function (m) { return m.get('code') == newVal }); // filter to the correct one, based on the code
+                if (!newModel) return; // if we didn't find it, abort
+
+                var newView = new CategoryDetailsView({ model: newModel });
+                newView.render();
             }
+            /* end of event handlers */
         });
 
+        window.CategoryDetailsView = Backbone.View.extend({
+            el: $('#categoryDetails_container'),
+            template: _.template($('#categoryDetails_template').html()),
+            render: function () {
+                $(this.el).html(
+                    this.template(this.model)
+                );
+                return this;
+            },
+            initialize: function () {
+                console.log("CategoryDetailsView: Initializing");
+                //this.model.bind('change', this.render, this);
+                //this.model.bind('destroy', this.remove, this);
+            },
+            remove: function () {
+                this.$el.remove();
+            },
 
-        var all = new Category({ code: 'All', description: 'Mixed' });
-        var processor = new Category({ code: 'Processor', description: 'Processor' });
-        var graphicCard = new Category({ code: 'GraphicCard', description: 'Graphic Card' });
-        var motherboard = new Category({ code: 'Motherboard', description: 'Motherboard' });
-        var desktop = new Category({ code: 'Desktop', description: 'Desktop' });
+            /* begin event binding */
+            //TODO: data binding to modify the model directly
+            events: {
+                'change #searchResultsView': 'changeSearchResultsView',
+                'click .categoryFacetList li': 'clickFacet',
+                'click .categoryConfigurationSave': 'clickSave',
+                'click .categoryConfigurationCancel': 'clickCancel'
+            },
+            changeSearchResultsView: function (e) {
+                console.log('CategoryDetailsView: changeSearchResultsView');
+            },
+            clickFacet: function (e) {
+                console.log('CategoryDetailsView: clickFacet');
+            },
+            clickSave: function (e) {
+                console.log('CategoryDetailsView: clickSave');
+                console.log(this.model);
+            },
+            clickCancel: function (e) {
+                console.log('CategoryDetailsView: clickCancel');
+                this.remove();
+            }
+            /* end event binding */
+        });
 
-        var categories = new CategoryCollection([all, processor, graphicCard, motherboard, desktop]);
-
-        console.debug(categories.toJSON());
-
-        for (var i in categories.models) {
-            console.debug(categories.models[i].toJSON());
-        }
-
-        var categorySelectionView = new CategorySelectionView({ el: $("#categorySelection_container"), model : desktop });
-        categorySelectionView.render();
-
+        var categories = new CategoryCollection();
+        categories.fetch({ // bring the data from the server
+            success: function () { // only when we get the data back
+                console.log('Categories retrieved from server and instantiated.');
+                var categorySelectionView = new CategorySelectionView({ model: categories.models });
+                categorySelectionView.render();
+            }
+        });
     });
 </script>
 
@@ -81,15 +141,17 @@
 
 <hr />
 
-<div class="categoryConfiguration_container">
-    <h2>Mixed</h2>
+<div id="categoryDetails_container">
+</div>
 
+<script type="text/template" id="categoryDetails_template">
+    <h2><%= name %></h2>
     <label for="searchResultsView">Search Results View:</label>
+
     <select id="searchResultsView">
         <option value="List">List</option>
         <option value="Grid">Grid</option>
     </select>
-
     <div class="categoryFacetList">
         <label>Facets</label>
         <ul> 
@@ -99,5 +161,5 @@
     </div>
 
     <button class="categoryConfigurationSave">Save</button>
-</div>
-
+    <button class="categoryConfigurationCancel">Cancel</button>
+</script>
