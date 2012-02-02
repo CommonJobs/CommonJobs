@@ -23,6 +23,7 @@ window.ViewTypes = [
                 this.collection.each(function (cat) {
                     cat.set({ Editing: cat == me });
                 });
+                //FIX IT
                 var view = new CategoryDetailView({ model: me });
                 $("#edit-category").empty().append(view.render().el);
             }
@@ -63,6 +64,9 @@ window.ViewTypes = [
 
         window.CategoryDetailView = Backbone.View.extend({
             template: _.template($('#edit-category-template').html()),
+            initialize: function () {
+                this.$viewType = this.$(".viewtype");
+            },
             events: {
                 "change .viewType": "updateViewType"
             },
@@ -71,7 +75,7 @@ window.ViewTypes = [
                 return this;
             },
             updateViewType: function () {
-                this.model.set({ ViewType: this.$(".viewtype").val() });
+                this.model.set({ ViewType: this.$viewtype.val() });
                 //unidirectional :(
                 //I mean, I can do it: 
                 //    `Categories.models[3].edit();`
@@ -89,15 +93,17 @@ window.ViewTypes = [
             initialize: function () {
                 Categories.bind('reset', this.resetItems, this);
                 Categories.fetch();
+                this.$categoryList = $("#category-list");
             },
             render: function () {
                 //console.debug("render all");
             },
             resetItems: function () {
-                $("#category-list").empty();
+                var me = this;
+                me.$categoryList.empty();
                 Categories.each(function (cat) {
                     var view = new CategoryItemView({ model: cat });
-                    $("#category-list").append(view.render().el);
+                    me.$categoryList.append(view.render().el);
                 });
             }
         });
