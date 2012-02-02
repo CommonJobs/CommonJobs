@@ -14,9 +14,9 @@ namespace BackbonePOC1.Areas.Rest.Controllers
             return Json(
                 new object[]
                             {
-                                new { code = "All", description = "Mixed", searchResultsView = "List" },
-                                new { code = "Processor", description = "Processor", searchResultsView = "Grid" },
-                                new { code = "GraphicCard", description = "Graphic Card", searchResultsView = "Grid" },
+                                new { code = "All", description = "Mixed", viewType = "List" },
+                                new { code = "Processor", description = "Processor", viewType = "Grid" },
+                                new { code = "GraphicCard", description = "Graphic Card", viewType = "Grid" },
                                 new { code = "Motherboard", description = "Motherboard" },
                                 new { code = "Desktop", description = "Desktop" },
                                 new { code = "Notebook", description = "Notebook" },

@@ -53,6 +53,13 @@
 
     <script type="text/template" id="edit-category-template">
         <h2><%= description %><h2>
+        <%  console.debug("viewType: " + viewType); %>
+        <select class="viewtype">
+            <% _(ViewTypes).each(function(t) { %>
+                <% console.debug("t: " + t.code);  %>
+                <option<%= t.code == viewType ? " selected='selected'" : " "%> value="<%= t.code %>" ><%= t.description %></option>
+            <% }); %>
+        </select>
     </script>
 
   </body>
