@@ -1,0 +1,8 @@
+﻿.categoryitem.editing 
+{
+    background-color:Red;
+}
+.categoryitem.nonediting
+{
+    background-color:Lime;
+}

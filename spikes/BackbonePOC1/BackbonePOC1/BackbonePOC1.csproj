@@ -65,13 +65,14 @@
   <ItemGroup>
     <Compile Include="Areas\Rest\Controllers\CategoriesController.cs" />
     <Compile Include="Areas\Rest\RestAreaRegistration.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="site\categories.css" />
+    <Content Include="site\categories.html" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -130,6 +131,7 @@
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="site\categories.js" />
     <Content Include="README.jQuery.vsdoc.txt" />
     <Content Include="Scripts\backbone.js" />
     <Content Include="Scripts\backbone.min.js" />
@@ -170,6 +172,7 @@
   <ItemGroup>
     <Folder Include="Areas\Rest\Models\" />
     <Folder Include="Areas\Rest\Views\Shared\" />
+    <Folder Include="Controllers\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
