@@ -1,14 +1,15 @@
 /// <reference path="../Scripts/jquery-1.7.1-vsdoc.js" />
 /// <reference path="../Scripts/backbone.js" />
 /// <reference path="../Scripts/underscore.js" />
-
-window.ViewTypes = [
-    { Code: 0, Description: 'List' },
-    { Code: 1, Description: 'Grid' }
-];
-
     $(function () {
-        window.Category = Backbone.Model.extend({
+        window.App = {};
+        App.ViewTypes = [
+            { Code: 0, Description: 'List' },
+            { Code: 1, Description: 'Grid' }
+        ];
+
+        App.Category = Backbone.Model.extend({
+            //detailView: null,
             defaults: function () {
                 return {
                     Code: '',
@@ -23,21 +24,21 @@ window.ViewTypes = [
                 this.collection.each(function (cat) {
                     cat.set({ Editing: cat == me });
                 });
-                //FIX IT
-                var view = new CategoryDetailView({ model: me });
-                $("#edit-category").empty().append(view.render().el);
+                //I am generating a lot of views...
+                var v = new App.CategoryDetailView({ model: me });
+                v.render();
             }
         });
 
-        window.CategoryList = Backbone.Collection.extend({
-            model: Category,
+        App.Categories = Backbone.Collection.extend({
+            model: App.Category,
             url: "/rest/categories"
         });
 
         //My Data
-        window.Categories = new CategoryList();
+        App.Categories.Instance = new App.Categories();
 
-        window.CategoryItemView = Backbone.View.extend({
+        App.CategoryItemView = Backbone.View.extend({
             tagName: "li",
             template: _.template($('#item-template').html()),
             events: {
@@ -62,37 +63,42 @@ window.ViewTypes = [
             }
         });
 
-        window.CategoryDetailView = Backbone.View.extend({
+        App.CategoryDetailView = Backbone.View.extend({
+            container: $("#edit-category"),
+            //el: $("#edit-category"), //it does not work because the container should shared by different views
             template: _.template($('#edit-category-template').html()),
             initialize: function () {
-                this.$viewType = this.$(".viewtype");
             },
             events: {
-                "change .viewType": "updateViewType"
+                "change .viewtype": "updateViewType"
             },
             render: function () {
                 $(this.el).html(this.template(this.model.toJSON()));
+                this.container.html(this.el); //it is working but.... is it fine?
                 return this;
             },
             updateViewType: function () {
-                this.model.set({ ViewType: this.$viewtype.val() });
+                console.debug(this);
+                this.model.set({ ViewType: this.$(".viewtype").val() });
                 //unidirectional :(
                 //I mean, I can do it: 
-                //    `Categories.models[3].edit();`
-                //    `Categories.models[3].set({ Description: "new description" });`
+                //    `App.Categories.Instance.models[3].edit();`
+                //    `App.Categories.Instance.models[3].set({ Description: "new description" });`
                 //and it will be reflected in the UI instantly,
                 //but, it does not:
-                //    `Categories.models[3].set({ ViewType: "List" });`
+                //    `App.Categories.Instance.models[3].set({ ViewType: "List" });`
             }
         })
 
-        window.AppView = Backbone.View.extend({
+        //App.CategoryDetailView.Instance = new App.CategoryDetailView();
+
+        App.AppView = Backbone.View.extend({
             el: $("#categoriesConfigurationApp"),
             events: {
             },
             initialize: function () {
-                Categories.bind('reset', this.resetItems, this);
-                Categories.fetch();
+                App.Categories.Instance.bind('reset', this.resetItems, this);
+                App.Categories.Instance.fetch();
                 this.$categoryList = $("#category-list");
             },
             render: function () {
@@ -101,12 +107,13 @@ window.ViewTypes = [
             resetItems: function () {
                 var me = this;
                 me.$categoryList.empty();
-                Categories.each(function (cat) {
-                    var view = new CategoryItemView({ model: cat });
+                App.Categories.Instance.each(function (cat) {
+                    var view = new App.CategoryItemView({ model: cat });
                     me.$categoryList.append(view.render().el);
                 });
+                //this.$("#edit-category").empty().append(App.CategoryDetailView.Instance.render().el);
             }
         });
 
-        window.App = new AppView();
+        App.AppView.Instance = new App.AppView();
     });

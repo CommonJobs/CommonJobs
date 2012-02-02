@@ -54,7 +54,7 @@
     <script type="text/template" id="edit-category-template">
         <h2><%= Description %><h2>
         <select class="viewtype">
-            <% _(ViewTypes).each(function(t) { %>
+            <% _(App.ViewTypes).each(function(t) { %>
                 <option<%= t.Code == ViewType ? " selected='selected'" : " "%> value="<%= t.Code %>" ><%= t.Description %></option>
             <% }); %>
         </select>
