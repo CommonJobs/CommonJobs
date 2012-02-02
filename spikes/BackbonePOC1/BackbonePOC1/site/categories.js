@@ -72,10 +72,15 @@ window.ViewTypes = [
             },
             updateViewType: function () {
                 this.model.set({ viewType: this.$(".viewtype").val() });
-
+                //unidirectional :(
+                //I mean, I can do it: 
+                //    `Categories.models[3].edit();`
+                //    `Categories.models[3].set({ description: "new description" });`
+                //and it will be reflected in the UI instantly,
+                //but, it does not:
+                //    `Categories.models[3].set({ viewType: "List" });`
             }
         })
-
 
         window.AppView = Backbone.View.extend({
             el: $("#categoriesConfigurationApp"),
