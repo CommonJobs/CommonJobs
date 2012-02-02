@@ -46,20 +46,19 @@
     <!-- Templates -->
 
     <script type="text/template" id="item-template">
-      <span class="categoryitem<%= editing ? ' editing' : ' nonediting' %>">
-        <%= description %>
+      <span class="categoryitem<%= Editing ? ' editing' : ' nonediting' %>">
+        <%= Description %>
       </span>
     </script>
 
     <script type="text/template" id="edit-category-template">
-        <h2><%= description %><h2>
-        <%  console.debug("viewType: " + viewType); %>
+        <h2><%= Description %><h2>
         <select class="viewtype">
             <% _(ViewTypes).each(function(t) { %>
-                <% console.debug("t: " + t.code);  %>
-                <option<%= t.code == viewType ? " selected='selected'" : " "%> value="<%= t.code %>" ><%= t.description %></option>
+                <option<%= t.Code == ViewType ? " selected='selected'" : " "%> value="<%= t.Code %>" ><%= t.Description %></option>
             <% }); %>
         </select>
+
     </script>
 
   </body>

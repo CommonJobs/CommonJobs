@@ -3,25 +3,25 @@
 /// <reference path="../Scripts/underscore.js" />
 
 window.ViewTypes = [
-    { code: 'List', description: 'List' },
-    { code: 'Grid', description: 'Grid' }
+    { Code: 0, Description: 'List' },
+    { Code: 1, Description: 'Grid' }
 ];
 
     $(function () {
         window.Category = Backbone.Model.extend({
             defaults: function () {
                 return {
-                    code: '',
-                    description: '',
-                    viewType: 'List',
-                    facets: [],
-                    editing: false
+                    Code: '',
+                    Description: '',
+                    ViewType: 'List',
+                    Facets: [],
+                    Editing: false
                 };
             },
             edit: function () {
                 var me = this;
                 this.collection.each(function (cat) {
-                    cat.set({ editing: cat == me });
+                    cat.set({ Editing: cat == me });
                 });
                 var view = new CategoryDetailView({ model: me });
                 $("#edit-category").empty().append(view.render().el);
@@ -48,7 +48,7 @@ window.ViewTypes = [
             onChange: function (e) {
                 var changed = e.changedAttributes();
                 //it could be useful because I do not want to renderize in all cases
-                if (changed.hasOwnProperty("description") || changed.hasOwnProperty("editing")) {
+                if (changed.hasOwnProperty("Description") || changed.hasOwnProperty("Editing")) {
                     this.render();
                 }
             },
@@ -64,21 +64,21 @@ window.ViewTypes = [
         window.CategoryDetailView = Backbone.View.extend({
             template: _.template($('#edit-category-template').html()),
             events: {
-                "change .viewtype": "updateViewType"
+                "change .viewType": "updateViewType"
             },
             render: function () {
                 $(this.el).html(this.template(this.model.toJSON()));
                 return this;
             },
             updateViewType: function () {
-                this.model.set({ viewType: this.$(".viewtype").val() });
+                this.model.set({ ViewType: this.$(".viewtype").val() });
                 //unidirectional :(
                 //I mean, I can do it: 
                 //    `Categories.models[3].edit();`
-                //    `Categories.models[3].set({ description: "new description" });`
+                //    `Categories.models[3].set({ Description: "new description" });`
                 //and it will be reflected in the UI instantly,
                 //but, it does not:
-                //    `Categories.models[3].set({ viewType: "List" });`
+                //    `Categories.models[3].set({ ViewType: "List" });`
             }
         })
 

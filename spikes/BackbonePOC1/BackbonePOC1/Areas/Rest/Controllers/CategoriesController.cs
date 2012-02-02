@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using BackbonePOC1.Models;
 
 namespace BackbonePOC1.Areas.Rest.Controllers
 {
@@ -12,17 +13,17 @@ namespace BackbonePOC1.Areas.Rest.Controllers
         public JsonResult Get()
         {
             return Json(
-                new object[]
-                            {
-                                new { code = "All", description = "Mixed", viewType = "List" },
-                                new { code = "Processor", description = "Processor", viewType = "Grid" },
-                                new { code = "GraphicCard", description = "Graphic Card", viewType = "Grid" },
-                                new { code = "Motherboard", description = "Motherboard" },
-                                new { code = "Desktop", description = "Desktop" },
-                                new { code = "Notebook", description = "Notebook" },
-                                new { code = "Server", description = "Server" },
-                                new { code = "Workstation", description = "Workstation" },
-                            },
+                new[]
+                {
+                    new CategoryConfiguration { Code = "All", Description = "Mixed", ViewType = Models.ViewType.List },
+                    new CategoryConfiguration { Code = "Processor", Description = "Processor", ViewType = Models.ViewType.Grid },
+                    new CategoryConfiguration { Code = "GraphicCard", Description = "Graphic Card", ViewType = Models.ViewType.Grid },
+                    new CategoryConfiguration { Code = "Motherboard", Description = "Motherboard" },
+                    new CategoryConfiguration { Code = "Desktop", Description = "Desktop" },
+                    new CategoryConfiguration { Code = "Notebook", Description = "Notebook" },
+                    new CategoryConfiguration { Code = "Server", Description = "Server" },
+                    new CategoryConfiguration { Code = "Workstation", Description = "Workstation" },
+                },
                 JsonRequestBehavior.AllowGet);
         }
 
