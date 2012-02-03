@@ -47,7 +47,7 @@ namespace EmployeeFile
             if (DocumentStore != null)
                 return; // prevent misuse
 
-            DocumentStore = new DocumentStore
+            DocumentStore = new DocumentStore()
                                 {
                                     ConnectionStringName = "CommonJobsDB"
                                 }.Initialize();
