@@ -1,15 +1,11 @@
-﻿<!DOCTYPE html>
-<html>
-    <head>
-        <title>Categories</title>
-        <link href="../Content/Site.css" rel="stylesheet" type="text/css" />
-        <script src="../Scripts/jquery-1.7.1.min.js" type="text/javascript"></script>
-        <script src="../Scripts/modernizr-1.7.min.js" type="text/javascript"></script>
-        <script src="../Scripts/underscore.min.js" type="text/javascript"></script>
-        <script src="../Scripts/backbone.min.js" type="text/javascript"></script>
-        <script src="categories.js" type="text/javascript"></script>
-        <link href="categories.css" rel="stylesheet" type="text/css" />
-    </head>
+﻿@{
+    ViewBag.Title = "Index";
+}
+@section header {
+    @Html.Partial("JsGlobals")
+    <script src="@Url.Content("~/BackboneApps/categories.js")" type="text/javascript"></script>
+    <link href="@Url.Content("~/BackboneApps/categories.css")" rel="stylesheet" type="text/css" ></link>
+}
 
   <body>
 
@@ -44,6 +40,7 @@
     </div>
 
     <!-- Templates -->
+    <!-- TODO move it to an external file to allow the caching -->
 
     <script type="text/template" id="item-template">
       <span class="categoryitem<%= Editing ? ' editing' : ' nonediting' %>">
@@ -53,9 +50,9 @@
 
     <script type="text/template" id="edit-category-template">
         <h2><%= Description %><h2>
-        <select class="viewtype">
-            <% _(App.ViewTypes).each(function(t) { %>
-                <option<%= t.Code == ViewType ? " selected='selected'" : " "%> value="<%= t.Code %>" ><%= t.Description %></option>
+        <select class="resultsviewtype">
+            <% _(App.Enumerations.ResultsViewType).each(function(t) { %>
+                <option<%= t.Value == ResultsViewType ? " selected='selected'" : " "%> value="<%= t.Code %>" ><%= t.Name %></option>
             <% }); %>
         </select>
 

@@ -2,18 +2,12 @@
 /// <reference path="../Scripts/backbone.js" />
 /// <reference path="../Scripts/underscore.js" />
 $(function () {
-    window.App = {};
-    App.ViewTypes = [
-            { Code: 0, Description: 'List' },
-            { Code: 1, Description: 'Grid' }
-        ];
-
     App.Category = Backbone.Model.extend({
         defaults: function () {
             return {
                 Code: '',
                 Description: '',
-                ViewType: 'List',
+                ResultsViewType: 'List',
                 Facets: [],
                 Editing: false
             };
@@ -28,8 +22,9 @@ $(function () {
     });
 
     App.Categories = Backbone.Collection.extend({
-        model: App.Category,
-        url: "/rest/categories"
+        model: App.Category
+        //Commented because I am bootstraping now
+        //, url: "/categories/list" 
     });
 
     App.Categories.instance = new App.Categories();
@@ -65,7 +60,7 @@ $(function () {
         initialize: function () {
         },
         events: {
-            "change .viewtype": "updateViewType"
+            "change .resultsviewtype": "updateResultsViewType"
         },
         render: function () {
             this.model 
@@ -77,15 +72,15 @@ $(function () {
             this.model = model;
             return this.render();
         },
-        updateViewType: function () {
-            this.model.set({ ViewType: this.$(".viewtype").val() });
+        updateResultsViewType: function () {
+            this.model.set({ ResultsViewType: this.$(".resultsviewtype").val() });
             //unidirectional :(
             //I mean, I can do it: 
             //    `App.Categories.instance.models[3].edit();`
             //    `App.Categories.instance.models[3].set({ Description: "new description" });`
             //and it will be reflected in the UI instantly,
             //but, it does not:
-            //    `App.Categories.instance.models[3].set({ ViewType: "List" });`
+            //    `App.Categories.instance.models[3].set({ ResultsViewType: "List" });`
         }
     })
 
@@ -97,17 +92,18 @@ $(function () {
         },
         initialize: function () {
             App.Categories.instance.bind('reset', this.resetItems, this);
-            App.Categories.instance.fetch();
-            this.$categoryList = $("#category-list");
+            //Commented because I am bootstraping now
+            //App.Categories.instance.fetch();
+            App.Categories.instance.reset(App._Categories);
         },
         render: function () {
         },
         resetItems: function () {
-            var me = this;
-            me.$categoryList.empty();
+            var $categorylist = this.$("#category-list")
+            $categorylist.empty();
             App.Categories.instance.each(function (cat) {
                 var view = new App.CategoryItemView({ model: cat });
-                me.$categoryList.append(view.render().el);
+                $categorylist.append(view.render().el);
             });
         }
     });
