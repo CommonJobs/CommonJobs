@@ -7,6 +7,6 @@ namespace EmployeeFile.Models
 {
     public class SearchModel
     {
-        public string Terms { get; set; }
+        public string Term { get; set; }
     }
 }

@@ -9,9 +9,9 @@
         $("#quicksearch").keyup(function (e) {
             //TODO Fix hardcoded URLs
             if (e.keyCode == 13) {
-                location.href = "Employees?terms=" + $(this).val();
+                location.href = "Employees?term=" + $(this).val();
             } else {
-                $(".results").load("Employees/List?terms=" + $(this).val());
+                $(".results").load("Employees/List?term=" + encodeURI($(this).val()));
             }
         });
     });
@@ -23,7 +23,7 @@
     @Html.ActionLink("Create New", "Create")
 </p>
 
-<label for="quicksearch">Quick Search</label><input type="text" id="quicksearch" value="@Model.Terms" />
+<label for="quicksearch">Quick Search</label><input type="text" id="quicksearch" value="@Model.Term" />
 
 <div class="results">
     @Html.Action("List", Model) 

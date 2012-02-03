@@ -27,12 +27,23 @@ namespace EmployeeFile.Controllers
             var list = RavenSession
                 .Query<Employee_QuickSearch.Query, Employee_QuickSearch>()
                 .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite())
-                .Where(x => x.ByTerms.StartsWith(searchModel.Terms))
+                .Where(x => x.ByTerm.StartsWith(searchModel.Term))
                 .AsProjection<EmployeeListView>()
                 .ToList();
             return View(list);
         }
-
+        
+        //
+        // GET: /Employees/QuickSearchAutocomplete?terms=Mar
+        public JsonResult QuickSearchAutocomplete(string term)
+        {
+            const int maxResults = 20;
+            var list = RavenSession.Advanced.DatabaseCommands
+                .GetTerms("Employee/QuickSearch", "ByTerm", term, maxResults)
+                .Where(x => x.StartsWith(term));
+            return Json(list, JsonRequestBehavior.AllowGet);
+        }
+        
         //
         // GET: /Employees/Details/5
 

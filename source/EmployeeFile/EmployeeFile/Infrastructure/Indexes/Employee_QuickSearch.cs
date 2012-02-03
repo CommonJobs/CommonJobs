@@ -13,7 +13,7 @@ namespace EmployeeFile.Infrastructure.Indexes
     {
         public class Query
         {
-            public string ByTerms { get; set; }
+            public string ByTerm { get; set; }
         }
 
         public Employee_QuickSearch()
@@ -21,7 +21,7 @@ namespace EmployeeFile.Infrastructure.Indexes
             Map = employees => from employee in employees
                                select new 
                                {
-                                   ByTerms = new object[]
+                                   ByTerm = new object[]
                                    {
                                        employee.FirstName,
                                        employee.LastName,
@@ -47,7 +47,7 @@ namespace EmployeeFile.Infrastructure.Indexes
                                        employee.University
                                    }
                                };
-            Indexes.Add(x => x.ByTerms, FieldIndexing.Analyzed);
+            Indexes.Add(x => x.ByTerm, FieldIndexing.Analyzed);
 		}
     }
 }
