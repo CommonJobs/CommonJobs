@@ -5,34 +5,49 @@ using System.Web;
 using EmployeeFile.Models;
 using Raven.Abstractions.Indexing;
 using Raven.Client.Indexes;
+using System.Globalization;
 
 namespace EmployeeFile.Infrastructure.Indexes
 {
-    public class Employee_QuickSearch : AbstractIndexCreationTask<Employee>
+    public class Employee_QuickSearch : AbstractIndexCreationTask<Employee, Employee_QuickSearch.Query>
     {
+        public class Query
+        {
+            public string ByTerms { get; set; }
+        }
+
         public Employee_QuickSearch()
 		{
             Map = employees => from employee in employees
                                select new 
                                {
-                                   Id = employee.Id,
-                                   FirstName = employee.FirstName,
-                                   LastName = employee.LastName,
-                                   WorkingSince = employee.WorkingSince,
-                                   InitialRemuneration = employee.InitialRemuneration,
-                                   CurrentRemuneration = employee.CurrentRemuneration,
-                                   Schedule = employee.Schedule,
-                                   FileId = employee.FileId,
-                                   Lunch = employee.Lunch,
-                                   BankAccount = employee.BankAccount,
-                                   HealthInsurance = employee.HealthInsurance,
-                                   Platform = employee.Platform,
-                                   CurrentPosition = employee.CurrentPosition,
-                                   SalaryIncreases = employee.SalaryIncreases,
-                                   CurrentProyect = employee.CurrentProyect,
-                                   Agreement = employee.Agreement,
-                                   Comments = employee.Comments
+                                   ByTerms = new object[]
+                                   {
+                                       employee.FirstName,
+                                       employee.LastName,
+                                       string.Format("{0:yyyy-MM-dd", employee.WorkingSince),
+                                       string.Format("{0:dd-MM-yyyy", employee.WorkingSince),
+                                       string.Format("{0:MM-dd-yyyy", employee.WorkingSince),
+                                       string.Format("{0:MMMM", employee.WorkingSince),
+                                       string.Format("{0:yyyy-MM-dd}", employee.BirthDate),
+                                       string.Format("{0:dd-MM-yyyy}", employee.BirthDate),
+                                       string.Format("{0:MM-dd-yyyy}", employee.BirthDate),
+                                       string.Format("{0:MMMM}", employee.BirthDate),
+                                       employee.FileId,
+                                       employee.BankAccount,
+                                       employee.HealthInsurance,
+                                       employee.Platform,
+                                       employee.CurrentPosition,
+                                       employee.CurrentProyect,
+                                       employee.Comments,
+                                       employee.EnglishLevel,
+                                       employee.Notes,
+                                       employee.Seniority,
+                                       employee.Title,
+                                       employee.University
+                                   }
                                };
+            Indexes.Add(x => x.ByTerms, FieldIndexing.Analyzed);
 		}
     }
 }

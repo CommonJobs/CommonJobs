@@ -15,12 +15,14 @@ namespace EmployeeFile.Controllers
     {
         //
         // GET: /Employees/
+        // GET: /Employees?terms=mar
 
-        public ViewResult Index()
+        public ViewResult Index(string terms)
         {
             var list = RavenSession
-                .Query<Employee>()
+                .Query<Employee_QuickSearch.Query, Employee_QuickSearch>()
                 .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite())
+                .Where(x => x.ByTerms.StartsWith(terms))
                 .AsProjection<EmployeeListView>()
                 .ToList();
             return View(list);
