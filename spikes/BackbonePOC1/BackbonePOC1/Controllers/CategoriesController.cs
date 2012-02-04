@@ -10,24 +10,24 @@ namespace BackbonePOC1.Controllers
 {
     public class CategoriesController : Controller
     {
-        private IEnumerable EnumerationAsList<T>() where T : struct
+        private Dictionary<string, string> EnumerationAsDictionary<T>() where T : struct
         {
-            return EnumerationAsList(typeof(T));
+            return EnumerationAsDictionary(typeof(T));
         }
 
-        private IEnumerable EnumerationAsList(Type type) 
+        private Dictionary<string, string> EnumerationAsDictionary(Type type) 
         {
-            return Enum.GetValues(type).Cast<object>().Select(x => new { Value = (int)x, Name = x.ToString() });
+            return Enum.GetValues(type).Cast<object>().ToDictionary(x => string.Format("{0:D}", x), x => string.Format("{0:F}", x));
         }
 
         private object Enumerations()
         {
             return new
             {
-                ResultsViewType = EnumerationAsList<ResultsViewType>(),
-                ProductType = EnumerationAsList<ProductType>(),
-                FacetFiltersOrderType = EnumerationAsList<FacetFiltersOrderType>(),
-                FacetFiltersOrderDirection = EnumerationAsList<FacetFiltersOrderDirection>()
+                ResultsViewType = EnumerationAsDictionary<ResultsViewType>(),
+                ProductType = EnumerationAsDictionary<ProductType>(),
+                FacetFiltersOrderType = EnumerationAsDictionary<FacetFiltersOrderType>(),
+                FacetFiltersOrderDirection = EnumerationAsDictionary<FacetFiltersOrderDirection>()
             };
         }
 

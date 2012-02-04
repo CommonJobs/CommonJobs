@@ -6,7 +6,6 @@ $(function () {
         defaults: function () {
             return {
                 Code: '',
-                Description: '',
                 ResultsViewType: 'List',
                 Facets: [],
                 Editing: false
@@ -41,7 +40,7 @@ $(function () {
         onChange: function (e) {
             var changed = e.changedAttributes();
             //it could be useful because I do not want to renderize in all cases
-            if (changed.hasOwnProperty("Description") || changed.hasOwnProperty("Editing")) {
+            if (changed.hasOwnProperty("Editing")) {
                 this.render();
             }
         },
@@ -77,7 +76,6 @@ $(function () {
             //unidirectional :(
             //I mean, I can do it: 
             //    `App.Categories.instance.models[3].edit();`
-            //    `App.Categories.instance.models[3].set({ Description: "new description" });`
             //and it will be reflected in the UI instantly,
             //but, it does not:
             //    `App.Categories.instance.models[3].set({ ResultsViewType: "List" });`

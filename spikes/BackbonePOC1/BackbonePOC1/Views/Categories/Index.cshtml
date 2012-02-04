@@ -44,16 +44,16 @@
 
     <script type="text/template" id="item-template">
       <span class="categoryitem<%= Editing ? ' editing' : ' nonediting' %>">
-        <%= Description %>
+        <%= App.Enumerations.ProductType[ProductType] %>
       </span>
     </script>
 
     <script type="text/template" id="edit-category-template">
-        <h2><%= Description %><h2>
+        <h2><%= App.Enumerations.ProductType[ProductType] %><h2>
         <select class="resultsviewtype">
-            <% _(App.Enumerations.ResultsViewType).each(function(t) { %>
-                <option<%= t.Value == ResultsViewType ? " selected='selected'" : " "%> value="<%= t.Code %>" ><%= t.Name %></option>
-            <% }); %>
+            <% for (var i in App.Enumerations.ResultsViewType) { %>
+                <option<%= i == ResultsViewType ? " selected='selected'" : " "%> value="<%= i %>" ><%= App.Enumerations.ResultsViewType[i] %></option>
+            <% }; %>
         </select>
 
     </script>
