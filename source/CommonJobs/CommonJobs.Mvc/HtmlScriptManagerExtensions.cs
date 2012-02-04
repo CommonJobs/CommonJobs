@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using System.Text;
 using CommonJobs.Utilities;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace CommonJobs.Mvc
 {
@@ -48,7 +50,7 @@ namespace CommonJobs.Mvc
             var casted = entry as GlobalJavascriptEntry;
             if (casted == null)
                 return null;
-            return string.Format(@"<script type=""text/javascript"">window.{0} = {1};</script>", casted.Name, new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(casted.Value));
+            return string.Format(@"<script type=""text/javascript"">window.{0} = {1};</script>", casted.Name, JsonConvert.SerializeObject(casted.Value, Formatting.Indented, new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.Auto }));
         }
 
     }

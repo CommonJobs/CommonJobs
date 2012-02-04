@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using System.Xml.Linq;
 using Raven.Client;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace CommonJobs.Mvc
 {
@@ -20,6 +22,12 @@ namespace CommonJobs.Mvc
         public ScriptManager ScriptManager
         {
             get { return ScriptManager.GetFromViewData(ViewData); }
+        }
+        
+        protected new JsonNetResult Json(object data)
+        {
+            var settings = new JsonSerializerSettings();
+            return new JsonNetResult(data, settings);
         }
     }
 }

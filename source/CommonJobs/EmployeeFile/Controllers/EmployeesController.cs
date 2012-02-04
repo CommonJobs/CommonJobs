@@ -85,6 +85,8 @@ namespace EmployeeFile.Controllers
         public ActionResult Edit(string id)
         {
             var employee = RavenSession.Load<Employee>(id);
+            ScriptManager.RegisterGlobalJavascript("App", new {}, 500);
+            ScriptManager.RegisterGlobalJavascript("App.Employee", employee, 500);
             return View(employee);
         }
 
@@ -96,10 +98,11 @@ namespace EmployeeFile.Controllers
         {
             if (ModelState.IsValid)
             {
-                RavenSession.Store(employee);
-                return RedirectToAction("Index");
+                //RavenSession.Store(employee);
+                //return RedirectToAction("Index");
             }
-            return View(employee);
+            //return View(employee);
+            return new EmptyResult();
         }
 
         //

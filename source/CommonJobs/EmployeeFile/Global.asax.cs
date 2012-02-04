@@ -37,6 +37,12 @@ namespace EmployeeFile
             InitializeDocumentStore(indexAssemblies: new[] { typeof(NullIndex).Assembly });
 
             RegisterRoutes(RouteTable.Routes);
+
+            //move these lines to CommonJobsApplication
+            ValueProviderFactories.Factories.Remove(ValueProviderFactories.Factories.OfType<JsonValueProviderFactory>().FirstOrDefault());
+            ValueProviderFactories.Factories.Add(new JsonDotNetValueProviderFactory());
+            ModelBinders.Binders.DefaultBinder =  new JsonDotNetModelBinder();
+
         }
     }
 }
