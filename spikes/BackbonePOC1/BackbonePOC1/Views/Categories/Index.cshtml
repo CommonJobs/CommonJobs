@@ -1,0 +1,63 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+@section header {
+    @Html.Partial("JsGlobals")
+    <script src="@Url.Content("~/BackboneApps/categories.js")" type="text/javascript"></script>
+    <link href="@Url.Content("~/BackboneApps/categories.css")" rel="stylesheet" type="text/css" ></link>
+}
+
+  <body>
+
+    <!-- Categories Configuration App Interface -->
+
+    <div id="categoriesConfigurationApp">
+
+      <div class="title">
+        <h1>Categories Configuration</h1>
+      </div>
+
+      <div class="content">
+
+        <div id="select-category">
+
+            <div id="categories">
+                <ul id="category-list"></ul>
+            </div>
+
+        </div>
+
+        <hr />
+
+        <div id="edit-category"></div>
+
+        <hr />
+
+        <div id="edit-facet"></div>
+
+      </div>
+
+    </div>
+
+    <!-- Templates -->
+    <!-- TODO move it to an external file to allow the caching -->
+
+    <script type="text/template" id="item-template">
+      <span class="categoryitem<%= Editing ? ' editing' : ' nonediting' %>">
+        <%= App.Enumerations.ProductType[ProductType] %>
+      </span>
+    </script>
+
+    <script type="text/template" id="edit-category-template">
+        <h2><%= App.Enumerations.ProductType[ProductType] %><h2>
+        <select class="resultsviewtype">
+            <% for (var i in App.Enumerations.ResultsViewType) { %>
+                <option<%= i == ResultsViewType ? " selected='selected'" : " "%> value="<%= i %>" ><%= App.Enumerations.ResultsViewType[i] %></option>
+            <% }; %>
+        </select>
+
+    </script>
+
+  </body>
+
+</html>
