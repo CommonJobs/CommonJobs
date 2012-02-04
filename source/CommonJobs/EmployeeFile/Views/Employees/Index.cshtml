@@ -9,9 +9,9 @@
         $("#quicksearch").keyup(function (e) {
             //TODO Fix hardcoded URLs
             if (e.keyCode == 13) {
-                location.href = "Employees?term=" + $(this).val();
+                location.href = "/Employees?term=" + $(this).val();
             } else {
-                $(".results").load("Employees/List?term=" + encodeURI($(this).val()));
+                $(".results").load("/Employees/List?term=" + encodeURI($(this).val()));
             }
         });
     });
