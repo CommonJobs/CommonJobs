@@ -30,7 +30,8 @@ namespace EmployeeFile.Controllers
                 .Query<Employee_QuickSearch.Query, Employee_QuickSearch>()
                 .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite())
                 .Where(x => x.ByTerm.StartsWith(searchModel.Term))
-                .AsProjection<EmployeeListView>()
+                .As<Employee>()
+                //.AsProjection<EmployeeListView>() // EmployeeListView is an optimization, we do not need it yet
                 .ToList();
             return View(list);
         }

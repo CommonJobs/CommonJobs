@@ -88,7 +88,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\EmployeeListView.cs" />
     <Compile Include="Models\SearchModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -226,6 +225,10 @@
     <ProjectReference Include="..\CommonJobs.Mvc\CommonJobs.Mvc.csproj">
       <Project>{658EAF8E-02A2-4029-AC52-942261EE486C}</Project>
       <Name>CommonJobs.Mvc</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CommonJobs.Utilities\CommonJobs.Utilities.csproj">
+      <Project>{FABFCAFA-F6F2-47C2-B393-66E97203F107}</Project>
+      <Name>CommonJobs.Utilities</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

@@ -4,23 +4,12 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Text;
+using CommonJobs.Utilities;
 
 namespace CommonJobs.Mvc
 {
     public static class HtmlScriptManagerExtensions
     {
-        private static TResult FirtsNotNull<T, TResult>(T param, params Func<T, TResult>[] funcs) where TResult : class
-        {
-            TResult r = null;
-            foreach (var f in funcs)
-            {
-                r = f(param);
-                if (r != null)
-                    break;
-            }
-            return r;
-        }
-
         public static IHtmlString RenderScriptManagerEntries(this HtmlHelper html)
         {
             var scriptManager = ScriptManager.GetFromViewData(html.ViewData);
@@ -30,7 +19,7 @@ namespace CommonJobs.Mvc
             sb.AppendLine().AppendLine("<!-- Begin ScriptManager Entries -->");
             foreach (var entry in entries)
             {
-                var renderedEntry = FirtsNotNull(entry, RenderCssReference, RenderJsReference, RenderGlobalJavascript);
+                var renderedEntry = FunctionHelper.FirtsNotNull(entry, RenderCssReference, RenderJsReference, RenderGlobalJavascript);
                 if (renderedEntry != null)
                     sb.AppendLine(renderedEntry);
             }

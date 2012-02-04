@@ -47,19 +47,11 @@
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.InitialRemuneration)
+            @Html.LabelFor(model => model.InitialSalary)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.InitialRemuneration)
-            @Html.ValidationMessageFor(model => model.InitialRemuneration)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.CurrentRemuneration)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.CurrentRemuneration)
-            @Html.ValidationMessageFor(model => model.CurrentRemuneration)
+            @Html.EditorFor(model => model.InitialSalary)
+            @Html.ValidationMessageFor(model => model.InitialSalary)
         </div>
 
         <div class="editor-label">
@@ -197,15 +189,7 @@
             @Html.EditorFor(model => model.EnglishLevel)
             @Html.ValidationMessageFor(model => model.EnglishLevel)
         </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.SalaryIncreases)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.SalaryIncreases)
-            @Html.ValidationMessageFor(model => model.SalaryIncreases)
-        </div>
-
+        
         <div class="editor-label">
             @Html.LabelFor(model => model.CurrentProyect)
         </div>

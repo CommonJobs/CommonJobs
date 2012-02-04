@@ -6,14 +6,21 @@ using System.Web;
 
 namespace CommonJobs.Domain
 {
-    public class DatedNote
+    public class Happening
     {
-        [Display(Name = "Fecha")]
+        [Display(Name = "Fecha Real")]
         [DataType(DataType.DateTime)]
-        public DateTime Date { get; set; }
+        public DateTime RealDate { get; set; }
+
+        [Display(Name = "Fecha registrada")]
+        [DataType(DataType.DateTime)]
+        public DateTime RegisterDate { get; set; }
 
         [Display(Name = "Nota")]
         [DataType(DataType.MultilineText)]
         public string Note { get; set; }
+
+        [Display(Name = "Eliminado")]
+        public bool Deleted { get; set; }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using CommonJobs.Utilities;
 
 namespace CommonJobs.Domain
 {
@@ -28,12 +29,20 @@ namespace CommonJobs.Domain
         
         [Display(Name = "Rem.Inicial")]
         [DataType(DataType.Currency)]
-        public Decimal InitialRemuneration { get; set; }
-        
-        [Display(Name = "Ajuste")]
+        public Decimal InitialSalary { get; set; }
+
+        [Display(Name = "Rem.Actual")]
         [DataType(DataType.Currency)]
-        public Decimal CurrentRemuneration { get; set; }
-        
+        public Decimal CurrentSalary 
+        { 
+            get 
+            {
+                return SalaryChanges
+                    .Select(x => (decimal?)x.Salary)
+                    .FirstOrDefault() ?? InitialSalary; 
+            } 
+        }
+
         [Display(Name = "Horario")]
         public string Schedule { get; set; }
 
@@ -45,7 +54,7 @@ namespace CommonJobs.Domain
         public string FileId { get; set; }
         
         [Display(Name = "Almuerzo")]
-        public string Lunch { get; set; }
+        public bool Lunch { get; set; }
         
         [Display(Name = "Banco")]
         public string BankAccount { get; set; }
@@ -78,7 +87,7 @@ namespace CommonJobs.Domain
 
         [Display(Name = "Recibido")]
         //Only in detailed view
-        public string Received { get; set; }
+        public bool Received { get; set; }
 
         [Display(Name = "Posición Inicial")]
         //Only in detailed view
@@ -94,9 +103,6 @@ namespace CommonJobs.Domain
         [Display(Name = "Idioma")]
         //Only in detailed view
         public string EnglishLevel { get; set; }
-
-        [Display(Name = "Aumentos")]
-        public string SalaryIncreases { get; set; }
 
         [Display(Name = "Proyecto")]
         public string CurrentProyect { get; set; }
@@ -114,6 +120,22 @@ namespace CommonJobs.Domain
 
         [Display(Name = "Observaciones")]
         //Only in detailed view
-        public List<DatedNote> Notes { get; set; }
+        public IEnumerable<SimpleNote> Notes
+        {
+            get { return TakeHappenings<SimpleNote>(); }
+        }
+
+        [Display(Name = "Historial de sueldos")]
+        public IEnumerable<SalaryChange> SalaryChanges
+        {
+            get { return TakeHappenings<SalaryChange>(); }
+        }
+
+        private IEnumerable<T> TakeHappenings<T>() where T : Happening
+        {
+            return Happenings.EmptyIfNull().OfType<T>().Where(x => !x.Deleted).OrderByDescending(x => x.RealDate);
+        }
+
+        public List<Happening> Happenings { get; set; }
     }
 }

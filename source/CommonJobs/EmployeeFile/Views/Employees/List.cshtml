@@ -1,4 +1,4 @@
-﻿@model IEnumerable<EmployeeFile.Models.EmployeeListView>
+﻿@model IEnumerable<CommonJobs.Domain.Employee>
 
 @{
     Layout = null;
@@ -16,10 +16,10 @@
             WorkingSince
         </th>
         <th>
-            InitialRemuneration
+            InitialSalary
         </th>
         <th>
-            CurrentRemuneration
+            CurrentSalary
         </th>
         <th>
             Schedule
@@ -41,9 +41,6 @@
         </th>
         <th>
             CurrentPosition
-        </th>
-        <th>
-            SalaryIncreases
         </th>
         <th>
             CurrentProyect
@@ -69,10 +66,10 @@
             @Html.DisplayFor(modelItem => item.WorkingSince)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.InitialRemuneration)
+            @Html.DisplayFor(modelItem => item.InitialSalary)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.CurrentRemuneration)
+            @Html.DisplayFor(modelItem => item.CurrentSalary)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Schedule)
@@ -94,9 +91,6 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.CurrentPosition)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SalaryIncreases)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.CurrentProyect)
