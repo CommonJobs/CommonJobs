@@ -4,17 +4,18 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Web;
-using EmployeeFile.Infrastructure.Indexes;
+using CommonJobs.Infrastructure.Indexes;
 using Raven.Client;
 using Raven.Client.Document;
 using Raven.Client.Indexes;
+using System.Reflection;
 
-namespace EmployeeFile
+namespace CommonJobs.Mvc
 {
-    public static class RavenSessionManager
+    internal static class RavenSessionManager
     {
-        private const string CURRENT_REQUEST_RAVEN_SESSION_KEY = "CurrentRequestRavenSession";
-        
+        private const string CURRENT_REQUEST_RAVEN_SESSION_KEY = "_COMMOMJOBS_CURRENT_REQUEST_RAVEN_SESSION_";
+       
         public static IDocumentStore DocumentStore { get; private set; }
 
         public static IDocumentSession GetCurrentSession()
@@ -42,24 +43,22 @@ namespace EmployeeFile
             }
         }
 
-        public static void InitializeDocumentStore()
+        public static void InitializeDocumentStore(Assembly[] indexAssemblies, string connectionStringName, string errorUrl)
         {
             if (DocumentStore != null)
                 return; // prevent misuse
 
-            DocumentStore = new DocumentStore()
-                                {
-                                    ConnectionStringName = "CommonJobsDB"
-                                }.Initialize();
+            DocumentStore = new DocumentStore() { ConnectionStringName = connectionStringName }.Initialize();
 
-            TryCreatingIndexesOrRedirectToErrorPage();
+            TryCreatingIndexesOrRedirectToErrorPage(indexAssemblies, errorUrl);
         }
 
-        private static void TryCreatingIndexesOrRedirectToErrorPage()
+        private static void TryCreatingIndexesOrRedirectToErrorPage(Assembly[] indexAssemblies, string errorUrl)
         {
             try
             {
-                IndexCreation.CreateIndexes(typeof(NullIndex).Assembly, DocumentStore);
+                foreach (var assembly in indexAssemblies)
+                    IndexCreation.CreateIndexes(assembly, DocumentStore);
             }
             catch (WebException e)
             {
@@ -79,7 +78,7 @@ namespace EmployeeFile
                     case SocketError.HostDown:
                     case SocketError.HostUnreachable:
                     case SocketError.HostNotFound:
-                        HttpContext.Current.Response.Redirect("~/RavenNotReachable.htm");
+                        HttpContext.Current.Response.Redirect(errorUrl);
                         break;
                     default:
                         throw;

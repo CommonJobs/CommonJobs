@@ -6,6 +6,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2070500B-667A-47C7-A1B2-31363031FEE1}"
 	ProjectSection(SolutionItems) = preProject
 		Delete Raven Server Data.cmd = Delete Raven Server Data.cmd
+		Start Raven Server (no open admin UI).cmd = Start Raven Server (no open admin UI).cmd
 		Start Raven Server.cmd = Start Raven Server.cmd
 	EndProjectSection
 EndProject

@@ -4,16 +4,13 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using CommonJobs.Mvc;
+using CommonJobs.Infrastructure.Indexes;
 
 namespace EmployeeFile
 {
-    public class MvcApplication : HttpApplication
+    public class MvcApplication : CommonJobsApplication
     {
-        public MvcApplication()
-        {
-            EndRequest += (sender, args) => RavenSessionManager.CloseCurrentSession();
-        }
-
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
@@ -37,7 +34,7 @@ namespace EmployeeFile
 
             RegisterGlobalFilters(GlobalFilters.Filters);
 
-            RavenSessionManager.InitializeDocumentStore();
+            InitializeDocumentStore(indexAssemblies: new[] { typeof(NullIndex).Assembly });
 
             RegisterRoutes(RouteTable.Routes);
         }

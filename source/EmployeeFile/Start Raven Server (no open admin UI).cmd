@@ -1,0 +1,1 @@
+start .\packages\RavenDB.1.0.608-Unstable\server\Raven.Server.exe --debug

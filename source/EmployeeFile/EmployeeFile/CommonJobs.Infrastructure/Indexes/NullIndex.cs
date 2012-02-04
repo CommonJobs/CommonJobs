@@ -5,7 +5,7 @@ using System.Web;
 using Raven.Abstractions.Indexing;
 using Raven.Client.Indexes;
 
-namespace EmployeeFile.Infrastructure.Indexes
+namespace CommonJobs.Infrastructure.Indexes
 {
     public class NullIndex : AbstractIndexCreationTask<NullIndex.SampleCollection>
     {

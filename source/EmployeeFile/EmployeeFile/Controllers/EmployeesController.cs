@@ -5,13 +5,15 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using EmployeeFile.Infrastructure.Indexes;
+using CommonJobs.Infrastructure.Indexes;
 using EmployeeFile.Models;
 using Raven.Client.Linq;
+using CommonJobs.Mvc;
+using CommonJobs.Domain;
 
 namespace EmployeeFile.Controllers
 {
-    public class EmployeesController : RavenController
+    public class EmployeesController : CommonJobsController
     {
         //
         // GET: /Employees/

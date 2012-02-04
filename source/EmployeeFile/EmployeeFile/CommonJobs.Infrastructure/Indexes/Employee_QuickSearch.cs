@@ -6,8 +6,9 @@ using EmployeeFile.Models;
 using Raven.Abstractions.Indexing;
 using Raven.Client.Indexes;
 using System.Globalization;
+using CommonJobs.Domain;
 
-namespace EmployeeFile.Infrastructure.Indexes
+namespace CommonJobs.Infrastructure.Indexes
 {
     public class Employee_QuickSearch : AbstractIndexCreationTask<Employee, Employee_QuickSearch.Query>
     {

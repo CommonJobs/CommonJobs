@@ -85,20 +85,25 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommonJobs.Mvc\CommonJobsApplication.cs" />
+    <Compile Include="CommonJobs.Mvc\CommonJobsViewPage.cs" />
+    <Compile Include="CommonJobs.Mvc\ScriptManager.cs" />
+    <Compile Include="CommonJobs.Mvc\ScriptManagerEntry.cs" />
+    <Compile Include="CommonJobs.Mvc\HtmlScriptManagerExtensions.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\RavenController.cs" />
+    <Compile Include="CommonJobs.Mvc\CommonJobsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Infrastructure\Indexes\Employee_QuickSearch.cs" />
-    <Compile Include="Infrastructure\Indexes\NullIndex.cs" />
+    <Compile Include="CommonJobs.Infrastructure\Indexes\Employee_QuickSearch.cs" />
+    <Compile Include="CommonJobs.Infrastructure\Indexes\NullIndex.cs" />
     <Compile Include="Models\EmployeeListView.cs" />
-    <Compile Include="Models\DatedNote.cs" />
-    <Compile Include="Models\Employee.cs" />
+    <Compile Include="CommonJobs.Domain\DatedNote.cs" />
+    <Compile Include="CommonJobs.Domain\Employee.cs" />
     <Compile Include="Models\SearchModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RavenSessionManager.cs" />
+    <Compile Include="CommonJobs.Mvc\RavenSessionManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />

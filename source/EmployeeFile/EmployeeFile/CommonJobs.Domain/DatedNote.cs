@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace EmployeeFile.Models
+namespace CommonJobs.Domain
 {
     public class DatedNote
     {
