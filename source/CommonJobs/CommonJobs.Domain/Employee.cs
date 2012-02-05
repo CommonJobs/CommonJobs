@@ -38,6 +38,8 @@ namespace CommonJobs.Domain
             get 
             {
                 return SalaryChanges
+                    .EmptyIfNull()
+                    .OrderByDescending(x => x.RealDate)
                     .Select(x => (decimal?)x.Salary)
                     .FirstOrDefault() ?? InitialSalary; 
             } 
@@ -120,22 +122,25 @@ namespace CommonJobs.Domain
 
         [Display(Name = "Observaciones")]
         //Only in detailed view
-        public IEnumerable<SimpleNote> Notes
-        {
-            get { return TakeHappenings<SimpleNote>(); }
-        }
+        public List<SimpleNote> Notes { get; set; }
 
         [Display(Name = "Historial de sueldos")]
-        public IEnumerable<SalaryChange> SalaryChanges
-        {
-            get { return TakeHappenings<SalaryChange>(); }
-        }
+        public List<SalaryChange> SalaryChanges { get; set; }
 
-        private IEnumerable<T> TakeHappenings<T>() where T : Happening
-        {
-            return Happenings.EmptyIfNull().OfType<T>().Where(x => !x.Deleted).OrderByDescending(x => x.RealDate);
-        }
+        //private IEnumerable<T> TakeHappenings<T>() where T : Happening
+        //{
+        //    return Happenings.EmptyIfNull().OfType<T>().Where(x => !x.Deleted).OrderByDescending(x => x.RealDate);
+        //}
 
-        public List<Happening> Happenings { get; set; }
+        public IEnumerable<Happening> Happenings 
+        {
+            get
+            {
+                return Notes.EmptyIfNull().Cast<Happening>()
+                    .Union(SalaryChanges.EmptyIfNull().Cast<Happening>())
+                    .OrderByDescending(x => x.RealDate)
+                    .ThenBy(x => x.RegisterDate);
+            }
+        }
     }
 }

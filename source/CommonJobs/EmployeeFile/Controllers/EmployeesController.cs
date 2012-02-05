@@ -85,10 +85,10 @@ namespace EmployeeFile.Controllers
         public ActionResult Edit(string id)
         {
             var employee = RavenSession.Load<Employee>(id);
-            if (employee.Happenings == null)
+            if (employee.SalaryChanges == null)
             {
-                employee.Happenings = new List<Happening>();
-                employee.Happenings.Add(new SalaryChange()
+                employee.SalaryChanges = new List<SalaryChange>();
+                employee.SalaryChanges.Add(new SalaryChange()
                 {
                     RealDate = DateTime.Parse("2010-10-1"),
                     RegisterDate = DateTime.Parse("2010-10-1"),
@@ -107,13 +107,20 @@ namespace EmployeeFile.Controllers
         [HttpPost]
         public ActionResult Edit(Employee employee)
         {
+            //Not finished yet, to test it:
+            //$.ajax({
+            //    url: '/Employees/Edit',
+            //    type: 'POST',
+            //    dataType: 'json',
+            //    data: JSON.stringify(App.Employee),
+            //    contentType: 'application/json; charset=utf-8',
+            //});
             if (ModelState.IsValid)
             {
-                //RavenSession.Store(employee);
-                //return RedirectToAction("Index");
+                RavenSession.Store(employee);
+                return RedirectToAction("Index");
             }
-            //return View(employee);
-            return new EmptyResult();
+            return View(employee);
         }
 
         //
