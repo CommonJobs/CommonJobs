@@ -107,7 +107,10 @@ namespace System.Web.Mvc
             else if (value is JValue)
             {
                 var jValue = value as JValue;
-                backingStore[prefix] = jValue.Value;
+                if (jValue.Value == null)
+                    backingStore[prefix] = null;
+                else
+                    backingStore[prefix] = jValue.Value.ToString();
             }
             else
             {
