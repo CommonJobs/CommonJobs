@@ -14,6 +14,41 @@ namespace System.Web.Mvc
     {
         public override object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
         {
+            //TODO: remove restrictions ¿?
+            if (bindingContext.ModelMetadata.IsComplexType && !bindingContext.ModelMetadata.ModelType.IsArray && !bindingContext.ModelMetadata.ModelType.IsGenericType)
+            {
+                var realType = bindingContext.ValueProvider.GetValue(bindingContext.ModelName + ".$type");
+                if (realType != null)
+                {
+                    var modelType = bindingContext.ModelType;
+                    var type = Type.GetType(realType.RawValue.ToString());
+                    if (modelType != type && modelType.IsAssignableFrom(type))
+                    {
+                        //var myBindingContext = CreateComplexElementalModelBindingContext(controllerContext, bindingContext, null);
+                        /*
+                        BindAttribute bindAttr = (BindAttribute)GetTypeDescriptor(controllerContext, bindingContext).GetAttributes()[typeof(BindAttribute)];
+                        Predicate<string> newPropertyFilter = (bindAttr != null)
+                            ? propertyName => bindAttr.IsPropertyAllowed(propertyName) && bindingContext.PropertyFilter(propertyName)
+                            : bindingContext.PropertyFilter;
+                        */
+                        //var md = ModelMetadataProviders.Current.GetMetadataForType(
+                        //    () => collection, type);
+
+                        ModelBindingContext newBindingContext = new ModelBindingContext()
+                        {
+                            ModelMetadata = bindingContext.ModelMetadata,
+                            ModelName = bindingContext.ModelName,
+                            ModelState = bindingContext.ModelState,
+                            //PropertyFilter = newPropertyFilter,
+                            PropertyFilter = bindingContext.PropertyFilter,
+                            ValueProvider = bindingContext.ValueProvider
+                        };
+
+                        return base.BindModel(controllerContext, newBindingContext);
+                    }
+                }
+            }
+
             return base.BindModel(controllerContext, bindingContext);
         }
 
@@ -35,14 +70,17 @@ namespace System.Web.Mvc
         //        OnModelUpdated(controllerContext, newBindingContext);
         //    }
         //}
-            if (bindingContext.ModelMetadata.IsComplexType && !bindingContext.ModelMetadata.ModelType.IsArray)
+            //TODO: remove restrictions ¿?
+            if (bindingContext.ModelMetadata.IsComplexType && !bindingContext.ModelMetadata.ModelType.IsArray && !bindingContext.ModelMetadata.ModelType.IsGenericType)
             {
                 var realType = bindingContext.ValueProvider.GetValue(bindingContext.ModelName + ".$type");
                 if (realType != null)
                 {
                     var type = Type.GetType(realType.RawValue.ToString());
-                    if (modelType.IsAssignableFrom(type))
+                    if (modelType != type && modelType.IsAssignableFrom(type))
+                    {
                         return base.CreateModel(controllerContext, bindingContext, type);
+                    }
                 }
             }
             return base.CreateModel(controllerContext, bindingContext, modelType);
@@ -50,12 +88,38 @@ namespace System.Web.Mvc
 
         protected override ComponentModel.PropertyDescriptorCollection GetModelProperties(ControllerContext controllerContext, ModelBindingContext bindingContext)
         {
+            if (bindingContext.ModelMetadata.IsComplexType && !bindingContext.ModelMetadata.ModelType.IsArray && !bindingContext.ModelMetadata.ModelType.IsGenericType)
+            {
+                var realType = bindingContext.ValueProvider.GetValue(bindingContext.ModelName + ".$type");
+                if (realType != null)
+                {
+                    var modelType = bindingContext.ModelType;
+                    var type = Type.GetType(realType.RawValue.ToString());
+                    if (modelType != type && modelType.IsAssignableFrom(type))
+                    {
+                        var md = ModelMetadataProviders.Current.GetMetadataForType(
+                            () => bindingContext.Model, type);
+
+                        ModelBindingContext newBindingContext = new ModelBindingContext()
+                        {
+                            ModelMetadata = md,
+                            ModelName = bindingContext.ModelName,
+                            ModelState = bindingContext.ModelState,
+                            //PropertyFilter = newPropertyFilter,
+                            PropertyFilter = bindingContext.PropertyFilter,
+                            ValueProvider = bindingContext.ValueProvider
+                        };
+                        return base.GetModelProperties(controllerContext, newBindingContext);
+                    }
+                }
+            }
             return base.GetModelProperties(controllerContext, bindingContext);
         }
 
         protected override object GetPropertyValue(ControllerContext controllerContext, ModelBindingContext bindingContext, ComponentModel.PropertyDescriptor propertyDescriptor, IModelBinder propertyBinder)
         {
-            return base.GetPropertyValue(controllerContext, bindingContext, propertyDescriptor, propertyBinder);
+            var value = base.GetPropertyValue(controllerContext, bindingContext, propertyDescriptor, propertyBinder);
+            return value;
         }
 
         protected override ComponentModel.ICustomTypeDescriptor GetTypeDescriptor(ControllerContext controllerContext, ModelBindingContext bindingContext)

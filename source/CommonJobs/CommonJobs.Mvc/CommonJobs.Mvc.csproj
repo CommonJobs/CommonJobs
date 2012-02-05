@@ -84,6 +84,8 @@
     <Compile Include="RavenSessionManager.cs" />
     <Compile Include="ScriptManager.cs" />
     <Compile Include="ScriptManagerEntry.cs" />
+    <Compile Include="TryGetValueDelegate.cs" />
+    <Compile Include="TypeHelpers.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

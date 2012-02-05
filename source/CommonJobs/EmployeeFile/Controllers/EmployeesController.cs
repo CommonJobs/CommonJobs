@@ -85,6 +85,17 @@ namespace EmployeeFile.Controllers
         public ActionResult Edit(string id)
         {
             var employee = RavenSession.Load<Employee>(id);
+            if (employee.Happenings == null)
+            {
+                employee.Happenings = new List<Happening>();
+                employee.Happenings.Add(new SalaryChange()
+                {
+                    RealDate = DateTime.Parse("2010-10-1"),
+                    RegisterDate = DateTime.Parse("2010-10-1"),
+                    Note = "Un merecido aumento..."
+                });
+                RavenSession.SaveChanges();
+            }
             ScriptManager.RegisterGlobalJavascript("App", new {}, 500);
             ScriptManager.RegisterGlobalJavascript("App.Employee", employee, 500);
             return View(employee);
