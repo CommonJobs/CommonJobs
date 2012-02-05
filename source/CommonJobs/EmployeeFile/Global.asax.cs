@@ -30,19 +30,16 @@ namespace EmployeeFile
 
         protected void Application_Start()
         {
+            //It is ugly, It should be transparent
+            CommonJobsBindingConfiguration();
+            //It is ugly, It should be mandatory, maybe an abstract method
+            InitializeDocumentStore(indexAssemblies: new[] { typeof(NullIndex).Assembly });
+
             AreaRegistration.RegisterAllAreas();
 
             RegisterGlobalFilters(GlobalFilters.Filters);
 
-            InitializeDocumentStore(indexAssemblies: new[] { typeof(NullIndex).Assembly });
-
             RegisterRoutes(RouteTable.Routes);
-
-            //move these lines to CommonJobsApplication
-            ValueProviderFactories.Factories.Remove(ValueProviderFactories.Factories.OfType<JsonValueProviderFactory>().FirstOrDefault());
-            ValueProviderFactories.Factories.Add(new JsonDotNetValueProviderFactory());
-            ModelBinders.Binders.DefaultBinder =  new JsonDotNetModelBinder();
-
         }
     }
 }

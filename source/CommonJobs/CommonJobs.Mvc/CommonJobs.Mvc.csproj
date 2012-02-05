@@ -74,11 +74,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="JsonDotNetValueProviderFactory.cs" />
     <Compile Include="CommonJobsApplication.cs" />
     <Compile Include="CommonJobsController.cs" />
     <Compile Include="CommonJobsViewPage.cs" />
     <Compile Include="HtmlScriptManagerExtensions.cs" />
+    <Compile Include="JsonDotNetModelBinder.cs" />
     <Compile Include="JsonNetResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RavenSessionManager.cs" />
