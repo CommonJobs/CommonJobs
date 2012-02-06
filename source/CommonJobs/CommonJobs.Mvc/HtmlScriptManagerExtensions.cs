@@ -7,6 +7,7 @@ using System.Text;
 using CommonJobs.Utilities;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using Newtonsoft.Json.Converters;
 
 namespace CommonJobs.Mvc
 {
@@ -50,8 +51,23 @@ namespace CommonJobs.Mvc
             var casted = entry as GlobalJavascriptEntry;
             if (casted == null)
                 return null;
-            return string.Format(@"<script type=""text/javascript"">window.{0} = {1};</script>", casted.Name, JsonConvert.SerializeObject(casted.Value, Formatting.Indented, new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.Auto }));
+            return string.Format(
+                @"<script type=""text/javascript"">window.{0} = {1};</script>", 
+                casted.Name, 
+                JsonConvert.SerializeObject(
+                    casted.Value,
+                    Formatting.Indented,
+                    GetSerializerSettings()));
         }
 
+        private static JsonSerializerSettings GetSerializerSettings()
+        {
+            var converter = new JavaScriptDateTimeConverter();
+            return new JsonSerializerSettings()
+            {
+                TypeNameHandling = TypeNameHandling.Auto,
+                Converters = new[] { converter }
+            };
+        }
     }
 }
