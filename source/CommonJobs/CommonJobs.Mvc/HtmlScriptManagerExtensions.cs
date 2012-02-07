@@ -13,9 +13,9 @@ namespace CommonJobs.Mvc
 {
     public static class HtmlScriptManagerExtensions
     {
-        public static IHtmlString RenderScriptManagerEntries(this HtmlHelper html)
+        public static MvcHtmlString RenderScriptManagerEntries(this HtmlHelper htmlHelper)
         {
-            var scriptManager = ScriptManager.GetFromViewData(html.ViewData);
+            var scriptManager = ScriptManager.GetFromViewData(htmlHelper.ViewData);
             var entries = scriptManager.GetEntries();
 
             var sb = new StringBuilder();
@@ -27,7 +27,7 @@ namespace CommonJobs.Mvc
                     sb.AppendLine(renderedEntry);
             }
             sb.AppendLine("<!-- End ScriptManager Entries -->");
-            return new HtmlString(sb.ToString());
+            return MvcHtmlString.Create(sb.ToString());
         }
 
         private static string RenderCssReference(ScriptManagerEntry entry)
@@ -35,7 +35,14 @@ namespace CommonJobs.Mvc
             var casted = entry as CssReferenceEntry;
             if (casted == null)
                 return null;
-            return string.Format(@"<link href=""{0}"" rel=""stylesheet"" type=""text/css"" />", casted.Path);
+
+            var htmlAttributes = HtmlHelper.AnonymousObjectToHtmlAttributes(casted.HtmlAttributes);
+            TagBuilder builder = new TagBuilder("link");
+            builder.MergeAttribute("href", casted.Path);
+            builder.MergeAttribute("rel", "stylesheet");
+            builder.MergeAttribute("type", "text/css");
+            builder.MergeAttributes(htmlAttributes);
+            return builder.ToString(TagRenderMode.SelfClosing);
         }
 
         private static string RenderJsReference(ScriptManagerEntry entry)
@@ -43,7 +50,13 @@ namespace CommonJobs.Mvc
             var casted = entry as JsReferenceEntry;
             if (casted == null)
                 return null;
-            return string.Format(@"<script src=""{0}"" type=""text/javascript""></script>", casted.Path);
+            
+            var htmlAttributes = HtmlHelper.AnonymousObjectToHtmlAttributes(casted.HtmlAttributes);
+            TagBuilder builder = new TagBuilder("script");
+            builder.MergeAttribute("src", casted.Path);
+            builder.MergeAttribute("type", "text/javascript");
+            builder.MergeAttributes(htmlAttributes);
+            return builder.ToString(TagRenderMode.Normal);
         }
 
         private static string RenderGlobalJavascript(ScriptManagerEntry entry)
@@ -51,13 +64,18 @@ namespace CommonJobs.Mvc
             var casted = entry as GlobalJavascriptEntry;
             if (casted == null)
                 return null;
-            return string.Format(
-                @"<script type=""text/javascript"">window.{0} = {1};</script>", 
+
+            var htmlAttributes = HtmlHelper.AnonymousObjectToHtmlAttributes(casted.HtmlAttributes);
+            TagBuilder builder = new TagBuilder("script");
+            builder.MergeAttribute("type", "text/javascript");
+            builder.MergeAttributes(htmlAttributes);
+            builder.SetInnerText(string.Format("window.{0} = {1};", 
                 casted.Name, 
                 JsonConvert.SerializeObject(
                     casted.Value,
                     Formatting.Indented,
-                    GetSerializerSettings()));
+                    GetSerializerSettings())));
+            return builder.ToString(TagRenderMode.Normal);
         }
 
         private static JsonSerializerSettings GetSerializerSettings()

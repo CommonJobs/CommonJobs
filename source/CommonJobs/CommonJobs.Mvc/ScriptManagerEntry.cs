@@ -10,6 +10,7 @@ namespace CommonJobs.Mvc
     {
         public int Priority { get; set; }
         public int SetOrder { get; set; }
+        public Object HtmlAttributes { get; set; }
     }
 
     internal class CssReferenceEntry : ScriptManagerEntry
