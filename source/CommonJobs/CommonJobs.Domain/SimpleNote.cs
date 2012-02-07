@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CommonJobs.Domain
 {
-    public class SimpleNote : Happening
+    public class SimpleNote : EmployeeEvent
     {
     }
 }

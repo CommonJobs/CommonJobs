@@ -20,14 +20,14 @@ namespace CommonJobs.Domain
         
         [Display(Name = "Fecha Inicio")]
         [DataType(DataType.Date)]
-        public DateTime WorkingSince { get; set; }
+        public DateTime HiringDate { get; set; }
 
         [Display(Name = "Fecha Nacimiento")]
         [DataType(DataType.Date)]
         //Only in detailed view
         public DateTime BirthDate { get; set; }
         
-        [Display(Name = "Rem.Inicial")]
+        [Display(Name = "Rem. Inicial")]
         [DataType(DataType.Currency)]
         public Decimal InitialSalary { get; set; }
 
@@ -48,6 +48,7 @@ namespace CommonJobs.Domain
         [Display(Name = "Horario")]
         public string Schedule { get; set; }
 
+        //TODO this should be auto-calculated from Schedule
         [Display(Name = "Carga horaria")]
         //Only in detailed view
         public decimal WorkingHours { get; set; }
@@ -67,10 +68,12 @@ namespace CommonJobs.Domain
         [Display(Name = "Plataforma")]
         public string Platform { get; set; }
 
+        //TODO this should be a collection of "tags"
         [Display(Name = "Skills")]
         //Only in detailed view
         public string Skills { get; set; }
 
+        //TODO this should be a collection of pre-defined values. Each of these should be associated with a tag. Example: Skill C#, Skill Level Advanced. Skill HTML, Skill Level Medium.
         [Display(Name = "Nivel")]
         //Only in detailed view
         public string SkillLevel { get; set; }
@@ -81,15 +84,15 @@ namespace CommonJobs.Domain
 
         [Display(Name = "Universidad")]
         //Only in detailed view
-        public string University { get; set; }
+        public string College { get; set; }
 
         [Display(Name = "Título")]
         //Only in detailed view
-        public string Title { get; set; }
+        public string Degree { get; set; }
 
         [Display(Name = "Recibido")]
         //Only in detailed view
-        public bool Received { get; set; }
+        public bool IsGraduated { get; set; }
 
         [Display(Name = "Posición Inicial")]
         //Only in detailed view
@@ -107,11 +110,12 @@ namespace CommonJobs.Domain
         public string EnglishLevel { get; set; }
 
         [Display(Name = "Proyecto")]
-        public string CurrentProyect { get; set; }
+        public string CurrentProject { get; set; }
 
         [Display(Name = "Convenio")]
         public string Agreement { get; set; }
 
+        //TODO this should be a collection of start-end dates
         [Display(Name = "Vacaciones")]
         //Only in detailed view
         public string Vacations { get; set; }
@@ -120,6 +124,7 @@ namespace CommonJobs.Domain
         [DataType(DataType.MultilineText)]
         public string Comments { get; set; }
 
+        //TODO is this really different from "Comments"? Do we need both?
         [Display(Name = "Observaciones")]
         //Only in detailed view
         public List<SimpleNote> Notes { get; set; }
@@ -132,12 +137,12 @@ namespace CommonJobs.Domain
         //    return Happenings.EmptyIfNull().OfType<T>().Where(x => !x.Deleted).OrderByDescending(x => x.RealDate);
         //}
 
-        public IEnumerable<Happening> Happenings 
+        public IEnumerable<EmployeeEvent> Events 
         {
             get
             {
-                return Notes.EmptyIfNull().Cast<Happening>()
-                    .Union(SalaryChanges.EmptyIfNull().Cast<Happening>())
+                return Notes.EmptyIfNull().Cast<EmployeeEvent>()
+                    .Union(SalaryChanges.EmptyIfNull().Cast<EmployeeEvent>())
                     .OrderByDescending(x => x.RealDate)
                     .ThenBy(x => x.RegisterDate);
             }

@@ -25,10 +25,10 @@ namespace CommonJobs.Infrastructure.Indexes
                                    {
                                        employee.FirstName,
                                        employee.LastName,
-                                       string.Format("{0:yyyy-MM-dd}", employee.WorkingSince),
-                                       string.Format("{0:dd-MM-yyyy}", employee.WorkingSince),
-                                       string.Format("{0:MM-dd-yyyy}", employee.WorkingSince),
-                                       string.Format("{0:MMMM}", employee.WorkingSince),
+                                       string.Format("{0:yyyy-MM-dd}", employee.HiringDate),
+                                       string.Format("{0:dd-MM-yyyy}", employee.HiringDate),
+                                       string.Format("{0:MM-dd-yyyy}", employee.HiringDate),
+                                       string.Format("{0:MMMM}", employee.HiringDate),
                                        string.Format("{0:yyyy-MM-dd}", employee.BirthDate),
                                        string.Format("{0:dd-MM-yyyy}", employee.BirthDate),
                                        string.Format("{0:MM-dd-yyyy}", employee.BirthDate),
@@ -38,13 +38,13 @@ namespace CommonJobs.Infrastructure.Indexes
                                        employee.HealthInsurance,
                                        employee.Platform,
                                        employee.CurrentPosition,
-                                       employee.CurrentProyect,
+                                       employee.CurrentProject,
                                        employee.Comments,
                                        employee.EnglishLevel,
                                        employee.Notes,
                                        employee.Seniority,
-                                       employee.Title,
-                                       employee.University
+                                       employee.Degree,
+                                       employee.College
                                    }
                                };
             Indexes.Add(x => x.ByTerm, FieldIndexing.Analyzed);
