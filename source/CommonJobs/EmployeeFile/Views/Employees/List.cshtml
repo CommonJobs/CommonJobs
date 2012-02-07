@@ -3,21 +3,23 @@
 
 @{
     Layout = null;
-
-    foreach (var employeeRow in Model.Batch(12))
+    var groupSize = 3;
+    foreach (var employeeRow in Model.Batch(groupSize))
     {
         <div class="row">
             @foreach (var employee in employeeRow)
             {
                 var lastInRow = employeeRow.Last() == employee;
                 
-                <div class="onecol @(lastInRow ? "last" : "")">
-                    <img src="//TODO" alt="@employee.FirstName @employee.LastName's picture" width="32" height="32" />
-                    @employee.FirstName @employee.LastName
-                    @employee.CurrentPosition
-                    @Html.ActionLink("Edit", "Edit", new { id= employee.Id }) |
-                    @Html.ActionLink("Details", "Details", new { id = employee.Id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = employee.Id })
+                <div class="threecol @(lastInRow ? "last" : "") employeeCard">
+                    <img class="employeePicture" src="@employee.PictureUrl" alt="@employee.FirstName @employee.LastName's picture" width="32" height="32" />
+                    <div class="employeePreview">
+                        <p class="employeeName">@employee.FirstName @employee.LastName</p>
+                        <p class="employeePosition">@employee.CurrentPosition</p>
+                        <p>@Html.ActionLink("Edit", "Edit", new { id = employee.Id }) |
+                        @Html.ActionLink("Details", "Details", new { id = employee.Id }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = employee.Id })</p>
+                    </div>
                 </div>
             }
         </div>

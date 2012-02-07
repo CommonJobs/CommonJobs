@@ -93,6 +93,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\1140.css" />
+    <Content Include="Content\Employees.css" />
     <Content Include="Content\ie.css" />
     <Content Include="Content\reset.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />

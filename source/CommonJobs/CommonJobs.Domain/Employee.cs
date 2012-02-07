@@ -137,6 +137,9 @@ namespace CommonJobs.Domain
         //    return Happenings.EmptyIfNull().OfType<T>().Where(x => !x.Deleted).OrderByDescending(x => x.RealDate);
         //}
 
+        [Display(Name = "URL de Imagen")]
+        public string PictureUrl { get; set; }
+
         public IEnumerable<EmployeeEvent> Events 
         {
             get
