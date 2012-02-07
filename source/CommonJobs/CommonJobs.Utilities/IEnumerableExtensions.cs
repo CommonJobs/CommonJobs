@@ -17,5 +17,12 @@ namespace CommonJobs.Utilities
         {
             return source ?? Enumerable.Empty<T>();
         }
+
+        public static IEnumerable<IGrouping<int, T>> Batch<T>(this IEnumerable<T> source, int batchSize)
+        {
+            return source
+                .Select((x, index) => new { Element = x, index = index })
+                .GroupBy(x => x.index / batchSize, e => e.Element);
+        }
     }
 }

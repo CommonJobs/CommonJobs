@@ -1,7 +1,7 @@
 ﻿@model EmployeeFile.Models.SearchModel
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Búsqueda de Empleados | CommonJobs";
 }
 
 <script language="javascript">
@@ -23,8 +23,17 @@
     @Html.ActionLink("Create New", "Create")
 </p>
 
-<label for="quicksearch">Quick Search</label><input type="text" id="quicksearch" value="@Model.Term" />
+<div class="container">
+    <div class="row">
+        <div class="threecol"></div>
+        <div class="sixcol">
+            <label for="quicksearch">Quick Search</label>
+            <input type="text" id="quicksearch" value="@Model.Term" />
+        </div>
+        <div class="threecol last"></div>
+    </div>
 
-<div class="results">
-    @Html.Action("List", Model) 
+    <div class="results">
+        @Html.Action("List", Model) 
+    </div>
 </div>

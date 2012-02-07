@@ -1,111 +1,25 @@
 ﻿@model IEnumerable<CommonJobs.Domain.Employee>
+@using CommonJobs.Utilities;
 
 @{
     Layout = null;
-}
 
-<table>
-    <tr>
-        <th>
-            FirstName
-        </th>
-        <th>
-            LastName
-        </th>
-        <th>
-            WorkingSince
-        </th>
-        <th>
-            InitialSalary
-        </th>
-        <th>
-            CurrentSalary
-        </th>
-        <th>
-            Schedule
-        </th>
-        <th>
-            FileId
-        </th>
-        <th>
-            Lunch
-        </th>
-        <th>
-            BankAccount
-        </th>
-        <th>
-            HealthInsurance
-        </th>
-        <th>
-            Platform
-        </th>
-        <th>
-            CurrentPosition
-        </th>
-        <th>
-            CurrentProyect
-        </th>
-        <th>
-            Agreement
-        </th>
-        <th>
-            Comments
-        </th>
-        <th></th>
-    </tr>
-    
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.FirstName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LastName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.WorkingSince)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.InitialSalary)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CurrentSalary)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Schedule)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FileId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Lunch)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BankAccount)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.HealthInsurance)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Platform)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CurrentPosition)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CurrentProyect)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Agreement)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Comments)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
+    foreach (var employeeRow in Model.Batch(12))
+    {
+        <div class="row">
+            @foreach (var employee in employeeRow)
+            {
+                var lastInRow = employeeRow.Last() == employee;
+                
+                <div class="onecol @(lastInRow ? "last" : "")">
+                    <img src="//TODO" alt="@employee.FirstName @employee.LastName's picture" width="32" height="32" />
+                    @employee.FirstName @employee.LastName
+                    @employee.CurrentPosition
+                    @Html.ActionLink("Edit", "Edit", new { id= employee.Id }) |
+                    @Html.ActionLink("Details", "Details", new { id = employee.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = employee.Id })
+                </div>
+            }
+        </div>
+    }
 }
-</table>
