@@ -10,12 +10,12 @@ namespace CommonJobs.Utilities
         /// <summary>
         /// It runs the functions in the provided order while the result is null. When the result is not null, it is returned.
         /// </summary>
-        public static TResult FirtsNotNull<T, TResult>(T param, params Func<T, TResult>[] funcs) where TResult : class
+        public static TResult FirtsNotNull<TResult>(params Func<TResult>[] funcs) where TResult : class
         {
             TResult r = null;
             foreach (var f in funcs)
             {
-                r = f(param);
+                r = f();
                 if (r != null)
                     break;
             }

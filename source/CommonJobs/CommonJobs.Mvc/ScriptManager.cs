@@ -29,23 +29,25 @@ namespace CommonJobs.Mvc
             entries.Add(entry);
         }
 
-        public void RegisterCss(string path, int priority = 1000, object htmlAttributes = null)
+        public void RegisterCss(string path, int priority = 1000, object htmlAttributes = null, bool omitAppVersion = false)
         {
             Register(new CssReferenceEntry()
             {
                 Priority = priority,
                 Path = path,
-                HtmlAttributes = htmlAttributes
+                HtmlAttributes = htmlAttributes,
+                OmitAppVersion = omitAppVersion
             });
         }
 
-        public void RegisterJs(string path, int priority = 1000, object htmlAttributes = null)
+        public void RegisterJs(string path, int priority = 1000, object htmlAttributes = null, bool omitAppVersion = false)
         {
             Register(new JsReferenceEntry()
             { 
                 Priority = priority,
                 Path = path,
-                HtmlAttributes = htmlAttributes
+                HtmlAttributes = htmlAttributes,
+                OmitAppVersion = omitAppVersion
             });
         }
 

@@ -13,50 +13,38 @@ namespace CommonJobs.Mvc
 {
     public static class HtmlScriptManagerExtensions
     {
+        private const string APP_VERSION_QUERYSTRING_KEY = "appv";
+        /// <summary>
+        /// Render references and scripts entries in header
+        /// </summary>
         public static MvcHtmlString RenderScriptManagerEntries(this HtmlHelper htmlHelper)
         {
             var scriptManager = ScriptManager.GetFromViewData(htmlHelper.ViewData);
             var entries = scriptManager.GetEntries();
 
-            var sb = new StringBuilder();
-            sb.AppendLine().AppendLine("<!-- Begin ScriptManager Entries -->");
+            var sb = new StringBuilder().AppendLine();
             foreach (var entry in entries)
             {
-                var renderedEntry = FunctionHelper.FirtsNotNull(entry, RenderCssReference, RenderJsReference, RenderGlobalJavascript);
+                var renderedEntry = FunctionHelper.FirtsNotNull(
+                    () => RenderReference(entry),
+                    () => RenderGlobalJavascript(entry));
                 if (renderedEntry != null)
                     sb.AppendLine(renderedEntry);
             }
-            sb.AppendLine("<!-- End ScriptManager Entries -->");
             return MvcHtmlString.Create(sb.ToString());
         }
 
-        private static string RenderCssReference(ScriptManagerEntry entry)
+        private static string RenderReference(ScriptManagerEntry entry)
         {
-            var casted = entry as CssReferenceEntry;
+            var casted = entry as ReferenceEntry;
             if (casted == null)
                 return null;
 
-            var htmlAttributes = HtmlHelper.AnonymousObjectToHtmlAttributes(casted.HtmlAttributes);
-            TagBuilder builder = new TagBuilder("link");
-            builder.MergeAttribute("href", casted.Path);
-            builder.MergeAttribute("rel", "stylesheet");
-            builder.MergeAttribute("type", "text/css");
-            builder.MergeAttributes(htmlAttributes);
-            return builder.ToString(TagRenderMode.SelfClosing);
-        }
-
-        private static string RenderJsReference(ScriptManagerEntry entry)
-        {
-            var casted = entry as JsReferenceEntry;
-            if (casted == null)
-                return null;
-            
-            var htmlAttributes = HtmlHelper.AnonymousObjectToHtmlAttributes(casted.HtmlAttributes);
-            TagBuilder builder = new TagBuilder("script");
-            builder.MergeAttribute("src", casted.Path);
-            builder.MergeAttribute("type", "text/javascript");
-            builder.MergeAttributes(htmlAttributes);
-            return builder.ToString(TagRenderMode.Normal);
+            TagBuilder builder = new TagBuilder(casted.TagName());
+            builder.MergeAttribute(casted.ReferenceAttributeName(), TransformReferencePath(casted.Path, casted.OmitAppVersion));
+            builder.MergeAttributes(HtmlHelper.AnonymousObjectToHtmlAttributes(casted.DefaultAttributes()));
+            builder.MergeAttributes(HtmlHelper.AnonymousObjectToHtmlAttributes(casted.HtmlAttributes));
+            return builder.ToString(casted.SelfClosed() ? TagRenderMode.SelfClosing : TagRenderMode.Normal);
         }
 
         private static string RenderGlobalJavascript(ScriptManagerEntry entry)
@@ -65,10 +53,10 @@ namespace CommonJobs.Mvc
             if (casted == null)
                 return null;
 
-            var htmlAttributes = HtmlHelper.AnonymousObjectToHtmlAttributes(casted.HtmlAttributes);
             TagBuilder builder = new TagBuilder("script");
             builder.MergeAttribute("type", "text/javascript");
-            builder.MergeAttributes(htmlAttributes);
+            builder.MergeAttributes(HtmlHelper.AnonymousObjectToHtmlAttributes(casted.HtmlAttributes));
+
             builder.SetInnerText(string.Format("window.{0} = {1};", 
                 casted.Name, 
                 JsonConvert.SerializeObject(
@@ -76,6 +64,18 @@ namespace CommonJobs.Mvc
                     Formatting.Indented,
                     GetSerializerSettings())));
             return builder.ToString(TagRenderMode.Normal);
+        }
+
+        /// <summary>
+        /// It will allow us to use aggresive catching of referenced files without pain
+        /// </summary>
+        private static string TransformReferencePath(string path, bool omitAppVersion)
+        {
+            if (omitAppVersion)
+                return path;
+
+            var separator = path.Contains('?') ? "&" : "?";
+            return string.Format("{0}{1}{2}={3}", path, separator, APP_VERSION_QUERYSTRING_KEY, CommonJobsApplication.AppNameHash);
         }
 
         private static JsonSerializerSettings GetSerializerSettings()

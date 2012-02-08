@@ -28,12 +28,14 @@ namespace EmployeeFile
 
         }
 
+        protected override System.Reflection.Assembly[] GetIndexAssemblies()
+        {
+            return new[] { typeof(NullIndex).Assembly };
+        }
+        
         protected void Application_Start()
         {
-            //It is ugly, It should be transparent
-            CommonJobsBindingConfiguration();
-            //It is ugly, It should be mandatory, maybe an abstract method
-            InitializeDocumentStore(indexAssemblies: new[] { typeof(NullIndex).Assembly });
+            Initialize();
 
             AreaRegistration.RegisterAllAreas();
 
