@@ -6,13 +6,17 @@ using System.Web.Mvc;
 
 namespace CommonJobs.Mvc
 {
-    public class ScriptManager
+    public sealed class ScriptManager
     {
         private const string CURRENT_VIEWDATA_SCRIPT_MANAGER = "_COMMOMJOBS_CURRENT_VIEWDATA_SCRIPT_MANAGER_";
 
         List<ScriptManagerEntry> entries = new List<ScriptManagerEntry>();
 
-        internal static ScriptManager GetFromViewData(ViewDataDictionary viewData)
+        private ScriptManager()
+        {
+        }
+
+        public static ScriptManager GetFromViewData(ViewDataDictionary viewData)
         {
             var scriptManager = viewData[CURRENT_VIEWDATA_SCRIPT_MANAGER] as ScriptManager;
             if (scriptManager == null)
@@ -29,14 +33,15 @@ namespace CommonJobs.Mvc
             entries.Add(entry);
         }
 
-        public void RegisterCss(string path, int priority = 1000, object htmlAttributes = null, bool omitAppVersion = false)
+        public void RegisterCss(string path, int priority = 1000, object htmlAttributes = null, bool omitAppVersion = false, string patchCondition = null)
         {
             Register(new CssReferenceEntry()
             {
                 Priority = priority,
                 Path = path,
                 HtmlAttributes = htmlAttributes,
-                OmitAppVersion = omitAppVersion
+                OmitAppVersion = omitAppVersion,
+                PatchCondition = patchCondition
             });
         }
 

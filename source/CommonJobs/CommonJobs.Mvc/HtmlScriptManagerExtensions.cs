@@ -44,7 +44,16 @@ namespace CommonJobs.Mvc
             builder.MergeAttribute(casted.ReferenceAttributeName(), TransformReferencePath(casted.Path, casted.OmitAppVersion));
             builder.MergeAttributes(HtmlHelper.AnonymousObjectToHtmlAttributes(casted.DefaultAttributes()));
             builder.MergeAttributes(HtmlHelper.AnonymousObjectToHtmlAttributes(casted.HtmlAttributes));
-            return builder.ToString(casted.SelfClosed() ? TagRenderMode.SelfClosing : TagRenderMode.Normal);
+            var tag = builder.ToString(casted.SelfClosed() ? TagRenderMode.SelfClosing : TagRenderMode.Normal);
+            return ProcessPatchCondition(casted, tag);
+        }
+
+        private static string ProcessPatchCondition(ReferenceEntry entry, string tag)
+        {
+            var casted = entry as CssReferenceEntry;
+            if (casted != null && casted.PatchCondition != null)
+                tag = string.Format("<!--[if {0}]>{1}<![endif]-->", casted.PatchCondition, tag);
+            return tag;   
         }
 
         private static string RenderGlobalJavascript(ScriptManagerEntry entry)

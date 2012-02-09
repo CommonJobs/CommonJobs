@@ -29,6 +29,7 @@ namespace CommonJobs.Mvc
         public override string ReferenceAttributeName() { return "href"; }
         public override object DefaultAttributes() { return new { rel = "stylesheet", type = "text/css" }; }
         public override bool SelfClosed() { return true; }
+        public string PatchCondition { get; set; }
     }
 
     internal class JsReferenceEntry : ReferenceEntry
