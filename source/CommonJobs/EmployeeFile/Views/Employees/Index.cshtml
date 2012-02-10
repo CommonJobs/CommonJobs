@@ -1,13 +1,11 @@
 ﻿@model EmployeeFile.Models.SearchModel
-
 @{
     ViewBag.Title = "Empleados | CommonJobs";
 }
-
 <script type="text/javascript">
     //TODO: move it to a .js file
     $(function () {
-        $("#quicksearch").keyup(function (e) {
+        $("#quickSearch").keyup(function (e) {
             //TODO Fix hardcoded URLs
             if (e.keyCode == 13) {
                 location.href = "/Employees?term=" + $(this).val();
@@ -17,19 +15,14 @@
         });
     });
 </script>
+<div class="container searchContainer">
+    <h1>Empleados</h1>
 
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-
-<div class="container">
     <div class="row">
         <div class="threecol"></div>
-        <div class="sixcol">
-            <label for="quicksearch">Quick Search</label>
-            <input type="text" id="quicksearch" value="@Model.Term" />
+        <div class="sixcol quickSearchContainer">
+            <label for="quickSearch">Búsqueda rápida:</label>
+            <input type="text" id="quickSearch" value="@Model.Term" />
         </div>
         <div class="threecol last"></div>
     </div>
