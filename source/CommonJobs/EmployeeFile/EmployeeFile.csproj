@@ -39,6 +39,9 @@
     <Reference Include="AsyncCtpLibrary, Version=1.0.4107.18181, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\RavenDB.1.0.638-Unstable\lib\net40\AsyncCtpLibrary.dll</HintPath>
     </Reference>
+    <Reference Include="dotless.Core">
+      <HintPath>..\packages\dotless.1.2.2.0\lib\dotless.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.4.0.5\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -95,7 +98,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\1140.css" />
-    <Content Include="Content\Employees.css" />
+    <None Include="Content\Employees.less" />
     <Content Include="Content\ie.css" />
     <Content Include="Content\reset.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -174,7 +177,9 @@
     <Content Include="Scripts\modernizr-1.7.min.js" />
     <Content Include="Scripts\underscore.js" />
     <Content Include="Scripts\underscore.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
