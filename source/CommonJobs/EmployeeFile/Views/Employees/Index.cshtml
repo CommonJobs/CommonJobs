@@ -13,18 +13,22 @@
                 $(".results").load("/Employees/List?term=" + encodeURI($(this).val()));
             }
         });
+        
     });
 </script>
 <div class="container searchContainer">
-    <h1>Empleados</h1>
+    <h1>Administración de Empleados</h1>
 
     <div class="row">
-        <div class="threecol"></div>
-        <div class="sixcol quickSearchContainer">
-            <label for="quickSearch">Búsqueda rápida:</label>
-            <input type="text" id="quickSearch" value="@Model.Term" />
+        <div class="twocol"></div>
+        <div class="eightcol quickSearchContainer">
+            <form method="get" action="@Url.Action("Index")">
+                <label for="quickSearch">Búsqueda rápida:</label>
+                <input type="text" id="quickSearch" name="Term" value="@Model.Term" />
+                <input type="submit" id="quickSearchSubmit" value=">>" />
+            </form>
         </div>
-        <div class="threecol last"></div>
+        <div class="twocol last"></div>
     </div>
 </div>
 <div class="results">
