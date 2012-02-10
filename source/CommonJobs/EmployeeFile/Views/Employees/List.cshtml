@@ -3,25 +3,18 @@
 
 @{
     Layout = null;
-    var groupSize = 3;
-    foreach (var employeeRow in Model.Batch(groupSize))
+
+    foreach (var employee in Model)
     {
-        <div class="row">
-            @foreach (var employee in employeeRow)
-            {
-                var lastInRow = employeeRow.Last() == employee;
-                
-                <div class="threecol @(lastInRow ? "last" : "") employeeCard">
-                    <img class="employeePicture" src="@employee.PictureUrl" alt="@employee.FirstName @employee.LastName's picture" width="32" height="32" />
-                    <div class="employeePreview">
-                        <p class="employeeName">@employee.FirstName @employee.LastName</p>
-                        <p class="employeePosition">@employee.CurrentPosition</p>
-                        <p>@Html.ActionLink("Edit", "Edit", new { id = employee.Id }) |
-                        @Html.ActionLink("Details", "Details", new { id = employee.Id }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = employee.Id })</p>
-                    </div>
-                </div>
-            }
+        <div class="employeeCard column">
+            <img class="employeePicture" src="@employee.PictureUrl" alt="@employee.FirstName @employee.LastName's picture" width="32" height="32" />
+            <div class="employeePreview">
+                <p class="employeeName">@employee.FirstName @employee.LastName</p>
+                <p class="employeePosition">@employee.CurrentPosition</p>
+                <p>@Html.ActionLink("Edit", "Edit", new { id = employee.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = employee.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = employee.Id })</p>
+            </div>
         </div>
     }
 }

@@ -29,3 +29,18 @@
 {
     font-style: italic;
 }
+
+/*from http://designshack.net/articles/css/beating-borders-the-bane-of-responsive-layout/ */
+.column 
+{
+    min-width: 200px;
+	width: 14%;
+	float: left;
+	margin: 1em 1% 0 1%;
+	border: 1px solid black;
+	padding: 15px;
+	font-size: 13px;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
