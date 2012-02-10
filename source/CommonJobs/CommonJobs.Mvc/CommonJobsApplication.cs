@@ -10,13 +10,22 @@ namespace CommonJobs.Mvc
 {
     public abstract class CommonJobsApplication : HttpApplication
     {
+        static bool initialized = false;
+        static readonly object block = new object();
+
         public CommonJobsApplication()
         {
             EndRequest += (sender, args) => RavenSessionManager.CloseCurrentSession();
+            lock (block)
+            {
+                if (!initialized)
+                    Initialize();
+            }
         }
 
         protected void Initialize()
         {
+            initialized = true;
             InitializeAppVersion();
             CommonJobsBindingConfiguration();
             InitializeDocumentStore();
