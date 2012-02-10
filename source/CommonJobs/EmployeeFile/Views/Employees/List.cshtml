@@ -11,6 +11,13 @@
         </div>
     </div>
     
+    <script>
+        //TODO FIXME replace this retardation with a good approach -- I just wanted the links out of my way
+        function editEmployee(id) {
+            window.location = "/Employees/Details/" + id;
+            return false;
+        }
+    </script>
     
     foreach (var employee in Model)
     {
@@ -18,13 +25,23 @@
             ? Url.Content("~/Content/Images/NoPicture.png")
             : employee.PictureUrl;
         
-        <div class="card column">
+        <div class="card column" onclick="editEmployee('@employee.Id')">
             <img class="cardPicture" src="@employeePic" alt="@employee.FirstName @employee.LastName's picture" />
             <div class="cardDescription">
                 <p class="employeeName">@employee.FirstName @employee.LastName</p>
                 <p class="employeePosition">@employee.CurrentPosition</p>
-                <p>@Html.ActionLink("Detalles", "Details", new { id = employee.Id }) |
-                @Html.ActionLink("Eliminar", "Delete", new { id = employee.Id })</p>
+                <p class="employeeTags">
+                    @{
+                        //TODO replace with a collection of skills, order from most skilled to less
+                        var tags = string.IsNullOrEmpty(employee.Skills)
+                            ? Enumerable.Empty<string>()
+                            : employee.Skills.Split(',');
+                        foreach (var tag in tags)
+                        {
+                            <span class="tag">@tag</span>
+                        }
+                    }
+                </p>
             </div>
         </div>
     }

@@ -5,6 +5,8 @@
 @color_primary_semi_dark: #383C46;
 @color_primary_dark: #051032;
 
+@color_secondary_b_light: #92A8B7;
+
 @card_picture_width: 50px;
 @card_picture_height: 50px;
 
@@ -27,6 +29,7 @@
     padding: 10px;
     height: 80px;
     .rounded_corners(10px);
+	cursor: pointer;
 }
 
 .cardPicture 
@@ -68,9 +71,9 @@
 .column 
 {
     min-width: 200px;
-	width: 14%;
+	width: 15.5%;
 	float: left;
-	margin: 1em 1% 0 1%;
+	margin: 1em 0.5% 0 0.5%;
 	border: 1px solid @color_primary_dark;
 	padding: 15px;
 	.box_sizing_border_box;
@@ -78,12 +81,35 @@
 
 .searchContainer
 {
-	width: 100%;
 	background-color: @color_primary_semi_light;
-	padding: 2em 1em;
+	padding-top: 2em;
+	padding-bottom: 2em;
 }
 
 .quickSearchContainer, #quickSearch
 {
 	font-size: 1.5em;
+}
+
+.quickSearchContainer label 
+{
+	color: white;
+}
+
+.employeeTags 
+{
+	font-size: 0.8em;
+	padding-top: 0.2em;
+	overflow: hidden;
+	white-space: nowrap;
+	height: 1.5em;
+
+	.tag 
+    {
+		background-color: @color_secondary_b_light;
+		color:  white;
+		padding-left: 0.5em;
+		padding-right: 0.5em;
+		.rounded_corners(2px);
+    }
 }
