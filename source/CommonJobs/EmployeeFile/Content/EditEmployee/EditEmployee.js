@@ -116,6 +116,10 @@ App.EditEmployeeAppView = Backbone.View.extend({
     initialize: function () {
         this.dataBind();
     },
+    events: {
+        "click .saveEmployee": "saveEmployee",
+        "click .reloadEmployee": "reloadEmployee"
+    },
     dataBind: function () {
         //It will be automatic
         this.bindTextField("Platform");
@@ -164,7 +168,34 @@ App.EditEmployeeAppView = Backbone.View.extend({
                 }
             }
         );
+    },
+    saveEmployee: function () {
+        var me = this;
+        $.ajax({
+            url: Model.saveEmployeeUrl,
+            type: 'POST',
+            dataType: 'json',
+            data: JSON.stringify(App.appView.model.toJSON()),
+            contentType: 'application/json; charset=utf-8',
+            success: function (result) {
+                me.setModel(new App.Employee(result));
+            }
+        });
+    },
+    reloadEmployee: function () {
+        var me = this;
+        $.ajax({
+            url: Model.getEmployeeUrl,
+            type: 'GET',
+            dataType: 'json',
+            data: { id: Model.employee.Id },
+            contentType: 'application/json; charset=utf-8',
+            success: function (result) {
+                me.setModel(new App.Employee(result));
+            }
+        });
     }
+
 });
 
 //**/
