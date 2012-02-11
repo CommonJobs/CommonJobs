@@ -31,6 +31,22 @@
         </div>
 
         <div class="editor-label">
+            @Html.LabelFor(model => model.Address)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Address)
+            @Html.ValidationMessageFor(model => model.Address)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Telephones)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Telephones)
+            @Html.ValidationMessageFor(model => model.Telephones)
+        </div>
+
+        <div class="editor-label">
             @Html.LabelFor(model => model.HiringDate)
         </div>
         <div class="editor-field">
