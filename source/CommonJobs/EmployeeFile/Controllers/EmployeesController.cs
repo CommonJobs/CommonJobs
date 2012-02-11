@@ -48,15 +48,6 @@ namespace EmployeeFile.Controllers
         }
         
         //
-        // GET: /Employees/Details/5
-
-        public ViewResult Details(string id)
-        {
-            var employee = RavenSession.Load<Employee>(id);
-            return View(employee);
-        }
-
-        //
         // GET: /Employees/Create
 
         public ActionResult Create()

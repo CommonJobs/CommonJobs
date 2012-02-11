@@ -215,9 +215,6 @@
     <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Employees\Details.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Employees\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
