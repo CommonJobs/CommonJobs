@@ -39,7 +39,6 @@ namespace CommonJobs.Infrastructure.Indexes
                                        employee.Platform,
                                        employee.CurrentPosition,
                                        employee.CurrentProject,
-                                       employee.Comments,
                                        employee.EnglishLevel,
                                        employee.Notes,
                                        employee.Seniority,

@@ -1,0 +1,34 @@
+.editable-field .view-editable:hover
+{
+    background-color: rgb(230, 242, 255);
+	background-color: rgba(0, 128, 255, 0.1);
+}
+.editable-field .add-button,.remove-button
+{
+    margin-left: 3px;
+    margin-right: 3px;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-weight: bolder;
+}
+.editable-field .add-button
+{
+    background-color: #00BF00;
+}
+.editable-field .add-button:hover
+{
+    background-color: #007F00;    
+}
+.editable-field .remove-button
+{
+    background-color: #FF0000;
+}
+.editable-field .remove-button:hover
+{
+    background-color: #BF0000;
+}
+.field-name
+{
+    margin-right:.3em;
+    font-weight: bold;
+}

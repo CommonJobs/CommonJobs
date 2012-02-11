@@ -99,6 +99,8 @@
   <ItemGroup>
     <Content Include="Content\1140.css" />
     <None Include="Content\Employees.less" />
+    <Content Include="Content\EditEmployee\EditEmployee.js" />
+    <Content Include="Content\EditEmployee\EditEmployee.css" />
     <Content Include="Content\ie.css" />
     <Content Include="Content\reset.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />

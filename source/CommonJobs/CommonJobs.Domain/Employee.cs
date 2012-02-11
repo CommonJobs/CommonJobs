@@ -17,6 +17,15 @@ namespace CommonJobs.Domain
 
         [Display(Name = "Apellido")]
         public string LastName { get; set; }
+
+        [Display(Name = "Dirección")]
+        public string Address { get; set; }
+
+        [Display(Name = "Teléfonos")]
+        public string Telephones { get; set; }
+
+        [Display(Name = "Estado Civil")]
+        public MaritalStatus MaritalStatus { get; set; }
         
         [Display(Name = "Fecha Inicio")]
         [DataType(DataType.Date)]
@@ -26,22 +35,32 @@ namespace CommonJobs.Domain
         [DataType(DataType.Date)]
         //Only in detailed view
         public DateTime BirthDate { get; set; }
-        
+
         [Display(Name = "Rem. Inicial")]
         [DataType(DataType.Currency)]
-        public Decimal InitialSalary { get; set; }
+        public Decimal InitialSalary 
+        {
+            get
+            {
+                return SalaryChanges
+                    .EmptyIfNull()
+                    .OrderBy(x => x.RealDate)
+                    .Select(x => (decimal?)x.Salary)
+                    .FirstOrDefault() ?? 0;
+            } 
+        }
 
         [Display(Name = "Rem.Actual")]
         [DataType(DataType.Currency)]
         public Decimal CurrentSalary 
-        { 
-            get 
+        {
+            get
             {
                 return SalaryChanges
                     .EmptyIfNull()
                     .OrderByDescending(x => x.RealDate)
                     .Select(x => (decimal?)x.Salary)
-                    .FirstOrDefault() ?? InitialSalary; 
+                    .FirstOrDefault() ?? 0;
             } 
         }
 
@@ -69,16 +88,12 @@ namespace CommonJobs.Domain
         public string Platform { get; set; }
 
         //TODO this should be a collection of "tags"
+        //TODO this should be a collection of pre-defined values. Each of these should be associated with a tag. Example: Skill C#, Skill Level Advanced. Skill HTML, Skill Level Medium.
         [Display(Name = "Skills")]
         //Only in detailed view
         public string Skills { get; set; }
 
-        //TODO this should be a collection of pre-defined values. Each of these should be associated with a tag. Example: Skill C#, Skill Level Advanced. Skill HTML, Skill Level Medium.
-        [Display(Name = "Nivel")]
-        //Only in detailed view
-        public string SkillLevel { get; set; }
-
-        [Display(Name = "Certificación")]
+        [Display(Name = "Certificaciones")]
         //Only in detailed view
         public string Certifications { get; set; }
 
@@ -120,11 +135,6 @@ namespace CommonJobs.Domain
         //Only in detailed view
         public string Vacations { get; set; }
 
-        [Display(Name = "Comentarios")]
-        [DataType(DataType.MultilineText)]
-        public string Comments { get; set; }
-
-        //TODO is this really different from "Comments"? Do we need both?
         [Display(Name = "Observaciones")]
         //Only in detailed view
         public List<SimpleNote> Notes { get; set; }
