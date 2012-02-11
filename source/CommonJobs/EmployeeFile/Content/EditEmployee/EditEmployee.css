@@ -1,7 +1,17 @@
-.editable-field .view-editable:hover
+.editable-field .view-editable:hover,.view-editable-empty:hover
 {
     background-color: rgb(230, 242, 255);
 	background-color: rgba(0, 128, 255, 0.1);
+}
+.view-editable-prototype
+{
+    background-color: rgb(255, 255, 230);
+	background-color: rgba(255, 255, 0, 0.1);
+}
+.editable-field .view-editable-empty
+{
+    color:#CCCCCC;
+    font-style:italic;
 }
 .editable-field .add-button,.remove-button
 {

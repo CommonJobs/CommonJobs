@@ -76,6 +76,7 @@ namespace EmployeeFile.Controllers
         public ActionResult Edit(string id)
         {
             var employee = RavenSession.Load<Employee>(id);
+            /*
             if (employee.SalaryChanges == null)
             {
                 employee.SalaryChanges = new List<SalaryChange>();
@@ -87,8 +88,8 @@ namespace EmployeeFile.Controllers
                 });
                 RavenSession.SaveChanges();
             }
-            ScriptManager.RegisterGlobalJavascript("App", new {}, 500);
-            ScriptManager.RegisterGlobalJavascript("App.Employee", employee, 500);
+            */
+            ScriptManager.RegisterGlobalJavascript("Model", new { employee = employee }, 500);
             return View(employee);
         }
 
