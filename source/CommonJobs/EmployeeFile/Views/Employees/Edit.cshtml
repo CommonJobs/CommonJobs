@@ -2,6 +2,7 @@
            
 @{
     ViewBag.Title = "Edit";
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/backbone-commonjobs.js"));
     ScriptManager.RegisterCss(Url.Content("~/Content/EditEmployee/EditEmployee.css"));
     ScriptManager.RegisterJs(Url.Content("~/Content/EditEmployee/EditEmployee.js"));
 }
@@ -78,38 +79,16 @@
             </tr>
             <tr>
                 <td><span class="editable-field" data-bind="Lunch"><span class="view-editable view-editable-prototype">Si</span></span></td>
-                <td><span class="editable-field" data-bind="BankAccount"><span class="view-editable view-editable-prototype">Francés</span></span></td>
-                <td><span class="editable-field" data-bind="HealthInsurance"><span class="view-editable view-editable-prototype">Swiss</span></span></td>
-                <td><span class="editable-field" data-bind="Agreement"><span class="view-editable view-editable-prototype">Agreement</span></span></td>
-                <td><span class="editable-field" data-bind="Vacations"><span class="view-editable view-editable-prototype">18/7 al 31/7 inclusive (2011)</span></span></td>
+                <td><span class="editable-field" data-bind="BankAccount"></span></td>
+                <td><span class="editable-field" data-bind="HealthInsurance"></span></td>
+                <td><span class="editable-field" data-bind="Agreement"></span></td>
+                <td><span class="editable-field" data-bind="Vacations"></span></td>
             </tr>
         </table>
     </div>
-    <div class="editable-field" data-bind="Notes">
-    <h3>Notas</h3>
-        <ul>
-            <li>
-                <span class="remove-button">-</span>
-                <pre class="view-editable view-editable-prototype">
-                    Morbi porta facilisis tortor, in aliquet nibh mollis quis. 
-                    Sed et nibh nisi. Curabitur sollicitudin faucibus consequat. Fusce non nunc velit, in 
-                    tempus neque. Proin vitae sem arcu, quis consectetur est. Ut ligula enim, dapibus sed scelerisque id, rutrum vitae 
-                    tortor. Aliquam eget lacus erat, non porta sem.
-                </pre>
-            </li>
-            <li>
-                <span class="remove-button">-</span>
-                <pre class="view-editable view-editable-prototype">
-                    Vivamus sit amet eros vitae lorem sagittis dignissim vel a augue. Quisque porttitor, lorem quis mollis semper, 
-                    odio sapien venenatis arcu, et congue metus mauris nec ligula. Cras ornare dui a nunc vulputate feugiat. 
-                    Proin accumsan lectus et nulla hendrerit faucibus. Integer mauris ante, congue ut pellentesque vitae, tristique 
-                    sit amet nisi. Nullam leo dolor, euismod vitae hendrerit vitae, tristique rutrum nibh. Curabitur placerat, odio 
-                    nec egestas luctus, magna libero blandit lacus, porttitor ornare augue lectus ac sapien. Nulla suscipit odio at 
-                    velit adipiscing id molestie magna porta. Cras nulla metus, aliquet volutpat rutrum eget, pulvinar sed lorem.
-                </pre>
-            </li>
-        </ul>
-        <span class="add-button">+</span>
+    <div>
+        <h3>Notas</h3>
+        <div class="editable-field" data-bind="Notes"></div> 
     </div>
 </div>
 <div>
