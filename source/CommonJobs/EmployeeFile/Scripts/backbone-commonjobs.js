@@ -136,6 +136,7 @@
             });
             $el.on("keyup", ".editor-editable", null, function (e) {
                 //TODO: cuando un campo que está bindeado en dos controles diferentes está inicialmente vacío y en uno de los controles escribo el otro continua mostrando "Sin datos" hasta que presiono enter.
+                //Es mas, cuando apreto enter tampoco funciona, tengo que empezar a editar y luego queda correcto
                 if (e.keyCode == 27) {
                     modelBinder.write(originalValue);
                     show();

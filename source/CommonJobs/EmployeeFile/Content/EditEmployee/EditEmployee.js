@@ -48,7 +48,7 @@ App.EditEmployeeAppView = Backbone.View.extend({
     saveEmployee: function () {
         var me = this;
         $.ajax({
-            url: Model.saveEmployeeUrl,
+            url: ViewData.saveEmployeeUrl,
             type: 'POST',
             dataType: 'json',
             data: JSON.stringify(App.appView.model.toJSON()),
@@ -61,10 +61,10 @@ App.EditEmployeeAppView = Backbone.View.extend({
     reloadEmployee: function () {
         var me = this;
         $.ajax({
-            url: Model.getEmployeeUrl,
+            url: ViewData.getEmployeeUrl,
             type: 'GET',
             dataType: 'json',
-            data: { id: Model.employee.Id },
+            data: { id: ViewData.employee.Id },
             contentType: 'application/json; charset=utf-8',
             success: function (result) {
                 me.setModel(new App.Employee(result));
@@ -79,7 +79,7 @@ $(function () {
     App.appView = new App.EditEmployeeAppView({
         el: $("#EditEmployeeApp")
     });
-    App.appView.setModel(new App.Employee(Model.employee));
+    App.appView.setModel(new App.Employee(ViewData.employee));
 });
 
 

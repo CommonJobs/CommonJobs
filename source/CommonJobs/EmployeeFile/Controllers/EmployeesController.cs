@@ -77,7 +77,7 @@ namespace EmployeeFile.Controllers
         {
             var employee = RavenSession.Load<Employee>(id);
             ScriptManager.RegisterGlobalJavascript(
-                "Model", 
+                "ViewData", 
                 new { 
                     employee = employee,    
                     saveEmployeeUrl = Url.Action("SaveEmployee"),
