@@ -13,7 +13,9 @@
             }
         },
         setModel: function (model) {
+            this.$el.removeClass("editing");
             if (this.model) {
+                this.beforeUnsetModel();
                 this.offAll();
                 this.model = null;
             }
@@ -21,10 +23,16 @@
                 this.model = model;
             }
             this.autoDataBind();
+            if (this.model) {
+                this.on(this.model, "change", function () { this.$el.addClass("editing"); }, this);
+                this.afterSetModel();
+            }
         },
         unsetModel: function () {
             this.setModel(null);
-        }
+        },
+        afterSetModel: function() { },
+        beforeUnsetModel: function() { }
     });
 } ());
 

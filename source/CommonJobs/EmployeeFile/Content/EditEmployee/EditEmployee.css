@@ -1,3 +1,11 @@
+.editing-bar
+{
+    display:none;
+}
+.editing .editing-bar
+{
+    display:block;
+}
 .editable-field .view-editable:hover,.view-editable-empty:hover
 {
     background-color: rgb(230, 242, 255);

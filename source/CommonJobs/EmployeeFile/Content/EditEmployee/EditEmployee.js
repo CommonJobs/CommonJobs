@@ -21,8 +21,12 @@ App.Employee = Backbone.Model.extend({
         return {
         }
     },
+    initCollectionField: function(fieldName) {
+        this.set(fieldName, new App.Notes(this.get(fieldName)));
+        this.get(fieldName).on("add remove reset", function () { this.trigger("change"); }, this);
+    },
     initialize: function () {
-        this.set("Notes", new App.Notes(this.get("Notes")));
+        this.initCollectionField("Notes");
     }
 });
 
@@ -40,6 +44,8 @@ App.EditEmployeeAppView = Backbone.View.extend({
     },
     initialize: function () {
         //this.autoDataBind();
+    },
+    afterSetModel: function () {
     },
     events: {
         "click .saveEmployee": "saveEmployee",
@@ -71,7 +77,6 @@ App.EditEmployeeAppView = Backbone.View.extend({
             }
         });
     }
-
 });
 
 //**/
