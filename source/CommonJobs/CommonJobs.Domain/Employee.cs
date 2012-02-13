@@ -29,12 +29,12 @@ namespace CommonJobs.Domain
         
         [Display(Name = "Fecha Inicio")]
         [DataType(DataType.Date)]
-        public DateTime HiringDate { get; set; }
+        public DateTime? HiringDate { get; set; }
 
         [Display(Name = "Fecha Nacimiento")]
         [DataType(DataType.Date)]
         //Only in detailed view
-        public DateTime BirthDate { get; set; }
+        public DateTime? BirthDate { get; set; }
 
         [Display(Name = "Rem. Inicial")]
         [DataType(DataType.Currency)]
@@ -70,7 +70,7 @@ namespace CommonJobs.Domain
         //TODO this should be auto-calculated from Schedule
         [Display(Name = "Carga horaria")]
         //Only in detailed view
-        public decimal WorkingHours { get; set; }
+        public decimal? WorkingHours { get; set; }
         
         [Display(Name = "Legajo")]
         public string FileId { get; set; }

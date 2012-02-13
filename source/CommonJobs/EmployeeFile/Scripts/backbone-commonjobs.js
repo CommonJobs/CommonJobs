@@ -158,6 +158,63 @@
         }
     };
 
+    //TODO:
+    var bindDateControl = function (view, $el, modelBinder, options) {
+        $el.off().empty();
+        if (modelBinder.validModel) {
+            $el.html(options.template());
+            var $view = $el.find(".view-editable");
+            var $viewEmpty = $el.find(".view-editable-empty");
+            var $editor = $el.find(".editor-editable");
+            var originalValue;
+            var show = function () {
+                $editor.hide();
+                if (modelBinder.read()) {
+                    $viewEmpty.hide();
+                    $view.show();
+                } else {
+                    $view.hide();
+                    $viewEmpty.show();
+                }
+            };
+            var edit = function () {
+                originalValue = modelBinder.read(); ;
+                $view.hide();
+                $viewEmpty.hide();
+                $editor.show().focus().select();
+            };
+            var refresh = function () {
+                var value = modelBinder.read();
+                if (_.isString(value)) { //TODO: FIX AJAX SERIALIZER
+                    $view.text(value);
+                    $editor.val(value);
+                } else {
+                    $view.text(value ? "" + value.getDate() + "/" + value.getMonth() + "/" + value.getFullYear() : "");
+                    $editor.val(value ? "" + value.getDate() + "/" + value.getMonth() + "/" + value.getFullYear() : "");
+                }
+            };
+            modelBinder.onChange(refresh);
+            refresh();
+            show();
+            $el.on("click", ".view-editable,.view-editable-empty", null, function () {
+                edit();
+            });
+            $el.on("keyup", ".editor-editable", null, function (e) {
+                //TODO: cuando un campo que está bindeado en dos controles diferentes está inicialmente vacío y en uno de los controles escribo el otro continua mostrando "Sin datos" hasta que presiono enter.
+                //Es mas, cuando apreto enter tampoco funciona, tengo que empezar a editar y luego queda correcto
+                if (e.keyCode == 27) {
+                    //modelBinder.write(originalValue);
+                    show();
+                } else {
+                    //modelBinder.write($editor.val());
+                    if (e.keyCode == 13) {
+                        show();
+                    }
+                }
+            });
+        }
+    };
+
     var bindDatedNotesControl = function (view, $el, modelBinder, options) {
         $el.off().empty();
         if (modelBinder.validCollection) {
@@ -190,14 +247,18 @@
         },
         controlMappings: {
             "text": bindTextControl,
+            "date": bindDateControl,
             "datedNotes": bindDatedNotesControl
             //TODO:
             //,options
-            //,date
             //,int
         },
         defaultControlOptions: {
             text: {
+                template: _.template('<span class="view-editable-empty">Sin datos</span><span class="view-editable" style="display: none;"></span><input class="editor-editable" type="text" value="" style="display: none;"/>'),
+                modelBinder: "simpleModel"
+            },
+            date: {
                 template: _.template('<span class="view-editable-empty">Sin datos</span><span class="view-editable" style="display: none;"></span><input class="editor-editable" type="text" value="" style="display: none;"/>'),
                 modelBinder: "simpleModel"
             },
