@@ -27,66 +27,23 @@ App.Employee = Backbone.Model.extend({
 });
 
 App.EditEmployeeAppView = Backbone.View.extend({
+    dataBindings: {
+        fullName: { control: "text", lastNameField: "LastName", firstNameField: "FirstName", modelBinder: "fullName" },
+        Photo: { control: "picture" },
+        IsGraduated: { control: "options", options: [{ key: false, value: "No recibido" }, { key: true, value: "Recibido"}] },
+        BirthDate: { control: "date" },
+        MaritalStatus: { control: "options", options: [{ key: 0, value: "Soltero" }, { key: 1, value: "Casado" }, { key: 2, value: "Divorciado"}] },
+        HiringDate: { control: "date" },
+        WorkingHours: { control: "int" },
+        Lunch: { control: "options", options: [{ key: false, value: "No" }, { key: true, value: "Si"}] },
+        Notes: { control: "datedNotes", item: { control: "text", field: "Text"} }
+    },
     initialize: function () {
-        this.dataBind();
+        //this.autoDataBind();
     },
     events: {
         "click .saveEmployee": "saveEmployee",
         "click .reloadEmployee": "reloadEmployee"
-    },
-    dataBind: function () {
-        //It will be automatic
-        this.bindTextField("Platform");
-        this.bindTextField("CurrentProject");
-        this.bindTextField("CurrentPosition");
-        this.bindTextField("InitialPosition");
-        this.bindTextField("Degree");
-        this.bindTextField("Address");
-        this.bindTextField("Telephones");
-        this.bindTextField("Seniority");
-        this.bindTextField("EnglishLevel");
-        this.bindTextField("College");
-        this.bindTextField("Skills");
-        this.bindTextField("Certifications");
-        this.bindTextField("FileId");
-        this.bindTextField("Schedule");
-        this.bindTextField("BankAccount");
-        this.bindTextField("HealthInsurance");
-        this.bindTextField("Agreement");
-        this.bindTextField("Vacations");
-        this.bindNotesField("Notes");
-        this.bindTextField(
-            "[LastName, FirstName]",
-            {
-                getModelValue: function (model, fieldName) {
-                    var firstName = model.get("FirstName");
-                    var lastName = model.get("LastName");
-                    if (firstName) {
-                        return lastName + ", " + firstName;
-                    } else {
-                        return lastName;
-                    }
-                },
-                setModelValue: function (model, fieldName, value) {
-                    var firstName = '';
-                    var lastName = '';
-                    if (value.split) {
-                        var aux = value.split(',');
-                        if (aux.length > 0) {
-                            lastName = $.trim(aux.shift());
-                        }
-                        if (aux.length > 0) {
-                            firstName = $.trim(aux.join(','));
-                        }
-                    }
-                    return model.set({ FirstName: firstName, LastName: lastName });
-                },
-                bindChangeEvent: function (view, model, fieldName, callback, context) {
-                    view.on(model, "change:LastName", callback, view);
-                    view.on(model, "change:FirstName", callback, view);
-                }
-            }
-        );
     },
     saveEmployee: function () {
         var me = this;
