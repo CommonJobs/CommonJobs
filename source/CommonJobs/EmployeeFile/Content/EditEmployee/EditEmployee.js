@@ -36,12 +36,14 @@ App.EditEmployeeAppView = Backbone.View.extend({
     dataBindings: {
         fullName: { control: "text", lastNameField: "LastName", firstNameField: "FirstName", modelBinder: "fullName" },
         Photo: { control: "picture" },
-        IsGraduated: { control: "options", options: [{ value: false, text: "No recibido" }, { value: true, text: "Recibido"}] },
+        //TODO: change 0, 1 by false, true
+        IsGraduated: { control: "options", options: [{ value: 0, text: "No recibido" }, { value: 1, text: "Recibido"}] },
         BirthDate: { control: "date" },
         MaritalStatus: { control: "options", options: [{ value: 0, text: "Soltero" }, { value: 1, text: "Casado" }, { value: 2, text: "Divorciado"}] },
         HiringDate: { control: "date" },
         WorkingHours: { control: "int" },
-        Lunch: { control: "options", options: [{ value: false, text: "No" }, { value: true, text: "Si"}] },
+        //TODO: change 0, 1 by false, true
+        Lunch: { control: "options", options: [{ value: 0, text: "No" }, { value: 1, text: "Si"}] },
         Notes: {
             control: "collection",
             item: {

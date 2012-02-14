@@ -118,14 +118,20 @@
             var $editor = $el.find(".editor-editable");
             var optionIsValid = function(value) { 
                 for (var i in options.options) {
+                    //TODO: booleanod fallan
                     if (value == options.options[i].value) {
-                        return true; }}
+                        return true; 
+                    } 
+                }
                 return false;
             };
             var findText = function(value) {
                 for (var i in options.options) {
+                    //TODO: booleanod fallan
                     if (value == options.options[i].value) {
-                        return options.options[i].text; }}
+                        return options.options[i].text; 
+                    }
+                }
                 return null;
             };
             var show = function () {
@@ -145,7 +151,13 @@
             };
             var refresh = function () {
                 var value = modelBinder.read();
+                console.debug(1);
+                console.debug(value);
+                console.debug(2);
+                console.debug(optionIsValid(value));
                 if (optionIsValid(value)) {
+                    console.debug(3);
+                    console.debug(findText(value));
                     $view.text(findText(value));
                     $editor.val(value);
                 } else {

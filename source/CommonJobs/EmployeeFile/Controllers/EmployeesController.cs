@@ -47,32 +47,13 @@ namespace EmployeeFile.Controllers
             return Json(list, JsonRequestBehavior.AllowGet);
         }
         
-        //
-        // GET: /Employees/Create
-
         public ActionResult Create()
         {
-            return View();
-        } 
-
-        //
-        // POST: /Employees/Create
-
-        [HttpPost]
-        public ActionResult Create(Employee employee)
-        {
-            if (ModelState.IsValid)
-            {
-                RavenSession.Store(employee);
-                return RedirectToAction("Index");  
-            }
-
-            return View(employee);
+            var newEmployee = new Employee();
+            RavenSession.Store(newEmployee);
+            return RedirectToAction("Edit", new { id = newEmployee.Id });  
         }
-        
-        //
-        // GET: /Employees/Edit/5
- 
+         
         public ActionResult Edit(string id)
         {
             var employee = RavenSession.Load<Employee>(id);
@@ -90,7 +71,7 @@ namespace EmployeeFile.Controllers
         public JsonNetResult GetEmployee(string id)
         {
             var employee = RavenSession.Load<Employee>(id);
-            return Json(employee); //TODO: check result javascript
+            return Json(employee);
         }   
 
         public JsonNetResult SaveEmployee(Employee employee)
@@ -98,21 +79,8 @@ namespace EmployeeFile.Controllers
             RavenSession.Store(employee);
             return GetEmployee(employee.Id);
         }
-
-        //
-        // GET: /Employees/Delete/5
- 
+         
         public ActionResult Delete(string id)
-        {
-            var employee = RavenSession.Load<Employee>(id);
-            return View(employee);
-        }
-
-        //
-        // POST: /Employees/Delete/5
-
-        [HttpPost, ActionName("Delete")]
-        public ActionResult DeleteConfirmed(string id)
         {
             var employee = RavenSession.Load<Employee>(id);
             RavenSession.Delete(employee);
