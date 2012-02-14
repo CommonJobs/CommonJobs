@@ -6,8 +6,10 @@ window.App = { };
 App.Note = Backbone.Model.extend({
     defaults: function () {
         return {
-            Date: new Date(),
-            Text: ""
+            RealDate: new Date().toJSON(),
+            //TODO: move RegisterDate to a better place
+            RegisterDate: new Date().toJSON(),
+            Note: ""
         }
     }
 });
@@ -23,7 +25,7 @@ App.Employee = Backbone.Model.extend({
     },
     initCollectionField: function(fieldName) {
         this.set(fieldName, new App.Notes(this.get(fieldName)));
-        this.get(fieldName).on("add remove reset", function () { this.trigger("change"); }, this);
+        this.get(fieldName).on("add remove reset change", function () { this.trigger("change"); }, this);
     },
     initialize: function () {
         this.initCollectionField("Notes");
@@ -34,13 +36,20 @@ App.EditEmployeeAppView = Backbone.View.extend({
     dataBindings: {
         fullName: { control: "text", lastNameField: "LastName", firstNameField: "FirstName", modelBinder: "fullName" },
         Photo: { control: "picture" },
-        IsGraduated: { control: "options", options: [{ key: false, value: "No recibido" }, { key: true, value: "Recibido"}] },
+        IsGraduated: { control: "options", options: [{ value: false, text: "No recibido" }, { value: true, text: "Recibido"}] },
         BirthDate: { control: "date" },
-        MaritalStatus: { control: "options", options: [{ key: 0, value: "Soltero" }, { key: 1, value: "Casado" }, { key: 2, value: "Divorciado"}] },
+        MaritalStatus: { control: "options", options: [{ value: 0, text: "Soltero" }, { value: 1, text: "Casado" }, { value: 2, text: "Divorciado"}] },
         HiringDate: { control: "date" },
         WorkingHours: { control: "int" },
-        Lunch: { control: "options", options: [{ key: false, value: "No" }, { key: true, value: "Si"}] },
-        Notes: { control: "datedNotes", item: { control: "text", field: "Text"} }
+        Lunch: { control: "options", options: [{ value: false, text: "No" }, { value: true, text: "Si"}] },
+        Notes: {
+            control: "collection",
+            item: {
+                control: "compound",
+                template: _.template('<span data-bind="date"></span> <span data-bind="text"></span>'),
+                items: [{ name: "date", control: "date", field: "RealDate" }, { name: "text", control: "text", field: "Note"}]
+            } 
+        }
     },
     initialize: function () {
         //this.autoDataBind();

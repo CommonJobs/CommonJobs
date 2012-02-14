@@ -72,7 +72,7 @@ namespace CommonJobs.Mvc
                 JsonConvert.SerializeObject(
                     casted.Value,
                     Formatting.Indented,
-                    GetSerializerSettings()),
+                    CommonJobsController.GetSerializerSettings()),
                 builder.ToString(TagRenderMode.EndTag));
         }
 
@@ -86,16 +86,6 @@ namespace CommonJobs.Mvc
 
             var separator = path.Contains('?') ? "&" : "?";
             return string.Format("{0}{1}{2}={3}", path, separator, APP_VERSION_QUERYSTRING_KEY, CommonJobsApplication.AppNameHash);
-        }
-
-        private static JsonSerializerSettings GetSerializerSettings()
-        {
-            var converter = new JavaScriptDateTimeConverter();
-            return new JsonSerializerSettings()
-            {
-                TypeNameHandling = TypeNameHandling.Auto,
-                Converters = new[] { converter }
-            };
         }
     }
 }
