@@ -48,15 +48,6 @@ namespace EmployeeFile.Controllers
         }
         
         //
-        // GET: /Employees/Details/5
-
-        public ViewResult Details(string id)
-        {
-            var employee = RavenSession.Load<Employee>(id);
-            return View(employee);
-        }
-
-        //
         // GET: /Employees/Create
 
         public ActionResult Create()
@@ -85,42 +76,27 @@ namespace EmployeeFile.Controllers
         public ActionResult Edit(string id)
         {
             var employee = RavenSession.Load<Employee>(id);
-            if (employee.SalaryChanges == null)
-            {
-                employee.SalaryChanges = new List<SalaryChange>();
-                employee.SalaryChanges.Add(new SalaryChange()
-                {
-                    RealDate = DateTime.Parse("2010-10-1"),
-                    RegisterDate = DateTime.Parse("2010-10-1"),
-                    Note = "Un merecido aumento..."
-                });
-                RavenSession.SaveChanges();
-            }
-            ScriptManager.RegisterGlobalJavascript("App", new {}, 500);
-            ScriptManager.RegisterGlobalJavascript("App.Employee", employee, 500);
+            ScriptManager.RegisterGlobalJavascript(
+                "ViewData", 
+                new { 
+                    employee = employee,    
+                    saveEmployeeUrl = Url.Action("SaveEmployee"),
+                    getEmployeeUrl = Url.Action("GetEmployee")
+                }, 
+                500);
             return View(employee);
         }
 
-        //
-        // POST: /Employees/Edit/5
-
-        [HttpPost]
-        public ActionResult Edit(Employee employee)
+        public JsonNetResult GetEmployee(string id)
         {
-            //Not finished yet, to test it:
-            //$.ajax({
-            //    url: '/Employees/Edit',
-            //    type: 'POST',
-            //    dataType: 'json',
-            //    data: JSON.stringify(App.Employee),
-            //    contentType: 'application/json; charset=utf-8',
-            //});
-            if (ModelState.IsValid)
-            {
-                RavenSession.Store(employee);
-                return RedirectToAction("Index");
-            }
-            return View(employee);
+            var employee = RavenSession.Load<Employee>(id);
+            return Json(employee); //TODO: check result javascript
+        }   
+
+        public JsonNetResult SaveEmployee(Employee employee)
+        {
+            RavenSession.Store(employee);
+            return GetEmployee(employee.Id);
         }
 
         //

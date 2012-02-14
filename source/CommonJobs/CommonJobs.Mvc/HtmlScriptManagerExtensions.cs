@@ -66,13 +66,14 @@ namespace CommonJobs.Mvc
             builder.MergeAttribute("type", "text/javascript");
             builder.MergeAttributes(HtmlHelper.AnonymousObjectToHtmlAttributes(casted.HtmlAttributes));
 
-            builder.SetInnerText(string.Format("window.{0} = {1};", 
-                casted.Name, 
+            return string.Format("{0}window.{1} = {2};{3}",
+                builder.ToString(TagRenderMode.StartTag),
+                casted.Name,
                 JsonConvert.SerializeObject(
                     casted.Value,
                     Formatting.Indented,
-                    GetSerializerSettings())));
-            return builder.ToString(TagRenderMode.Normal);
+                    GetSerializerSettings()),
+                builder.ToString(TagRenderMode.EndTag));
         }
 
         /// <summary>

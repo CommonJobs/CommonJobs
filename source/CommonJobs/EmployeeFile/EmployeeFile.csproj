@@ -99,6 +99,8 @@
   <ItemGroup>
     <Content Include="Content\1140.css" />
     <None Include="Content\Employees.less" />
+    <Content Include="Content\EditEmployee\EditEmployee.js" />
+    <Content Include="Content\EditEmployee\EditEmployee.css" />
     <Content Include="Content\ie.css" />
     <Content Include="Content\Images\AddEmployee.png" />
     <Content Include="Content\Images\NoPicture.png" />
@@ -164,6 +166,7 @@
     <Content Include="RavenNotReachable.htm" />
     <Content Include="Scripts\backbone.js" />
     <Content Include="Scripts\backbone.min.js" />
+    <Content Include="Scripts\backbone-commonjobs.js" />
     <Content Include="Scripts\css3-mediaqueries.js" />
     <Content Include="Scripts\jquery-1.7.1-vsdoc.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
@@ -213,9 +216,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Employees\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Employees\Create.cshtml" />

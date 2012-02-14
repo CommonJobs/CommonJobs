@@ -35,8 +35,6 @@ namespace EmployeeFile
         
         protected void Application_Start()
         {
-            Initialize();
-
             AreaRegistration.RegisterAllAreas();
 
             RegisterGlobalFilters(GlobalFilters.Filters);

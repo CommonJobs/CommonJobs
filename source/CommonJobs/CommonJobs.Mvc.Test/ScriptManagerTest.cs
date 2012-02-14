@@ -118,5 +118,22 @@ namespace CommonJobs.Mvc.Test
 
             Assert.AreEqual(result, expected);
         }
+
+        [TestMethod()]
+        public void RenderGlobalJavascript_NotEncodeQuotes()
+        {
+            var viewContext = new ViewContext();
+            var viewDataContainer = new ViewDataContainer();
+
+            var expected = "<script type=\"text/javascript\">window.variable = \"value\";</script>";
+
+            var scriptManager = ScriptManager.GetFromViewData(viewDataContainer.ViewData);
+            scriptManager.RegisterGlobalJavascript("variable", "value" );
+            var htmlHelper = new HtmlHelper(viewContext, viewDataContainer);
+            var result = htmlHelper.RenderScriptManagerEntries().ToHtmlString().Trim();
+
+            Assert.AreEqual(result, expected);
+        }
+
     }
 }
