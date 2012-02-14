@@ -1,26 +1,26 @@
 # Product Backlog
 * Definición de la arquitectura y diseños generales, estrategia técnica de la aplicación 
-  * _Estimado:_ 10 horas
+	* _Estimado:_ 10 horas
 * Selección de la herramienta a utilizar para repositorio del código fuente 
-  * _Estimado:_ 3 horas
+  	* _Estimado:_ 3 horas
 * Selección de la herramienta a utilizar documentación
-  * _Estimado:_ 3 horas
+  	* _Estimado:_ 3 horas
 * Selección de la herramienta a utilizar para gestión de tareas
-  * _Estimado:_ 2 horas
+  	* _Estimado:_ 2 horas
 * Selección del sistema de base de datos a utilizar
-  * _Estimado:_ 3 horas
+  	* _Estimado:_ 3 horas
 * Selección de la plataforma y UI del sistema
-  * _Estimado:_ 1 hora
+  	* _Estimado:_ 1 hora
 * Determinar sistema de priorización para las tareas incluídas en el Product Backlog y las prioridades que tendrán las tareas
-  * _Estimado:_ 10 horas
+  	* _Estimado:_ 10 horas
 * Migrar product backlog y demás registros al sistema de tracking del proyecto
-  * _Estimado:_ 5 horas
+  	* _Estimado:_ 5 horas
 * Creación de los entornos de trabajo y su configuración (Andrés)
-  * _Estimado:_ 15 horas
+  	* _Estimado:_ 15 horas
 * Creación de los entornos de trabajo y su configuración (Juan Diego)
-  * _Estimado:_ 15 horas
+  	* _Estimado:_ 15 horas
 * Creación de los entornos de trabajo y su configuración (Matías)
-  * _Estimado:_ 15 horas
+  	* _Estimado:_ 15 horas
 * Mantener una base de datos de los postulantes (para reemplazar el actual proyecto de Jira "Recruit") 
 * Registro de las entrevistas en la base de datos de postulantes
 * Permitir búsquedas flexibles e inteligentes sobre la base de datos de postulantes. 
@@ -31,10 +31,10 @@
 * Integrar búsquedas en bases de datos externas como BaseJobs o LinkedIn 
 * Publicar búsquedas en publicaciones gráficas o sitios como ZonaJobs,  Boomeran o BuscoJobs
 * Relacionar postulantes con búsquedas realizadas
-* Migrar datos actuales (menos de 300 postulantes) del actual proyecto de Jira "Recruit" a nuestra base de datos
+* Migrar datos actuales (menos de 300 postulantes) del actual proyecto de  Jira "Recruit" a nuestra base de datos
 
-***
 #### Marca de límite del proyecto
+
 ***
 
 * Mantener una base de datos de los empleados (Legajos) 
