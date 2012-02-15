@@ -13,7 +13,6 @@
             }
         },
         setModel: function (model) {
-            this.$el.removeClass("editing");
             if (this.model) {
                 this.beforeUnsetModel();
                 this.offAll();
@@ -22,6 +21,7 @@
             if (model) {
                 this.model = model;
             }
+            this.$el.removeClass("editing");
             this.autoDataBind();
             if (this.model) {
                 this.on(this.model, "change", function () { this.$el.addClass("editing"); }, this);
@@ -31,8 +31,8 @@
         unsetModel: function () {
             this.setModel(null);
         },
-        afterSetModel: function() { },
-        beforeUnsetModel: function() { }
+        afterSetModel: function () { },
+        beforeUnsetModel: function () { }
     });
 } ());
 
@@ -41,6 +41,7 @@
     //Utilities to data-binding
 
     var simpleModelBinder = function (view, model, options) {
+        this.model = model;
         this.validModel = !!model;
         this.read = function () {
             return model.get(options.field);
@@ -54,6 +55,7 @@
     };
 
     var simpleCollectionBinder = function (view, model, options) {
+        this.model = model;
         this.validModel = !!model;
         var collection = this.validModel ? model.get(options.field) : null;
         this.validCollection = !!collection;
@@ -104,6 +106,79 @@
             view.on(model, "change:" + options.firstNameField, action, view);
             view.on(model, "change:" + options.lastNameField, action, view);
         };
+    };
+
+    var bindOptionsControl = function (view, $el, modelBinder, options) {
+        //TODO: there are details
+        $el.off().empty();
+        if (modelBinder.validModel) {
+            $el.html(options.template({ Model: options.options }));
+            var $view = $el.find(".view-editable");
+            var $viewEmpty = $el.find(".view-editable-empty");
+            var $editor = $el.find(".editor-editable");
+            var optionIsValid = function(value) { 
+                for (var i in options.options) {
+                    //TODO: booleanod fallan
+                    if (value == options.options[i].value) {
+                        return true; 
+                    } 
+                }
+                return false;
+            };
+            var findText = function(value) {
+                for (var i in options.options) {
+                    //TODO: booleanod fallan
+                    if (value == options.options[i].value) {
+                        return options.options[i].text; 
+                    }
+                }
+                return null;
+            };
+            var show = function () {
+                $editor.hide();
+                if (optionIsValid(modelBinder.read())) {
+                    $viewEmpty.hide();
+                    $view.show();
+                } else {
+                    $view.hide();
+                    $viewEmpty.show();
+                }
+            };
+            var edit = function () {
+                $view.hide();
+                $viewEmpty.hide();
+                $editor.show().focus().select();
+            };
+            var refresh = function () {
+                var value = modelBinder.read();
+                console.debug(1);
+                console.debug(value);
+                console.debug(2);
+                console.debug(optionIsValid(value));
+                if (optionIsValid(value)) {
+                    console.debug(3);
+                    console.debug(findText(value));
+                    $view.text(findText(value));
+                    $editor.val(value);
+                } else {
+                    show();
+                }
+            };
+            modelBinder.onChange(refresh);
+            refresh();
+            show();
+            $el.on("click", ".view-editable,.view-editable-empty", null, function () {
+                edit();
+            });
+            $el.on("change", ".editor-editable", null, function (e) {
+                modelBinder.write($editor.val());
+            });
+            $el.on("keyup", ".editor-editable", null, function (e) {
+                if (e.keyCode == 13 || e.keyCode == 27) {
+                    show();
+                }
+            });
+        }
     };
 
     var bindTextControl = function (view, $el, modelBinder, options) {
@@ -158,64 +233,19 @@
         }
     };
 
-    //TODO:
-    var bindDateControl = function (view, $el, modelBinder, options) {
+    var bindCompoundControl = function (view, $el, modelBinder, options) {
         $el.off().empty();
-        if (modelBinder.validModel) {
-            $el.html(options.template());
-            var $view = $el.find(".view-editable");
-            var $viewEmpty = $el.find(".view-editable-empty");
-            var $editor = $el.find(".editor-editable");
-            var originalValue;
-            var show = function () {
-                $editor.hide();
-                if (modelBinder.read()) {
-                    $viewEmpty.hide();
-                    $view.show();
-                } else {
-                    $view.hide();
-                    $viewEmpty.show();
-                }
-            };
-            var edit = function () {
-                originalValue = modelBinder.read(); ;
-                $view.hide();
-                $viewEmpty.hide();
-                $editor.show().focus().select();
-            };
-            var refresh = function () {
-                var value = modelBinder.read();
-                if (_.isString(value)) { //TODO: FIX AJAX SERIALIZER
-                    $view.text(value);
-                    $editor.val(value);
-                } else {
-                    $view.text(value ? "" + value.getDate() + "/" + value.getMonth() + "/" + value.getFullYear() : "");
-                    $editor.val(value ? "" + value.getDate() + "/" + value.getMonth() + "/" + value.getFullYear() : "");
-                }
-            };
-            modelBinder.onChange(refresh);
-            refresh();
-            show();
-            $el.on("click", ".view-editable,.view-editable-empty", null, function () {
-                edit();
-            });
-            $el.on("keyup", ".editor-editable", null, function (e) {
-                //TODO: cuando un campo que está bindeado en dos controles diferentes está inicialmente vacío y en uno de los controles escribo el otro continua mostrando "Sin datos" hasta que presiono enter.
-                //Es mas, cuando apreto enter tampoco funciona, tengo que empezar a editar y luego queda correcto
-                if (e.keyCode == 27) {
-                    //modelBinder.write(originalValue);
-                    show();
-                } else {
-                    //modelBinder.write($editor.val());
-                    if (e.keyCode == 13) {
-                        show();
-                    }
-                }
-            });
+        $el.html(options.template());
+        for (var i in options.items) {
+            var itemcfg = options.items[i];
+            view.dataBind(
+                $el.find('[data-bind=' + (itemcfg.name || itemcfg.field) + ']'),
+                modelBinder.model,
+                itemcfg);
         }
     };
 
-    var bindDatedNotesControl = function (view, $el, modelBinder, options) {
+    var bindCollectionControl = function (view, $el, modelBinder, options) {
         $el.off().empty();
         if (modelBinder.validCollection) {
             $el.html(options.template());
@@ -237,7 +267,7 @@
             modelBinder.each(addEl);
         }
     };
-
+    
     _.extend(Backbone.View.prototype, {
         dataBindings: {},
         modelBindings: {
@@ -247,24 +277,36 @@
         },
         controlMappings: {
             "text": bindTextControl,
-            "date": bindDateControl,
-            "datedNotes": bindDatedNotesControl
-            //TODO:
-            //,options
-            //,int
+            //TODO: "date": bindDateControl,
+            "date": bindTextControl,
+            "compound": bindCompoundControl,
+            "collection": bindCollectionControl,
+            //TODO: "int": bindIntControl,
+            "int": bindTextControl,
+            "options": bindOptionsControl
         },
         defaultControlOptions: {
-            text: {
+            "text": {
                 template: _.template('<span class="view-editable-empty">Sin datos</span><span class="view-editable" style="display: none;"></span><input class="editor-editable" type="text" value="" style="display: none;"/>'),
                 modelBinder: "simpleModel"
             },
-            date: {
+            //TODO:
+            "date": {
                 template: _.template('<span class="view-editable-empty">Sin datos</span><span class="view-editable" style="display: none;"></span><input class="editor-editable" type="text" value="" style="display: none;"/>'),
                 modelBinder: "simpleModel"
             },
-            datedNotes: {
+            //TODO:
+            "int": {
+                template: _.template('<span class="view-editable-empty">Sin datos</span><span class="view-editable" style="display: none;"></span><input class="editor-editable" type="text" value="" style="display: none;"/>'),
+                modelBinder: "simpleModel"
+            },
+            "options": {
+                template: _.template('<span class="view-editable-empty">Sin datos</span><span class="view-editable" style="display: none;"></span><select class="editor-editable" style="display: none;"><% for (var i in Model) { %><option value="<%= Model[i].value %>"><%= Model[i].text %></option><% } %></select>'),
+                modelBinder: "simpleModel"
+            },
+            "collection": {
                 template: _.template('<ul class="list-editable"></ul><span class="add-button">+</span>'),
-                subtemplate: _.template('<li><span class="remove-button">-</span><span class="editable-field" data-bind="item"><span></li>'),
+                subtemplate: _.template('<li><span class="remove-button">-</span><span class="editable-field" data-bind="item"></span></li>'),
                 modelBinder: "simpleCollection"
             }
         },
