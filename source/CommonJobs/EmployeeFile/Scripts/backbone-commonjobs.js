@@ -284,6 +284,7 @@
             //TODO: "int": bindIntControl,
             "int": bindTextControl,
             "options": bindOptionsControl
+            //TODO: "picture": bindTextControl
         },
         defaultControlOptions: {
             "text": {
