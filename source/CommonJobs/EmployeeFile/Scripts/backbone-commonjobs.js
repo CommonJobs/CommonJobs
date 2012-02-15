@@ -151,13 +151,7 @@
             };
             var refresh = function () {
                 var value = modelBinder.read();
-                console.debug(1);
-                console.debug(value);
-                console.debug(2);
-                console.debug(optionIsValid(value));
                 if (optionIsValid(value)) {
-                    console.debug(3);
-                    console.debug(findText(value));
                     $view.text(findText(value));
                     $editor.val(value);
                 } else {
