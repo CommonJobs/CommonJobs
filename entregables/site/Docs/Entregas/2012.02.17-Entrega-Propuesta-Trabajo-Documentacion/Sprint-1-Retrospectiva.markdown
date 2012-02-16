@@ -1,4 +1,4 @@
-# Retraspectiva
+# Retrospectiva
 
 ## ¿Qué ha ido bien?
 

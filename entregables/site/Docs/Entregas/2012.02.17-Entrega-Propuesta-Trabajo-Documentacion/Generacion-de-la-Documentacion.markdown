@@ -9,7 +9,7 @@ Por otro lado, las herramientas encontradas, específicamente [MultiMarkDown to 
 Al momento de escritura, la documentación puede estilizarse con la utilización de estilos CSSs sobre archivos HTMLs intermedios generados desde el Markdown directamente. Tras esta conversión a CSS, la estructura jerárquica del HTML permite incorporar en la versión PDF una tabla de contenidos automatizada, basada en los niveles originales de títulos escritos en Markdown.
 
 Aún está pendiente como tarea la estilización específica de estos CSSs y la personalización de la tabla de contenidos generada, tarea que requiere de cierto análisis debido a que esta capacidad ha sido una capacidad añadida a uno de los subsistemas de MMD2PDF ([wkhthmltopdf][wkhtmltopdf]) en una versión muy reciente, y por tanto se requiere su prueba y análisis de integración con el otro subsistema de MMD2PDF.
-
+ 
 Cabe destacar que todas estas herramientas se encuentran en el dominio open source y en actual desarrollo activo, permitiendo la contribución de la comunidad, y del equipo mismo, si esto fuera necesario.
 
 [Markdown]: http://en.wikipedia.org/wiki/Markdown
