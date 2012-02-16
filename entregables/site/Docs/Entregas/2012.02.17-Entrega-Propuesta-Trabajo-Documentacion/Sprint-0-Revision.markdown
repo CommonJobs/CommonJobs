@@ -1,6 +1,6 @@
-#Revisión
+# Revisión
 
-# Trabajo completado
+## Trabajo completado
 
 * Selección de la herramienta a utilizar para repositorio del código fuente.
 	* Listo y documentado en el documento [Detalles-Repositorio-de-Codigo-Fuente] 
@@ -15,7 +15,7 @@
 * Selección de la herramienta a utilizar documentación
 	* Se encontró la herramienta adecuada y la forma de utilizarla, pero aún no se llegó a lograr la automatización esperada ni se documentó.
 
-# Pendiente para otros sprints
+## Pendiente para otros sprints
 
 * Rankear individualmente cada item del _Product Backlog_
 * Posicionar la _línea de fin de proyecto_ en el _Product Backlog_

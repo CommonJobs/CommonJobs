@@ -1,14 +1,14 @@
 
 # Selección Base de Datos
 
-# Base de datos de documentos
+## Base de datos de documentos
 
 Creemos que la utilización de una [base de datos de documentos] se adapta a las necesidades de negocio ya que la mayoría de nuestros objetos de negocio representarán estructuras complejas como _Postulantes_ o _Curriculumns_.
 
 De esta manera los datos almacenados serán mucho mas parecidos a nuestros objetos de negocio permitiéndonos ahorrar mucho trabajo en mapeo objeto/relacional.
 
 [base de datos de documentos]: http://en.wikipedia.org/wiki/Document-oriented_database
-# RavenDB
+## RavenDB
 
 [RavenDB] es una base de datos de documentos programada en .NET con APIs .NET, Silverlight, Javascript y REST. A diferencia de otros sistemas de este tipo, RavenDB permite transacciones y su API para .NET es totalmente _.NET friendly_.
 

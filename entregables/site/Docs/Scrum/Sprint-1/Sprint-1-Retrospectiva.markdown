@@ -1,7 +1,9 @@
-# ¿Qué ha ido bien?
+# Retraspectiva
+
+## Â¿QuÃ© ha ido bien?
 
 //TODO
 
-# ¿Qué podría mejorarse?
+## Â¿QuÃ© podrÃ­a mejorarse?
 
 //TODO

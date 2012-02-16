@@ -1,4 +1,7 @@
-# Horas Comprometidas
+
+# Resumen de Horas
+
+## Horas Comprometidas
 
 _Se incluyen las reuniones de planificación, revisión y retrospectiva_
 

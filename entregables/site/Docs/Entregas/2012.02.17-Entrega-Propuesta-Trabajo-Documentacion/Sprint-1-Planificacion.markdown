@@ -1,6 +1,6 @@
-# Planificación de Sprint 1 #
+# Planificación de Sprint 1
 
-## Tareas ##
+## Tareas
 * Instalar Jira 
 * Establecer línea de fin de proyecto
 * Realizar una _Entrega_ a la cátegdra
