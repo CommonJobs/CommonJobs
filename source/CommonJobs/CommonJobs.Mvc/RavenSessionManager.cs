@@ -11,13 +11,13 @@ using System.Reflection;
 
 namespace CommonJobs.Mvc
 {
-    internal static class RavenSessionManager
+    public static class RavenSessionManager
     {
         private const string CURRENT_REQUEST_RAVEN_SESSION_KEY = "_COMMOMJOBS_CURRENT_REQUEST_RAVEN_SESSION_";
        
         public static IDocumentStore DocumentStore { get; private set; }
 
-        public static IDocumentSession GetCurrentSession()
+        internal static IDocumentSession GetCurrentSession()
         {
             var session = HttpContext.Current.Items[CURRENT_REQUEST_RAVEN_SESSION_KEY] as IDocumentSession;
             if (session == null)
@@ -28,7 +28,7 @@ namespace CommonJobs.Mvc
             return session;
         }
 
-        public static void CloseCurrentSession()
+        internal static void CloseCurrentSession()
         {
             using (var session = (IDocumentSession)HttpContext.Current.Items[CURRENT_REQUEST_RAVEN_SESSION_KEY])
             {
@@ -42,7 +42,7 @@ namespace CommonJobs.Mvc
             }
         }
 
-        public static void InitializeDocumentStore(Assembly[] indexAssemblies, string connectionStringName, string errorUrl)
+        internal static void InitializeDocumentStore(Assembly[] indexAssemblies, string connectionStringName, string errorUrl)
         {
             if (DocumentStore != null)
                 return; // prevent misuse
