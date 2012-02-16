@@ -1,4 +1,4 @@
-/// <reference path="../../Scripts/jquery-1.7.1-vsdoc.js" />
+﻿/// <reference path="../../Scripts/jquery-1.7.1-vsdoc.js" />
 /// <reference path="../../Scripts/underscore.js" />
 /// <reference path="../../Scripts/backbone.js" />
 window.App = { };
@@ -43,7 +43,7 @@ App.EditEmployeeAppView = Backbone.View.extend({
         HiringDate: { control: "date" },
         WorkingHours: { control: "int" },
         //TODO: change 0, 1 by false, true
-        Lunch: { control: "options", options: [{ value: 0, text: "No" }, { value: 1, text: "S�"}] },
+        Lunch: { control: "options", options: [{ value: 0, text: "No" }, { value: 1, text: "Sí"}] },
         Notes: {
             control: "collection",
             item: {
