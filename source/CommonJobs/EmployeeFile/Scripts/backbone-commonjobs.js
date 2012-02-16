@@ -212,6 +212,13 @@
                 edit();
             });
             $el.on("keyup", ".editor-editable", null, function (e) {
+                //Begin QUICK PATCH for int fields:
+                var $input = $(this);
+                if ($input.hasClass("int-field")) {
+                    $input.val($input.val().replace(/[^0-9]/g, ''));
+                }
+                //End QUICK PATCH for int fields:
+
                 //TODO: cuando un campo que está bindeado en dos controles diferentes está inicialmente vacío y en uno de los controles escribo el otro continua mostrando "Sin datos" hasta que presiono enter.
                 //Es mas, cuando apreto enter tampoco funciona, tengo que empezar a editar y luego queda correcto
                 if (e.keyCode == 27) {
@@ -292,7 +299,7 @@
             },
             //TODO:
             "int": {
-                template: _.template('<span class="view-editable-empty">Sin datos</span><span class="view-editable" style="display: none;"></span><input class="editor-editable" type="text" value="" style="display: none;"/>'),
+                template: _.template('<span class="view-editable-empty">Sin datos</span><span class="view-editable" style="display: none;"></span><input class="editor-editable int-field" type="text" value="" style="display: none;"/>'),
                 modelBinder: "simpleModel"
             },
             "options": {

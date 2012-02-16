@@ -29,6 +29,7 @@ App.Employee = Backbone.Model.extend({
     },
     initialize: function () {
         this.initCollectionField("Notes");
+        this.initCollectionField("SalaryChanges");
     }
 });
 
@@ -51,15 +52,15 @@ App.EditEmployeeAppView = Backbone.View.extend({
                 template: _.template('(<span data-bind="date" class="timestamp-field"></span>) <span data-bind="text"></span>'),
                 items: [{ name: "date", control: "date", field: "RealDate" }, { name: "text", control: "text", field: "Note"}]
             }
-        }/*, //FIXME this breaks everything else, fix ("Object has no method "on")
+        }, 
         SalaryChanges: {
             control: "collection",
             item: {
                 control: "compound",
-                template: _.template('<span data-bind="date"></span> <span data-bind="salary"></span>'),
-                items: [{ name: "date", control: "date", field: "RealDate" }, { name: "salary", control: "int", field: "Salary" }]
+                template: _.template('<span data-bind="date"></span> | Salary: <span data-bind="salary"></span> | Note: <span data-bind="note"></span>'),
+                items: [{ name: "date", control: "date", field: "RealDate" }, { name: "salary", control: "int", field: "Salary" }, { name: "note", control: "text", field: "Note" }]
             }
-        }*/
+        }
     },
     initialize: function () {
         //this.autoDataBind();
