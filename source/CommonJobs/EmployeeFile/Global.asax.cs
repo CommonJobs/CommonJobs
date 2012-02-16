@@ -35,6 +35,9 @@ namespace EmployeeFile
         
         protected void Application_Start()
         {
+            using (var migrator = new DataMigrator(RavenSessionManager.DocumentStore))
+                migrator.Execute();
+            
             AreaRegistration.RegisterAllAreas();
 
             RegisterGlobalFilters(GlobalFilters.Filters);
