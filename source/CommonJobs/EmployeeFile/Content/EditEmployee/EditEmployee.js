@@ -43,15 +43,23 @@ App.EditEmployeeAppView = Backbone.View.extend({
         HiringDate: { control: "date" },
         WorkingHours: { control: "int" },
         //TODO: change 0, 1 by false, true
-        Lunch: { control: "options", options: [{ value: 0, text: "No" }, { value: 1, text: "Si"}] },
+        Lunch: { control: "options", options: [{ value: 0, text: "No" }, { value: 1, text: "Sí"}] },
         Notes: {
             control: "collection",
             item: {
                 control: "compound",
-                template: _.template('<span data-bind="date"></span> <span data-bind="text"></span>'),
+                template: _.template('(<span data-bind="date" class="timestamp-field"></span>) <span data-bind="text"></span>'),
                 items: [{ name: "date", control: "date", field: "RealDate" }, { name: "text", control: "text", field: "Note"}]
-            } 
-        }
+            }
+        }/*, //FIXME this breaks everything else, fix ("Object has no method "on")
+        SalaryChanges: {
+            control: "collection",
+            item: {
+                control: "compound",
+                template: _.template('<span data-bind="date"></span> <span data-bind="salary"></span>'),
+                items: [{ name: "date", control: "date", field: "RealDate" }, { name: "salary", control: "int", field: "Salary" }]
+            }
+        }*/
     },
     initialize: function () {
         //this.autoDataBind();

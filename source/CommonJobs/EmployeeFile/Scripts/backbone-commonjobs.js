@@ -300,7 +300,7 @@
                 modelBinder: "simpleModel"
             },
             "collection": {
-                template: _.template('<ul class="list-editable"></ul><span class="add-button">+</span>'),
+                template: _.template('<ul class="list-editable"></ul><span class="add-button">+</span><span class="add-button-text">Agregar...</span>'),
                 subtemplate: _.template('<li><span class="remove-button">-</span><span class="editable-field" data-bind="item"></span></li>'),
                 modelBinder: "simpleCollection"
             }
