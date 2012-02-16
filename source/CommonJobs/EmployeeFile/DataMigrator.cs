@@ -29,8 +29,8 @@ namespace EmployeeFile
         {
             var employee = new CommonJobs.Domain.Employee()
             {
-                FirstName = "Andrés",
-                LastName = "Moschini",
+                FirstName = "Juan",
+                LastName = "Perez",
                 Address = "Calle Falsa 123",
                 Agreement = "Empleados de Comercio",
                 BankAccount = "Francés",
