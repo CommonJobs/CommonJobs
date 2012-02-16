@@ -54,7 +54,7 @@
 * (1) Como usuario del sistema, me gustaría que el sistema me permita acceder a los perfiles en distintos sitios del postulante, como para poder analizar yo mismo la información allí disponible.
 * (1) Como usuario, me gustaria poder modificar los datos extraidos en las entrevistas a los postulante para corregir errores o agregar información omitida.
 
-## Menos Importante
+## Menos Importante (+8)
 
 * (50) Como usuario del sistema, desearía que una oferta pueda publicarse en LinkedIn, para obtener mayor alcance en su distribución.
 * (50) Como usuario del sistema, desearía que una oferta pueda publicarse en Facebook, para obtener mayor alcance en su distribución.
