@@ -17,8 +17,10 @@
 <head>
     <meta charset="utf-8" />
     @Html.MetaAcceptLanguage()
+    @Html.LocalizationScripts(Url)
     <title>@ViewBag.Title</title>
     @Html.RenderScriptManagerEntries()
+    
 </head>
 
 <body>

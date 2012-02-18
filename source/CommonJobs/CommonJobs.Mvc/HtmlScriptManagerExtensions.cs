@@ -34,7 +34,7 @@ namespace CommonJobs.Mvc
             return MvcHtmlString.Create(sb.ToString());
         }
 
-        private static string RenderReference(ScriptManagerEntry entry)
+        internal static string RenderReference(ScriptManagerEntry entry)
         {
             var casted = entry as ReferenceEntry;
             if (casted == null)
