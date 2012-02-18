@@ -81,6 +81,7 @@
     <Compile Include="HtmlScriptManagerExtensions.cs" />
     <Compile Include="JsonDotNetModelBinder.cs" />
     <Compile Include="JsonNetResult.cs" />
+    <Compile Include="LocalizationHelpers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RavenSessionManager.cs" />
     <Compile Include="ScriptManager.cs" />
