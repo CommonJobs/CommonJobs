@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Globalization;
 
 namespace CommonJobs.Mvc
 {
@@ -67,6 +68,20 @@ namespace CommonJobs.Mvc
             });
         }
 
+        //TODO: refactor this:
+        public void RegisterGlobalizationEntries(string globalizeScriptFolder, CultureInfo culture = null, int priority = 1000)
+        {
+            if (culture == null)
+                culture = System.Threading.Thread.CurrentThread.CurrentUICulture;
+
+            Register(new GlobalizationEntries() 
+            { 
+                Culture = culture, 
+                Priority = priority,
+                GlobalizeScriptFolder = globalizeScriptFolder
+            });
+        }
+       
         internal IEnumerable<ScriptManagerEntry> GetEntries()
         {
             return entries.OrderBy(x => x.Priority).ThenBy(x => x.SetOrder);

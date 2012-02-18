@@ -23,18 +23,20 @@ namespace CommonJobs.Mvc
             var entries = scriptManager.GetEntries();
 
             var sb = new StringBuilder().AppendLine();
+            
             foreach (var entry in entries)
             {
                 var renderedEntry = FunctionHelper.FirtsNotNull(
                     () => RenderReference(entry),
-                    () => RenderGlobalJavascript(entry));
+                    () => RenderGlobalJavascript(entry),
+                    () => RenderGlobalizationEntries(entry));
                 if (renderedEntry != null)
                     sb.AppendLine(renderedEntry);
             }
             return MvcHtmlString.Create(sb.ToString());
         }
 
-        internal static string RenderReference(ScriptManagerEntry entry)
+        private static string RenderReference(ScriptManagerEntry entry)
         {
             var casted = entry as ReferenceEntry;
             if (casted == null)
@@ -54,6 +56,45 @@ namespace CommonJobs.Mvc
             if (casted != null && casted.PatchCondition != null)
                 tag = string.Format("<!--[if {0}]>{1}<![endif]-->", casted.PatchCondition, tag);
             return tag;   
+        }
+
+        //TODO: refactorize it
+        private static string RenderGlobalizationEntries(ScriptManagerEntry entry)
+        {
+            var casted = entry as GlobalizationEntries;
+            if (casted == null)
+                return null;
+
+            var meta = String.Format("<meta name=\"accept-language\" content=\"{0}\">", casted.AcceptLanguage);
+
+            var files = new[] {
+                "globalize.js",
+                string.Format("cultures/globalize.culture.{0}.js", casted.AcceptLanguage)
+            };
+            var references = files.Select(x => HtmlScriptManagerExtensions.RenderReference(new JsReferenceEntry() { Path = string.Format("{0}/{1}", casted.GlobalizeScriptFolder, x) }));
+            var scriptTemplates = new[] {
+                "Globalize.culture('{0}');",
+                @"if ($) {{$(function () {{
+    if ($.datepicker) {{
+        var regionalData = $.datepicker.regional['{0}'];
+        if (!regionalData) {{
+            regionalData = $.datepicker.regional['{1}'];
+        }}
+        if (regionalData) {{
+            $.datepicker.setDefaults(regionalData)
+        }}
+    }}
+}});}}"};
+            var scripts = scriptTemplates.Select(x => string.Format(x, casted.AcceptLanguage, casted.AcceptLanguageSimplied));
+            TagBuilder builder = new TagBuilder("script");
+            builder.MergeAttribute("type", "text/javascript");
+
+            return string.Join("\n", 
+                new[] { meta } 
+                .Union(references)
+                .Union(new[] { builder.ToString(TagRenderMode.StartTag) })
+                .Union(scripts)
+                .Union(new[] { builder.ToString(TagRenderMode.EndTag) }));
         }
 
         private static string RenderGlobalJavascript(ScriptManagerEntry entry)

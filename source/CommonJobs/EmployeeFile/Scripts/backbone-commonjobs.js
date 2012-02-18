@@ -175,6 +175,83 @@
         }
     };
 
+    var bindDateControl = function (view, $el, modelBinder, options) {
+        $el.off().empty();
+        if (modelBinder.validModel) {
+            $el.html(options.template());
+            var $view = $el.find(".view-editable");
+            var $viewEmpty = $el.find(".view-editable-empty");
+            var $editor = $el.find(".editor-editable");
+            $editor.datepicker({
+                onClose: function(dateText, inst) {
+                    console.debug("onClose");
+                    //TODO: me quede trabajando acá
+                    //Con este método no alcanza porque si el tipo presiona escape se dispara y si luego modifica a mano tambien cambia el valor
+                    //$(".hasDatepicker:visible").datepicker("getDate")
+                }
+            });
+            var originalValue;
+            var show = function () {
+                $editor.hide();
+                if (modelBinder.read()) {
+                    $viewEmpty.hide();
+                    $view.show();
+                } else {
+                    $view.hide();
+                    $viewEmpty.show();
+                }
+            };
+            var edit = function () {
+                originalValue = modelBinder.read(); ;
+                $view.hide();
+
+                $viewEmpty.hide();
+                $editor.show().focus().select();
+            };
+            var refresh = function () {
+                var value = modelBinder.read();
+                $view.text(value);
+                $editor.val(value);
+            };
+            modelBinder.onChange(refresh);
+            refresh();
+            show();
+            $el.on("click", ".view-editable,.view-editable-empty", null, function () {
+                edit();
+            });
+
+            //IT DOES NOT WORK
+//            $el.on("onSelect", ".editor-editable", null, function (e) {
+//                console.debug("onSelect");
+//            });
+//            $el.on("onClose", ".editor-editable", null, function (e) {
+//                console.debug("onClose");
+//            });
+
+            //FROM TEXT CONTROL
+            //            $el.on("keyup", ".editor-editable", null, function (e) {
+//                //Begin QUICK PATCH for int fields:
+//                var $input = $(this);
+//                if ($input.hasClass("int-field")) {
+//                    $input.val($input.val().replace(/[^0-9]/g, ''));
+//                }
+//                //End QUICK PATCH for int fields:
+
+//                //TODO: cuando un campo que está bindeado en dos controles diferentes está inicialmente vacío y en uno de los controles escribo el otro continua mostrando "Sin datos" hasta que presiono enter.
+//                //Es mas, cuando apreto enter tampoco funciona, tengo que empezar a editar y luego queda correcto
+//                if (e.keyCode == 27) {
+//                    modelBinder.write(originalValue);
+//                    show();
+//                } else {
+//                    modelBinder.write($editor.val());
+//                    if (e.keyCode == 13) {
+//                        show();
+//                    }
+//                }
+//            });
+        }
+    };
+
     var bindTextControl = function (view, $el, modelBinder, options) {
         $el.off().empty();
         if (modelBinder.validModel) {
@@ -279,7 +356,7 @@
         controlMappings: {
             "text": bindTextControl,
             //TODO: "date": bindDateControl,
-            "date": bindTextControl,
+            "date": bindDateControl,
             "compound": bindCompoundControl,
             "collection": bindCollectionControl,
             //TODO: "int": bindIntControl,

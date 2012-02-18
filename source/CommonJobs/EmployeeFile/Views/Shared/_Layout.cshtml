@@ -4,7 +4,7 @@
     ScriptManager.RegisterJs(Url.Content("~/Scripts/jquery-ui-i18n.min.js"), priority: 900);
     ScriptManager.RegisterJs(Url.Content("~/Scripts/modernizr-1.7.min.js"), priority: 900);
     ScriptManager.RegisterJs(Url.Content("~/Scripts/json2.min.js"), priority: 900);
-
+    ScriptManager.RegisterGlobalizationEntries(Url.Content("~/Scripts/jquery.globalize"), priority: 900);
     ScriptManager.RegisterCss(Url.Content("~/Content/Site.css"), priority: 900);
     
     ScriptManager.RegisterJs(Url.Content("~/Scripts/css3-mediaqueries.js"), priority: 900);
@@ -16,11 +16,8 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    @Html.MetaAcceptLanguage()
-    @Html.LocalizationScripts(Url)
     <title>@ViewBag.Title</title>
     @Html.RenderScriptManagerEntries()
-    
 </head>
 
 <body>
