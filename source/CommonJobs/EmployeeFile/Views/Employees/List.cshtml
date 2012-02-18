@@ -1,0 +1,51 @@
+﻿@model IEnumerable<CommonJobs.Domain.Employee>
+@using CommonJobs.Utilities;
+
+@{
+    Layout = null;
+    <script>
+        //TODO: it should be in Index.html
+        //TODO FIXME replace this retardation with a good approach -- I just wanted the links out of my way
+        function editEmployee(id) {
+            window.location = "/Employees/Edit/" + id;
+            return false;
+        }
+        function addNewEmployee() {
+            window.location = "@Url.Action("Create")";
+        }
+    </script>
+
+    <div class="card column" id="addNewCard" onclick="addNewEmployee()">
+        <img class="cardPicture" src="@Url.Content("~/Content/Images/AddEmployee.png")" alt="Agregar nuevo..."  />
+        <div class="cardDescription">
+            <p>@Html.ActionLink("Agregar nuevo...", "Create")</p>
+        </div>
+    </div>
+        
+    foreach (var employee in Model)
+    {
+        var employeePic = string.IsNullOrEmpty(employee.PictureUrl)
+            ? Url.Content("~/Content/Images/NoPicture.png")
+            : employee.PictureUrl;
+        
+        <div class="card column" onclick="editEmployee('@employee.Id')">
+            <img class="cardPicture" src="@employeePic" alt="@employee.FirstName @employee.LastName's picture" />
+            <div class="cardDescription">
+                <p class="employeeName">@employee.FirstName @employee.LastName</p>
+                <p class="employeePosition">@employee.CurrentPosition</p>
+                <p class="employeeTags">
+                    @{
+        //TODO replace with a collection of skills, order from most skilled to less
+        var tags = string.IsNullOrEmpty(employee.Skills)
+            ? Enumerable.Empty<string>()
+            : employee.Skills.Split(',');
+        foreach (var tag in tags)
+        {
+                            <span class="tag">@tag</span>
+        }
+                    }
+                </p>
+            </div>
+        </div>
+    }
+}

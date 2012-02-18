@@ -1,0 +1,24 @@
+﻿@{
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/jquery-1.7.1.min.js"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/modernizr-1.7.min.js"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/json2.min.js"), priority: 900);
+
+    ScriptManager.RegisterCss(Url.Content("~/Content/Site.css"), priority: 900);
+    
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/css3-mediaqueries.js"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/underscore.js"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/backbone.js"), priority: 900);
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title</title>
+    @Html.RenderScriptManagerEntries()
+</head>
+
+<body>
+    @RenderBody()
+</body>
+</html>

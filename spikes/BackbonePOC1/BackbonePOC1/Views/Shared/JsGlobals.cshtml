@@ -1,0 +1,13 @@
+﻿@{
+    var jsGlobals = ViewBag.JsGlobals as Dictionary<string, object>;
+    if (jsGlobals != null && jsGlobals.Any())
+    {
+<script language="javascript">
+    @foreach (var jsGlobal in jsGlobals)
+    {
+        var json = MvcHtmlString.Create(new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(jsGlobal.Value));
+        <text>window.@(jsGlobal.Key) = @(json);</text> 
+    }
+    </script>
+    }
+}
