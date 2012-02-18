@@ -17,7 +17,7 @@ namespace CommonJobs.Mvc
         /// <summary>
         /// Render references and scripts entries in header
         /// </summary>
-        public static MvcHtmlString RenderScriptManagerEntries(this HtmlHelper htmlHelper)
+        public static MvcHtmlString RenderScriptManagerEntries<T>(this HtmlHelper<T> htmlHelper)
         {
             var scriptManager = ScriptManager.GetFromViewData(htmlHelper.ViewData);
             var entries = scriptManager.GetEntries();
