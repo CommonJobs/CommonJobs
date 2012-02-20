@@ -105,7 +105,10 @@
         },
         events: {
             "click .saveEmployee": "saveEmployee",
-            "click .reloadEmployee": "reloadEmployee"
+            "click .reloadEmployee": "reloadEmployee",
+            "click .editionNormal": "editionNormal",
+            "click .editionReadonly": "editionReadonly",
+            "click .editionFullEdit": "editionFullEdit"
         },
         saveEmployee: function () {
             var me = this;
@@ -132,7 +135,10 @@
                     me.setModel(new App.Employee(result));
                 }
             });
-        }
+        },
+        editionNormal: function() { this.dataBinder.editionMode("normal"); },
+        editionReadonly: function() { this.dataBinder.editionMode("readonly"); },
+        editionFullEdit: function() { this.dataBinder.editionMode("full-edit"); }
     });
 
 

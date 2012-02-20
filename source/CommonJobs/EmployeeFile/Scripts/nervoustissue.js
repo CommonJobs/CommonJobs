@@ -181,9 +181,9 @@
             this.$el.off().empty();
             this.linkedData = new this.dataLink(_.extend({ viewDataBinder: this.viewDataBinder, model: this.model }, configuration));
             if (this.linkedData.validModel) {
+                this.viewDataBinder.on("change", this.applyEditMode, this);
                 this.$el.html(this.render());
                 this._initialize();
-                this.initialize();
             }
         }
 
@@ -193,6 +193,8 @@
             },
             getTemplateModel: function () {
                 return null;
+            },
+            applyEditMode: function (mode) {
             }
         });
 
@@ -202,7 +204,6 @@
             template: _.template('<ul class="list-editable"></ul><button class="add-button">+</button>'),
             subtemplate: _.template('<li><button class="remove-button">-</button><span class="editable-field" data-bind="item"></span></li>'),
             dataLink: Nervoustissue.DataLinking.Collection,
-            initialize: function () { },
             _initialize: function () {
                 var me = this;
                 this.$ul = this.$el.find(".list-editable");
@@ -221,6 +222,14 @@
                 this.$el.on("click", ".add-button", null, function () { me.linkedData.add(); });
                 this.linkedData.onAdd(this.addEl, this);
                 this.linkedData.each(this.addEl, this);
+            },
+            applyEditMode: function () {
+                var buttons = this.$el.find(".add-button,.remove-button");
+                if (this.viewDataBinder.editionMode() == "readonly") {
+                    buttons.hide();
+                } else {
+                    buttons.show();
+                }
             }
         });
 
@@ -229,7 +238,6 @@
         // ------------------------------------
 
         m.BaseModel = m.Base.extend({
-            initialize: function () { },
             _initialize: function () {
                 this.$view = this.$el.find(".view-editable");
                 this.$viewEmpty = this.$el.find(".view-editable-empty");
@@ -246,21 +254,35 @@
             },
             dataLink: Nervoustissue.DataLinking.Model,
             originalValue: null,
+            applyEditMode: function (mode) {
+                this.showView();
+            },
+            focusOnEditor: function() {
+                if (this.$editor.css("display") != "none") {
+                    this.$editor.focus().select();
+                }
+            },
             showView: function () {
-                this.$editor.hide();
-                if (!this.dataEmpty()) {
-                    this.$viewEmpty.hide();
-                    this.$view.show();
+                if (this.viewDataBinder.editionMode() == "full-edit") {
+                    this.showEdit();
                 } else {
-                    this.$view.hide();
-                    this.$viewEmpty.show();
+                    this.$editor.hide();
+                    if (!this.dataEmpty()) {
+                        this.$viewEmpty.hide();
+                        this.$view.show();
+                    } else {
+                        this.$view.hide();
+                        this.$viewEmpty.show();
+                    }
                 }
             },
             showEdit: function () {
-                this.originalValue = this.linkedData.read();
-                this.$view.hide();
-                this.$viewEmpty.hide();
-                this.$editor.show();
+                if (this.viewDataBinder.editionMode() != "readonly") {
+                    this.originalValue = this.linkedData.read();
+                    this.$view.hide();
+                    this.$viewEmpty.hide();
+                    this.$editor.show();
+                }
             },
             undoEdition: function () {
                 this.linkedData.write(this.originalValue);
@@ -292,7 +314,7 @@
             },
             onEditableClick: function () {
                 this.showEdit();
-                this.$editor.focus().select()
+                this.focusOnEditor();
             },
             onKeyUp: function (e) {
                 //TODO: cuando un campo que está bindeado en dos controles diferentes está inicialmente vacío y en uno de los controles escribo el otro continua mostrando "Sin datos" hasta que presiono enter.
@@ -347,7 +369,7 @@
                 me.$editor.datepicker({
                     onClose: function () {
                         me.update();
-                        me.$editor.focus().select();
+                        me.focusOnEditor();
                         //which is better? or both?
                         //me.$editor.focus().select();
                         //me.showView();
@@ -355,7 +377,7 @@
                 });
                 me.$el.on("click", ".view-editable,.view-editable-empty", null, function () {
                     me.showEdit();
-                    me.$editor.focus().select()
+                    me.focusOnEditor();
                 });
                 me.$el.on("keyup", ".editor-editable", null, function (e) {
                     //TODO: cuando un campo que está bindeado en dos controles diferentes está inicialmente vacío y en uno de los controles escribo el otro continua mostrando "Sin datos" hasta que presiono enter.
@@ -412,7 +434,7 @@
             },
             onEditableClick: function () {
                 this.showEdit();
-                this.$editor.focus().select()
+                this.focusOnEditor();
             },
             onKeyUp: function (e) {
                 if (e.keyCode == 27) {
@@ -428,10 +450,10 @@
             bindUI: function () {
                 var me = this;
                 me.$el.on("click", ".view-editable,.view-editable-empty", null, function () {
-                    me.onEditableClick(); //Inner function to avoid context change
+                    me.onEditableClick();
                 });
                 me.$el.on("keyup", ".editor-editable", null, function (e) {
-                    me.onKeyUp(e); //Inner function to avoid context change
+                    me.onKeyUp(e);
                 });
                 me.$el.on("change", ".editor-editable", null, function (e) {
                     me.update();
@@ -532,16 +554,20 @@
             });
         },
         _editionMode: "normal", //normal, readonly, full-edit
-        setEditionMode: function (mode) {
-            var previous = this._editionMode;
-            switch (mode) {
-                case "readonly":
-                case "full-edit":
-                    this._editionMode = mode; break;
-                default: this._editionMode = "normal"; break;
-            }
-            if (this._editionMode != previous) {
-                this.trigger("change change:edition-mode change:edition-mode:" + this._editionMode, this);
+        editionMode: function (mode) {
+            if (typeof mode === "undefined") {
+                return this._editionMode;
+            } else {
+                var previous = this._editionMode;
+                switch (mode) {
+                    case "readonly":
+                    case "full-edit":
+                        this._editionMode = mode; break;
+                    default: this._editionMode = "normal"; break;
+                }
+                if (this._editionMode != previous) {
+                    this.trigger("change change:edition-mode change:edition-mode:" + this._editionMode, this._editionMode);
+                }
             }
         }
     });
