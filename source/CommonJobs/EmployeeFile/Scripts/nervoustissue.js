@@ -1,6 +1,6 @@
-//     Nervoustissue.js 0.0.1
+Ôªø//     Nervoustissue.js 0.0.1
 
-//     (c) 2012 AndrÈs Moschini
+//     (c) 2012 Andr√©s Moschini
 //     Nervoustissue may be freely distributed under the MIT license.
 
 (function () {
@@ -18,7 +18,7 @@
 
     // The top-level namespace. All public Backbone classes and modules will
     // be attached to this. Exported for both CommonJS and the browser.
-    // (Supongo que est· bien...)
+    // (Supongo que est√° bien...)
     var Nervoustissue;
     if (typeof exports !== 'undefined') {
         Nervoustissue = exports;
@@ -36,7 +36,7 @@
 
 
     // For Nervoustissue's purposes, jQuery, Zepto, or Ender owns the `$` variable.
-    // (los otros no los conozco pero supongo que est· bien)
+    // (los otros no los conozco pero supongo que est√° bien)
     var $ = root.jQuery || root.Zepto || root.ender;
 
     // Set the JavaScript library that will be used for DOM manipulation and
@@ -295,7 +295,7 @@
                 this.$editor.focus().select()
             },
             onKeyUp: function (e) {
-                //TODO: cuando un campo que est· bindeado en dos controles diferentes est· inicialmente vacÌo y en uno de los controles escribo el otro continua mostrando "Sin datos" hasta que presiono enter.
+                //TODO: cuando un campo que est√° bindeado en dos controles diferentes est√° inicialmente vac√≠o y en uno de los controles escribo el otro continua mostrando "Sin datos" hasta que presiono enter.
                 //Es mas, cuando apreto enter tampoco funciona, tengo que empezar a editar y luego queda correcto
                 if (e.keyCode == 27) {
                     this.undoEdition();
@@ -322,15 +322,18 @@
             template: _.template('<span class="view-editable-empty">Sin datos</span><span class="view-editable" style="display: none;"></span><input class="editor-editable" type="text" value="" style="display: none;"/>'),
             onKeyUp: function (e) {
                 this.$editor.val(this.$editor.val().replace(/[^0-9]/g, ''));
-                //TODO: Ac· estoy llamando al onKeyUp de Text, tiene que haber una forma mejor 
+                //TODO: Ac√° estoy llamando al onKeyUp de Text, tiene que haber una forma mejor 
                 this.__proto__.__proto__.onKeyUp.call(this, e);
             }
         });
 
         m.Date = m.BaseModel.extend({
             template: _.template('<span class="view-editable-empty">Sin datos</span><span class="view-editable" style="display: none;"></span><input class="editor-editable" type="text" value="" style="display: none;"/>'),
+            valueToText: function (date) {
+                return Globalize.format(date, "d");
+            },
             refreshView: function (value) {
-                this.$view.text(value);
+                this.$view.text(this.valueToText(new Date(value)));
             },
             refreshEdit: function (value) {
                 this.$editor.datepicker("setDate", value ? new Date(value) : null);
@@ -344,6 +347,9 @@
                 me.$editor.datepicker({
                     onClose: function () {
                         me.update();
+                        me.$editor.focus().select();
+                        //which is better? or both?
+                        //me.$editor.focus().select();
                         //me.showView();
                     }
                 });
@@ -352,7 +358,7 @@
                     me.$editor.focus().select()
                 });
                 me.$el.on("keyup", ".editor-editable", null, function (e) {
-                    //TODO: cuando un campo que est· bindeado en dos controles diferentes est· inicialmente vacÌo y en uno de los controles escribo el otro continua mostrando "Sin datos" hasta que presiono enter.
+                    //TODO: cuando un campo que est√° bindeado en dos controles diferentes est√° inicialmente vac√≠o y en uno de los controles escribo el otro continua mostrando "Sin datos" hasta que presiono enter.
                     //Es mas, cuando apreto enter tampoco funciona, tengo que empezar a editar y luego queda correcto
                     if (e.keyCode == 27) {
                         me.undoEdition();
@@ -451,7 +457,7 @@
     Nervoustissue.FormBinder.extend = Backbone.Model.extend;
 
     _.extend(FormBinder.prototype, Backbone.Events, {
-        // Establece el elemento correspondiente al bloque que se bindear·
+        // Establece el elemento correspondiente al bloque que se bindear√°
         setElement: function (element) {
             if (this.el) {
                 this.unregisterAllElementEvents();
@@ -465,7 +471,7 @@
             //Probar cuando permita cambiar los Elements:
             //this.autoDataBind();
         },
-        // Establece el modelo que se bindear·
+        // Establece el modelo que se bindear√°
         setModel: function (model) {
             if (this.model) {
                 this.unregisterAllModelEvents();
@@ -477,9 +483,9 @@
             this.$el.removeClass("editing");
             this.autoDataBind();
             if (this.model) {
-                //TODO: remover la dependencia con Backbone ac·
+                //TODO: remover la dependencia con Backbone ac√°
                 this.registerModelEvent(this.model, "change", function () { this.$el.addClass("editing"); }, this);
-                //TODO: Tal vez ac· podrÌa escuchar los eventos de las inner collections para no 
+                //TODO: Tal vez ac√° podr√≠a escuchar los eventos de las inner collections para no 
                 //tener que hacerlo afuera.
             }
         },
@@ -504,7 +510,7 @@
                 binding.model.off(binding.event, binding.callback, binding.context);
             }
         },
-        // ConfiguraciÛn personalizada de los bindeos
+        // Configuraci√≥n personalizada de los bindeos
         dataBindings: {},
 
         //TODO: Rename view to viewDataBinder and view to view 
