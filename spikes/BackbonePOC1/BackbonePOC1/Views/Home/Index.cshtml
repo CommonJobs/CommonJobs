@@ -1,0 +1,198 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+@if (false)
+{
+    <script type="text/javascript" src="../../Scripts/jquery-1.7.1-vsdoc.js"></script>
+    <script type="text/javascript" src="../../Scripts/underscore.js"></script>
+    <script type="text/javascript" src="../../Scripts/backbone.js"></script>
+}
+
+<!-- we passed a "categories" context variable (array), we now have a categories free variable over to iterate -->
+<!-- each of them is a model with the fields to display -->
+<!-- also, these comments are outside because underscode.js breaks with comments in the template -->
+<!-- //a/ no convendría hacer acá? _.each(categories.model, ... -->
+<script type="text/template" id="categorySelection_template">
+    <label>Category:</label>
+    <select class="categorySelection">
+        <% 
+            _(categories).each(function(category) { 
+
+        %>
+                <option value="<%= category.get('code') %>"><%= category.get('description') %></option> 
+        <% 
+            });
+        %>
+    </select>
+    <button class="edit">Edit</button>
+</script>
+
+<script type="text/template" id="categoryDetails_template">
+    <h2><%= category.get('description') %></h2>
+
+    <label>Search Results View:</label>
+
+    <select class="searchResultsView">
+    <% 
+        _(PosibleSearchResultsView).each(function(value) { 
+            var selected = _(value.code).isEqual(category.get('searchResultsView')) 
+                ? selected="selected"
+                : "";
+    %>
+            <option <%= selected %> value="<%= value.code %>"><%= value.description %></option>
+    <% 
+        });
+    %>
+    </select>
+
+    <div class="categoryFacetList">
+        <label>Facets</label>
+        <ul> 
+            <li>Category</li>
+            <li>Manufacturer</li>
+        </ul>
+    </div>
+    <button class="save">Save</button>
+    <button class="cancel">Cancel</button>
+</script>
+
+<script type="text/javascript">
+    $(function () {
+        window.PosibleSearchResultsView = [
+            { code: 'List', description: 'List' },
+            { code: 'Grid', description: 'Grid' }
+        ];
+
+        window.Category = Backbone.Model.extend({
+            defaults: {
+                code: '',
+                description: '',
+                searchResultsView: 'List',
+                facets: []
+            },
+            initialize: function () {
+                console.debug("CategoryModel: Initializing '" + this.get("code") + "' category.");
+            }
+        });
+
+        window.CategoryCollection = Backbone.Collection.extend({
+            model: Category,
+            url: "/rest/categories"
+        });
+
+        window.CategorySelectionView = Backbone.View.extend({
+            el: $("#categorySelection_container"),
+            $template: $('#categorySelection_template'),
+            template: function (categories) {
+                return _(this.$template.html()).template({ categories: categories }); // we return the same function with the context object assigned
+                //                                                                    //a/ es necesario hacer esto? ..., { categories: categories });
+                //                                                                    //a/ no alcanza con? ..., categories);
+                //                                                                    //a/ no se debería llamar model en lugar de categories?
+            },
+            render: function () {
+                this.$el.html(
+                    this.template(this.model) // we pass the model (array) to the template, for some reason the template function does not have automatic access to this.model
+                );
+                return this;
+            },
+
+            initialize: function () {
+                console.debug("CategorySelectionView: Initializing");
+                this._currentlyDisplayedDetailsView = null;
+            },
+
+            enable: function (enabled) {
+                this.$(".categorySelection").attr("disabled", enabled);
+                this.$(".edit").attr("disabled", enabled);
+            },
+
+            /* beginning of event handlers */
+            events: {
+                "click .edit": "editCategory"
+            },
+
+            editCategory: function (e) {
+                var newVal = this.$(".categorySelection").val();
+                console.log("Editing category: " + newVal);
+
+                var newModel = _(this.model).filter(function (m) { return m.get('code') == newVal }); // filter to the correct one, based on the code
+                if (!newModel) {
+                    console.debug("we didn't find it, abort: " + newVal);
+                    return; // if we didn't find it, abort
+                }
+
+                var newView = new CategoryDetailsView({ model: newModel[0] }); //a/ acá debería pasar el objeto o el modelo está bien?
+                newView.render();
+            }
+            /* end of event handlers */
+
+
+        });
+
+        window.CategoryDetailsView = Backbone.View.extend({
+            el: $('#categoryDetails_container'),
+            $template: $('#categoryDetails_template'),
+            template: function (category) {
+                return _(this.$template.html()).template({ category: category })
+            },
+            render: function (category) {
+                console.debug(this.model);
+                this.$el.html(
+                    this.template(this.model)
+                );
+                return this;
+            },
+            initialize: function () {
+                console.log("CategoryDetailsView: Initializing");
+                //this.model.bind('change', this.render, this);
+                //this.model.bind('destroy', this.remove, this);
+            },
+            remove: function () {
+                this.$el.remove();
+            },
+
+            /* begin event binding */
+            //TODO: data binding to modify the model directly
+            events: {
+                'change #searchResultsView': 'changeSearchResultsView',
+                'click .categoryFacetList li': 'clickFacet',
+                'click .save': 'clickSave',
+                'click .cancel': 'clickCancel'
+            },
+            changeSearchResultsView: function (e) {
+                console.log('CategoryDetailsView: changeSearchResultsView');
+            },
+            clickFacet: function (e) {
+                console.log('CategoryDetailsView: clickFacet');
+            },
+            clickSave: function (e) {
+                console.log('CategoryDetailsView: clickSave');
+                console.log(this.model);
+            },
+            clickCancel: function (e) {
+                console.log('CategoryDetailsView: clickCancel');
+                this.remove();
+            }
+            /* end event binding */
+        });
+
+        var categories = new CategoryCollection();
+        categories.fetch({ // bring the data from the server
+            success: function () { // only when we get the data back
+                console.log('Categories retrieved from server and instantiated.');
+                var categorySelectionView = new CategorySelectionView({ model: categories.models }); //a/ porque se mandan models y no la collection?
+                categorySelectionView.render();
+            }
+        });
+    });
+</script>
+
+<div id="categorySelection_container">
+</div>
+
+<hr />
+
+<div id="categoryDetails_container">
+</div>
+

@@ -1,0 +1,40 @@
+﻿@model EmployeeFile.Models.SearchModel
+@{
+    ViewBag.Title = "Empleados | CommonJobs";
+    ScriptManager.RegisterCss(Url.Content("~/Content/ie.css"), priority: 500, htmlAttributes: new { media = "screen" }, patchCondition: "lte IE 9");
+    ScriptManager.RegisterCss(Url.Content("~/Content/1140.css"), priority: 500, htmlAttributes: new { media = "screen" });
+    ScriptManager.RegisterCss(Url.Content("~/Content/reset.css"), priority: 500);
+    ScriptManager.RegisterCss(Url.Content("~/Content/Employees.less"));
+}
+<script type="text/javascript">
+    //TODO: move it to a .js file
+    $(function () {
+        $("#quickSearch").keyup(function (e) {
+            //TODO Fix hardcoded URLs
+            if (e.keyCode == 13) {
+                location.href = "/Employees?term=" + $(this).val();
+            } else {
+                $(".results").load("/Employees/List?term=" + encodeURI($(this).val()));
+            }
+        });
+        
+    });
+</script>
+<div class="container searchContainer">
+    <h1>Administración de Empleados</h1>
+
+    <div class="row">
+        <div class="twocol"></div>
+        <div class="eightcol quickSearchContainer">
+            <form method="get" action="@Url.Action("Index")">
+                <label for="quickSearch">Búsqueda rápida:</label>
+                <input type="text" id="quickSearch" name="Term" value="@Model.Term" />
+                <input type="submit" id="quickSearchSubmit" value=">>" />
+            </form>
+        </div>
+        <div class="twocol last"></div>
+    </div>
+</div>
+<div class="results">
+    @Html.Action("List", Model) 
+</div>
