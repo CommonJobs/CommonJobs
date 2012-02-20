@@ -33,39 +33,58 @@ App.Employee = Backbone.Model.extend({
     }
 });
 
-App.EditEmployeeAppView = Backbone.View.extend({
-    dataBindings: {
-        fullName: { control: "text", lastNameField: "LastName", firstNameField: "FirstName", modelBinder: "fullName" },
-        Photo: { control: "picture" },
-        //TODO: change 0, 1 by false, true
-        IsGraduated: { control: "options", options: [{ value: 0, text: "No recibido" }, { value: 1, text: "Recibido"}] },
-        BirthDate: { control: "date" },
-        MaritalStatus: { control: "options", options: [{ value: 0, text: "Soltero" }, { value: 1, text: "Casado" }, { value: 2, text: "Divorciado"}] },
-        HiringDate: { control: "date" },
-        WorkingHours: { control: "int" },
-        //TODO: change 0, 1 by false, true
-        Lunch: { control: "options", options: [{ value: 0, text: "No" }, { value: 1, text: "Sí"}] },
-        Notes: {
-            control: "collection",
-            item: {
-                control: "compound",
-                template: _.template('(<span data-bind="date" class="timestamp-field"></span>) <span data-bind="text"></span>'),
-                items: [{ name: "date", control: "date", field: "RealDate" }, { name: "text", control: "text", field: "Note"}]
-            }
-        }, 
-        SalaryChanges: {
-            control: "collection",
-            item: {
-                control: "compound",
-                template: _.template('<span data-bind="date"></span> | Salary: <span data-bind="salary"></span> | Note: <span data-bind="note"></span>'),
-                items: [{ name: "date", control: "date", field: "RealDate" }, { name: "salary", control: "int", field: "Salary" }, { name: "note", control: "text", field: "Note" }]
+App.EditEmployeeAppViewDataBinder = Nervoustissue.FormBinder.extend({
+    dataBindings:
+        {
+            fullName:
+            {
+                controlLink: Nervoustissue.UILinking.Text,
+                dataLink: Nervoustissue.DataLinking.FullName,
+                lastNameField: "LastName",
+                firstNameField: "FirstName"
+            },
+            //Photo: { control: "picture" },
+            //TODO: change 0, 1 by false, true
+            IsGraduated: { controlLink: Nervoustissue.UILinking.Options, options: [{ value: false, text: "No recibido" }, { value: true, text: "Recibido"}] },
+            BirthDate: { controlLink: Nervoustissue.UILinking.Date },
+            MaritalStatus: { controlLink: Nervoustissue.UILinking.Options, options: [{ value: 0, text: "Soltero" }, { value: 1, text: "Casado" }, { value: 2, text: "Divorciado"}] },
+            HiringDate: { controlLink: Nervoustissue.UILinking.Date },
+            WorkingHours: { controlLink: Nervoustissue.UILinking.Int },
+            //TODO: change 0, 1 by false, true
+            Lunch: { controlLink: Nervoustissue.UILinking.Options, options: [{ value: false, text: "No" }, { value: true, text: "Si"}] },
+            Notes:
+            {
+                controlLink: Nervoustissue.UILinking.Collection,
+                item:
+                {
+                    controlLink: Nervoustissue.UILinking.Compound,
+                    template: _.template('<span data-bind="date"></span> <span data-bind="text"></span>'),
+                    items:
+                    [
+                        { controlLink: Nervoustissue.UILinking.Date, name: "date", field: "RealDate" },
+                        { controlLink: Nervoustissue.UILinking.Text, name: "text", field: "Note" }
+                    ]
+                }
+            },
+            SalaryChanges: {
+                control: "collection",
+                item: {
+                    control: "compound",
+                    template: _.template('<span data-bind="date"></span> | Salary: <span data-bind="salary"></span> | Note: <span data-bind="note"></span>'),
+                    items: [{ name: "date", control: "date", field: "RealDate" }, { name: "salary", control: "int", field: "Salary" }, { name: "note", control: "text", field: "Note"}]
+                }
             }
         }
+});
+
+
+App.EditEmployeeAppView = Backbone.View.extend({
+    setModel: function (model) {
+        this.model = model;
+        this.dataBinder.setModel(model);
     },
     initialize: function () {
-        //this.autoDataBind();
-    },
-    afterSetModel: function () {
+        this.dataBinder = new App.EditEmployeeAppViewDataBinder({ el: this.el });
     },
     events: {
         "click .saveEmployee": "saveEmployee",
