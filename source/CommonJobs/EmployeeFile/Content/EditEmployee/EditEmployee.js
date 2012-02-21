@@ -118,7 +118,7 @@
             this.dataBinder.setModel(model);
         },
         initialize: function () {
-            this.dataBinder = new App.EditEmployeeAppViewDataBinder({ el: this.el });
+            this.dataBinder = new App.EditEmployeeAppViewDataBinder({ el: this.el, model: this.model });
         },
         events: {
             "click .saveEmployee": "saveEmployee",
@@ -158,13 +158,12 @@
         editionFullEdit: function () { this.dataBinder.editionMode("full-edit"); }
     });
 
-
 }).call(this);
 
 
 $(function () {
     App.appView = new App.EditEmployeeAppView({
-        el: $("#EditEmployeeApp")
+        el: $("#EditEmployeeApp"),
+        model: new App.Employee(ViewData.employee)
     });
-    App.appView.setModel(new App.Employee(ViewData.employee));
 });
