@@ -268,7 +268,7 @@
             },
             dataEmpty: function () {
                 var value = this.linkedData.read();
-                return typeof value == "undefined" || value === null || value === "";
+                return typeof value == "undefined" || value === null || (_.isString(value) && $.trim(value) === "");
             },
             dataLink: Nervoustissue.DataLinking.Model,
             originalValue: null,
@@ -279,6 +279,12 @@
                 if (this.$editor.css("display") != "none") {
                     this.$editor.focus().select();
                 }
+            },
+            refreshView: function (text) {
+                this.$view.html(text);
+            },
+            refreshEdit: function (value) {
+                this.$editor.val(value);
             },
             showView: function () {
                 this.$editor.hide();
@@ -306,7 +312,7 @@
             },
             refresh: function () {
                 var value = this.linkedData.read();
-                this.refreshView(value ? this.valueToViewText(value) : '');
+                this.refreshView(typeof value == "undefined" || value === null ? '' : this.valueToViewText(value));
                 if (!this.writing) {
                     this.refreshEdit(value);
                 }
@@ -319,9 +325,6 @@
 
         m.ReadOnlyText = m.BaseModel.extend({
             template: _.template('<span class="view-editable-empty">Sin datos</span><span class="view-editable" style="display: none;"></span>'),
-            refreshView: function (text) {
-                this.$view.text(text);
-            },
             showView: function () {
                 if (!this.dataEmpty()) {
                     this.$viewEmpty.hide();
@@ -339,12 +342,6 @@
 
         m.Text = m.BaseModel.extend({
             template: _.template('<span class="view-editable-empty">Sin datos</span><span class="view-editable" style="display: none;"></span><input class="editor-editable" type="text" value="" style="display: none;"/>'),
-            refreshView: function (text) {
-                this.$view.text(text);
-            },
-            refreshEdit: function (value) {
-                this.$editor.val(value);
-            },
             readUI: function () {
                 return this.$editor.val();
             },
@@ -360,7 +357,7 @@
                     this.applyMode("view");
                 } else {
                     this.update();
-                    if (e.keyCode == 13) {
+                    if (!e.altKey && !e.shiftKey && !e.ctrlKey && e.keyCode == 13) {
                         this.applyMode("view");
                     }
                 }
@@ -376,6 +373,10 @@
             }
         });
 
+        m.Markdown = m.Text.extend({
+            template: _.template('<span class="view-editable-empty">Sin datos</span><span class="view-editable" style="display: none;"></span><textarea rows="2" cols="20" class="editor-editable" style="display: none;"></textarea>')
+        });
+
         m.Int = m.Text.extend({
             template: _.template('<span class="view-editable-empty">Sin datos</span><span class="view-editable" style="display: none;"></span><input class="editor-editable" type="text" value="" style="display: none;"/>'),
             onKeyUp: function (e) {
@@ -389,9 +390,6 @@
             template: _.template('<span class="view-editable-empty">Sin datos</span><span class="view-editable" style="display: none;"></span><input class="editor-editable" type="text" value="" style="display: none;"/>'),
             valueToViewText: function (value) {
                 return Globalize.format(new Date(value), "d");
-            },
-            refreshView: function (text) {
-                this.$view.text(text);
             },
             refreshEdit: function (value) {
                 this.$editor.datepicker("setDate", value ? new Date(value) : null);
@@ -458,12 +456,6 @@
                     }
                 }
                 return "<i>Invalid Data!</i>";
-            },
-            refreshView: function (text) {
-                this.$view.text(text);
-            },
-            refreshEdit: function (value) {
-                this.$editor.val(value);
             },
             readUI: function () {
                 return this.$editor.val();

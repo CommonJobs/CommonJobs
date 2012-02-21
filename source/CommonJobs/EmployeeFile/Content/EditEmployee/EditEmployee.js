@@ -28,9 +28,15 @@
             this.set(fieldName, new App.Notes(this.get(fieldName)));
             this.get(fieldName).on("add remove reset change", function () { this.trigger("change"); }, this);
         },
+        updateSalaries: function () {
+            var sortedSalaries = _.chain(this.get("SalaryChanges").toJSON()).sortBy(function (x) { return x.RealDate; }).pluck("Salary");
+            this.set("CurrentSalary", sortedSalaries.last().value());
+            this.set("InitialSalary", sortedSalaries.first().value());
+        },
         initialize: function () {
             this.initCollectionField("Notes");
             this.initCollectionField("SalaryChanges");
+            this.get("SalaryChanges").on("add remove reset change", this.updateSalaries, this);
         }
     });
 
@@ -82,7 +88,7 @@
                         items:
                         [
                             { controlLink: Nervoustissue.UILinking.Date, name: "date", field: "RealDate" },
-                            { controlLink: Nervoustissue.UILinking.Text, name: "text", field: "Note" }
+                            { controlLink: Nervoustissue.UILinking.Markdown, name: "text", field: "Note" }
                         ]
                     }
                 },
