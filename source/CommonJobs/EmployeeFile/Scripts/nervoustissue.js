@@ -3,6 +3,42 @@
 //     (c) 2012 Andrés Moschini
 //     Nervoustissue may be freely distributed under the MIT license.
 
+// TODO: Leer la configuración de los elementos desde el mismo elemento, por ejemplo permitir que en lugar de hacer lo siguiente:
+//
+//        <h1 class="editable-field" data-bind="fullName"></h1>
+//        App.EditEmployeeAppViewDataBinder = Nervoustissue.FormBinder.extend({
+//            dataBindings: {
+//                fullName: { controlLink: "Text", dataLink: "FullName", lastNameField: "LastName", firstNameField: "FirstName" },
+//            [...]
+//
+// hacer
+//
+//        <h1 class="editable-field" data-bind="{'controlLink':'Text','dataLink':'FullName','lastNameField':'LastName','firstNameField':'FirstName'}"></h1>
+//
+// o bien
+//
+//        <h1 class="editable-field" data-bind-controlLink="Text" data-bind-dataLink="FullName" data-bind-lastNameField="LastName" data-bind-firstNameField="FirstName"></h1>
+//
+// Luego se pueden hacer helpers razor para generar el html correspondiente a partir de las anotaciones en el modelo. También
+// se podría renderizar el texto inicial para facilitar la indexación por buscadores y al menos mostrar el contenido si la página no soporta javascript.
+// Por ejemplo:
+//
+//        @Html.NervousFullNameFieldFor("h1", x => x.LastName, x => x.FirstName, new { @class = "editable-field" })
+//
+// generaría:
+//
+//        <h1 class="editable-field" data-bind="{'controlLink':'Text','dataLink':'FullName','lastNameField':'LastName','firstNameField':'FirstName'}">Perez, Juan</h1>
+// O
+//
+//        @Html.NervousFieldFor("span", x => x.MaritalStatus, new { @class = "editable-field" })
+//
+// generaría:
+//
+//        <span class="editable-field" data-bind="{'controlLink':'Options','options':[{'value':0,'text':'Soltero'},{'value':1,'text':'Casado'},{'value':2,'text':'Divorciado'}]}">
+//
+// Ya que el modelo tendría las anotaciones correspondientes o automáticamente se detectaría que MaritalStatus es de tipo enum con los valores Soltero, Casado y Divorciado.
+
+
 (function () {
 
     // Initial Setup
@@ -623,8 +659,20 @@
         dataBind: function ($els, model, options) {
             var viewDataBinder = this;
             var controlClass = options.controlLink ? options.controlLink : Nervoustissue.UILinking.Text;
+            if (_.isString(controlClass)) {
+                controlClass = Nervoustissue.UILinking[controlClass];
+            }
+
+            var myoptions = { viewDataBinder: viewDataBinder, model: model };
+
+            if (options.dataLink) {
+                var dataLink = options.dataLink;
+                dataLink = _.isString(dataLink) ? Nervoustissue.DataLinking[dataLink] : dataLink;
+                myoptions.dataLink = dataLink;
+            }
+
             $els.each(function () {
-                new controlClass(_.extend({}, options, { viewDataBinder: viewDataBinder, el: this, model: model }));
+                new controlClass(_.extend({}, options, myoptions, { el: this }));
             });
         },
         _editionMode: "normal", //normal, readonly, full-edit

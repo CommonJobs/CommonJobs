@@ -66,48 +66,48 @@
             {
                 fullName:
                 {
-                    controlLink: Nervoustissue.UILinking.Text,
-                    dataLink: Nervoustissue.DataLinking.FullName,
+                    controlLink: "Text",
+                    dataLink: "FullName",
                     lastNameField: "LastName",
                     firstNameField: "FirstName"
                 },
                 //Photo: { control: "picture" },
-                IsGraduated: { controlLink: Nervoustissue.UILinking.Options, options: [{ value: false, text: "No recibido" }, { value: true, text: "Recibido"}] },
-                BirthDate: { controlLink: Nervoustissue.UILinking.Date, valueToViewText: formatLongDateWithYears },
-                MaritalStatus: { controlLink: Nervoustissue.UILinking.Options, options: [{ value: 0, text: "Soltero" }, { value: 1, text: "Casado" }, { value: 2, text: "Divorciado"}] },
-                HiringDate: { controlLink: Nervoustissue.UILinking.Date, valueToViewText: formatLongDateWithYears },
-                WorkingHours: { controlLink: Nervoustissue.UILinking.Int },
-                Lunch: { controlLink: Nervoustissue.UILinking.Options, options: [{ value: false, text: "No" }, { value: true, text: "Si"}] },
+                IsGraduated: { controlLink: "Options", options: [{ value: false, text: "No recibido" }, { value: true, text: "Recibido"}] },
+                BirthDate: { controlLink: "Date", valueToViewText: formatLongDateWithYears },
+                MaritalStatus: { controlLink: "Options", options: [{ value: 0, text: "Soltero" }, { value: 1, text: "Casado" }, { value: 2, text: "Divorciado"}] },
+                HiringDate: { controlLink: "Date", valueToViewText: formatLongDateWithYears },
+                WorkingHours: { controlLink: "Int" },
+                Lunch: { controlLink: "Options", options: [{ value: false, text: "No" }, { value: true, text: "Si"}] },
                 Notes:
                 {
-                    controlLink: Nervoustissue.UILinking.Collection,
+                    controlLink: "Collection",
                     item:
                     {
-                        controlLink: Nervoustissue.UILinking.Compound,
+                        controlLink: "Compound",
                         template: _.template('<span data-bind="date"></span> | <span data-bind="text"></span>'),
                         items:
                         [
-                            { controlLink: Nervoustissue.UILinking.Date, name: "date", field: "RealDate" },
-                            { controlLink: Nervoustissue.UILinking.Markdown, name: "text", field: "Note" }
+                            { controlLink: "Date", name: "date", field: "RealDate" },
+                            { controlLink: "Markdown", name: "text", field: "Note" }
                         ]
                     }
                 },
                 SalaryChanges:
                 {
-                    controlLink: Nervoustissue.UILinking.Collection,
+                    controlLink: "Collection",
                     item: {
-                        controlLink: Nervoustissue.UILinking.Compound,
+                        controlLink: "Compound",
                         template: _.template('<span data-bind="date"></span> | Salary: <span data-bind="salary"></span> | Note: <span data-bind="note"></span>'),
                         items:
                         [
-                            { controlLink: Nervoustissue.UILinking.Date, name: "date", field: "RealDate" },
-                            { controlLink: Nervoustissue.UILinking.Int, name: "salary", field: "Salary", valueToViewText: formatSalary },
-                            { controlLink: Nervoustissue.UILinking.Text, name: "note", field: "Note" }
+                            { controlLink: "Date", name: "date", field: "RealDate" },
+                            { controlLink: "Int", name: "salary", field: "Salary", valueToViewText: formatSalary },
+                            { controlLink: "Text", name: "note", field: "Note" }
                         ]
                     }
                 },
-                CurrentSalary: { controlLink: Nervoustissue.UILinking.ReadOnlyText, valueToViewText: formatSalary },
-                InitialSalary: { controlLink: Nervoustissue.UILinking.ReadOnlyText, valueToViewText: formatSalary }
+                CurrentSalary: { controlLink: "ReadOnlyText", valueToViewText: formatSalary },
+                InitialSalary: { controlLink: "ReadOnlyText", valueToViewText: formatSalary }
             }
     });
 
