@@ -315,8 +315,8 @@
                 this.refreshView(typeof value == "undefined" || value === null ? '' : this.valueToViewText(value));
                 if (!this.writing) {
                     this.refreshEdit(value);
+                    this.applyMode();
                 }
-                this.applyMode();
             },
             valueToViewText: function (value) {
                 return value.toString();
@@ -382,7 +382,7 @@
                     resizebar: false,
                     ExtraMode: true
                 });
-                me.$editor.find(".mdd_preview").hide();
+                me.$editor.find(".mdd_preview").hide(); //Esto es un parche para no mostrar el preview de MarkdownDeep
                 me.$el.on("click", ".view-editable,.view-editable-empty", null, function () {
                     me.onEditableClick();
                 });
