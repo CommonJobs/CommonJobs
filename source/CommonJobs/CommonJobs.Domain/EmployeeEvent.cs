@@ -19,8 +19,5 @@ namespace CommonJobs.Domain
         [Display(Name = "Nota")]
         [DataType(DataType.MultilineText)]
         public string Note { get; set; }
-
-        [Display(Name = "Eliminado")]
-        public bool Deleted { get; set; }
     }
 }

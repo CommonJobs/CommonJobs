@@ -24,7 +24,7 @@
             return {
             }
         },
-        initCollectionField: function(fieldName) {
+        initCollectionField: function (fieldName) {
             this.set(fieldName, new App.Notes(this.get(fieldName)));
             this.get(fieldName).on("add remove reset change", function () { this.trigger("change"); }, this);
         },
@@ -34,7 +34,8 @@
         }
     });
 
-    var formatLongDateWithYears = function (date) {
+    var formatLongDateWithYears = function (value) {
+        var date = new Date(value);
         var age = (new Date() - date) / 365.25 / 24 / 60 / 60 / 1000;
         var ageInt = parseInt(age);
         var casi = "";
@@ -50,6 +51,10 @@
         return Globalize.format(date, "d' de 'MMMM' de 'yyyy") + " (" + tiempo + ")";
     };
 
+    var formatSalary = function (value) {
+        return "$ " + value;
+    };
+
     App.EditEmployeeAppViewDataBinder = Nervoustissue.FormBinder.extend({
         dataBindings:
             {
@@ -61,13 +66,11 @@
                     firstNameField: "FirstName"
                 },
                 //Photo: { control: "picture" },
-                //TODO: change 0, 1 by false, true
                 IsGraduated: { controlLink: Nervoustissue.UILinking.Options, options: [{ value: false, text: "No recibido" }, { value: true, text: "Recibido"}] },
-                BirthDate: { controlLink: Nervoustissue.UILinking.Date, valueToText: formatLongDateWithYears },
+                BirthDate: { controlLink: Nervoustissue.UILinking.Date, valueToViewText: formatLongDateWithYears },
                 MaritalStatus: { controlLink: Nervoustissue.UILinking.Options, options: [{ value: 0, text: "Soltero" }, { value: 1, text: "Casado" }, { value: 2, text: "Divorciado"}] },
-                HiringDate: { controlLink: Nervoustissue.UILinking.Date, valueToText: formatLongDateWithYears },
+                HiringDate: { controlLink: Nervoustissue.UILinking.Date, valueToViewText: formatLongDateWithYears },
                 WorkingHours: { controlLink: Nervoustissue.UILinking.Int },
-                //TODO: change 0, 1 by false, true
                 Lunch: { controlLink: Nervoustissue.UILinking.Options, options: [{ value: false, text: "No" }, { value: true, text: "Si"}] },
                 Notes:
                 {
@@ -75,7 +78,7 @@
                     item:
                     {
                         controlLink: Nervoustissue.UILinking.Compound,
-                        template: _.template('<span data-bind="date"></span> <span data-bind="text"></span>'),
+                        template: _.template('<span data-bind="date"></span> | <span data-bind="text"></span>'),
                         items:
                         [
                             { controlLink: Nervoustissue.UILinking.Date, name: "date", field: "RealDate" },
@@ -83,14 +86,22 @@
                         ]
                     }
                 },
-                SalaryChanges: {
-                    control: "collection",
+                SalaryChanges:
+                {
+                    controlLink: Nervoustissue.UILinking.Collection,
                     item: {
-                        control: "compound",
+                        controlLink: Nervoustissue.UILinking.Compound,
                         template: _.template('<span data-bind="date"></span> | Salary: <span data-bind="salary"></span> | Note: <span data-bind="note"></span>'),
-                        items: [{ name: "date", control: "date", field: "RealDate" }, { name: "salary", control: "int", field: "Salary" }, { name: "note", control: "text", field: "Note"}]
+                        items:
+                        [
+                            { controlLink: Nervoustissue.UILinking.Date, name: "date", field: "RealDate" },
+                            { controlLink: Nervoustissue.UILinking.Int, name: "salary", field: "Salary", valueToViewText: formatSalary },
+                            { controlLink: Nervoustissue.UILinking.Text, name: "note", field: "Note" }
+                        ]
                     }
-                }
+                },
+                CurrentSalary: { controlLink: Nervoustissue.UILinking.ReadOnlyText, valueToViewText: formatSalary },
+                InitialSalary: { controlLink: Nervoustissue.UILinking.ReadOnlyText, valueToViewText: formatSalary }
             }
     });
 
@@ -136,9 +147,9 @@
                 }
             });
         },
-        editionNormal: function() { this.dataBinder.editionMode("normal"); },
-        editionReadonly: function() { this.dataBinder.editionMode("readonly"); },
-        editionFullEdit: function() { this.dataBinder.editionMode("full-edit"); }
+        editionNormal: function () { this.dataBinder.editionMode("normal"); },
+        editionReadonly: function () { this.dataBinder.editionMode("readonly"); },
+        editionFullEdit: function () { this.dataBinder.editionMode("full-edit"); }
     });
 
 

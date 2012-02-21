@@ -181,7 +181,7 @@
             this.$el.off().empty();
             this.linkedData = new this.dataLink(_.extend({ viewDataBinder: this.viewDataBinder, model: this.model }, configuration));
             if (this.linkedData.validModel) {
-                this.viewDataBinder.on("change", this.applyEditMode, this);
+                this.viewDataBinder.on("change", this.applyFormEditMode, this);
                 this.$el.html(this.render());
                 this._initialize();
             }
@@ -194,7 +194,7 @@
             getTemplateModel: function () {
                 return null;
             },
-            applyEditMode: function (mode) {
+            applyFormEditMode: function (mode) {
             }
         });
 
@@ -244,9 +244,27 @@
                 this.$editor = this.$el.find(".editor-editable");
                 this.writing = false;
                 this.linkedData.onChange(this.refresh, this);
-                this.showView();
+                this.applyMode("view");
                 this.bindUI();
                 this.refresh();
+            },
+            mode: "view",
+            applyMode: function (mode) {
+                if (!mode) {
+                    mode = this.mode;
+                }
+                var formMode = this.viewDataBinder.editionMode();
+                if (formMode == "full-edit") {
+                    mode = "edit";
+                } else if (formMode == "readonly") {
+                    mode = "view";
+                }
+                this.mode = mode;
+                if (mode == "view") {
+                    this.showView();
+                } else if (mode == "edit") {
+                    this.showEdit();
+                }
             },
             dataEmpty: function () {
                 var value = this.linkedData.read();
@@ -254,35 +272,29 @@
             },
             dataLink: Nervoustissue.DataLinking.Model,
             originalValue: null,
-            applyEditMode: function (mode) {
-                this.showView();
+            applyFormEditMode: function (mode) {
+                this.applyMode();
             },
-            focusOnEditor: function() {
+            focusOnEditor: function () {
                 if (this.$editor.css("display") != "none") {
                     this.$editor.focus().select();
                 }
             },
             showView: function () {
-                if (this.viewDataBinder.editionMode() == "full-edit") {
-                    this.showEdit();
+                this.$editor.hide();
+                if (!this.dataEmpty()) {
+                    this.$viewEmpty.hide();
+                    this.$view.show();
                 } else {
-                    this.$editor.hide();
-                    if (!this.dataEmpty()) {
-                        this.$viewEmpty.hide();
-                        this.$view.show();
-                    } else {
-                        this.$view.hide();
-                        this.$viewEmpty.show();
-                    }
+                    this.$view.hide();
+                    this.$viewEmpty.show();
                 }
             },
             showEdit: function () {
-                if (this.viewDataBinder.editionMode() != "readonly") {
-                    this.originalValue = this.linkedData.read();
-                    this.$view.hide();
-                    this.$viewEmpty.hide();
-                    this.$editor.show();
-                }
+                this.originalValue = this.linkedData.read();
+                this.$view.hide();
+                this.$viewEmpty.hide();
+                this.$editor.show();
             },
             undoEdition: function () {
                 this.linkedData.write(this.originalValue);
@@ -294,17 +306,41 @@
             },
             refresh: function () {
                 var value = this.linkedData.read();
-                this.refreshView(value);
+                this.refreshView(value ? this.valueToViewText(value) : '');
                 if (!this.writing) {
                     this.refreshEdit(value);
                 }
+                this.applyMode();
+            },
+            valueToViewText: function (value) {
+                return value.toString();
             }
+        });
+
+        m.ReadOnlyText = m.BaseModel.extend({
+            template: _.template('<span class="view-editable-empty">Sin datos</span><span class="view-editable" style="display: none;"></span>'),
+            refreshView: function (text) {
+                this.$view.text(text);
+            },
+            showView: function () {
+                if (!this.dataEmpty()) {
+                    this.$viewEmpty.hide();
+                    this.$view.show();
+                } else {
+                    this.$view.hide();
+                    this.$viewEmpty.show();
+                }
+            },
+            showEdit: function () { },
+            refreshEdit: function (value) { },
+            readUI: function () { },
+            bindUI: function () { }
         });
 
         m.Text = m.BaseModel.extend({
             template: _.template('<span class="view-editable-empty">Sin datos</span><span class="view-editable" style="display: none;"></span><input class="editor-editable" type="text" value="" style="display: none;"/>'),
-            refreshView: function (value) {
-                this.$view.text(value);
+            refreshView: function (text) {
+                this.$view.text(text);
             },
             refreshEdit: function (value) {
                 this.$editor.val(value);
@@ -313,7 +349,7 @@
                 return this.$editor.val();
             },
             onEditableClick: function () {
-                this.showEdit();
+                this.applyMode("edit");
                 this.focusOnEditor();
             },
             onKeyUp: function (e) {
@@ -321,11 +357,11 @@
                 //Es mas, cuando apreto enter tampoco funciona, tengo que empezar a editar y luego queda correcto
                 if (e.keyCode == 27) {
                     this.undoEdition();
-                    this.showView();
+                    this.applyMode("view");
                 } else {
                     this.update();
                     if (e.keyCode == 13) {
-                        this.showView();
+                        this.applyMode("view");
                     }
                 }
             },
@@ -351,11 +387,11 @@
 
         m.Date = m.BaseModel.extend({
             template: _.template('<span class="view-editable-empty">Sin datos</span><span class="view-editable" style="display: none;"></span><input class="editor-editable" type="text" value="" style="display: none;"/>'),
-            valueToText: function (date) {
-                return Globalize.format(date, "d");
+            valueToViewText: function (value) {
+                return Globalize.format(new Date(value), "d");
             },
-            refreshView: function (value) {
-                this.$view.text(this.valueToText(new Date(value)));
+            refreshView: function (text) {
+                this.$view.text(text);
             },
             refreshEdit: function (value) {
                 this.$editor.datepicker("setDate", value ? new Date(value) : null);
@@ -372,11 +408,11 @@
                         me.focusOnEditor();
                         //which is better? or both?
                         //me.$editor.focus().select();
-                        //me.showView();
+                        //me.applyMode("view");
                     }
                 });
                 me.$el.on("click", ".view-editable,.view-editable-empty", null, function () {
-                    me.showEdit();
+                    me.applyMode("edit");
                     me.focusOnEditor();
                 });
                 me.$el.on("keyup", ".editor-editable", null, function (e) {
@@ -384,11 +420,11 @@
                     //Es mas, cuando apreto enter tampoco funciona, tengo que empezar a editar y luego queda correcto
                     if (e.keyCode == 27) {
                         me.undoEdition();
-                        me.showView();
+                        me.applyMode("view");
                     } else {
                         me.update();
                         if (e.keyCode == 13) {
-                            me.showView();
+                            me.applyMode("view");
                         }
                     }
                 });
@@ -415,16 +451,16 @@
                 return { Model: this.options };
             },
             template: _.template('<span class="view-editable-empty">Sin datos</span><span class="view-editable" style="display: none;"></span><select class="editor-editable" style="display: none;"><% for (var i in Model) { %><option value="<%= Model[i].value %>"><%= Model[i].text %></option><% } %></select>'),
-            findText: function (value) {
+            valueToViewText: function (value) {
                 for (var i in this.options) {
                     if (value.toString() == this.options[i].value.toString()) {
                         return this.options[i].text;
                     }
                 }
-                return null;
+                return "<i>Invalid Data!</i>";
             },
-            refreshView: function (value) {
-                this.$view.text(this.findText(value));
+            refreshView: function (text) {
+                this.$view.text(text);
             },
             refreshEdit: function (value) {
                 this.$editor.val(value);
@@ -433,17 +469,17 @@
                 return this.$editor.val();
             },
             onEditableClick: function () {
-                this.showEdit();
+                this.applyMode("edit");
                 this.focusOnEditor();
             },
             onKeyUp: function (e) {
                 if (e.keyCode == 27) {
                     this.undoEdition();
-                    this.showView();
+                    this.applyMode("view");
                 } else {
                     this.update();
                     if (e.keyCode == 13) {
-                        this.showView();
+                        this.applyMode("view");
                     }
                 }
             },

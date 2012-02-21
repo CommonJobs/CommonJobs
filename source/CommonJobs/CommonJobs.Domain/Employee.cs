@@ -142,11 +142,6 @@ namespace CommonJobs.Domain
         [Display(Name = "Historial de sueldos")]
         public List<SalaryChange> SalaryChanges { get; set; }
 
-        //private IEnumerable<T> TakeHappenings<T>() where T : Happening
-        //{
-        //    return Happenings.EmptyIfNull().OfType<T>().Where(x => !x.Deleted).OrderByDescending(x => x.RealDate);
-        //}
-
         [Display(Name = "URL de Imagen")]
         public string PictureUrl { get; set; }
 
