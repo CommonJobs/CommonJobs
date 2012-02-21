@@ -350,14 +350,12 @@
                 this.focusOnEditor();
             },
             onKeyUp: function (e) {
-                //TODO: cuando un campo que está bindeado en dos controles diferentes está inicialmente vacío y en uno de los controles escribo el otro continua mostrando "Sin datos" hasta que presiono enter.
-                //Es mas, cuando apreto enter tampoco funciona, tengo que empezar a editar y luego queda correcto
                 if (e.keyCode == 27) {
                     this.undoEdition();
                     this.applyMode("view");
                 } else {
                     this.update();
-                    if (!e.altKey && !e.shiftKey && !e.ctrlKey && e.keyCode == 13) {
+                    if (!e.altKey && !e.shiftKey && e.keyCode == 13) {
                         this.applyMode("view");
                     }
                 }
@@ -365,16 +363,64 @@
             bindUI: function () {
                 var me = this;
                 me.$el.on("click", ".view-editable,.view-editable-empty", null, function () {
-                    me.onEditableClick(); //Inner function to avoid context change
+                    me.onEditableClick();
                 });
                 me.$el.on("keyup", ".editor-editable", null, function (e) {
-                    me.onKeyUp(e); //Inner function to avoid context change
+                    me.onKeyUp(e);
                 });
             }
         });
 
         m.Markdown = m.Text.extend({
-            template: _.template('<span class="view-editable-empty">Sin datos</span><span class="view-editable" style="display: none;"></span><textarea rows="2" cols="20" class="editor-editable" style="display: none;"></textarea>')
+            template: _.template('<span class="view-editable-empty">Sin datos</span><div class="view-editable markdown-content" style="display: none;"></div><div class="editor-editable" style="display: none;"><textarea  cols=50 rows=10 class="mdd_editor"></textarea></div>'),
+            bindUI: function () {
+                //TODO: separar de alguna forma $editor y .editor-editable ya que están representando tanto la vista de edición como el elemento que tiene el valor.
+                var me = this;
+                me.$editor.find("textarea").MarkdownDeep({
+                    help_location: "/Scripts/mdd_help.htm",
+                    disableTabHandling: true,
+                    resizebar: false,
+                    ExtraMode: true
+                });
+                me.$editor.find(".mdd_preview").hide();
+                me.$el.on("click", ".view-editable,.view-editable-empty", null, function () {
+                    me.onEditableClick();
+                });
+                me.$el.on("keyup", ".editor-editable textarea", null, function (e) {
+                    me.onKeyUp(e);
+                });
+            },
+            onKeyUp: function (e) {
+                if (e.keyCode == 27) {
+                    this.undoEdition();
+                    this.applyMode("view");
+                } else {
+                    this.update();
+                    if (e.ctrlKey && e.keyCode == 13) {
+                        this.applyMode("view");
+                    }
+                }
+            },
+            focusOnEditor: function () {
+                //TODO: separar de alguna forma $editor y .editor-editable ya que están representando tanto la vista de edición como el elemento que tiene el valor.
+                if (this.$editor.css("display") != "none") {
+                    this.$editor.focus().select();
+                }
+            },
+            refreshEdit: function (value) {
+                //TODO: separar de alguna forma $editor y .editor-editable ya que están representando tanto la vista de edición como el elemento que tiene el valor.
+                this.$editor.find("textarea").val(value);
+            },
+            readUI: function () {
+                //TODO: separar de alguna forma $editor y .editor-editable ya que están representando tanto la vista de edición como el elemento que tiene el valor.
+                return this.$editor.find("textarea").val();
+            },
+            valueToViewText: function (value) {
+                //return value;
+                var md = new MarkdownDeep.Markdown();
+                md.ExtraMode = true;
+                return md.Transform(value);
+            }
         });
 
         m.Int = m.Text.extend({
