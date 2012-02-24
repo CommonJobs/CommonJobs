@@ -88,7 +88,7 @@ namespace CommonJobs.Mvc.Test
 
             ScriptManager target = ScriptManager.GetFromViewData(viewDataContainer.ViewData);
             target.RegisterCss(path, priority, htmlAttributes, omitAppVersion);
-            var htmlHelper = new HtmlHelper(viewContext, viewDataContainer);
+            var htmlHelper = new HtmlHelper<dynamic>(viewContext, viewDataContainer);
             var result = htmlHelper.RenderScriptManagerEntries().ToHtmlString().Trim();
 
             Assert.AreEqual(result, expected);
@@ -106,14 +106,14 @@ namespace CommonJobs.Mvc.Test
             var viewDataContainer = new ViewDataContainer();
             var scriptManager = ScriptManager.GetFromViewData(viewDataContainer.ViewData);
             scriptManager.RegisterCss(path, priority, htmlAttributes, omitAppVersion);
-            var htmlHelper = new HtmlHelper(viewContext, viewDataContainer);
+            var htmlHelper = new HtmlHelper<dynamic>(viewContext, viewDataContainer);
             var expected = "<!--[if lte IE 9]>" + htmlHelper.RenderScriptManagerEntries().ToHtmlString().Trim() + "<![endif]-->";
 
             var viewContext2 = new ViewContext();
             var viewDataContainer2 = new ViewDataContainer();
             var scriptManager2 = ScriptManager.GetFromViewData(viewDataContainer2.ViewData);
             scriptManager2.RegisterCss(path, priority, htmlAttributes, omitAppVersion, patchCondition: "lte IE 9");
-            var htmlHelper2 = new HtmlHelper(viewContext2, viewDataContainer2);
+            var htmlHelper2 = new HtmlHelper<dynamic>(viewContext2, viewDataContainer2);
             var result = htmlHelper2.RenderScriptManagerEntries().ToHtmlString().Trim();
 
             Assert.AreEqual(result, expected);
@@ -129,7 +129,7 @@ namespace CommonJobs.Mvc.Test
 
             var scriptManager = ScriptManager.GetFromViewData(viewDataContainer.ViewData);
             scriptManager.RegisterGlobalJavascript("variable", "value" );
-            var htmlHelper = new HtmlHelper(viewContext, viewDataContainer);
+            var htmlHelper = new HtmlHelper<dynamic>(viewContext, viewDataContainer);
             var result = htmlHelper.RenderScriptManagerEntries().ToHtmlString().Trim();
 
             Assert.AreEqual(result, expected);

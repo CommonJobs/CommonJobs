@@ -2,7 +2,9 @@
            
 @{
     ViewBag.Title = "Edit";
-    ScriptManager.RegisterJs(Url.Content("~/Scripts/backbone-commonjobs.js"));
+    ScriptManager.RegisterCss(Url.Content("~/Scripts/mdd_styles.css"));
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/MarkdownDeepLib.min.js"));
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/nervoustissue.js"));
     ScriptManager.RegisterCss(Url.Content("~/Content/EditEmployee/EditEmployee.less"));
     ScriptManager.RegisterJs(Url.Content("~/Content/EditEmployee/EditEmployee.js"));
 }
@@ -19,6 +21,11 @@
     <div class="editing-bar">
         <p><button class="saveEmployee">Guardar cambios</button></p>
         <p><button class="reloadEmployee">Descartar cambios</button></p>
+        <!--
+        <p><button class="editionNormal">editionNormal</button></p>
+        <p><button class="editionReadonly">editionReadonly</button></p>
+        <p><button class="editionFullEdit">editionFullEdit</button></p>
+        -->
     </div>
     
     <h1 class="editable-field" data-bind="fullName"></h1>
@@ -70,11 +77,12 @@
                 <li><span class="field-name">Horario:</span><span class="editable-field" data-bind="Schedule"></span></li>
                 <li><span class="field-name">Acuerdo:</span><span class="editable-field" data-bind="Agreement"></span></li>
                 <li>
-                    <div class="editable-field" data-bind="SalaryChanges">
-                        <span class="field-name">Remuneración:</span>
-                        <span class="view-field" data-bind="CurrentSalary">$ 3900</span>
-                        (<span class="field-name">Remuneración inicial:</span>
-                        <span class="view-field" data-bind="InitialSalary">$ 3500</span>)
+                    <span class="field-name">Remuneración:</span>
+                    <span class="view-field" data-bind="CurrentSalary">$ 3900</span>
+                    (<span class="field-name">Remuneración inicial:</span>
+                    <span class="view-field" data-bind="InitialSalary">$ 3500</span>)
+                    <div class="editable-field" data-bind="SalaryChanges"></div> 
+                    <div class="editable-field">
                         <ul>
                             <li><span class="view-editable view-editable-prototype">15/10/2009 $3500</span><span class="remove-button">-</span></li>
                             <li><span class="view-editable view-editable-prototype">20/7/20010 $3700 (5,7 %)</span><span class="remove-button">-</span></li>
