@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Globalization;
 
 namespace CommonJobs.Mvc
 {
@@ -11,6 +12,15 @@ namespace CommonJobs.Mvc
         public int Priority { get; set; }
         public int SetOrder { get; set; }
         public Object HtmlAttributes { get; set; }
+    }
+
+    internal class GlobalizationEntries : ScriptManagerEntry
+    {
+        public CultureInfo Culture { get; set; }
+        public string GlobalizeScriptFolder { get; set; }
+
+        public string AcceptLanguage { get { return HttpUtility.HtmlAttributeEncode(Culture.ToString()); } }
+        public string AcceptLanguageSimplied { get { return AcceptLanguage.Split(new[] { '-' }, 2).FirstOrDefault(); } }
     }
 
     internal abstract class ReferenceEntry : ScriptManagerEntry

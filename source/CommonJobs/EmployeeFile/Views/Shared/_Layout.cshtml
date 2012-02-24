@@ -1,10 +1,13 @@
 ﻿@{
     ScriptManager.RegisterJs(Url.Content("~/Scripts/jquery-1.7.1.min.js"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/jquery-ui-1.8.17.min.js"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/jquery-ui-i18n.min.js"), priority: 900);
     ScriptManager.RegisterJs(Url.Content("~/Scripts/modernizr-1.7.min.js"), priority: 900);
     ScriptManager.RegisterJs(Url.Content("~/Scripts/json2.min.js"), priority: 900);
-
+    ScriptManager.RegisterGlobalizationEntries(Url.Content("~/Scripts/jquery.globalize"), priority: 900);
+    ScriptManager.RegisterCss(Url.Content("~/Content/themes/base/jquery.ui.all.css"), priority: 900);
     ScriptManager.RegisterCss(Url.Content("~/Content/Site.css"), priority: 900);
-    
+
     ScriptManager.RegisterJs(Url.Content("~/Scripts/css3-mediaqueries.js"), priority: 900);
     ScriptManager.RegisterJs(Url.Content("~/Scripts/underscore.js"), priority: 900);
     ScriptManager.RegisterJs(Url.Content("~/Scripts/backbone.js"), priority: 900);
