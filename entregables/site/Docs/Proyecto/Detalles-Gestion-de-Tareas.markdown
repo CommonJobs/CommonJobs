@@ -1,18 +1,20 @@
-# Gestión de tareas
+# Gestión de las tareas del proyecto
 
-## Dinámica de trabajo
+## Herramienta a utilizar
 
-Para definir la dinámica de trabajo, nos basamos en la de uno de los proyectos de la empresa que está utilizando _Scrum_. 
+En un principio habíamos decidido utilizar [JIRA] dado que nuestro _Product Owner_ está familiarizado y que la idea a mediano plazo es que él sea el responsable principal del _Product Backlog_.
 
-La idea es mantener el _Product Backlog_ con los _User Stories_, _Bugs_ y tareas técnicas en una herramienta de gestión de proyectos. El _Product Owner_ y los integrantes del equipo se encargarán de actualizarlo, refinarlo y priorizarlo durante el transcurso del proyecto.
+En cuanto al manejo de las tareas dentro del _sprint_ estamos utilizando [Trello] como lo habíamos planeado. 
 
-Al comienzo de la reunión de _Planificación del Sprint_ se identificarán los _User Stories_ y las tareas mejor rankeadas como potencialmente a ser realizadas en el _sprint_. Luego, de  acuerdo con las necesidades del cliente, posibilidades de realización, relación costo/beneficio y madurez de los _user stories_ se seleccionarán para ser realizadas en el sprint y se dividirán en subtareas cuyo ciclo de vida no va más allá del sprint. Su desarrollo se seguirá en una de pizarra con notas adhesivas (o una alternativa digital) y no se volcarán al sistema de gestión de proyectos.
+La utilización de las dos herramientas en simultaneo resulto incomoda y gracias a las últimas actualizaciones de [Trello], que lo dejan mucho más adecuado para nuestro uso, decidimos probarlo para realizar de forma unificada la gestión de las tareas del proyecto.
 
-## Selección de herramientas
+## Nueva Dinámica de trabajo en [Trello]
 
-Dado que nuestro _Product Owner_ está familiarizado con [JIRA] y que la idea a mediano plazo es que él sea el responsable principal del _Product Backlog_, decidimos utilizar dicha herramienta para mantenerlo.
+Tenemos una pizarra con el *Product Backlog* (con una etiqueta por cada _User Stories_, _Bugs_ o _tareas_), donde el _Product Owner_ y los integrantes del equipo nos encargamos de actualizar, refinar y priorizar durante el transcurso del proyecto.
 
-En cuanto al manejo de las tareas dentro del _sprint_ decidimos  utilizar [Trello] ya que es muy dinámico y nos permite simular una pizarra física con etiquetas adhesivas.
+Por cada _Sprint_ generamos una nueva pizarra organizada en columnas (Todo, Doing, Done y For Product Backlog) en donde se pasan cada etiqueta seleccionada, para el *sprint* en cuestion, desde la pizarra del *Product Backlog*.
+Cada etiqueta se va pasando de columna según su estado y además podemos generar feedback como comentarios en cada etiqueta.
 
+[Link a Pizarras CommonJobs](https://trello.com/commonjobs)
 [Trello]: http://trello.com/
 [JIRA]: http://www.atlassian.com/es/software/jira/overview
