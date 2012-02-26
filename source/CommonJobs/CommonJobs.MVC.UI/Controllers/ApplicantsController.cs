@@ -59,7 +59,7 @@ namespace CommonJobs.MVC.UI.Controllers
                 {
                     applicant = applicant,
                     saveApplicantUrl = Url.Action("SaveApplicant"),
-                    getEApplicantUrl = Url.Action("GetApplicant")
+                    getApplicantUrl = Url.Action("GetApplicant")
                 },
                 500);
             return View(applicant);
@@ -71,7 +71,7 @@ namespace CommonJobs.MVC.UI.Controllers
             return Json(applicant);
         }
 
-        public JsonNetResult SaveEmployee(Applicant applicant)
+        public JsonNetResult SaveApplicant(Applicant applicant)
         {
             RavenSession.Store(applicant);
             return GetApplicant(applicant.Id);
