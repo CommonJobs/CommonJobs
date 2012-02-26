@@ -7,34 +7,11 @@ using CommonJobs.Utilities;
 
 namespace CommonJobs.Domain
 {
-    public class Employee
+    public class Employee: Person
     {
-        //[HiddenInput]
-        public string Id { get; set; }
-
-        [Display(Name = "Nombre")]
-        public string FirstName { get; set; }
-
-        [Display(Name = "Apellido")]
-        public string LastName { get; set; }
-
-        [Display(Name = "Dirección")]
-        public string Address { get; set; }
-
-        [Display(Name = "Teléfonos")]
-        public string Telephones { get; set; }
-
-        [Display(Name = "Estado Civil")]
-        public MaritalStatus MaritalStatus { get; set; }
-        
         [Display(Name = "Fecha Inicio")]
         [DataType(DataType.Date)]
         public DateTime? HiringDate { get; set; }
-
-        [Display(Name = "Fecha Nacimiento")]
-        [DataType(DataType.Date)]
-        //Only in detailed view
-        public DateTime? BirthDate { get; set; }
 
         [Display(Name = "Rem. Inicial")]
         [DataType(DataType.Currency)]
@@ -87,27 +64,9 @@ namespace CommonJobs.Domain
         [Display(Name = "Plataforma")]
         public string Platform { get; set; }
 
-        //TODO this should be a collection of "tags"
-        //TODO this should be a collection of pre-defined values. Each of these should be associated with a tag. Example: Skill C#, Skill Level Advanced. Skill HTML, Skill Level Medium.
-        [Display(Name = "Skills")]
-        //Only in detailed view
-        public string Skills { get; set; }
-
         [Display(Name = "Certificaciones")]
         //Only in detailed view
         public string Certifications { get; set; }
-
-        [Display(Name = "Universidad")]
-        //Only in detailed view
-        public string College { get; set; }
-
-        [Display(Name = "Título")]
-        //Only in detailed view
-        public string Degree { get; set; }
-
-        [Display(Name = "Recibido")]
-        //Only in detailed view
-        public bool IsGraduated { get; set; }
 
         [Display(Name = "Posición Inicial")]
         //Only in detailed view
@@ -119,10 +78,6 @@ namespace CommonJobs.Domain
         [Display(Name = "Seniority")]
         //Only in detailed view
         public string Seniority { get; set; }
-
-        [Display(Name = "Idioma")]
-        //Only in detailed view
-        public string EnglishLevel { get; set; }
 
         [Display(Name = "Proyecto")]
         public string CurrentProject { get; set; }

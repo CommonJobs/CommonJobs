@@ -47,6 +47,7 @@
     <Compile Include="ApplicantNote.cs" />
     <Compile Include="CompanyHistory.cs" />
     <Compile Include="MaritalStatus.cs" />
+    <Compile Include="Person.cs" />
     <Compile Include="SimpleNote.cs" />
     <Compile Include="Event.cs" />
     <Compile Include="Employee.cs" />
