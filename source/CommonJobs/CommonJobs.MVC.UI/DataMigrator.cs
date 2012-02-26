@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Raven.Client;
+using CommonJobs.Domain;
 
-namespace EmployeeFile
+namespace CommonJobs.MVC.UI
 {
     public class DataMigrator : IDisposable
     {
@@ -21,11 +22,52 @@ namespace EmployeeFile
 
         public void Execute()
         {
-            if (ThereIsNoData())
-                CreateSampleData();
+            if (ThereIsNoEmployeeData())
+                CreateSampleEmployeeData();
+
+            if (ThereIsNoApplicantData())
+                CreatesampleApplicantdata();
         }
 
-        private void CreateSampleData()
+        private void CreatesampleApplicantdata()
+        {
+            var applicant = new Applicant()
+            {
+                FirstName = "Fulano",
+                LastName = "De Tal",
+                Address = "Calle Falsa 123, 2do piso (vecino de Andrés)",
+                Telephones = "0223-12345678, 155-208557",
+                MaritalStatus = CommonJobs.Domain.MaritalStatus.Single,
+                Email = "fulanito@gmail.com",
+                CompanyHistory = new List<CompanyHistory>()
+                {
+                    new CompanyHistory() {
+                        CompanyName = "Google Inc.",
+                        IsCurrent = true,
+                        StartDate = DateTime.Parse("2007-01-01"),
+                        EndDate = null
+                    }
+                },
+                Degree = "CS Master",
+                College = "MIT",
+                IsGraduated = true,
+                IsHighlighted = true,
+                Notes = new List<SimpleNote>()
+                {
+                    new SimpleNote() {
+                        Note = "Parece muy buena opción, su experiencia previa es increíble.",
+                        RealDate = DateTime.Parse("2012-02-15"), 
+                        RegisterDate = DateTime.Parse("2012-02-15")
+                    }
+                },
+                Skills = "C#, Python, Ruby, Perl, HTML, CSS, HTML5, JS, SEO"
+            };
+
+            Session.Store(applicant);
+            Session.SaveChanges();
+        }
+
+        private void CreateSampleEmployeeData()
         {
             var employee = new CommonJobs.Domain.Employee()
             {
@@ -80,9 +122,14 @@ namespace EmployeeFile
             Session.SaveChanges();
         }
 
-        private bool ThereIsNoData()
+        private bool ThereIsNoEmployeeData()
         {
             return !Session.Query<CommonJobs.Domain.Employee>().Any();
+        }
+
+        private bool ThereIsNoApplicantData()
+        {
+            return !Session.Query<CommonJobs.Domain.Applicant>().Any();
         }
 
         public void Dispose()

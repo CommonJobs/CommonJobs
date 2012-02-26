@@ -64,6 +64,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Indexes\Applicant_QuickSearch.cs" />
     <Compile Include="Indexes\Employee_QuickSearch.cs" />
     <Compile Include="Indexes\NullIndex.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

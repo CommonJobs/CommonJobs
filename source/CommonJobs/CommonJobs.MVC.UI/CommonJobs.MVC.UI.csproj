@@ -10,8 +10,8 @@
     <ProjectTypeGuids>{E53F8FEA-EAE0-44A6-8774-FFD645390401};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>EmployeeFile</RootNamespace>
-    <AssemblyName>EmployeeFile</AssemblyName>
+    <RootNamespace>CommonJobs.MVC.UI</RootNamespace>
+    <AssemblyName>CommonJobs.MVC.UI</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <MvcBuildViews>true</MvcBuildViews>
     <UseIISExpress>false</UseIISExpress>
@@ -92,6 +92,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\ApplicantsController.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="DataMigrator.cs" />
@@ -103,6 +104,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\1140.css" />
+    <Content Include="Content\EditApplicant\EditApplicant.js" />
+    <Content Include="Views\Applicants\Edit.cshtml" />
+    <Content Include="Views\Applicants\Index.cshtml" />
+    <Content Include="Views\Applicants\List.cshtml" />
+    <None Include="Content\Applicants.less" />
+    <None Include="Content\ApplicantsBase.less" />
+    <None Include="Content\EditApplicant\EditApplicant.less" />
     <None Include="_bin_deployableAssemblies\System.Web.Mvc.dll" />
     <None Include="_bin_deployableAssemblies\WebMatrix.WebData.xml" />
     <None Include="_bin_deployableAssemblies\WebMatrix.WebData.dll" />
