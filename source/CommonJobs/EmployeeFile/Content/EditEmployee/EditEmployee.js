@@ -137,6 +137,7 @@
                 contentType: 'application/json; charset=utf-8',
                 success: function (result) {
                     me.setModel(new App.Employee(result));
+                    me.editionNormal();
                 }
             });
         },
@@ -150,6 +151,7 @@
                 contentType: 'application/json; charset=utf-8',
                 success: function (result) {
                     me.setModel(new App.Employee(result));
+                    me.editionNormal();
                 }
             });
         },
