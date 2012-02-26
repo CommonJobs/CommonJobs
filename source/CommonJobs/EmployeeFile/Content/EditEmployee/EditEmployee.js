@@ -136,8 +136,8 @@
                 data: JSON.stringify(App.appView.model.toJSON()),
                 contentType: 'application/json; charset=utf-8',
                 success: function (result) {
-                    me.setModel(new App.Employee(result));
                     me.editionNormal();
+                    me.setModel(new App.Employee(result));
                 }
             });
         },
@@ -150,8 +150,8 @@
                 data: { id: ViewData.employee.Id },
                 contentType: 'application/json; charset=utf-8',
                 success: function (result) {
-                    me.setModel(new App.Employee(result));
                     me.editionNormal();
+                    me.setModel(new App.Employee(result));
                 }
             });
         },
