@@ -1,0 +1,107 @@
+﻿@import "ApplicantsBase.less";
+
+.card
+{
+    border: 1px solid #bbb;
+    padding: 10px;
+    height: 80px;
+    .rounded_corners(10px);
+	cursor: pointer;
+}
+
+.cardPicture 
+{
+    width: @card_picture_width;
+    height: @card_picture_height;
+    float: left;
+    margin-right: 10px;
+}
+
+.cardDescription 
+{
+    min-width: 150px;
+
+	p
+    {
+		line-height: 1.2em;
+    }
+}
+
+#addNewCard 
+{
+	.cardDescription p
+	{
+		height: @card_picture_height;
+		line-height: @card_picture_height;
+	}
+
+	a 
+    {
+		color:  @color_primary_medium;
+    }
+}
+
+.applicantName 
+{
+    font-weight: bold;
+}
+
+.applicantPosition 
+{
+    font-style: italic;
+}
+
+/*from http://designshack.net/articles/css/beating-borders-the-bane-of-responsive-layout/ */
+.column 
+{
+    min-width: 200px;
+	width: 15.5%;
+	float: left;
+	margin: 1em 0.5% 0 0.5%;
+	border: 1px solid @color_primary_dark;
+	padding: 15px;
+	.box_sizing_border_box;
+}
+
+.searchContainer
+{
+	background-color: @color_primary_semi_light;
+	padding-top: 2em;
+	padding-bottom: 2em;
+}
+
+.quickSearchContainer, #quickSearch, #quickSearchSubmit
+{
+	font-size: 1.5em;
+}
+
+.quickSearchContainer label 
+{
+	color: white;
+}
+
+.applicantTags 
+{
+	font-size: 0.8em;
+	padding-top: 0.2em;
+	overflow: hidden;
+	white-space: nowrap;
+	height: 1.5em;
+
+	.tag 
+    {
+		background-color: @color_secondary_b_light;
+		color:  white;
+		padding-left: 0.5em;
+		padding-right: 0.5em;
+		.rounded_corners(2px);
+    }
+}
+
+h1 
+{
+	font-size: 2em;
+	text-align: center;
+	margin-bottom: 0.5em;
+	color: @color_primary_semi_dark;
+}
