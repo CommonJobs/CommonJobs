@@ -8,16 +8,21 @@
 }
 <script type="text/javascript">
     //TODO: move it to a .js file
+    function setResultCount() {
+        $("#resultCount").html($(".card").length - 1);
+    }
+
     $(function () {
         $("#quickSearch").keyup(function (e) {
             //TODO Fix hardcoded URLs
             if (e.keyCode == 13) {
                 location.href = "/Applicants?term=" + $(this).val();
             } else {
-                $(".results").load("/Applicants/List?term=" + encodeURI($(this).val()));
+                $(".results").load("/Applicants/List?term=" + encodeURI($(this).val()), null, setResultCount);
             }
         });
-        
+
+        setResultCount();
     });
 </script>
 <div class="container searchContainer">
@@ -31,6 +36,7 @@
                 <input type="text" id="quickSearch" name="Term" value="@Model.Term" />
                 <input type="submit" id="quickSearchSubmit" value=">>" />
             </form>
+            <p id="resultCountNotice">Hay <span id="resultCount">0</span> resultado(s).</p>
         </div>
         <div class="twocol last"></div>
     </div>

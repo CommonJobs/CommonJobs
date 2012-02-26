@@ -6,16 +6,16 @@
     <script>
         //TODO: it should be in Index.html
         //TODO FIXME replace this retardation with a good approach -- I just wanted the links out of my way
-        function editEmployee(id) {
+        function editApplicant(id) {
             window.location = "/Applicants/Edit/" + id;
             return false;
         }
-        function addNewEmployee() {
+        function addNewApplicant() {
             window.location = "@Url.Action("Create")";
         }
     </script>
 
-    <div class="card column" id="addNewCard" onclick="addNewEmployee()">
+    <div class="card column" id="addNewCard" onclick="addNewApplicant()">
         <img class="cardPicture" src="@Url.Content("~/Content/Images/AddEmployee.png")" alt="Agregar nuevo..."  />
         <div class="cardDescription">
             <p>@Html.ActionLink("Agregar nuevo...", "Create")</p>
@@ -24,10 +24,10 @@
         
     foreach (var applicant in Model)
     {
-        <div class="card column" onclick="editEmployee('@applicant.Id')">
+        <div class="card column" onclick="editApplicant('@applicant.Id')">
             <div class="cardDescription">
                 <p class="applicantName">@applicant.FirstName @applicant.LastName</p>
-                <p class="applicantPosition">@string.Join(", ", applicant.CompanyHistory.Select(x => x.CompanyName))</p>
+                <p class="applicantPosition">@(applicant.CompanyHistory != null ? string.Join(", ", applicant.CompanyHistory.Select(x => x.CompanyName)) : "(Sin experiencia previa)")</p>
                 <p class="applicantTags">
                     @{
                         //TODO replace with a collection of skills, order from most skilled to less
