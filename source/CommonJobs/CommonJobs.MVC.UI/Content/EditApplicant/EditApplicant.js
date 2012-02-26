@@ -117,7 +117,8 @@
             "click .reloadApplicant": "reloadApplicant",
             "click .editionNormal": "editionNormal",
             "click .editionReadonly": "editionReadonly",
-            "click .editionFullEdit": "editionFullEdit"
+            "click .editionFullEdit": "editionFullEdit",
+            "click .deleteApplicant": "deleteApplicant"
         },
         saveApplicant: function () {
             var me = this;
@@ -146,6 +147,11 @@
                     me.setModel(new App.Applicant(result));
                 }
             });
+        },
+        deleteApplicant: function () {
+            if (confirm("¿Está seguro de que desea eliminar este postulante?")) {
+                window.location = ViewData.deleteApplicantUrl + this.model.get('Id');
+            }
         },
         editionNormal: function () { this.dataBinder.editionMode("normal"); },
         editionReadonly: function () { this.dataBinder.editionMode("readonly"); },

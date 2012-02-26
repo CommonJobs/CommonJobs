@@ -59,7 +59,8 @@ namespace CommonJobs.MVC.UI.Controllers
                 {
                     applicant = applicant,
                     saveApplicantUrl = Url.Action("SaveApplicant"),
-                    getApplicantUrl = Url.Action("GetApplicant")
+                    getApplicantUrl = Url.Action("GetApplicant"),
+                    deleteApplicantUrl = Url.Action("DeleteApplicant")
                 },
                 500);
             return View(applicant);
@@ -77,7 +78,7 @@ namespace CommonJobs.MVC.UI.Controllers
             return GetApplicant(applicant.Id);
         }
 
-        public ActionResult Delete(string id)
+        public ActionResult DeleteApplicant(string id)
         {
             var applicant = RavenSession.Load<Applicant>(id);
             RavenSession.Delete(applicant);
