@@ -22,19 +22,9 @@ namespace CommonJobs.Infrastructure.Indexes
                                 {
                                     ByTerm = new object[]
                                     {
-                                        applicant.Id,
                                         applicant.FirstName,
                                         applicant.LastName,
-                                        applicant.Address,
-                                        applicant.Telephones,
-                                        applicant.MaritalStatus,
-                                        string.Format("{0:yyyy-MM-dd}", applicant.BirthDate),
-                                        string.Format("{0:dd-MM-yyyy}", applicant.BirthDate),
-                                        string.Format("{0:MM-dd-yyyy}", applicant.BirthDate),
-                                        string.Format("{0:MMMM}", applicant.BirthDate),
-                                        applicant.Email,
-                                        applicant.College,
-                                        applicant.Degree,
+                                        string.Join(" ", applicant.CompanyHistory.Select(x => x.CompanyName)),
                                         applicant.Skills
                                     }
                                 };
