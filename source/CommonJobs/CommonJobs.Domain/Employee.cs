@@ -145,12 +145,12 @@ namespace CommonJobs.Domain
         [Display(Name = "URL de Imagen")]
         public string PictureUrl { get; set; }
 
-        public IEnumerable<EmployeeEvent> Events 
+        public IEnumerable<Event> Events 
         {
             get
             {
-                return Notes.EmptyIfNull().Cast<EmployeeEvent>()
-                    .Union(SalaryChanges.EmptyIfNull().Cast<EmployeeEvent>())
+                return Notes.EmptyIfNull().Cast<Event>()
+                    .Union(SalaryChanges.EmptyIfNull().Cast<Event>())
                     .OrderByDescending(x => x.RealDate)
                     .ThenBy(x => x.RegisterDate);
             }

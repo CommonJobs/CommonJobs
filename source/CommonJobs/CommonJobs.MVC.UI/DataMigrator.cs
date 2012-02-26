@@ -52,12 +52,25 @@ namespace CommonJobs.MVC.UI
                 College = "MIT",
                 IsGraduated = true,
                 IsHighlighted = true,
-                Notes = new List<SimpleNote>()
+                Notes = new List<ApplicantNote>()
                 {
-                    new SimpleNote() {
+                    new ApplicantNote() {
                         Note = "Parece muy buena opción, su experiencia previa es increíble.",
                         RealDate = DateTime.Parse("2012-02-15"), 
-                        RegisterDate = DateTime.Parse("2012-02-15")
+                        RegisterDate = DateTime.Parse("2012-02-15"),
+                        NoteType = ApplicantNoteType.InteviewNote
+                    },
+                    new ApplicantNote() {
+                        Note = "Demostró tener amplios conocimientos de project management.",
+                        RealDate = DateTime.Parse("2012-02-16"),
+                        RegisterDate = DateTime.Parse("2012-03-01"),
+                        NoteType = ApplicantNoteType.TechnicalInterviewNote
+                    },
+                    new ApplicantNote() {
+                        Note = "Tiene pensado mudarse a Mar del Plata.",
+                        RealDate = DateTime.Parse("2012-02-16"),
+                        RegisterDate = DateTime.Parse("2012-02-16"),
+                        NoteType = ApplicantNoteType.GeneralNote
                     }
                 },
                 Skills = "C#, Python, Ruby, Perl, HTML, CSS, HTML5, JS, SEO"

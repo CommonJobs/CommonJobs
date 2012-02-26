@@ -6,7 +6,7 @@ using System.Web;
 
 namespace CommonJobs.Domain
 {
-    public abstract class EmployeeEvent
+    public abstract class Event
     {
         [Display(Name = "Fecha Real")]
         [DataType(DataType.DateTime)]

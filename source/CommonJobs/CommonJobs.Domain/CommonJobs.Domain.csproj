@@ -44,10 +44,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Applicant.cs" />
+    <Compile Include="ApplicantNote.cs" />
     <Compile Include="CompanyHistory.cs" />
     <Compile Include="MaritalStatus.cs" />
     <Compile Include="SimpleNote.cs" />
-    <Compile Include="EmployeeEvent.cs" />
+    <Compile Include="Event.cs" />
     <Compile Include="Employee.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SalaryChange.cs" />

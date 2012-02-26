@@ -57,7 +57,7 @@ namespace CommonJobs.Domain
         public string Skills { get; set; }
 
         [Display(Name = "Notas")]
-        public List<SimpleNote> Notes { get; set; }
+        public List<ApplicantNote> Notes { get; set; }
 
         [Display(Name = "Resaltado")]
         public bool IsHighlighted { get; set; }

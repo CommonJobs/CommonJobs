@@ -91,12 +91,12 @@
                 item:
                 {
                     controlLink: "Compound",
-                    template: _.template('<span data-bind="date"></span> | Entrevista: <span data-bind="IsInterviewNote"></span> <span data-bind="text"></span> '),
+                    template: _.template('<span data-bind="date"></span> (<span data-bind="NoteType"></span>) <span data-bind="text"></span> '),
                     items:
                     [
                         { controlLink: "Date", name: "date", field: "RealDate" },
                         { controlLink: "Markdown", name: "text", field: "Note" },
-                        { controlLink: "Options", name: "IsInterviewNote", field: "IsInterviewNote", options: [{ value: false, text: "No" }, {value: true, text: "Sí" }] }
+                        { controlLink: "Options", name: "NoteType", field: "NoteType", options: [{ value: 0, text: "Nota Genérica" }, { value: 1, text: "Nota de entrevista" }, { value: 2, text: "Nota de entrevistsa técnica"}] }
                     ]
                 }
             }

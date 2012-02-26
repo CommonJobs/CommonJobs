@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CommonJobs.Domain
 {
-    public class SalaryChange : EmployeeEvent
+    public class SalaryChange : Event
     {
         [Display(Name = "Salary")]
         [DataType(DataType.Currency)]
