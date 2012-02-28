@@ -407,6 +407,46 @@
             }
         });
 
+        m.MultilineText = m.Text.extend({
+            template: _.template('<span class="view-editable-empty">Sin datos</span><div class="view-editable markdown-content" style="display: none;"></div><div class="editor-editable" style="display: none;"><textarea  cols=50 rows=10 class="mdd_editor"></textarea></div>'),
+            bindUI: function () {
+                var me = this;
+                me.$el.on("click", ".view-editable,.view-editable-empty", null, function () {
+                    me.onEditableClick();
+                });
+                me.$el.on("keyup", ".editor-editable textarea", null, function (e) {
+                    me.onKeyUp(e);
+                });
+            },
+            onKeyUp: function (e) {
+                if (e.keyCode == 27) {
+                    this.undoEdition();
+                    this.applyMode("view");
+                } else {
+                    this.update();
+                    //I am waiting for ctrl + enter to accept changes
+                    if (e.ctrlKey && e.keyCode == 13) {
+                        this.applyMode("view");
+                    }
+                }
+            },
+            focusOnEditor: function () {
+                if (this.$editor.css("display") != "none") {
+                    this.$editor.focus().select();
+                }
+            },
+            refreshEdit: function (value) {
+                this.$editor.find("textarea").val(value);
+            },
+            readUI: function () {
+                return this.$editor.find("textarea").val();
+            },
+            valueToViewText: function (value) {
+                return $("<pre></pre>").text(value);
+            }
+        });
+
+
         m.Markdown = m.Text.extend({
             template: _.template('<span class="view-editable-empty">Sin datos</span><div class="view-editable markdown-content" style="display: none;"></div><div class="editor-editable" style="display: none;"><textarea  cols=50 rows=10 class="mdd_editor"></textarea></div>'),
             bindUI: function () {
