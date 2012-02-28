@@ -88,7 +88,7 @@
                         items:
                         [
                             { controlLink: "Date", name: "date", field: "RealDate" },
-                            { controlLink: "Markdown", name: "text", field: "Note" }
+                            { controlLink: "MultilineText", name: "text", field: "Note" }
                         ]
                     }
                 },

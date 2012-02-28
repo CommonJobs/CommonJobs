@@ -95,7 +95,7 @@
                     items:
                     [
                         { controlLink: "Date", name: "date", field: "RealDate" },
-                        { controlLink: "Markdown", name: "text", field: "Note" },
+                        { controlLink: "MultilineText", name: "text", field: "Note" },
                         { controlLink: "Options", name: "NoteType", field: "NoteType", options: [{ value: 0, text: "Nota Genérica" }, { value: 1, text: "Nota de entrevista" }, { value: 2, text: "Nota de entrevistsa técnica"}] }
                     ]
                 }
