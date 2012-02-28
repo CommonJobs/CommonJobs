@@ -302,8 +302,7 @@
                     this.showEdit();
                 }
             },
-            dataEmpty: function () {
-                var value = this.linkedData.read();
+            dataEmpty: function (value) {
                 return typeof value == "undefined" || value === null || (_.isString(value) && $.trim(value) === "");
             },
             dataLink: Nervoustissue.DataLinking.Model,
@@ -324,7 +323,8 @@
             },
             showView: function () {
                 this.$editor.hide();
-                if (!this.dataEmpty()) {
+                var value = this.linkedData.read();
+                if (!this.dataEmpty(value)) {
                     this.$viewEmpty.hide();
                     this.$view.show();
                 } else {
@@ -348,7 +348,7 @@
             },
             refresh: function () {
                 var value = this.linkedData.read();
-                this.refreshView(typeof value == "undefined" || value === null ? '' : this.valueToViewText(value));
+                this.refreshView(this.dataEmpty(value) ? '' : this.valueToViewText(value));
                 if (!this.writing) {
                     this.refreshEdit(value);
                     this.applyMode();
@@ -362,7 +362,8 @@
         m.ReadOnlyText = m.BaseModel.extend({
             template: _.template('<span class="view-editable-empty">Sin datos</span><span class="view-editable" style="display: none;"></span>'),
             showView: function () {
-                if (!this.dataEmpty()) {
+                var value = this.linkedData.read();
+                if (!this.dataEmpty(value)) {
                     this.$viewEmpty.hide();
                     this.$view.show();
                 } else {
@@ -564,6 +565,55 @@
                         itemcfg);
                 }
             }
+        });
+
+        m.Toggle = m.BaseModel.extend({
+            template: _.template('<a class="view-editable"></a>'),
+            onTemplate: _.template('On'),
+            offTemplate: _.template('Off'),
+            valueToViewText: function (value) {
+                return value ? this.onTemplate() : this.offTemplate();
+            },
+            readUI: null,
+            refreshView: function (text) {
+                this.$view.html(text);
+            },
+            applyMode: function (mode) {
+                if (!mode) {
+                    mode = this.mode;
+                }
+                var formMode = this.viewDataBinder.editionMode();
+                this.showView();
+                if (formMode == "readonly") {
+                    this.$view.removeAttr("href");
+                } else {
+                    this.$view.attr("href", "javascript:void(null)");
+                }
+            },
+            dataEmpty: function (value) { return false; },
+            onEditableClick: function () { this.toggle(); },
+            toggle: function () {
+                var formMode = this.viewDataBinder.editionMode();
+                if (formMode != "readonly") {
+                    var value = this.linkedData.read();
+                    this.linkedData.write(!value);
+                }
+            },
+            onKeyUp: function (e) {
+                if (e.keyCode == 32) {
+                    this.toggle();
+                }
+            },
+            bindUI: function () {
+                var me = this;
+                me.$el.on("click", ".view-editable", null, function () {
+                    me.onEditableClick();
+                });
+                me.$el.on("keyup", ".view-editable", null, function (e) {
+                    me.onKeyUp(e);
+                });
+            },
+            refreshEdit: function () { }
         });
 
         m.Options = m.BaseModel.extend({
