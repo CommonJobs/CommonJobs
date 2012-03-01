@@ -7,7 +7,7 @@ using System.Web.Routing;
 using CommonJobs.Mvc;
 using CommonJobs.Infrastructure.Indexes;
 
-namespace EmployeeFile
+namespace CommonJobs.MVC.UI
 {
     public class MvcApplication : CommonJobsApplication
     {

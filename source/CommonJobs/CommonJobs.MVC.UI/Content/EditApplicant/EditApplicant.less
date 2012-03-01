@@ -1,4 +1,4 @@
-@import "../EmployeesBase.less";
+@import "../ApplicantsBase.less";
 body 
 {
 	background-color:  @color_primary_semi_light;
@@ -9,7 +9,7 @@ body
 	float: left;
 }
 
-#EditEmployeeApp 
+#EditApplicantApp 
 {
 	width: 800px;
 	margin: 1em auto;
@@ -67,7 +67,7 @@ body
     font-weight: bold;
 }
 
-.employee-photo 
+.applicant-photo 
 {
 	width: 100px;
 	height: 100px;
@@ -90,7 +90,6 @@ ul
 
 .editing-bar 
 {
-	display:none;
 	position:  fixed;
 	left: 50%;
 	top: 2em;
@@ -103,9 +102,14 @@ ul
     {
 		line-height: 1em;
     }
+
+	.change-management-options 
+    {
+    	display: none;
+    }
 }
 
-.editing .editing-bar
+.editing .change-management-options 
 {
     display:block;
 }
