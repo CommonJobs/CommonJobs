@@ -1,0 +1,46 @@
+﻿@model IEnumerable<CommonJobs.Domain.Applicant>
+@using CommonJobs.Utilities;
+
+@{
+    Layout = null;
+    <script>
+        //TODO: it should be in Index.html
+        //TODO FIXME replace this retardation with a good approach -- I just wanted the links out of my way
+        function editEmployee(id) {
+            window.location = "/Applicants/Edit/" + id;
+            return false;
+        }
+        function addNewEmployee() {
+            window.location = "@Url.Action("Create")";
+        }
+    </script>
+
+    <div class="card column" id="addNewCard" onclick="addNewEmployee()">
+        <img class="cardPicture" src="@Url.Content("~/Content/Images/AddEmployee.png")" alt="Agregar nuevo..."  />
+        <div class="cardDescription">
+            <p>@Html.ActionLink("Agregar nuevo...", "Create")</p>
+        </div>
+    </div>
+        
+    foreach (var applicant in Model)
+    {
+        <div class="card column" onclick="editEmployee('@applicant.Id')">
+            <div class="cardDescription">
+                <p class="applicantName">@applicant.FirstName @applicant.LastName</p>
+                <p class="applicantPosition">@string.Join(", ", applicant.CompanyHistory.Select(x => x.CompanyName))</p>
+                <p class="applicantTags">
+                    @{
+                        //TODO replace with a collection of skills, order from most skilled to less
+                        var tags = string.IsNullOrEmpty(applicant.Skills)
+                            ? Enumerable.Empty<string>()
+                            : applicant.Skills.Split(',');
+                        foreach (var tag in tags)
+                        {
+                            <span class="tag">@tag</span>
+                        }
+                    }
+                </p>
+            </div>
+        </div>
+    }
+}
