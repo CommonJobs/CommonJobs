@@ -100,8 +100,8 @@
                 lastNameField: "LastName",
                 firstNameField: "FirstName"
             },
-            Photo: { controlLink: "CjApplicantPicture" }, 
-            Starred:
+            Photo: { controlLink: "CjApplicantPicture" },
+            IsHighlighted:
             { 
                 controlLink: "Toggle",
                 onTemplate: _.template('<img width="13" height="13" border="0" class="on" src="/Content/Images/star_on.gif">'),
