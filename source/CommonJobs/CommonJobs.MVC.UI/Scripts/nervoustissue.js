@@ -763,7 +763,12 @@
             var viewDataBinder = this;
             var controlClass = options.controlLink ? options.controlLink : Nervoustissue.UILinking.Text;
             if (_.isString(controlClass)) {
-                controlClass = Nervoustissue.UILinking[controlClass];
+                var aux = Nervoustissue.UILinking[controlClass];
+                if (!_.isFunction(aux)) {
+                    alert("Nervoustissue.js: " + controlClass + " is not a valid control");
+                    return;
+                }
+                controlClass = aux;
             }
 
             var myoptions = { viewDataBinder: viewDataBinder, model: model };

@@ -27,6 +27,7 @@
         initCollectionField: function (fieldName) {
             this.set(fieldName, new App.Notes(this.get(fieldName)));
             this.get(fieldName).on("add remove reset change", function () { this.trigger("change"); }, this);
+            this.get(fieldName).parentModel = this;
         },
         updateSalaries: function () {
             var sortedSalaries = _.chain(this.get("SalaryChanges").toJSON()).sortBy(function (x) { return x.RealDate; }).pluck("Salary");
@@ -81,6 +82,18 @@
         }
     });
 
+    Nervoustissue.UILinking.CjEmployeeAttachment = Nervoustissue.UILinking.Attachment.extend({
+        template: _.template('<span class="upload-element">'
+                                   + '    <span class="view-editable-empty">Sin archivo adjunto</span>'
+                                   + '</span>'
+                                   + '<span class="view-attached" style="display: none;">'
+                                   + '    Adjunto: <span class="view-editable-content"></span>'
+                                   + '<button class="view-editable-clear">-</button>'
+                                   + '</span>'),
+        uploadUrl: function () { return "/Employees/Attachment/" + /* TODO */this.model.collection.parentModel.get('Id'); },
+        attachedUrl: function (value) { return "/Employees/Attachment/" + /* TODO */this.model.collection.parentModel.get('Id') + "?" + "fileName=" + value.FileName; }
+    });
+
     App.EditEmployeeAppViewDataBinder = Nervoustissue.FormBinder.extend({
         dataBindings:
             {
@@ -91,7 +104,7 @@
                     lastNameField: "LastName",
                     firstNameField: "FirstName"
                 },
-                Photo: { controlLink: "CjEmployeePicture" }, 
+                Photo: { controlLink: "CjEmployeePicture" },
                 IsGraduated: { controlLink: "Options", options: [{ value: false, text: "No recibido" }, { value: true, text: "Recibido"}] },
                 BirthDate: { controlLink: "Date", valueToViewText: formatLongDateWithYears },
                 MaritalStatus: { controlLink: "Options", options: [{ value: 0, text: "Soltero" }, { value: 1, text: "Casado" }, { value: 2, text: "Divorciado"}] },
@@ -104,9 +117,10 @@
                     item:
                     {
                         controlLink: "Compound",
-                        template: _.template('<span data-bind="date"></span> | <span data-bind="text"></span>'),
+                        template: _.template('<span data-bind="date"></span> | <span data-bind="attachment"></span> <div data-bind="text"></div>'),
                         items:
                         [
+                            { controlLink: "CjEmployeeAttachment", name: "attachment", field: "Attachment" },
                             { controlLink: "Date", name: "date", field: "RealDate" },
                             { controlLink: "MultilineText", name: "text", field: "Note" }
                         ]

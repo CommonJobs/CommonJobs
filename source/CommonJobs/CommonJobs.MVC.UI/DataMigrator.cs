@@ -141,9 +141,9 @@ namespace CommonJobs.MVC.UI
                 HealthInsurance = "Swiss Medical",
                 HiringDate = DateTime.Parse("2010-07-07"),
                 InitialPosition = "Junior Developer",
-                Notes = new List<CommonJobs.Domain.SimpleNote>()
+                Notes = new List<CommonJobs.Domain.NoteWithAttachment>()
                 {
-                    new CommonJobs.Domain.SimpleNote() 
+                    new CommonJobs.Domain.NoteWithAttachment() 
                     {
                         RealDate = DateTime.Parse("2011-07-07"), 
                         RegisterDate = DateTime.Parse("2011-07-08"),

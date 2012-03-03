@@ -11,7 +11,8 @@
                 //TODO: move RegisterDate to a better place
                 RegisterDate: new Date().toJSON(),
                 Note: "",
-                IsInterviewNote: false
+                NoteType: 0,
+                Attachment: null
             }
         }
     });
@@ -28,6 +29,7 @@
         initCollectionField: function (fieldName) {
             this.set(fieldName, new App.Notes(this.get(fieldName)));
             this.get(fieldName).on("add remove reset change", function () { this.trigger("change"); }, this);
+            this.get(fieldName).parentModel = this;
         },
         initialize: function () {
             this.initCollectionField("Notes");
@@ -76,6 +78,18 @@
         }
     });
 
+    Nervoustissue.UILinking.CjApplicantAttachment = Nervoustissue.UILinking.Attachment.extend({
+        template: _.template('<span class="upload-element">'
+                                   + '    <span class="view-editable-empty">Sin archivo adjunto</span>'
+                                   + '</span>'
+                                   + '<span class="view-attached" style="display: none;">'
+                                   + '    Adjunto: <span class="view-editable-content"></span>'
+                                   + '<button class="view-editable-clear">-</button>'
+                                   + '</span>'),
+        uploadUrl: function () { return "/applicants/Attachment/" + /* TODO */this.model.collection.parentModel.get('Id'); },
+        attachedUrl: function (value) { return "/applicants/Attachment/" + /* TODO */this.model.collection.parentModel.get('Id') + "?" + "fileName=" + value.FileName; }
+    });
+
     App.EditApplicantAppViewDataBinder = Nervoustissue.FormBinder.extend({
         dataBindings:
         {
@@ -118,12 +132,13 @@
                 item:
                 {
                     controlLink: "Compound",
-                    template: _.template('<span data-bind="date"></span> (<span data-bind="NoteType"></span>) <span data-bind="text"></span> '),
+                    template: _.template('<span data-bind="date"></span> (<span data-bind="NoteType"></span>) | <span data-bind="attachment"></span> <div data-bind="text"></div> '),
                     items:
                     [
                         { controlLink: "Date", name: "date", field: "RealDate" },
+                        { controlLink: "CjApplicantAttachment", name: "attachment", field: "Attachment" },
                         { controlLink: "MultilineText", name: "text", field: "Note" },
-                        { controlLink: "Options", name: "NoteType", field: "NoteType", options: [{ value: 0, text: "Nota Genérica" }, { value: 1, text: "Nota de entrevista" }, { value: 2, text: "Nota de entrevistsa técnica"}] }
+                        { controlLink: "Options", name: "NoteType", field: "NoteType", options: [{ value: 0, text: "Nota Genérica" }, { value: 1, text: "Nota de entrevista" }, { value: 2, text: "Nota de entrevista técnica"}] }
                     ]
                 }
             }

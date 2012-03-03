@@ -84,7 +84,7 @@ namespace CommonJobs.Mvc
             var attachment = new Attachment()
             {
                 //It could be ussefull: ContentLength = inputFile.ContentLength,
-                ContentType = DetectMimeType(inputFile),
+                ContentType = DetectMimeType(originalFileName, inputFile),
                 OriginalFileName = originalFileName,
                 FileName = CreateUniqueFileName(originalFileName),
             };
@@ -104,10 +104,32 @@ namespace CommonJobs.Mvc
             }
         }
 
-        private string DetectMimeType(InputFileDescriptor inputFile)
+        private string DetectMimeType(string fileName, InputFileDescriptor inputFile)
         {
-            //TODO: detect mime from content or extension
-            return "image/jpeg";
+            //TODO: detect mime from content or file extension
+            var extension = Path.GetExtension(fileName);
+            switch (extension)
+            {
+                case ".jpg":
+                case ".jpeg":
+                    return "image/jpeg";
+                case ".pjpg":
+                case ".pjpeg":
+                    return "image/pjpeg";
+                case ".gif":
+                    return "image/gif";
+                case ".png":
+                    return "image/png";
+                case ".svg":
+                    return "image/svg+xml";
+                case ".tif":
+                case ".tiff":
+                    return "image/tiff";
+                case ".ico":
+                    return "image/vnd.microsoft.icon";
+                default:
+                    return "application/octet-stream";
+            }
         }
 
         public Stream ReadAttachment(string resourceId, string division, string fileName)

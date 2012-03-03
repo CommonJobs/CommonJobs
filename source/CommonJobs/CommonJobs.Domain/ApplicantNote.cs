@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CommonJobs.Domain
 {
-    public class ApplicantNote: SimpleNote
+    public class ApplicantNote : NoteWithAttachment
     {
         public ApplicantNoteType NoteType { get; set; }
     }
