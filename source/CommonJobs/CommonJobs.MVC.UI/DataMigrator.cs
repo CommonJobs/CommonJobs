@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using Raven.Client;
 using CommonJobs.Domain;
+using System.Dynamic;
 
 namespace CommonJobs.MVC.UI
 {
@@ -19,17 +20,59 @@ namespace CommonJobs.MVC.UI
             lazySession = new Lazy<IDocumentSession>(store.OpenSession);
         }
 
+        private int current = -1;
+        private int step = 1;
+
+        public void UpdateStep(Action action)
+        {
+            if (current < 0)
+                current = GetDataVersion();
+            if (current < step) 
+            {
+                if (action != null)
+                {
+                    action();
+                }
+                SetDataVersion(step);
+            }
+            step++;
+        }
 
         public void Execute()
         {
-            if (ThereIsNoEmployeeData())
-                CreateSampleEmployeeData();
-
-            if (ThereIsNoApplicantData())
-                CreatesampleApplicantdata();
+            current = -1;
+            step = 1;
+            //Do not remove or alter the order
+            UpdateStep(CreateDataVersionDocument);
+            UpdateStep(CreateSampleEmployeeData);
+            UpdateStep(CreateSampleApplicantdata);
+            //Insert new actions here
+            Session.SaveChanges();
         }
 
-        private void CreatesampleApplicantdata()
+        private void CreateDataVersionDocument()
+        {
+            dynamic document = new ExpandoObject();
+            document.DataVersion = 0;
+            Session.Store(document, "DataVersionDocument");
+        }
+
+        private int GetDataVersion()
+        {
+            var document = Session.Load<dynamic>("DataVersionDocument");
+            if (document == null)
+                return 0;
+            else
+                return document.DataVersion;
+        }
+
+        private void SetDataVersion(int version)
+        {
+            var document = Session.Load<dynamic>("DataVersionDocument");
+            document.DataVersion = version;
+        }
+
+        private void CreateSampleApplicantdata()
         {
             var applicant = new Applicant()
             {
@@ -77,7 +120,6 @@ namespace CommonJobs.MVC.UI
             };
 
             Session.Store(applicant);
-            Session.SaveChanges();
         }
 
         private void CreateSampleEmployeeData()
@@ -132,7 +174,6 @@ namespace CommonJobs.MVC.UI
                 WorkingHours = 40
             };
             Session.Store(employee);
-            Session.SaveChanges();
         }
 
         private bool ThereIsNoEmployeeData()
