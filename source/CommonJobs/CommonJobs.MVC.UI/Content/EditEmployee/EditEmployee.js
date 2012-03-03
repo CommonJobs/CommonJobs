@@ -61,6 +61,26 @@
         return "$ " + value;
     };
 
+    Nervoustissue.UILinking.CjEmployeePicture = Nervoustissue.UILinking.Attachment.extend({
+        //TODO: generalize it
+        uploadUrl: function () { return "/Employees/Photo/" + this.model.get('Id'); },
+        attachedUrl: function (value) { return "/Employees/Photo/" + this.model.get('Id') + "?" + "fileName=" + value.Thumbnail.FileName; },
+        template: _.template('<div class="upload-element">'
+                           + '    <img class="view-editable-empty" alt="No Photo" src="/Content/Images/NoPicture.png" title="No Photo" style="display:none"/>'
+                           + '</div>'
+                           + '<span class="view-attached" style="display: none;">'
+                           + '    <div class="view-editable-content"></div>'
+                           + '    <button class="view-editable-clear">-</button>'
+                           + '</span>'),
+        valueToContent: function (value) {
+            if (!value) { return ""; }
+            return $("<a />")
+                .attr("href", this.attachedUrl(value))
+                .attr("target", "_blank")
+                .append($("<img />").attr("src", "/Employees/Photo/" + this.model.get('Id') + "?" + "fileName=" + value.Thumbnail.FileName));
+        }
+    });
+
     App.EditEmployeeAppViewDataBinder = Nervoustissue.FormBinder.extend({
         dataBindings:
             {
@@ -71,7 +91,7 @@
                     lastNameField: "LastName",
                     firstNameField: "FirstName"
                 },
-                //Photo: { control: "picture" },
+                Photo: { controlLink: "CjEmployeePicture" }, 
                 IsGraduated: { controlLink: "Options", options: [{ value: false, text: "No recibido" }, { value: true, text: "Recibido"}] },
                 BirthDate: { controlLink: "Date", valueToViewText: formatLongDateWithYears },
                 MaritalStatus: { controlLink: "Options", options: [{ value: 0, text: "Soltero" }, { value: 1, text: "Casado" }, { value: 2, text: "Divorciado"}] },
