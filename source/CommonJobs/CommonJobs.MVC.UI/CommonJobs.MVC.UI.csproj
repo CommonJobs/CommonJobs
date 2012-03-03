@@ -107,6 +107,7 @@
     <Content Include="Content\EditApplicant\EditApplicant.js" />
     <Content Include="Content\Images\star_off.gif" />
     <Content Include="Content\Images\star_on.gif" />
+    <Content Include="Scripts\nervoustissue-uploader.js" />
     <Content Include="Views\Applicants\Edit.cshtml" />
     <Content Include="Views\Applicants\Index.cshtml" />
     <Content Include="Views\Applicants\List.cshtml" />
