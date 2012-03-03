@@ -16,20 +16,32 @@ namespace CommonJobs.MVC.UI.Controllers
         //
         // GET: /Applicants/
 
-        public ViewResult Index(SearchModel searchModel)
+        public ViewResult Index(ApplicantSearchModel searchModel)
         {
             return View(searchModel);
         }
 
-        public ViewResult List(SearchModel searchModel)
+        public ViewResult List(ApplicantSearchModel searchModel)
         {
-            var list = RavenSession
+            var query = RavenSession
                 .Query<Applicant_QuickSearch.Query, Applicant_QuickSearch>()
                 .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite())
                 .Where(x => x.ByTerm.StartsWith(searchModel.Term))
                 .As<Applicant>()
+                .AsEnumerable(); //TODO: add proper index in raven db and remove this line.
+
                 //.AsProjection<EmployeeListView>() // EmployeeListView is an optimization, we do not need it yet
-                .ToList();
+
+            if (searchModel.HaveInterview)
+                query = query.Where(x => x.HaveInterview);
+
+            if (searchModel.HaveTechnicalInterview)
+                query = query.Where(x => x.HaveTechnicalInterview);
+
+            if (searchModel.Highlighted)
+                query = query.Where(x => x.IsHighlighted);
+
+            var list = query.ToList();
             return View(list);
         }
 

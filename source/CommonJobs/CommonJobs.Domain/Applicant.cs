@@ -19,5 +19,15 @@ namespace CommonJobs.Domain
 
         [Display(Name = "Notas")]
         public List<ApplicantNote> Notes { get; set; }
+
+        public bool HaveInterview
+        {
+            get { return Notes != null && Notes.Any(x => x.NoteType == ApplicantNoteType.InteviewNote); }
+        }
+
+        public bool HaveTechnicalInterview
+        {
+            get { return Notes != null && Notes.Any(x => x.NoteType == ApplicantNoteType.TechnicalInterviewNote); }
+        }
     }
 }

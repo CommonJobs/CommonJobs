@@ -1,4 +1,4 @@
-﻿@model CommonJobs.MVC.UI.Models.SearchModel
+﻿@model CommonJobs.MVC.UI.Models.ApplicantSearchModel
 @{
     ViewBag.Title = "Postulantes | CommonJobs";
     ScriptManager.RegisterCss(Url.Content("~/Content/ie.css"), priority: 500, htmlAttributes: new { media = "screen" }, patchCondition: "lte IE 9");
@@ -12,14 +12,32 @@
         $("#resultCount").html($(".card").length - 1);
     }
 
+    function search(ajax) {
+        //TODO Fix hardcoded URLs
+
+        var query = "?term=" + encodeURI($("#quickSearch").val());
+        if ($("#HighlightedCheck").prop("checked"))
+            query += "&Highlighted=true";
+        if ($("#HaveInterviewCheck").prop("checked"))
+            query += "&HaveInterview=true";
+        if ($("#HaveTechnicalInterviewCheck").prop("checked"))
+            query += "&HaveTechnicalInterview=true";
+
+
+        if (ajax) {
+            $(".results").load("/Applicants/List" + query, null, setResultCount);
+        } else {
+            location.href = "/Applicants" + query;
+        }
+    }
+
     $(function () {
         $("#quickSearch").keyup(function (e) {
-            //TODO Fix hardcoded URLs
-            if (e.keyCode == 13) {
-                location.href = "/Applicants?term=" + $(this).val();
-            } else {
-                $(".results").load("/Applicants/List?term=" + encodeURI($(this).val()), null, setResultCount);
-            }
+            search(e.keyCode != 13);
+        });
+
+        $("#HighlightedCheck, #HaveInterviewCheck, #HaveTechnicalInterviewCheck").change(function () {
+            search(true); 
         });
 
         setResultCount();
@@ -34,6 +52,9 @@
             <form method="get" action="@Url.Action("Index")">
                 <label for="quickSearch">Búsqueda rápida:</label>
                 <input type="text" id="quickSearch" name="Term" value="@Model.Term" />
+                <label>Highlighted</label><input type="checkbox" id="HighlightedCheck" name="Highlighted" @(Model.Highlighted ? "checked='checked'" : string.Empty) />
+                <label>Interview</label><input type="checkbox" id="HaveInterviewCheck" name="HaveInterview" @(Model.HaveInterview ? "checked='checked'" : string.Empty)/>
+                <label>Tecnical Interview</label><input type="checkbox" id="HaveTechnicalInterviewCheck" name="HaveTechnicalInterview" @(Model.HaveTechnicalInterview ? "checked='checked'" : string.Empty) />
                 <input type="submit" id="quickSearchSubmit" value=">>" />
             </form>
             <p id="resultCountNotice">Hay <span id="resultCount">0</span> resultado(s).</p>
