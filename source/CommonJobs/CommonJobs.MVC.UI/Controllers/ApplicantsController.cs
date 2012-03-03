@@ -11,7 +11,7 @@ using Raven.Client.Linq;
 
 namespace CommonJobs.MVC.UI.Controllers
 {
-    public class ApplicantsController : CommonJobsController
+    public class ApplicantsController : MvcBase.PersonController
     {
         //
         // GET: /Applicants/
@@ -83,6 +83,24 @@ namespace CommonJobs.MVC.UI.Controllers
             var applicant = RavenSession.Load<Applicant>(id);
             RavenSession.Delete(applicant);
             return RedirectToAction("Index");
+        }
+
+        // GET: /Employees/Photo/applicants/2?fileName=thumb_foto1_medium-xdagbypk.jpg&contentType=image/jpeg
+        // GET: /Employees/Photo/applicants/2?fileName=thumb_foto1_medium-xdagbypk.jpg
+        // GET: /Employees/Photo/applicants/2
+        // GET: /Employees/Photo/applicants/2?thumbnail=true
+        [HttpGet]
+        public ActionResult Photo(string id, bool thumbnail = false, string fileName = null, string contentType = "image/jpeg")
+        {
+            var employee = RavenSession.Load<Applicant>(id);
+            return GetPersonPhoto(employee, thumbnail, fileName, contentType);
+        }
+
+        [HttpPost]
+        public ActionResult Photo(string id, string fileName)
+        {
+            var employee = RavenSession.Load<Applicant>(id);
+            return SavePhoto(employee, fileName, Request);
         }
     }
 }

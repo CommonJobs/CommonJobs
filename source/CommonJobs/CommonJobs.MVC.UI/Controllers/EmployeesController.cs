@@ -10,10 +10,11 @@ using CommonJobs.MVC.UI.Models;
 using Raven.Client.Linq;
 using CommonJobs.Mvc;
 using CommonJobs.Domain;
+using CommonJobs.Utilities;
 
 namespace CommonJobs.MVC.UI.Controllers
 {
-    public class EmployeesController : CommonJobsController
+    public class EmployeesController : MvcBase.PersonController
     {
         //
         // GET: /Employees/
@@ -85,6 +86,24 @@ namespace CommonJobs.MVC.UI.Controllers
             var employee = RavenSession.Load<Employee>(id);
             RavenSession.Delete(employee);
             return RedirectToAction("Index");
+        }
+
+        // GET: /Employees/Photo/employees/2?fileName=thumb_foto1_medium-xdagbypk.jpg&contentType=image/jpeg
+        // GET: /Employees/Photo/employees/2?fileName=thumb_foto1_medium-xdagbypk.jpg
+        // GET: /Employees/Photo/employees/2
+        // GET: /Employees/Photo/employees/2?thumbnail=true
+        [HttpGet]
+        public ActionResult Photo(string id, bool thumbnail = false, string fileName = null, string contentType = "image/jpeg")
+        {
+            var employee = RavenSession.Load<Employee>(id);
+            return GetPersonPhoto(employee, thumbnail, fileName, contentType);
+        }
+
+        [HttpPost]
+        public ActionResult Photo(string id, string fileName)
+        {
+            var employee = RavenSession.Load<Employee>(id);
+            return SavePhoto(employee, fileName, Request);
         }
     }
 }
