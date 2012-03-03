@@ -10,6 +10,8 @@ namespace CommonJobs.Domain
     {
         public string Id { get; set; }
 
+        public ImageAttachment Photo { get; set; }
+
         [Display(Name = "Nombre")]
         public string FirstName { get; set; }
 
