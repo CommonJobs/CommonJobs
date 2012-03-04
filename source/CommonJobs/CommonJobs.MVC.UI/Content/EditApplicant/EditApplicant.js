@@ -104,8 +104,8 @@
             IsHighlighted:
             { 
                 controlLink: "Toggle",
-                onTemplate: _.template('<img width="13" height="13" border="0" class="on" src="/Content/Images/star_on.gif">'),
-                offTemplate: _.template('<img width="13" height="13" border="0" class="on" src="/Content/Images/star_off.gif">')
+                onTemplate: _.template('<img border="0" class="on" src="/Content/Images/GreenTick.png" alt="Resaltado" title="Resaltado">'),
+                offTemplate: _.template('<img border="0" class="on" src="/Content/Images/GrayTick.png" alt="Resaltado" title="Resaltado">')
             },
             BirthDate: { controlLink: "Date", valueToViewText: formatLongDateWithYears },
             MaritalStatus: { controlLink: "Options", options: [{ value: 0, text: "Soltero" }, { value: 1, text: "Casado" }, { value: 2, text: "Divorciado"}] },
