@@ -16,6 +16,7 @@ namespace CommonJobs.Infrastructure.Indexes
             public bool Highlighted { get; set; }
             public bool HaveInterview { get; set; }
             public bool HaveTechnicalInterview { get; set; }
+            public string SortingField { get; set; }
         }
 
         public Applicant_QuickSearch()
@@ -32,7 +33,8 @@ namespace CommonJobs.Infrastructure.Indexes
                                     },
                                     Highlighted = applicant.IsHighlighted,
                                     HaveInterview = applicant.HaveInterview,
-                                    HaveTechnicalInterview = applicant.HaveTechnicalInterview 
+                                    HaveTechnicalInterview = applicant.HaveTechnicalInterview,
+                                    SortingField = string.Format("{0}, {1}", applicant.LastName, applicant.FirstName) 
                                 };
             Indexes.Add(x => x.ByTerm, FieldIndexing.Analyzed);
         }

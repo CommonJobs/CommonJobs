@@ -37,6 +37,7 @@ namespace CommonJobs.MVC.UI.Controllers
             if (searchModel.Highlighted)
                 query = query.Where(x => x.Highlighted);
 
+            query = query.OrderBy(x => x.SortingField);
             //.AsProjection<EmployeeListView>() // EmployeeListView is an optimization, we do not need it yet
             var list = query.As<Applicant>().ToList();
             return View(list);

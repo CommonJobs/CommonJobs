@@ -31,6 +31,7 @@ namespace CommonJobs.MVC.UI.Controllers
                 .Query<Employee_QuickSearch.Query, Employee_QuickSearch>()
                 .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite())
                 .Where(x => x.ByTerm.StartsWith(searchModel.Term))
+                .OrderBy(x => x.SortingField)
                 .As<Employee>()
                 //.AsProjection<EmployeeListView>() // EmployeeListView is an optimization, we do not need it yet
                 .ToList();
