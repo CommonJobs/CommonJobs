@@ -50,12 +50,16 @@
         <div class="twocol"></div>
         <div class="eightcol quickSearchContainer">
             <form method="get" action="@Url.Action("Index")">
-                <label for="quickSearch">Búsqueda rápida:</label>
-                <input type="text" id="quickSearch" name="Term" value="@Model.Term" />
-                <label>Highlighted</label><input type="checkbox" id="HighlightedCheck" name="Highlighted" @(Model.Highlighted ? "checked='checked'" : string.Empty) />
-                <label>Interview</label><input type="checkbox" id="HaveInterviewCheck" name="HaveInterview" @(Model.HaveInterview ? "checked='checked'" : string.Empty)/>
-                <label>Tecnical Interview</label><input type="checkbox" id="HaveTechnicalInterviewCheck" name="HaveTechnicalInterview" @(Model.HaveTechnicalInterview ? "checked='checked'" : string.Empty) />
-                <input type="submit" id="quickSearchSubmit" value=">>" />
+                <div class="mainSearch">
+                    <label for="quickSearch">Búsqueda rápida:</label>
+                    <input type="text" id="quickSearch" name="Term" value="@Model.Term" />
+                    <input type="submit" id="quickSearchSubmit" value=">>" />
+                </div>
+                <div class="secondarySearch">
+                    <label>Resaltado</label><input type="checkbox" id="HighlightedCheck" name="Highlighted" @(Model.Highlighted ? "checked='checked'" : string.Empty) />
+                    <label>¿Con entrevistas?</label><input type="checkbox" id="HaveInterviewCheck" name="HaveInterview" @(Model.HaveInterview ? "checked='checked'" : string.Empty)/>
+                    <label>¿Con entrevistas técnicas?</label><input type="checkbox" id="HaveTechnicalInterviewCheck" name="HaveTechnicalInterview" @(Model.HaveTechnicalInterview ? "checked='checked'" : string.Empty) />
+                </div>
             </form>
             <p id="resultCountNotice">Hay <span id="resultCount">0</span> resultado(s).</p>
         </div>
