@@ -13,6 +13,9 @@ namespace CommonJobs.Infrastructure.Indexes
         public class Query
         {
             public string ByTerm { get; set; }
+            public bool Highlighted { get; set; }
+            public bool HaveInterview { get; set; }
+            public bool HaveTechnicalInterview { get; set; }
         }
 
         public Applicant_QuickSearch()
@@ -26,7 +29,10 @@ namespace CommonJobs.Infrastructure.Indexes
                                         applicant.LastName,
                                         string.Join(" ", applicant.CompanyHistory.Select(x => x.CompanyName)),
                                         applicant.Skills
-                                    }
+                                    },
+                                    Highlighted = applicant.IsHighlighted,
+                                    HaveInterview = applicant.HaveInterview,
+                                    HaveTechnicalInterview = applicant.HaveTechnicalInterview 
                                 };
             Indexes.Add(x => x.ByTerm, FieldIndexing.Analyzed);
         }

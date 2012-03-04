@@ -26,11 +26,7 @@ namespace CommonJobs.MVC.UI.Controllers
             var query = RavenSession
                 .Query<Applicant_QuickSearch.Query, Applicant_QuickSearch>()
                 .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite())
-                .Where(x => x.ByTerm.StartsWith(searchModel.Term))
-                .As<Applicant>()
-                .AsEnumerable(); //TODO: add proper index in raven db and remove this line.
-
-                //.AsProjection<EmployeeListView>() // EmployeeListView is an optimization, we do not need it yet
+                .Where(x => x.ByTerm.StartsWith(searchModel.Term));
 
             if (searchModel.HaveInterview)
                 query = query.Where(x => x.HaveInterview);
@@ -39,9 +35,10 @@ namespace CommonJobs.MVC.UI.Controllers
                 query = query.Where(x => x.HaveTechnicalInterview);
 
             if (searchModel.Highlighted)
-                query = query.Where(x => x.IsHighlighted);
+                query = query.Where(x => x.Highlighted);
 
-            var list = query.ToList();
+            //.AsProjection<EmployeeListView>() // EmployeeListView is an optimization, we do not need it yet
+            var list = query.As<Applicant>().ToList();
             return View(list);
         }
 
