@@ -749,6 +749,7 @@
             me.$(".view-editable-clear").on("click", function () { me.clearData(); });
             me.uploader = new Nervoustissue.Uploader.UploaderElement(me.$(".upload-element"), {
                 action: _.isString(me.uploadUrl) ? me.uploadUrl : me.uploadUrl(),
+                allowedExtensions: [ "jpg", "jpeg", "gif", "png" ],
                 onComplete: function (id, fileName, responseJSON) {
                     if (responseJSON && responseJSON.success) {
                         me.linkedData.write(responseJSON.attachment);
