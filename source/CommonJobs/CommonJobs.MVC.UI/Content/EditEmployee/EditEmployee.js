@@ -78,6 +78,7 @@
             return $("<a />")
                 .attr("href", this.attachedUrl(value))
                 .attr("target", "_blank")
+                .addClass("photoLink")
                 .append($("<img />").attr("src", "/Employees/Photo/" + this.model.get('Id') + "?" + "fileName=" + value.Thumbnail.FileName).attr("width", "100").attr("height", "100"));
         }
     });
