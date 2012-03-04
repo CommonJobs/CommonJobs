@@ -14,22 +14,25 @@
     <link href="../../Content/EditApplicant/EditApplicant.less" rel="stylesheet" type="text/css" />
     <script src="../../Content/EditApplicant/EditApplicant.js" type="text/javascript"></script>
 }
-<div id="EditApplicantApp">
+<div id="EditApplicantApp" class="edition-normal">
     <div class="back-link">
         @Html.ActionLink("« Volver al listado", "Index")
     </div>
 
     <div class="editing-bar">
-        <p><button class="editionFullEdit">Editar todos los campos</button></p>
+        <div class="edition-mode">
+            <h3>Modo de edición</h3>
+            <p><button class="editionNormal">Normal</button></p>
+            <p><button class="editionFullEdit">Todos los campos</button></p>
+            <!-- <p><button class="editionReadonly">Solo lectura</button></p> -->
+        </div>
         <div class="change-management-options">
+            <h3>Cambios</h3>
             <p><button class="saveApplicant">Guardar cambios</button></p>
             <p><button class="reloadApplicant">Descartar cambios</button></p>
         </div>
-        <!--
-        <p><button class="editionNormal">editionNormal</button></p>
-        <p><button class="editionReadonly">editionReadonly</button></p>
-        -->
         <div class="danger-zone">
+            <h3>Precaución!</h3>
             <p><button class="deleteApplicant">Eliminar postulante</button></p>
         </div>
     </div>

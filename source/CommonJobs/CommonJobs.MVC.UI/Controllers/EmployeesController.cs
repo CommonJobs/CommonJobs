@@ -63,7 +63,8 @@ namespace CommonJobs.MVC.UI.Controllers
                 new { 
                     employee = employee,    
                     saveEmployeeUrl = Url.Action("SaveEmployee"),
-                    getEmployeeUrl = Url.Action("GetEmployee")
+                    getEmployeeUrl = Url.Action("GetEmployee"),
+                    deleteEmployeeUrl = Url.Action("DeleteEmployee")
                 }, 
                 500);
             return View(employee);
@@ -80,8 +81,8 @@ namespace CommonJobs.MVC.UI.Controllers
             RavenSession.Store(employee);
             return GetEmployee(employee.Id);
         }
-         
-        public ActionResult Delete(string id)
+
+        public ActionResult DeleteEmployee(string id)
         {
             var employee = RavenSession.Load<Employee>(id);
             RavenSession.Delete(employee);

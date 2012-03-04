@@ -195,9 +195,21 @@
                 window.location = ViewData.deleteApplicantUrl + this.model.get('Id');
             }
         },
-        editionNormal: function () { this.dataBinder.editionMode("normal"); },
-        editionReadonly: function () { this.dataBinder.editionMode("readonly"); },
-        editionFullEdit: function () { this.dataBinder.editionMode("full-edit"); }
+        editionNormal: function () {
+            this.dataBinder.editionMode("normal");
+            this.$el.removeClass("edition-readonly edition-full-edit");
+            this.$el.addClass("edition-normal");
+        },
+        editionReadonly: function () {
+            this.dataBinder.editionMode("readonly");
+            this.$el.removeClass("edition-normal edition-full-edit");
+            this.$el.addClass("edition-readonly");
+        },
+        editionFullEdit: function () {
+            this.dataBinder.editionMode("full-edit");
+            this.$el.removeClass("edition-readonly edition-normal");
+            this.$el.addClass("edition-full-edit");
+        }
     });
 
 }).call(this);

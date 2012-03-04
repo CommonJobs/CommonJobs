@@ -160,7 +160,8 @@
             "click .reloadEmployee": "reloadEmployee",
             "click .editionNormal": "editionNormal",
             "click .editionReadonly": "editionReadonly",
-            "click .editionFullEdit": "editionFullEdit"
+            "click .editionFullEdit": "editionFullEdit",
+            "click .deleteEmployee": "deleteEmployee"
         },
         saveEmployee: function () {
             var me = this;
@@ -190,9 +191,26 @@
                 }
             });
         },
-        editionNormal: function () { this.dataBinder.editionMode("normal"); },
-        editionReadonly: function () { this.dataBinder.editionMode("readonly"); },
-        editionFullEdit: function () { this.dataBinder.editionMode("full-edit"); }
+        deleteEmployee: function () {
+            if (confirm("¿Está seguro de que desea eliminar este empleado?")) {
+                window.location = ViewData.deleteEmployeeUrl + this.model.get('Id');
+            }
+        },
+        editionNormal: function () {
+            this.dataBinder.editionMode("normal");
+            this.$el.removeClass("edition-readonly edition-full-edit");
+            this.$el.addClass("edition-normal");
+        },
+        editionReadonly: function () {
+            this.dataBinder.editionMode("readonly");
+            this.$el.removeClass("edition-normal edition-full-edit");
+            this.$el.addClass("edition-readonly");
+        },
+        editionFullEdit: function () {
+            this.dataBinder.editionMode("full-edit");
+            this.$el.removeClass("edition-readonly edition-normal");
+            this.$el.addClass("edition-full-edit");
+        }
     });
 
 }).call(this);

@@ -31,7 +31,7 @@
         <div class="card column" onclick="editEmployee('@employee.Id')">
             <img class="cardPicture" src="@employeePic" alt="@employee.FirstName @employee.LastName's picture" />
             <div class="cardDescription">
-                <p class="employeeName">@employee.FirstName @employee.LastName</p>
+                <p class="employeeName">@Html.ActionLink(employee.FirstName + " " + employee.LastName, "Edit", new { id = employee.Id })</p>
                 <p class="employeePosition">@employee.CurrentPosition</p>
                 <p class="employeeTags">
                     @{
