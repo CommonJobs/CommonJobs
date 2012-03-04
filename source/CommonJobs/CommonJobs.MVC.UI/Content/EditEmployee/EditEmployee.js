@@ -67,7 +67,7 @@
         uploadUrl: function () { return "/Employees/Photo/" + this.model.get('Id'); },
         attachedUrl: function (value) { return "/Employees/Photo/" + this.model.get('Id') + "?" + "fileName=" + value.Thumbnail.FileName; },
         template: _.template('<div class="upload-element">'
-                           + '    <img class="view-editable-empty" alt="No Photo" src="/Content/Images/NoPicture.png" title="No Photo" style="display:none"/>'
+                           + '    <img class="view-editable-empty" width="100" height="100" alt="No Photo" src="/Content/Images/NoPicture.png" title="No Photo" style="display:none"/>'
                            + '</div>'
                            + '<span class="view-attached" style="display: none;">'
                            + '    <div class="view-editable-content"></div>'
@@ -78,7 +78,7 @@
             return $("<a />")
                 .attr("href", this.attachedUrl(value))
                 .attr("target", "_blank")
-                .append($("<img />").attr("src", "/Employees/Photo/" + this.model.get('Id') + "?" + "fileName=" + value.Thumbnail.FileName));
+                .append($("<img />").attr("src", "/Employees/Photo/" + this.model.get('Id') + "?" + "fileName=" + value.Thumbnail.FileName).attr("width", "100").attr("height", "100"));
         }
     });
 
