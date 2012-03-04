@@ -24,7 +24,9 @@
         
     foreach (var applicant in Model)
     {
-        <div class="card column" onclick="editApplicant('@applicant.Id')">
+        var highlightedClass = applicant.IsHighlighted ? "highlighted" : "";
+        
+        <div class="card column @highlightedClass" onclick="editApplicant('@applicant.Id')">
             <div class="cardDescription">
                 <p class="applicantName">@applicant.FirstName @applicant.LastName</p>
                 <p class="applicantPosition">@(applicant.CompanyHistory != null ? string.Join(", ", applicant.CompanyHistory.Select(x => x.CompanyName)) : "(Sin experiencia previa)")</p>
