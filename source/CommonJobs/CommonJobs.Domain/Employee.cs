@@ -97,9 +97,6 @@ namespace CommonJobs.Domain
         [Display(Name = "Historial de sueldos")]
         public List<SalaryChange> SalaryChanges { get; set; }
 
-        [Display(Name = "URL de Imagen")]
-        public string PictureUrl { get; set; }
-
         ////It is not nessesary now, I was testing something
         //public IEnumerable<Event> Events 
         //{
