@@ -14,6 +14,7 @@ namespace CommonJobs.Infrastructure.Indexes
         public class Query
         {
             public string ByTerm { get; set; }
+            public string SortingField { get; set; }
         }
 
         public Employee_QuickSearch()
@@ -44,7 +45,8 @@ namespace CommonJobs.Infrastructure.Indexes
                                        employee.Seniority,
                                        employee.Degree,
                                        employee.College
-                                   }
+                                   },
+                                   SortingField = string.Format("{0}, {1}", employee.LastName, employee.FirstName)
                                };
             Indexes.Add(x => x.ByTerm, FieldIndexing.Analyzed);
 		}

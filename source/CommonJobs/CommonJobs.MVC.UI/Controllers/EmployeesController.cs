@@ -10,10 +10,11 @@ using CommonJobs.MVC.UI.Models;
 using Raven.Client.Linq;
 using CommonJobs.Mvc;
 using CommonJobs.Domain;
+using CommonJobs.Utilities;
 
 namespace CommonJobs.MVC.UI.Controllers
 {
-    public class EmployeesController : CommonJobsController
+    public class EmployeesController : MvcBase.PersonController
     {
         //
         // GET: /Employees/
@@ -30,6 +31,7 @@ namespace CommonJobs.MVC.UI.Controllers
                 .Query<Employee_QuickSearch.Query, Employee_QuickSearch>()
                 .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite())
                 .Where(x => x.ByTerm.StartsWith(searchModel.Term))
+                .OrderBy(x => x.SortingField)
                 .As<Employee>()
                 //.AsProjection<EmployeeListView>() // EmployeeListView is an optimization, we do not need it yet
                 .ToList();
@@ -62,7 +64,8 @@ namespace CommonJobs.MVC.UI.Controllers
                 new { 
                     employee = employee,    
                     saveEmployeeUrl = Url.Action("SaveEmployee"),
-                    getEmployeeUrl = Url.Action("GetEmployee")
+                    getEmployeeUrl = Url.Action("GetEmployee"),
+                    deleteEmployeeUrl = Url.Action("DeleteEmployee")
                 }, 
                 500);
             return View(employee);
@@ -79,12 +82,50 @@ namespace CommonJobs.MVC.UI.Controllers
             RavenSession.Store(employee);
             return GetEmployee(employee.Id);
         }
-         
-        public ActionResult Delete(string id)
+
+        public ActionResult DeleteEmployee(string id)
         {
             var employee = RavenSession.Load<Employee>(id);
             RavenSession.Delete(employee);
             return RedirectToAction("Index");
         }
+
+        // GET: /Employees/Photo/employees/2?fileName=thumb_foto1_medium-xdagbypk.jpg&contentType=image/jpeg
+        // GET: /Employees/Photo/employees/2?fileName=thumb_foto1_medium-xdagbypk.jpg
+        // GET: /Employees/Photo/employees/2
+        // GET: /Employees/Photo/employees/2?thumbnail=true
+        [HttpGet]
+        public ActionResult Photo(string id, bool thumbnail = false, string fileName = null, string contentType = "image/jpeg")
+        {
+            var employee = RavenSession.Load<Employee>(id);
+            return GetPersonPhoto(employee, thumbnail, fileName, contentType);
+        }
+
+        [HttpPost]
+        public ActionResult Photo(string id, string fileName)
+        {
+            var employee = RavenSession.Load<Employee>(id);
+            return SavePhoto(employee, fileName, Request);
+        }
+
+        // GET: /Employees/Attachment/employees/2?fileName=foto1_medium-xdagbypk.jpg&contentType=image/jpeg
+        // GET: /Employees/Attachment/employees/2?fileName=foto1_medium-xdagbypk.jpg
+        // GET: /Employees/Attachment/employees/2
+        [HttpGet, ActionName("Attachment")]
+        public ActionResult GetAttachment(string id, string fileName)
+        {
+            var employee = RavenSession.Load<Employee>(id);
+            return File(new AttachmentsHelper().ReadAttachment(employee.Id, "Attachment", fileName), "application/octet-stream", fileName);
+        }
+
+        [HttpPost, ActionName("Attachment")]
+        public ActionResult PostAttachment(string id, string fileName)
+        {
+            var employee = RavenSession.Load<Employee>(id);
+            var attachmentHelper = new AttachmentsHelper();
+            var attachment = attachmentHelper.SaveAttachment(employee.Id, "Attachment", Request, fileName);
+            return Json(new { success = true, attachment = attachment });
+        }
+
     }
 }

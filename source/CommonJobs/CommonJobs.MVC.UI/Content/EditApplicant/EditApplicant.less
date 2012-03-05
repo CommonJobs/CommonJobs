@@ -9,6 +9,10 @@ body
 	float: left;
 }
 
+.edition-full-edit .editionFullEdit  { display: none }
+.edition-normal .editionNormal  { display: none }
+.edition-readonly .editionReadonly  { display: none }
+
 #EditApplicantApp 
 {
 	width: 800px;
@@ -18,7 +22,9 @@ body
 	position: relative;
 }
 
-.editable-field .view-editable:hover,.view-editable-empty:hover
+.qq-upload-button-focus {outline:1px dotted black;}
+
+.qq-upload-button-hover, .editable-field .view-editable:hover, .editable-field .view-editable-empty:hover
 {
     background-color: rgb(230, 242, 255);
 	background-color: rgba(0, 128, 255, 0.1);
@@ -140,7 +146,13 @@ h3
 	margin-top: 1em;
 }
 
-.personal-data, .Employment-data
+.Employment-data
+{
+	float:  left;
+	width: 100%;
+}
+
+.personal-data
 {
 	float:  left;
 	width: 45%;
@@ -177,4 +189,22 @@ h3
 .markdown-content ul ul ul
 {
 	list-style-type:circle
+}
+
+.danger-zone
+{
+	border: 2px solid red;
+	padding: 0.5em;
+	margin:  1em 0em;
+}
+
+h1.fullName
+{
+	float:  left;
+	clear:  both;
+}
+
+.isHighligted 
+{
+	float:  right;
 }

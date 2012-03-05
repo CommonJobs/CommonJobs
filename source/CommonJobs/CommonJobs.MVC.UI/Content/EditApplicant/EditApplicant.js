@@ -11,7 +11,8 @@
                 //TODO: move RegisterDate to a better place
                 RegisterDate: new Date().toJSON(),
                 Note: "",
-                IsInterviewNote: false
+                NoteType: 0,
+                Attachment: null
             }
         }
     });
@@ -28,6 +29,7 @@
         initCollectionField: function (fieldName) {
             this.set(fieldName, new App.Notes(this.get(fieldName)));
             this.get(fieldName).on("add remove reset change", function () { this.trigger("change"); }, this);
+            this.get(fieldName).parentModel = this;
         },
         initialize: function () {
             this.initCollectionField("Notes");
@@ -56,6 +58,38 @@
         return "$ " + value;
     };
 
+    Nervoustissue.UILinking.CjApplicantPicture = Nervoustissue.UILinking.Attachment.extend({
+        //TODO: generalize it
+        uploadUrl: function () { return "/applicants/Photo/" + this.model.get('Id'); },
+        attachedUrl: function (value) { return "/applicants/Photo/" + this.model.get('Id') + "?" + "fileName=" + value.Thumbnail.FileName; },
+        template: _.template('<div class="upload-element">'
+                           + '    <img class="view-editable-empty" alt="No Photo" src="/Content/Images/NoPicture.png" title="No Photo" style="display:none"/>'
+                           + '</div>'
+                           + '<span class="view-attached" style="display: none;">'
+                           + '    <div class="view-editable-content"></div>'
+                           + '    <button class="view-editable-clear">-</button>'
+                           + '</span>'),
+        valueToContent: function (value) {
+            if (!value) { return ""; }
+            return $("<a />")
+                .attr("href", this.attachedUrl(value))
+                .attr("target", "_blank")
+                .append($("<img />").attr("src", "/Employees/Photo/" + this.model.get('Id') + "?" + "fileName=" + value.Thumbnail.FileName));
+        }
+    });
+
+    Nervoustissue.UILinking.CjApplicantAttachment = Nervoustissue.UILinking.Attachment.extend({
+        template: _.template('<span class="upload-element">'
+                                   + '    <span class="view-editable-empty">Sin archivo adjunto</span>'
+                                   + '</span>'
+                                   + '<span class="view-attached" style="display: none;">'
+                                   + '    Adjunto: <span class="view-editable-content"></span>'
+                                   + '<button class="view-editable-clear">-</button>'
+                                   + '</span>'),
+        uploadUrl: function () { return "/applicants/Attachment/" + /* TODO */this.model.collection.parentModel.get('Id'); },
+        attachedUrl: function (value) { return "/applicants/Attachment/" + /* TODO */this.model.collection.parentModel.get('Id') + "?" + "fileName=" + value.FileName; }
+    });
+
     App.EditApplicantAppViewDataBinder = Nervoustissue.FormBinder.extend({
         dataBindings:
         {
@@ -65,6 +99,13 @@
                 dataLink: "FullName",
                 lastNameField: "LastName",
                 firstNameField: "FirstName"
+            },
+            Photo: { controlLink: "CjApplicantPicture" },
+            IsHighlighted:
+            { 
+                controlLink: "Toggle",
+                onTemplate: _.template('<img border="0" class="on" src="/Content/Images/GreenTick.png" alt="Resaltado" title="Resaltado">'),
+                offTemplate: _.template('<img border="0" class="on" src="/Content/Images/GrayTick.png" alt="Resaltado" title="Resaltado">')
             },
             BirthDate: { controlLink: "Date", valueToViewText: formatLongDateWithYears },
             MaritalStatus: { controlLink: "Options", options: [{ value: 0, text: "Soltero" }, { value: 1, text: "Casado" }, { value: 2, text: "Divorciado"}] },
@@ -91,12 +132,13 @@
                 item:
                 {
                     controlLink: "Compound",
-                    template: _.template('<span data-bind="date"></span> | Entrevista: <span data-bind="IsInterviewNote"></span> <span data-bind="text"></span> '),
+                    template: _.template('<span data-bind="date"></span> (<span data-bind="NoteType"></span>) | <span data-bind="attachment"></span> <div data-bind="text"></div> '),
                     items:
                     [
                         { controlLink: "Date", name: "date", field: "RealDate" },
-                        { controlLink: "Markdown", name: "text", field: "Note" },
-                        { controlLink: "Options", name: "IsInterviewNote", field: "IsInterviewNote", options: [{ value: false, text: "No" }, {value: true, text: "Sí" }] }
+                        { controlLink: "CjApplicantAttachment", name: "attachment", field: "Attachment" },
+                        { controlLink: "MultilineText", name: "text", field: "Note" },
+                        { controlLink: "Options", name: "NoteType", field: "NoteType", options: [{ value: 0, text: "Nota Genérica" }, { value: 1, text: "Nota de entrevista" }, { value: 2, text: "Nota de entrevista técnica"}] }
                     ]
                 }
             }
@@ -117,7 +159,8 @@
             "click .reloadApplicant": "reloadApplicant",
             "click .editionNormal": "editionNormal",
             "click .editionReadonly": "editionReadonly",
-            "click .editionFullEdit": "editionFullEdit"
+            "click .editionFullEdit": "editionFullEdit",
+            "click .deleteApplicant": "deleteApplicant"
         },
         saveApplicant: function () {
             var me = this;
@@ -147,9 +190,26 @@
                 }
             });
         },
-        editionNormal: function () { this.dataBinder.editionMode("normal"); },
-        editionReadonly: function () { this.dataBinder.editionMode("readonly"); },
-        editionFullEdit: function () { this.dataBinder.editionMode("full-edit"); }
+        deleteApplicant: function () {
+            if (confirm("¿Está seguro de que desea eliminar este postulante?")) {
+                window.location = ViewData.deleteApplicantUrl + this.model.get('Id');
+            }
+        },
+        editionNormal: function () {
+            this.dataBinder.editionMode("normal");
+            this.$el.removeClass("edition-readonly edition-full-edit");
+            this.$el.addClass("edition-normal");
+        },
+        editionReadonly: function () {
+            this.dataBinder.editionMode("readonly");
+            this.$el.removeClass("edition-normal edition-full-edit");
+            this.$el.addClass("edition-readonly");
+        },
+        editionFullEdit: function () {
+            this.dataBinder.editionMode("full-edit");
+            this.$el.removeClass("edition-readonly edition-normal");
+            this.$el.addClass("edition-full-edit");
+        }
     });
 
 }).call(this);

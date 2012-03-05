@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using Raven.Client;
 using CommonJobs.Domain;
+using System.Dynamic;
 
 namespace CommonJobs.MVC.UI
 {
@@ -19,17 +20,59 @@ namespace CommonJobs.MVC.UI
             lazySession = new Lazy<IDocumentSession>(store.OpenSession);
         }
 
+        private int current = -1;
+        private int step = 1;
+
+        public void UpdateStep(Action action)
+        {
+            if (current < 0)
+                current = GetDataVersion();
+            if (current < step) 
+            {
+                if (action != null)
+                {
+                    action();
+                }
+                SetDataVersion(step);
+            }
+            step++;
+        }
 
         public void Execute()
         {
-            if (ThereIsNoEmployeeData())
-                CreateSampleEmployeeData();
-
-            if (ThereIsNoApplicantData())
-                CreatesampleApplicantdata();
+            current = -1;
+            step = 1;
+            //Do not remove or alter the order
+            UpdateStep(CreateDataVersionDocument);
+            UpdateStep(CreateSampleEmployeeData);
+            UpdateStep(CreateSampleApplicantdata);
+            //Insert new actions here
+            Session.SaveChanges();
         }
 
-        private void CreatesampleApplicantdata()
+        private void CreateDataVersionDocument()
+        {
+            dynamic document = new ExpandoObject();
+            document.DataVersion = 0;
+            Session.Store(document, "DataVersionDocument");
+        }
+
+        private int GetDataVersion()
+        {
+            var document = Session.Load<dynamic>("DataVersionDocument");
+            if (document == null)
+                return 0;
+            else
+                return document.DataVersion;
+        }
+
+        private void SetDataVersion(int version)
+        {
+            var document = Session.Load<dynamic>("DataVersionDocument");
+            document.DataVersion = version;
+        }
+
+        private void CreateSampleApplicantdata()
         {
             var applicant = new Applicant()
             {
@@ -52,19 +95,31 @@ namespace CommonJobs.MVC.UI
                 College = "MIT",
                 IsGraduated = true,
                 IsHighlighted = true,
-                Notes = new List<SimpleNote>()
+                Notes = new List<ApplicantNote>()
                 {
-                    new SimpleNote() {
+                    new ApplicantNote() {
                         Note = "Parece muy buena opción, su experiencia previa es increíble.",
                         RealDate = DateTime.Parse("2012-02-15"), 
-                        RegisterDate = DateTime.Parse("2012-02-15")
+                        RegisterDate = DateTime.Parse("2012-02-15"),
+                        NoteType = ApplicantNoteType.InteviewNote
+                    },
+                    new ApplicantNote() {
+                        Note = "Demostró tener amplios conocimientos de project management.",
+                        RealDate = DateTime.Parse("2012-02-16"),
+                        RegisterDate = DateTime.Parse("2012-03-01"),
+                        NoteType = ApplicantNoteType.TechnicalInterviewNote
+                    },
+                    new ApplicantNote() {
+                        Note = "Tiene pensado mudarse a Mar del Plata.",
+                        RealDate = DateTime.Parse("2012-02-16"),
+                        RegisterDate = DateTime.Parse("2012-02-16"),
+                        NoteType = ApplicantNoteType.GeneralNote
                     }
                 },
                 Skills = "C#, Python, Ruby, Perl, HTML, CSS, HTML5, JS, SEO"
             };
 
             Session.Store(applicant);
-            Session.SaveChanges();
         }
 
         private void CreateSampleEmployeeData()
@@ -86,9 +141,9 @@ namespace CommonJobs.MVC.UI
                 HealthInsurance = "Swiss Medical",
                 HiringDate = DateTime.Parse("2010-07-07"),
                 InitialPosition = "Junior Developer",
-                Notes = new List<CommonJobs.Domain.SimpleNote>()
+                Notes = new List<CommonJobs.Domain.NoteWithAttachment>()
                 {
-                    new CommonJobs.Domain.SimpleNote() 
+                    new CommonJobs.Domain.NoteWithAttachment() 
                     {
                         RealDate = DateTime.Parse("2011-07-07"), 
                         RegisterDate = DateTime.Parse("2011-07-08"),
@@ -119,7 +174,6 @@ namespace CommonJobs.MVC.UI
                 WorkingHours = 40
             };
             Session.Store(employee);
-            Session.SaveChanges();
         }
 
         private bool ThereIsNoEmployeeData()

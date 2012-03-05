@@ -13,6 +13,10 @@ namespace CommonJobs.Infrastructure.Indexes
         public class Query
         {
             public string ByTerm { get; set; }
+            public bool Highlighted { get; set; }
+            public bool HaveInterview { get; set; }
+            public bool HaveTechnicalInterview { get; set; }
+            public string SortingField { get; set; }
         }
 
         public Applicant_QuickSearch()
@@ -22,21 +26,15 @@ namespace CommonJobs.Infrastructure.Indexes
                                 {
                                     ByTerm = new object[]
                                     {
-                                        applicant.Id,
                                         applicant.FirstName,
                                         applicant.LastName,
-                                        applicant.Address,
-                                        applicant.Telephones,
-                                        applicant.MaritalStatus,
-                                        string.Format("{0:yyyy-MM-dd}", applicant.BirthDate),
-                                        string.Format("{0:dd-MM-yyyy}", applicant.BirthDate),
-                                        string.Format("{0:MM-dd-yyyy}", applicant.BirthDate),
-                                        string.Format("{0:MMMM}", applicant.BirthDate),
-                                        applicant.Email,
-                                        applicant.College,
-                                        applicant.Degree,
+                                        string.Join(" ", applicant.CompanyHistory.Select(x => x.CompanyName)),
                                         applicant.Skills
-                                    }
+                                    },
+                                    Highlighted = applicant.IsHighlighted,
+                                    HaveInterview = applicant.HaveInterview,
+                                    HaveTechnicalInterview = applicant.HaveTechnicalInterview,
+                                    SortingField = string.Format("{0}, {1}", applicant.LastName, applicant.FirstName) 
                                 };
             Indexes.Add(x => x.ByTerm, FieldIndexing.Analyzed);
         }

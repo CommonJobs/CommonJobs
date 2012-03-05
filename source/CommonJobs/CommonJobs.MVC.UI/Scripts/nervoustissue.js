@@ -1,4 +1,4 @@
-﻿//     Nervoustissue.js 0.0.1
+﻿//     Nervoustissue.js 0.0.2
 
 //     (c) 2012 Andrés Moschini
 //     Nervoustissue may be freely distributed under the MIT license.
@@ -68,12 +68,12 @@
 
     // Require Backbone, if we're on the server, and it's not already present.
     var Backbone = root.Backbone;
-    if (!Backbone && (typeof require !== 'undefined')) Backbone = require('underscore');
+    if (!Backbone && (typeof require !== 'undefined')) Backbone = require('backbone');
 
 
     // For Nervoustissue's purposes, jQuery, Zepto, or Ender owns the `$` variable.
     // (los otros no los conozco pero supongo que está bien)
-    var $ = root.jQuery || root.Zepto || root.ender;
+    var $ = Nervoustissue._domLibrary = root.jQuery || root.Zepto || root.ender;
 
     // Set the JavaScript library that will be used for DOM manipulation and
     // Ajax calls (a.k.a. the `$` variable). By default Nervoustissue will use: jQuery,
@@ -81,7 +81,7 @@
     // alternate JavaScript library (or a mock library for testing your views
     // outside of a browser).
     Nervoustissue.setDomLibrary = function (lib) {
-        $ = lib;
+        $ = Nervoustissue._domLibrary = lib;
     };
 
     // Runs Nervoustissue.js in *noConflict* mode, returning the `Nervoustissue` variable
@@ -230,8 +230,11 @@
             getTemplateModel: function () {
                 return null;
             },
-            applyFormEditMode: function (mode) {
-            }
+            applyFormEditMode: function () {
+                this.applyMode("view");
+            },
+            mode: "view",
+            applyMode: function (mode) { }
         });
 
         m.Base.extend = Backbone.Model.extend;
@@ -259,9 +262,10 @@
                 this.linkedData.onAdd(this.addEl, this);
                 this.linkedData.each(this.addEl, this);
             },
-            applyEditMode: function () {
+            applyMode: function (mode) {
+                var formMode = this.viewDataBinder.editionMode();
                 var buttons = this.$el.find(".add-button,.remove-button");
-                if (this.viewDataBinder.editionMode() == "readonly") {
+                if (formMode == "readonly") {
                     buttons.hide();
                 } else {
                     buttons.show();
@@ -275,16 +279,21 @@
 
         m.BaseModel = m.Base.extend({
             _initialize: function () {
-                this.$view = this.$el.find(".view-editable");
-                this.$viewEmpty = this.$el.find(".view-editable-empty");
-                this.$editor = this.$el.find(".editor-editable");
-                this.writing = false;
-                this.linkedData.onChange(this.refresh, this);
-                this.applyMode("view");
-                this.bindUI();
-                this.refresh();
+                var me = this;
+                me.$view = this.$(".view-editable");
+                var $viewContent = this.$(".view-editable-content");
+                me.$viewContent = $viewContent.length ? $viewContent : me.$view;
+                me.$viewEmpty = this.$(".view-editable-empty");
+                me.$editor = this.$(".editor-editable");
+                me.writing = false;
+                me.linkedData.onChange(this.refresh, this);
+                me.bindUI();
+                me.applyMode("view");
+                me.refresh();
             },
-            mode: "view",
+            $: function (selector) {
+                return this.$el.find(selector);
+            },
             applyMode: function (mode) {
                 if (!mode) {
                     mode = this.mode;
@@ -308,16 +317,13 @@
             },
             dataLink: Nervoustissue.DataLinking.Model,
             originalValue: null,
-            applyFormEditMode: function (mode) {
-                this.applyMode();
-            },
             focusOnEditor: function () {
                 if (this.$editor.css("display") != "none") {
                     this.$editor.focus().select();
                 }
             },
             refreshView: function (text) {
-                this.$view.html(text);
+                this.$viewContent.html(text);
             },
             refreshEdit: function (value) {
                 this.$editor.val(value);
@@ -338,6 +344,9 @@
                 this.$viewEmpty.hide();
                 this.$editor.show();
             },
+            clearData: function () {
+                this.linkedData.write(null);
+            },
             undoEdition: function () {
                 this.linkedData.write(this.originalValue);
             },
@@ -348,14 +357,14 @@
             },
             refresh: function () {
                 var value = this.linkedData.read();
-                this.refreshView(typeof value == "undefined" || value === null ? '' : this.valueToViewText(value));
+                this.refreshView(this.dataEmpty(value) ? '' : this.valueToContent(value));
                 if (!this.writing) {
                     this.refreshEdit(value);
                     this.applyMode();
                 }
             },
-            valueToViewText: function (value) {
-                return value.toString();
+            valueToContent: function (value) {
+                return value;
             }
         });
 
@@ -373,7 +382,10 @@
             showEdit: function () { },
             refreshEdit: function (value) { },
             readUI: function () { },
-            bindUI: function () { }
+            bindUI: function () { },
+            valueToContent: function (value) {
+                return value.toString();
+            }
         });
 
         m.Text = m.BaseModel.extend({
@@ -404,6 +416,48 @@
                 me.$el.on("keyup", ".editor-editable", null, function (e) {
                     me.onKeyUp(e);
                 });
+            },
+            valueToContent: function (value) {
+                return value.toString();
+            }
+        });
+
+        m.MultilineText = m.Text.extend({
+            template: _.template('<span class="view-editable-empty">Sin datos</span><div class="view-editable markdown-content" style="display: none;"></div><div class="editor-editable" style="display: none;"><textarea  cols=50 rows=10 class="mdd_editor"></textarea></div>'),
+            bindUI: function () {
+                var me = this;
+                me.$el.on("click", ".view-editable,.view-editable-empty", null, function () {
+                    me.onEditableClick();
+                });
+                me.$el.on("keyup", ".editor-editable textarea", null, function (e) {
+                    me.onKeyUp(e);
+                });
+            },
+            onKeyUp: function (e) {
+                if (e.keyCode == 27) {
+                    this.undoEdition();
+                    this.applyMode("view");
+                } else {
+                    this.update();
+                    //I am waiting for ctrl + enter to accept changes
+                    if (e.ctrlKey && e.keyCode == 13) {
+                        this.applyMode("view");
+                    }
+                }
+            },
+            focusOnEditor: function () {
+                if (this.$editor.css("display") != "none") {
+                    this.$editor.find("textarea").focus().select();
+                }
+            },
+            refreshEdit: function (value) {
+                this.$editor.find("textarea").val(value);
+            },
+            readUI: function () {
+                return this.$editor.find("textarea").val();
+            },
+            valueToContent: function (value) {
+                return $("<pre></pre>").text(value);
             }
         });
 
@@ -451,7 +505,7 @@
                 //TODO: separar de alguna forma $editor y .editor-editable ya que están representando tanto la vista de edición como el elemento que tiene el valor.
                 return this.$editor.find("textarea").val();
             },
-            valueToViewText: function (value) {
+            valueToContent: function (value) {
                 //return value;
                 var md = new MarkdownDeep.Markdown();
                 md.ExtraMode = true;
@@ -470,7 +524,7 @@
 
         m.Date = m.BaseModel.extend({
             template: _.template('<span class="view-editable-empty">Sin datos</span><span class="view-editable" style="display: none;"></span><input class="editor-editable" type="text" value="" style="display: none;"/>'),
-            valueToViewText: function (value) {
+            valueToContent: function (value) {
                 return Globalize.format(new Date(value), "d");
             },
             refreshEdit: function (value) {
@@ -526,12 +580,64 @@
             }
         });
 
+        m.Toggle = m.BaseModel.extend({
+            template: _.template('<a class="view-editable"></a>'),
+            onTemplate: _.template('On'),
+            offTemplate: _.template('Off'),
+            valueToContent: function (value) {
+                return value ? this.onTemplate() : this.offTemplate();
+            },
+            readUI: null,
+            refreshView: function (text) {
+                this.$view.html(text);
+            },
+            applyMode: function (mode) {
+                if (!mode) {
+                    mode = this.mode;
+                }
+                var formMode = this.viewDataBinder.editionMode();
+                this.showView();
+                if (formMode == "readonly") {
+                    this.$view.removeAttr("href");
+                } else {
+                    this.$view.attr("href", "javascript:void(null)");
+                }
+            },
+            dataEmpty: function () { return false; },
+            onEditableClick: function () { this.toggle(); },
+            toggle: function () {
+                var formMode = this.viewDataBinder.editionMode();
+                if (formMode != "readonly") {
+                    var value = this.linkedData.read();
+                    this.linkedData.write(!value);
+                }
+            },
+            onKeyUp: function (e) {
+                if (e.keyCode == 32) {
+                    this.toggle();
+                }
+            },
+            bindUI: function () {
+                var me = this;
+                me.$el.on("click", ".view-editable", null, function () {
+                    me.onEditableClick();
+                });
+                me.$el.on("keyup", ".view-editable", null, function (e) {
+                    me.onKeyUp(e);
+                });
+            },
+            refreshEdit: function () { }
+        });
+
         m.Options = m.BaseModel.extend({
             getTemplateModel: function () {
                 return { Model: this.options };
             },
             template: _.template('<span class="view-editable-empty">Sin datos</span><span class="view-editable" style="display: none;"></span><select class="editor-editable" style="display: none;"><% for (var i in Model) { %><option value="<%= Model[i].value %>"><%= Model[i].text %></option><% } %></select>'),
-            valueToViewText: function (value) {
+            refreshEdit: function (value) {
+                this.$editor.val(value === null ? '' : value.toString());
+            },
+            valueToContent: function (value) {
                 for (var i in this.options) {
                     if (value.toString() == this.options[i].value.toString()) {
                         return this.options[i].text;
@@ -650,7 +756,7 @@
             var viewDataBinder = this;
             var $els = this.$el.find('[data-bind]');
             $els.each(function () {
-                $el = $(this);
+                var $el = $(this);
                 var bindId = $el.attr("data-bind");
                 var dataBindCfg = viewDataBinder.dataBindings[bindId];
                 viewDataBinder.dataBind($el, viewDataBinder.model, _.extend({ field: bindId }, dataBindCfg));
@@ -660,7 +766,12 @@
             var viewDataBinder = this;
             var controlClass = options.controlLink ? options.controlLink : Nervoustissue.UILinking.Text;
             if (_.isString(controlClass)) {
-                controlClass = Nervoustissue.UILinking[controlClass];
+                var aux = Nervoustissue.UILinking[controlClass];
+                if (!_.isFunction(aux)) {
+                    alert("Nervoustissue.js: " + controlClass + " is not a valid control");
+                    return;
+                }
+                controlClass = aux;
             }
 
             var myoptions = { viewDataBinder: viewDataBinder, model: model };
