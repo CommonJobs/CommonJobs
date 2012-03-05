@@ -20,20 +20,22 @@ h1 {
   padding-bottom: 2px;
 }
 h2 {
-  font-size:1.2em;
+  font-size:1.3em;
   text-align: center;
   border-bottom: 1px solid #632423;
-  text-transform: uppercase;
+  /*text-transform: uppercase; -- issue: wkhtmltopdf renders styled-uppercase as real uppercase in the TOC */
+  font-variant: small-caps;
   font-family: 'Times New Roman';
   color: #632423;
   font-weight: lighter;
   padding-bottom: 2px;
 }
 h3 {
-  font-size:1em;
+  font-size:1.2em;
   text-align: center;
   color: #632423;
-  text-transform: uppercase;
+  /*text-transform: uppercase; -- issue: wkhtmltopdf renders styled-uppercase as real uppercase in the TOC */
+  font-variant: small-caps;
   border-top: 1px dashed #632423;
   border-bottom: 1px dashed #632423;
   margin-top: 1em;
