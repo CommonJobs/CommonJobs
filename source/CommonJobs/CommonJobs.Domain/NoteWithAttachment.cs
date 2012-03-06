@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.ComponentModel.DataAnnotations;
+using CommonJobs.Utilities;
 
 namespace CommonJobs.Domain
 {
-    public class SalaryChange : Event
+    public class NoteWithAttachment : SimpleNote
     {
-        [Display(Name = "Salary")]
-        [DataType(DataType.Currency)]
-        public decimal Salary { get; set; }
+        public Attachment Attachment { get; set; }
     }
 }

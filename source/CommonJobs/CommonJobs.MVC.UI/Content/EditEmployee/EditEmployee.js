@@ -27,6 +27,7 @@
         initCollectionField: function (fieldName) {
             this.set(fieldName, new App.Notes(this.get(fieldName)));
             this.get(fieldName).on("add remove reset change", function () { this.trigger("change"); }, this);
+            this.get(fieldName).parentModel = this;
         },
         updateSalaries: function () {
             var sortedSalaries = _.chain(this.get("SalaryChanges").toJSON()).sortBy(function (x) { return x.RealDate; }).pluck("Salary");
@@ -61,6 +62,39 @@
         return "$ " + value;
     };
 
+    Nervoustissue.UILinking.CjEmployeePicture = Nervoustissue.UILinking.Attachment.extend({
+        //TODO: generalize it
+        uploadUrl: function () { return "/Employees/Photo/" + this.model.get('Id'); },
+        attachedUrl: function (value) { return "/Employees/Photo/" + this.model.get('Id') + "?" + "fileName=" + value.Thumbnail.FileName; },
+        template: _.template('<div class="upload-element">'
+                           + '    <img class="view-editable-empty" width="100" height="100" alt="No Photo" src="/Content/Images/NoPicture.png" title="No Photo" style="display:none"/>'
+                           + '</div>'
+                           + '<span class="view-attached" style="display: none;">'
+                           + '    <div class="view-editable-content"></div>'
+                           + '    <button class="view-editable-clear">-</button>'
+                           + '</span>'),
+        valueToContent: function (value) {
+            if (!value) { return ""; }
+            return $("<a />")
+                .attr("href", this.attachedUrl(value))
+                .attr("target", "_blank")
+                .addClass("photoLink")
+                .append($("<img />").attr("src", "/Employees/Photo/" + this.model.get('Id') + "?" + "fileName=" + value.Thumbnail.FileName).attr("width", "100").attr("height", "100"));
+        }
+    });
+
+    Nervoustissue.UILinking.CjEmployeeAttachment = Nervoustissue.UILinking.Attachment.extend({
+        template: _.template('<span class="upload-element">'
+                                   + '    <span class="view-editable-empty">Sin archivo adjunto</span>'
+                                   + '</span>'
+                                   + '<span class="view-attached" style="display: none;">'
+                                   + '    Adjunto: <span class="view-editable-content"></span>'
+                                   + '<button class="view-editable-clear">-</button>'
+                                   + '</span>'),
+        uploadUrl: function () { return "/Employees/Attachment/" + /* TODO */this.model.collection.parentModel.get('Id'); },
+        attachedUrl: function (value) { return "/Employees/Attachment/" + /* TODO */this.model.collection.parentModel.get('Id') + "?" + "fileName=" + value.FileName; }
+    });
+
     App.EditEmployeeAppViewDataBinder = Nervoustissue.FormBinder.extend({
         dataBindings:
             {
@@ -71,7 +105,7 @@
                     lastNameField: "LastName",
                     firstNameField: "FirstName"
                 },
-                //Photo: { control: "picture" },
+                Photo: { controlLink: "CjEmployeePicture" },
                 IsGraduated: { controlLink: "Options", options: [{ value: false, text: "No recibido" }, { value: true, text: "Recibido"}] },
                 BirthDate: { controlLink: "Date", valueToViewText: formatLongDateWithYears },
                 MaritalStatus: { controlLink: "Options", options: [{ value: 0, text: "Soltero" }, { value: 1, text: "Casado" }, { value: 2, text: "Divorciado"}] },
@@ -84,11 +118,12 @@
                     item:
                     {
                         controlLink: "Compound",
-                        template: _.template('<span data-bind="date"></span> | <span data-bind="text"></span>'),
+                        template: _.template('<span data-bind="date"></span> | <span data-bind="attachment"></span> <div data-bind="text"></div>'),
                         items:
                         [
+                            { controlLink: "CjEmployeeAttachment", name: "attachment", field: "Attachment" },
                             { controlLink: "Date", name: "date", field: "RealDate" },
-                            { controlLink: "Markdown", name: "text", field: "Note" }
+                            { controlLink: "MultilineText", name: "text", field: "Note" }
                         ]
                     }
                 },
@@ -125,7 +160,8 @@
             "click .reloadEmployee": "reloadEmployee",
             "click .editionNormal": "editionNormal",
             "click .editionReadonly": "editionReadonly",
-            "click .editionFullEdit": "editionFullEdit"
+            "click .editionFullEdit": "editionFullEdit",
+            "click .deleteEmployee": "deleteEmployee"
         },
         saveEmployee: function () {
             var me = this;
@@ -155,9 +191,26 @@
                 }
             });
         },
-        editionNormal: function () { this.dataBinder.editionMode("normal"); },
-        editionReadonly: function () { this.dataBinder.editionMode("readonly"); },
-        editionFullEdit: function () { this.dataBinder.editionMode("full-edit"); }
+        deleteEmployee: function () {
+            if (confirm("¿Está seguro de que desea eliminar este empleado?")) {
+                window.location = ViewData.deleteEmployeeUrl + this.model.get('Id');
+            }
+        },
+        editionNormal: function () {
+            this.dataBinder.editionMode("normal");
+            this.$el.removeClass("edition-readonly edition-full-edit");
+            this.$el.addClass("edition-normal");
+        },
+        editionReadonly: function () {
+            this.dataBinder.editionMode("readonly");
+            this.$el.removeClass("edition-normal edition-full-edit");
+            this.$el.addClass("edition-readonly");
+        },
+        editionFullEdit: function () {
+            this.dataBinder.editionMode("full-edit");
+            this.$el.removeClass("edition-readonly edition-normal");
+            this.$el.addClass("edition-full-edit");
+        }
     });
 
 }).call(this);

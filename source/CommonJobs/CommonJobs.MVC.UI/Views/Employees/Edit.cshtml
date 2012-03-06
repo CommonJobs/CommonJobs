@@ -5,6 +5,7 @@
     ScriptManager.RegisterCss(Url.Content("~/Scripts/mdd_styles.css"));
     ScriptManager.RegisterJs(Url.Content("~/Scripts/MarkdownDeepLib.min.js"));
     ScriptManager.RegisterJs(Url.Content("~/Scripts/nervoustissue.js"));
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/nervoustissue-uploader.js"));
     ScriptManager.RegisterCss(Url.Content("~/Content/EditEmployee/EditEmployee.less"));
     ScriptManager.RegisterJs(Url.Content("~/Content/EditEmployee/EditEmployee.js"));
 }
@@ -13,21 +14,27 @@
     <link href="../../Content/EditEmployee/EditEmployee.css" rel="stylesheet" type="text/css" />
     <script src="../../Content/EditEmployee/EditEmployee.js" type="text/javascript"></script>
 }
-<div id="EditEmployeeApp">
+<div id="EditEmployeeApp" class="edition-normal">
     <div class="back-link">
         @Html.ActionLink("« Volver al listado", "Index")
     </div>
 
     <div class="editing-bar">
-        <p><button class="editionFullEdit">Editar todos los campos</button></p>
+        <div class="edition-mode">
+            <h3>Modo de edición</h3>
+            <p><button class="editionNormal">Normal</button></p>
+            <p><button class="editionFullEdit">Todos los campos</button></p>
+            <!-- <p><button class="editionReadonly">Solo lectura</button></p> -->
+        </div>
         <div class="change-management-options">
+            <h3>Cambios</h3>
             <p><button class="saveEmployee">Guardar cambios</button></p>
             <p><button class="reloadEmployee">Descartar cambios</button></p>
         </div>
-        <!--
-        <p><button class="editionNormal">editionNormal</button></p>
-        <p><button class="editionReadonly">editionReadonly</button></p>
-        -->
+        <div class="danger-zone">
+            <h3>Precaución!</h3>
+            <p><button class="deleteEmployee">Eliminar empleado</button></p>
+        </div>
     </div>
     
     <h1 class="editable-field" data-bind="fullName"></h1>
@@ -80,18 +87,10 @@
                 <li><span class="field-name">Acuerdo:</span><span class="editable-field" data-bind="Agreement"></span></li>
                 <li>
                     <span class="field-name">Remuneración:</span>
-                    <span class="view-field" data-bind="CurrentSalary">$ 3900</span>
+                    <span class="view-field" data-bind="CurrentSalary"></span>
                     (<span class="field-name">Remuneración inicial:</span>
-                    <span class="view-field" data-bind="InitialSalary">$ 3500</span>)
+                    <span class="view-field" data-bind="InitialSalary"></span>)
                     <div class="editable-field" data-bind="SalaryChanges"></div> 
-                    <div class="editable-field">
-                        <ul>
-                            <li><span class="view-editable view-editable-prototype">15/10/2009 $3500</span><span class="remove-button">-</span></li>
-                            <li><span class="view-editable view-editable-prototype">20/7/20010 $3700 (5,7 %)</span><span class="remove-button">-</span></li>
-                            <li><span class="view-editable view-editable-prototype">5/12/2012 $3900 (5,4 %)</span><span class="remove-button">-</span></li>
-                        </ul>
-                        <span class="add-button">+</span>
-                    </div>
                 </li>
             </ul>
         </div>

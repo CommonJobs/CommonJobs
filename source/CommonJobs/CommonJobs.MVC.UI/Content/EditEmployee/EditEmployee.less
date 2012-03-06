@@ -9,6 +9,10 @@ body
 	float: left;
 }
 
+.edition-full-edit .editionFullEdit  { display: none }
+.edition-normal .editionNormal  { display: none }
+.edition-readonly .editionReadonly  { display: none }
+
 #EditEmployeeApp 
 {
 	width: 800px;
@@ -18,7 +22,9 @@ body
 	position: relative;
 }
 
-.editable-field .view-editable:hover,.view-editable-empty:hover
+.qq-upload-button-focus {outline:1px dotted black;}
+
+.qq-upload-button-hover, .editable-field .view-editable:hover, .editable-field .view-editable-empty:hover
 {
     background-color: rgb(230, 242, 255);
 	background-color: rgba(0, 128, 255, 0.1);
@@ -177,4 +183,11 @@ h3
 .markdown-content ul ul ul
 {
 	list-style-type:circle
+}
+
+.qq-upload-button-hover
+{
+	background-image: url("uploadAvatar.png");
+	background-repeat: no-repeat;
+	background-position: left top;
 }
