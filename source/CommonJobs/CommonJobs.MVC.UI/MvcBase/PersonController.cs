@@ -13,11 +13,15 @@ namespace CommonJobs.MVC.UI.MvcBase
     public abstract class PersonController : CommonJobsController
     {
         //TODO: No estoy seguro, creo que esta clase no debería existir.
+        private AttachmentsHelper attachmentsHelper = null;
+        protected AttachmentsHelper AttachmentsHelper
+        {
+            get { return attachmentsHelper ?? (attachmentsHelper = new AttachmentsHelper(RavenSession));  }
+        }
 
         protected ActionResult SavePhoto(Person person, HttpRequestBase request)
         {
-            var attachmentHelper = new AttachmentsHelper();
-            var photo = attachmentHelper.SaveAttachment(request);
+            var photo = AttachmentsHelper.SaveAttachment(request);
             var thumbnail = SaveThumbnailAttachment(photo);
             var imageAttachment = new ImageAttachment() { Original = photo, Thumbnail = thumbnail };
             return Json(new { success = true, attachment = imageAttachment });
@@ -25,15 +29,14 @@ namespace CommonJobs.MVC.UI.MvcBase
 
         private AttachmentReference SaveThumbnailAttachment(AttachmentReference photo)
         {
-            var attachmentHelper = new AttachmentsHelper();
             var thumbnailFileName = "thumb_" + photo.FileName;
 
-            var photoStream = attachmentHelper.ReadAttachment(photo.Id);
+            var photoStream = AttachmentsHelper.ReadAttachment(photo.Id);
             photoStream.Position = 0; //Find a more elegant way to do it
             //TODO: generate thumbnail
             var thumbnailStream = photoStream;
 
-            return attachmentHelper.SaveAttachment(thumbnailFileName, thumbnailStream);
+            return AttachmentsHelper.SaveAttachment(thumbnailFileName, thumbnailStream);
         }
     }
 }

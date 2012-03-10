@@ -9,11 +9,21 @@ using System.Text.RegularExpressions;
 using CommonJobs.Utilities;
 using System.Security.Cryptography;
 using CommonJobs.Domain;
+using Raven.Client;
 
 namespace CommonJobs.MVC.UI.Attachments
 {
+    //TODO: Refactorize it as commands and/or queries
+    //TODO: Mejorar otras cosas, por ejemplo tal vez no sea necesario guardar el mimeType en la referecia si el archivo esta indexado en raven
     public class AttachmentsHelper
     {
+        public AttachmentsHelper(IDocumentSession ravenSession)
+        {
+            RavenSession = ravenSession;
+        }
+
+        protected readonly IDocumentSession RavenSession;
+
         public const string FileNameRequestParameter = "fileName";
         private Regex sha1regex = new Regex("^([0-9]|[A-F]){40}$", RegexOptions.IgnoreCase);
 
@@ -22,7 +32,6 @@ namespace CommonJobs.MVC.UI.Attachments
             if (id == null || !sha1regex.IsMatch(id))
                 throw new ArgumentException(string.Format("'{0}' is not a valid SHA-1 hash", id), "id");
 
-            id = id.ToLower();
             var folder = id.Substring(0, 2);
             var filename = id.Substring(2);
 
@@ -63,28 +72,46 @@ namespace CommonJobs.MVC.UI.Attachments
         public AttachmentReference SaveAttachment(string fileName, Stream stream)
         {
             var id = CalculateSha1(stream);
-            var mimeType = DetectMimeType(fileName, stream);
-
-            var attachment = new AttachmentReference()
+            //TODO: I am loading PlainContent field here and it is not necessary, maybe it is better to change it to a query with projection
+            var attachment = RavenSession.Load<Attachment>(id);
+            if (attachment == null)
             {
-                //It could be ussefull: ContentLength = inputFile.ContentLength,
-                ContentType = mimeType,
-                FileName = fileName,
-                Id = id
-            };
+                var path = GetAttachmentPath(id);
+                var directory = Path.GetDirectoryName(path);
+                Directory.CreateDirectory(directory);
 
-            var path = GetAttachmentPath(id);
-            var directory = Path.GetDirectoryName(path);
-            Directory.CreateDirectory(directory);
-            if (!File.Exists(path))
-            {
-                using (var fs = new FileStream(path, FileMode.CreateNew, FileAccess.Write))
+                using (var fs = new FileStream(path, FileMode.Create, FileAccess.Write))
                 {
                     stream.Position = 0; //Find a more elegant way to do it
                     stream.CopyTo(fs);
                     fs.Close();
                 }
+
+                attachment = CreateAttachment(id, fileName, stream);
             }
+
+            var reference = new AttachmentReference()
+            {
+                ContentType = attachment.ContentType,
+                FileName = fileName,
+                Id = id
+            };
+
+            return reference;
+        }
+
+        //TODO: remove filename paramenter
+        private Attachment CreateAttachment(string id, string fileName, Stream stream)
+        {
+            var attachment = new Attachment()
+            {
+                ContentType = DetectMimeType(fileName, stream),
+                Id = id
+            };
+
+            //TODO: extract content
+
+            RavenSession.Store(attachment);
             return attachment;
         }
 
@@ -94,10 +121,11 @@ namespace CommonJobs.MVC.UI.Attachments
             using (var cryptoProvider = new SHA1CryptoServiceProvider())
             {
                 string hash = BitConverter.ToString(cryptoProvider.ComputeHash(stream));
-                return hash.Replace("-", "");
+                return hash.Replace("-", "").ToLower();
             }
         }
 
+        //TODO: remove filename paramenter
         private string DetectMimeType(string fileName, Stream stream)
         {
             stream.Position = 0; //Find a more elegant way to do it
@@ -129,8 +157,17 @@ namespace CommonJobs.MVC.UI.Attachments
 
         public Stream ReadAttachment(string id)
         {
+            id = id.ToLower();
+            var attachment = RavenSession.Load<Attachment>(id);
             var path = GetAttachmentPath(id);
-            return new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            if (attachment == null || !File.Exists(path))
+            {
+                return null;
+            }
+            else
+            {
+                return new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            }
         }
 
         //public Stream ReadAttachment(string resourceId, string division, Attachment attachment)
