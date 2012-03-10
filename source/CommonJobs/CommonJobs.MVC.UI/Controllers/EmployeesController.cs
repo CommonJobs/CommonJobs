@@ -90,42 +90,11 @@ namespace CommonJobs.MVC.UI.Controllers
             return RedirectToAction("Index");
         }
 
-        // GET: /Employees/Photo/employees/2?fileName=thumb_foto1_medium-xdagbypk.jpg&contentType=image/jpeg
-        // GET: /Employees/Photo/employees/2?fileName=thumb_foto1_medium-xdagbypk.jpg
-        // GET: /Employees/Photo/employees/2
-        // GET: /Employees/Photo/employees/2?thumbnail=true
-        [HttpGet]
-        public ActionResult Photo(string id, bool thumbnail = false, string fileName = null, string contentType = "image/jpeg")
-        {
-            var employee = RavenSession.Load<Employee>(id);
-            return GetPersonPhoto(employee, thumbnail, fileName, contentType);
-        }
-
         [HttpPost]
-        public ActionResult Photo(string id, string fileName)
+        public ActionResult SavePhoto(string id, string fileName)
         {
             var employee = RavenSession.Load<Employee>(id);
-            return SavePhoto(employee, fileName, Request);
+            return SavePhoto(employee, Request);
         }
-
-        // GET: /Employees/Attachment/employees/2?fileName=foto1_medium-xdagbypk.jpg&contentType=image/jpeg
-        // GET: /Employees/Attachment/employees/2?fileName=foto1_medium-xdagbypk.jpg
-        // GET: /Employees/Attachment/employees/2
-        [HttpGet, ActionName("Attachment")]
-        public ActionResult GetAttachment(string id, string fileName)
-        {
-            var employee = RavenSession.Load<Employee>(id);
-            return File(new AttachmentsHelper().ReadAttachment(employee.Id, "Attachment", fileName), "application/octet-stream", fileName);
-        }
-
-        [HttpPost, ActionName("Attachment")]
-        public ActionResult PostAttachment(string id, string fileName)
-        {
-            var employee = RavenSession.Load<Employee>(id);
-            var attachmentHelper = new AttachmentsHelper();
-            var attachment = attachmentHelper.SaveAttachment(employee.Id, "Attachment", Request, fileName);
-            return Json(new { success = true, attachment = attachment });
-        }
-
     }
 }

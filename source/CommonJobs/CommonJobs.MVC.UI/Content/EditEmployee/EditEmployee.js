@@ -64,8 +64,8 @@
 
     Nervoustissue.UILinking.CjEmployeePicture = Nervoustissue.UILinking.Attachment.extend({
         //TODO: generalize it
-        uploadUrl: function () { return "/Employees/Photo/" + this.model.get('Id'); },
-        attachedUrl: function (value) { return "/Employees/Photo/" + this.model.get('Id') + "?" + "fileName=" + value.Thumbnail.FileName; },
+        uploadUrl: function () { return "/Employees/SavePhoto/" + this.model.get('Id'); },
+        attachedUrl: function (value) { return "/Attachments/Get/" + value.Original.Id + "?contentType=" + value.Original.ContentType; },
         template: _.template('<div class="upload-element">'
                            + '    <img class="view-editable-empty" width="100" height="100" alt="No Photo" src="/Content/Images/NoPicture.png" title="No Photo" style="display:none"/>'
                            + '</div>'
@@ -79,7 +79,7 @@
                 .attr("href", this.attachedUrl(value))
                 .attr("target", "_blank")
                 .addClass("photoLink")
-                .append($("<img />").attr("src", "/Employees/Photo/" + this.model.get('Id') + "?" + "fileName=" + value.Thumbnail.FileName).attr("width", "100").attr("height", "100"));
+                .append($("<img />").attr("src", "/Attachments/Get/" + value.Thumbnail.Id + "?contentType=" + value.Thumbnail.ContentType).attr("width", "100").attr("height", "100"));
         }
     });
 
@@ -91,8 +91,8 @@
                                    + '    Adjunto: <span class="view-editable-content"></span>'
                                    + '<button class="view-editable-clear">-</button>'
                                    + '</span>'),
-        uploadUrl: function () { return "/Employees/Attachment/" + /* TODO */this.model.collection.parentModel.get('Id'); },
-        attachedUrl: function (value) { return "/Employees/Attachment/" + /* TODO */this.model.collection.parentModel.get('Id') + "?" + "fileName=" + value.FileName; }
+        uploadUrl: function () { return "/Attachments/Post"; },
+        attachedUrl: function (value) { return "/Attachments/Get/" + value.Id; }
     });
 
     App.EditEmployeeAppViewDataBinder = Nervoustissue.FormBinder.extend({

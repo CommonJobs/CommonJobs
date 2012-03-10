@@ -95,41 +95,11 @@ namespace CommonJobs.MVC.UI.Controllers
             return RedirectToAction("Index");
         }
 
-        // GET: /Employees/Photo/applicants/2?fileName=thumb_foto1_medium-xdagbypk.jpg&contentType=image/jpeg
-        // GET: /Employees/Photo/applicants/2?fileName=thumb_foto1_medium-xdagbypk.jpg
-        // GET: /Employees/Photo/applicants/2
-        // GET: /Employees/Photo/applicants/2?thumbnail=true
-        [HttpGet]
-        public ActionResult Photo(string id, bool thumbnail = false, string fileName = null, string contentType = "image/jpeg")
-        {
-            var employee = RavenSession.Load<Applicant>(id);
-            return GetPersonPhoto(employee, thumbnail, fileName, contentType);
-        }
-
         [HttpPost]
-        public ActionResult Photo(string id, string fileName)
+        public ActionResult SavePhoto(string id)
         {
             var employee = RavenSession.Load<Applicant>(id);
-            return SavePhoto(employee, fileName, Request);
-        }
-
-        // GET: /Employees/Attachment/applicants/2?fileName=foto1_medium-xdagbypk.jpg&contentType=image/jpeg
-        // GET: /Employees/Attachment/applicants/2?fileName=foto1_medium-xdagbypk.jpg
-        // GET: /Employees/Attachment/applicants/2
-        [HttpGet, ActionName("Attachment")]
-        public ActionResult GetAttachment(string id, string fileName)
-        {
-            var applicant = RavenSession.Load<Applicant>(id);
-            return File(new AttachmentsHelper().ReadAttachment(applicant.Id, "Attachment", fileName), "application/octet-stream", fileName);
-        }
-
-        [HttpPost, ActionName("Attachment")]
-        public ActionResult PostAttachment(string id, string fileName)
-        {
-            var applicant = RavenSession.Load<Applicant>(id);
-            var attachmentHelper = new AttachmentsHelper();
-            var attachment = attachmentHelper.SaveAttachment(applicant.Id, "Attachment", Request, fileName);
-            return Json(new { success = true, attachment = attachment });
+            return SavePhoto(employee, Request);
         }
     }
 }

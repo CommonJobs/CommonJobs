@@ -7,106 +7,98 @@ using System.Web;
 using CommonJobs.Utilities;
 using System.Text.RegularExpressions;
 using CommonJobs.Utilities;
+using System.Security.Cryptography;
 
 namespace CommonJobs.Mvc
 {
     public class AttachmentsHelper
     {
-        private string CreateUniqueFileName(string originalFileName = null)
+        public const string FileNameRequestParameter = "fileName";
+
+        private string GetAttachmentPath(string id)
         {
-            if (originalFileName == null)
+            if (id == null || id.Length != 40)
+                throw new ArgumentException(string.Format("'{0}' is not a valid SHA-1 hash", id), "id");
+
+            var folder = id.Substring(0, 2);
+            var filename = id.Substring(2);
+
+            return Path.Combine(
+                Path.GetFullPath(CommonJobs.Mvc.Properties.Settings.Default.UploadPath),
+                folder, 
+                filename);
+        }
+
+        public Attachment SaveAttachment(HttpRequestBase request)
+        {
+            var fileName = 
+                request.Params[FileNameRequestParameter] as string 
+                ?? request.Params["HTTP_X_FILE_NAME"] as string 
+                ?? Path.GetRandomFileName();
+            /// <summary>
+            /// To handle differences in FireFox/Chrome/Safari/Opera
+            /// </summary>
+            int contentLength;
+            string contentType;
+            Stream stream;
+            if (request.Files.Count > 0)
             {
-                return Path.GetRandomFileName();
+                var file = request.Files[0];
+                contentLength = file.ContentLength;
+                contentType = file.ContentType;
+                stream = file.InputStream;
             }
             else
             {
-                var originalWithoutExtension = Path.GetFileNameWithoutExtension(originalFileName);
-                var originalExtension = Path.GetExtension(originalFileName);
-                var random = Path.GetFileNameWithoutExtension(Path.GetRandomFileName());
-                return Slug(string.Format("{0}-{1}{2}", originalWithoutExtension, random, originalExtension));
+                contentLength = request.ContentLength;
+                contentType = request.ContentType;
+                stream = request.InputStream;
             }
+            return SaveAttachment(fileName, stream);
         }
 
-        /// <summary>
-        /// To handle differences in FireFox/Chrome/Safari/Opera
-        /// </summary>
-        private class InputFileDescriptor
+        public Attachment SaveAttachment(string fileName, Stream stream)
         {
-            public string ContentType { get; set; }
-            public int ContentLength { get; set; }
-            public Stream InputStream { get; set; }
+            var id = CalculateSha1(stream);
+            var mimeType = DetectMimeType(fileName, stream);
 
-            public InputFileDescriptor(HttpRequestBase request)
-            {
-                if (request.Files.Count > 0)
-                {
-                    var file = request.Files[0];
-                    ContentLength = file.ContentLength;
-                    ContentType = file.ContentType;
-                    InputStream = file.InputStream;
-                }
-                else
-                {
-                    ContentLength = request.ContentLength;
-                    ContentType = request.ContentType;
-                    InputStream = request.InputStream;
-                }
-            }
-        }
-
-        private string GetAttachmentPath(string resourceId, string division, string fileName)
-        {
-            //TODO: verificar que no sea posible escalar directirios, hacer tests:
-            //resourceId no modifique el path si tiene alguna ruta absoluta o ".." por ejemplo
-            //division no modifique el path si tiene "/" o ".."
-            //fileName no modifique el path si tiene "/" o ".."            
-            var sections = new List<string>() { Path.GetFullPath(CommonJobs.Mvc.Properties.Settings.Default.UploadPath) };
-            //Maybe plain is better sections.AddRange(resourceId.Split(new[] { '/' }));
-            sections.Add(Slug(resourceId));
-            sections.Add(Slug(division));
-            sections.Add(Slug(fileName));
-            return Path.Combine(sections.ToArray());
-        }
-
-        private string Slug(string text)
-        {
-            //TODO: Testear que si entra algo ya sluggedo siempre salga lo mismo
-            string str = text.ToLower();
-            str = Regex.Replace(str, @"[^a-z0-9-\.]", "-");
-            str = Regex.Replace(str, @"[-]+", "-").Trim();
-            str = Regex.Replace(str, @"[\.]+", ".").Trim();
-            return text;
-        }
-
-        public Attachment SaveAttachment(string resourceId, string division, HttpRequestBase request, string originalFileName)
-        {
-            var inputFile = new InputFileDescriptor(request);
             var attachment = new Attachment()
             {
                 //It could be ussefull: ContentLength = inputFile.ContentLength,
-                ContentType = DetectMimeType(originalFileName, inputFile),
-                OriginalFileName = originalFileName,
-                FileName = CreateUniqueFileName(originalFileName),
+                ContentType = mimeType,
+                FileName = fileName,
+                Id = id
             };
-            SaveAttachment(resourceId, division, attachment.FileName, inputFile.InputStream);
+
+            var path = GetAttachmentPath(id);
+            var directory = Path.GetDirectoryName(path);
+            Directory.CreateDirectory(directory);
+            if (!File.Exists(path))
+            {
+                using (var fs = new FileStream(path, FileMode.CreateNew, FileAccess.Write))
+                {
+                    stream.Position = 0; //Find a more elegant way to do it
+                    stream.CopyTo(fs);
+                    fs.Close();
+                }
+            }
             return attachment;
         }
 
-        public void SaveAttachment(string resourceId, string division, string fileName, Stream stream)
+        private string CalculateSha1(Stream stream)
         {
-            var path = GetAttachmentPath(resourceId, division, fileName);
-            var directory = Path.GetDirectoryName(path);
-            System.IO.Directory.CreateDirectory(directory);
-            using (var fs = new FileStream(path, FileMode.CreateNew, FileAccess.Write))
+            stream.Position = 0; //Find a more elegant way to do it
+            using (var cryptoProvider = new SHA1CryptoServiceProvider())
             {
-                stream.CopyTo(fs);
-                fs.Close();
+                string hash = BitConverter.ToString(cryptoProvider.ComputeHash(stream));
+                return hash.Replace("-", "");
             }
         }
 
-        private string DetectMimeType(string fileName, InputFileDescriptor inputFile)
+        private string DetectMimeType(string fileName, Stream stream)
         {
-            //TODO: detect mime from content or file extension
+            stream.Position = 0; //Find a more elegant way to do it
+            //TODO: detect mime from content
             var extension = Path.GetExtension(fileName);
             switch (extension)
             {
@@ -132,9 +124,9 @@ namespace CommonJobs.Mvc
             }
         }
 
-        public Stream ReadAttachment(string resourceId, string division, string fileName)
+        public Stream ReadAttachment(string id)
         {
-            var path = GetAttachmentPath(resourceId, division, fileName);
+            var path = GetAttachmentPath(id);
             return new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
         }
 

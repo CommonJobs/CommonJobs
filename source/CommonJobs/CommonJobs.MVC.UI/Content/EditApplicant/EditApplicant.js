@@ -60,8 +60,8 @@
 
     Nervoustissue.UILinking.CjApplicantPicture = Nervoustissue.UILinking.Attachment.extend({
         //TODO: generalize it
-        uploadUrl: function () { return "/applicants/Photo/" + this.model.get('Id'); },
-        attachedUrl: function (value) { return "/applicants/Photo/" + this.model.get('Id') + "?" + "fileName=" + value.Thumbnail.FileName; },
+        uploadUrl: function () { return "/Applicants/SavePhoto/" + this.model.get('Id'); },
+        attachedUrl: function (value) { return "/Attachments/Get/" + value.Original.Id + "?contentType=" + value.Original.ContentType; },
         template: _.template('<div class="upload-element">'
                            + '    <img class="view-editable-empty" alt="No Photo" src="/Content/Images/NoPicture.png" title="No Photo" style="display:none"/>'
                            + '</div>'
@@ -74,7 +74,7 @@
             return $("<a />")
                 .attr("href", this.attachedUrl(value))
                 .attr("target", "_blank")
-                .append($("<img />").attr("src", "/Employees/Photo/" + this.model.get('Id') + "?" + "fileName=" + value.Thumbnail.FileName));
+                .append($("<img />").attr("src", "/Attachments/Get/" + value.Thumbnail.Id + "?contentType=" + value.Thumbnail.ContentType));
         }
     });
 
@@ -86,8 +86,8 @@
                                    + '    Adjunto: <span class="view-editable-content"></span>'
                                    + '<button class="view-editable-clear">-</button>'
                                    + '</span>'),
-        uploadUrl: function () { return "/applicants/Attachment/" + /* TODO */this.model.collection.parentModel.get('Id'); },
-        attachedUrl: function (value) { return "/applicants/Attachment/" + /* TODO */this.model.collection.parentModel.get('Id') + "?" + "fileName=" + value.FileName; }
+        uploadUrl: function () { return "/Attachments/Post"; },
+        attachedUrl: function (value) { return "/Attachments/Get/" + value.Id; }
     });
 
     App.EditApplicantAppViewDataBinder = Nervoustissue.FormBinder.extend({
