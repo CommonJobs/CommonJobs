@@ -14,12 +14,14 @@ namespace CommonJobs.Mvc
     public class AttachmentsHelper
     {
         public const string FileNameRequestParameter = "fileName";
+        private Regex sha1regex = new Regex("^([0-9]|[A-F]){40}$", RegexOptions.IgnoreCase);
 
         private string GetAttachmentPath(string id)
         {
-            if (id == null || id.Length != 40)
+            if (id == null || !sha1regex.IsMatch(id))
                 throw new ArgumentException(string.Format("'{0}' is not a valid SHA-1 hash", id), "id");
 
+            id = id.ToLower();
             var folder = id.Substring(0, 2);
             var filename = id.Substring(2);
 
