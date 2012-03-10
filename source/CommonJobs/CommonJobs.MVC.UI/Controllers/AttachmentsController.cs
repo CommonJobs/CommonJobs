@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using CommonJobs.Mvc;
+using CommonJobs.MVC.UI.Attachments;
 
 namespace CommonJobs.MVC.UI.Controllers
 {

@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Applicant.cs" />
     <Compile Include="ApplicantNote.cs" />
+    <Compile Include="AttachmentReference.cs" />
     <Compile Include="CompanyHistory.cs" />
     <Compile Include="NoteWithAttachment.cs" />
     <Compile Include="ImageAttachment.cs" />

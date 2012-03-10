@@ -8,8 +8,9 @@ using CommonJobs.Utilities;
 using System.Text.RegularExpressions;
 using CommonJobs.Utilities;
 using System.Security.Cryptography;
+using CommonJobs.Domain;
 
-namespace CommonJobs.Mvc
+namespace CommonJobs.MVC.UI.Attachments
 {
     public class AttachmentsHelper
     {
@@ -26,12 +27,12 @@ namespace CommonJobs.Mvc
             var filename = id.Substring(2);
 
             return Path.Combine(
-                Path.GetFullPath(CommonJobs.Mvc.Properties.Settings.Default.UploadPath),
+                Path.GetFullPath(CommonJobs.MVC.UI.Properties.Settings.Default.UploadPath),
                 folder, 
                 filename);
         }
 
-        public Attachment SaveAttachment(HttpRequestBase request)
+        public AttachmentReference SaveAttachment(HttpRequestBase request)
         {
             var fileName = 
                 request.Params[FileNameRequestParameter] as string 
@@ -59,12 +60,12 @@ namespace CommonJobs.Mvc
             return SaveAttachment(fileName, stream);
         }
 
-        public Attachment SaveAttachment(string fileName, Stream stream)
+        public AttachmentReference SaveAttachment(string fileName, Stream stream)
         {
             var id = CalculateSha1(stream);
             var mimeType = DetectMimeType(fileName, stream);
 
-            var attachment = new Attachment()
+            var attachment = new AttachmentReference()
             {
                 //It could be ussefull: ContentLength = inputFile.ContentLength,
                 ContentType = mimeType,

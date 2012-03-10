@@ -6,28 +6,13 @@ using CommonJobs.Mvc;
 using System.Web.Mvc;
 using CommonJobs.Domain;
 using CommonJobs.Utilities;
+using CommonJobs.MVC.UI.Attachments;
 
 namespace CommonJobs.MVC.UI.MvcBase
 {
     public abstract class PersonController : CommonJobsController
     {
-        //TODO: remove this class
-
-        //protected ActionResult GetPersonPhoto(Person person, bool thumbnail, string id, string contentType)
-        //{
-        //    if (person != null)
-        //    {
-        //        if (string.IsNullOrEmpty(id) && person.Photo.Original != null)
-        //        {
-        //            var attachment = thumbnail ? person.Photo.Thumbnail ?? person.Photo.Original : person.Photo.Original;
-        //            id = attachment.Id;
-        //            contentType = attachment.ContentType;
-        //        }
-        //        if (!string.IsNullOrEmpty(id))
-        //            return File(new AttachmentsHelper().ReadAttachment(id), contentType);
-        //    }
-        //    return this.HttpNotFound();
-        //}
+        //TODO: No estoy seguro, creo que esta clase no debería existir.
 
         protected ActionResult SavePhoto(Person person, HttpRequestBase request)
         {
@@ -38,7 +23,7 @@ namespace CommonJobs.MVC.UI.MvcBase
             return Json(new { success = true, attachment = imageAttachment });
         }
 
-        private Attachment SaveThumbnailAttachment(Attachment photo)
+        private AttachmentReference SaveThumbnailAttachment(AttachmentReference photo)
         {
             var attachmentHelper = new AttachmentsHelper();
             var thumbnailFileName = "thumb_" + photo.FileName;
