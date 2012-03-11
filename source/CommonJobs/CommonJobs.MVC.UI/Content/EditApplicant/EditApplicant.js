@@ -107,7 +107,7 @@
                 onTemplate: _.template('<img border="0" class="on" src="/Content/Images/GreenTick.png" alt="Resaltado" title="Resaltado">'),
                 offTemplate: _.template('<img border="0" class="on" src="/Content/Images/GrayTick.png" alt="Resaltado" title="Resaltado">')
             },
-            BirthDate: { controlLink: "Date", valueToViewText: formatLongDateWithYears },
+            BirthDate: { controlLink: "Date", valueToContent: formatLongDateWithYears },
             MaritalStatus: { controlLink: "Options", options: [{ value: 0, text: "Soltero" }, { value: 1, text: "Casado" }, { value: 2, text: "Divorciado"}] },
             IsGraduated: { controlLink: "Options", options: [{ value: false, text: "No recibido" }, { value: true, text: "Recibido"}] },
             CompanyHistory:

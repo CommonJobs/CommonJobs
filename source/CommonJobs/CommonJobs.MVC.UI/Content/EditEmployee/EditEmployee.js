@@ -107,9 +107,9 @@
                 },
                 Photo: { controlLink: "CjEmployeePicture" },
                 IsGraduated: { controlLink: "Options", options: [{ value: false, text: "No recibido" }, { value: true, text: "Recibido"}] },
-                BirthDate: { controlLink: "Date", valueToViewText: formatLongDateWithYears },
+                BirthDate: { controlLink: "Date", valueToContent: formatLongDateWithYears },
                 MaritalStatus: { controlLink: "Options", options: [{ value: 0, text: "Soltero" }, { value: 1, text: "Casado" }, { value: 2, text: "Divorciado"}] },
-                HiringDate: { controlLink: "Date", valueToViewText: formatLongDateWithYears },
+                HiringDate: { controlLink: "Date", valueToContent: formatLongDateWithYears },
                 WorkingHours: { controlLink: "Int" },
                 Lunch: { controlLink: "Options", options: [{ value: false, text: "No" }, { value: true, text: "Si"}] },
                 Notes:
@@ -136,13 +136,13 @@
                         items:
                         [
                             { controlLink: "Date", name: "date", field: "RealDate" },
-                            { controlLink: "Int", name: "salary", field: "Salary", valueToViewText: formatSalary },
+                            { controlLink: "Int", name: "salary", field: "Salary", valueToContent: formatSalary },
                             { controlLink: "Text", name: "note", field: "Note" }
                         ]
                     }
                 },
-                CurrentSalary: { controlLink: "ReadOnlyText", valueToViewText: formatSalary },
-                InitialSalary: { controlLink: "ReadOnlyText", valueToViewText: formatSalary }
+                CurrentSalary: { controlLink: "ReadOnlyText", valueToContent: formatSalary },
+                InitialSalary: { controlLink: "ReadOnlyText", valueToContent: formatSalary }
             }
     });
 
