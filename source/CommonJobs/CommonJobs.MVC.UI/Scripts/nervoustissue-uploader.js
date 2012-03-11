@@ -535,6 +535,9 @@
             if (this._options.multiple) {
                 $input.attr("multiple", "multiple");
             }
+            if (this._options.accept) {
+                $input.attr("accept", this._options.accept);
+            }
 
             this.$el.append($input);
 
@@ -742,6 +745,8 @@
         },
         readUI: null,
         update: null,
+        allowedExtensions: [],
+        accept: null,
         uploadUrl: "/server/upload",
         bindUI: function () {
             var me = this;
@@ -749,7 +754,8 @@
             me.$(".view-editable-clear").on("click", function () { me.clearData(); });
             me.uploader = new Nervoustissue.Uploader.UploaderElement(me.$(".upload-element"), {
                 action: _.isString(me.uploadUrl) ? me.uploadUrl : me.uploadUrl(),
-                allowedExtensions: [ "jpg", "jpeg", "gif", "png" ],
+                allowedExtensions: me.allowedExtensions,
+                accept: me.accept,
                 onComplete: function (id, fileName, responseJSON) {
                     if (responseJSON && responseJSON.success) {
                         me.linkedData.write(responseJSON.attachment);

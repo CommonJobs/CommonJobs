@@ -60,6 +60,8 @@
 
     Nervoustissue.UILinking.CjApplicantPicture = Nervoustissue.UILinking.Attachment.extend({
         //TODO: generalize it
+        allowedExtensions: ["jpg", "jpeg", "gif", "png"],
+        accept: "image/*",
         uploadUrl: function () { return "/applicants/Photo/" + this.model.get('Id'); },
         attachedUrl: function (value) { return "/applicants/Photo/" + this.model.get('Id') + "?" + "fileName=" + value.Thumbnail.FileName; },
         template: _.template('<div class="upload-element">'
