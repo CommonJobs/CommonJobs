@@ -65,7 +65,7 @@
     Nervoustissue.UILinking.CjEmployeePicture = Nervoustissue.UILinking.Attachment.extend({
         //TODO: generalize it
         uploadUrl: function () { return "/Employees/SavePhoto/" + this.model.get('Id'); },
-        attachedUrl: function (value) { return "/Attachments/Get/" + value.Original.Id + "?contentType=" + value.Original.ContentType; },
+        attachedUrl: function (value) { return "/Attachments/Get/" + value.Original.Id; },
         template: _.template('<div class="upload-element">'
                            + '    <img class="view-editable-empty" width="100" height="100" alt="No Photo" src="/Content/Images/NoPicture.png" title="No Photo" style="display:none"/>'
                            + '</div>'
@@ -79,7 +79,7 @@
                 .attr("href", this.attachedUrl(value))
                 .attr("target", "_blank")
                 .addClass("photoLink")
-                .append($("<img />").attr("src", "/Attachments/Get/" + value.Thumbnail.Id + "?contentType=" + value.Thumbnail.ContentType).attr("width", "100").attr("height", "100"));
+                .append($("<img />").attr("src", "/Attachments/Get/" + value.Thumbnail.Id).attr("width", "100").attr("height", "100"));
         }
     });
 
@@ -92,7 +92,7 @@
                                    + '<button class="view-editable-clear">-</button>'
                                    + '</span>'),
         uploadUrl: function () { return "/Attachments/Post"; },
-        attachedUrl: function (value) { return "/Attachments/Get/" + value.Id + "?contentType=" + value.ContentType + "&fileName=" + value.FileName; }
+        attachedUrl: function (value) { return "/Attachments/Get/" + value.Id + "?fileName=" + value.FileName; }
     });
 
     App.EditEmployeeAppViewDataBinder = Nervoustissue.FormBinder.extend({

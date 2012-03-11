@@ -9,8 +9,7 @@ namespace CommonJobs.Domain
     {
         public string Id { get; set; }
         public string ContentType { get; set; }
-        public List<string> ExtractorsAvailablesOnIndexation { get; set; }
-        public string SuccessfulExtractor { get; set; }
+        public string ContentExtractorConfigurationHash { get; set; }
         public string PlainContent { get; set; }
     }
 }

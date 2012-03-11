@@ -20,10 +20,13 @@ namespace CommonJobs.MVC.UI.Attachments
             return new ImageAttachment() { Original = photo, Thumbnail = thumbnail };
         }
 
-        private AttachmentReference SaveThumbnailAttachment(AttachmentReference photo)
+        private AttachmentReference SaveThumbnailAttachment(AttachmentReference photoReference)
         {
-            var thumbnailFileName = "thumb_" + photo.FileName;
-            var photoStream = Query(new ReadAttachment() { Id = photo.Id });
+            var thumbnailFileName = "thumb_" + photoReference.FileName;
+
+            var photo = RavenSession.Load<Attachment>(photoReference.Id);
+
+            var photoStream = Query(new ReadAttachment() { Attachment = photo });
             photoStream.Position = 0; //Find a more elegant way to do it
             //TODO: generate thumbnail
             var thumbnailStream = photoStream;

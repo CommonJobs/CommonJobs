@@ -71,35 +71,25 @@ namespace CommonJobs.MVC.UI.Attachments
                     Stream.CopyTo(fs);
                     fs.Close();
                 }
-                attachment = CreateAttachment(id);
+
+                attachment = new Attachment()
+                {
+                    ContentType = GetContentTypeFromExtension(Path.GetExtension(FileName)),
+                    Id = id
+                };
+                
+                RavenSession.Store(attachment);
             }
 
             return new AttachmentReference()
             {
-                ContentType = attachment.ContentType,
                 FileName = FileName,
                 Id = id
             };
         }
 
-        private Attachment CreateAttachment(string id)
+        private static string GetContentTypeFromExtension(string extension)
         {
-            var attachment = new Attachment()
-            {
-                ContentType = DetectMimeType(),
-                Id = id
-            };
-            //TODO: extract content
-            RavenSession.Store(attachment);
-            return attachment;
-        }
-
-        //TODO: remove filename paramenter
-        private string DetectMimeType()
-        {
-            Stream.Position = 0; //Find a more elegant way to do it
-            //TODO: detect mime from content
-            var extension = Path.GetExtension(FileName);
             switch (extension)
             {
                 case ".jpg":

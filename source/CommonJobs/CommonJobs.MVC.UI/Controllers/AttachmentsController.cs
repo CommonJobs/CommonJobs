@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using CommonJobs.Mvc;
 using CommonJobs.MVC.UI.Attachments;
+using CommonJobs.Domain;
 
 namespace CommonJobs.MVC.UI.Controllers
 {
@@ -12,13 +13,20 @@ namespace CommonJobs.MVC.UI.Controllers
     {
         //TODO: permitir no usar los nombres de las acciones
         [HttpGet]
-        public ActionResult Get(string id, string contentType = "application/octet-stream", string fileName = null)
+        public ActionResult Get(string id, string fileName = null)
         {
-            var stream = Query(new ReadAttachment() { Id = id });
+            var attachment = RavenSession.Load<Attachment>(id);
+            if (attachment == null)
+                return HttpNotFound();
+
+            var stream = Query(new ReadAttachment() { Attachment = attachment });
+            if (stream == null)
+                return HttpNotFound();
+
             if (string.IsNullOrWhiteSpace(fileName))
-                return File(stream, contentType);
+                return File(stream, attachment.ContentType);
             else
-                return File(stream, contentType, fileName);
+                return File(stream, attachment.ContentType, fileName);
         }
 
         [HttpPost]
