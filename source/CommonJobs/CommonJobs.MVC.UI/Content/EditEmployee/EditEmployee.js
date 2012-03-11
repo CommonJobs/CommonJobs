@@ -92,7 +92,7 @@
                                    + '<button class="view-editable-clear">-</button>'
                                    + '</span>'),
         uploadUrl: function () { return "/Attachments/Post"; },
-        attachedUrl: function (value) { return "/Attachments/Get/" + value.Id; }
+        attachedUrl: function (value) { return "/Attachments/Get/" + value.Id + "?contentType=" + value.ContentType + "&fileName=" + value.FileName; }
     });
 
     App.EditEmployeeAppViewDataBinder = Nervoustissue.FormBinder.extend({

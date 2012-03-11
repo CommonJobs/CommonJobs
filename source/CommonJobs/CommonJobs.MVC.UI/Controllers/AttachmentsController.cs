@@ -12,10 +12,13 @@ namespace CommonJobs.MVC.UI.Controllers
     {
         //TODO: permitir no usar los nombres de las acciones
         [HttpGet]
-        public ActionResult Get(string id, string contentType = "application/octet-stream")
+        public ActionResult Get(string id, string contentType = "application/octet-stream", string fileName = null)
         {
             var stream = Query(new ReadAttachment() { Id = id });
-            return File(stream, contentType);
+            if (string.IsNullOrWhiteSpace(fileName))
+                return File(stream, contentType);
+            else
+                return File(stream, contentType, fileName);
         }
 
         [HttpPost]
