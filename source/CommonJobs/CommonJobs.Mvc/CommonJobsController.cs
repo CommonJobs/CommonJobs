@@ -24,7 +24,7 @@ namespace CommonJobs.Mvc
         {
             get { return ScriptManager.GetFromViewData(ViewData); }
         }
-        
+
         protected new JsonNetResult Json(object data)
         {
             return new JsonNetResult(data, GetSerializerSettings());
@@ -43,6 +43,26 @@ namespace CommonJobs.Mvc
                 }
             };
             return settings;
+        }
+
+        //TODO: Tal vez sea util en los tests: http://ayende.com/blog/154273/limit-your-abstractions-and-how-do-you-handle-testing
+        protected void ExecuteCommand(Command cmd)
+        {
+            cmd.RavenSession = RavenSession;
+            cmd.Execute();
+        }
+
+        protected TResult ExecuteCommand<TResult>(Command<TResult> cmd)
+        {
+            cmd.RavenSession = RavenSession;
+            cmd.Execute();
+            return cmd.Result;
+        }
+
+        protected TResult Query<TResult>(Query<TResult> qry)
+        {
+            qry.RavenSession = RavenSession;
+            return qry.Execute();
         }
     }
 }

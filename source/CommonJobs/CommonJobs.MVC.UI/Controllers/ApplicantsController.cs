@@ -8,10 +8,11 @@ using CommonJobs.MVC.UI.Models;
 using CommonJobs.Infrastructure.Indexes;
 using CommonJobs.Domain;
 using Raven.Client.Linq;
+using CommonJobs.MVC.UI.Attachments;
 
 namespace CommonJobs.MVC.UI.Controllers
 {
-    public class ApplicantsController : MvcBase.PersonController
+    public class ApplicantsController : CommonJobsController
     {
         //
         // GET: /Applicants/
@@ -98,8 +99,9 @@ namespace CommonJobs.MVC.UI.Controllers
         [HttpPost]
         public ActionResult SavePhoto(string id)
         {
-            var employee = RavenSession.Load<Applicant>(id);
-            return SavePhoto(employee, Request);
+            var applicant = RavenSession.Load<Applicant>(id);
+            applicant.Photo = ExecuteCommand(new SavePhotoAttachments() { Request = this.Request });
+            return Json(new { success = true, attachment = applicant.Photo });
         }
     }
 }

@@ -11,10 +11,11 @@ using Raven.Client.Linq;
 using CommonJobs.Mvc;
 using CommonJobs.Domain;
 using CommonJobs.Utilities;
+using CommonJobs.MVC.UI.Attachments;
 
 namespace CommonJobs.MVC.UI.Controllers
 {
-    public class EmployeesController : MvcBase.PersonController
+    public class EmployeesController : CommonJobsController
     {
         //
         // GET: /Employees/
@@ -94,7 +95,8 @@ namespace CommonJobs.MVC.UI.Controllers
         public ActionResult SavePhoto(string id, string fileName)
         {
             var employee = RavenSession.Load<Employee>(id);
-            return SavePhoto(employee, Request);
+            employee.Photo = ExecuteCommand(new SavePhotoAttachments() { Request = this.Request });
+            return Json(new { success = true, attachment = employee.Photo });
         }
     }
 }
