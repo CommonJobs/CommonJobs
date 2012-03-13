@@ -64,6 +64,8 @@
 
     Nervoustissue.UILinking.CjEmployeePicture = Nervoustissue.UILinking.Attachment.extend({
         //TODO: generalize it
+        allowedExtensions: ["jpg", "jpeg", "gif", "png"],
+        accept: "image/*",
         uploadUrl: function () { return "/Employees/SavePhoto/" + this.model.get('Id'); },
         attachedUrl: function (value) { return "/Attachments/Get/" + value.Original.Id; },
         template: _.template('<div class="upload-element">'
