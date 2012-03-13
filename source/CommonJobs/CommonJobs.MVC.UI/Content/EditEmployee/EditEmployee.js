@@ -66,8 +66,8 @@
         //TODO: generalize it
         allowedExtensions: ["jpg", "jpeg", "gif", "png"],
         accept: "image/*",
-        uploadUrl: function () { return "/Employees/Photo/" + this.model.get('Id'); },
-        attachedUrl: function (value) { return "/Employees/Photo/" + this.model.get('Id') + "?" + "fileName=" + value.Thumbnail.FileName; },
+        uploadUrl: function () { return "/Employees/SavePhoto/" + this.model.get('Id'); },
+        attachedUrl: function (value) { return "/Attachments/Get/" + value.Original.Id; },
         template: _.template('<div class="upload-element">'
                            + '    <img class="view-editable-empty" width="100" height="100" alt="No Photo" src="/Content/Images/NoPicture.png" title="No Photo" style="display:none"/>'
                            + '</div>'
@@ -81,7 +81,7 @@
                 .attr("href", this.attachedUrl(value))
                 .attr("target", "_blank")
                 .addClass("photoLink")
-                .append($("<img />").attr("src", "/Employees/Photo/" + this.model.get('Id') + "?" + "fileName=" + value.Thumbnail.FileName).attr("width", "100").attr("height", "100"));
+                .append($("<img />").attr("src", "/Attachments/Get/" + value.Thumbnail.Id).attr("width", "100").attr("height", "100"));
         }
     });
 
@@ -93,8 +93,8 @@
                                    + '    Adjunto: <span class="view-editable-content"></span>'
                                    + '<button class="view-editable-clear">-</button>'
                                    + '</span>'),
-        uploadUrl: function () { return "/Employees/Attachment/" + /* TODO */this.model.collection.parentModel.get('Id'); },
-        attachedUrl: function (value) { return "/Employees/Attachment/" + /* TODO */this.model.collection.parentModel.get('Id') + "?" + "fileName=" + value.FileName; }
+        uploadUrl: function () { return "/Attachments/Post"; },
+        attachedUrl: function (value) { return "/Attachments/Get/" + value.Id + "?fileName=" + value.FileName; }
     });
 
     App.EditEmployeeAppViewDataBinder = Nervoustissue.FormBinder.extend({
@@ -109,9 +109,9 @@
                 },
                 Photo: { controlLink: "CjEmployeePicture" },
                 IsGraduated: { controlLink: "Options", options: [{ value: false, text: "No recibido" }, { value: true, text: "Recibido"}] },
-                BirthDate: { controlLink: "Date", valueToViewText: formatLongDateWithYears },
+                BirthDate: { controlLink: "Date", valueToContent: formatLongDateWithYears },
                 MaritalStatus: { controlLink: "Options", options: [{ value: 0, text: "Soltero" }, { value: 1, text: "Casado" }, { value: 2, text: "Divorciado"}] },
-                HiringDate: { controlLink: "Date", valueToViewText: formatLongDateWithYears },
+                HiringDate: { controlLink: "Date", valueToContent: formatLongDateWithYears },
                 WorkingHours: { controlLink: "Int" },
                 Lunch: { controlLink: "Options", options: [{ value: false, text: "No" }, { value: true, text: "Si"}] },
                 Notes:
@@ -138,13 +138,13 @@
                         items:
                         [
                             { controlLink: "Date", name: "date", field: "RealDate" },
-                            { controlLink: "Int", name: "salary", field: "Salary", valueToViewText: formatSalary },
+                            { controlLink: "Int", name: "salary", field: "Salary", valueToContent: formatSalary },
                             { controlLink: "Text", name: "note", field: "Note" }
                         ]
                     }
                 },
-                CurrentSalary: { controlLink: "ReadOnlyText", valueToViewText: formatSalary },
-                InitialSalary: { controlLink: "ReadOnlyText", valueToViewText: formatSalary }
+                CurrentSalary: { controlLink: "ReadOnlyText", valueToContent: formatSalary },
+                InitialSalary: { controlLink: "ReadOnlyText", valueToContent: formatSalary }
             }
     });
 

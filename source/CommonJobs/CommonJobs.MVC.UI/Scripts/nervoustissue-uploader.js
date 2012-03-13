@@ -178,7 +178,9 @@
             var $iframe = this._createIframe(id);
             var $form = this._createForm($iframe, params);
             $form.append(input);
-            $form.append($("<input />").attr("name", "fileName").val($(input).val()));
+            
+            //I think that it is not necessary
+            //$form.append($("<input />").attr("name", "fileName").val($(input).val()));
 
             var self = this;
             this._attachLoadEvent($iframe, function () {
@@ -384,7 +386,6 @@
 
             // build query string
             params = params || {};
-            params['qqfile'] = name;
             params['fileName'] = name;
             var serializedParams = $.param(params);
             var prefix = this._options.action.indexOf('?') < 0 ? '?' : '&';
@@ -741,7 +742,7 @@
             if (!value) { return ""; }
             return $("<a></a>")
                 .attr("href", this.attachedUrl(value))
-                .text(value.OriginalFileName);
+                .text(value.FileName);
         },
         readUI: null,
         update: null,

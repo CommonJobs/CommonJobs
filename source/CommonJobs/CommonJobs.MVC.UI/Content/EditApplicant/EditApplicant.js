@@ -62,8 +62,8 @@
         //TODO: generalize it
         allowedExtensions: ["jpg", "jpeg", "gif", "png"],
         accept: "image/*",
-        uploadUrl: function () { return "/applicants/Photo/" + this.model.get('Id'); },
-        attachedUrl: function (value) { return "/applicants/Photo/" + this.model.get('Id') + "?" + "fileName=" + value.Thumbnail.FileName; },
+        uploadUrl: function () { return "/Applicants/SavePhoto/" + this.model.get('Id'); },
+        attachedUrl: function (value) { return "/Attachments/Get/" + value.Original.Id; },
         template: _.template('<div class="upload-element">'
                            + '    <img class="view-editable-empty" alt="No Photo" src="/Content/Images/NoPicture.png" title="No Photo" style="display:none"/>'
                            + '</div>'
@@ -76,7 +76,7 @@
             return $("<a />")
                 .attr("href", this.attachedUrl(value))
                 .attr("target", "_blank")
-                .append($("<img />").attr("src", "/Employees/Photo/" + this.model.get('Id') + "?" + "fileName=" + value.Thumbnail.FileName));
+                .append($("<img />").attr("src", "/Attachments/Get/" + value.Thumbnail.Id));
         }
     });
 
@@ -88,8 +88,8 @@
                                    + '    Adjunto: <span class="view-editable-content"></span>'
                                    + '<button class="view-editable-clear">-</button>'
                                    + '</span>'),
-        uploadUrl: function () { return "/applicants/Attachment/" + /* TODO */this.model.collection.parentModel.get('Id'); },
-        attachedUrl: function (value) { return "/applicants/Attachment/" + /* TODO */this.model.collection.parentModel.get('Id') + "?" + "fileName=" + value.FileName; }
+        uploadUrl: function () { return "/Attachments/Post"; },
+        attachedUrl: function (value) { return "/Attachments/Get/" + value.Id + "?fileName=" + value.FileName; }
     });
 
     App.EditApplicantAppViewDataBinder = Nervoustissue.FormBinder.extend({
@@ -109,7 +109,7 @@
                 onTemplate: _.template('<img border="0" class="on" src="/Content/Images/GreenTick.png" alt="Resaltado" title="Resaltado">'),
                 offTemplate: _.template('<img border="0" class="on" src="/Content/Images/GrayTick.png" alt="Resaltado" title="Resaltado">')
             },
-            BirthDate: { controlLink: "Date", valueToViewText: formatLongDateWithYears },
+            BirthDate: { controlLink: "Date", valueToContent: formatLongDateWithYears },
             MaritalStatus: { controlLink: "Options", options: [{ value: 0, text: "Soltero" }, { value: 1, text: "Casado" }, { value: 2, text: "Divorciado"}] },
             IsGraduated: { controlLink: "Options", options: [{ value: false, text: "No recibido" }, { value: true, text: "Recibido"}] },
             CompanyHistory:

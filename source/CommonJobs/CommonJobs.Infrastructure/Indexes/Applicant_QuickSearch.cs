@@ -28,7 +28,7 @@ namespace CommonJobs.Infrastructure.Indexes
                                     {
                                         applicant.FirstName,
                                         applicant.LastName,
-                                        string.Join(" ", applicant.CompanyHistory.Select(x => x.CompanyName)),
+                                        applicant.CompanyHistory.Select(x => x.CompanyName),
                                         applicant.Skills
                                     },
                                     Highlighted = applicant.IsHighlighted,

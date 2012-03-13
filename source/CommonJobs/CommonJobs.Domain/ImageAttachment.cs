@@ -8,7 +8,7 @@ namespace CommonJobs.Domain
 {
     public class ImageAttachment
     {
-        public Attachment Original { get; set; }
-        public Attachment Thumbnail { get; set; }
+        public AttachmentReference Original { get; set; }
+        public AttachmentReference Thumbnail { get; set; }
     }
 }
