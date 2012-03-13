@@ -32,17 +32,18 @@
             <img class="cardPicture" src="@employeePic" alt="@employee.FirstName @employee.LastName's picture" />
             <div class="cardDescription">
                 <p class="employeeName">@Html.ActionLink(employee.FirstName + " " + employee.LastName, "Edit", new { id = employee.Id })</p>
+                <p class="employeeProject">@employee.CurrentProject</p>
                 <p class="employeePosition">@employee.CurrentPosition</p>
                 <p class="employeeTags">
                     @{
-        //TODO replace with a collection of skills, order from most skilled to less
-        var tags = string.IsNullOrEmpty(employee.Skills)
-            ? Enumerable.Empty<string>()
-            : employee.Skills.Split(',');
-        foreach (var tag in tags)
-        {
+                        //TODO replace with a collection of skills, order from most skilled to less
+                        var tags = string.IsNullOrEmpty(employee.Skills)
+                            ? Enumerable.Empty<string>()
+                            : employee.Skills.Split(',');
+                        foreach (var tag in tags)
+                        {
                             <span class="tag">@tag</span>
-        }
+                        }
                     }
                 </p>
             </div>
