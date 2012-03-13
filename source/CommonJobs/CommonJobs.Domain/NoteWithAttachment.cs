@@ -9,6 +9,6 @@ namespace CommonJobs.Domain
 {
     public class NoteWithAttachment : SimpleNote
     {
-        public Attachment Attachment { get; set; }
+        public AttachmentReference Attachment { get; set; }
     }
 }

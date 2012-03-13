@@ -42,7 +42,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attachment.cs" />
     <Compile Include="Encoding.cs" />
     <Compile Include="FunctionHelper.cs" />
     <Compile Include="IEnumerableExtensions.cs" />
