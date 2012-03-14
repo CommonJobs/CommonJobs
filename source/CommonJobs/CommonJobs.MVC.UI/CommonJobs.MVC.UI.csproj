@@ -96,9 +96,6 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attachments\ReadAttachment.cs" />
-    <Compile Include="Attachments\SaveAttachment.cs" />
-    <Compile Include="Attachments\SavePhotoAttachments.cs" />
     <Compile Include="Controllers\ApplicantsController.cs" />
     <Compile Include="Controllers\AttachmentsController.cs">
       <SubType>Code</SubType>

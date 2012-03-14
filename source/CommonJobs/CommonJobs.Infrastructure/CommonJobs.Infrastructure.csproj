@@ -64,6 +64,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attachments\ReadAttachment.cs" />
+    <Compile Include="Attachments\SaveAttachment.cs" />
+    <Compile Include="Attachments\SavePhotoAttachments.cs" />
     <Compile Include="Indexes\Applicant_QuickSearch.cs" />
     <Compile Include="Indexes\Employee_QuickSearch.cs" />
     <Compile Include="Indexes\NullIndex.cs" />
