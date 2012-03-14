@@ -103,6 +103,7 @@ namespace CommonJobs.Mvc.UI.Controllers
             var attachmentReader = new RequestAttachmentReader(Request);
             applicant.Photo = ExecuteCommand(new SavePhotoAttachments()
             {
+                RelatedEntity = applicant,
                 FileName = attachmentReader.FileName,
                 Stream = attachmentReader.Stream,
                 UploadPath = CommonJobs.Mvc.UI.Properties.Settings.Default.UploadPath

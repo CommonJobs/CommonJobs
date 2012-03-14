@@ -11,6 +11,7 @@ namespace CommonJobs.Infrastructure.AttachmentStorage
 {
     public class SavePhotoAttachments : Command<ImageAttachment>
     {
+        public object RelatedEntity { get; set; } 
         public string FileName { get; set; }
         public Stream Stream { get; set; }
         public string UploadPath { get; set; }
@@ -18,7 +19,9 @@ namespace CommonJobs.Infrastructure.AttachmentStorage
         public override ImageAttachment ExecuteWithResult()
         {
             var photo = ExecuteCommand(new SaveAttachment() 
-            { 
+            {
+                UploadPath = UploadPath,
+                RelatedEntity = RelatedEntity,
                 FileName = FileName, 
                 Stream = Stream 
             });
@@ -33,14 +36,20 @@ namespace CommonJobs.Infrastructure.AttachmentStorage
             var photo = RavenSession.Load<Attachment>(photoReference.Id);
 
             var photoStream = Query(new ReadAttachment() 
-            { 
+            {
                 Attachment = photo, 
                 UploadPath = UploadPath 
             });
             photoStream.Position = 0; //Find a more elegant way to do it
             //TODO: generate thumbnail
             var thumbnailStream = photoStream;
-            return ExecuteCommand(new SaveAttachment() { FileName = thumbnailFileName, Stream = thumbnailStream });
+            return ExecuteCommand(new SaveAttachment() 
+            {
+                UploadPath = UploadPath,
+                RelatedEntity = RelatedEntity,
+                FileName = thumbnailFileName, 
+                Stream = thumbnailStream 
+            });
         }
     }
 }
