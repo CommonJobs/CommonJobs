@@ -12,11 +12,17 @@ namespace CommonJobs.Mvc.UI.Attachments
 {
     public class SavePhotoAttachments : Command<ImageAttachment>
     {
-        public HttpRequestBase Request { get; set; }
+        public string FileName { get; set; }
+        public Stream Stream { get; set; }
+        public string UploadPath { get; set; }
 
         public override ImageAttachment ExecuteWithResult()
         {
-            var photo = ExecuteCommand(new SaveAttachment() { Request = Request });
+            var photo = ExecuteCommand(new SaveAttachment() 
+            { 
+                FileName = FileName, 
+                Stream = Stream 
+            });
             var thumbnail = SaveThumbnailAttachment(photo);
             return new ImageAttachment() { Original = photo, Thumbnail = thumbnail };
         }
@@ -27,7 +33,11 @@ namespace CommonJobs.Mvc.UI.Attachments
 
             var photo = RavenSession.Load<Attachment>(photoReference.Id);
 
-            var photoStream = Query(new ReadAttachment() { Attachment = photo });
+            var photoStream = Query(new ReadAttachment() 
+            { 
+                Attachment = photo, 
+                UploadPath = UploadPath 
+            });
             photoStream.Position = 0; //Find a more elegant way to do it
             //TODO: generate thumbnail
             var thumbnailStream = photoStream;

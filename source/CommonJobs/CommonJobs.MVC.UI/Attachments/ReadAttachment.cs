@@ -14,15 +14,8 @@ namespace CommonJobs.Mvc.UI.Attachments
     public class ReadAttachment : Query<Stream>
     {
         public Attachment Attachment { get; set; }
-        //TODO: Duplicated code
         public string UploadPath { get; set; }
-
-        public ReadAttachment()
-        {
-            //TODO: Duplicated code
-            UploadPath = CommonJobs.Mvc.UI.Properties.Settings.Default.UploadPath;
-        }
-
+        
         //TODO: Duplicated code
         private string GetAttachmentPath(string id)
         {

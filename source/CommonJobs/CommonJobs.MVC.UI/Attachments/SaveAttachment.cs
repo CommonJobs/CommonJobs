@@ -14,30 +14,7 @@ namespace CommonJobs.Mvc.UI.Attachments
     {
         public string FileName { get; set; }
         public Stream Stream { get; set; }
-        public HttpRequestBase Request
-        {
-            set
-            {
-                FileName = value.Params[FileNameRequestParameter] as string
-                    ?? value.Params["HTTP_X_FILE_NAME"] as string
-                    ?? Path.GetRandomFileName();
-
-                // To handle differences in FireFox/Chrome/Safari/Opera
-                Stream = value.Files.Count > 0
-                    ? value.Files[0].InputStream
-                    : value.InputStream;
-            }
-        }
-        public string FileNameRequestParameter { get; set; }
-        //TODO: Duplicated code
         public string UploadPath { get; set; }
-
-        public SaveAttachment()
-        {
-            FileNameRequestParameter = "fileName";
-            //TODO: Duplicated code
-            UploadPath = CommonJobs.Mvc.UI.Properties.Settings.Default.UploadPath;
-        }
 
         private string CalculateSha1(Stream stream)
         {

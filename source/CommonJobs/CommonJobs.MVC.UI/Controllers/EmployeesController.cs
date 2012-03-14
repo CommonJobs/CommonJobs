@@ -95,7 +95,13 @@ namespace CommonJobs.Mvc.UI.Controllers
         public ActionResult SavePhoto(string id, string fileName)
         {
             var employee = RavenSession.Load<Employee>(id);
-            employee.Photo = ExecuteCommand(new SavePhotoAttachments() { Request = this.Request });
+            var attachmentReader = new RequestAttachmentReader(Request);
+            employee.Photo = ExecuteCommand(new SavePhotoAttachments()
+            {
+                FileName = attachmentReader.FileName,
+                Stream = attachmentReader.Stream,
+                UploadPath = CommonJobs.Mvc.UI.Properties.Settings.Default.UploadPath 
+            });
             return Json(new { success = true, attachment = employee.Photo });
         }
     }
