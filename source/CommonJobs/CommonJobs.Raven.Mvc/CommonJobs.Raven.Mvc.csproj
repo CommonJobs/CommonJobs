@@ -74,8 +74,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Command.cs" />
-    <Compile Include="Query.cs" />
     <Compile Include="JsonDotNetValueProviderFactory.cs" />
     <Compile Include="CommonJobsApplication.cs" />
     <Compile Include="CommonJobsController.cs" />

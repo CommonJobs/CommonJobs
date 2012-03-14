@@ -653,6 +653,10 @@
       <Project>{4D58F500-CDC4-4697-8DA5-15568E804317}</Project>
       <Name>CommonJobs.Infrastructure</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CommonJobs.Raven.Infrastructure\CommonJobs.Raven.Infrastructure.csproj">
+      <Project>{7B4A0A21-0CDE-432A-A785-599D4339AD8E}</Project>
+      <Name>CommonJobs.Raven.Infrastructure</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CommonJobs.Raven.Mvc\CommonJobs.Raven.Mvc.csproj">
       <Project>{658EAF8E-02A2-4029-AC52-942261EE486C}</Project>
       <Name>CommonJobs.Raven.Mvc</Name>
