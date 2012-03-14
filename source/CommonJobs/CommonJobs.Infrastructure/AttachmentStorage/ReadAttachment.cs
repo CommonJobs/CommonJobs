@@ -8,7 +8,7 @@ using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using CommonJobs.Raven.Infrastructure;
 
-namespace CommonJobs.Infrastructure.Attachments
+namespace CommonJobs.Infrastructure.AttachmentStorage
 {
     public class ReadAttachment : Query<Stream>
     {

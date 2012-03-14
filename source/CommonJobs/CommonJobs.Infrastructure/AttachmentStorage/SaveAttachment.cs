@@ -7,7 +7,7 @@ using System.IO;
 using System.Security.Cryptography;
 using CommonJobs.Raven.Infrastructure;
 
-namespace CommonJobs.Infrastructure.Attachments
+namespace CommonJobs.Infrastructure.AttachmentStorage
 {
     public class SaveAttachment : Command<AttachmentReference>
     {

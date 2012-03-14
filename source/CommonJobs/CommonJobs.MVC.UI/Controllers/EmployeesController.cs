@@ -11,7 +11,7 @@ using Raven.Client.Linq;
 using CommonJobs.Raven.Mvc;
 using CommonJobs.Domain;
 using CommonJobs.Utilities;
-using CommonJobs.Infrastructure.Attachments;
+using CommonJobs.Infrastructure.AttachmentStorage;
 
 namespace CommonJobs.Mvc.UI.Controllers
 {

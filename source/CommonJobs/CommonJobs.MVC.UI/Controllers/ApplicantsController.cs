@@ -8,7 +8,7 @@ using CommonJobs.Mvc.UI.Models;
 using CommonJobs.Infrastructure.Indexes;
 using CommonJobs.Domain;
 using Raven.Client.Linq;
-using CommonJobs.Infrastructure.Attachments;
+using CommonJobs.Infrastructure.AttachmentStorage;
 
 namespace CommonJobs.Mvc.UI.Controllers
 {
