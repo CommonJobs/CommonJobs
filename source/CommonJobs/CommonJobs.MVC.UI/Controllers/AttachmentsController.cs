@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using CommonJobs.Raven.Mvc;
-using CommonJobs.Mvc.UI.Attachments;
+using CommonJobs.Infrastructure.Attachments;
 using CommonJobs.Domain;
 
 namespace CommonJobs.Mvc.UI.Controllers

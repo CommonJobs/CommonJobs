@@ -6,10 +6,9 @@ using CommonJobs.Domain;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
-using CommonJobs.Raven.Mvc;
 using CommonJobs.Raven.Infrastructure;
 
-namespace CommonJobs.Mvc.UI.Attachments
+namespace CommonJobs.Infrastructure.Attachments
 {
     public class ReadAttachment : Query<Stream>
     {
