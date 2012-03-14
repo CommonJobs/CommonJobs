@@ -8,7 +8,7 @@ using CommonJobs.Mvc.UI.Models;
 using CommonJobs.Infrastructure.Indexes;
 using CommonJobs.Domain;
 using Raven.Client.Linq;
-using CommonJobs.Infrastructure.Attachments;
+using CommonJobs.Infrastructure.AttachmentStorage;
 
 namespace CommonJobs.Mvc.UI.Controllers
 {
@@ -103,6 +103,7 @@ namespace CommonJobs.Mvc.UI.Controllers
             var attachmentReader = new RequestAttachmentReader(Request);
             applicant.Photo = ExecuteCommand(new SavePhotoAttachments()
             {
+                RelatedEntity = applicant,
                 FileName = attachmentReader.FileName,
                 Stream = attachmentReader.Stream,
                 UploadPath = CommonJobs.Mvc.UI.Properties.Settings.Default.UploadPath

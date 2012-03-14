@@ -8,24 +8,16 @@ using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using CommonJobs.Raven.Infrastructure;
 
-namespace CommonJobs.Infrastructure.Attachments
+namespace CommonJobs.Infrastructure.AttachmentStorage
 {
     public class ReadAttachment : Query<Stream>
     {
         public Attachment Attachment { get; set; }
         public string UploadPath { get; set; }
         
-        //TODO: Duplicated code
-        private string GetAttachmentPath(string id)
-        {
-            var folder = id.Substring(0, 2);
-            var filename = id.Substring(2);
-            return Path.Combine(UploadPath, folder, filename);
-        }
-
         public override Stream Execute()
         {
-            var path = GetAttachmentPath(Attachment.Id);
+            var path = Attachment.GetServerPath(UploadPath);
             if (!File.Exists(path))
             {
                 //TODO: es conveniente disparar una excepción?
