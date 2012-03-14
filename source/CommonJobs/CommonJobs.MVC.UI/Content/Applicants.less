@@ -7,6 +7,7 @@
     height: 80px;
     .rounded_corners(10px);
 	cursor: pointer;
+	overflow: hidden;
 }
 
 .card.highlighted 
@@ -22,14 +23,9 @@
     margin-right: 10px;
 }
 
-.cardDescription 
+.cardDescription p
 {
-    min-width: 150px;
-
-	p
-    {
-		line-height: 1.2em;
-    }
+	line-height: 1.2em;
 }
 
 #addNewCard 
@@ -59,7 +55,7 @@
 /*from http://designshack.net/articles/css/beating-borders-the-bane-of-responsive-layout/ */
 .column 
 {
-    min-width: 200px;
+    min-width: 288px;
 	width: 15.5%;
 	float: left;
 	margin: 1em 0.5% 0 0.5%;
