@@ -1,10 +1,7 @@
-﻿@import "EmployeesBase.less";
-
-.card
+﻿.card
 {
     border: 1px solid #bbb;
     padding: 10px;
-    height: 100px;
     .rounded_corners(10px);
 	cursor: pointer;
 }
@@ -19,7 +16,6 @@
 
 .cardDescription 
 {
-    margin-left: 62px;
     min-width: 150px;
 
 	p
@@ -42,16 +38,6 @@
     }
 }
 
-.employeeName 
-{
-    font-weight: bold;
-}
-
-.employeePosition 
-{
-    font-style: italic;
-}
-
 /*from http://designshack.net/articles/css/beating-borders-the-bane-of-responsive-layout/ */
 .column 
 {
@@ -64,24 +50,7 @@
 	.box_sizing_border_box;
 }
 
-.searchContainer
-{
-	background-color: @color_primary_semi_light;
-	padding-top: 2em;
-	padding-bottom: 2em;
-}
-
-.quickSearchContainer, #quickSearch, #quickSearchSubmit
-{
-	font-size: 1.5em;
-}
-
-.quickSearchContainer label 
-{
-	color: white;
-}
-
-.employeeTags 
+.tags 
 {
 	font-size: 0.8em;
 	padding-top: 0.2em;
@@ -97,6 +66,24 @@
 		padding-right: 0.5em;
 		.rounded_corners(2px);
     }
+}
+
+// search
+.searchContainer
+{
+	background-color: @color_primary_semi_light;
+	padding-top: 2em;
+	padding-bottom: 2em;
+}
+
+.quickSearchContainer, #quickSearch, #quickSearchSubmit
+{
+	font-size: 1.5em;
+}
+
+.quickSearchContainer label 
+{
+	color: white;
 }
 
 h1 

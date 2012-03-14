@@ -1,1 +1,1 @@
-.box_sizing_border_box{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;}
+input,select{border-top:none;border-right:none;border-left:none;border-bottom:1px solid #ddd;}
