@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Web.Mvc;
 using CommonJobs.Utilities;
 
-namespace CommonJobs.Mvc
+namespace CommonJobs.Raven.Mvc
 {
     public abstract class CommonJobsApplication : HttpApplication
     {

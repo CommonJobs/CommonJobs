@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Web.Mvc;
 
-namespace CommonJobs.Mvc
+namespace CommonJobs.Raven.Mvc
 {
     /// <summary>
     /// This ModelBinder try to read $type property of Newtonsoft Json.Net serialized objects.

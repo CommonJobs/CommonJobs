@@ -6,7 +6,7 @@ using Raven.Client;
 using CommonJobs.Domain;
 using System.Dynamic;
 
-namespace CommonJobs.MVC.UI
+namespace CommonJobs.Mvc.UI
 {
     public class DataMigrator : IDisposable
     {

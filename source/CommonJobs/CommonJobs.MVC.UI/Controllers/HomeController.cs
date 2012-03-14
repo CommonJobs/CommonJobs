@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace CommonJobs.MVC.UI.Controllers
+namespace CommonJobs.Mvc.UI.Controllers
 {
     public class HomeController : Controller
     {

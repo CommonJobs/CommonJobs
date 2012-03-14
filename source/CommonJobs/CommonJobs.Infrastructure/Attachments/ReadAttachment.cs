@@ -6,22 +6,15 @@ using CommonJobs.Domain;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
-using CommonJobs.Mvc;
+using CommonJobs.Raven.Infrastructure;
 
-namespace CommonJobs.MVC.UI.Attachments
+namespace CommonJobs.Infrastructure.Attachments
 {
     public class ReadAttachment : Query<Stream>
     {
         public Attachment Attachment { get; set; }
-        //TODO: Duplicated code
         public string UploadPath { get; set; }
-
-        public ReadAttachment()
-        {
-            //TODO: Duplicated code
-            UploadPath = CommonJobs.MVC.UI.Properties.Settings.Default.UploadPath;
-        }
-
+        
         //TODO: Duplicated code
         private string GetAttachmentPath(string id)
         {

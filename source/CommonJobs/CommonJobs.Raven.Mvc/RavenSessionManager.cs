@@ -9,7 +9,7 @@ using Raven.Client.Document;
 using Raven.Client.Indexes;
 using System.Reflection;
 
-namespace CommonJobs.Mvc
+namespace CommonJobs.Raven.Mvc
 {
     public static class RavenSessionManager
     {
