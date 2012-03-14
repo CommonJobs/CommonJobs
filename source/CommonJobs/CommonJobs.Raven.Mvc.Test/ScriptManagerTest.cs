@@ -1,9 +1,9 @@
-﻿using CommonJobs.Mvc;
+﻿using CommonJobs.Raven.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Web.Mvc;
 
-namespace CommonJobs.Mvc.Test
+namespace CommonJobs.Raven.Mvc.Test
 {
     
     

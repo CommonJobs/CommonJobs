@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using Raven.Client;
 
-namespace CommonJobs.Mvc
+namespace CommonJobs.Raven.Infrastructure
 {
     public abstract class Command
     {

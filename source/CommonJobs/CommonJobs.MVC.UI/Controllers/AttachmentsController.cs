@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using CommonJobs.Mvc;
-using CommonJobs.MVC.UI.Attachments;
+using CommonJobs.Raven.Mvc;
+using CommonJobs.Infrastructure.Attachments;
 using CommonJobs.Domain;
 
-namespace CommonJobs.MVC.UI.Controllers
+namespace CommonJobs.Mvc.UI.Controllers
 {
     public class AttachmentsController : CommonJobsController
     {
@@ -19,7 +19,11 @@ namespace CommonJobs.MVC.UI.Controllers
             if (attachment == null)
                 return HttpNotFound();
 
-            var stream = Query(new ReadAttachment() { Attachment = attachment });
+            var stream = Query(new ReadAttachment() 
+            { 
+                Attachment = attachment, 
+                UploadPath = CommonJobs.Mvc.UI.Properties.Settings.Default.UploadPath 
+            });
             if (stream == null)
                 return HttpNotFound();
 
@@ -32,7 +36,12 @@ namespace CommonJobs.MVC.UI.Controllers
         [HttpPost]
         public ActionResult Post(string fileName)
         {
-            var attachment = ExecuteCommand(new SaveAttachment() { Request = this.Request });
+            var attachmentReader = new RequestAttachmentReader(Request);
+            var attachment = ExecuteCommand(new SaveAttachment()
+            {
+                FileName = attachmentReader.FileName,
+                Stream = attachmentReader.Stream
+            });
             return Json(new { success = true, attachment = attachment });
         }
     }

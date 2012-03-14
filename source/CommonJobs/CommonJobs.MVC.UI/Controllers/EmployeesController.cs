@@ -6,14 +6,14 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using CommonJobs.Infrastructure.Indexes;
-using CommonJobs.MVC.UI.Models;
+using CommonJobs.Mvc.UI.Models;
 using Raven.Client.Linq;
-using CommonJobs.Mvc;
+using CommonJobs.Raven.Mvc;
 using CommonJobs.Domain;
 using CommonJobs.Utilities;
-using CommonJobs.MVC.UI.Attachments;
+using CommonJobs.Infrastructure.Attachments;
 
-namespace CommonJobs.MVC.UI.Controllers
+namespace CommonJobs.Mvc.UI.Controllers
 {
     public class EmployeesController : CommonJobsController
     {
@@ -95,7 +95,13 @@ namespace CommonJobs.MVC.UI.Controllers
         public ActionResult SavePhoto(string id, string fileName)
         {
             var employee = RavenSession.Load<Employee>(id);
-            employee.Photo = ExecuteCommand(new SavePhotoAttachments() { Request = this.Request });
+            var attachmentReader = new RequestAttachmentReader(Request);
+            employee.Photo = ExecuteCommand(new SavePhotoAttachments()
+            {
+                FileName = attachmentReader.FileName,
+                Stream = attachmentReader.Stream,
+                UploadPath = CommonJobs.Mvc.UI.Properties.Settings.Default.UploadPath 
+            });
             return Json(new { success = true, attachment = employee.Photo });
         }
     }

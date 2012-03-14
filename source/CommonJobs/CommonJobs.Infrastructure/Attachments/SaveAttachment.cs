@@ -5,38 +5,15 @@ using System.Web;
 using CommonJobs.Domain;
 using System.IO;
 using System.Security.Cryptography;
-using CommonJobs.Mvc;
+using CommonJobs.Raven.Infrastructure;
 
-namespace CommonJobs.MVC.UI.Attachments
+namespace CommonJobs.Infrastructure.Attachments
 {
     public class SaveAttachment : Command<AttachmentReference>
     {
         public string FileName { get; set; }
         public Stream Stream { get; set; }
-        public HttpRequestBase Request
-        {
-            set
-            {
-                FileName = value.Params[FileNameRequestParameter] as string
-                    ?? value.Params["HTTP_X_FILE_NAME"] as string
-                    ?? Path.GetRandomFileName();
-
-                // To handle differences in FireFox/Chrome/Safari/Opera
-                Stream = value.Files.Count > 0
-                    ? value.Files[0].InputStream
-                    : value.InputStream;
-            }
-        }
-        public string FileNameRequestParameter { get; set; }
-        //TODO: Duplicated code
         public string UploadPath { get; set; }
-
-        public SaveAttachment()
-        {
-            FileNameRequestParameter = "fileName";
-            //TODO: Duplicated code
-            UploadPath = CommonJobs.MVC.UI.Properties.Settings.Default.UploadPath;
-        }
 
         private string CalculateSha1(Stream stream)
         {

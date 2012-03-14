@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using Newtonsoft.Json;
 
-namespace CommonJobs.Mvc
+namespace CommonJobs.Raven.Mvc
 {
     public class JsonNetResult : ActionResult
     {

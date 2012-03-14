@@ -4,10 +4,10 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
-using CommonJobs.Mvc;
+using CommonJobs.Raven.Mvc;
 using CommonJobs.Infrastructure.Indexes;
 
-namespace CommonJobs.MVC.UI
+namespace CommonJobs.Mvc.UI
 {
     public class MvcApplication : CommonJobsApplication
     {
