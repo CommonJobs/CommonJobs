@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using CommonJobs.Mvc;
-using CommonJobs.MVC.UI.Models;
+using CommonJobs.Raven.Mvc;
+using CommonJobs.Mvc.UI.Models;
 using CommonJobs.Infrastructure.Indexes;
 using CommonJobs.Domain;
 using Raven.Client.Linq;
-using CommonJobs.MVC.UI.Attachments;
+using CommonJobs.Mvc.UI.Attachments;
 
-namespace CommonJobs.MVC.UI.Controllers
+namespace CommonJobs.Mvc.UI.Controllers
 {
     public class ApplicantsController : CommonJobsController
     {

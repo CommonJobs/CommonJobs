@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Globalization;
 
-namespace CommonJobs.Mvc
+namespace CommonJobs.Raven.Mvc
 {
     internal abstract class ScriptManagerEntry
     {

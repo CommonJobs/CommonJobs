@@ -6,14 +6,14 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using CommonJobs.Infrastructure.Indexes;
-using CommonJobs.MVC.UI.Models;
+using CommonJobs.Mvc.UI.Models;
 using Raven.Client.Linq;
-using CommonJobs.Mvc;
+using CommonJobs.Raven.Mvc;
 using CommonJobs.Domain;
 using CommonJobs.Utilities;
-using CommonJobs.MVC.UI.Attachments;
+using CommonJobs.Mvc.UI.Attachments;
 
-namespace CommonJobs.MVC.UI.Controllers
+namespace CommonJobs.Mvc.UI.Controllers
 {
     public class EmployeesController : CommonJobsController
     {

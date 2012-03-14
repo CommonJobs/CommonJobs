@@ -5,15 +5,13 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{4D58F500-CDC4-4697-8DA5-15568E804317}</ProjectGuid>
+    <ProjectGuid>{7B4A0A21-0CDE-432A-A785-599D4339AD8E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CommonJobs.Infrastructure</RootNamespace>
-    <AssemblyName>CommonJobs.Infrastructure</AssemblyName>
+    <RootNamespace>CommonJobs.Raven.Infrastructure</RootNamespace>
+    <AssemblyName>CommonJobs.Raven.Infrastructure</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\CommonJobs\</SolutionDir>
-    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -33,29 +31,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AsyncCtpLibrary">
-      <HintPath>..\packages\RavenDB.1.0.638-Unstable\lib\net40\AsyncCtpLibrary.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.4.0.5\lib\net40\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="NLog">
-      <HintPath>..\packages\NLog.2.0.0.2000\lib\net40\NLog.dll</HintPath>
-    </Reference>
-    <Reference Include="Raven.Abstractions">
-      <HintPath>..\packages\RavenDB.1.0.638-Unstable\lib\net40\Raven.Abstractions.dll</HintPath>
-    </Reference>
     <Reference Include="Raven.Client.Debug">
       <HintPath>..\packages\RavenDB.1.0.638-Unstable\lib\net40\Raven.Client.Debug.dll</HintPath>
     </Reference>
     <Reference Include="Raven.Client.Lightweight">
       <HintPath>..\packages\RavenDB.1.0.638-Unstable\lib\net40\Raven.Client.Lightweight.dll</HintPath>
     </Reference>
-    <Reference Include="Raven.Client.MvcIntegration">
-      <HintPath>..\packages\RavenDB.1.0.638-Unstable\lib\net40\Raven.Client.MvcIntegration.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -64,26 +46,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Indexes\Applicant_QuickSearch.cs" />
-    <Compile Include="Indexes\Employee_QuickSearch.cs" />
-    <Compile Include="Indexes\NullIndex.cs" />
+    <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\CommonJobs.Domain\CommonJobs.Domain.csproj">
-      <Project>{CC2939C6-A278-4789-B937-ADB693E69C89}</Project>
-      <Name>CommonJobs.Domain</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CommonJobs.Raven.Infrastructure\CommonJobs.Raven.Infrastructure.csproj">
-      <Project>{7B4A0A21-0CDE-432A-A785-599D4339AD8E}</Project>
-      <Name>CommonJobs.Raven.Infrastructure</Name>
+    <ProjectReference Include="..\CommonJobs.Utilities\CommonJobs.Utilities.csproj">
+      <Project>{FABFCAFA-F6F2-47C2-B393-66E97203F107}</Project>
+      <Name>CommonJobs.Utilities</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

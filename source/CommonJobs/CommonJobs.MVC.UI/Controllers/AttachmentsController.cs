@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using CommonJobs.Mvc;
-using CommonJobs.MVC.UI.Attachments;
+using CommonJobs.Raven.Mvc;
+using CommonJobs.Mvc.UI.Attachments;
 using CommonJobs.Domain;
 
-namespace CommonJobs.MVC.UI.Controllers
+namespace CommonJobs.Mvc.UI.Controllers
 {
     public class AttachmentsController : CommonJobsController
     {

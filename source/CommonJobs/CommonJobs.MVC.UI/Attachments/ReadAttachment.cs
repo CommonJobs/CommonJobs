@@ -6,9 +6,9 @@ using CommonJobs.Domain;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
-using CommonJobs.Mvc;
+using CommonJobs.Raven.Mvc;
 
-namespace CommonJobs.MVC.UI.Attachments
+namespace CommonJobs.Mvc.UI.Attachments
 {
     public class ReadAttachment : Query<Stream>
     {
@@ -19,7 +19,7 @@ namespace CommonJobs.MVC.UI.Attachments
         public ReadAttachment()
         {
             //TODO: Duplicated code
-            UploadPath = CommonJobs.MVC.UI.Properties.Settings.Default.UploadPath;
+            UploadPath = CommonJobs.Mvc.UI.Properties.Settings.Default.UploadPath;
         }
 
         //TODO: Duplicated code

@@ -10,8 +10,8 @@
     <ProjectTypeGuids>{E53F8FEA-EAE0-44A6-8774-FFD645390401};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CommonJobs.MVC.UI</RootNamespace>
-    <AssemblyName>CommonJobs.MVC.UI</AssemblyName>
+    <RootNamespace>CommonJobs.Mvc.UI</RootNamespace>
+    <AssemblyName>CommonJobs.Mvc.UI</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <MvcBuildViews>true</MvcBuildViews>
     <UseIISExpress>false</UseIISExpress>
@@ -653,9 +653,9 @@
       <Project>{4D58F500-CDC4-4697-8DA5-15568E804317}</Project>
       <Name>CommonJobs.Infrastructure</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CommonJobs.Mvc\CommonJobs.Mvc.csproj">
+    <ProjectReference Include="..\CommonJobs.Raven.Mvc\CommonJobs.Raven.Mvc.csproj">
       <Project>{658EAF8E-02A2-4029-AC52-942261EE486C}</Project>
-      <Name>CommonJobs.Mvc</Name>
+      <Name>CommonJobs.Raven.Mvc</Name>
     </ProjectReference>
     <ProjectReference Include="..\CommonJobs.Utilities\CommonJobs.Utilities.csproj">
       <Project>{FABFCAFA-F6F2-47C2-B393-66E97203F107}</Project>

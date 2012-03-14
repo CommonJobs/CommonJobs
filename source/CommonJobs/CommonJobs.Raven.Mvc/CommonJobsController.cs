@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json.Converters;
 
-namespace CommonJobs.Mvc
+namespace CommonJobs.Raven.Mvc
 {
     public abstract class CommonJobsController : Controller
     {

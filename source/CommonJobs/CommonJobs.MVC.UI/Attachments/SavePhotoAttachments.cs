@@ -5,9 +5,9 @@ using System.Web;
 using CommonJobs.Domain;
 using System.IO;
 using System.Security.Cryptography;
-using CommonJobs.Mvc;
+using CommonJobs.Raven.Mvc;
 
-namespace CommonJobs.MVC.UI.Attachments
+namespace CommonJobs.Mvc.UI.Attachments
 {
     public class SavePhotoAttachments : Command<ImageAttachment>
     {

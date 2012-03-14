@@ -5,9 +5,9 @@ using System.Web;
 using CommonJobs.Domain;
 using System.IO;
 using System.Security.Cryptography;
-using CommonJobs.Mvc;
+using CommonJobs.Raven.Mvc;
 
-namespace CommonJobs.MVC.UI.Attachments
+namespace CommonJobs.Mvc.UI.Attachments
 {
     public class SaveAttachment : Command<AttachmentReference>
     {
@@ -35,7 +35,7 @@ namespace CommonJobs.MVC.UI.Attachments
         {
             FileNameRequestParameter = "fileName";
             //TODO: Duplicated code
-            UploadPath = CommonJobs.MVC.UI.Properties.Settings.Default.UploadPath;
+            UploadPath = CommonJobs.Mvc.UI.Properties.Settings.Default.UploadPath;
         }
 
         private string CalculateSha1(Stream stream)
