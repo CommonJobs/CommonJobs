@@ -6,6 +6,7 @@ using CommonJobs.Domain;
 using System.IO;
 using System.Security.Cryptography;
 using CommonJobs.Raven.Mvc;
+using CommonJobs.Raven.Infrastructure;
 
 namespace CommonJobs.Mvc.UI.Attachments
 {

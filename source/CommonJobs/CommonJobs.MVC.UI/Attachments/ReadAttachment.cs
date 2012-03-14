@@ -7,6 +7,7 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using CommonJobs.Raven.Mvc;
+using CommonJobs.Raven.Infrastructure;
 
 namespace CommonJobs.Mvc.UI.Attachments
 {
