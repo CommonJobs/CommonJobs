@@ -8,7 +8,7 @@ using CommonJobs.Mvc.UI.Models;
 using CommonJobs.Infrastructure.Indexes;
 using CommonJobs.Domain;
 using Raven.Client.Linq;
-using CommonJobs.Infrastructure.Attachments;
+using CommonJobs.Infrastructure.AttachmentStorage;
 
 namespace CommonJobs.Mvc.UI.Controllers
 {
@@ -101,12 +101,10 @@ namespace CommonJobs.Mvc.UI.Controllers
         {
             var applicant = RavenSession.Load<Applicant>(id);
             var attachmentReader = new RequestAttachmentReader(Request);
-            applicant.Photo = ExecuteCommand(new SavePhotoAttachments()
-            {
-                FileName = attachmentReader.FileName,
-                Stream = attachmentReader.Stream,
-                UploadPath = CommonJobs.Mvc.UI.Properties.Settings.Default.UploadPath
-            });
+            applicant.Photo = ExecuteCommand(new SavePhotoAttachments(
+                applicant, 
+                attachmentReader.FileName, 
+                attachmentReader.Stream));
             return Json(new { success = true, attachment = applicant.Photo });
         }
     }

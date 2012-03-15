@@ -63,7 +63,7 @@
         allowedExtensions: ["jpg", "jpeg", "gif", "png"],
         accept: "image/*",
         uploadUrl: function () { return "/Applicants/SavePhoto/" + this.model.get('Id'); },
-        attachedUrl: function (value) { return "/Attachments/Get/" + value.Original.Id; },
+        attachedUrl: function (value) { return "/Attachments/Get/" + value.Original.Id + "?returnName=false"; },
         template: _.template('<div class="upload-element">'
                            + '    <img class="view-editable-empty" alt="No Photo" src="/Content/Images/NoPicture.png" title="No Photo" style="display:none"/>'
                            + '</div>'
@@ -76,7 +76,8 @@
             return $("<a />")
                 .attr("href", this.attachedUrl(value))
                 .attr("target", "_blank")
-                .append($("<img />").attr("src", "/Attachments/Get/" + value.Thumbnail.Id));
+                .append($("<img />").attr("src", "/Attachments/Get/" + value.Thumbnail.Id + "?returnName=false")
+                );
         }
     });
 
@@ -88,8 +89,8 @@
                                    + '    Adjunto: <span class="view-editable-content"></span>'
                                    + '<button class="view-editable-clear">-</button>'
                                    + '</span>'),
-        uploadUrl: function () { return "/Attachments/Post"; },
-        attachedUrl: function (value) { return "/Attachments/Get/" + value.Id + "?fileName=" + value.FileName; }
+        uploadUrl: function () { return "/Attachments/Post/" + /* TODO */this.model.collection.parentModel.get('Id'); },
+        attachedUrl: function (value) { return "/Attachments/Get/" + value.Id; }
     });
 
     App.EditApplicantAppViewDataBinder = Nervoustissue.FormBinder.extend({
