@@ -24,10 +24,7 @@ namespace CommonJobs.Mvc.UI.Controllers
             if (attachment == null)
                 return HttpNotFound();
 
-            var stream = Query(new ReadAttachment() 
-            { 
-                Attachment = attachment
-            });
+            var stream = Query(new ReadAttachment(attachment));
             if (stream == null)
                 return HttpNotFound();
 
@@ -45,12 +42,10 @@ namespace CommonJobs.Mvc.UI.Controllers
                 return HttpNotFound("Specified entity does not exists");
             
             var attachmentReader = new RequestAttachmentReader(Request);
-            var attachment = ExecuteCommand(new SaveAttachment()
-            {
-                RelatedEntity = entity,
-                FileName = attachmentReader.FileName,
-                Stream = attachmentReader.Stream
-            });
+            var attachment = ExecuteCommand(new SaveAttachment(
+                entity,
+                attachmentReader.FileName,
+                attachmentReader.Stream));
 
             return Json(new { success = true, attachment = attachment });
         }
@@ -60,13 +55,10 @@ namespace CommonJobs.Mvc.UI.Controllers
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
-            Attachment[] attachments = Query(new GetNotIndexedAttachments() { Quantity = quantity });
+            Attachment[] attachments = Query(new GetNotIndexedAttachments(quantity));
             //TODO: indexar cada uno
             foreach (var attachment in attachments)
-                ExecuteCommand(new IndexAttachment() 
-                {
-                    Attachment = attachment
-                });
+                ExecuteCommand(new IndexAttachment(attachment));
 
             stopwatch.Stop();
             return Json(new

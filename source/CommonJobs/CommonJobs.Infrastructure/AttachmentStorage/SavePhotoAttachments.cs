@@ -16,19 +16,19 @@ namespace CommonJobs.Infrastructure.AttachmentStorage
         public Stream Stream { get; set; }
         public string UploadPath { get; set; }
 
-        public SavePhotoAttachments()
+        public SavePhotoAttachments(object relatedEntity, string fileName, Stream stream)
         {
             UploadPath = CommonJobs.Infrastructure.Properties.Settings.Default.UploadPath; //Default value
+            RelatedEntity = relatedEntity;
+            FileName = fileName;
+            Stream = stream;
         }
 
         public override ImageAttachment ExecuteWithResult()
         {
-            var photo = ExecuteCommand(new SaveAttachment() 
+            var photo = ExecuteCommand(new SaveAttachment(RelatedEntity, FileName, Stream) 
             {
-                UploadPath = UploadPath,
-                RelatedEntity = RelatedEntity,
-                FileName = FileName, 
-                Stream = Stream 
+                UploadPath = UploadPath
             });
             var thumbnail = SaveThumbnailAttachment(photo);
             return new ImageAttachment() { Original = photo, Thumbnail = thumbnail };
@@ -40,20 +40,16 @@ namespace CommonJobs.Infrastructure.AttachmentStorage
 
             var photo = RavenSession.Load<Attachment>(photoReference.Id);
 
-            var photoStream = Query(new ReadAttachment() 
+            var photoStream = Query(new ReadAttachment(photo) 
             {
-                Attachment = photo, 
                 UploadPath = UploadPath 
             });
             photoStream.Position = 0; //Find a more elegant way to do it
             //TODO: generate thumbnail
             var thumbnailStream = photoStream;
-            return ExecuteCommand(new SaveAttachment() 
+            return ExecuteCommand(new SaveAttachment(RelatedEntity, thumbnailFileName, thumbnailStream) 
             {
-                UploadPath = UploadPath,
-                RelatedEntity = RelatedEntity,
-                FileName = thumbnailFileName, 
-                Stream = thumbnailStream 
+                UploadPath = UploadPath
             });
         }
     }

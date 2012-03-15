@@ -96,12 +96,10 @@ namespace CommonJobs.Mvc.UI.Controllers
         {
             var employee = RavenSession.Load<Employee>(id);
             var attachmentReader = new RequestAttachmentReader(Request);
-            employee.Photo = ExecuteCommand(new SavePhotoAttachments()
-            {
-                RelatedEntity = employee,
-                FileName = attachmentReader.FileName,
-                Stream = attachmentReader.Stream
-            });
+            employee.Photo = ExecuteCommand(new SavePhotoAttachments(
+                employee, 
+                attachmentReader.FileName, 
+                attachmentReader.Stream));
             return Json(new { success = true, attachment = employee.Photo });
         }
     }

@@ -14,10 +14,10 @@ namespace CommonJobs.Infrastructure.AttachmentIndexing
         public ContentExtractionConfiguration Configuration { get; set; }
         public int Quantity { get; set; }
 
-        public GetNotIndexedAttachments()
+        public GetNotIndexedAttachments(int quantity)
         {
-            Quantity = 10; //Default value
             Configuration = ContentExtractionConfiguration.Current; //Default value
+            Quantity = quantity;
         }
 
         public override Attachment[] Execute()

@@ -15,17 +15,17 @@ namespace CommonJobs.Infrastructure.AttachmentIndexing
         public Attachment Attachment { get; set; }
         public string UploadPath { get; set; }
 
-        public IndexAttachment()
+        public IndexAttachment(Attachment attachment)
         {
             Configuration = ContentExtractionConfiguration.Current; //Default value
             UploadPath = CommonJobs.Infrastructure.Properties.Settings.Default.UploadPath; //Default value
+            Attachment = attachment;
         }
 
         public override void Execute()
         {
-            var stream = Query(new ReadAttachment() 
+            var stream = Query(new ReadAttachment(Attachment) 
             { 
-                Attachment = Attachment,
                 UploadPath = UploadPath
             });
             ExtractionResult result = null;

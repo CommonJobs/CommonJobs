@@ -17,9 +17,12 @@ namespace CommonJobs.Infrastructure.AttachmentStorage
         public Stream Stream { get; set; }
         public string UploadPath { get; set; }
 
-        public SaveAttachment()
+        public SaveAttachment(object relatedEntity, string fileName, Stream stream)
         {
             UploadPath = CommonJobs.Infrastructure.Properties.Settings.Default.UploadPath; //Default value
+            RelatedEntity = relatedEntity;
+            FileName = fileName;
+            Stream = stream;
         }
 
         public override AttachmentReference ExecuteWithResult()
@@ -42,9 +45,8 @@ namespace CommonJobs.Infrastructure.AttachmentStorage
 
             RavenSession.Store(attachment);
 
-            ExecuteCommand(new IndexAttachment() 
+            ExecuteCommand(new IndexAttachment(attachment)
             {
-                Attachment = attachment,
                 UploadPath = UploadPath
             });
 
