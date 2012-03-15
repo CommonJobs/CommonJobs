@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.ComponentModel.DataAnnotations;
+using CommonJobs.Utilities;
 
 namespace CommonJobs.Domain
 {
@@ -28,6 +29,11 @@ namespace CommonJobs.Domain
         public bool HaveTechnicalInterview
         {
             get { return Notes != null && Notes.Any(x => x.NoteType == ApplicantNoteType.TechnicalInterviewNote); }
+        }
+
+        public override IEnumerable<AttachmentReference> AllAttachmentReferences
+        {
+            get { return base.AllAttachmentReferences.Union(Notes.EmptyIfNull().Select(x => x.Attachment)).Where(x => x != null); }
         }
     }
 }

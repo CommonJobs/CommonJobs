@@ -6,6 +6,8 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using CommonJobs.Raven.Mvc;
 using CommonJobs.Infrastructure.Indexes;
+using CommonJobs.ContentExtraction;
+using CommonJobs.ContentExtraction.Extractors;
 
 namespace CommonJobs.Mvc.UI
 {
@@ -38,6 +40,10 @@ namespace CommonJobs.Mvc.UI
             using (var migrator = new DataMigrator(RavenSessionManager.DocumentStore))
                 migrator.Execute();
             
+            //TODO: hacer esto con algo mejor que un singleton
+            ContentExtractionConfiguration.Current.Clear();
+            ContentExtractionConfiguration.Current.Add(new PlainTextContentExtractor());
+
             AreaRegistration.RegisterAllAreas();
 
             RegisterGlobalFilters(GlobalFilters.Filters);
