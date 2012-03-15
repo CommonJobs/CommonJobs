@@ -13,6 +13,7 @@ namespace CommonJobs.Infrastructure.AttachmentIndexing
     {
         public ContentExtractionConfiguration Configuration { get; set; }
         public Attachment Attachment { get; set; }
+        public string UploadPath { get; set; }
 
         public IndexAttachment()
         {
@@ -21,7 +22,11 @@ namespace CommonJobs.Infrastructure.AttachmentIndexing
 
         public override void Execute()
         {
-            var stream = Query(new ReadAttachment() { Attachment = Attachment });
+            var stream = Query(new ReadAttachment() 
+            { 
+                Attachment = Attachment,
+                UploadPath = UploadPath
+            });
             ExtractionResult result = null;
             foreach (var extractor in Configuration)
             {

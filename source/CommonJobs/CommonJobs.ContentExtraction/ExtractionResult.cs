@@ -9,5 +9,6 @@ namespace CommonJobs.ContentExtraction
     {
         public string ContentType { get; set; }
         public string PlainContent { get; set; }
+        //TODO: permitir una coleccion de key/values para metadatos (Por ejemplo los de los archivos de word)
     }
 }

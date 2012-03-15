@@ -37,7 +37,11 @@ namespace CommonJobs.Infrastructure.AttachmentStorage
 
             RavenSession.Store(attachment);
 
-            ExecuteCommand(new IndexAttachment() { Attachment = attachment });
+            ExecuteCommand(new IndexAttachment() 
+            {
+                Attachment = attachment,
+                UploadPath = UploadPath
+            });
 
             return attachment.CreateReference();
         }

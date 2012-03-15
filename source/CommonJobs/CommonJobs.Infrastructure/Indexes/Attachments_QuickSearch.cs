@@ -10,6 +10,8 @@ namespace CommonJobs.Infrastructure.Indexes
 {
     public class Attachments_QuickSearch : AbstractMultiMapIndexCreationTask<Attachments_QuickSearch.Result>
     {
+        //TODO: permitir indexar coleccion de key/values para metadatos (Por ejemplo los de los archivos de word)
+
         public class Result
         {
             public string AttachmentId { get; set; }
@@ -18,6 +20,7 @@ namespace CommonJobs.Infrastructure.Indexes
             public string FileName { get; set; }
             public string RelatedEntityId { get; set; }
             public bool IsOrphan { get; set; }
+            public string ContentExtractorConfigurationHash { get; set; }
         }
 
         public Attachments_QuickSearch()
@@ -31,6 +34,7 @@ namespace CommonJobs.Infrastructure.Indexes
                     ContentType = attachment.ContentType,
                     FileName = attachment.FileName,
                     RelatedEntityId = attachment.RelatedEntityId,
+                    ContentExtractorConfigurationHash = attachment.ContentExtractorConfigurationHash,
                     IsOrphan = true
                 });
 
@@ -45,6 +49,7 @@ namespace CommonJobs.Infrastructure.Indexes
                     ContentType = (string)null,
                     FileName = (string)null,
                     RelatedEntityId = (string)null,
+                    ContentExtractorConfigurationHash = (string)null,
                     IsOrphan = false
                 });
 
@@ -58,6 +63,7 @@ namespace CommonJobs.Infrastructure.Indexes
                     ContentType = (string)null,
                     FileName = (string)null,
                     RelatedEntityId = (string)null,
+                    ContentExtractorConfigurationHash = (string)null,
                     IsOrphan = false
                 });
 
@@ -70,6 +76,7 @@ namespace CommonJobs.Infrastructure.Indexes
                                 ContentType = g.Select(x => x.ContentType).Where(x => x != null).FirstOrDefault(),
                                 FileName = g.Select(x => x.FileName).Where(x => x != null).FirstOrDefault(),
                                 RelatedEntityId = g.Select(x => x.RelatedEntityId).Where(x => x != null).FirstOrDefault(),
+                                ContentExtractorConfigurationHash = g.Select(x => x.ContentExtractorConfigurationHash).Where(x => x != null).FirstOrDefault(),
                                 IsOrphan = g.Select(x => x.IsOrphan).All(x => x)
                              };
 

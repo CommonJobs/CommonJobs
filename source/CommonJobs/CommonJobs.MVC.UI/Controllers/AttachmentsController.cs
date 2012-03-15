@@ -57,7 +57,6 @@ namespace CommonJobs.Mvc.UI.Controllers
             return Json(new { success = true, attachment = attachment });
         }
 
-        [Obsolete("This action should be executed automatically by the system")]
         public ActionResult IndexAttachments(int quantity = 10)
         {
             var stopwatch = new Stopwatch();
@@ -66,7 +65,11 @@ namespace CommonJobs.Mvc.UI.Controllers
             Attachment[] attachments = Query(new GetNotIndexedAttachments() { Quantity = quantity });
             //TODO: indexar cada uno
             foreach (var attachment in attachments)
-                ExecuteCommand(new IndexAttachment() { Attachment = attachment });
+                ExecuteCommand(new IndexAttachment() 
+                {
+                    Attachment = attachment,
+                    UploadPath = CommonJobs.Mvc.UI.Properties.Settings.Default.UploadPath
+                });
 
             stopwatch.Stop();
             return Json(new

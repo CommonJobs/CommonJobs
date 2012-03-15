@@ -8,11 +8,22 @@ namespace CommonJobs.ContentExtraction.Extractors
 {
     public class PlainTextContentExtractor : IContentExtractor
     {
+        private static readonly HashSet<string> AllowedExtensions = new HashSet<string> { ".txt", ".md", ".markdown" };
+
+        private bool IsExtractable(string fileName)
+        {
+            //TODO: it should not be based on extensions. I should be based in content
+            return AllowedExtensions.Contains(Path.GetExtension(fileName));
+        }
+
         public bool TryExtract(string fileName, Stream stream, out ExtractionResult result)
         {
-            stream.Position = 0; //TODO: buscar una forma mas elegante de hacer esto
-            if (true /* TODO: verify encoding, etc */)
+            result = null;
+            if (IsExtractable(fileName))
             {
+                //TODO: Mejorar el soporte para archivos ANSI
+
+                stream.Position = 0; //TODO: buscar una forma mas elegante de hacer esto
                 result = new ExtractionResult()
                 {
                     ContentType = "text/plain",
@@ -20,7 +31,10 @@ namespace CommonJobs.ContentExtraction.Extractors
                 };
                 return true;
             }
-            return false;
+            else
+            {
+                return false;
+            }
         }
     }
 }
