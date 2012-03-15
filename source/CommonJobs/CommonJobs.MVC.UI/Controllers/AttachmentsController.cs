@@ -11,6 +11,8 @@ using Raven.Client.Linq;
 using CommonJobs.Mvc.UI.Models;
 using CommonJobs.Infrastructure.Indexes;
 using CommonJobs.Infrastructure.AttachmentIndexing;
+using RavenData = Raven.Abstractions.Data;
+using Raven.Json.Linq;
 
 namespace CommonJobs.Mvc.UI.Controllers
 {
@@ -49,6 +51,48 @@ namespace CommonJobs.Mvc.UI.Controllers
 
             return Json(new { success = true, attachment = attachment });
         }
+
+        public ActionResult CleanAttachmentIndexInformation()
+        {
+            //TODO: revisar si funciona ilimitados documentos
+            RavenSession.Advanced.DatabaseCommands.UpdateByIndex(
+                "Attachments/ByContentExtractorConfigurationHash",
+                new RavenData.IndexQuery() { Query = "ContentExtractorConfigurationHash:*" },
+                new[] {
+                    new RavenData.PatchRequest()
+                    {
+                        Type = RavenData.PatchCommandType.Set,
+                        Name = "ContentExtractorConfigurationHash",
+                        Value = RavenJValue.Null
+                    },
+                    new RavenData.PatchRequest()
+                    {
+                        Type = RavenData.PatchCommandType.Set,
+                        Name = "PlainContent",
+                        Value = RavenJValue.Null
+                    }
+                },
+                allowStale: false);
+
+            return Json(new { ok = true });
+
+            //var addToPatchedDoc = new JsonPatcher(doc).Apply(new[]
+            //{
+            //    new PatchRequest
+            //    {
+            //        Type = PatchCommandType.Modify,
+            //        Name = "ContentExtractorConfigurationHash",
+            //        Nested = new[]
+            //        {
+            //            new PatchRequest {Type = PatchCommandType.Set, Name = "ContentExtractorConfigurationHash", Value = RavenJValue.Null},
+            //        }
+            //    },
+            //});
+
+            //RavenSession.Advanced.DatabaseCommands.Patch(
+                //);
+        }
+
 
         public ActionResult IndexAttachments(int quantity = 10)
         {
