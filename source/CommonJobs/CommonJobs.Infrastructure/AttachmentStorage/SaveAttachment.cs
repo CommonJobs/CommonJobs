@@ -6,6 +6,7 @@ using CommonJobs.Domain;
 using System.IO;
 using System.Security.Cryptography;
 using CommonJobs.Raven.Infrastructure;
+using CommonJobs.Infrastructure.AttachmentIndexing;
 
 namespace CommonJobs.Infrastructure.AttachmentStorage
 {
@@ -35,6 +36,8 @@ namespace CommonJobs.Infrastructure.AttachmentStorage
             }
 
             RavenSession.Store(attachment);
+
+            ExecuteCommand(new IndexAttachment() { Attachment = attachment });
 
             return attachment.CreateReference();
         }

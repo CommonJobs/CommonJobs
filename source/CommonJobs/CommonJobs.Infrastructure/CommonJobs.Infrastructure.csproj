@@ -64,10 +64,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AttachmentIndexing\GetNotIndexedAttachments.cs" />
+    <Compile Include="AttachmentIndexing\IndexAttachment.cs" />
     <Compile Include="AttachmentStorage\ReadAttachment.cs" />
     <Compile Include="AttachmentStorage\SaveAttachment.cs" />
     <Compile Include="AttachmentStorage\SavePhotoAttachments.cs" />
     <Compile Include="Indexes\Applicant_QuickSearch.cs" />
+    <Compile Include="Indexes\Attachments_ByContentExtractorConfigurationHash.cs" />
+    <Compile Include="Indexes\Attachments_QuickSearch.cs" />
     <Compile Include="Indexes\Employee_QuickSearch.cs" />
     <Compile Include="Indexes\NullIndex.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -76,6 +80,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CommonJobs.ContentExtraction\CommonJobs.ContentExtraction.csproj">
+      <Project>{FCF0DC4A-8A75-499D-AE7D-25D2F5174E38}</Project>
+      <Name>CommonJobs.ContentExtraction</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CommonJobs.Domain\CommonJobs.Domain.csproj">
       <Project>{CC2939C6-A278-4789-B937-ADB693E69C89}</Project>
       <Name>CommonJobs.Domain</Name>
@@ -84,7 +92,12 @@
       <Project>{7B4A0A21-0CDE-432A-A785-599D4339AD8E}</Project>
       <Name>CommonJobs.Raven.Infrastructure</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CommonJobs.Utilities\CommonJobs.Utilities.csproj">
+      <Project>{FABFCAFA-F6F2-47C2-B393-66E97203F107}</Project>
+      <Name>CommonJobs.Utilities</Name>
+    </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
