@@ -17,6 +17,11 @@ namespace CommonJobs.Infrastructure.AttachmentStorage
         public Stream Stream { get; set; }
         public string UploadPath { get; set; }
 
+        public SaveAttachment()
+        {
+            UploadPath = CommonJobs.Infrastructure.Properties.Settings.Default.UploadPath; //Default value
+        }
+
         public override AttachmentReference ExecuteWithResult()
         {
             var relatedEntityId = RavenSession.Advanced.GetDocumentId(RelatedEntity);

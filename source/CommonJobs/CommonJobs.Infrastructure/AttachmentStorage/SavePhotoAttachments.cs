@@ -16,6 +16,11 @@ namespace CommonJobs.Infrastructure.AttachmentStorage
         public Stream Stream { get; set; }
         public string UploadPath { get; set; }
 
+        public SavePhotoAttachments()
+        {
+            UploadPath = CommonJobs.Infrastructure.Properties.Settings.Default.UploadPath; //Default value
+        }
+
         public override ImageAttachment ExecuteWithResult()
         {
             var photo = ExecuteCommand(new SaveAttachment() 

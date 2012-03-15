@@ -18,6 +18,7 @@ namespace CommonJobs.Infrastructure.AttachmentIndexing
         public IndexAttachment()
         {
             Configuration = ContentExtractionConfiguration.Current; //Default value
+            UploadPath = CommonJobs.Infrastructure.Properties.Settings.Default.UploadPath; //Default value
         }
 
         public override void Execute()

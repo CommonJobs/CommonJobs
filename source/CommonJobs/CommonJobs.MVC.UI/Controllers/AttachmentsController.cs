@@ -26,8 +26,7 @@ namespace CommonJobs.Mvc.UI.Controllers
 
             var stream = Query(new ReadAttachment() 
             { 
-                Attachment = attachment, 
-                UploadPath = CommonJobs.Infrastructure.Properties.Settings.Default.UploadPath 
+                Attachment = attachment
             });
             if (stream == null)
                 return HttpNotFound();
@@ -48,7 +47,6 @@ namespace CommonJobs.Mvc.UI.Controllers
             var attachmentReader = new RequestAttachmentReader(Request);
             var attachment = ExecuteCommand(new SaveAttachment()
             {
-                UploadPath = CommonJobs.Infrastructure.Properties.Settings.Default.UploadPath,
                 RelatedEntity = entity,
                 FileName = attachmentReader.FileName,
                 Stream = attachmentReader.Stream
@@ -67,8 +65,7 @@ namespace CommonJobs.Mvc.UI.Controllers
             foreach (var attachment in attachments)
                 ExecuteCommand(new IndexAttachment() 
                 {
-                    Attachment = attachment,
-                    UploadPath = CommonJobs.Infrastructure.Properties.Settings.Default.UploadPath
+                    Attachment = attachment
                 });
 
             stopwatch.Stop();

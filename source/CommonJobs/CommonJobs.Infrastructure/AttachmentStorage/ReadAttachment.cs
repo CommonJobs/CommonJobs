@@ -14,6 +14,11 @@ namespace CommonJobs.Infrastructure.AttachmentStorage
     {
         public Attachment Attachment { get; set; }
         public string UploadPath { get; set; }
+
+        public ReadAttachment()
+        {
+            UploadPath = CommonJobs.Infrastructure.Properties.Settings.Default.UploadPath; //Default value
+        }
         
         public override Stream Execute()
         {

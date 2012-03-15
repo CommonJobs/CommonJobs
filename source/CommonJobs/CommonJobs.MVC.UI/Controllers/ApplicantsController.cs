@@ -105,8 +105,7 @@ namespace CommonJobs.Mvc.UI.Controllers
             {
                 RelatedEntity = applicant,
                 FileName = attachmentReader.FileName,
-                Stream = attachmentReader.Stream,
-                UploadPath = CommonJobs.Infrastructure.Properties.Settings.Default.UploadPath
+                Stream = attachmentReader.Stream
             });
             return Json(new { success = true, attachment = applicant.Photo });
         }
