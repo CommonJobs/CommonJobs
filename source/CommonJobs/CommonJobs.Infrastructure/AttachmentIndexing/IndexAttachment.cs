@@ -31,8 +31,9 @@ namespace CommonJobs.Infrastructure.AttachmentIndexing
             ExtractionResult result = null;
             if (Configuration.TryExtract(Attachment.GetServerPath(UploadPath), stream, Attachment.FileName, out result))
             {
-                Attachment.ContentType = result.ContentType;
                 Attachment.PlainContent = result.PlainContent;
+                if (result.ContentType != null)
+                    Attachment.ContentType = result.ContentType;
             }
             else
             {
