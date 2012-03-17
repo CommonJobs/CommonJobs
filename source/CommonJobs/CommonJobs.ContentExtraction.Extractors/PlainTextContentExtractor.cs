@@ -39,7 +39,7 @@ namespace CommonJobs.ContentExtraction.Extractors
             return enc;
         }
 
-        public bool TryExtract(string fileName, Stream stream, out ExtractionResult result)
+        public bool TryExtract(string fullPath, Stream stream, string fileName, out ExtractionResult result)
         {
             result = null;
             if (IsExtractable(fileName))

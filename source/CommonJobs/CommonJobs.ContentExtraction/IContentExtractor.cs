@@ -8,6 +8,6 @@ namespace CommonJobs.ContentExtraction
 {
     public interface IContentExtractor
     {
-        bool TryExtract(string fileName, Stream stream, out ExtractionResult result);
+        bool TryExtract(string fullPath, Stream stream, string fileName, out ExtractionResult result);
     }
 }
