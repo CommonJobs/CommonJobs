@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 namespace CommonJobs.ContentExtraction.IFilterExtraction
 {
   [StructLayout(LayoutKind.Sequential)]
-  public struct FULLPROPSPEC 
+  internal struct FULLPROPSPEC 
   {
     public Guid guidPropSet;
     public PROPSPEC psProperty;
@@ -23,7 +23,7 @@ namespace CommonJobs.ContentExtraction.IFilterExtraction
   }
 
   [StructLayout(LayoutKind.Explicit)]
-  public struct PROPSPEC
+  internal struct PROPSPEC
   {
     [FieldOffset(0)] public int ulKind;     // 0 - string used; 1 - PROPID
     [FieldOffset(4)] public int propid;    
@@ -124,7 +124,7 @@ namespace CommonJobs.ContentExtraction.IFilterExtraction
     FILTER_OWNED_VALUE_OK = 512
   }
 
-  public struct STAT_CHUNK 
+  internal struct STAT_CHUNK 
   {
     /// <summary>
     /// The chunk identifier. Chunk identifiers must be unique for the
@@ -207,7 +207,7 @@ namespace CommonJobs.ContentExtraction.IFilterExtraction
   /// Enumerates the different breaking types that occur between 
   /// chunks of text read out by the FileFilter.
   /// </summary>
-  public enum CHUNK_BREAKTYPE
+  internal enum CHUNK_BREAKTYPE
   {
     /// <summary>
     /// No break is placed between the current chunk and the previous chunk.
@@ -240,7 +240,7 @@ namespace CommonJobs.ContentExtraction.IFilterExtraction
   }
 
 
-  public enum CHUNKSTATE 
+  internal enum CHUNKSTATE 
   {
     /// <summary>
     /// The current chunk is a text-type property.

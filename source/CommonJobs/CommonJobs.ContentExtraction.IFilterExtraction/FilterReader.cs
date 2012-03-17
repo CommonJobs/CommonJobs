@@ -10,7 +10,7 @@ namespace CommonJobs.ContentExtraction.IFilterExtraction
     /// Implements a TextReader that reads from an IFilter. 
     /// Taken from http://indexer.codeplex.com/ under Apache License 2.0 (Apache)
     /// </summary>
-    public class FilterReader : TextReader
+    internal class FilterReader : TextReader
     {
         //TODO: revisar porque ya le quité algunas incorrecciones, no estoy seguro de que no tenga bugs o memory leaks.
         IFilter _filter;

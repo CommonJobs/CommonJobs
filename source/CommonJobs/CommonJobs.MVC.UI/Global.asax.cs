@@ -8,7 +8,6 @@ using CommonJobs.Raven.Mvc;
 using CommonJobs.Infrastructure.Indexes;
 using CommonJobs.ContentExtraction;
 using CommonJobs.ContentExtraction.Extractors;
-using CommonJobs.ContentExtraction.IFilterExtraction;
 
 namespace CommonJobs.Mvc.UI
 {

@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using CommonJobs.ContentExtraction.IFilterExtraction;
 
-namespace CommonJobs.ContentExtraction.IFilterExtraction
+namespace CommonJobs.ContentExtraction.Extractors
 {
     public class FilterContentExtractor : IContentExtractor
     {

@@ -14,7 +14,7 @@ namespace CommonJobs.ContentExtraction.IFilterExtraction
     /// It then loads that dll, creates the appropriate COM object and returns 
     /// a pointer to an IFilter instance
     /// </summary>
-    static class FilterLoader
+    internal static class FilterLoader
     {
         #region CacheEntry
         private class CacheEntry
