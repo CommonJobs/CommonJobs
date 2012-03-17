@@ -107,13 +107,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ApplicantSearchModel.cs" />
+    <Compile Include="Models\AttachmentSearchModel.cs" />
     <Compile Include="Models\SearchModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>Settings.settings</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\1140.css" />
@@ -132,10 +128,6 @@
     <None Include="Content\PersonListing.less" />
     <None Include="Content\PersonsBase.less" />
     <None Include="Content\StylesBase.less" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
     <None Include="_bin_deployableAssemblies\System.Web.Mvc.dll" />
     <None Include="_bin_deployableAssemblies\WebMatrix.WebData.xml" />
     <None Include="_bin_deployableAssemblies\WebMatrix.WebData.dll" />
@@ -647,6 +639,14 @@
     <Content Include="Views\Employees\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CommonJobs.ContentExtraction.Extractors\CommonJobs.ContentExtraction.Extractors.csproj">
+      <Project>{BD46EC5E-D3DD-42C2-81D1-D7B2B05B7A4E}</Project>
+      <Name>CommonJobs.ContentExtraction.Extractors</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CommonJobs.ContentExtraction\CommonJobs.ContentExtraction.csproj">
+      <Project>{FCF0DC4A-8A75-499D-AE7D-25D2F5174E38}</Project>
+      <Name>CommonJobs.ContentExtraction</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CommonJobs.Domain\CommonJobs.Domain.csproj">
       <Project>{CC2939C6-A278-4789-B937-ADB693E69C89}</Project>
       <Name>CommonJobs.Domain</Name>

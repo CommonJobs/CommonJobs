@@ -51,5 +51,17 @@ namespace CommonJobs.Domain
         [Display(Name = "Skills")]
         //Only in detailed view
         public string Skills { get; set; }
+
+        public virtual IEnumerable<AttachmentReference> AllAttachmentReferences
+        {
+            get
+            {
+                if (Photo != null && Photo.Original != null)
+                    yield return Photo.Original;
+                if (Photo != null && Photo.Thumbnail != null)
+                    yield return Photo.Thumbnail;
+                yield break;
+            }
+        }
     }
 }

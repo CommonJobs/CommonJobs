@@ -108,5 +108,11 @@ namespace CommonJobs.Domain
         //            .ThenBy(x => x.RegisterDate);
         //    }
         //}
+
+
+        public override IEnumerable<AttachmentReference> AllAttachmentReferences
+        {
+            get { return base.AllAttachmentReferences.Union(Notes.EmptyIfNull().Select(x => x.Attachment)).Where(x => x != null); }
+        }
     }
 }
