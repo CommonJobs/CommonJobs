@@ -29,19 +29,14 @@ namespace CommonJobs.Infrastructure.AttachmentIndexing
                 UploadPath = UploadPath
             });
             ExtractionResult result = null;
-            foreach (var extractor in Configuration)
-            {
-                if (extractor.TryExtract(Attachment.FileName, stream, out result))
-                    break;
-            }
-            if (result == null)
-            {
-                Attachment.PlainContent = null;
-            }
-            else
+            if (Configuration.TryExtract(null, stream, Attachment.FileName, out result))
             {
                 Attachment.ContentType = result.ContentType;
                 Attachment.PlainContent = result.PlainContent;
+            }
+            else
+            {
+                Attachment.PlainContent = null;
             }
             Attachment.ContentExtractorConfigurationHash = Configuration.HashCode;
         }

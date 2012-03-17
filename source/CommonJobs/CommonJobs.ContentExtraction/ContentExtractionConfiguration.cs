@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using CommonJobs.Utilities;
+using System.IO;
 
 namespace CommonJobs.ContentExtraction
 {
-    public class ContentExtractionConfiguration : List<IContentExtractor>
+    public class ContentExtractionConfiguration : List<IContentExtractor>, IContentExtractor
     {
         //TODO: hacer algo mejor que un singleton para esto
         public static readonly ContentExtractionConfiguration Current = new ContentExtractionConfiguration();
@@ -20,5 +21,15 @@ namespace CommonJobs.ContentExtraction
             get { return Encoding.IntToBase64urlEncoding(GetHashCode()); }
         }
 
+        public bool TryExtract(string fullPath, Stream stream, string fileName, out ExtractionResult result)
+        {
+            result = null;
+            foreach (var extractor in this)
+            {
+                if (extractor.TryExtract(null, stream, fileName, out result))
+                    return true;
+            }
+            return false;
+        }
     }
 }
