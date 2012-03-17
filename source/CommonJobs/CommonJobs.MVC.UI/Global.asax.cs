@@ -42,7 +42,10 @@ namespace CommonJobs.Mvc.UI
             
             //TODO: hacer esto con algo mejor que un singleton
             ContentExtractionConfiguration.Current.Clear();
-            ContentExtractionConfiguration.Current.Add(new PlainTextContentExtractor());
+            ContentExtractionConfiguration.Current.AddRange(new IContentExtractor[] {
+                new PlainTextContentExtractor(), //I prefeer my own plain text extractor than IFilter. It is ugly but it reads fine UTF8 without BOM files.
+                new FilterContentExtractor()
+            });
 
             AreaRegistration.RegisterAllAreas();
 

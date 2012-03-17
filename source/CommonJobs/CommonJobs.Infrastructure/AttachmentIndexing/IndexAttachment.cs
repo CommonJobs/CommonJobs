@@ -29,19 +29,15 @@ namespace CommonJobs.Infrastructure.AttachmentIndexing
                 UploadPath = UploadPath
             });
             ExtractionResult result = null;
-            foreach (var extractor in Configuration)
+            if (Configuration.TryExtract(Attachment.GetServerPath(UploadPath), stream, Attachment.FileName, out result))
             {
-                if (extractor.TryExtract(Attachment.FileName, stream, out result))
-                    break;
-            }
-            if (result == null)
-            {
-                Attachment.PlainContent = null;
+                Attachment.PlainContent = result.PlainContent;
+                if (result.ContentType != null)
+                    Attachment.ContentType = result.ContentType;
             }
             else
             {
-                Attachment.ContentType = result.ContentType;
-                Attachment.PlainContent = result.PlainContent;
+                Attachment.PlainContent = null;
             }
             Attachment.ContentExtractorConfigurationHash = Configuration.HashCode;
         }
