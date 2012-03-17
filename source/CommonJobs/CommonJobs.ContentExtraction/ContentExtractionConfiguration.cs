@@ -26,7 +26,7 @@ namespace CommonJobs.ContentExtraction
             result = null;
             foreach (var extractor in this)
             {
-                if (extractor.TryExtract(null, stream, fileName, out result))
+                if (extractor.TryExtract(fullPath, stream, fileName, out result))
                     return true;
             }
             return false;

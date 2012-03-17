@@ -29,7 +29,7 @@ namespace CommonJobs.Infrastructure.AttachmentIndexing
                 UploadPath = UploadPath
             });
             ExtractionResult result = null;
-            if (Configuration.TryExtract(null, stream, Attachment.FileName, out result))
+            if (Configuration.TryExtract(Attachment.GetServerPath(UploadPath), stream, Attachment.FileName, out result))
             {
                 Attachment.ContentType = result.ContentType;
                 Attachment.PlainContent = result.PlainContent;
