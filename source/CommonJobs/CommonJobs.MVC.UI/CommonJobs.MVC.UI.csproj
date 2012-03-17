@@ -638,6 +638,10 @@
       <Project>{BD46EC5E-D3DD-42C2-81D1-D7B2B05B7A4E}</Project>
       <Name>CommonJobs.ContentExtraction.Extractors</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CommonJobs.ContentExtraction.IFilterExtraction\CommonJobs.ContentExtraction.IFilterExtraction.csproj">
+      <Project>{3B252589-C00B-49F6-92A0-EE2C8E7C671F}</Project>
+      <Name>CommonJobs.ContentExtraction.IFilterExtraction</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CommonJobs.ContentExtraction\CommonJobs.ContentExtraction.csproj">
       <Project>{FCF0DC4A-8A75-499D-AE7D-25D2F5174E38}</Project>
       <Name>CommonJobs.ContentExtraction</Name>
