@@ -108,7 +108,9 @@
     </Compile>
     <Compile Include="Models\ApplicantSearchModel.cs" />
     <Compile Include="Models\AttachmentSearchModel.cs" />
-    <Compile Include="Models\SearchModel.cs" />
+    <Compile Include="Models\EmployeeSearchModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

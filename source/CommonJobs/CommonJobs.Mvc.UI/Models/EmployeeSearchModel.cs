@@ -5,7 +5,7 @@ using System.Web;
 
 namespace CommonJobs.Mvc.UI.Models
 {
-    public class SearchModel
+    public class EmployeeSearchModel
     {
         public string Term { get; set; }
     }
