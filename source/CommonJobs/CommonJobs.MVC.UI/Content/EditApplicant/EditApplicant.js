@@ -105,7 +105,7 @@
             },
             Photo: { controlLink: "CjApplicantPicture" },
             IsHighlighted:
-            { 
+            {
                 controlLink: "Toggle",
                 onTemplate: _.template('<img border="0" class="on" src="/Content/Images/GreenTick.png" alt="Resaltado" title="Resaltado">'),
                 offTemplate: _.template('<img border="0" class="on" src="/Content/Images/GrayTick.png" alt="Resaltado" title="Resaltado">')
@@ -156,6 +156,8 @@
         },
         initialize: function () {
             this.dataBinder = new App.EditApplicantAppViewDataBinder({ el: this.el, model: this.model });
+            this.model.on("change:IsHighlighted", this.refreshHighlightedView, this);
+            this.refreshHighlightedView();
         },
         events: {
             "click .saveApplicant": "saveApplicant",
@@ -212,6 +214,14 @@
             this.dataBinder.editionMode("full-edit");
             this.$el.removeClass("edition-readonly edition-normal");
             this.$el.addClass("edition-full-edit");
+        },
+        refreshHighlightedView: function () {
+            //TODO how to avoid making references out of the view?
+            var $highlight = $('body').add('.editing-bar', this.$el);
+            if (this.model.get('IsHighlighted'))
+                $highlight.addClass('highlighted');
+            else
+                $highlight.removeClass('highlighted');
         }
     });
 
@@ -220,7 +230,7 @@
 
 $(function () {
     App.appView = new App.EditApplicantAppView({
-        el: $("#EditApplicantApp"),
+        el: $("#EditApp"),
         model: new App.Applicant(ViewData.applicant)
     });
 });
