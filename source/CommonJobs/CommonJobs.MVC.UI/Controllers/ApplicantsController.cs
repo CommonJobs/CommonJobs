@@ -24,10 +24,21 @@ namespace CommonJobs.Mvc.UI.Controllers
 
         public ViewResult List(ApplicantSearchModel searchModel)
         {
+            //TODO: move all of this and result to a query element
             var query = RavenSession
-                .Query<Applicant_QuickSearch.Query, Applicant_QuickSearch>()
-                .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite())
-                .Where(x => x.ByTerm.StartsWith(searchModel.Term));
+                .Query<Applicant_QuickSearch.Projection, Applicant_QuickSearch>()
+                .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite());
+
+            query = query.Where(x => 
+                x.FullName1.StartsWith(searchModel.Term)
+                || x.FullName2.StartsWith(searchModel.Term)
+                || x.Companies.Any(y => y.StartsWith(searchModel.Term))
+                || x.Skills.StartsWith(searchModel.Term)
+                || x.AttachmentNames.Any(y => y.StartsWith(searchModel.Term)));
+
+            //TODO
+            //if (searchModel.SearchInAttachments)
+            //    || x.AttachmentsContent.Any(y => y.StartsWith(searchModel.Term))
 
             if (searchModel.HaveInterview)
                 query = query.Where(x => x.HaveInterview);
@@ -36,11 +47,11 @@ namespace CommonJobs.Mvc.UI.Controllers
                 query = query.Where(x => x.HaveTechnicalInterview);
 
             if (searchModel.Highlighted)
-                query = query.Where(x => x.Highlighted);
+                query = query.Where(x => x.IsHighlighted);
 
-            query = query.OrderBy(x => x.SortingField);
-            //.AsProjection<EmployeeListView>() // EmployeeListView is an optimization, we do not need it yet
-            var list = query.As<Applicant>().ToList();
+            query = query.OrderBy(x => x.FullName1);
+            
+            var list = query.AsProjection<ApplicantSearchResult>().ToList();
             return View(list);
         }
 

@@ -11,5 +11,6 @@ namespace CommonJobs.Mvc.UI.Models
         public bool Highlighted { get; set; }
         public bool HaveInterview { get; set; }
         public bool HaveTechnicalInterview { get; set; }
+        public bool SearchInAttachments { get; set; }
     }
 }
