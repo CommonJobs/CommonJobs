@@ -220,7 +220,7 @@
 
 $(function () {
     App.appView = new App.EditApplicantAppView({
-        el: $("#EditApplicantApp"),
+        el: $("#EditApp"),
         model: new App.Applicant(ViewData.applicant)
     });
 });
