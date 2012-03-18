@@ -31,11 +31,12 @@ Tenants
 Applicants.css
 ApplicantsBase.css
 ApplicantsListing.css
+EditApplicant.css
+EditEmployee.css
+EditScreen.css
 Employees.css
 EmployeesBase.css
 EmployeesListing.css
 PersonBase.css
 PersonsBase.css
 StylesBase.css
-EditApplicant.css
-EditEmployee.css

@@ -1,4 +1,5 @@
 @import "../EmployeesBase.less";
+@import "../EditScreen.less";
 body 
 {
 	background-color:  @color_primary_semi_light;
@@ -92,32 +93,6 @@ ul
 {
     list-style: none;
 	padding-left: 2em;
-}
-
-.editing-bar 
-{
-	position:  fixed;
-	left: 50%;
-	top: 2em;
-	padding: 1em;
-	margin-left: 450px;
-	background-color: @color_primary_lighter;
-	.rounded_corners(10px);
-
-	p
-    {
-		line-height: 1em;
-    }
-
-	.change-management-options 
-    {
-    	display: none;
-    }
-}
-
-.editing .change-management-options
-{
-	display: block;
 }
 
 #info-header 

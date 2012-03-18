@@ -1,1 +1,51 @@
-﻿
+﻿.view-editable, .view-editable-empty
+{
+	border-bottom: dashed 1px #999;
+}
+
+.reference-editable-field 
+{
+	border-bottom: dashed 1px black;
+}
+
+.editing-bar 
+{
+	position:  fixed;
+	left: 50%;
+	top: 2em;
+	padding: 1em;
+	margin-left: 450px;
+	background-color: @color_primary_lighter;
+	.rounded_corners(10px);
+	max-width: 150px;
+
+	p
+    {
+		line-height: 1em;
+    }
+
+	.change-management-options 
+    {
+    	display: none;
+    }
+
+	.references
+    {
+		ul 
+        {
+        	padding-left: 0;
+			list-style-type: disc;
+			list-style-position:  inside;
+			
+			li 
+            {
+            	padding-bottom: 0.5em;
+            }
+        }
+    }
+}
+
+.editing .change-management-options
+{
+	display: block;
+}

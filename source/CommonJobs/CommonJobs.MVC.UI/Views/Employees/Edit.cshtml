@@ -20,6 +20,14 @@
     </div>
 
     <div class="editing-bar">
+        <div class="references">
+            <h3>Referencias</h3>
+            <ul>
+                <li>Click en un <span class="reference-editable-field">campo subrayado</span> para editarlo.</li>
+                <li>Click en <em>Guardar Cambios</em> luego de editar.</li>
+                <li>Click en <em>Modo de edición &rarr; Todos los campos</em> para editar todos los campos.</li>
+            </ul>
+        </div>
         <div class="edition-mode">
             <h3>Modo de edición</h3>
             <p><button class="editionNormal">Normal</button></p>
@@ -87,7 +95,7 @@
                 <li><span class="field-name">Acuerdo:</span><span class="editable-field" data-bind="Agreement"></span></li>
                 <li>
                     <span class="field-name">Remuneración:</span>
-                    <span class="view-field" data-bind="CurrentSalary"></span>
+                    <span class="view-field" data-bind="CurrentSalary"></span><br />
                     (<span class="field-name">Remuneración inicial:</span>
                     <span class="view-field" data-bind="InitialSalary"></span>)
                     <div class="editable-field" data-bind="SalaryChanges"></div> 
