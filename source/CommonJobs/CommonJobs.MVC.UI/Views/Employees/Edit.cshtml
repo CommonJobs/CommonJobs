@@ -93,14 +93,14 @@
                 <li><span class="field-name">Carga Horaria:</span><span class="editable-field" data-bind="WorkingHours"><span class="view-editable view-editable-prototype">41 horas</span></span></li>
                 <li><span class="field-name">Horario:</span><span class="editable-field" data-bind="Schedule"></span></li>
                 <li><span class="field-name">Acuerdo:</span><span class="editable-field" data-bind="Agreement"></span></li>
-                <li>
-                    <span class="field-name">Remuneración:</span>
-                    <span class="view-field" data-bind="CurrentSalary"></span><br />
-                    (<span class="field-name">Remuneración inicial:</span>
-                    <span class="view-field" data-bind="InitialSalary"></span>)
-                    <div class="editable-field" data-bind="SalaryChanges"></div> 
-                </li>
             </ul>
+            <h3>Remuneración <span class="confidential-info-title">Mostrar/Ocultar</span></h3>
+            <div class="salary-data confidential-info-data">
+                <span class="field-name">Remuneración actual:</span> <span class="view-field" data-bind="CurrentSalary"></span> <br />
+                <span class="field-name">Remuneración inicial:</span> <span class="view-field" data-bind="InitialSalary"></span> <br />
+                <span class="field-name">Cambios salariales:</span>
+                <div class="editable-field" data-bind="SalaryChanges"></div> 
+            </div>
         </div>
         <div class="misc-data additional-info-section">
             <h3>Otros datos</h3>
