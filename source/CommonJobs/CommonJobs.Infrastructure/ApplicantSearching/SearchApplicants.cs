@@ -26,16 +26,24 @@ namespace CommonJobs.Infrastructure.ApplicantSearching
                 .Query<Applicant_QuickSearch.Projection, Applicant_QuickSearch>()
                 .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite());
 
-            query = query.Where(x =>
-                x.FullName1.StartsWith(Parameters.Term)
-                || x.FullName2.StartsWith(Parameters.Term)
-                || x.Companies.Any(y => y.StartsWith(Parameters.Term))
-                || x.Skills.StartsWith(Parameters.Term)
-                || x.AttachmentNames.Any(y => y.StartsWith(Parameters.Term)));
+            query = query.Where(x => x.IsApplicant);
 
-            //TODO
-            //if (Parameters.SearchInAttachments)
-            //    || x.AttachmentsContent.Any(y => y.StartsWith(Parameters.Term))
+            //TODO: enhance it
+            if (Parameters.SearchInAttachments)
+                query = query.Where(x =>
+                    x.FullName1.StartsWith(Parameters.Term)
+                    || x.FullName2.StartsWith(Parameters.Term)
+                    || x.Companies.Any(y => y.StartsWith(Parameters.Term))
+                    || x.Skills.StartsWith(Parameters.Term)
+                    || x.AttachmentNames.Any(y => y.StartsWith(Parameters.Term))
+                    || x.AttachmentContent.Any(y => y.StartsWith(Parameters.Term)));
+            else
+                query = query.Where(x =>
+                    x.FullName1.StartsWith(Parameters.Term)
+                    || x.FullName2.StartsWith(Parameters.Term)
+                    || x.Companies.Any(y => y.StartsWith(Parameters.Term))
+                    || x.Skills.StartsWith(Parameters.Term)
+                    || x.AttachmentNames.Any(y => y.StartsWith(Parameters.Term)));
 
             if (Parameters.HaveInterview)
                 query = query.Where(x => x.HaveInterview);
