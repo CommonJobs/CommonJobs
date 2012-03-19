@@ -14,12 +14,20 @@
     <link href="../../Content/EditApplicant/EditApplicant.less" rel="stylesheet" type="text/css" />
     <script src="../../Content/EditApplicant/EditApplicant.js" type="text/javascript"></script>
 }
-<div id="EditApplicantApp" class="edition-normal">
+<div id="EditApp" class="edition-normal">
     <div class="back-link">
         @Html.ActionLink("« Volver al listado", "Index")
     </div>
 
     <div class="editing-bar">
+        <div class="references">
+            <h3>Referencias</h3>
+            <ul>
+                <li>Click en un <span class="reference-editable-field">campo subrayado</span> para editarlo.</li>
+                <li>Click en <em>Guardar Cambios</em> luego de editar.</li>
+                <li>Click en <em>Modo de edición &rarr; Todos los campos</em> para editar todos los campos.</li>
+            </ul>
+        </div>
         <div class="edition-mode">
             <h3>Modo de edición</h3>
             <p><button class="editionNormal">Normal</button></p>

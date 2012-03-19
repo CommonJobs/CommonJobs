@@ -221,7 +221,7 @@
 
 $(function () {
     App.appView = new App.EditEmployeeAppView({
-        el: $("#EditEmployeeApp"),
+        el: $("#EditApp"),
         model: new App.Employee(ViewData.employee)
     });
 });

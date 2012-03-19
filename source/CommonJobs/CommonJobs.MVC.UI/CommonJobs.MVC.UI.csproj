@@ -123,9 +123,14 @@
     <Content Include="Views\Applicants\Edit.cshtml" />
     <Content Include="Views\Applicants\Index.cshtml" />
     <Content Include="Views\Applicants\List.cshtml" />
-    <None Include="Content\Applicants.less" />
+    <None Include="Content\ApplicantsListing.less" />
     <None Include="Content\ApplicantsBase.less" />
+    <None Include="Content\CardListing.less" />
     <None Include="Content\EditApplicant\EditApplicant.less" />
+    <None Include="Content\EditScreen.less" />
+    <None Include="Content\PersonListing.less" />
+    <None Include="Content\PersonsBase.less" />
+    <None Include="Content\StylesBase.less" />
     <None Include="_bin_deployableAssemblies\System.Web.Mvc.dll" />
     <None Include="_bin_deployableAssemblies\WebMatrix.WebData.xml" />
     <None Include="_bin_deployableAssemblies\WebMatrix.WebData.dll" />
@@ -145,7 +150,7 @@
     <None Include="_bin_deployableAssemblies\NuGet.Core.dll" />
     <None Include="_bin_deployableAssemblies\Microsoft.Web.Infrastructure.xml" />
     <None Include="_bin_deployableAssemblies\Microsoft.Web.Infrastructure.dll" />
-    <None Include="Content\Employees.less" />
+    <None Include="Content\EmployeesListing.less" />
     <Content Include="Content\EditEmployee\EditEmployee.js" />
     <None Include="Content\EditEmployee\EditEmployee.less" />
     <None Include="Content\EmployeesBase.less" />

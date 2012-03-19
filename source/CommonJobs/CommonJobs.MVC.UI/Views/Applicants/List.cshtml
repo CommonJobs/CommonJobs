@@ -28,9 +28,9 @@
         
         <div class="card column @highlightedClass" onclick="editApplicant('@applicant.Id')">
             <div class="cardDescription">
-                <p class="applicantName">@Html.ActionLink(applicant.FirstName + " " + applicant.LastName, "Edit", new { id = applicant.Id })</p>
-                <p class="applicantPosition">@(applicant.Companies.EmptyIfNull().Any() ? string.Join(", ", applicant.Companies) : "(Sin experiencia previa)")</p>
-                <p class="applicantTags">
+                <p class="name">@Html.ActionLink(applicant.FirstName + " " + applicant.LastName, "Edit", new { id = applicant.Id })</p>
+                <p class="position">@(applicant.Companies.EmptyIfNull().Any() ? string.Join(", ", applicant.Companies) : "(Sin experiencia previa)")</p>
+                <p class="tags">
                     @{
                         //TODO replace with a collection of skills, order from most skilled to less
                         var tags = string.IsNullOrEmpty(applicant.Skills)
