@@ -106,8 +106,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\ApplicantSearchModel.cs" />
-    <Compile Include="Models\ApplicantSearchResult.cs" />
     <Compile Include="Models\AttachmentSearchModel.cs" />
     <Compile Include="Models\EmployeeSearchModel.cs">
       <SubType>Code</SubType>

@@ -6,7 +6,7 @@ using Raven.Client.Indexes;
 using CommonJobs.Domain;
 using Raven.Abstractions.Indexing;
 
-namespace CommonJobs.Infrastructure.Indexes
+namespace CommonJobs.Infrastructure.ApplicantSearching
 {
     public class Applicant_QuickSearch: AbstractMultiMapIndexCreationTask<Applicant_QuickSearch.Projection>
     {

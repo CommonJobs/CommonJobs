@@ -64,12 +64,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicantSearching\ApplicantSearchParameters.cs" />
+    <Compile Include="ApplicantSearching\ApplicantSearchResult.cs" />
+    <Compile Include="ApplicantSearching\SearchApplicants.cs" />
     <Compile Include="AttachmentIndexing\GetNotIndexedAttachments.cs" />
     <Compile Include="AttachmentIndexing\IndexAttachment.cs" />
     <Compile Include="AttachmentStorage\ReadAttachment.cs" />
     <Compile Include="AttachmentStorage\SaveAttachment.cs" />
     <Compile Include="AttachmentStorage\SavePhotoAttachments.cs" />
-    <Compile Include="Indexes\Applicant_QuickSearch.cs" />
+    <Compile Include="ApplicantSearching\Applicant_QuickSearch.cs" />
     <Compile Include="Indexes\Attachments_ByContentExtractorConfigurationHash.cs" />
     <Compile Include="Indexes\Attachments_QuickSearch.cs" />
     <Compile Include="Indexes\Employee_QuickSearch.cs" />

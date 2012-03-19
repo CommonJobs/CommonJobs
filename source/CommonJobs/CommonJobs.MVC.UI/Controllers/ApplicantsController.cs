@@ -9,6 +9,7 @@ using CommonJobs.Infrastructure.Indexes;
 using CommonJobs.Domain;
 using Raven.Client.Linq;
 using CommonJobs.Infrastructure.AttachmentStorage;
+using CommonJobs.Infrastructure.ApplicantSearching;
 
 namespace CommonJobs.Mvc.UI.Controllers
 {
@@ -17,42 +18,15 @@ namespace CommonJobs.Mvc.UI.Controllers
         //
         // GET: /Applicants/
 
-        public ViewResult Index(ApplicantSearchModel searchModel)
+        public ViewResult Index(ApplicantSearchParameters searchParameters)
         {
-            return View(searchModel);
+            return View(searchParameters);
         }
 
-        public ViewResult List(ApplicantSearchModel searchModel)
+        public ViewResult List(ApplicantSearchParameters searchParameters)
         {
-            //TODO: move all of this and result to a query element
-            var query = RavenSession
-                .Query<Applicant_QuickSearch.Projection, Applicant_QuickSearch>()
-                .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite());
-
-            query = query.Where(x => 
-                x.FullName1.StartsWith(searchModel.Term)
-                || x.FullName2.StartsWith(searchModel.Term)
-                || x.Companies.Any(y => y.StartsWith(searchModel.Term))
-                || x.Skills.StartsWith(searchModel.Term)
-                || x.AttachmentNames.Any(y => y.StartsWith(searchModel.Term)));
-
-            //TODO
-            //if (searchModel.SearchInAttachments)
-            //    || x.AttachmentsContent.Any(y => y.StartsWith(searchModel.Term))
-
-            if (searchModel.HaveInterview)
-                query = query.Where(x => x.HaveInterview);
-
-            if (searchModel.HaveTechnicalInterview)
-                query = query.Where(x => x.HaveTechnicalInterview);
-
-            if (searchModel.Highlighted)
-                query = query.Where(x => x.IsHighlighted);
-
-            query = query.OrderBy(x => x.FullName1);
-            
-            var list = query.AsProjection<ApplicantSearchResult>().ToList();
-            return View(list);
+            var results = Query(new SearchApplicants(searchParameters));
+            return View(results);
         }
 
         // GET: /Applicants/QuickSearchAutocomplete?terms=Mar
