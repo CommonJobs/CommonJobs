@@ -1,6 +1,6 @@
 #Product Backlog CommonJobs ([Trello])
 [Trello]: https://trello.com/board/product-backlog/4f15d6128f513d777e0269bd
-**Los numeros son los Story Points asignados a cada Tarea/UserStory.*
+**Los números son los Story Points asignados a cada Tarea/User Story.*
 
 
 * (2) Como responsable de RRHH me gustaría agregar o quitar personas con acceso al sistema
@@ -12,7 +12,7 @@
 * Previsualización de formato en notas.
 * (3) Quién refirió a un postulante?
 * (2) Al hacer click en "Agregar nuevo" (empleado o postulante) no y se cancelan los cambios, aparece un empleado con datos en blanco.
-(2) El usuario de IIS está configurado como commonjobs, buscar una mejor forma
+* (2) El usuario de IIS está configurado como commonjobs, buscar una mejor forma
 * El boton de submit en la búsqueda de Applicant no filtra correctamente por Highlighted ni "Entrevistado".
 * (20) Empleados: Permitir buscar en archivos adjuntos
 * (5) Como usuario, quiero contar con la información de los empleados de la empresa cargados hasta el momento de forma unificada (legajos) para poder acceder de forma rápida y sencilla.
@@ -53,6 +53,7 @@
 * (1) Como manager de RRHH, me gustaría poder ver un listado de postulantes que luego se convirtieron en empleados de la empresa, para así poder evaluar las eficiencias en nuestras búsquedas.
 * (1) Como usuario del sistema, me gustaría que el sistema me permita acceder a los perfiles en distintos sitios del postulante, como para poder analizar yo mismo la información allí disponible.
 * (1) Como usuario, me gustaría poder modificar los datos extraídos en las entrevistas a los postulante para corregir errores o agregar información omitida.
+
 # Línea de fin de proyecto
 
 *Consideramos lo que se encuentra por encima de esta línea, la funcionalidad que marca la línea de fin de proyecto.*

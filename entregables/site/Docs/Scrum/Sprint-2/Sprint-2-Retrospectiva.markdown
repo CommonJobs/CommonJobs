@@ -4,7 +4,7 @@ A continuacion cada integrante del grupo plantea que dificultades tuvo y como po
 
 ### Andrés:
 - Piensa que no cumplimos al pie de la letra las tareas  como las planificamos. Algunas se extendieron. No necesariamente sería algo malo. Propone comprometernos para menos tareas y enfocar más en la calidad de esas tareas.
-- [Trello](www.trello.com) no avisa del todo de las tareas. Hay que prestar más atención.
+- [Trello](http://www.trello.com) no avisa del todo de las tareas. Hay que prestar más atención.
 - Para reviews convendría generar listas y discutir sobre ella.
 
 ### Matías:
