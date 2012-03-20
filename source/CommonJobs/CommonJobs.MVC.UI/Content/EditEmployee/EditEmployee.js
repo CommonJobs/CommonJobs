@@ -135,7 +135,7 @@
                     controlLink: "Collection",
                     item: {
                         controlLink: "Compound",
-                        template: _.template('<span data-bind="date"></span> | Salary: <span data-bind="salary"></span><br /> Nota: <span data-bind="note"></span>'),
+                        template: _.template('<span data-bind="date"></span> | Sueldo: <span data-bind="salary"></span><br /> Nota: <span data-bind="note"></span>'),
                         items:
                         [
                             { controlLink: "Date", name: "date", field: "RealDate" },
