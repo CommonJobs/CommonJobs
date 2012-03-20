@@ -12,11 +12,11 @@ using CommonJobs.Infrastructure.AttachmentStorage;
 
 namespace CommonJobs.Mvc.UI.Controllers
 {
+    [Authorize]
     public class ApplicantsController : CommonJobsController
     {
         //
         // GET: /Applicants/
-        [Authorize]
         public ViewResult Index(ApplicantSearchModel searchModel)
         {
             return View(searchModel);

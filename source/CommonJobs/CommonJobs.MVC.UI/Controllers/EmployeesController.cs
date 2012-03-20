@@ -15,6 +15,7 @@ using CommonJobs.Infrastructure.AttachmentStorage;
 
 namespace CommonJobs.Mvc.UI.Controllers
 {
+    [Authorize]
     public class EmployeesController : CommonJobsController
     {
         //
