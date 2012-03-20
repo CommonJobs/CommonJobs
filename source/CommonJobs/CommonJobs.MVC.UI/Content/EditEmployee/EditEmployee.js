@@ -135,7 +135,7 @@
                     controlLink: "Collection",
                     item: {
                         controlLink: "Compound",
-                        template: _.template('<span data-bind="date"></span> | Salary: <span data-bind="salary"></span> | Note: <span data-bind="note"></span>'),
+                        template: _.template('<span data-bind="date"></span> | Sueldo: <span data-bind="salary"></span><br /> Nota: <span data-bind="note"></span>'),
                         items:
                         [
                             { controlLink: "Date", name: "date", field: "RealDate" },
@@ -148,7 +148,6 @@
                 InitialSalary: { controlLink: "ReadOnlyText", valueToContent: formatSalary }
             }
     });
-
 
     App.EditEmployeeAppView = Backbone.View.extend({
         setModel: function (model) {
@@ -164,7 +163,8 @@
             "click .editionNormal": "editionNormal",
             "click .editionReadonly": "editionReadonly",
             "click .editionFullEdit": "editionFullEdit",
-            "click .deleteEmployee": "deleteEmployee"
+            "click .deleteEmployee": "deleteEmployee",
+            "click .confidential-info-title": "toggleConfidentialVisibility"
         },
         saveEmployee: function () {
             var me = this;
@@ -213,6 +213,9 @@
             this.dataBinder.editionMode("full-edit");
             this.$el.removeClass("edition-readonly edition-normal");
             this.$el.addClass("edition-full-edit");
+        },
+        toggleConfidentialVisibility: function (event) {
+            $(event.target).parent().next(".confidential-info-data").toggle();
         }
     });
 
