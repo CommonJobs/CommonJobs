@@ -9,6 +9,7 @@ using CommonJobs.Infrastructure.Indexes;
 using CommonJobs.Domain;
 using Raven.Client.Linq;
 using CommonJobs.Infrastructure.AttachmentStorage;
+using CommonJobs.Infrastructure.ApplicantSearching;
 
 namespace CommonJobs.Mvc.UI.Controllers
 {
@@ -17,31 +18,15 @@ namespace CommonJobs.Mvc.UI.Controllers
         //
         // GET: /Applicants/
 
-        public ViewResult Index(ApplicantSearchModel searchModel)
+        public ViewResult Index(ApplicantSearchParameters searchParameters)
         {
-            return View(searchModel);
+            return View(searchParameters);
         }
 
-        public ViewResult List(ApplicantSearchModel searchModel)
+        public ViewResult List(ApplicantSearchParameters searchParameters)
         {
-            var query = RavenSession
-                .Query<Applicant_QuickSearch.Query, Applicant_QuickSearch>()
-                .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite())
-                .Where(x => x.ByTerm.StartsWith(searchModel.Term));
-
-            if (searchModel.HaveInterview)
-                query = query.Where(x => x.HaveInterview);
-
-            if (searchModel.HaveTechnicalInterview)
-                query = query.Where(x => x.HaveTechnicalInterview);
-
-            if (searchModel.Highlighted)
-                query = query.Where(x => x.Highlighted);
-
-            query = query.OrderBy(x => x.SortingField);
-            //.AsProjection<EmployeeListView>() // EmployeeListView is an optimization, we do not need it yet
-            var list = query.As<Applicant>().ToList();
-            return View(list);
+            var results = Query(new SearchApplicants(searchParameters));
+            return View(results);
         }
 
         // GET: /Applicants/QuickSearchAutocomplete?terms=Mar

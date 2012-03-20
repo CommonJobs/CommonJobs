@@ -1,4 +1,4 @@
-﻿@model IEnumerable<CommonJobs.Domain.Applicant>
+﻿@model IEnumerable<CommonJobs.Infrastructure.ApplicantSearching.ApplicantSearchResult>
 @using CommonJobs.Utilities;
 
 @{
@@ -29,7 +29,7 @@
         <div class="card column @highlightedClass" onclick="editApplicant('@applicant.Id')">
             <div class="cardDescription">
                 <p class="name">@Html.ActionLink(applicant.FirstName + " " + applicant.LastName, "Edit", new { id = applicant.Id })</p>
-                <p class="position">@(applicant.CompanyHistory != null ? string.Join(", ", applicant.CompanyHistory.Select(x => x.CompanyName)) : "(Sin experiencia previa)")</p>
+                <p class="position">@(applicant.Companies.EmptyIfNull().Any() ? string.Join(", ", applicant.Companies) : "(Sin experiencia previa)")</p>
                 <p class="tags">
                     @{
                         //TODO replace with a collection of skills, order from most skilled to less
