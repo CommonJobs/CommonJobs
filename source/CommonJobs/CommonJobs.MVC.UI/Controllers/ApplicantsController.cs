@@ -16,7 +16,7 @@ namespace CommonJobs.Mvc.UI.Controllers
     {
         //
         // GET: /Applicants/
-
+        [Authorize]
         public ViewResult Index(ApplicantSearchModel searchModel)
         {
             return View(searchModel);
