@@ -20,14 +20,14 @@ namespace CommonJobs.Mvc.UI.Controllers
     {
         //
         // GET: /Employees/
-        public ViewResult Index(SearchModel searchModel)
+        public ViewResult Index(EmployeeSearchModel searchModel)
         {
             return View(searchModel);
         }
 
         //
         // GET: /Employees/List?terms=Mar
-        public ViewResult List(SearchModel searchModel)
+        public ViewResult List(EmployeeSearchModel searchModel)
         {
             var list = RavenSession
                 .Query<Employee_QuickSearch.Query, Employee_QuickSearch>()

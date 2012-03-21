@@ -1,4 +1,4 @@
-﻿@model CommonJobs.Mvc.UI.Models.ApplicantSearchModel
+﻿@model CommonJobs.Infrastructure.ApplicantSearching.ApplicantSearchParameters
 @{
     ViewBag.Title = "Postulantes | CommonJobs";
     ScriptManager.RegisterCss(Url.Content("~/Content/ie.css"), priority: 500, htmlAttributes: new { media = "screen" }, patchCondition: "lte IE 9");
@@ -22,6 +22,8 @@
             query += "&HaveInterview=true";
         if ($("#HaveTechnicalInterviewCheck").prop("checked"))
             query += "&HaveTechnicalInterview=true";
+        if ($("#SearchInAttachmentsCheck").prop("checked"))
+            query += "&SearchInAttachments=true";
 
 
         if (ajax) {
@@ -36,7 +38,7 @@
             search(e.keyCode != 13);
         });
 
-        $("#HighlightedCheck, #HaveInterviewCheck, #HaveTechnicalInterviewCheck").change(function () {
+        $("#HighlightedCheck, #HaveInterviewCheck, #HaveTechnicalInterviewCheck, #SearchInAttachmentsCheck").change(function () {
             search(true); 
         });
 
@@ -59,6 +61,7 @@
                     <label>Resaltado</label><input type="checkbox" id="HighlightedCheck" name="Highlighted" @(Model.Highlighted ? "checked='checked'" : string.Empty) />
                     <label>¿Con entrevistas?</label><input type="checkbox" id="HaveInterviewCheck" name="HaveInterview" @(Model.HaveInterview ? "checked='checked'" : string.Empty)/>
                     <label>¿Con entrevistas técnicas?</label><input type="checkbox" id="HaveTechnicalInterviewCheck" name="HaveTechnicalInterview" @(Model.HaveTechnicalInterview ? "checked='checked'" : string.Empty) />
+                    <br /><label>¿Buscar en adjuntos?</label><input type="checkbox" id="SearchInAttachmentsCheck" name="SearchInAttachments" @(Model.SearchInAttachments ? "checked='checked'" : string.Empty) />
                 </div>
             </form>
             <p id="resultCountNotice">Hay <span id="resultCount">0</span> resultado(s).</p>
