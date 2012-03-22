@@ -43,8 +43,6 @@ namespace CommonJobs.Infrastructure.ApplicantSearching
 
         public Applicant_QuickSearch()
         {
-            //TODO: index AttachmentsContent too
-
             AddMap<Applicant>(applicants => 
                 from applicant in applicants
                 select new
