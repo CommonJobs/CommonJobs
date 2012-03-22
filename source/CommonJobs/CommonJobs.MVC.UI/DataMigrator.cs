@@ -4,12 +4,16 @@ using System.Linq;
 using System.Web;
 using Raven.Client;
 using CommonJobs.Domain;
-using System.Dynamic;
 
 namespace CommonJobs.Mvc.UI
 {
     public class DataMigrator : IDisposable
     {
+        public class VersionDocument
+        {
+            public int DataVersion { get; set; }
+        }
+
         IDocumentStore store;
         Lazy<IDocumentSession> lazySession;
         IDocumentSession Session { get { return lazySession.Value; } }
@@ -46,20 +50,21 @@ namespace CommonJobs.Mvc.UI
             UpdateStep(CreateDataVersionDocument);
             UpdateStep(CreateSampleEmployeeData);
             UpdateStep(CreateSampleApplicantdata);
+            UpdateStep(CreateFirstUser);
             //Insert new actions here
             Session.SaveChanges();
         }
 
         private void CreateDataVersionDocument()
         {
-            dynamic document = new ExpandoObject();
+            var document = new VersionDocument();
             document.DataVersion = 0;
             Session.Store(document, "DataVersionDocument");
         }
 
         private int GetDataVersion()
         {
-            var document = Session.Load<dynamic>("DataVersionDocument");
+            var document = Session.Load<VersionDocument>("DataVersionDocument");
             if (document == null)
                 return 0;
             else
@@ -68,7 +73,7 @@ namespace CommonJobs.Mvc.UI
 
         private void SetDataVersion(int version)
         {
-            var document = Session.Load<dynamic>("DataVersionDocument");
+            var document = Session.Load<VersionDocument>("DataVersionDocument");
             document.DataVersion = version;
         }
 
@@ -121,6 +126,14 @@ namespace CommonJobs.Mvc.UI
 
             Session.Store(applicant);
         }
+
+
+        private void CreateFirstUser()
+        {
+            var user = new User("admin", "admin");
+            Session.Store(user);
+        }
+
 
         private void CreateSampleEmployeeData()
         {
