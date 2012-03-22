@@ -37,6 +37,7 @@ namespace CommonJobs.Mvc.UI.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public ActionResult Post(string id)
         {
             var entity = RavenSession.Load<object>(id);
@@ -52,6 +53,7 @@ namespace CommonJobs.Mvc.UI.Controllers
             return Json(new { success = true, attachment = attachment });
         }
 
+        [Authorize]
         public ActionResult CleanAttachmentIndexInformation()
         {
             //TODO: revisar si funciona ilimitados documentos
@@ -75,25 +77,9 @@ namespace CommonJobs.Mvc.UI.Controllers
                 allowStale: false);
 
             return Json(new { ok = true });
-
-            //var addToPatchedDoc = new JsonPatcher(doc).Apply(new[]
-            //{
-            //    new PatchRequest
-            //    {
-            //        Type = PatchCommandType.Modify,
-            //        Name = "ContentExtractorConfigurationHash",
-            //        Nested = new[]
-            //        {
-            //            new PatchRequest {Type = PatchCommandType.Set, Name = "ContentExtractorConfigurationHash", Value = RavenJValue.Null},
-            //        }
-            //    },
-            //});
-
-            //RavenSession.Advanced.DatabaseCommands.Patch(
-                //);
         }
 
-
+        [Authorize]
         public ActionResult IndexAttachments(int quantity = 10)
         {
             var stopwatch = new Stopwatch();
@@ -112,6 +98,7 @@ namespace CommonJobs.Mvc.UI.Controllers
             });
         }
 
+        [Authorize]
         public ActionResult AttachmentsQuickSearch(AttachmentSearchModel searchModel)
         {
             //TODO: agregar soporte para filtrar por tipo de archivos o con comodines en el nombre y para filtrar por id de usuario

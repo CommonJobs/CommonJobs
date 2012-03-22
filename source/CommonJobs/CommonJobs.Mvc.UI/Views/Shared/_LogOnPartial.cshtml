@@ -1,0 +1,8 @@
+﻿@if(Request.IsAuthenticated) {
+    @:[ @Html.ActionLink(string.Format("Cerrar sesión de {0}", User.Identity.Name), "LogOff", "Account") ]
+    @:[ @Html.ActionLink("Cambiar contraseña", "ChangePassword", "Account") ]
+}
+else
+{
+    @:[ @Html.ActionLink("Iniciar sesión", "LogOn", "Account") ]
+}
