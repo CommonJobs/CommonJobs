@@ -23,9 +23,6 @@
                     <a id="overview-trigger" href="#">Quick View</a>
                     @RenderPage("~/_Overview.cshtml")
                 </li>
-@*                <li><a href="@Href("~/docs/Contribute/Contributing-to-NuGet-Documentation")">Contribute</a></li> *@
-@*                <li><a href="http://nuget.org">NuGet Gallery</a> </li>*@
-@*                <li><a href="http://visualstudiogallery.msdn.microsoft.com/27077b70-9dad-4c64-adcf-c7cf6bc9970c">Install NuGet</a></li>*@
             </ul>
             @RenderPage("~/_searchbox.cshtml")
         </nav>
@@ -72,6 +69,5 @@
             SetUpQuickView("#overview-trigger", "#overview");
         });
     </script>
-    @Microsoft.Web.Helpers.Analytics.GetGoogleAsyncHtml("UA-12268721-4")
 </body>
 </html>
