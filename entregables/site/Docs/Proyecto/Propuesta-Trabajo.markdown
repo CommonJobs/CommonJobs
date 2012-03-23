@@ -1,3 +1,4 @@
+
 # Introducción 
 
 ## Propósito de este documento
@@ -196,9 +197,9 @@ Serán entregados a la cátedra los siguientes documentos:
   	* Código fuente y ejecutables de pruebas de concepto
   	* Código fuente y ejecutables del sistema
   	* Registro de la realización de tarea de soporte
-	
+
 # Planificación
-	
+
 Dada que la planificación en cuanto a funcionalidades se define de forma general en el _Product Backlog_ y más en detalle al comienzo de cada _sprint_, la planificación existente en este momento es la correspondiente a la estructura de los distintos _sprints_ a lo largo del tiempo, junto con la determinación de las tareas para el primer _sprint_.
 
 ## Gráfico de Gantt
@@ -207,50 +208,3 @@ A continuación se demuestra cómo sería la progresión de los distintos _sprin
 
 ![Gráfico de Gantt](Images/Gantt.png)
 
-## Product Backlog (Preliminar)
-
-__Nota:__ Este _Product Backlog_ es temporal, hasta que se decida cuál será el sistema que mantenga la información del proyecto. Cuando exista esa determinación, los datos se copiarán a dicho sistema y ese será el sistema oficial de registro de _sprints_ y tareas.
-
-* Definición de la arquitectura y diseños generales, estrategia técnica de la aplicación (10 hrs)
-* Selección de la herramienta a utilizar para repositorio del código fuente (3 hrs)
-* Selección de la herramienta a utilizar documentación (3 hrs)
-* Selección de la herramienta a utilizar para gestión de tareas (2 hrs)
-* Selección del sistema de base de datos a utilizar (3 hrs)
-* Selección de la plataforma y UI del sistema (1 hr)
-* Determinar sistema de priorización para las tareas incluídas en el _Product Backlog_ y las prioridades que tendrán las tareas (10 hrs)
-* Migrar _Product Backlog_ y demás registros al sistema de tracking del proyecto (5 hrs)
-* Creación de los entornos de trabajo y su configuración (Andrés)
-* Creación de los entornos de trabajo y su configuración (Juan Diego)
-* Creación de los entornos de trabajo y su configuración (Matías)
-* Mantener una base de datos de los postulantes (para reemplazar el actual proyecto de Jira "Recruit") 
-* Registro de las entrevistas en la base de datos de postulantes
-* Permitir búsquedas flexibles e inteligentes sobre la base de datos de postulantes. 
-* Extracción de datos de los postulantes de CV, LinkedIn, ZonaJobs,  Boomeran, BuscoJobs, BaseJobs, etc
-* Alta y actualización automática de postulantes desde Email, CV, LinkedIn, ZonaJobs,  Boomeran, BuscoJobs, BaseJobs, etc
-* Determinación mas o menos inteligente del grado de seniority en postulantes
-* Integración con Jira para "Sales Pipeline" con el listado de los postulantes propuestos
-* Integrar búsquedas en bases de datos externas como BaseJobs o LinkedIn 
-* Publicar búsquedas en publicaciones gráficas o sitios como ZonaJobs,  Boomeran o BuscoJobs
-* Relacionar postulantes con búsquedas realizadas
-* Migrar datos actuales (menos de 300 postulantes) del actual proyecto de Jira "Recruit" a nuestra base de datos
-* Mantener una base de datos de los empleados (Legajos) 
-* Integración de los usuarios de JIRA (empleados) con su legajo en nuestra base de datos
-* Migrar datos de la planilla actual de legajos a nuestra base de datos (alrededor de 50 items)
-
-## Backlog Sprint 0 (Preliminar)
-
-__Nota:__ Este _Sprint Backlog_ es temporal, que realizemos la _Reunión de Planificación del Sprint_. En ese momento cada integrante comprometerá una cantidad de horas y se analizará cada uno de los items incluyendo más detalles.
-
-* Definición de la arquitectura y diseños generales, estrategia técnica de la aplicación (10 hrs)
-* Selección de la herramienta a utilizar para repositorio del código fuente (3 hrs)
-* Selección de la herramienta a utilizar documentación (3 hrs)
-* Selección de la herramienta a utilizar para gestión de tareas (2 hrs)
-* Selección del sistema de base de datos a utilizar (3 hrs)
-* Selección de la plataforma y UI del sistema (1 hr)
-* Determinar sistema de priorización para las tareas incluídas en el _Product Backlog_ y las prioridades que tendrán las tareas (10 hrs)
-* Migrar _Product Backlog_ al sistema de tracking del proyecto (5 hrs)
-* Creación de los entornos de trabajo y su configuración (Andrés - 15 hrs)
-* Creación de los entornos de trabajo y su configuración (Juan Diego - 15 hrs)
-* Creación de los entornos de trabajo y su configuración (Matías - 15 hrs)
-
-Incluyendo 5 horas aproximadas para las reuniones de _planificación_, _revisión_ y _retrospectiva_, el total de tiempo estimado para el _Sprint 0_: 87 horas efectivas de trabajo.
