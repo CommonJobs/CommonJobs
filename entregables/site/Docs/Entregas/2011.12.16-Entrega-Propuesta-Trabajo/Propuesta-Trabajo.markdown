@@ -351,7 +351,7 @@ primer _sprint_.
 A continuación se demuestra cómo sería la progresión de los distintos _sprints_ hasta 
 la terminación de la ejecución del proyecto.
 
-![Gráfico de Gantt](Images/Gantt.png)
+![ ](Images/Gantt.png)
 
 #### Product Backlog (Preliminar)
 
