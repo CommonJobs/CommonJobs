@@ -20,9 +20,9 @@ namespace CommonJobs.Mvc.UI.Controllers
     {
         //
         // GET: /Employees/
-        public ViewResult Index(EmployeeSearchModel searchModel)
+        public ViewResult Index(EmployeeSearchParameters searchParameters)
         {
-            return View(searchModel);
+            return View(searchParameters);
         }
 
         //
