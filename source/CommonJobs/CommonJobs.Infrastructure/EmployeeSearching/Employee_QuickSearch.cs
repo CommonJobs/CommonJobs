@@ -86,6 +86,62 @@ namespace CommonJobs.Infrastructure.EmployeeSearching
                         employee.College
                     }
                 });
+
+
+            AddMap<Attachment>(attachments =>
+                from attachment in attachments
+                select new
+                {
+                    Id = attachment.RelatedEntityId,
+                    FirstName = (string)null,
+                    LastName = (string)null,
+                    Skills = (string)null,
+                    FullName1 = (string)null,
+                    FullName2 = (string)null,
+                    AttachmentIds = new string[0],
+                    AttachmentNames = new string[0],
+                    AttachmentContent = new string[0],
+                    IsEmployee = false,
+                    FileId = (string)null,
+                    Platform = (string)null,
+                    CurrentPosition = (string)null,
+                    CurrentProject = (string)null,
+                    Notes = new object[0],
+                    Photo = (object)null,
+                    Terms = new object[0],
+                    OrphanAttachments = new[] { new { Id = attachment.Id, FileName = attachment.FileName, PlainContent = attachment.PlainContent } },
+                });
+            
+            Reduce = docs =>
+                from doc in docs
+                group doc by doc.Id into g
+                select new
+                {
+                    Id = g.Key,
+                    FirstName = g.Where(x => x.FirstName != null).Select(x => x.FirstName).FirstOrDefault(),
+                    LastName = g.Where(x => x.LastName != null).Select(x => x.LastName).FirstOrDefault(),
+                    Skills = g.Where(x => x.Skills != null).Select(x => x.Skills).FirstOrDefault(),
+                    FullName1 = g.Where(x => x.FullName1 != null).Select(x => x.FullName1).FirstOrDefault(),
+                    FullName2 = g.Where(x => x.FullName2 != null).Select(x => x.FullName2).FirstOrDefault(),
+                    FileId = g.Where(x => x.FileId != null).Select(x => x.FileId).FirstOrDefault(),
+                    Platform = g.Where(x => x.Platform != null).Select(x => x.Platform).FirstOrDefault(),
+                    CurrentPosition = g.Where(x => x.CurrentPosition != null).Select(x => x.CurrentPosition).FirstOrDefault(),
+                    CurrentProject = g.Where(x => x.CurrentProject != null).Select(x => x.CurrentProject).FirstOrDefault(),
+                    Notes = g.SelectMany(x => x.Notes).Distinct().ToArray(),
+                    Photo = g.Where(x => x.Photo != null).Select(x => x.Photo).FirstOrDefault(),
+                    Terms = g.SelectMany(x => x.Terms).Distinct().ToArray(),
+
+                    AttachmentIds = g.SelectMany(x => x.AttachmentIds).Distinct().ToArray(),
+                    AttachmentNames = g.SelectMany(x => x.AttachmentNames).Distinct().ToArray(),
+
+                    IsEmployee = g.Any(x => x.IsEmployee),
+
+                    AttachmentContent = g.SelectMany(x => x.AttachmentContent).Union(
+                        g.SelectMany(x => x.OrphanAttachments).Where(x => g.SelectMany(y => y.AttachmentIds).Contains(x.Id)).Select(x => x.PlainContent)
+                    ).ToArray(),
+                    OrphanAttachments = g.SelectMany(x => x.OrphanAttachments).Where(x => !g.SelectMany(y => y.AttachmentIds).Contains(x.Id)).ToArray()
+                };
+            
             Indexes.Add(x => x.FirstName, FieldIndexing.Analyzed);
             Indexes.Add(x => x.LastName, FieldIndexing.Analyzed);
             Indexes.Add(x => x.Skills, FieldIndexing.Analyzed);
