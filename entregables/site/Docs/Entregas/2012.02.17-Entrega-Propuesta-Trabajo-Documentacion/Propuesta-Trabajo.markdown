@@ -206,5 +206,5 @@ Dada que la planificación en cuanto a funcionalidades se define de forma genera
 
 A continuación se demuestra cómo sería la progresión de los distintos _sprints_ hasta la terminación de la ejecución del proyecto.
 
-![Gráfico de Gantt](Images/Gantt.png)
+![ ](Images/Gantt.png)
 
