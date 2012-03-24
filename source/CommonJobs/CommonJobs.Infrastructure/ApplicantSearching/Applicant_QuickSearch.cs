@@ -10,7 +10,7 @@ namespace CommonJobs.Infrastructure.ApplicantSearching
 {
     public class Applicant_QuickSearch: AbstractMultiMapIndexCreationTask<Applicant_QuickSearch.Projection>
     {
-        //TODO: Merjorar esto. Está realmente feo y llena el indice con archivos repetidos, 
+        //TODO: Mejorar esto. Está realmente feo y llena el indice con archivos repetidos, 
         //pero es la única forma de hacerlo funcionar que encontré hasta ahora
 
         public class OrphanAttachment
@@ -61,7 +61,7 @@ namespace CommonJobs.Infrastructure.ApplicantSearching
                     AttachmentNames = applicant.AllAttachmentReferences.Select(x => x.FileName).ToArray(),
                     AttachmentContent = new string[0],
                     IsApplicant = true,
-                    OrphanAttachments = new dynamic[0], 
+                    OrphanAttachments = new dynamic[0]
                 });
 
             AddMap<Attachment>(attachments =>

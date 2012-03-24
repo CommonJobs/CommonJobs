@@ -12,6 +12,7 @@ using CommonJobs.Raven.Mvc;
 using CommonJobs.Domain;
 using CommonJobs.Utilities;
 using CommonJobs.Infrastructure.AttachmentStorage;
+using CommonJobs.Infrastructure.EmployeeSearching;
 
 namespace CommonJobs.Mvc.UI.Controllers
 {
@@ -20,24 +21,17 @@ namespace CommonJobs.Mvc.UI.Controllers
     {
         //
         // GET: /Employees/
-        public ViewResult Index(EmployeeSearchModel searchModel)
+        public ViewResult Index(EmployeeSearchParameters searchParameters)
         {
-            return View(searchModel);
+            return View(searchParameters);
         }
 
         //
         // GET: /Employees/List?terms=Mar
-        public ViewResult List(EmployeeSearchModel searchModel)
+        public ViewResult List(EmployeeSearchParameters searchParameters)
         {
-            var list = RavenSession
-                .Query<Employee_QuickSearch.Query, Employee_QuickSearch>()
-                .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite())
-                .Where(x => x.ByTerm.StartsWith(searchModel.Term))
-                .OrderBy(x => x.SortingField)
-                .As<Employee>()
-                //.AsProjection<EmployeeListView>() // EmployeeListView is an optimization, we do not need it yet
-                .ToList();
-            return View(list);
+            var results = Query(new SearchEmployees(searchParameters));
+            return View(results);
         }
         
         //

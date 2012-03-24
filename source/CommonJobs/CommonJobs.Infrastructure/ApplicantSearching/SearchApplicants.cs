@@ -7,6 +7,8 @@ using CommonJobs.Raven.Infrastructure;
 using CommonJobs.Domain;
 using CommonJobs.ContentExtraction;
 using CommonJobs.Infrastructure.Indexes;
+using System.Linq.Expressions;
+using CommonJobs.Utilities;
 
 namespace CommonJobs.Infrastructure.ApplicantSearching
 {
@@ -28,22 +30,17 @@ namespace CommonJobs.Infrastructure.ApplicantSearching
 
             query = query.Where(x => x.IsApplicant);
 
-            //TODO: enhance it
+            Expression<Func<Applicant_QuickSearch.Projection, bool>> predicate = x =>
+                x.FullName1.StartsWith(Parameters.Term)
+                    || x.FullName2.StartsWith(Parameters.Term)
+                    || x.Companies.Any(y => y.StartsWith(Parameters.Term))
+                    || x.Skills.StartsWith(Parameters.Term)
+                    || x.AttachmentNames.Any(y => y.StartsWith(Parameters.Term));
+
             if (Parameters.SearchInAttachments)
-                query = query.Where(x =>
-                    x.FullName1.StartsWith(Parameters.Term)
-                    || x.FullName2.StartsWith(Parameters.Term)
-                    || x.Companies.Any(y => y.StartsWith(Parameters.Term))
-                    || x.Skills.StartsWith(Parameters.Term)
-                    || x.AttachmentNames.Any(y => y.StartsWith(Parameters.Term))
-                    || x.AttachmentContent.Any(y => y.StartsWith(Parameters.Term)));
-            else
-                query = query.Where(x =>
-                    x.FullName1.StartsWith(Parameters.Term)
-                    || x.FullName2.StartsWith(Parameters.Term)
-                    || x.Companies.Any(y => y.StartsWith(Parameters.Term))
-                    || x.Skills.StartsWith(Parameters.Term)
-                    || x.AttachmentNames.Any(y => y.StartsWith(Parameters.Term)));
+                predicate.Or(x => x.AttachmentContent.Any(y => y.StartsWith(Parameters.Term)));
+
+            query = query.Where(predicate);
 
             if (Parameters.HaveInterview)
                 query = query.Where(x => x.HaveInterview);

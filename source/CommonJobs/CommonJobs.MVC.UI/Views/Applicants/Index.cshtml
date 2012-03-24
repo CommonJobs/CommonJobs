@@ -8,38 +8,50 @@
 }
 <script type="text/javascript">
     //TODO: move it to a .js file
-    function setResultCount() {
-        $("#resultCount").html($(".card").length - 1);
-    }
-
-    function search(ajax) {
-        //TODO Fix hardcoded URLs
-
-        var query = "?term=" + encodeURI($("#quickSearch").val());
-        if ($("#HighlightedCheck").prop("checked"))
-            query += "&Highlighted=true";
-        if ($("#HaveInterviewCheck").prop("checked"))
-            query += "&HaveInterview=true";
-        if ($("#HaveTechnicalInterviewCheck").prop("checked"))
-            query += "&HaveTechnicalInterview=true";
-        if ($("#SearchInAttachmentsCheck").prop("checked"))
-            query += "&SearchInAttachments=true";
-
-
-        if (ajax) {
-            $(".results").load("/Applicants/List" + query, null, setResultCount);
-        } else {
-            location.href = "/Applicants" + query;
-        }
-    }
-
     $(function () {
+
+        function setResultCount() {
+            $("#resultCount").html($(".card").length - 1);
+        }
+
+        var loadResultsXHR = null;
+        $(".results").ajaxSend(function (event, jqXHR, ajaxOptions) {
+            if (loadResultsXHR)
+                loadResultsXHR.abort();
+            loadResultsXHR = jqXHR;
+        });
+
+        function search(ajax) {
+            //TODO Fix hardcoded URLs
+
+            var query = "?term=" + encodeURI($("#quickSearch").val());
+            if ($("#HighlightedCheck").prop("checked"))
+                query += "&Highlighted=true";
+            if ($("#HaveInterviewCheck").prop("checked"))
+                query += "&HaveInterview=true";
+            if ($("#HaveTechnicalInterviewCheck").prop("checked"))
+                query += "&HaveTechnicalInterview=true";
+            if ($("#SearchInAttachmentsCheck").prop("checked"))
+                query += "&SearchInAttachments=true";
+
+
+            if (ajax) {
+                $(".results").load("/Applicants/List" + query, null, setResultCount);
+            } else {
+                location.href = "/Applicants" + query;
+            }
+        }
+
         $("#quickSearch").keyup(function (e) {
             search(e.keyCode != 13);
         });
 
         $("#HighlightedCheck, #HaveInterviewCheck, #HaveTechnicalInterviewCheck, #SearchInAttachmentsCheck").change(function () {
-            search(true); 
+            search(true);
+        });
+
+        $("#quickSearchSubmit").click(function () {
+            search(false);
         });
 
         setResultCount();
@@ -51,7 +63,7 @@
     <div class="row">
         <div class="twocol"></div>
         <div class="eightcol quickSearchContainer">
-            <form method="get" action="@Url.Action("Index")">
+            <form method="get" action="javascript:void(0);">
                 <div class="mainSearch">
                     <label for="quickSearch">Búsqueda rápida:</label>
                     <input type="text" id="quickSearch" name="Term" value="@Model.Term" />
