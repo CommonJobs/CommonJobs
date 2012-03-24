@@ -57,6 +57,7 @@
     <Compile Include="Employee.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SalaryChange.cs" />
+    <Compile Include="User.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CommonJobs.Utilities\CommonJobs.Utilities.csproj">

@@ -22,6 +22,23 @@
 </head>
 
 <body>
-    @RenderBody()
+    <div class="page">
+        <header style="float:right; text-align:center">
+            <div id="logindisplay" >
+                @Html.Partial("_LogOnPartial")
+            </div>
+            <nav>
+                <ul id="menu">
+                    <li>@Html.ActionLink("Postulantes", "Index", "Applicants")</li>
+                    <li>@Html.ActionLink("Empleados", "Index", "Employees")</li>
+                </ul>
+            </nav>
+        </header>
+        <section id="main">
+            @RenderBody()
+        </section>
+        <footer>
+        </footer>
+    </div>
 </body>
 </html>

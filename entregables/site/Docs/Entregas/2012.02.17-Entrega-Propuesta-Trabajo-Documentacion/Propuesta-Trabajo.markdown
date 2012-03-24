@@ -146,11 +146,11 @@ En varios proyectos de la empresa se está implementando el marco de trabajo _Sc
 
 Por todo lo anterior decidimos utilizar una metodología propia iterativa e incremental. Por familiaridad y comodidad utilizaremos la nomenclatura y algunos de los procedimientos de _Scrum_.
 
-### Product Backlog 
+## Product Backlog 
 
 Contaremos con un _Product Backlog_ donde identificaremos todos los requerimientos y funcionabilidades deseables, priorizadas y con estimaciones de esfuerzo aproximadas (que iremos ajustando luego de realizados una serie de _sprints_). Ésta lista estará abierta, tanto el cliente, la cátedra o el equipo podrá incluir ítems, aunque la prioridad deberá ser negociada teniendo en cuenta la relación costo / beneficio según objetivo del sistema, los tiempos y las cuestiones técnicas.
 
-### Marca de Límite del Proyecto
+## Marca de Límite del Proyecto
 
 Se trazará una línea dividiendo las tareas del _Product Backlog_ que representará cuales son las tareas que se espera realizar antes de la finalización del proyecto. La posición de esa línea se irá ajustando entre los _sprints_ y al incluir nuevas tareas al _Product Backlog_. 
 
@@ -164,7 +164,7 @@ La posición de la _Marca de Límite del Proyecto_ contemplará:
 
 La única condición flexible en este caso es la que define los objetivos mínimos del sistema. Esto es a drede, ya que le permite al cliente realmente priorizar y determinar cuál es el punto en el cual él mismo determina en qué punto el sistema puede ser aceptado como final.
 
-### Sprints
+## Sprints
 
 El _Sprint_ es el período en el cual se lleva a cabo el trabajo en sí. Tendrán una duración fija, en principio de tres semanas pero podrá ser modificada durante el desarrollo del proyecto. Luego de comenzado un _sprint_ no se podrán modificar sus tareas, con la sola excepción de tareas de soporte.
 
@@ -174,7 +174,7 @@ Al terminar se realizará la _Reunión de Revisión del Sprint_. Allí se revisa
 
 Luego de realizados una serie de _sprints_, a medida de que vayamos conociendo el ritmo del equipo y se vaya definiendo con mayor exactitud las tareas del _Product Backlog_, iremos realizando re-estimaciones del mismo y ajustando la posición de la _Marca de Límite del Proyecto_.
 
-### Entregables
+## Entregables
 
 Serán entregados a la cátedra los siguientes documentos:
 
@@ -202,9 +202,9 @@ Serán entregados a la cátedra los siguientes documentos:
 
 Dada que la planificación en cuanto a funcionalidades se define de forma general en el _Product Backlog_ y más en detalle al comienzo de cada _sprint_, la planificación existente en este momento es la correspondiente a la estructura de los distintos _sprints_ a lo largo del tiempo, junto con la determinación de las tareas para el primer _sprint_.
 
-### Gráfico de Gantt
+## Gráfico de Gantt
 
 A continuación se demuestra cómo sería la progresión de los distintos _sprints_ hasta la terminación de la ejecución del proyecto.
 
-![](Images\Gantt.png)
+![ ](Images/Gantt.png)
 

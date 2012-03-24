@@ -13,11 +13,11 @@ using CommonJobs.Infrastructure.ApplicantSearching;
 
 namespace CommonJobs.Mvc.UI.Controllers
 {
+    [Authorize]
     public class ApplicantsController : CommonJobsController
     {
         //
         // GET: /Applicants/
-
         public ViewResult Index(ApplicantSearchParameters searchParameters)
         {
             return View(searchParameters);

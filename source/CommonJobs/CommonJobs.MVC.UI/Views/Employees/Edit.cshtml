@@ -15,9 +15,7 @@
     <script src="../../Content/EditEmployee/EditEmployee.js" type="text/javascript"></script>
 }
 <div id="EditApp" class="edition-normal">
-    <div class="back-link">
-        @Html.ActionLink("« Volver al listado", "Index")
-    </div>
+    
 
     <div class="editing-bar">
         <div class="references">
@@ -43,6 +41,9 @@
             <h3>Precaución!</h3>
             <p><button class="deleteEmployee">Eliminar empleado</button></p>
         </div>
+        <div class="back-link">
+        @Html.ActionLink("« Volver al listado", "Index")
+    </div>
     </div>
     
     <h1 class="editable-field" data-bind="fullName"></h1>
