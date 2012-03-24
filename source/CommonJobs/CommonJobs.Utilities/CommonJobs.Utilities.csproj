@@ -45,6 +45,7 @@
     <Compile Include="Encoding.cs" />
     <Compile Include="FunctionHelper.cs" />
     <Compile Include="IEnumerableExtensions.cs" />
+    <Compile Include="PredicateBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

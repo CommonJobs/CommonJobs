@@ -1,4 +1,4 @@
-﻿@model IEnumerable<CommonJobs.Domain.Employee>
+﻿@model CommonJobs.Infrastructure.EmployeeSearching.EmployeeSearchResult[]
 @using CommonJobs.Utilities;
 
 @{
@@ -26,7 +26,7 @@
     {
         var employeePic = employee.Photo == null
             ? Url.Content("~/Content/Images/NoPicture.png")
-            : "/Employees/Photo/" + employee.Id + "?thumbnail=true";
+            : Url.Action("Get", "Attachments", new { id = employee.Photo.Thumbnail.Id });
         
         <div class="card column" onclick="editEmployee('@employee.Id')">
             <img class="cardPicture" src="@employeePic" alt="@employee.FirstName @employee.LastName's picture" />
