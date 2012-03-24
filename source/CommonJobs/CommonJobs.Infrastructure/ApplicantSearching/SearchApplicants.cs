@@ -40,6 +40,8 @@ namespace CommonJobs.Infrastructure.ApplicantSearching
             if (Parameters.SearchInAttachments)
                 predicate.Or(x => x.AttachmentContent.Any(y => y.StartsWith(Parameters.Term)));
 
+            query = query.Where(predicate);
+
             if (Parameters.HaveInterview)
                 query = query.Where(x => x.HaveInterview);
 
