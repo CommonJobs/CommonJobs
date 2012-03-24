@@ -8,6 +8,7 @@ using CommonJobs.Domain;
 using CommonJobs.ContentExtraction;
 using CommonJobs.Infrastructure.Indexes;
 using System.Linq.Expressions;
+using CommonJobs.Utilities;
 
 namespace CommonJobs.Infrastructure.EmployeeSearching
 {
@@ -29,9 +30,7 @@ namespace CommonJobs.Infrastructure.EmployeeSearching
 
             query = query.Where(x => x.IsEmployee);
 
-            //TODO: enhance it
-            if (!Parameters.SearchInAttachments && !Parameters.SearchInNotes)
-                query = query.Where(x =>
+            Expression<Func<Employee_QuickSearch.Projection, bool>> predicate = x =>
                     x.FullName1.StartsWith(Parameters.Term)
                     || x.FullName2.StartsWith(Parameters.Term)
                     || x.Skills.StartsWith(Parameters.Term)
@@ -40,46 +39,15 @@ namespace CommonJobs.Infrastructure.EmployeeSearching
                     || x.CurrentProject.StartsWith(Parameters.Term)
                     || x.FileId.StartsWith(Parameters.Term)
                     || x.Platform.StartsWith(Parameters.Term)
-                    || x.Terms.StartsWith(Parameters.Term));
-            else if (!Parameters.SearchInAttachments && Parameters.SearchInNotes)
-                query = query.Where(x =>
-                    x.FullName1.StartsWith(Parameters.Term)
-                    || x.FullName2.StartsWith(Parameters.Term)
-                    || x.Skills.StartsWith(Parameters.Term)
-                    || x.AttachmentNames.Any(y => y.StartsWith(Parameters.Term))
-                    || x.CurrentPosition.StartsWith(Parameters.Term)
-                    || x.CurrentProject.StartsWith(Parameters.Term)
-                    || x.FileId.StartsWith(Parameters.Term)
-                    || x.Platform.StartsWith(Parameters.Term)
-                    || x.Terms.StartsWith(Parameters.Term)
-                    || x.Notes.StartsWith(Parameters.Term));
-            else if (Parameters.SearchInAttachments && !Parameters.SearchInNotes)
-                query = query.Where(x =>
-                    x.FullName1.StartsWith(Parameters.Term)
-                    || x.FullName2.StartsWith(Parameters.Term)
-                    || x.Skills.StartsWith(Parameters.Term)
-                    || x.AttachmentNames.Any(y => y.StartsWith(Parameters.Term))
-                    || x.CurrentPosition.StartsWith(Parameters.Term)
-                    || x.CurrentProject.StartsWith(Parameters.Term)
-                    || x.FileId.StartsWith(Parameters.Term)
-                    || x.Platform.StartsWith(Parameters.Term)
-                    || x.Terms.StartsWith(Parameters.Term)
-                    || x.AttachmentContent.Any(y => y.StartsWith(Parameters.Term)));
-            else if (!Parameters.SearchInAttachments && Parameters.SearchInNotes)
-                query = query.Where(x =>
-                    x.FullName1.StartsWith(Parameters.Term)
-                    || x.FullName2.StartsWith(Parameters.Term)
-                    || x.Skills.StartsWith(Parameters.Term)
-                    || x.AttachmentNames.Any(y => y.StartsWith(Parameters.Term))
-                    || x.CurrentPosition.StartsWith(Parameters.Term)
-                    || x.CurrentProject.StartsWith(Parameters.Term)
-                    || x.FileId.StartsWith(Parameters.Term)
-                    || x.Platform.StartsWith(Parameters.Term)
-                    || x.Terms.StartsWith(Parameters.Term)
-                    || x.Notes.StartsWith(Parameters.Term)
-                    || x.AttachmentContent.Any(y => y.StartsWith(Parameters.Term)));
+                    || x.Terms.StartsWith(Parameters.Term);
 
-            query = query.OrderBy(x => x.FullName1);
+            if (Parameters.SearchInNotes)
+                predicate = predicate.Or(x => x.Notes.StartsWith(Parameters.Term));
+
+            if (Parameters.SearchInAttachments)
+                predicate = predicate.Or(x => x.AttachmentContent.Any(y => y.StartsWith(Parameters.Term)));
+            
+            query = query.Where(predicate).OrderBy(x => x.FullName1);
 
             var result = query.AsProjection<EmployeeSearchResult>().ToArray();
             return result;
