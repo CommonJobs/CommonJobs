@@ -1,6 +1,8 @@
 ﻿/// <reference path="../../Scripts/jquery-1.7.1-vsdoc.js" />
 /// <reference path="../../Scripts/underscore.js" />
 /// <reference path="../../Scripts/backbone.js" />
+/// <reference path="../../Scripts/url-generator.js" />
+
 (function () {
     var App = this.App = {};
 
@@ -66,10 +68,10 @@
         //TODO: generalize it
         allowedExtensions: ["jpg", "jpeg", "gif", "png"],
         accept: "image/*",
-        uploadUrl: function () { return "/Employees/SavePhoto/" + this.model.get('Id'); },
-        attachedUrl: function (value) { return "/Attachments/Get/" + value.Original.Id + "?returnName=false"; },
+        uploadUrl: function () { return urlGenerator.action("SavePhoto", "Employees", this.model.get('Id')); },
+        attachedUrl: function (value) { return urlGenerator.action("Get", "Attachments", value.Original.Id, { returnName: false }) },
         template: _.template('<div class="upload-element">'
-                           + '    <img class="view-editable-empty" width="100" height="100" alt="No Photo" src="/Content/Images/NoPicture.png" title="No Photo" style="display:none"/>'
+                           + '    <img class="view-editable-empty" width="100" height="100" alt="No Photo" src="' + urlGenerator.content("Images/NoPicture.png") + '" title="No Photo" style="display:none"/>'
                            + '</div>'
                            + '<span class="view-attached" style="display: none;">'
                            + '    <div class="view-editable-content"></div>'
@@ -81,7 +83,7 @@
                 .attr("href", this.attachedUrl(value))
                 .attr("target", "_blank")
                 .addClass("photoLink")
-                .append($("<img />").attr("src", "/Attachments/Get/" + value.Thumbnail.Id + "?returnName=false")
+                .append($("<img />").attr("src", urlGenerator.action("Get", "Attachments", value.Thumbnail.Id, { returnName: false }))
                 .attr("width", "100").attr("height", "100"));
         }
     });
@@ -94,8 +96,8 @@
                                    + '    Adjunto: <span class="view-editable-content"></span>'
                                    + '<button class="view-editable-clear">-</button>'
                                    + '</span>'),
-        uploadUrl: function () { return "/Attachments/Post/" + /* TODO */this.model.collection.parentModel.get('Id'); },
-        attachedUrl: function (value) { return "/Attachments/Get/" + value.Id; }
+        uploadUrl: function () { return urlGenerator.action("Post", "Attachments", /* TODO */this.model.collection.parentModel.get('Id')); },
+        attachedUrl: function (value) { return urlGenerator.action("Get", "Attachments", value.Id); }
     });
 
     App.EditEmployeeAppViewDataBinder = Nervoustissue.FormBinder.extend({
@@ -169,7 +171,7 @@
         saveEmployee: function () {
             var me = this;
             $.ajax({
-                url: ViewData.saveEmployeeUrl,
+                url: urlGenerator.action("Post", "Employees"),
                 type: 'POST',
                 dataType: 'json',
                 data: JSON.stringify(App.appView.model.toJSON()),
@@ -183,7 +185,7 @@
         reloadEmployee: function () {
             var me = this;
             $.ajax({
-                url: ViewData.getEmployeeUrl,
+                url: urlGenerator.action("Get", "Employees"),
                 type: 'GET',
                 dataType: 'json',
                 data: { id: ViewData.employee.Id },
@@ -196,7 +198,7 @@
         },
         deleteEmployee: function () {
             if (confirm("¿Está seguro de que desea eliminar este empleado?")) {
-                window.location = ViewData.deleteEmployeeUrl + this.model.get('Id');
+                window.location = urlGenerator.action("Delete", "Employees", this.model.get('Id'));
             }
         },
         editionNormal: function () {

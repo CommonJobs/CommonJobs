@@ -58,28 +58,25 @@ namespace CommonJobs.Mvc.UI.Controllers
             ScriptManager.RegisterGlobalJavascript(
                 "ViewData", 
                 new { 
-                    employee = employee,    
-                    saveEmployeeUrl = Url.Action("SaveEmployee"),
-                    getEmployeeUrl = Url.Action("GetEmployee"),
-                    deleteEmployeeUrl = Url.Action("DeleteEmployee")
+                    employee = employee
                 }, 
                 500);
-            return View(employee);
+            return View();
         }
 
-        public JsonNetResult GetEmployee(string id)
+        public JsonNetResult Get(string id)
         {
             var employee = RavenSession.Load<Employee>(id);
             return Json(employee);
         }   
 
-        public JsonNetResult SaveEmployee(Employee employee)
+        public JsonNetResult Post(Employee employee)
         {
             RavenSession.Store(employee);
-            return GetEmployee(employee.Id);
+            return Get(employee.Id);
         }
 
-        public ActionResult DeleteEmployee(string id)
+        public ActionResult Delete(string id)
         {
             var employee = RavenSession.Load<Employee>(id);
             RavenSession.Delete(employee);
