@@ -7,10 +7,12 @@
     ScriptManager.RegisterGlobalizationEntries(Url.Content("~/Scripts/jquery.globalize"), priority: 900);
     ScriptManager.RegisterCss(Url.Content("~/Content/themes/base/jquery.ui.all.css"), priority: 900);
     ScriptManager.RegisterCss(Url.Content("~/Content/Site.css"), priority: 900);
-
+    
     ScriptManager.RegisterJs(Url.Content("~/Scripts/css3-mediaqueries.js"), priority: 900);
     ScriptManager.RegisterJs(Url.Content("~/Scripts/underscore.js"), priority: 900);
     ScriptManager.RegisterJs(Url.Content("~/Scripts/backbone.js"), priority: 900);
+    ScriptManager.RegisterGlobalJavascript("baseUrl", Url.Content("~"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/url-generator.js"), priority: 900);
 }
 
 <!DOCTYPE html>
