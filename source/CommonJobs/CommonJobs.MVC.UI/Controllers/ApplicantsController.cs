@@ -53,28 +53,25 @@ namespace CommonJobs.Mvc.UI.Controllers
                 "ViewData",
                 new
                 {
-                    applicant = applicant,
-                    saveApplicantUrl = Url.Action("SaveApplicant"),
-                    getApplicantUrl = Url.Action("GetApplicant"),
-                    deleteApplicantUrl = Url.Action("DeleteApplicant")
+                    applicant = applicant
                 },
                 500);
-            return View(applicant);
+            return View();
         }
 
-        public JsonNetResult GetApplicant(string id)
+        public JsonNetResult Get(string id)
         {
             var applicant = RavenSession.Load<Applicant>(id);
             return Json(applicant);
         }
 
-        public JsonNetResult SaveApplicant(Applicant applicant)
+        public JsonNetResult Post(Applicant applicant)
         {
             RavenSession.Store(applicant);
-            return GetApplicant(applicant.Id);
+            return Get(applicant.Id);
         }
 
-        public ActionResult DeleteApplicant(string id)
+        public ActionResult Delete(string id)
         {
             var applicant = RavenSession.Load<Applicant>(id);
             RavenSession.Delete(applicant);

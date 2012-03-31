@@ -3,22 +3,11 @@
 
 @{
     Layout = null;
-    <script>
-        //TODO: it should be in Index.html
-        //TODO FIXME replace this retardation with a good approach -- I just wanted the links out of my way
-        function editApplicant(id) {
-            window.location = "/Applicants/Edit/" + id;
-            return false;
-        }
-        function addNewApplicant() {
-            window.location = "@Url.Action("Create")";
-        }
-    </script>
-
-    <div class="card column" id="addNewCard" onclick="addNewApplicant()">
+    
+    <div class="card column" id="addNewCard">
         <img class="cardPicture" src="@Url.Content("~/Content/Images/AddEmployee.png")" alt="Agregar nuevo..."  />
         <div class="cardDescription">
-            <p>@Html.ActionLink("Agregar nuevo...", "Create")</p>
+            <p>@Html.ActionLink("Agregar nuevo...", "Create", null, new { @class = "card-link" })</p>
         </div>
     </div>
         
@@ -26,9 +15,9 @@
     {
         var highlightedClass = applicant.IsHighlighted ? "highlighted" : "";
         
-        <div class="card column @highlightedClass" onclick="editApplicant('@applicant.Id')">
+        <div class="card column @highlightedClass">
             <div class="cardDescription">
-                <p class="name">@Html.ActionLink(applicant.FirstName + " " + applicant.LastName, "Edit", new { id = applicant.Id })</p>
+                <p class="name">@Html.ActionLink(applicant.FirstName + " " + applicant.LastName, "Edit", new { id = applicant.Id }, new { @class = "card-link" })</p>
                 <p class="position">@(applicant.Companies.EmptyIfNull().Any() ? string.Join(", ", applicant.Companies) : "(Sin experiencia previa)")</p>
                 <p class="tags">
                     @{

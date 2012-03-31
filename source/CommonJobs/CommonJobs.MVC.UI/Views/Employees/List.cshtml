@@ -3,22 +3,11 @@
 
 @{
     Layout = null;
-    <script>
-        //TODO: it should be in Index.html
-        //TODO FIXME replace this retardation with a good approach -- I just wanted the links out of my way
-        function editEmployee(id) {
-            window.location = "/Employees/Edit/" + id;
-            return false;
-        }
-        function addNewEmployee() {
-            window.location = "@Url.Action("Create")";
-        }
-    </script>
 
-    <div class="card column" id="addNewCard" onclick="addNewEmployee()">
+    <div class="card column" id="addNewCard">
         <img class="cardPicture" src="@Url.Content("~/Content/Images/AddEmployee.png")" alt="Agregar nuevo..."  />
         <div class="cardDescription">
-            <p>@Html.ActionLink("Agregar nuevo...", "Create")</p>
+            <p>@Html.ActionLink("Agregar nuevo...", "Create", null, new { @class = "card-link" })</p>
         </div>
     </div>
         
@@ -28,10 +17,10 @@
             ? Url.Content("~/Content/Images/NoPicture.png")
             : Url.Action("Get", "Attachments", new { id = employee.Photo.Thumbnail.Id });
         
-        <div class="card column" onclick="editEmployee('@employee.Id')">
+        <div class="card column">
             <img class="cardPicture" src="@employeePic" alt="@employee.FirstName @employee.LastName's picture" />
             <div class="cardDescription">
-                <p class="name">@Html.ActionLink(employee.FirstName + " " + employee.LastName, "Edit", new { id = employee.Id })</p>
+                <p class="name">@Html.ActionLink(employee.FirstName + " " + employee.LastName, "Edit", new { id = employee.Id }, new { @class = "card-link" })</p>
                 <p class="employeeProject">@employee.CurrentProject</p>
                 <p class="position">@employee.CurrentPosition</p>
                 <p class="tags">
