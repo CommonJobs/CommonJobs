@@ -408,6 +408,8 @@
                     }
                 }
             },
+            onKeyPress: function (e) {
+            },
             bindUI: function () {
                 var me = this;
                 me.$el.on("click", ".view-editable,.view-editable-empty", null, function () {
@@ -415,6 +417,9 @@
                 });
                 me.$el.on("keyup", ".editor-editable", null, function (e) {
                     me.onKeyUp(e);
+                });
+                me.$el.on("keypress", ".editor-editable", null, function (e) {
+                    me.onKeyPress(e);
                 });
             },
             valueToContent: function (value) {
@@ -515,10 +520,13 @@
 
         m.Int = m.Text.extend({
             template: _.template('<span class="view-editable-empty">Sin datos</span><span class="view-editable" style="display: none;"></span><input class="editor-editable" type="text" value="" style="display: none;"/>'),
-            onKeyUp: function (e) {
-                this.$editor.val(this.$editor.val().replace(/[^0-9]/g, ''));
-                //TODO: Acá estoy llamando al onKeyUp de Text, tiene que haber una forma mejor 
-                this.__proto__.__proto__.onKeyUp.call(this, e);
+            onKeyPress: function (e) {
+                if (e.which < 48 || e.which > 57)
+                    e.preventDefault();
+
+                //TODO: Acá estoy llamando al onKeyPress de Text, tiene que haber una forma mejor 
+                this.base
+                this.__proto__.__proto__.onKeyPress.call(this, e);
             }
         });
 
