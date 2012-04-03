@@ -4,7 +4,6 @@
 *Las siguientes tareas surgieron o se desprendieron de otra tarea de lo planificado para este sprint.*
 
 * Pasar pendientes de Sprint 2 a Product Backlog.
-* Reunión de Andrés con JD acerca de lo que pienso hacer para indexar attachments.
 * No se muestran los Applicants creados en el listado (bug).
 * Configurar el servidor RabbitMQ para que sea accesible desde fuera de la red de CommonSense.
 * Postulantes: Permitir buscar en archivos adjuntos.
@@ -21,16 +20,14 @@
 * Los sueldos y algunas fechas no se están formateando correctamente.
 * Renombrado de proyectos y redistribución de las clases entre ellos.
 * Empleados: Agregar a los datos que se ven en la primera pantalla (listado) el proyecto actual.
-* Reunión sobre assemblies.
-* Coordinar como seguimos, hay muchas cosas para hacer y no estoy seguro de que llegemos.
 * Resaltado de los campos editables.
 * Realizar documentación fin de sprint 2 y comienzo sprint 3.
 * Permitir opcionalmente buscar por texto en los adjuntos en las búsquedas rápidas de applicants.
 * Realizar test de la aplicacion.
 * Empleados: Permitir buscar en archivos adjuntos.
 * El quicksearch puede no funcionar bien si se escribe muy rápido. Es porque los request obsoletos no se cancelan.
-* No funciona la foto de los employees en el listado
-* Documentar que filtros de IFilter se requiere
+* No funciona la foto de los employees en el listado (bug).
+* Documentar que filtros de IFilter se requiere.
 * Instalar para el soporte deseado (pdf, word, etc)
 * Replicar en Applicants los estilos del modo de edición de Employees.
 * Diseño en general para usabilidad y claridad.
@@ -47,4 +44,4 @@
 * Implementar un menú para navegar el sitio.
 * Revisar la generación de URLs desde Javascript para permitir que el sitio esté en un directorio del dominio diferente del  raíz.
 # Salida Sprint 
-Como salida del Sprint 2 mostramos el estado del proyecto al día de la fecha en nuestro [Repositorio de Hit Hub](https://github.com/CommonJobs/CommonJobs/tree/Fin-Sprint-03 ).
+Como salida del Sprint 3 mostramos el estado del proyecto al día de la fecha en nuestro [Repositorio de HitHub](https://github.com/CommonJobs/CommonJobs/tree/Fin-Sprint-03 ).

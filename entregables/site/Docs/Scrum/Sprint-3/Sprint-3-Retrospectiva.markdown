@@ -1,7 +1,5 @@
 # Retrospectiva
 
-A continuación cada integrante del grupo plantea que dificultades tuvo y como podria mejorar para el próximo *sprint*:
-
 ### Andrés:
 
 * Buena coordinación del equipo.
@@ -10,7 +8,7 @@ A continuación cada integrante del grupo plantea que dificultades tuvo y como p
 ### Matías:
 
 * La manera de la utilización de [Trello](http://www.trello.com) fue más dinámica que en sprint anterior.
-* La forma en que me asignaron tareas según su dificultad me ayudo a aprender y empezar a ver código.
+* La forma en que le asignaron tareas según su dificultad le ayudo a aprender y empezar a ver código.
 * No pudo dedicar mucho tiempo.
 
 ### JD:

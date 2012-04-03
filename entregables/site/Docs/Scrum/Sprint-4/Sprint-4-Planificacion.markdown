@@ -1,7 +1,7 @@
 # Planificación de Sprint 4
 
 ## Tareas
-* Al editar una remuneración el cursor es automáticamente enviado al final del campo(bug).
+* Al editar una remuneración el cursor es automáticamente enviado al final del campo (bug).
 * Vacaciones.
 * Implementar paginado en los listados.
 * Cropping de avatares.

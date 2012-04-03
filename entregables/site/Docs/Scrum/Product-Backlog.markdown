@@ -6,14 +6,13 @@
 * (20) Empleados: Definir links para vistas (quizá temporales) para poder compartir cierta información.
 * (50) Como usuario del sistema, me gustaría poder leer información de los perfiles de mis contactos en LinkedIn para poder manejar mi base de contactos como postulantes de forma eficiente.
 * Refrescar listados al utilizar el back del browser
-* (2) Al hacer click en "Agregar nuevo" (empleado o postulante) no y se cancelan los cambios, aparece un empleado con datos en blanco.
+* (2) Al hacer click en "Agregar nuevo" (empleado o postulante) no se cancelan los cambios, y aparece un empleado con datos en blanco.
 * (20) Como responsable de recursos humanos me gustaría tener información realmente útil en el sistema de legajo de usuario (Refinar)
 * Empleados: Definir cuáles son los datos que sirven para la búsqueda avanzada (en lugar de todos).
 * (5) Como usuario del sistema, me gustaría poder compartir resultados del sistema (búsquedas, información de postulantes, etc.).
 * (3) Como usuario del sistema, me gustaría poder ver el listado de postulantes a una oferta en particular, de forma de saber cuáles son aquellos que respondieron a ella.
 * (9) Como usuario del sistema, me gustaría poder definir carpetas en las que se sitúa cada postulante, de forma de poder definir un flujo de trabajo personalizado y alterable en el futuro. (Ejemplo: "por entrevistar", "esperando datos", etc.).
-* (1) Como usuario del sistema, me gustaría poder asociar cada postulante a uno o más perfiles, para los cuales puede haber ofertas de
- trabajo o no, para así poder saber en el futuro qué postulantes están disponibles si se abrieran ofertas para aquellos perfiles.
+* (1) Como usuario del sistema, me gustaría poder asociar cada postulante a uno o más perfiles, para los cuales puede haber ofertas de trabajo o no, para así poder saber en el futuro qué postulantes están disponibles si se abrieran ofertas para aquellos perfiles.
 * (50) Como usuario del sistema, me gustaría poder obtener información de postulantes desde LinkedIn, para poder facilitar el proceso de importación de datos.
 * (20) Como usuario del sistema, me gustaría que el sistema automáticamente determinara según las calificaciones de un postulante, qué requerimientos cumple y qué nivel de seniority posee él, para poder tomar decisiones eficientemente.
 * (50) Como administrador del sistema, me gustaría poder alterar los criterios para definir el seniority de un postulante, creando y quitando niveles, para poder ajustarlo a los criterios de la empresa.
@@ -25,19 +24,15 @@
 * (1) Como manager de RRHH me gustaría poder asignar un puntaje (rating) a cada postulante, de forma de poder ver de forma rápida cuál es el más apropiado para contratar.
 * (50) Como entrevistador, me gustaría poder asignar una o más fechas de entrevista a cada postulante, también pudiendo invitar a empleados de la empresa, de forma de poder mantener un registro de las entrevistas que cada postulante tiene.
 * (50) Como usuario del sistema, me gustaría poder obtener información de postulantes desde su CV, para poder facilitar el proceso de importación de datos.
-* (20) Como usuario, me gustaría poder ver filtros sugeridos por el sistema según los datos disponibles en el actual banco de postulantes, para así poder navegar por la información para así poder navegar por la información disponible de una forma más eficiente.
+* (20) Como usuario, me gustaría poder ver filtros sugeridos por el sistema según los datos disponibles en el actual banco de postulantes, para así poder navegar por la información disponible de una forma más eficiente.
 * (1) Como usuario del sistema, me gustaría poder ver la información de un postulante en particular sin perder el resultado de la búsqueda desde donde ingresé a ver su información, para así poder continuar con evaluaciones sobre cada uno de ellos.
 * (3) Como usuario del sistema, me gustaría poder agregar notas personalizadas a la información de un postulante, para poder ser acertado en mis decisiones futuras y/o hacer seguimientos específicos sobre ese postulante.
-* (1) Como usuario del sistema, me gutaría poder asignar tags (etiquetas) a los postulantes, de forma de poder clasificarlos según varios criterios simultáneos.
+* (1) Como usuario del sistema, me gustaría poder asignar tags (etiquetas) a los postulantes, de forma de poder clasificarlos según varios criterios simultáneos.
 * (1) Como usuario, quisiera poder quitar a un empleado para poder hacer más fácil el trabajo con los empleados restantes.
-
-
-
 * (2) Indicar claramente cuando una sección está colapsada o expandida.
 * (3) Quién refirió a un postulante?
 * (2) Como responsable de RRHH me gustaría agregar o quitar personas con acceso al sistema.
 * (8) Como usuario me gustaría poder recuperar mi contraseña en caso de perderla
-* (9) Como manager de RRHH, desearía que determinados elementos no se mostraran directamente en la pantalla para mantener datos confidenciales.
 * (3) Como usuario del sistema, me gustaría poder actualizar la información de un postulante, de forma de poder mantener su información actualizada.
 * (5) Como usuario del sistema, me gustaría poder alterar qué información veré de los postulantes al momento de efectuar una búsqueda, de forma de poder ver rápidamente la información más relevante.
 * (9) Como usuario, me gustaría contar con la información cargada hasta el momento sobre los postulantes (menos de 300) en el proyecto actual Jira Recruit para no perder el trabajo realizado hasta el momento en las entrevistas y acceder a ella de forma sencilla.
@@ -62,14 +57,15 @@
 * (50) Como usuario del sistema, desearía que una oferta pueda publicarse en Facebook, para obtener mayor alcance en su distribución.
 * (50) Como usuario del sistema, me gustaría poder obtener información de postulantes desde ZonaJobs, para poder facilitar el proceso de importación de datos.
 * (50) Como usuario del sistema, desearía que una oferta pueda publicarse en Boomerang, para obtener mayor alcance en su distribución.
-* Indexar la metadata de los attachments
-* (50) Como usuario del sistema, desearía que una oferta pueda publicarse en BaseJobs, para obtener mayor alcance en su distribución. * (50) Como usuario del sistema, desearía que una oferta pueda publicarse en BuscoJobs, para obtener mayor alcance en su distribución.
+* Indexar la metadata de los attachments.
+* (50) Como usuario del sistema, desearía que una oferta pueda publicarse en BaseJobs, para obtener mayor alcance en su distribución. 
+* (50) Como usuario del sistema, desearía que una oferta pueda publicarse en BuscoJobs, para obtener mayor alcance en su distribución.
 * (9) Como soporte a futuro del sistema, desearía que expusiera una API o un sistema de plugins de publicación de ofertas para poder ampliar la cantidad de sitios o formatos soportados.
 * (50) Como usuario del sistema, desearía que una oferta pueda publicarse en ZonaJobs, para obtener mayor alcance en su distribución.
 * (9) Como usuario del sistema, desearía que una oferta pueda publicarse en Twitter, para obtener mayor alcance en su distribución.
 * (50) Como usuario del sistema, me gustaría que la información de un postulante se pueda actualizar desde LinkedIn, para poder facilitar el proceso de manutención de datos.
 * (50) Como usuario del sistema, me gustaría poder obtener información de postulantes desde Boomerang, para poder facilitar el proceso de importación de datos.
-* (9) Como usuario del sistema, me gustaría poder (9) Como usuario del sistema, me gustaría poder usar mi misma información de acceso de Jira en CommonJobs, para hacer más eficiente el trabajo en ambos.
+* (9) Como usuario del sistema, me gustaría poder usar mi misma información de acceso de Jira en CommonJobs, para hacer más eficiente el trabajo en ambos.
 * (20) Como usuario del sistema, me gustaría poder guardar definiciones de vistas de postulantes (información visible rápidamente para un postulante en los resultados de una búsqueda) para así poder reutilizarlas de forma más eficiente.
 * (50) Como usuario del sistema, me gustaría que la información de un postulante se pueda actualizar desde ZonaJobs, para poder facilitar el proceso de manutención de datos.
 * (9) Como auditor del sistema, me gustaría poder ver los cambios que se realizaron a un postulante, para así observar el progreso de un postulante.
