@@ -1,5 +1,6 @@
 #Product Backlog CommonJobs ([Trello])
 [Trello]: https://trello.com/board/product-backlog/4f15d6128f513d777e0269bd
+
 *Los números son los Story Points asignados a cada Tarea/User Story.*
 
 * UI específica para buscar archivos adjuntos de cualquier entidad del sistema.
@@ -74,7 +75,6 @@
 * (50) Como usuario del sistema, desearía que los cambios efectuados en una oferta de trabajo se actualicen en el proyecto de Jira "Sales Pipeline", para que el resto de la empresa pueda estar al tanto a través de dicho proyecto sobre el avance de esa búsqueda laboral.
 * (50) Como usuario del sistema, me gustaría que la información de un postulante se mantenga actualizada según su información obtenida desde un email, para poder facilitar el proceso de manutención de datos.
 * (50) Como usuario del sistema, me gustaría que la información de un postulante se pueda actualizar desde Boomerang, para poder facilitar el proceso de manutención de datos.
-* (50) Como soporte a futuro del sistema me gustaría que el sistema me de la opción de migrar la nueva información de los postulantes cargados en el sistema actual al nuevo de forma sencilla para no tener que cargar la información dos veces en las primeras etapas de la migración del sistema.
 * (9) Como soporte a futuro del sistema, me gustaría que el sistema dispusiera de una API o sistema de plugins de importación de datos para que pueda agregar soporte en otros sitios de empleos.
 * (9) Como soporte a futuro del sistema, me gustaría que el sistema dispusiera de una API o sistema de plugins de actualización de datos para que pueda agregar soporte en otros sitios de empleos.
 * (50) Como usuario del sistema, me gustaría poder obtener información de postulantes desde BuscoJobs, para poder facilitar el proceso de importación de datos.

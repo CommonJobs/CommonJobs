@@ -1,6 +1,7 @@
 # Planificación de Sprint 3
 
 ## Tareas
+
 * Reunión con JD acerca de lo que pienso hacer para indexar attachments
 * (2) Como usuario me gustaría que el sistema me identifique para permitirme acceso
 * (1) Resaltado de los campos editable.

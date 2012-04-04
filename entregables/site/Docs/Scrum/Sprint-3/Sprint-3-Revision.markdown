@@ -1,6 +1,7 @@
-
 # Revisión
+
 ## Trabajo completado
+
 *Las siguientes tareas surgieron o se desprendieron de otra tarea de lo planificado para este sprint.*
 
 * Pasar pendientes de Sprint 2 a Product Backlog.
@@ -33,6 +34,7 @@
 * Diseño en general para usabilidad y claridad.
 
 ## Pendiente
+
  *Las tareas pendientes surgieron o se desprendieron de otra tarea de este Sprint. Estas tareas se agregan al Product Backlog o a la planificación del Sprint siguiente.*
 
 * Al editar una remuneración el cursor es automáticamente enviado al final del campo.
@@ -43,5 +45,7 @@
 * Indicar claramente cuando una sección está colapsada o expandida.
 * Implementar un menú para navegar el sitio.
 * Revisar la generación de URLs desde Javascript para permitir que el sitio esté en un directorio del dominio diferente del  raíz.
-# Salida Sprint 
+
+## Salida Sprint 
+
 Como salida del Sprint 3 mostramos el estado del proyecto al día de la fecha en nuestro [Repositorio de HitHub](https://github.com/CommonJobs/CommonJobs/tree/Fin-Sprint-03 ).
