@@ -48,4 +48,4 @@
 
 ## Salida Sprint 
 
-Como salida del Sprint 3 mostramos el estado del proyecto al día de la fecha en nuestro [Repositorio de HitHub](https://github.com/CommonJobs/CommonJobs/tree/Fin-Sprint-03 ).
+Como salida del Sprint 3 mostramos el estado del proyecto al día de la fecha en nuestro [Repositorio de Git Hub](https://github.com/CommonJobs/CommonJobs/tree/Fin-Sprint-03 ).
