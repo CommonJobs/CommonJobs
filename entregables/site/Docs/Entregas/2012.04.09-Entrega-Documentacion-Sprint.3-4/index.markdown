@@ -18,3 +18,7 @@
 * [Planificación](Sprint-4-Planificacion)
 * [Planificación (en formato PDF)](Sprint-4-Planificacion.pdf)
 
+## Indexación de archivos adjuntos
+
+* [Indexación de archivos adjuntos](Indexacion-archivos-adjuntos)
+* [Indexación de archivos adjuntos (en formato PDF)](Indexacion-archivos-adjuntos.pdf)
