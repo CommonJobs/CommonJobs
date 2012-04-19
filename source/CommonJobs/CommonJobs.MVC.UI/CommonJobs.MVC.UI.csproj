@@ -115,6 +115,13 @@
     <Content Include="Content\1140.css" />
     <Content Include="Content\EditApplicant\EditApplicant.js" />
     <Content Include="Content\EditEmployee\uploadAvatar.png" />
+    <Content Include="Content\Images\arrow.gif" />
+    <Content Include="Content\Images\arrow_over.gif" />
+    <Content Include="Content\Images\button1a.gif" />
+    <Content Include="Content\Images\button4.gif" />
+    <Content Include="Content\Images\button4a.gif" />
+    <Content Include="Content\Images\down.gif" />
+    <Content Include="Content\menu_style.css" />
     <Content Include="Scripts\url-generator.js" />
     <Content Include="Scripts\nervoustissue-uploader.js" />
     <Content Include="Views\Applicants\Edit.cshtml" />

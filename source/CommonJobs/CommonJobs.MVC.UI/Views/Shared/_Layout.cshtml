@@ -7,7 +7,7 @@
     ScriptManager.RegisterGlobalizationEntries(Url.Content("~/Scripts/jquery.globalize"), priority: 900);
     ScriptManager.RegisterCss(Url.Content("~/Content/themes/base/jquery.ui.all.css"), priority: 900);
     ScriptManager.RegisterCss(Url.Content("~/Content/Site.css"), priority: 900);
-    
+    ScriptManager.RegisterCss(Url.Content("~/Content/menu_style.css"), priority: 900);
     ScriptManager.RegisterJs(Url.Content("~/Scripts/css3-mediaqueries.js"), priority: 900);
     ScriptManager.RegisterJs(Url.Content("~/Scripts/underscore.js"), priority: 900);
     ScriptManager.RegisterJs(Url.Content("~/Scripts/backbone.js"), priority: 900);
@@ -15,32 +15,27 @@
     ScriptManager.RegisterJs(Url.Content("~/Scripts/url-generator.js"), priority: 900);
 }
 
-<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <title>@ViewBag.Title</title>
     @Html.RenderScriptManagerEntries()
 </head>
-
 <body>
     <div class="page">
-        <header style="float:right; text-align:center">
-            <div id="logindisplay" >
-                @Html.Partial("_LogOnPartial")
-            </div>
-            <nav>
-                <ul id="menu">
-                    <li>@Html.ActionLink("Postulantes", "Index", "Applicants")</li>
-                    <li>@Html.ActionLink("Empleados", "Index", "Employees")</li>
-                </ul>
-            </nav>
-        </header>
+        <div>
+        <ul class="menu">
+            <li class="top"><a href="/Account/LogOn/" target="_self" class="top_link"><span>Iniciar Sesion</span></a>
+            </li>
+            <li class="top"><a href="/Applicants/Index/" target="_self" class="top_link"><span>Postulantes</span></a>
+            </li>
+            <li class="top"><a href="/Employees/Index/" target="_self" class="top_link"><span>Empleados</span></a>
+            </li>
+        </ul>
+        </div>
         <section id="main">
             @RenderBody()
         </section>
-        <footer>
-        </footer>
     </div>
 </body>
 </html>
