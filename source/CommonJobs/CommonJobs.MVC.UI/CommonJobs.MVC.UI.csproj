@@ -122,7 +122,6 @@
     <Content Include="Scripts\nervoustissue-uploader.js" />
     <Content Include="Views\Applicants\Edit.cshtml" />
     <Content Include="Views\Applicants\Index.cshtml" />
-    <Content Include="Views\Applicants\List.cshtml" />
     <None Include="Content\ApplicantsListing\ApplicantsListing.less" />
     <None Include="Content\ApplicantsBase.less" />
     <None Include="Content\ListingCommon\CardListing.less" />
