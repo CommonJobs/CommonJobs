@@ -117,6 +117,7 @@
     <Content Include="Content\EditApplicant\EditApplicant.js" />
     <Content Include="Content\EditEmployee\uploadAvatar.png" />
     <Content Include="Content\EmployeesListing\EmployeesListing.js" />
+    <Content Include="Content\ListingCommon\QuickSearch.js" />
     <Content Include="Scripts\url-generator.js" />
     <Content Include="Scripts\nervoustissue-uploader.js" />
     <Content Include="Views\Applicants\Edit.cshtml" />
