@@ -4,63 +4,48 @@
     ScriptManager.RegisterCss(Url.Content("~/Content/ie.css"), priority: 500, htmlAttributes: new { media = "screen" }, patchCondition: "lte IE 9");
     ScriptManager.RegisterCss(Url.Content("~/Content/1140.css"), priority: 500, htmlAttributes: new { media = "screen" });
     ScriptManager.RegisterCss(Url.Content("~/Content/reset.css"), priority: 500);
-    ScriptManager.RegisterCss(Url.Content("~/Content/ApplicantsListing.less"));
+    ScriptManager.RegisterCss(Url.Content("~/Content/ApplicantsListing/ApplicantsListing.less"));
+    ScriptManager.RegisterJs(Url.Content("~/Content/ListingCommon/QuickSearch.js"));
+    ScriptManager.RegisterJs(Url.Content("~/Content/ApplicantsListing/ApplicantsListing.js"));
 }
-<script type="text/javascript">
-    //TODO: move it to a .js file
-    $(function () {
+<script type="text/template" id="add-new-card-template">
+    <div class="card column clickable add-new-card">
+        <img class="cardPicture" src="@Url.Content("~/Content/Images/AddEmployee.png")" alt="Agregar nuevo..."  />
+        <div class="cardDescription">
+            <p>@Html.ActionLink("Agregar nuevo...", "Create", null, new { @class = "clickable-link" })</p>
+        </div>
+    </div>
+</script>
 
-        $(".results").on("click", ".card", function (e) {
-            e.preventDefault();
-            window.location = $(this).find(".card-link").attr("href");
-        });
+<script type="text/template" id="get-more-cards-template">
+    <div class="card column loading get-more-cards">
+        <p class="ready-content">Click para obtener más...</p>
+    </div>
+</script>
 
-        function setResultCount() {
-            $("#resultCount").html($(".card").length - 1);
-        }
-
-        var loadResultsXHR = null;
-        $(".results").ajaxSend(function (event, jqXHR, ajaxOptions) {
-            if (loadResultsXHR)
-                loadResultsXHR.abort();
-            loadResultsXHR = jqXHR;
-        });
-
-        function search(ajax) {
-            //TODO Fix hardcoded URLs
-
-            var query = "?term=" + encodeURI($("#quickSearch").val());
-            if ($("#HighlightedCheck").prop("checked"))
-                query += "&Highlighted=true";
-            if ($("#HaveInterviewCheck").prop("checked"))
-                query += "&HaveInterview=true";
-            if ($("#HaveTechnicalInterviewCheck").prop("checked"))
-                query += "&HaveTechnicalInterview=true";
-            if ($("#SearchInAttachmentsCheck").prop("checked"))
-                query += "&SearchInAttachments=true";
-
-
-            if (ajax) {
-                $(".results").load("/Applicants/List" + query, null, setResultCount);
-            } else {
-                location.href = "/Applicants" + query;
-            }
-        }
-
-        $("#quickSearch").keyup(function (e) {
-            search(e.keyCode != 13);
-        });
-
-        $("#HighlightedCheck, #HaveInterviewCheck, #HaveTechnicalInterviewCheck, #SearchInAttachmentsCheck").change(function () {
-            search(true);
-        });
-
-        $("#quickSearchSubmit").click(function () {
-            search(false);
-        });
-
-        setResultCount();
-    });
+<script type="text/template" id="card-template">
+    <% _.each(model.items, function(item) { %>
+        <div class="card column clickable item-card <%= item.IsHighlighted ? "highlighted" : "" %>">
+            <div class="cardDescription">
+                <p class="name"><a class="clickable-link" href="<%= urlGenerator.action("Edit", "Applicants", item.Id) %>">
+                    <% if (item.FirstName || item.LastName) { %>
+                        <%= item.FirstName %> <%= item.LastName %>
+                    <% } else { %>
+                        <i>Sin nombre</i>
+                    <% } %>
+                </a></p>
+                <p class="employeeProject"><%= item.CurrentProject %></p>
+                <p class="position"><%= item.Companies ? item.Companies.join(", ", item.Companies) : "<i>(Sin experiencia previa)</i>" %></p>
+                <p class="tags">
+                    <% if (_.isString(item.Skills)) { 
+                        _.each(item.Skills.split(','), function(tag) { %>
+                            <span class="tag"><%= $.trim(tag) %></span>
+                        <% });
+                    } %>
+                </p>
+            </div>
+        </div>
+    <% }) %>
 </script>
 <div class="container searchContainer">
     <h1>Postulantes</h1>
@@ -87,5 +72,4 @@
     </div>
 </div>
 <div class="results">
-    @Html.Action("List", Model) 
 </div>
