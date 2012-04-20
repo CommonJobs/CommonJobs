@@ -640,9 +640,6 @@
     <Content Include="Views\Employees\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Employees\List.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\CommonJobs.ContentExtraction.Extractors\CommonJobs.ContentExtraction.Extractors.csproj">
       <Project>{BD46EC5E-D3DD-42C2-81D1-D7B2B05B7A4E}</Project>
       <Name>CommonJobs.ContentExtraction.Extractors</Name>

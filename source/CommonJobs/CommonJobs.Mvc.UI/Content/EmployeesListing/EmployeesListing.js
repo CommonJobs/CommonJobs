@@ -1,48 +1,33 @@
 ﻿$(function () {
-
-    $(".results").on("click", ".card", function (e) {
-        e.preventDefault();
-        window.location = $(this).find(".card-link").attr("href");
-    });
-
-    function setResultCount() {
-        $("#resultCount").html($(".card").length - 1);
-    }
-
-    var loadResultsXHR = null;
-    $(".results").ajaxSend(function (event, jqXHR, ajaxOptions) {
-        if (loadResultsXHR)
-            loadResultsXHR.abort();
-        loadResultsXHR = jqXHR;
-    });
-
-    function search(ajax) {
-        //TODO Fix hardcoded URLs
-
-        var query = "?term=" + encodeURI($("#quickSearch").val());
-        if ($("#SearchInAttachmentsCheck").prop("checked"))
-            query += "&SearchInAttachments=true";
-        if ($("#SearchInNotesCheck").prop("checked"))
-            query += "&SearchInNotes=true";
-
-        if (ajax) {
-            $(".results").load("/Employees/List" + query, null, setResultCount);
-        } else {
-            location.href = "/Employees" + query;
+    var qs = new QuickSearchPage({
+        //pageSize: 3,
+        generateRedirectUrl: function (searchParameters) {
+            return urlGenerator.action("Index", "Employees", searchParameters);
+        },
+        generateSearchUrl: function (searchParameters) {
+            return urlGenerator.action("List", "Employees", searchParameters);
+        },
+        fillOtherSearchParameters: function (searchParameters) {
+            if ($("#SearchInAttachmentsCheck").prop("checked"))
+                searchParameters.searchInAttachments = true;
+            if ($("#SearchInNotesCheck").prop("checked"))
+                searchParameters.searchInNotes = true;
         }
-    }
-
-    $("#quickSearch").keyup(function (e) {
-        search(e.keyCode != 13);
     });
 
     $("#SearchInAttachmentsCheck, #SearchInNotesCheck").change(function () {
-        search(true);
+        qs.search();
     });
 
     $("#quickSearchSubmit").click(function () {
-        search(false);
+        //It also catch enters in form inputs
+        qs.redirect();
     });
 
-    setResultCount();
+    $(".results").on("click", ".clickable", function (e) {
+        e.preventDefault();
+        window.location = $(this).find(".clickable-link").attr("href");
+    });
+
+    qs.search();
 });
