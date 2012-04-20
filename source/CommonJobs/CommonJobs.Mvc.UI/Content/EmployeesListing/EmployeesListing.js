@@ -20,7 +20,7 @@
     });
 
     $("#quickSearchSubmit").click(function () {
-        //It also catch enters in form inputs
+        //It also catch "enter"s in form inputs
         qs.redirect();
     });
 
