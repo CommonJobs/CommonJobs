@@ -1,0 +1,77 @@
+﻿@model CommonJobs.Infrastructure.EmployeeSearching.EmployeeSearchParameters
+@{
+    ViewBag.Title = "Empleados | CommonJobs";
+    ScriptManager.RegisterCss(Url.Content("~/Content/ie.css"), priority: 500, htmlAttributes: new { media = "screen" }, patchCondition: "lte IE 9");
+    ScriptManager.RegisterCss(Url.Content("~/Content/1140.css"), priority: 500, htmlAttributes: new { media = "screen" });
+    ScriptManager.RegisterCss(Url.Content("~/Content/reset.css"), priority: 500);
+    ScriptManager.RegisterCss(Url.Content("~/Content/EmployeesListing/EmployeesListing.less"));
+    ScriptManager.RegisterJs(Url.Content("~/Content/ListingCommon/QuickSearch.js"));
+    ScriptManager.RegisterJs(Url.Content("~/Content/EmployeesListing/EmployeesListing.js"));
+}
+<script type="text/template" id="add-new-card-template">
+    <div class="card column clickable add-new-card">
+        <img class="cardPicture" src="@Url.Content("~/Content/Images/AddEmployee.png")" alt="Agregar nuevo..."  />
+        <div class="cardDescription">
+            <p>@Html.ActionLink("Agregar nuevo...", "Create", null, new { @class = "clickable-link" })</p>
+        </div>
+    </div>
+</script>
+
+<script type="text/template" id="get-more-cards-template">
+    <div class="card column loading get-more-cards">
+        <p class="ready-content">Click para obtener más...</p>
+    </div>
+</script>
+
+<script type="text/template" id="card-template">
+    <% _.each(model.items, function(item) { %>
+        <div class="card column clickable item-card">
+            <img class="cardPicture" 
+                src="<%= item.Photo ? urlGenerator.action("Get", "Attachments", item.Photo.Thumbnail.Id) : urlGenerator.content("Images/NoPicture.png")  %>" 
+                alt="<%= item.FirstName %> <%= item.LastName %>'s picture" />
+            <div class="cardDescription">
+                <p class="name"><a class="clickable-link" href="<%= urlGenerator.action("Edit", "Employees", item.Id) %>">
+                    <% if (item.FirstName || item.LastName) { %>
+                        <%= item.FirstName %> <%= item.LastName %>
+                    <% } else { %>
+                        <i>Sin nombre</i>
+                    <% } %>
+                </a></p>
+                <p class="employeeProject"><%= item.CurrentProject %></p>
+                <p class="position"><%= item.CurrentPosition %></p>
+                <p class="tags">
+                    <% if (_.isString(item.Skills)) { 
+                        _.each(item.Skills.split(','), function(tag) { %>
+                            <span class="tag"><%= $.trim(tag) %></span>
+                        <% });
+                    } %>
+                </p>
+            </div>
+        </div>
+    <% }) %>
+</script>
+
+<div class="container searchContainer">
+    <h1>Administración de Empleados</h1>
+
+    <div class="row">
+        <div class="twocol"></div>
+        <div class="eightcol quickSearchContainer">
+            <form method="get" action="javascript:void(0);">
+                <div class="mainSearch">
+                    <label for="quickSearch">Búsqueda rápida:</label>
+                    <input type="text" id="quickSearch" name="Term" value="@Model.Term" />
+                    <input type="submit" id="quickSearchSubmit" value=">>" />
+                </div>
+                <div class="secondarySearch">
+                    <label>¿Buscar en notas?</label><input type="checkbox" id="SearchInNotesCheck" name="SearchInNotes" @(Model.SearchInNotes ? "checked='checked'" : string.Empty) />
+                    <label>¿Buscar en adjuntos?</label><input type="checkbox" id="SearchInAttachmentsCheck" name="SearchInAttachments" @(Model.SearchInAttachments ? "checked='checked'" : string.Empty) />
+                </div>
+            </form>
+            <p id="resultCountNotice">Hay <span id="resultCount">0</span> resultado(s).</p>
+        </div>
+        <div class="twocol last"></div>
+    </div>
+</div>
+<div class="results">
+</div>

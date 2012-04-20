@@ -14,7 +14,7 @@ namespace CommonJobs.Infrastructure.EmployeeSearching
 {
     public class SearchEmployees : Query<EmployeeSearchResult[]>
     {
-        //TODO: add pagination support
+        public RavenQueryStatistics Stats { get; set; }
         EmployeeSearchParameters Parameters { get; set; }
 
         public SearchEmployees(EmployeeSearchParameters parameters)
@@ -24,8 +24,10 @@ namespace CommonJobs.Infrastructure.EmployeeSearching
 
         public override EmployeeSearchResult[] Execute()
         {
-            var query = RavenSession
+            RavenQueryStatistics stats;
+            IQueryable<Employee_QuickSearch.Projection> query = RavenSession
                 .Query<Employee_QuickSearch.Projection, Employee_QuickSearch>()
+                .Statistics(out stats)
                 .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite());
 
             query = query.Where(x => x.IsEmployee);
@@ -46,10 +48,17 @@ namespace CommonJobs.Infrastructure.EmployeeSearching
 
             if (Parameters.SearchInAttachments)
                 predicate = predicate.Or(x => x.AttachmentContent.Any(y => y.StartsWith(Parameters.Term)));
-            
+
             query = query.Where(predicate).OrderBy(x => x.FullName1);
 
+            if (Parameters.Skip > 0)
+                query = query.Skip(Parameters.Skip);
+
+            if (Parameters.Take > 0)
+                query = query.Take(Parameters.Take);
+
             var result = query.AsProjection<EmployeeSearchResult>().ToArray();
+            Stats = stats;
             return result;
         }
     }

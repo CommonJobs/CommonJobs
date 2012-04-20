@@ -113,20 +113,23 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\1140.css" />
+    <Content Include="Content\ApplicantsListing\ApplicantsListing.js" />
     <Content Include="Content\EditApplicant\EditApplicant.js" />
     <Content Include="Content\EditEmployee\uploadAvatar.png" />
+    <Content Include="Content\EmployeesListing\EmployeesListing.js" />
+    <Content Include="Content\Images\ajax-loader.gif" />
+    <Content Include="Content\ListingCommon\QuickSearch.js" />
     <Content Include="Scripts\url-generator.js" />
     <Content Include="Scripts\nervoustissue-uploader.js" />
     <Content Include="Views\Applicants\Edit.cshtml" />
     <Content Include="Views\Applicants\Index.cshtml" />
-    <Content Include="Views\Applicants\List.cshtml" />
-    <None Include="Content\ApplicantsListing.less" />
+    <None Include="Content\ApplicantsListing\ApplicantsListing.less" />
     <None Include="Content\ApplicantsBase.less" />
-    <None Include="Content\CardListing.less" />
+    <None Include="Content\ListingCommon\CardListing.less" />
     <None Include="Content\EditApplicant\EditApplicant.less" />
-    <None Include="Content\EditPerson.less" />
-    <None Include="Content\EditScreen.less" />
-    <None Include="Content\PersonListing.less" />
+    <None Include="Content\EditCommon\EditPerson.less" />
+    <None Include="Content\EditCommon\EditScreen.less" />
+    <None Include="Content\ListingCommon\PersonListing.less" />
     <None Include="Content\PersonsBase.less" />
     <None Include="Content\StylesBase.less" />
     <Content Include="Views\Account\ChangePassword.cshtml" />
@@ -148,7 +151,7 @@
     <None Include="_bin_deployableAssemblies\NuGet.Core.dll" />
     <None Include="_bin_deployableAssemblies\Microsoft.Web.Infrastructure.xml" />
     <None Include="_bin_deployableAssemblies\Microsoft.Web.Infrastructure.dll" />
-    <None Include="Content\EmployeesListing.less" />
+    <None Include="Content\EmployeesListing\EmployeesListing.less" />
     <Content Include="Content\EditEmployee\EditEmployee.js" />
     <None Include="Content\EditEmployee\EditEmployee.less" />
     <None Include="Content\EmployeesBase.less" />
@@ -635,9 +638,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Employees\Edit.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Employees\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CommonJobs.ContentExtraction.Extractors\CommonJobs.ContentExtraction.Extractors.csproj">

@@ -5,9 +5,8 @@ using System.Web;
 
 namespace CommonJobs.Infrastructure.EmployeeSearching
 {
-    public class EmployeeSearchParameters
+    public class EmployeeSearchParameters : BaseSearchParameters
     {
-        public string Term { get; set; }
         public bool SearchInNotes { get; set; }
         public bool SearchInAttachments { get; set; }
     }

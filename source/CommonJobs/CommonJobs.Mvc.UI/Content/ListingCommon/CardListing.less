@@ -3,8 +3,12 @@
     border: 1px solid #bbb;
     padding: 10px;
     .rounded_corners(10px);
-	cursor: pointer;
 	overflow: hidden;
+}
+
+.clickable
+{
+	cursor: pointer;
 }
 
 .cardPicture 
@@ -17,14 +21,19 @@
 
 .cardDescription 
 {
-
 	p
     {
 		line-height: 1.2em;
     }
+
+	i
+	{
+		color: @color_primary_lighter;
+	}
 }
 
-#addNewCard 
+
+#addNewCard .add-new-card
 {
 	.cardDescription p
 	{
@@ -36,6 +45,24 @@
     {
 		color:  @color_primary_medium;
     }
+}
+
+.get-more-cards.ready
+{
+	cursor: pointer;
+	padding-top: 42px;
+    text-align: center;
+}
+
+.get-more-cards.loading .ready-content
+{
+	display: none;
+}
+
+.get-more-cards.loading {
+   background-image: url("../../Content/Images/ajax-loader.gif");
+   background-position: center center;
+   background-repeat: no-repeat;
 }
 
 /*from http://designshack.net/articles/css/beating-borders-the-bane-of-responsive-layout/ */
