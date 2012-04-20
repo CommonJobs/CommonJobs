@@ -113,8 +113,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\1140.css" />
+    <Content Include="Content\ApplicantsListing\ApplicantsListing.js" />
     <Content Include="Content\EditApplicant\EditApplicant.js" />
     <Content Include="Content\EditEmployee\uploadAvatar.png" />
+    <Content Include="Content\EmployeesListing\EmployeesListing.js" />
     <Content Include="Scripts\url-generator.js" />
     <Content Include="Scripts\nervoustissue-uploader.js" />
     <Content Include="Views\Applicants\Edit.cshtml" />
