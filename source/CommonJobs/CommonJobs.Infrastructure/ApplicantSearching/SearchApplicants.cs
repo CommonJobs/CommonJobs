@@ -62,6 +62,7 @@ namespace CommonJobs.Infrastructure.ApplicantSearching
                 query = query.Take(Parameters.Take);
 
             var result = query.AsProjection<ApplicantSearchResult>().ToArray();
+            Stats = stats;
             return result;
         }
     }
