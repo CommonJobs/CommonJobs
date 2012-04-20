@@ -14,7 +14,7 @@ namespace CommonJobs.Infrastructure.ApplicantSearching
 {
     public class SearchApplicants : Query<ApplicantSearchResult[]>
     {
-        //TODO: add pagination support
+        public RavenQueryStatistics Stats { get; set; }
         ApplicantSearchParameters Parameters { get; set; }
         
         public SearchApplicants(ApplicantSearchParameters parameters)
@@ -24,8 +24,10 @@ namespace CommonJobs.Infrastructure.ApplicantSearching
 
         public override ApplicantSearchResult[] Execute()
         {
-            var query = RavenSession
+            RavenQueryStatistics stats;
+            IQueryable<Applicant_QuickSearch.Projection> query = RavenSession
                 .Query<Applicant_QuickSearch.Projection, Applicant_QuickSearch>()
+                .Statistics(out stats)
                 .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite());
 
             query = query.Where(x => x.IsApplicant);
@@ -52,6 +54,12 @@ namespace CommonJobs.Infrastructure.ApplicantSearching
                 query = query.Where(x => x.IsHighlighted);
 
             query = query.OrderBy(x => x.FullName1);
+
+            if (Parameters.Skip > 0)
+                query = query.Skip(Parameters.Skip);
+
+            if (Parameters.Take > 0)
+                query = query.Take(Parameters.Take);
 
             var result = query.AsProjection<ApplicantSearchResult>().ToArray();
             return result;
