@@ -6,10 +6,12 @@ using Raven.Client;
 
 namespace CommonJobs.Raven.Migrations
 {
-    public class MigrationStatus
+    public enum MigrationStatus
     {
-        public MigrationDescriptor MigrationDescriptor { get; set; }
-        public bool Installed { get; set; }
-        public bool Obsolete { get; set; } 
+        NotInstalled,
+        Installing,
+        Installed,
+        InstalledObsolete,
+        Uninstalling
     }
 }

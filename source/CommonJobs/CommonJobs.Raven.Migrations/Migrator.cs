@@ -18,19 +18,32 @@ namespace CommonJobs.Raven.Migrations
             MigrationsAssembly = migrationsAssembly;
         }
 
-        public List<MigrationStatus> GetMigrationStatus()
+        public List<MigrationDescriptor> GetMigrationStatus()
         {
             var validMigrations = ListValidMigrations();
             var installedMigrations = ListInstalledMigrations();
-            MigrationDescriptor aux;
             var result =
                 validMigrations.Keys.Union(installedMigrations.Keys)
                 .OrderBy(x => x)
-                .Select(x => validMigrations.TryGetValue(x, out aux) 
-                    ? new MigrationStatus() { MigrationDescriptor = aux, Obsolete = false, Installed = installedMigrations.ContainsKey(x) }
-                    : new MigrationStatus() { MigrationDescriptor = installedMigrations[x], Obsolete = true, Installed = true })
+                .Select(x => GetDescriptorWithUpdatedStatus(x, validMigrations, installedMigrations))
                 .ToList();
             return result;
+        }
+
+        private static MigrationDescriptor GetDescriptorWithUpdatedStatus(string key, Dictionary<string, MigrationDescriptor> validMigrations, Dictionary<string, MigrationDescriptor> installedMigrations)
+        {
+            MigrationDescriptor auxValid = null;
+            MigrationDescriptor auxInstalled = null;
+            if (validMigrations.TryGetValue(key, out auxValid))
+            {
+                auxValid.Status = installedMigrations.TryGetValue(key, out auxInstalled) ? auxInstalled.Status : MigrationStatus.NotInstalled;
+            }
+            else
+            {
+                auxInstalled = installedMigrations[key];
+                auxInstalled.Status = MigrationStatus.InstalledObsolete;
+            }
+            return auxValid ?? auxInstalled;
         }
 
         private Dictionary<string, MigrationDescriptor> ListValidMigrations()
@@ -42,6 +55,7 @@ namespace CommonJobs.Raven.Migrations
                 .Where(x => iMigration.IsAssignableFrom(x))
                 .Select(x => new { migrationType = x, attribute = x.GetCustomAttributes(migrationAttribute, false).OfType<MigrationAttribute>().FirstOrDefault() })
                 .Where(x => x.migrationType != null)
+                .Where(x => x.attribute != null)
                 .Select(x => new MigrationDescriptor() { Id = x.attribute.Id, Description = x.attribute.Description, MigrationTypeFullName = x.migrationType.FullName })
                 .ToDictionary(x => x.Id);
             return result;
@@ -74,6 +88,12 @@ namespace CommonJobs.Raven.Migrations
         {
             try
             {
+                using (var session = DocumentStore.OpenSession())
+                {
+                    descriptor.Status = MigrationStatus.Installing;
+                    session.Store(descriptor);
+                    session.SaveChanges();
+                }
                 IMigration migration;
                 if (TryCreateMigrationInstance(descriptor, out migration))
                 {
@@ -81,6 +101,7 @@ namespace CommonJobs.Raven.Migrations
                 }
                 using (var session = DocumentStore.OpenSession())
                 {
+                    descriptor.Status = MigrationStatus.Installed;
                     session.Store(descriptor);
                     session.SaveChanges();
                 }
@@ -95,6 +116,12 @@ namespace CommonJobs.Raven.Migrations
         {
             try
             {
+                using (var session = DocumentStore.OpenSession())
+                {
+                    descriptor.Status = MigrationStatus.Uninstalling;
+                    session.Store(descriptor);
+                    session.SaveChanges();
+                }
                 IMigration migration;
                 if (TryCreateMigrationInstance(descriptor, out migration))
                 {
@@ -118,14 +145,10 @@ namespace CommonJobs.Raven.Migrations
 
         public void UpAll()
         {
-            var status = GetMigrationStatus();
-            foreach (var migrationStatus in status)
-            {
-                if (migrationStatus.Obsolete)
-                    Down(migrationStatus.MigrationDescriptor);
-                else if (!migrationStatus.Installed)
-                    Up(migrationStatus.MigrationDescriptor);
-            }
+            var descriptors = GetMigrationStatus();
+            var toInstall = descriptors.Where(x => x.Status != MigrationStatus.Installed && x.Status != MigrationStatus.InstalledObsolete);
+            foreach (var descriptor in toInstall)
+                Up(descriptor);
         }
     }
 }

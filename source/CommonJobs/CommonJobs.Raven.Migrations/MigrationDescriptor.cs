@@ -11,5 +11,6 @@ namespace CommonJobs.Raven.Migrations
         public string Id { get; set; }
         public string Description { get; set; }
         public string MigrationTypeFullName { get; set; }
+        public MigrationStatus Status { get; set; }
     }
 }
