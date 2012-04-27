@@ -103,6 +103,7 @@
     </Compile>
     <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MigrationsController.cs" />
     <Compile Include="DataMigrator.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -136,6 +137,7 @@
     <Content Include="Views\Account\ChangePasswordSuccess.cshtml" />
     <Content Include="Views\Account\LogOn.cshtml" />
     <Content Include="Views\Shared\_LogOnPartial.cshtml" />
+    <Content Include="Views\Migrations\Index.cshtml" />
     <None Include="_bin_deployableAssemblies\System.Web.Mvc.dll" />
     <None Include="_bin_deployableAssemblies\System.Web.WebPages.xml" />
     <None Include="_bin_deployableAssemblies\System.Web.WebPages.Razor.xml" />
@@ -660,9 +662,17 @@
       <Project>{4D58F500-CDC4-4697-8DA5-15568E804317}</Project>
       <Name>CommonJobs.Infrastructure</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CommonJobs.Migrations\CommonJobs.Migrations.csproj">
+      <Project>{E01BBAFF-4FD7-4A4F-89A6-4FA54CC622BA}</Project>
+      <Name>CommonJobs.Migrations</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CommonJobs.Raven.Infrastructure\CommonJobs.Raven.Infrastructure.csproj">
       <Project>{7B4A0A21-0CDE-432A-A785-599D4339AD8E}</Project>
       <Name>CommonJobs.Raven.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CommonJobs.Raven.Migrations\CommonJobs.Raven.Migrations.csproj">
+      <Project>{B6D54592-07C8-4B5E-A607-DD7FE49A43B6}</Project>
+      <Name>CommonJobs.Raven.Migrations</Name>
     </ProjectReference>
     <ProjectReference Include="..\CommonJobs.Raven.Mvc\CommonJobs.Raven.Mvc.csproj">
       <Project>{658EAF8E-02A2-4029-AC52-942261EE486C}</Project>
