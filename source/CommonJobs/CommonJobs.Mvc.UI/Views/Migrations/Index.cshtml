@@ -1,5 +1,76 @@
-﻿@{
-    ViewBag.Title = "Index";
+﻿@using CommonJobs.Raven.Migrations
+@model Dictionary<string, MigrationDescriptor>
+
+@{
+  ViewBag.Title = "Index";
+  var migrations = Model.Values.OrderBy(x => x.Id);
 }
 
 <h2>Index</h2>
+@using (Html.BeginForm())
+{
+  <table>
+    <thead>
+      <tr>
+        <td>Key</td>
+        <td>Class</td>
+        <td>Description</td>
+        <td>Status</td>
+        <td>Action</td>
+    </thead>
+    <tbody>
+      @{
+        var count = 0;
+        foreach (var migration in migrations)
+        {
+          <tr>
+            <td>@migration.Id</td>
+            <td>@migration.MigrationTypeFullName</td>
+            <td>@migration.Description</td>
+            <td>@migration.Status</td>
+            <td>
+              @Html.Hidden(string.Format("actions[{0}].Id", count), migration.Id)
+              @Html.DropDownList(string.Format("actions[{0}].Action", count), PossibleActions(migration.Status))
+            </td>
+          </tr>
+          count++;
+        }
+      }
+    </tbody>
+  </table>
+  
+  <input type="submit" name="submit" />
+}
+
+@functions {
+  IEnumerable<SelectListItem> PossibleActions(MigrationStatus status)
+  {
+    switch (status)
+    {
+      case MigrationStatus.Installed:
+        yield return new SelectListItem() { Text = "None", Value = MigrationActionType.None.ToString(), Selected = true };
+        yield return new SelectListItem() { Text = "Uninstall", Value = MigrationActionType.Down.ToString() };
+        yield return new SelectListItem() { Text = "Reinstall", Value = MigrationActionType.Up.ToString() };
+        break;
+      case MigrationStatus.Installing:
+        yield return new SelectListItem() { Text = "None", Value = MigrationActionType.None.ToString() };
+        yield return new SelectListItem() { Text = "Uninstall", Value = MigrationActionType.Down.ToString() };
+        yield return new SelectListItem() { Text = "Reinstall", Value = MigrationActionType.Up.ToString(), Selected = true };
+        break;
+      case MigrationStatus.InstalledObsolete:
+        yield return new SelectListItem() { Text = "None", Value = MigrationActionType.None.ToString(), Selected = true };
+        yield return new SelectListItem() { Text = "Remove", Value = MigrationActionType.Down.ToString() };
+        break;
+      case MigrationStatus.NotInstalled:
+        yield return new SelectListItem() { Text = "None", Value = MigrationActionType.None.ToString() };
+        yield return new SelectListItem() { Text = "Execute Uninstall", Value = MigrationActionType.Down.ToString() };
+        yield return new SelectListItem() { Text = "Install", Value = MigrationActionType.Up.ToString(), Selected = true };
+        break;
+      case MigrationStatus.Uninstalling:
+        yield return new SelectListItem() { Text = "None", Value = MigrationActionType.None.ToString(), Selected = true };
+        yield return new SelectListItem() { Text = "Uninstall", Value = MigrationActionType.Down.ToString() };
+        yield return new SelectListItem() { Text = "Reinstall", Value = MigrationActionType.Up.ToString() };
+        break;
+    }
+  }
+}

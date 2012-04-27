@@ -10,22 +10,32 @@ using Miscellaneous.Attributes.Controller;
 
 namespace CommonJobs.Mvc.UI.Controllers
 {
+    [FilterIP(
+            ConfigurationKeyAllowedMaskedIPs = "AllowedMigrationMaskedIPs",
+            ConfigurationKeyAllowedSingleIPs = "AllowedMigrationSingleIPs",
+            ConfigurationKeyDeniedMaskedIPs = "DeniedMigrationMaskedIPs",
+            ConfigurationKeyDeniedSingleIPs = "DeniedMigrationSingleIPs")]
     public class MigrationsController : CommonJobsController
     {
         //
         // GET: /Migrations
-        [FilterIP(
-            ConfigurationKeyAllowedMaskedIPs="AllowedMigrationMaskedIPs", 
-            ConfigurationKeyAllowedSingleIPs="AllowedMigrationSingleIPs",
-            ConfigurationKeyDeniedMaskedIPs="DeniedMigrationMaskedIPs",
-            ConfigurationKeyDeniedSingleIPs="DeniedMigrationSingleIPs")]
-        public ActionResult Index(string id)
+        [AcceptVerbs(HttpVerbs.Get)]
+        [ActionName("Index")]
+        public ActionResult Get(string id)
         {
             var migrator = new Migrator(RavenSessionManager.DocumentStore, typeof(MigrationClass).Assembly);
-            var migrations = migrator.GetMigrationStatus();
+            var status = migrator.GetMigrationStatus();
 
-            return View();
+            return View(status);
         }
 
+        [AcceptVerbs(HttpVerbs.Post)]
+        [ActionName("Index")]
+        public ActionResult Post(IEnumerable<MigrationAction> actions)
+        {
+            var migrator = new Migrator(RavenSessionManager.DocumentStore, typeof(MigrationClass).Assembly);
+            migrator.RunActions(actions);
+            return RedirectToAction("Index");
+        }
     }
 }

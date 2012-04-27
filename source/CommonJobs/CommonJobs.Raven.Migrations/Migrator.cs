@@ -18,15 +18,14 @@ namespace CommonJobs.Raven.Migrations
             MigrationsAssembly = migrationsAssembly;
         }
 
-        public List<MigrationDescriptor> GetMigrationStatus()
+        public Dictionary<string, MigrationDescriptor> GetMigrationStatus()
         {
             var validMigrations = ListValidMigrations();
             var installedMigrations = ListInstalledMigrations();
             var result =
                 validMigrations.Keys.Union(installedMigrations.Keys)
-                .OrderBy(x => x)
                 .Select(x => GetDescriptorWithUpdatedStatus(x, validMigrations, installedMigrations))
-                .ToList();
+                .ToDictionary(x => x.Id);
             return result;
         }
 
@@ -146,9 +145,23 @@ namespace CommonJobs.Raven.Migrations
         public void UpAll()
         {
             var descriptors = GetMigrationStatus();
-            var toInstall = descriptors.Where(x => x.Status != MigrationStatus.Installed && x.Status != MigrationStatus.InstalledObsolete);
+            var toInstall = descriptors
+                .Values
+                .OrderBy(x => x.Id) //¿Esto es necesario?
+                .Where(x => x.Status != MigrationStatus.Installed && x.Status != MigrationStatus.InstalledObsolete);
             foreach (var descriptor in toInstall)
                 Up(descriptor);
+        }
+
+        public void RunActions(IEnumerable<MigrationAction> actions)
+        {
+            var descriptors = GetMigrationStatus();
+            var itemsToRun = actions
+                .Where(x => x.Action != MigrationActionType.None)
+                .OrderBy(x => x.Id)
+                .Select(x => new { descriptor = descriptors[x.Id], action = x.Action == MigrationActionType.Down ? (Action<MigrationDescriptor>)Down : Up });
+            foreach (var itemToRun in itemsToRun)
+                itemToRun.action(itemToRun.descriptor);
         }
     }
 }
