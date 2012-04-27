@@ -72,33 +72,47 @@ namespace CommonJobs.Raven.Migrations
 
         public void Up(MigrationDescriptor descriptor)
         {
-            IMigration migration;
-            if (TryCreateMigrationInstance(descriptor, out migration))
+            try
             {
-                migration.Up();
+                IMigration migration;
+                if (TryCreateMigrationInstance(descriptor, out migration))
+                {
+                    migration.Up();
+                }
+                using (var session = DocumentStore.OpenSession())
+                {
+                    session.Store(descriptor);
+                    session.SaveChanges();
+                }
             }
-            using (var session = DocumentStore.OpenSession())
+            catch
             {
-                session.Store(descriptor);
-                session.SaveChanges();
+                //Por ahora no estoy haciendo nada con esto, si no se pudo aplicar la migración se va a ver en el resumen
             }
         }
 
         public void Down(MigrationDescriptor descriptor)
         {
-            using (var session = DocumentStore.OpenSession())
+            try
             {
-                var stored = session.Load<MigrationDescriptor>(descriptor.Id);
-                if (stored != null)
+                IMigration migration;
+                if (TryCreateMigrationInstance(descriptor, out migration))
                 {
-                    session.Delete(stored);
-                    session.SaveChanges();
+                    migration.Down();
+                }
+                using (var session = DocumentStore.OpenSession())
+                {
+                    var stored = session.Load<MigrationDescriptor>(descriptor.Id);
+                    if (stored != null)
+                    {
+                        session.Delete(stored);
+                        session.SaveChanges();
+                    }
                 }
             }
-            IMigration migration;
-            if (TryCreateMigrationInstance(descriptor, out migration))
+            catch
             {
-                migration.Down();
+                //Por ahora no estoy haciendo nada con esto, si no se pudo deshacer la migración se va a ver en el resumen
             }
         }
 
