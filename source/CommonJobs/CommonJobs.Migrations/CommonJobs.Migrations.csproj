@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="201204270835_InitialData.cs" />
     <Compile Include="MigrationClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
