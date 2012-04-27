@@ -49,6 +49,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonJobs.ContentExtractio
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonJobs.ContentExtraction.IFilterExtraction", "CommonJobs.ContentExtraction.IFilterExtraction\CommonJobs.ContentExtraction.IFilterExtraction.csproj", "{3B252589-C00B-49F6-92A0-EE2C8E7C671F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonJobs.Raven.Migrations", "CommonJobs.Raven.Migrations\CommonJobs.Raven.Migrations.csproj", "{B6D54592-07C8-4B5E-A607-DD7FE49A43B6}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = CommonJobs.vsmdi
@@ -102,6 +104,10 @@ Global
 		{3B252589-C00B-49F6-92A0-EE2C8E7C671F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3B252589-C00B-49F6-92A0-EE2C8E7C671F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3B252589-C00B-49F6-92A0-EE2C8E7C671F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6D54592-07C8-4B5E-A607-DD7FE49A43B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6D54592-07C8-4B5E-A607-DD7FE49A43B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6D54592-07C8-4B5E-A607-DD7FE49A43B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6D54592-07C8-4B5E-A607-DD7FE49A43B6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -116,6 +122,7 @@ Global
 		{FCF0DC4A-8A75-499D-AE7D-25D2F5174E38} = {956941F4-8905-499B-BA53-E65672714AC3}
 		{BD46EC5E-D3DD-42C2-81D1-D7B2B05B7A4E} = {956941F4-8905-499B-BA53-E65672714AC3}
 		{3B252589-C00B-49F6-92A0-EE2C8E7C671F} = {956941F4-8905-499B-BA53-E65672714AC3}
+		{B6D54592-07C8-4B5E-A607-DD7FE49A43B6} = {956941F4-8905-499B-BA53-E65672714AC3}
 		{954BDA8F-14DC-42BA-B975-59C4F2149779} = {1FC2C802-0B0A-4E0F-B5CD-C22ED9047219}
 		{EA93A17D-54EC-4703-A387-9BD605154300} = {1FC2C802-0B0A-4E0F-B5CD-C22ED9047219}
 	EndGlobalSection
