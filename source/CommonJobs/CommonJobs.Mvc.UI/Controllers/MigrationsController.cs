@@ -15,7 +15,7 @@ namespace CommonJobs.Mvc.UI.Controllers
             ConfigurationKeyAllowedSingleIPs = "AllowedMigrationSingleIPs",
             ConfigurationKeyDeniedMaskedIPs = "DeniedMigrationMaskedIPs",
             ConfigurationKeyDeniedSingleIPs = "DeniedMigrationSingleIPs")]
-    public class MigrationsController : CommonJobsController
+    public class MigrationsController : Controller
     {
         //
         // GET: /Migrations

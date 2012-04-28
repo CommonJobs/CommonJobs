@@ -2,11 +2,21 @@
 @model Dictionary<string, MigrationDescriptor>
 
 @{
-  ViewBag.Title = "Index";
+  Layout = null;
+  ViewBag.Title = "Migrations";
   var migrations = Model.Values.OrderBy(x => x.Id);
 }
 
-<h2>Index</h2>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title</title>
+</head>
+
+<body>
+
+<h1>Migrations</h1>
 @using (Html.BeginForm())
 {
   <table>
@@ -41,6 +51,8 @@
   
   <input type="submit" name="submit" />
 }
+</body>
+</html>
 
 @functions {
   IEnumerable<SelectListItem> PossibleActions(MigrationStatus status)
