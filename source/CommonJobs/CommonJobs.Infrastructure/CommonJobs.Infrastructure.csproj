@@ -73,6 +73,7 @@
     <Compile Include="AttachmentStorage\SaveAttachment.cs" />
     <Compile Include="AttachmentStorage\SavePhotoAttachments.cs" />
     <Compile Include="ApplicantSearching\Applicant_QuickSearch.cs" />
+    <Compile Include="BaseSearchParameters.cs" />
     <Compile Include="EmployeeSearching\EmployeeSearchResult.cs" />
     <Compile Include="EmployeeSearching\EmployeeSearchParameters.cs" />
     <Compile Include="EmployeeSearching\SearchEmployees.cs" />

@@ -28,11 +28,17 @@ namespace CommonJobs.Mvc.UI.Controllers
 
         //
         // GET: /Employees/List?terms=Mar
-        public ViewResult List(EmployeeSearchParameters searchParameters)
+        public JsonNetResult List(EmployeeSearchParameters searchParameters)
         {
-            var results = Query(new SearchEmployees(searchParameters));
-            return View(results);
-        }
+            var query = new SearchEmployees(searchParameters);
+            var results = Query(query);
+            return Json(new
+            {
+                Items = results,
+                Skiped = searchParameters.Skip,
+                TotalResults = query.Stats.TotalResults
+            });
+        } 
         
         //
         // GET: /Employees/QuickSearchAutocomplete?terms=Mar
