@@ -39,6 +39,7 @@
         initialize: function () {
             this.initCollectionField("Notes");
             this.initCollectionField("SalaryChanges");
+            this.initCollectionField("Vacations");
             this.get("SalaryChanges").on("add remove reset change", this.updateSalaries, this);
         }
     });
@@ -62,6 +63,10 @@
 
     var formatSalary = function (value) {
         return "$ " + value;
+    };
+
+    var formatTotalDays = function (value) {
+        return value + " días";
     };
 
     Nervoustissue.UILinking.CjEmployeePicture = Nervoustissue.UILinking.Attachment.extend({
@@ -147,7 +152,23 @@
                     }
                 },
                 CurrentSalary: { controlLink: "ReadOnlyText", valueToContent: formatSalary },
-                InitialSalary: { controlLink: "ReadOnlyText", valueToContent: formatSalary }
+                InitialSalary: { controlLink: "ReadOnlyText", valueToContent: formatSalary },
+                Vacations:
+                {
+                    controlLink: "Collection",
+                    item: {
+                        controlLink: "Compound",
+                        template: _.template('Periodo <span data-bind="Period"></span>: <span data-bind="From"></span> a <span data-bind="To"></span> (<span data-bind="TotalDays"></span>)'),
+                        items:
+                        [
+                            { controlLink: "Int", name: "Period", field: "Period" },
+                            { controlLink: "Date", name: "From", field: "From" },
+                            { controlLink: "Date", name: "To", field: "To" },
+                            { controlLink: "ReadOnlyText", name: "TotalDays", field: "TotalDays", valueToContent: formatTotalDays }
+                        ]
+                    }
+                },
+                VacationsTotalDays: { controlLink: "ReadOnlyText", valueToContent: function (value) { return "(" + formatTotalDays(value) + " en total)"; } }
             }
     });
 
