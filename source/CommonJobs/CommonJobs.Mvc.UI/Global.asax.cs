@@ -37,8 +37,7 @@ namespace CommonJobs.Mvc.UI
         
         protected void Application_Start()
         {
-            using (var migrator = new DataMigrator(RavenSessionManager.DocumentStore))
-                migrator.Execute();
+            //TODO: acá se podrían invocar las migraciones automáticas
             
             //TODO: hacer esto con algo mejor que un singleton
             ContentExtractionConfiguration.Current.Clear();

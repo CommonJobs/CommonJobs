@@ -57,6 +57,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -81,7 +82,9 @@
     <Compile Include="HtmlScriptManagerExtensions.cs" />
     <Compile Include="JsonDotNetModelBinder.cs" />
     <Compile Include="JsonNetResult.cs" />
+    <Compile Include="Miscellaneous.Attributes.Controller\FilterIPAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rainbow.Framework.Helpers\IPList.cs" />
     <Compile Include="RavenSessionManager.cs" />
     <Compile Include="RequestAttachmentReader.cs" />
     <Compile Include="ScriptManager.cs" />
