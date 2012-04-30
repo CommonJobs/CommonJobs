@@ -1,0 +1,100 @@
+<mockup version="1.0" skin="sketch" measuredW="1100" measuredH="465" mockupW="458" mockupH="225">
+  <controls>
+    <control controlID="36" controlTypeID="com.balsamiq.mockups::FieldSet" x="642" y="240" w="458" h="225" measuredW="200" measuredH="170" zOrder="0" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Vacaciones</text>
+      </controlProperties>
+    </control>
+    <control controlID="37" controlTypeID="com.balsamiq.mockups::TextInput" x="691" y="291" w="-1" h="-1" measuredW="46" measuredH="27" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>2009</text>
+      </controlProperties>
+    </control>
+    <control controlID="38" controlTypeID="com.balsamiq.mockups::DateChooser" x="759" y="292" w="-1" h="-1" measuredW="118" measuredH="25" zOrder="2" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>15/12/2008</text>
+      </controlProperties>
+    </control>
+    <control controlID="39" controlTypeID="com.balsamiq.mockups::Label" x="691" y="263" w="-1" h="-1" measuredW="52" measuredH="21" zOrder="3" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Per%EDodo</text>
+      </controlProperties>
+    </control>
+    <control controlID="40" controlTypeID="com.balsamiq.mockups::Label" x="759" y="263" w="52" h="21" measuredW="43" measuredH="21" zOrder="4" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Desde</text>
+      </controlProperties>
+    </control>
+    <control controlID="41" controlTypeID="com.balsamiq.mockups::DateChooser" x="892" y="292" w="-1" h="-1" measuredW="120" measuredH="25" zOrder="5" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>04/01/2009</text>
+      </controlProperties>
+    </control>
+    <control controlID="42" controlTypeID="com.balsamiq.mockups::Label" x="892" y="263" w="52" h="21" measuredW="39" measuredH="21" zOrder="6" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Hasta</text>
+      </controlProperties>
+    </control>
+    <control controlID="43" controlTypeID="com.balsamiq.mockups::Label" x="1027" y="294" w="58" h="21" measuredW="56" measuredH="21" zOrder="7" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>%2815%20d%EDas%29</text>
+      </controlProperties>
+    </control>
+    <control controlID="48" controlTypeID="__group__" x="691" y="377" w="321" h="27" measuredW="321" measuredH="27" zOrder="8" locked="false" isInGroup="-1">
+      <groupChildrenDescriptors>
+        <control controlID="0" controlTypeID="com.balsamiq.mockups::Canvas" x="0" y="0" w="321" h="27" measuredW="100" measuredH="70" zOrder="0" locked="false" isInGroup="48"/>
+        <control controlID="1" controlTypeID="__group__" x="126" y="3" w="69" h="21" measuredW="69" measuredH="21" zOrder="1" locked="false" isInGroup="48">
+          <groupChildrenDescriptors>
+            <control controlID="0" controlTypeID="com.balsamiq.mockups::Icon" x="0" y="2" w="-1" h="-1" measuredW="16" measuredH="16" zOrder="0" locked="false" isInGroup="1">
+              <controlProperties>
+                <borderStyle>none</borderStyle>
+                <icon>PlusIcon%7Cxsmall</icon>
+              </controlProperties>
+            </control>
+            <control controlID="1" controlTypeID="com.balsamiq.mockups::Label" x="16" y="0" w="-1" h="-1" measuredW="53" measuredH="21" zOrder="1" locked="false" isInGroup="1">
+              <controlProperties>
+                <text>Agregar</text>
+              </controlProperties>
+            </control>
+          </groupChildrenDescriptors>
+        </control>
+      </groupChildrenDescriptors>
+    </control>
+    <control controlID="49" controlTypeID="com.balsamiq.mockups::TextInput" x="691" y="333" w="-1" h="-1" measuredW="43" measuredH="27" zOrder="9" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>2012</text>
+      </controlProperties>
+    </control>
+    <control controlID="50" controlTypeID="com.balsamiq.mockups::DateChooser" x="759" y="334" w="-1" h="-1" measuredW="121" measuredH="25" zOrder="10" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>06/04/2012</text>
+      </controlProperties>
+    </control>
+    <control controlID="51" controlTypeID="com.balsamiq.mockups::DateChooser" x="892" y="334" w="-1" h="-1" measuredW="119" measuredH="25" zOrder="11" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>13/04/2012</text>
+      </controlProperties>
+    </control>
+    <control controlID="52" controlTypeID="com.balsamiq.mockups::Label" x="1033" y="336" w="52" h="21" measuredW="50" measuredH="21" zOrder="12" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>%285%20d%EDas%29</text>
+      </controlProperties>
+    </control>
+    <control controlID="53" controlTypeID="com.balsamiq.mockups::HRule" x="657" y="414" w="428" h="-1" measuredW="100" measuredH="5" zOrder="13" locked="false" isInGroup="-1"/>
+    <control controlID="54" controlTypeID="com.balsamiq.mockups::Label" x="959" y="427" w="126" h="21" measuredW="126" measuredH="21" zOrder="14" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>4%20semanas%20%2820%20d%EDas%29</text>
+      </controlProperties>
+    </control>
+    <control controlID="55" controlTypeID="com.balsamiq.mockups::Icon" x="660" y="296" w="-1" h="-1" measuredW="16" measuredH="16" zOrder="15" locked="false" isInGroup="-1">
+      <controlProperties>
+        <icon>XIcon%7Cxsmall</icon>
+      </controlProperties>
+    </control>
+    <control controlID="56" controlTypeID="com.balsamiq.mockups::Icon" x="660" y="338" w="-1" h="-1" measuredW="16" measuredH="16" zOrder="16" locked="false" isInGroup="-1">
+      <controlProperties>
+        <icon>XIcon%7Cxsmall</icon>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>

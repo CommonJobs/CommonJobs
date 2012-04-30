@@ -85,10 +85,17 @@ namespace CommonJobs.Domain
         [Display(Name = "Convenio")]
         public string Agreement { get; set; }
 
-        //TODO this should be a collection of start-end dates
         [Display(Name = "Vacaciones")]
         //Only in detailed view
-        public string Vacations { get; set; }
+        public VacationList Vacations { get; set; }
+
+        public int VacationsTotalDays
+        {
+            get
+            {
+                return Vacations.TotalDays;
+            }
+        }
 
         [Display(Name = "Observaciones")]
         //Only in detailed view
@@ -108,7 +115,6 @@ namespace CommonJobs.Domain
         //            .ThenBy(x => x.RegisterDate);
         //    }
         //}
-
 
         public override IEnumerable<AttachmentReference> AllAttachmentReferences
         {
