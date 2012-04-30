@@ -1,0 +1,42 @@
+<stylecopresultscache>
+  <version>11</version>
+  <sourcecode name=".NETFramework,Version=v4.0.AssemblyAttributes.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>04/30/2012 08:40:40</timestamp>
+      <milliseconds>518</milliseconds>
+    </settings>
+    <timestamp>01/14/2012 09:55:04</timestamp>
+    <milliseconds>899</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="Program.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>04/30/2012 08:40:40</timestamp>
+      <milliseconds>518</milliseconds>
+    </settings>
+    <timestamp>04/30/2012 08:40:40</timestamp>
+    <milliseconds>506</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="Company.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>04/30/2012 08:40:40</timestamp>
+      <milliseconds>518</milliseconds>
+    </settings>
+    <timestamp>04/30/2012 08:40:40</timestamp>
+    <milliseconds>506</milliseconds>
+    <violations />
+  </sourcecode>
+  <project key="577023634">
+    <configuration>DEBUG;TRACE</configuration>
+  </project>
+  <sourcecode name="CommonAssemblyInfo.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>04/30/2012 08:40:40</timestamp>
+      <milliseconds>518</milliseconds>
+    </settings>
+    <timestamp>04/30/2012 09:14:30</timestamp>
+    <milliseconds>12</milliseconds>
+    <violations />
+  </sourcecode>
+</stylecopresultscache>

@@ -1,0 +1,69 @@
+<stylecopresultscache>
+  <version>11</version>
+  <sourcecode name="ShoppingCartCustomer.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>04/30/2012 08:40:40</timestamp>
+      <milliseconds>518</milliseconds>
+    </settings>
+    <timestamp>04/30/2012 08:40:40</timestamp>
+    <milliseconds>480</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="ShoppingCart.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>04/30/2012 08:40:40</timestamp>
+      <milliseconds>518</milliseconds>
+    </settings>
+    <timestamp>04/30/2012 08:40:40</timestamp>
+    <milliseconds>479</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="ShoppingCartItem.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>04/30/2012 08:40:40</timestamp>
+      <milliseconds>518</milliseconds>
+    </settings>
+    <timestamp>04/30/2012 08:40:40</timestamp>
+    <milliseconds>481</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="ShoppingCartItemProduct.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>04/30/2012 08:40:40</timestamp>
+      <milliseconds>518</milliseconds>
+    </settings>
+    <timestamp>04/30/2012 08:40:40</timestamp>
+    <milliseconds>481</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name=".NETFramework,Version=v4.0.AssemblyAttributes.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>04/30/2012 08:40:40</timestamp>
+      <milliseconds>518</milliseconds>
+    </settings>
+    <timestamp>01/14/2012 09:55:04</timestamp>
+    <milliseconds>899</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="ShoppingCartEventsToShopingCart.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>04/30/2012 08:40:40</timestamp>
+      <milliseconds>518</milliseconds>
+    </settings>
+    <timestamp>04/30/2012 08:40:40</timestamp>
+    <milliseconds>480</milliseconds>
+    <violations />
+  </sourcecode>
+  <project key="171590304">
+    <configuration>DEBUG;TRACE</configuration>
+  </project>
+  <sourcecode name="CommonAssemblyInfo.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>04/30/2012 08:40:40</timestamp>
+      <milliseconds>518</milliseconds>
+    </settings>
+    <timestamp>04/30/2012 09:14:30</timestamp>
+    <milliseconds>12</milliseconds>
+    <violations />
+  </sourcecode>
+</stylecopresultscache>
