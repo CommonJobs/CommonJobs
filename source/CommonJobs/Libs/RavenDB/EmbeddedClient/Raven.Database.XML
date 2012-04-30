@@ -1123,6 +1123,11 @@
             The certificate to use when verifying access token signatures for OAuth
             </summary>
         </member>
+        <member name="P:Raven.Database.Config.InMemoryRavenConfiguration.WindowsServiceName">
+            <summary>
+            Register with this Windows service name.
+            </summary>
+        </member>
         <member name="P:Raven.Database.Config.InMemoryRavenConfiguration.DataDirectory">
             <summary>
             The directory for the RavenDB database. 
