@@ -33,26 +33,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AsyncCtpLibrary">
-      <HintPath>..\packages\RavenDB.1.0.638-Unstable\lib\net40\AsyncCtpLibrary.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.4.0.5\lib\net40\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="NLog">
-      <HintPath>..\packages\NLog.2.0.0.2000\lib\net40\NLog.dll</HintPath>
-    </Reference>
     <Reference Include="Raven.Abstractions">
-      <HintPath>..\packages\RavenDB.1.0.638-Unstable\lib\net40\Raven.Abstractions.dll</HintPath>
+      <HintPath>..\Libs\RavenDB\Client\Raven.Abstractions.dll</HintPath>
     </Reference>
     <Reference Include="Raven.Client.Debug">
-      <HintPath>..\packages\RavenDB.1.0.638-Unstable\lib\net40\Raven.Client.Debug.dll</HintPath>
+      <HintPath>..\Libs\RavenDB\Client\Raven.Client.Debug.dll</HintPath>
     </Reference>
     <Reference Include="Raven.Client.Lightweight">
-      <HintPath>..\packages\RavenDB.1.0.638-Unstable\lib\net40\Raven.Client.Lightweight.dll</HintPath>
-    </Reference>
-    <Reference Include="Raven.Client.MvcIntegration">
-      <HintPath>..\packages\RavenDB.1.0.638-Unstable\lib\net40\Raven.Client.MvcIntegration.dll</HintPath>
+      <HintPath>..\Libs\RavenDB\Client\Raven.Client.Lightweight.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
@@ -90,7 +78,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
