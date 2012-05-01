@@ -15,15 +15,7 @@ namespace CommonJobs.Domain
         {
             get
             {
-                var totalDays = 0;
-                for (var date = From; date < To; date = date.AddDays(1))
-                {
-                    if (date.DayOfWeek != DayOfWeek.Saturday
-                        && date.DayOfWeek != DayOfWeek.Sunday)
-                        totalDays++;
-                }
-
-                return totalDays;
+                return (int)(To - From).TotalDays;
             }
         }
     }
