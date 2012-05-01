@@ -30,21 +30,21 @@
     </thead>
     <tbody>
       @{
-        var count = 0;
-        foreach (var migration in migrations)
-        {
+  var count = 0;
+  foreach (var migration in migrations)
+  {
           <tr>
             <td>@migration.Id</td>
             <td>@migration.MigrationTypeFullName</td>
             <td>@migration.Description</td>
-            <td>@migration.Status</td>
+            <td>@migration.Status @Info(migration)</td>
             <td>
               @Html.Hidden(string.Format("actions[{0}].Id", count), migration.Id)
               @Html.DropDownList(string.Format("actions[{0}].Action", count), PossibleActions(migration.Status))
             </td>
           </tr>
-          count++;
-        }
+    count++;
+  }
       }
     </tbody>
   </table>
@@ -53,6 +53,14 @@
 }
 </body>
 </html>
+
+@helper Info(MigrationDescriptor migration)
+{
+  if (migration.Messages.Any())
+  {
+    <span title="@string.Join("\n\n", migration.Messages.OrderByDescending(x => x.Date).Select(x => string.Format("{0} on {1} action: '{2}'", x.Date, x.Action, x.Message)))"><b>(i)</b></span>
+  }
+}
 
 @functions {
   IEnumerable<SelectListItem> PossibleActions(MigrationStatus status)
