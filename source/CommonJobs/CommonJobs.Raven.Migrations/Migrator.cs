@@ -33,14 +33,16 @@ namespace CommonJobs.Raven.Migrations
         {
             MigrationDescriptor auxValid = null;
             MigrationDescriptor auxInstalled = null;
-            if (validMigrations.TryGetValue(key, out auxValid))
-            {
-                auxValid.Status = installedMigrations.TryGetValue(key, out auxInstalled) ? auxInstalled.Status : MigrationStatus.NotInstalled;
-            }
-            else
+            if (!validMigrations.TryGetValue(key, out auxValid))
             {
                 auxInstalled = installedMigrations[key];
                 auxInstalled.Status = MigrationStatus.InstalledObsolete;
+                
+            }
+            else if (installedMigrations.TryGetValue(key, out auxInstalled))
+            {
+                auxValid.Status = auxInstalled.Status;
+                auxValid.Messages = auxInstalled.Messages;
             }
             return auxValid ?? auxInstalled;
         }
@@ -105,9 +107,14 @@ namespace CommonJobs.Raven.Migrations
                     session.SaveChanges();
                 }
             }
-            catch
+            catch (Exception e)
             {
-                //Por ahora no estoy haciendo nada con esto, si no se pudo aplicar la migración se va a ver en el resumen
+                using (var session = DocumentStore.OpenSession())
+                {
+                    descriptor.Messages.Add(new MigrationMessage(MigrationActionType.Up, e));
+                    session.Store(descriptor);
+                    session.SaveChanges();
+                }
             }
         }
 
@@ -136,9 +143,14 @@ namespace CommonJobs.Raven.Migrations
                     }
                 }
             }
-            catch
+            catch (Exception e)
             {
-                //Por ahora no estoy haciendo nada con esto, si no se pudo deshacer la migración se va a ver en el resumen
+                using (var session = DocumentStore.OpenSession())
+                {
+                    descriptor.Messages.Add(new MigrationMessage(MigrationActionType.Down, e));
+                    session.Store(descriptor);
+                    session.SaveChanges();
+                }
             }
         }
 

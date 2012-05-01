@@ -12,5 +12,11 @@ namespace CommonJobs.Raven.Migrations
         public string Description { get; set; }
         public string MigrationTypeFullName { get; set; }
         public MigrationStatus Status { get; set; }
+        public List<MigrationMessage> Messages { get; set; }
+
+        public MigrationDescriptor()
+        {
+            Messages = new List<MigrationMessage>();
+        }
     }
 }

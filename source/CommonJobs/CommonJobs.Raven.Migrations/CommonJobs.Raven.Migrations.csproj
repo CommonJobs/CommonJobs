@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="MigrationAction.cs" />
     <Compile Include="MigrationActionType.cs" />
+    <Compile Include="MigrationMessage.cs" />
     <Compile Include="MigrationStatus.cs" />
     <Compile Include="IMigration.cs" />
     <Compile Include="Migration.cs" />
