@@ -1,0 +1,60 @@
+<stylecopresultscache>
+  <version>11</version>
+  <sourcecode name="Invoice.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>04/30/2012 08:40:40</timestamp>
+      <milliseconds>518</milliseconds>
+    </settings>
+    <timestamp>04/30/2012 08:40:40</timestamp>
+    <milliseconds>502</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="Company.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>04/30/2012 08:40:40</timestamp>
+      <milliseconds>518</milliseconds>
+    </settings>
+    <timestamp>04/30/2012 08:40:40</timestamp>
+    <milliseconds>501</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="InvoicesAmountByDate.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>04/30/2012 08:40:40</timestamp>
+      <milliseconds>518</milliseconds>
+    </settings>
+    <timestamp>04/30/2012 08:40:40</timestamp>
+    <milliseconds>502</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="Program.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>04/30/2012 08:40:40</timestamp>
+      <milliseconds>518</milliseconds>
+    </settings>
+    <timestamp>04/30/2012 08:40:40</timestamp>
+    <milliseconds>503</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name=".NETFramework,Version=v4.0.AssemblyAttributes.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>04/30/2012 08:40:40</timestamp>
+      <milliseconds>518</milliseconds>
+    </settings>
+    <timestamp>01/14/2012 09:55:04</timestamp>
+    <milliseconds>899</milliseconds>
+    <violations />
+  </sourcecode>
+  <project key="-2055088232">
+    <configuration>DEBUG;TRACE</configuration>
+  </project>
+  <sourcecode name="CommonAssemblyInfo.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>04/30/2012 08:40:40</timestamp>
+      <milliseconds>518</milliseconds>
+    </settings>
+    <timestamp>04/30/2012 11:35:09</timestamp>
+    <milliseconds>543</milliseconds>
+    <violations />
+  </sourcecode>
+</stylecopresultscache>
