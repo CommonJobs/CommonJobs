@@ -48,7 +48,7 @@ namespace CommonJobs.Migrations
             ForAllEmployees(result =>
             {
                 var value = result["Vacations"];
-                if (value != null && value.Type == Newtonsoft.Json.Linq.JTokenType.String)
+                if (value != null && (value.Type == Newtonsoft.Json.Linq.JTokenType.String || value.Type == Newtonsoft.Json.Linq.JTokenType.Null))
                 {
                     var patchs = new List<PatchRequest>() {
                         new PatchRequest() 
