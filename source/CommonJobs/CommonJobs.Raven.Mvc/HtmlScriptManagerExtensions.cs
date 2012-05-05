@@ -26,7 +26,7 @@ namespace CommonJobs.Raven.Mvc
             
             foreach (var entry in entries)
             {
-                var renderedEntry = FunctionHelper.FirtsNotNull(
+                var renderedEntry = FunctionHelper.FirstNotNull(
                     () => RenderReference(entry),
                     () => RenderGlobalJavascript(entry),
                     () => RenderGlobalizationEntries(entry));
