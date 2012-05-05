@@ -539,7 +539,7 @@
                 var date = value;
                 if (date != null) {
                     date = new Date(value);
-                    date = new Date(Date.UTC(date.getYear(), date.getMonth(), date.getDate(), 0, 0, 0, 0));
+                    date = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0, 0));
                 }
                 this.$editor.datepicker("setDate", date);
             },
