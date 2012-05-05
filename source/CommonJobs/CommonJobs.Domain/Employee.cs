@@ -9,6 +9,11 @@ namespace CommonJobs.Domain
 {
     public class Employee: Person
     {
+        public Employee() 
+        {
+            Vacations = new VacationList();
+        }
+
         [Display(Name = "Fecha Inicio")]
         [DataType(DataType.Date)]
         public DateTime? HiringDate { get; set; }
