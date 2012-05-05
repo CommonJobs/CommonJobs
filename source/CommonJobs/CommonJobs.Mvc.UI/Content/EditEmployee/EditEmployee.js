@@ -36,11 +36,33 @@
             this.set("CurrentSalary", sortedSalaries.last().value());
             this.set("InitialSalary", sortedSalaries.first().value());
         },
+        updateVacations: function () {
+            var totalDays = _.chain(this.get("Vacations").models)
+                .map(function (v) {
+                    var millisecondsPerDay = 1000 * 60 * 60 * 24;
+
+                    var from = Date.parse(v.get('From'));
+                    var to = Date.parse(v.get('To'));
+
+                    var dayDifference = (to - from) / millisecondsPerDay;
+                    dayDifference = Math.floor(dayDifference);
+                    v.set('TotalDays', dayDifference);
+                    return dayDifference;
+                })
+                .reduce(function (intermediateState, days) {
+                    return intermediateState + days
+                }, 0)
+                .value();
+            this.set('VacationsTotalDays', totalDays);
+        },
         initialize: function () {
             this.initCollectionField("Notes");
+
             this.initCollectionField("SalaryChanges");
-            this.initCollectionField("Vacations");
             this.get("SalaryChanges").on("add remove reset change", this.updateSalaries, this);
+
+            this.initCollectionField("Vacations");
+            this.get("Vacations").on("add remove reset change", this.updateVacations, this);
         }
     });
 

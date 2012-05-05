@@ -536,7 +536,12 @@
                 return Globalize.format(new Date(value), "d");
             },
             refreshEdit: function (value) {
-                this.$editor.datepicker("setDate", value ? new Date(value) : null);
+                var date = value;
+                if (date != null) {
+                    date = new Date(value);
+                    date = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0, 0));
+                }
+                this.$editor.datepicker("setDate", date);
             },
             readUI: function () {
                 var date = this.$editor.datepicker("getDate");
