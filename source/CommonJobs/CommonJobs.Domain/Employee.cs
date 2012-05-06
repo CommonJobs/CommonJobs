@@ -9,7 +9,7 @@ namespace CommonJobs.Domain
 {
     public class Employee: Person
     {
-        public Employee() 
+        public Employee()
         {
             Vacations = new VacationList();
         }
