@@ -13,6 +13,8 @@ using CommonJobs.Infrastructure.Indexes;
 using CommonJobs.Infrastructure.AttachmentIndexing;
 using RavenData = Raven.Abstractions.Data;
 using Raven.Json.Linq;
+using System.Drawing;
+using System.IO;
 
 namespace CommonJobs.Mvc.UI.Controllers
 {
@@ -34,6 +36,36 @@ namespace CommonJobs.Mvc.UI.Controllers
                 return File(stream, attachment.ContentType, attachment.FileName);
             else
                 return File(stream, attachment.ContentType);                
+        }
+
+        public ActionResult CropImageAttachment(string id, int x, int y, int width, int height)
+        {
+            // get image
+            var attachment = RavenSession.Load<Attachment>(id);
+            if (attachment == null)
+                return HttpNotFound();
+
+            var stream = Query(new ReadAttachment(attachment));
+            if (stream == null)
+                return HttpNotFound();
+
+            // crop it
+            var image = new Bitmap(stream);
+
+            var gfx = Graphics.FromImage(image);
+            gfx.DrawImage(image, new Rectangle(0, 0, width, height), x, y, width, height, GraphicsUnit.Pixel);
+            
+            // save it
+            var relatedEntity = RavenSession.Load<object>(attachment.RelatedEntityId);
+            if (relatedEntity == null)
+                return new HttpStatusCodeResult(500, "Related entity not found.");
+
+            var ms = new MemoryStream();
+            image.Save(ms, image.RawFormat);
+
+            ExecuteCommand(new SavePhotoAttachments(relatedEntity, attachment.FileName, ms));
+
+            return new HttpStatusCodeResult(200, "Updated attachment.");
         }
 
         [HttpPost]
