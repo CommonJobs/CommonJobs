@@ -58,6 +58,7 @@
         return "$ " + value;
     };
 
+    //TODO, a model with templates? Is this correct?
     Nervoustissue.UILinking.CjApplicantPicture = Nervoustissue.UILinking.Attachment.extend({
         //TODO: generalize it
         allowedExtensions: ["jpg", "jpeg", "gif", "png"],
@@ -70,7 +71,12 @@
                            + '<span class="view-attached" style="display: none;">'
                            + '    <div class="view-editable-content"></div>'
                            + '    <button class="view-editable-clear">-</button>'
-                           + '</span>'),
+                           + '</span>'
+                           + '<div class="cropDialog">'
+                           + '    <div class="originalImage"></div>'
+                           + '    <div class="croppedImage"></div>'
+                           + '</div>'
+                           ),
         valueToContent: function (value) {
             if (!value) { return ""; }
             return $("<a />")
@@ -79,6 +85,27 @@
                 .addClass("photoLink")
                 .append($("<img />").attr("src", urlGenerator.action("Get", "Attachments", value.Thumbnail.Id, { returnName: false }))
                 .attr("width", "100").attr("height", "100"));
+        },
+        uploadFinished: function (attachment) {
+            var $cropDialog = this.$('.cropDialog');
+            var url = this.attachedUrl(attachment);
+            $cropDialog.find('.originalImage').append($('<img />').attr('src', url));
+            $cropDialog.dialog({
+                buttons: {
+                    "Ok": function() {
+                        $(this).dialog("close");
+                    },
+                    "No cortar": function() {
+                        $(this).dialog("close");
+                    }
+                },
+                draggable: true,
+                maxHeight: 500,
+                modal: true,
+                resizable: false,
+                title: "Cortar imagen",
+                width: '80%'
+            });
         }
     });
 
@@ -90,8 +117,8 @@
                                    + '    Adjunto: <span class="view-editable-content"></span>'
                                    + '<button class="view-editable-clear">-</button>'
                                    + '</span>'),
-                                   uploadUrl: function () { return urlGenerator.action("Post", "Attachments", /* TODO */this.model.collection.parentModel.get('Id')); },
-                                   attachedUrl: function (value) { return urlGenerator.action("Get", "Attachments", value.Id); }
+        uploadUrl: function () { return urlGenerator.action("Post", "Attachments", /* TODO */this.model.collection.parentModel.get('Id')); },
+        attachedUrl: function (value) { return urlGenerator.action("Get", "Attachments", value.Id); }
     });
 
     App.EditApplicantAppViewDataBinder = Nervoustissue.FormBinder.extend({

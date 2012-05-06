@@ -9,7 +9,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{5BB479
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{BD183054-6B40-46B4-A2E3-161DD4959D02}"
 	ProjectSection(SolutionItems) = preProject
-		tools\Delete Raven Server Data.cmd = tools\Delete Raven Server Data.cmd
 		tools\Start Raven Server (no open admin UI).cmd = tools\Start Raven Server (no open admin UI).cmd
 		tools\Start Raven Server.cmd = tools\Start Raven Server.cmd
 	EndProjectSection
