@@ -16,6 +16,7 @@ namespace CommonJobs.Infrastructure.AttachmentStorage
         public string FileName { get; set; }
         public Stream Stream { get; set; }
         public string UploadPath { get; set; }
+        public string ExistingId { get; set; }
 
         public SaveAttachment(object relatedEntity, string fileName, Stream stream)
         {
@@ -25,13 +26,20 @@ namespace CommonJobs.Infrastructure.AttachmentStorage
             Stream = stream;
         }
 
+        public SaveAttachment(object relatedEntity, string fileName, Stream stream, string id): this(relatedEntity, fileName, stream)
+        {
+            ExistingId = id;
+        }
+
         public override AttachmentReference ExecuteWithResult()
         {
             var relatedEntityId = RavenSession.Advanced.GetDocumentId(RelatedEntity);
             if (relatedEntityId == null)
                 throw new ApplicationException("Supplied related entity is not stored in database yet");
 
-            var attachment = new Attachment(relatedEntityId, FileName);
+            var attachment = string.IsNullOrEmpty(ExistingId)
+                ? new Attachment(relatedEntityId, FileName)
+                : new Attachment(relatedEntityId, FileName, ExistingId);
 
             //La grabación y acceso al archivo también se le podría tirar a la capa de dominio, pero depende de la infrastructura (el sistema de archivos)
             var path = attachment.GetServerPath(UploadPath);

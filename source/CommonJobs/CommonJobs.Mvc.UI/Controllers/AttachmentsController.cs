@@ -52,8 +52,11 @@ namespace CommonJobs.Mvc.UI.Controllers
             // crop it
             var image = new Bitmap(stream);
 
+            var destArea = new Rectangle(0, 0, 100, 100);
+            var srcArea = new Rectangle(x, y, width, height);
+
             var gfx = Graphics.FromImage(image);
-            gfx.DrawImage(image, new Rectangle(0, 0, width, height), x, y, width, height, GraphicsUnit.Pixel);
+            gfx.DrawImage(image, destArea, srcArea, GraphicsUnit.Pixel);
             
             // save it
             var relatedEntity = RavenSession.Load<object>(attachment.RelatedEntityId);
@@ -63,9 +66,8 @@ namespace CommonJobs.Mvc.UI.Controllers
             var ms = new MemoryStream();
             image.Save(ms, image.RawFormat);
 
-            ExecuteCommand(new SavePhotoAttachments(relatedEntity, attachment.FileName, ms));
-
-            return new HttpStatusCodeResult(200, "Updated attachment.");
+            var newImage = ExecuteCommand(new SavePhotoAttachments(relatedEntity, attachment.FileName, ms));
+            return Json(newImage, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
