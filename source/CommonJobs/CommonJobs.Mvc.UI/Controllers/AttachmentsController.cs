@@ -55,7 +55,8 @@ namespace CommonJobs.Mvc.UI.Controllers
             var destArea = new Rectangle(0, 0, 100, 100);
             var srcArea = new Rectangle(x, y, width, height);
 
-            var gfx = Graphics.FromImage(image);
+            var destImage = new Bitmap(destArea.Width, destArea.Height);
+            var gfx = Graphics.FromImage(destImage);
             gfx.DrawImage(image, destArea, srcArea, GraphicsUnit.Pixel);
             
             // save it
@@ -64,7 +65,7 @@ namespace CommonJobs.Mvc.UI.Controllers
                 return new HttpStatusCodeResult(500, "Related entity not found.");
 
             var ms = new MemoryStream();
-            image.Save(ms, image.RawFormat);
+            destImage.Save(ms, image.RawFormat);
 
             var newImage = ExecuteCommand(new SavePhotoAttachments(relatedEntity, attachment.FileName, ms));
             return Json(newImage, JsonRequestBehavior.AllowGet);
