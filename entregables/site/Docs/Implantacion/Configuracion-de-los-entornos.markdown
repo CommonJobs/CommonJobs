@@ -91,7 +91,7 @@ Para configurar la seguridad del sistema se crearán los grupos `LAN-SERVER-NAME
 * `RavenDB CommonJobs DEV`
    * Physical Path: `C:\CommonJobsDEV\RavenDB`
    * Escuchando puerto: `8080`
-   * Bloqueado acceso anonimo
+   * Bloqueado acceso anónimo
    * Acceso permitido para el grupo `LAN-SERVER-NAME\CommonJobsDEV`
 
 ![ ](Images/RavenConfig_DEV.jpg)
@@ -99,7 +99,7 @@ Para configurar la seguridad del sistema se crearán los grupos `LAN-SERVER-NAME
 * `RavenDB CommonJobs PROD`
    * Physical Path: `C:\Sites\CommonJobs\DNS-SERVER-NAME`
    * Escuchando puerto: `8090`
-   * Bloqueado acceso anonimo
+   * Bloqueado acceso anónimo
    * Acceso permitido para el grupo `LAN-SERVER-NAME\CommonJobsPROD`
 
 ![ ](Images/RavenConfig_PROD.jpg)
