@@ -15,7 +15,7 @@ namespace CommonJobs.Domain
         {
             get
             {
-                return (int)(To - From).TotalDays;
+                return To.Date.Subtract(From.Date).Days + 1;
             }
         }
     }
