@@ -1,9 +1,9 @@
-# Planificación de Sprint 4
+# Planificación de Sprint 5
 
 ## Fecha inicio:
- 28  de marzo.
+ 21 de abril.
 ## Fecha fin:
- 20 de abril.
+ 9 de mayo.
 ## Tareas
 
 *Los números son los Story Points asignados a cada Tarea/User Story.*
