@@ -178,7 +178,7 @@
             var $iframe = this._createIframe(id);
             var $form = this._createForm($iframe, params);
             $form.append(input);
-            
+
             //I think that it is not necessary
             //$form.append($("<input />").attr("name", "fileName").val($(input).val()));
 
@@ -749,6 +749,7 @@
         allowedExtensions: [],
         accept: null,
         uploadUrl: "/server/upload",
+        uploadFinished: function(attachment) {},
         bindUI: function () {
             var me = this;
             me.$view = this.$(".view-attached");
@@ -759,6 +760,7 @@
                 accept: me.accept,
                 onComplete: function (id, fileName, responseJSON) {
                     if (responseJSON && responseJSON.success) {
+                        me.uploadFinished(responseJSON.attachment);
                         me.linkedData.write(responseJSON.attachment);
                     }
                 }

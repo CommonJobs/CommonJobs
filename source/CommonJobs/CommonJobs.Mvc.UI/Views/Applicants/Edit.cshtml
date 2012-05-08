@@ -1,10 +1,13 @@
 ﻿@{
     ViewBag.Title = "Edit";
     ScriptManager.RegisterCss(Url.Content("~/Scripts/mdd_styles.css"));
+    ScriptManager.RegisterCss(Url.Content("~/Content/EditApplicant/EditApplicant.less"));
+    ScriptManager.RegisterCss(Url.Content("~/Content/jquery.Jcrop.min.css"));
+    
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/jquery.jcrop.min.js"));
     ScriptManager.RegisterJs(Url.Content("~/Scripts/MarkdownDeepLib.min.js"));
     ScriptManager.RegisterJs(Url.Content("~/Scripts/nervoustissue.js"));
     ScriptManager.RegisterJs(Url.Content("~/Scripts/nervoustissue-uploader.js"));
-    ScriptManager.RegisterCss(Url.Content("~/Content/EditApplicant/EditApplicant.less"));
     ScriptManager.RegisterJs(Url.Content("~/Content/EditApplicant/EditApplicant.js"));
 }
 @if (false)
@@ -44,8 +47,10 @@
     </div>
     </div>
         
+    <div class="editable-field photo" data-bind="Photo"></div>
     <h1 class="fullName"><span class="editable-field" data-bind="fullName"></span></h1>
     <div class="isHighligted" class="editable-field" data-bind="IsHighlighted"></div>
+    
     <div class="info-section">
         <h2>Datos Personales</h2>
         <div class="personal-data">

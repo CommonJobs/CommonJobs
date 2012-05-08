@@ -28,6 +28,11 @@ namespace CommonJobs.Domain
             ContentType = GetContentTypeFromExtension(Path.GetExtension(FileName));
         }
 
+        public Attachment(string relatedEntityId, string filename, string id): this(relatedEntityId, filename)
+        {
+            Id = id;
+        }
+
         public string GetServerPath(string baseFolder)
         {
             var sections = new[] { baseFolder }.Union(Id.Split(new[] { '/' })).ToArray();
