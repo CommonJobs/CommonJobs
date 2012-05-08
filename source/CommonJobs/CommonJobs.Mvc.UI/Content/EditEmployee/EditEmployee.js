@@ -96,6 +96,7 @@
         allowedExtensions: ["jpg", "jpeg", "gif", "png"],
         accept: "image/*",
         uploadUrl: function () { return urlGenerator.action("SavePhoto", "Employees", this.model.get('Id')); },
+        cropUrl: function (value, x, y, width, height) { return urlGenerator.action("CropImageAttachment", "Attachments", value.Original.Id, { x: x, y: y, width: width, height: height }); },
         attachedUrl: function (value) { return urlGenerator.action("Get", "Attachments", value.Original.Id, { returnName: false }) },
         template: _.template('<div class="upload-element">'
                            + '    <img class="view-editable-empty" width="100" height="100" alt="No Photo" src="' + urlGenerator.content("Images/NoPicture.png") + '" title="No Photo" style="display:none"/>'
@@ -103,7 +104,16 @@
                            + '<span class="view-attached" style="display: none;">'
                            + '    <div class="view-editable-content"></div>'
                            + '    <button class="view-editable-clear">-</button>'
-                           + '</span>'),
+                           + '</span>'
+                           + '<div class="cropDialog">'
+                           + '    <div class="originalImage"></div>'
+                           + '    <div class="croppedImage"></div>'
+                           + '    <input type="hidden" class="cropX" />'
+                           + '    <input type="hidden" class="cropY" />'
+                           + '    <input type="hidden" class="cropWidth" />'
+                           + '    <input type="hidden" class="cropHeight" />'
+                           + '</div>'
+                           ),
         valueToContent: function (value) {
             if (!value) { return ""; }
             return $("<a />")
@@ -112,6 +122,79 @@
                 .addClass("photoLink")
                 .append($("<img />").attr("src", urlGenerator.action("Get", "Attachments", value.Thumbnail.Id, { returnName: false }))
                 .attr("width", "100").attr("height", "100"));
+        },
+        cropImage: function (attachment, x, y, w, h, callback) {
+            var me = this;
+            var cropUrl = me.cropUrl(attachment, x, y, w, h);
+            $.ajax({
+                url: cropUrl,
+                success: function (data) { callback(data); }
+            });
+        },
+        uploadFinished: function (attachment) {
+            var me = this;
+            var $cropDialog = this.$('.cropDialog');
+            var url = this.attachedUrl(attachment);
+            $cropDialog.find('.originalImage').append($('<img />').attr('src', url)).css({
+                float: "left"
+            });
+            var $cropImage = $cropDialog.find('.croppedImage');
+            $cropImage.append($('<img />').attr('src', url)).css({
+                float: "left",
+                width: 100,
+                height: 100,
+                overflow: 'hidden',
+                'margin-left': 5
+            });
+            $cropDialog.dialog({
+                buttons: {
+                    "Ok": function () {
+                        var x = $cropDialog.find('input.cropX').val();
+                        var y = $cropDialog.find('input.cropY').val();
+                        var w = $cropDialog.find('input.cropWidth').val();
+                        var h = $cropDialog.find('input.cropHeight').val();
+                        me.cropImage(attachment, x, y, w, h, function (newImage) {
+                            $cropDialog.dialog("close");
+                            me.linkedData.write(newImage);
+                            me.refreshView();
+                        });
+                    },
+                    "No cortar": function () {
+                        $(this).dialog("close");
+                    }
+                },
+                draggable: true,
+                maxHeight: 500,
+                modal: true,
+                resizable: false,
+                title: "Cortar imagen",
+                width: '80%'
+            });
+
+            var $originalImage = $cropDialog.find('.originalImage img');
+            var $preview = $cropDialog.find('.croppedImage img');
+
+            $originalImage.Jcrop({
+                aspectRatio: 1,
+                onChange: function (coords) {
+                    if (parseInt(coords.w) > 0) {
+                        $cropDialog.find('input.cropX').val(coords.x);
+                        $cropDialog.find('input.cropY').val(coords.y);
+                        $cropDialog.find('input.cropWidth').val(coords.w);
+                        $cropDialog.find('input.cropHeight').val(coords.h);
+
+                        var rx = 100 / coords.w;
+                        var ry = 100 / coords.h;
+
+                        $preview.css({
+                            width: Math.round(rx * parseInt($originalImage.css("width"))),
+                            height: Math.round(ry * parseInt($originalImage.css("height"))),
+                            marginLeft: '-' + Math.round(rx * coords.x) + 'px',
+                            marginTop: '-' + Math.round(ry * coords.y) + 'px'
+                        });
+                    }
+                }
+            });
         }
     });
 
