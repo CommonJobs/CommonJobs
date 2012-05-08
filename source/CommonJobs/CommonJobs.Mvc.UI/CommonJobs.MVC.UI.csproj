@@ -113,6 +113,7 @@
     <Content Include="Content\EmployeesListing\EmployeesListing.js" />
     <Content Include="Content\Images\ajax-loader.gif" />
     <Content Include="Content\ListingCommon\QuickSearch.js" />
+    <Content Include="Scripts\jquery.Jcrop.min.js" />
     <Content Include="Scripts\url-generator.js" />
     <Content Include="Scripts\nervoustissue-uploader.js" />
     <Content Include="Views\Applicants\Edit.cshtml" />
