@@ -96,7 +96,7 @@
         allowedExtensions: ["jpg", "jpeg", "gif", "png"],
         accept: "image/*",
         uploadUrl: function () { return urlGenerator.action("SavePhoto", "Employees", this.model.get('Id')); },
-        cropUrl: function (value, x, y, width, height) { return urlGenerator.action("CropImageAttachment", "Attachments", value.Original.Id, { x: x, y: y, width: width, height: height }); },
+        cropUrl: function (value, x, y, width, height) { return urlGenerator.action("CropImageAttachment", "Attachments", value.Original.Id, { x: parseInt(x), y: parseInt(y), width: parseInt(width), height: parseInt(height) }); },
         attachedUrl: function (value) { return urlGenerator.action("Get", "Attachments", value.Original.Id, { returnName: false }) },
         template: _.template('<div class="upload-element">'
                            + '    <img class="view-editable-empty" width="100" height="100" alt="No Photo" src="' + urlGenerator.content("Images/NoPicture.png") + '" title="No Photo" style="display:none"/>'
