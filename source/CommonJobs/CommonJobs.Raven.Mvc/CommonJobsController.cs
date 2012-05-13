@@ -40,7 +40,7 @@ namespace CommonJobs.Raven.Mvc
                 Converters = new[] 
                 { 
                     //http://msdn.microsoft.com/en-us/library/8kb3ddd4.aspx http://msdn.microsoft.com/en-us/library/az4se3k1.aspx
-                    new Newtonsoft.Json.Converters.IsoDateTimeConverter() { DateTimeFormat = "s" } 
+                    new Newtonsoft.Json.Converters.IsoDateTimeConverter() { DateTimeFormat = "yyyy-MM-dd" } 
                 }
             };
             return settings;
