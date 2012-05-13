@@ -3,7 +3,17 @@
 
 *Los números son los Story Points asignados a cada Tarea/User Story.*
 
-* UI específica para buscar archivos adjuntos de cualquier entidad del sistema.
+* (1) Agregar banner de entorno (PROD / DEV).
+* (5) Error cropping fotos con IE (bug).
+* (2) Agregar campo de filtrado por estado de baja.
+* (10) Permitir resaltados por cada usuario.
+* (10) Ordenamiento de Applicants.
+* (8) Modificar el image cropping para que solo recorte el thumbnail.
+* (7) Hacer que los campos "acepten" el cambio una vez que se hace click fuera de ellos.
+* (15) Convertir estilo in-line a visión tabular como en el mockup (Vacaciones).
+* (5) Revisar porque no se renderizan las referencias a los css y js en /Home/Index (bug).
+*  (3) Error deshaciendo una migración (bug).
+* (15) UI específica para buscar archivos adjuntos de cualquier entidad del sistema.
 * (20) Empleados: Definir links para vistas (quizá temporales) para poder compartir cierta información.
 * (50) Como usuario del sistema, me gustaría poder leer información de los perfiles de mis contactos en LinkedIn para poder manejar mi base de contactos como postulantes de forma eficiente.
 * Refrescar listados al utilizar el back del browser
@@ -52,7 +62,7 @@
 
 # Línea de fin de proyecto
 
-*Consideramos lo que se encuentra por encima de esta línea, la funcionalidad que marca la línea de fin de proyecto.*
+*Consideramos que las tareas que se indican a continuación no forman parte del criterio de fin de proyecto*
 
 * (50) Como usuario del sistema, desearía que una oferta pueda publicarse en LinkedIn, para obtener mayor alcance en su distribución.
 * (50) Como usuario del sistema, desearía que una oferta pueda publicarse en Facebook, para obtener mayor alcance en su distribución.
