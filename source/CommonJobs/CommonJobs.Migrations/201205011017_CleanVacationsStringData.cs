@@ -13,34 +13,12 @@ namespace CommonJobs.Migrations
     [Migration("201205011017", "Clean vacations string data")]
     public class CleanVacationsStringData : Migration
     {
-        const int PageSize = 64;
         const string UpBackupKey = "MigrationBackup_Up_201205011017_CleanVacationsStringData";
         const string DownBackupKey = "MigrationBackup_Down_201205011017_CleanVacationsStringData";
 
         private void ForAllEmployees(Action<RavenJObject> action)
         {
-            int start = 0;
-            while (true)
-            {
-                var results = DocumentStore.DatabaseCommands.Query(
-                    "Raven/DocumentsByEntityName",
-                    new IndexQuery()
-                    {
-                        Query = "Tag:Employees",
-                        PageSize = PageSize,
-                        Start = start
-                    },
-                    null);
-
-
-                if (results.Results.Count == 0)
-                    break;
-
-                foreach (var result in results.Results)
-                    action(result);
-
-                start += PageSize;
-            }
+            DoInResults(action, index: "Dynamic/Employees");
         }
 
         public override void Up()
