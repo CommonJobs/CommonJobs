@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Raven.Abstractions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
+      <HintPath>..\Libs\RavenDB\Client\Raven.Abstractions.dll</HintPath>
+    </Reference>
     <Reference Include="Raven.Client.Debug, Version=1.0.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
       <HintPath>..\Libs\RavenDB\Client\Raven.Client.Debug.dll</HintPath>
     </Reference>
