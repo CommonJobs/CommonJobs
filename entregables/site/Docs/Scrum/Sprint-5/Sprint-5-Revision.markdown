@@ -19,17 +19,16 @@
  *Las tareas pendientes surgieron o se desprendieron de otra tarea de este Sprint. Estas tareas se agregan al Product Backlog o a la planificación del Sprint siguiente.*
 
 * El campo certificaciones debería ser una lista en lugar de un solo string (bug).
-* Revisar porque no se renderizan las referencias a los css y js en /Home/Index(bug).
+* Revisar porque no se renderizan las referencias a los css y js en /Home/Index (bug).
 * Crear un script para backup de CommonJobs en producción.
 * Revisar el código externo incluido para restringir el acceso a las migraciones.
-* Convertir estilo in-line a visión tabular como en el mockup (Vacaciones).
+* Convertir estilo in-line a versión tabular como en el mockup (Vacaciones).
 * Calcular totales de vacaciones en JavaScript.
 * Implementar un menú, o algo para navegar el sitio.
 * Revisar orden de los resultados.
 * Consistencia de funcionabilidad.
 * Obtener e instalar un nuevo símbolo para el resaltado.
 * Permitir resaltados por cada usuario.
-* Hacer que los campos de fecha "acepten" el cambio una vez que se haga click sobre la fecha en el datepicker.
 * Hacer que los campos "acepten" el cambio una vez que se hace click fuera de ellos
 * Migración CleanVacationsStringData falla por falta de índice Raven DocumentsByEntityName (bug).
 * Agregar un estado "Dado de baja" para los employees.

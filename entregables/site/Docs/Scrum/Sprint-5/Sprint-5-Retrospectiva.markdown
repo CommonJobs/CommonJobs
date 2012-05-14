@@ -1,8 +1,7 @@
 # Retrospectiva
 
 ## Andrés:
-* Desorganización en nuestras reuniones con Gabriel.
-
+* Tenemos problemas de organización en nuestras reuniones con Gabriel, cree que tenemos que tener en cuenta sus necesidades y opinión, pero que no puede cumplir el rol de *Product Owner*. En ese sentido opina que el uso real que se le dará e involucrar a otras áreas de la empresa será bueno para el avance del proyecto.
 
 ## Matías:
 
@@ -11,4 +10,4 @@
 ## JD:
 
 * Falta de motivación en el proyecto.
-* Planteo y se discutió la complejidad del UI.
+* Complejidad innecesaria del UI.
