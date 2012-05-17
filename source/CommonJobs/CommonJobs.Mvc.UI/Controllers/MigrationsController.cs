@@ -31,6 +31,7 @@ namespace CommonJobs.Mvc.UI.Controllers
 
         [AcceptVerbs(HttpVerbs.Post)]
         [ActionName("Index")]
+        [ValidateAntiForgeryToken(Salt = "To avoid IP spoofing")] //http://stackoverflow.com/questions/8170830/can-request-userhostaddress-tostring-be-spoofed-asp-net-4-0-iis-7-5
         public ActionResult Post(IEnumerable<MigrationAction> actions)
         {
             var migrator = new Migrator(RavenSessionManager.DocumentStore, typeof(MigrationClass).Assembly);
