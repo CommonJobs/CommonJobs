@@ -38,7 +38,12 @@
     });
 
     var formatLongDateWithYears = function (value) {
-        var date = new Date(value);
+        // date format: yyyy-mm-dd
+        var year = value.substring(0, 4);
+        var month = value.substring(5, 7);
+        var day = value.substring(8, 10);
+
+        var date = new Date(year, month - 1, day, 0, 0, 0, 0);
         var age = (new Date() - date) / 365.25 / 24 / 60 / 60 / 1000;
         var ageInt = parseInt(age);
         var casi = "";

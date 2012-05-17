@@ -533,18 +533,34 @@
         m.Date = m.BaseModel.extend({
             template: _.template('<span class="view-editable-empty">Sin datos</span><span class="view-editable" style="display: none;"></span><input class="editor-editable" type="text" value="" style="display: none;"/>'),
             valueToContent: function (value) {
-                return Globalize.format(new Date(value), "d");
+                // date in format: yyyy-mm-dd
+                // indexes:        0123 56 89
+                var year = value.substring(0, 4);
+                var month = value.substring(5, 7) - 1; //months go from 0 to 11, wtf javascript
+                var day = value.substring(8, 10);
+                var dateValue = new Date(year, month, day, 0, 0, 0, 0);
+                return Globalize.format(dateValue, "d");
             },
             refreshEdit: function (value) {
-                this.$editor.datepicker("setDate", new Date(value));
+                if (value != null && typeof (value) != 'undefined') {
+                    value = value.substring(0, 10);
+                }
+
+                this.$editor.datepicker("setDate", value);
             },
             readUI: function () {
                 var date = this.$editor.datepicker("getDate");
-                return date ? date.toJSON() : null;
+                var noTimezoneDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0, 0);
+
+                var month = noTimezoneDate.getMonth() + 1;
+                if (month < 10) month = "0" + month;
+
+                return (date.getFullYear() + "-" + month + "-" + date.getDate());
             },
             bindUI: function () {
                 var me = this;
                 me.$editor.datepicker({
+                    dateFormat: "yy-mm-dd",
                     onClose: function () {
                         me.update();
                         me.focusOnEditor();
