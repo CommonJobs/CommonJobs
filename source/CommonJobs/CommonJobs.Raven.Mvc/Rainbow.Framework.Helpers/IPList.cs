@@ -42,13 +42,15 @@ namespace Rainbow.Framework.Helpers
         {
             uint res = 0;
             string[] elements = IPNumber.Split(new Char[] { '.' });
-            if (elements.Length == 4)
-            {
-                res = (uint)Convert.ToInt32(elements[0]) << 24;
-                res += (uint)Convert.ToInt32(elements[1]) << 16;
-                res += (uint)Convert.ToInt32(elements[2]) << 8;
-                res += (uint)Convert.ToInt32(elements[3]);
-            }
+
+            if (elements.Length != 4)
+                throw new ArgumentException(string.Format("'{0}' is not a valid IP v.4 address", IPNumber), "IPNumber");
+
+            res = (uint)Convert.ToInt32(elements[0]) << 24;
+            res += (uint)Convert.ToInt32(elements[1]) << 16;
+            res += (uint)Convert.ToInt32(elements[2]) << 8;
+            res += (uint)Convert.ToInt32(elements[3]);
+            
             return res;
         }
 

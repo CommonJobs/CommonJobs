@@ -19,6 +19,7 @@
 <h1>Migrations</h1>
 @using (Html.BeginForm())
 {
+  @Html.AntiForgeryToken("To avoid IP spoofing")
   <table>
     <thead>
       <tr>
