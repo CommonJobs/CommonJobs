@@ -95,25 +95,16 @@ namespace Miscellaneous.Attributes.Controller
 
             string userIpAddress = httpContext.Request.UserHostAddress;
 
-            try
-            {
-                // Check that the IP is allowed to access
-                bool ipAllowed = CheckAllowedIPs(userIpAddress);
+            // Check that the IP is allowed to access
+            bool ipAllowed = CheckAllowedIPs(userIpAddress);
 
-                // Check that the IP is not denied to access
-                bool ipDenied = CheckDeniedIPs(userIpAddress);    
+            // Check that the IP is not denied to access
+            bool ipDenied = CheckDeniedIPs(userIpAddress);    
 
-                // Only allowed if allowed and not denied
-                bool finallyAllowed = ipAllowed && !ipDenied;
+            // Only allowed if allowed and not denied
+            bool finallyAllowed = ipAllowed && !ipDenied;
 
-                return finallyAllowed;
-            }
-            catch (Exception e)
-            {
-                // Log the exception, probably something wrong with the configuration
-            }
-
-            return true; // if there was an exception, then we return true
+            return finallyAllowed;
         }
 
         /// <summary>
