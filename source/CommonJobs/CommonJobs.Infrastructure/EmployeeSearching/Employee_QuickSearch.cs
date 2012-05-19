@@ -142,8 +142,8 @@ namespace CommonJobs.Infrastructure.EmployeeSearching
                     OrphanAttachments = g.SelectMany(x => x.OrphanAttachments).Where(x => !g.SelectMany(y => y.AttachmentIds).Contains(x.Id)).ToArray()
                 };
             
-            Indexes.Add(x => x.FirstName, FieldIndexing.Analyzed);
-            Indexes.Add(x => x.LastName, FieldIndexing.Analyzed);
+            Indexes.Add(x => x.FullName1, FieldIndexing.Analyzed);
+            Indexes.Add(x => x.FullName2, FieldIndexing.Analyzed);
             Indexes.Add(x => x.Skills, FieldIndexing.Analyzed);
             Indexes.Add(x => x.AttachmentNames, FieldIndexing.Analyzed);
             Indexes.Add(x => x.AttachmentContent, FieldIndexing.Analyzed);
