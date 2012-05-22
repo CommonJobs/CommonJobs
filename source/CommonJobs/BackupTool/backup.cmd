@@ -8,13 +8,16 @@ IF %3%4%5%6 EQU XXXX GOTO :NOTHING
 
 REM Parsear configuracion desde linea de comandos
 SET destinationPath=%1
+SET auxPath=%~dp0
 SET prefix=%2
 SET ravenDbUrl=%3
 SET uploadsPath=%4
 SET sitePath=%5
 SET ravenDBServerPath=%6
 
+
 ECHO destinationPath = %destinationPath% 
+ECHO auxPath = %auxPath%
 ECHO prefix = %prefix%
 ECHO ravenDbUrl = %ravenDbUrl%
 ECHO uploadsPath = %uploadsPath%
@@ -33,8 +36,8 @@ SET /a counter=0
 :GET_FILE_NAME
 SET /a counter=%counter%+1
 SET bkpname=%prefix%_%date%_%counter%
-SET bkpfolder=%destinationPath%\%bkpname%
-SET bkpfile=%bkpfolder%.zip
+SET bkpfolder=%auxPath%\%bkpname%
+SET bkpfile=%destinationPath%\%bkpname%.zip
 IF EXIST %bkpfolder% GOTO GET_FILE_NAME
 IF EXIST %bkpfile% GOTO GET_FILE_NAME
 MKDIR %bkpfolder%
