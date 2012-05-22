@@ -9,8 +9,7 @@ using Raven.Json.Linq;
 
 namespace CommonJobs.Migrations
 {
-    //TODO: Quitar este comentario y actualizar el timestamp cuando esté listo el cambio en el sistema
-    //[Migration("//TODO:timestamp here", "Employee.Certification String => List<String>")]
+    [Migration("201205220859", "Employee.Certification String => List<String>")]
     public class EmployeeCertificationsToList : Migration
     {
         const int PageSize = 64;
@@ -40,7 +39,7 @@ namespace CommonJobs.Migrations
                     if (value != null && value.Type == Newtonsoft.Json.Linq.JTokenType.String)
                     {
                         var str = value.ToString();
-                        var list = str.Split(new[] { ';' }).Select(x => x.Trim()).ToList();
+                        var list = str.Split(new[] { ';' }).Select(x => global::Raven.Json.Linq.RavenJObject.FromObject(new { Description = x.Trim() })).ToList();
 
                         DocumentStore.DatabaseCommands.Patch(
                             result["@metadata"].Value<string>("@id").ToString(),
@@ -89,7 +88,8 @@ namespace CommonJobs.Migrations
                     var value = result["Certifications"];
                     if (value != null && value.Type == Newtonsoft.Json.Linq.JTokenType.Array)
                     {
-                        var values = value.Values<string>();
+
+                        var values = value.Values().Select(x => x.Value<string>("Description"));
                         var str = string.Join("; ", values);
 
                         DocumentStore.DatabaseCommands.Patch(

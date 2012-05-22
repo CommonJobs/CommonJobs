@@ -58,6 +58,10 @@
         initialize: function () {
             this.initCollectionField("Notes");
 
+            this.set("Certifications", new Backbone.Collection(this.get("Certifications")));
+            this.get("Certifications").on("add remove reset change", function () { this.trigger("change"); }, this);
+            this.get("Certifications").parentModel = this;
+
             this.initCollectionField("SalaryChanges");
             this.get("SalaryChanges").on("add remove reset change", this.updateSalaries, this);
 
@@ -278,7 +282,12 @@
                         ]
                     }
                 },
-                VacationsTotalDays: { controlLink: "ReadOnlyText", valueToContent: function (value) { return "(" + formatTotalDays(value) + " en total)"; } }
+                VacationsTotalDays: { controlLink: "ReadOnlyText", valueToContent: function (value) { return "(" + formatTotalDays(value) + " en total)"; } },
+                Certifications:
+                {
+                    controlLink: "Collection",
+                    item: { controlLink: "Text", name: "description", field: "Description" }
+                }
             }
     });
 
