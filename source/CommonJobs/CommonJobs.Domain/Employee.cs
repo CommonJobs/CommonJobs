@@ -71,7 +71,7 @@ namespace CommonJobs.Domain
 
         [Display(Name = "Certificaciones")]
         //Only in detailed view
-        public string Certifications { get; set; }
+        public List<Certification> Certifications { get; set; }
 
         [Display(Name = "Posición Inicial")]
         //Only in detailed view

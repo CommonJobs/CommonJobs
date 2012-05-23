@@ -54,7 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="201205011017_CleanVacationsStringData.cs" />
-    <Compile Include="TimestampHere_EmployeeCertificationsToList.cs" />
+    <Compile Include="201205220859_EmployeeCertificationsToList.cs" />
     <Compile Include="201204270835_InitialData.cs" />
     <Compile Include="MigrationClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
