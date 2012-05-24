@@ -112,6 +112,7 @@
     <Content Include="Content\EditEmployee\uploadAvatar.png" />
     <Content Include="Content\EmployeesListing\EmployeesListing.js" />
     <Content Include="Content\Images\ajax-loader.gif" />
+    <Content Include="Content\Images\favicon.ico" />
     <Content Include="Content\ListingCommon\QuickSearch.js" />
     <Content Include="Scripts\jquery.Jcrop.min.js" />
     <Content Include="Scripts\url-generator.js" />
