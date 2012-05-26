@@ -274,8 +274,11 @@
                 this.addEl = function (item) {
                     var $li = $(this.subtemplate());
                     this.$ul.append($li);
+                    var $subEl = $li.find('[data-bind=item]');
+                    if (!$subEl.length)
+                        $subEl = $li;
                     this.viewDataBinder.dataBind(
-                        $li.find('[data-bind=item]'),
+                        $subEl,
                         item,
                         this.item
                     );

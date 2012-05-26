@@ -121,7 +121,7 @@
 
     Nervoustissue.UILinking.CjVacation = Nervoustissue.UILinking.Compound.extend({
         template: _.template(
-            'Periodo <span data-bind="Period"></span>: <span data-bind="From"></span> a <span data-bind="To"></span> (<span class="vacation-days"></span>)'
+        '<td data-bind="Period" class="vacations-period-column"></td><td data-bind="From" class="vacations-from-column"></td><td data-bind="To" class="vacations-to-column"></td><td class="vacation-days"></td>'
         ),
         items:
         [
@@ -134,21 +134,21 @@
         }
     });
 
-    /*
-    <div class="vacation-items-total" data-bind="VacationsTotalDays"></div>
-    Vacations:
-    {
-    controlLink: "Collection",
-    item: { controlLink: "CjVacation" }
-    },
-    VacationsTotalDays: { controlLink: "ReadOnlyText", valueToContent: function (value) { return "(" + formatTotalDays(value) + " en total)"; } },
-    */
     Nervoustissue.UILinking.CjVacationList = Nervoustissue.UILinking.Collection.extend({
         item: { controlLink: "CjVacation" },
         template: _.template(
-            '<ul class="list-editable"></ul><button class="add-button">+</button>'
-            + '<div class="vacation-items-total"></div>'),
-        subtemplate: _.template('<li><button class="remove-button">-</button><span class="editable-field" data-bind="item"></span></li>'),
+            '<table>' +
+            '<thead><tr><th></th><th><table><tr><th class="vacations-period-column">Periodo</th><th class="vacations-from-column">Desde</th><th class="vacations-to-column">Hasta</th><th class="vacation-days">Total</th></tr></table></th></tr></thead>' +
+            '<tbody class="list-editable">' +
+            '</tbody>' +
+            '<tfoot><tr><td><button class="add-button">+</button></td><td><table><tr><td class="vacations-period-column"></td><td class="vacations-from-column"></td><td class="vacations-to-column"></td><td class="vacation-items-total vacation-days"></td></tr></table></td></tr></tfoot>' +
+            '</table>'
+            ),
+        subtemplate: _.template(
+            '<tr>' +
+            '<td><button class="remove-button">-</button></td>' +
+            '<td><table><tr class="editable-field" data-bind="item"><td></td></tr></table></td>' +
+            '</tr>'),
         refresh: function () {
             var total = formatTotalDays(this.linkedData.read().getTotalDays());
             this.$(".vacation-items-total").text(total);
