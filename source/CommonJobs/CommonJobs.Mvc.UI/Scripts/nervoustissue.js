@@ -555,7 +555,10 @@
                 var month = noTimezoneDate.getMonth() + 1;
                 if (month < 10) month = "0" + month;
 
-                return (date.getFullYear() + "-" + month + "-" + date.getDate());
+                var day = date.getDate().toString();
+                if (day.length == 1) day = "0" + day;
+
+                return (date.getFullYear() + "-" + month + "-" + day);
             },
             bindUI: function () {
                 var me = this;

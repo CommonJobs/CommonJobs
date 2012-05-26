@@ -51,7 +51,7 @@
                 })
                 .reduce(function (intermediateState, days) {
                     return intermediateState + days
-                }, 0)
+                }, 1)
                 .value();
             this.set('VacationsTotalDays', totalDays);
         },
