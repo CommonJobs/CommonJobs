@@ -115,6 +115,22 @@
             initialize: function () { }
         });
 
+        // Nervoustissue.DataLinking.Compound
+        // -------------------------------
+
+        // Se encarga de registrar el evento change en un modelo complejo de backbone.
+        
+        m.Compound = m.Base.extend({
+            initialize: function () {
+            },
+            read: function () {
+                return this.model;
+            },
+            onChange: function (action, context) {
+                this.viewDataBinder.registerModelEvent(this.model, "change", action, context);
+            }
+        });
+        
         // Nervoustissue.DataLinking.Model
         // -------------------------------
 
@@ -184,6 +200,9 @@
                 this.collection = this.validModel ? this.model.get(this.field) : null;
                 this.validModel = !!this.collection;
             },
+            read: function () {
+                return this.collection;
+            },
             add: function () {
                 this.collection.add();
             },
@@ -193,6 +212,9 @@
             },
             onAdd: function (action, context) {
                 this.viewDataBinder.registerModelEvent(this.collection, "add", action, context);
+            },
+            onChange: function (action, context) {
+                this.viewDataBinder.registerModelEvent(this.model, "change", action, context);
             },
             each: function (action, context) {
                 for (var i in this.collection.models) {
@@ -224,6 +246,9 @@
         }
 
         _.extend(m.Base.prototype, {
+            $: function (selector) {
+                return this.$el.find(selector);
+            },
             render: function () {
                 return this.template(this.getTemplateModel());
             },
@@ -261,7 +286,10 @@
                 this.$el.on("click", ".add-button", null, function () { me.linkedData.add(); });
                 this.linkedData.onAdd(this.addEl, this);
                 this.linkedData.each(this.addEl, this);
+                me.linkedData.onChange(this.refresh, this);
+                me.refresh();
             },
+            refresh: function() {},
             applyMode: function (mode) {
                 var formMode = this.viewDataBinder.editionMode();
                 var buttons = this.$el.find(".add-button,.remove-button");
@@ -290,9 +318,6 @@
                 me.bindUI();
                 me.applyMode("view");
                 me.refresh();
-            },
-            $: function (selector) {
-                return this.$el.find(selector);
             },
             applyMode: function (mode) {
                 if (!mode) {
@@ -594,6 +619,7 @@
         });
 
         m.Compound = m.BaseModel.extend({
+            dataLink: Nervoustissue.DataLinking.Compound,
             refresh: function () { },
             bindUI: function () {
                 var me = this;
