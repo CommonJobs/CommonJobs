@@ -26,8 +26,9 @@
             return {
             }
         },
-        initCollectionField: function (fieldName) {
-            this.set(fieldName, new App.Notes(this.get(fieldName)));
+        initCollectionField: function (fieldName, fieldType) {
+            fieldType = fieldType || Backbone.Collection;
+            this.set(fieldName, new fieldType(this.get(fieldName)));
             this.get(fieldName).on("add remove reset change", function () { this.trigger("change"); }, this);
             this.get(fieldName).parentModel = this;
         },
@@ -56,16 +57,15 @@
             this.set('VacationsTotalDays', totalDays);
         },
         initialize: function () {
-            this.initCollectionField("Notes");
+            this.initCollectionField("Notes", App.Notes);
+            this.initCollectionField("Certifications");
 
-            this.set("Certifications", new Backbone.Collection(this.get("Certifications")));
-            this.get("Certifications").on("add remove reset change", function () { this.trigger("change"); }, this);
-            this.get("Certifications").parentModel = this;
-
-            this.initCollectionField("SalaryChanges");
+            //TODO: move related logic to App.Salary and App.Salaries models
+            this.initCollectionField("SalaryChanges", App.Notes);
             this.get("SalaryChanges").on("add remove reset change", this.updateSalaries, this);
 
-            this.initCollectionField("Vacations");
+            //TODO: move related logic to App.Vacation and App.Vacations models
+            this.initCollectionField("Vacations", App.Notes);
             this.get("Vacations").on("add remove reset change", this.updateVacations, this);
         }
     });
