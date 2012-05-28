@@ -50,7 +50,7 @@
         getTotalDays: function () {
             return this.chain()
                 .map(function (x) { return x.getDays(); })
-                .reduce(function (intermediateState, days) { return intermediateState + days; })
+                .reduce(function (intermediateState, days) { return intermediateState + days; }, 0)
                 .value();
         }
     });
