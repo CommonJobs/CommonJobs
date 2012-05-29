@@ -26,13 +26,15 @@
             return {
             }
         },
-        initCollectionField: function (fieldName) {
-            this.set(fieldName, new App.Notes(this.get(fieldName)));
+        initCollectionField: function (fieldName, fieldType) {
+            fieldType = fieldType || Backbone.Collection;
+            this.set(fieldName, new fieldType(this.get(fieldName)));
             this.get(fieldName).on("add remove reset change", function () { this.trigger("change"); }, this);
             this.get(fieldName).parentModel = this;
         },
         initialize: function () {
-            this.initCollectionField("Notes");
+            this.initCollectionField("Notes", App.Notes);
+            //TODO: Consider to create model App.CompanyHistory and App.CompanyHistoryList
             this.initCollectionField("CompanyHistory");
         }
     });

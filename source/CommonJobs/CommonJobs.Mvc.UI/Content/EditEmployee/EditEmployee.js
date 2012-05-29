@@ -21,13 +21,48 @@
         model: App.Note
     });
 
+    var millisecondsPerDay = 1000 * 60 * 60 * 24;
+    var dateToCleanMilliseconds = function (str) {
+        var year = str.substring(0, 4);
+        var month = str.substring(5, 7);
+        var day = str.substring(8, 10);
+        var str = year + "-" + month + "-" + day;
+        return Date.parse(str);
+    };
+
+    App.Vacation = Backbone.Model.extend({
+        defaults: {
+            Period: "",
+            From: "",
+            To: ""
+        },
+        getDays: function () {
+            var from = dateToCleanMilliseconds(this.get('From'));
+            var to = dateToCleanMilliseconds(this.get('To'));
+            var dayDifference = (to - from) / millisecondsPerDay;
+            dayDifference = 1 + Math.floor(dayDifference);
+            return dayDifference > 0 ? dayDifference : 0;
+        }
+    });
+
+    App.Vacations = Backbone.Collection.extend({
+        model: App.Vacation,
+        getTotalDays: function () {
+            return this.chain()
+                .map(function (x) { return x.getDays(); })
+                .reduce(function (intermediateState, days) { return intermediateState + days; }, 0)
+                .value();
+        }
+    });
+
     App.Employee = Backbone.Model.extend({
         defaults: function () {
             return {
             }
         },
-        initCollectionField: function (fieldName) {
-            this.set(fieldName, new App.Notes(this.get(fieldName)));
+        initCollectionField: function (fieldName, fieldType) {
+            fieldType = fieldType || Backbone.Collection;
+            this.set(fieldName, new fieldType(this.get(fieldName)));
             this.get(fieldName).on("add remove reset change", function () { this.trigger("change"); }, this);
             this.get(fieldName).parentModel = this;
         },
@@ -36,37 +71,16 @@
             this.set("CurrentSalary", sortedSalaries.last().value());
             this.set("InitialSalary", sortedSalaries.first().value());
         },
-        updateVacations: function () {
-            var totalDays = _.chain(this.get("Vacations").models)
-                .map(function (v) {
-                    var millisecondsPerDay = 1000 * 60 * 60 * 24;
-
-                    var from = Date.parse(v.get('From'));
-                    var to = Date.parse(v.get('To'));
-
-                    var dayDifference = (to - from) / millisecondsPerDay;
-                    dayDifference = Math.floor(dayDifference);
-                    v.set('TotalDays', dayDifference);
-                    return dayDifference;
-                })
-                .reduce(function (intermediateState, days) {
-                    return intermediateState + days
-                }, 1)
-                .value();
-            this.set('VacationsTotalDays', totalDays);
-        },
         initialize: function () {
-            this.initCollectionField("Notes");
+            this.initCollectionField("Notes", App.Notes);
+            this.initCollectionField("Certifications");
 
-            this.set("Certifications", new Backbone.Collection(this.get("Certifications")));
-            this.get("Certifications").on("add remove reset change", function () { this.trigger("change"); }, this);
-            this.get("Certifications").parentModel = this;
-
-            this.initCollectionField("SalaryChanges");
+            //TODO: move related logic to App.Salary and App.Salaries models
+            this.initCollectionField("SalaryChanges", App.Notes);
             this.get("SalaryChanges").on("add remove reset change", this.updateSalaries, this);
 
-            this.initCollectionField("Vacations");
-            this.get("Vacations").on("add remove reset change", this.updateVacations, this);
+            //TODO: move related logic to App.Vacation and App.Vacations models
+            this.initCollectionField("Vacations", App.Vacations);
         }
     });
 
@@ -97,8 +111,50 @@
     };
 
     var formatTotalDays = function (value) {
-        return value + " días";
+        if (value == 1)
+            return "1 día";
+        else if (value > 1)
+            return value + " días";
+        else
+            return " - ";
     };
+
+    Nervoustissue.UILinking.CjVacation = Nervoustissue.UILinking.Compound.extend({
+        template: _.template(
+        '<td data-bind="Period" class="vacations-period-column"></td><td data-bind="From" class="vacations-from-column"></td><td data-bind="To" class="vacations-to-column"></td><td class="vacation-days"></td>'
+        ),
+        items:
+        [
+            { controlLink: "Int", name: "Period", field: "Period" },
+            { controlLink: "Date", name: "From", field: "From" },
+            { controlLink: "Date", name: "To", field: "To" },
+        ],
+        refresh: function () {
+            this.$(".vacation-days").text(formatTotalDays(this.model.getDays()));
+        }
+    });
+
+    Nervoustissue.UILinking.CjVacationList = Nervoustissue.UILinking.Collection.extend({
+        item: { controlLink: "CjVacation" },
+        template: _.template(
+            '<table>' +
+            '<thead><tr><th></th><th><table><tr><th class="vacations-period-column">Periodo</th><th class="vacations-from-column">Desde</th><th class="vacations-to-column">Hasta</th><th class="vacation-days">Total</th></tr></table></th></tr></thead>' +
+            '<tbody class="list-editable">' +
+            '</tbody>' +
+            '<tfoot><tr><td><button class="add-button">+</button></td><td><table><tr><td class="vacations-period-column"></td><td class="vacations-from-column"></td><td class="vacations-to-column"></td><td class="vacation-items-total vacation-days"></td></tr></table></td></tr></tfoot>' +
+            '</table>'
+            ),
+        subtemplate: _.template(
+            '<tr>' +
+            '<td><button class="remove-button">-</button></td>' +
+            '<td><table><tr class="editable-field" data-bind="item"><td></td></tr></table></td>' +
+            '</tr>'),
+        refresh: function () {
+            var total = formatTotalDays(this.linkedData.read().getTotalDays());
+            this.$(".vacation-items-total").text(total);
+        }
+    });
+
 
     Nervoustissue.UILinking.CjEmployeePicture = Nervoustissue.UILinking.Attachment.extend({
         //TODO: generalize it
@@ -267,22 +323,7 @@
                 },
                 CurrentSalary: { controlLink: "ReadOnlyText", valueToContent: formatSalary },
                 InitialSalary: { controlLink: "ReadOnlyText", valueToContent: formatSalary },
-                Vacations:
-                {
-                    controlLink: "Collection",
-                    item: {
-                        controlLink: "Compound",
-                        template: _.template('Periodo <span data-bind="Period"></span>: <span data-bind="From"></span> a <span data-bind="To"></span> (<span data-bind="TotalDays"></span>)'),
-                        items:
-                        [
-                            { controlLink: "Int", name: "Period", field: "Period" },
-                            { controlLink: "Date", name: "From", field: "From" },
-                            { controlLink: "Date", name: "To", field: "To" },
-                            { controlLink: "ReadOnlyText", name: "TotalDays", field: "TotalDays", valueToContent: formatTotalDays }
-                        ]
-                    }
-                },
-                VacationsTotalDays: { controlLink: "ReadOnlyText", valueToContent: function (value) { return "(" + formatTotalDays(value) + " en total)"; } },
+                Vacations: { controlLink: "CjVacationList" },
                 Certifications:
                 {
                     controlLink: "Collection",
