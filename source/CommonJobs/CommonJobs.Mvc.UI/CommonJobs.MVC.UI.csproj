@@ -112,7 +112,12 @@
     <Content Include="Content\EditEmployee\uploadAvatar.png" />
     <Content Include="Content\EmployeesListing\EmployeesListing.js" />
     <Content Include="Content\Images\ajax-loader.gif" />
+    <Content Include="Content\Images\Diploma.png" />
     <Content Include="Content\Images\favicon.ico" />
+    <Content Include="Content\Images\Highlighted.png" />
+    <Content Include="Content\Images\Jcrop.gif" />
+    <Content Include="Content\Images\NoDiploma.png" />
+    <Content Include="Content\Images\Unhighlighted.png" />
     <Content Include="Content\ListingCommon\QuickSearch.js" />
     <Content Include="Scripts\jquery.Jcrop.min.js" />
     <Content Include="Scripts\url-generator.js" />
