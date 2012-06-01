@@ -14,11 +14,13 @@ Los valores correspondientes y las capturas originales se envirán por email a l
 
 Por otro lado, en algunas capturas de pantalla se puede ver un usuario `CommonJobs` ese usuario a sido creado de forma temporal y será eliminado, no tiene utilidad en la configuración del sistema.
 
+Este documento se ha modificado para describir la configuración de los sitios como HTTPS en lugar de HTTP, tal vez algunas de las capturas de pantalla estén desactualizadas.
+
 ## Resumen 
 
 Para ambos entornos DEV y PROD, el cliente pone a disposición el servidor `LAN-SERVER-NAME` con la dirección IP interna `LAN-SERVER-IP` y accesible externamente mediante el siguiente nombre: `DNS-SERVER-NAME`.
 
-Ambos servidores web, DEV y PROD, serán accesibles externamente mediante las siguientes URLs http://DNS-SERVER-NAME:8888 y http://DNS-SERVER-NAME respectivamente.
+Ambos servidores web, DEV y PROD, serán accesibles externamente mediante las siguientes URLs https://DNS-SERVER-NAME:8888 y https://DNS-SERVER-NAME respectivamente.
 
 Los servicios de base de datos correrán en el mismo servidor. El servicio correspondiente a DEV será accesible externamente a través del puerto `8080` por los desarrolladores del sistema autenticados mediante _Windows Authentication_. La base de datos PROD solo será accesible localmente por el servidor web de PROD.
 
@@ -52,8 +54,8 @@ Para configurar la seguridad del sistema se crearán los grupos `LAN-SERVER-NAME
 
 ### Sitios
 
-* `CommonJobs DEV` (http://DNS-SERVER-NAME:8888)
-   * Bindings: `http:*:8888:`
+* `CommonJobs DEV` (https://DNS-SERVER-NAME:8888)
+   * Bindings: `https:*:8888:` (Se utilizará un Self-Generated certificate)
    * Application Pool: `CommonJobs DEV AppPool`
    * Physical Path: `C:\CommonJobsDEV\DNS-SERVER-NAME_8888`
    * Physical Path Credentials: `LAN-SERVER-NAME\CommonJobsDEVUsr`
@@ -65,14 +67,14 @@ Para configurar la seguridad del sistema se crearán los grupos `LAN-SERVER-NAME
 
 ![ ](Images/Sharing_DEV_folder.jpg)
 
-* `Documentation` (http://DNS-SERVER-NAME:8888/Documentation)
+* `Documentation` (https://DNS-SERVER-NAME:8888/Documentation)
    * Subsitio de `CommonJobs DEV` con similar configuración
    * Physical Path: `DNS-SERVER-NAME_8888_documentation`
 
 ![ ](Images/IIS_DEV_Documentation_Site.jpg)
 
 * `CommonJobs PROD`
-   * Bindings: `http:*:80:`
+   * Bindings: `https:*:443:` `//TODO: que certificado se utilizará?`
    * Application Pool: `CommonJobs PROD AppPool`
    * Physical Path: `C:\Sites\CommonJobs\DNS-SERVER-NAME`
    * Physical Path Credentials: `LAN-SERVER-NAME\CommonJobsPRODUsr`
@@ -109,7 +111,7 @@ Para configurar la seguridad del sistema se crearán los grupos `LAN-SERVER-NAME
 Mediante Windows Firewall vamos a limitar el acceso a los diferentes servicios.
 
 * Bloqueado todo acceso no local al puerto `8090` (servicio de base de datos de PROD)
-* Permitido acceso externo al puerto `80` (sitio web de PROD)
+* Permitido acceso externo al puerto `443` (sitio web de PROD)
 * Permitido acceso externo al puerto `8888` (sitio web de DEV)
 * Permitido acceso externo al puerto `8080` (servicio de base de datos de DEV)
 
@@ -131,10 +133,10 @@ Los archivos adjuntos se almacenarán en el sistema de archivos:
 Las migraciones permitirán modificar los documentos de la base de datos para adaptarse a la versión de la aplicación. Deberán ejecutarse manualmente y el acceso será restringido por dirección IP configurable en el web.config de la aplicación.
 
 * Migraciones de DEV
-  * URL: http://DNS-SERVER-NAME:8888/migrations / http://localhost:8888/migrations
+  * URL: https://DNS-SERVER-NAME:8888/migrations / https://localhost:8888/migrations
   * Accesible localmente desde `LAN-SERVER-NAME` o desde las direcciones IPs de los desarrolladores
 * Migraciones de PROD
-  * URL: http://localhost/migrations
+  * URL: https://localhost/migrations
   * Solo accesible localmente desde `LAN-SERVER-NAME`
 
 ![ ](Images/Migrations.jpg)
