@@ -11,6 +11,7 @@ SET fileMask=%3
 
 IF "%backupFolder%" EQU "" GOTO :ERROR
 IF "%keepRecentDays%" EQU "" SET /a keepRecentDays = 10
+IF "%keepRecentDays%" EQU "X" SET /a keepRecentDays = 10
 IF "%fileMask%" EQU "" SET fileMask=*.*
 
 REM Iterar por los nombres de archivo de la carpeta destino
@@ -39,12 +40,13 @@ ECHO CommonJobs, pero puede utilizarse para otros fines.
 ECHO CUIDADO: Esta herramienta eliminara archivos.
 ECHO.
 ECHO Sintaxis: 
-ECHO deleteOldBackup.cmd backupPath [keepRecentDays]
+ECHO deleteOldBackup.cmd backupPath [keepRecentDays] [fileMask]
 ECHO.
 ECHO     backupPath      Path de la carpeta en donde se almacenan los backups
 ECHO                     de CommonJobs.
 ECHO     keepRecentDays  (Opcional) Limite de antiguedad (en dias) para
-ECHO                     preservar backups. Default: 10.
+ECHO                     preservar backups. Default: 10. Poner "X" utilizara el
+ECHO                     valor por default.
 ECHO     fileMask        (Opcional) Mascara para identificar archivos que seran
 ECHO                     tenidos en cuenta como backup.
 ECHO.
