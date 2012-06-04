@@ -74,7 +74,7 @@ Para configurar la seguridad del sistema se crearán los grupos `LAN-SERVER-NAME
 ![ ](Images/IIS_DEV_Documentation_Site.jpg)
 
 * `CommonJobs PROD`
-   * Bindings: `https:*:443:` `//TODO: que certificado se utilizará?`
+   * Bindings: `https:*:443:` 
    * Application Pool: `CommonJobs PROD AppPool`
    * Physical Path: `C:\Sites\CommonJobs\DNS-SERVER-NAME`
    * Physical Path Credentials: `LAN-SERVER-NAME\CommonJobsPRODUsr`
