@@ -119,7 +119,7 @@
         // -------------------------------
 
         // Se encarga de registrar el evento change en un modelo complejo de backbone.
-        
+
         m.Compound = m.Base.extend({
             initialize: function () {
             },
@@ -130,7 +130,7 @@
                 this.viewDataBinder.registerModelEvent(this.model, "change", action, context);
             }
         });
-        
+
         // Nervoustissue.DataLinking.Model
         // -------------------------------
 
@@ -292,7 +292,7 @@
                 me.linkedData.onChange(this.refresh, this);
                 me.refresh();
             },
-            refresh: function() {},
+            refresh: function () { },
             applyMode: function (mode) {
                 var formMode = this.viewDataBinder.editionMode();
                 var buttons = this.$el.find(".add-button,.remove-button");
@@ -549,7 +549,12 @@
         m.Int = m.Text.extend({
             template: _.template('<span class="view-editable-empty">Sin datos</span><span class="view-editable" style="display: none;"></span><input class="editor-editable" type="text" value="" style="display: none;"/>'),
             onKeyPress: function (e) {
-                if (e.which < 48 || e.which > 57)
+                var code = e.which || e.keyCode;
+                if (code > 31  // is not a control key
+                    && (code < 37 || code > 40) // is not an arrow key
+                    && (code < 48 || code > 57) // is not numeric
+                    && (code != 46) // is not the delete key
+                )
                     e.preventDefault();
 
                 //TODO: Acá estoy llamando al onKeyPress de Text, tiene que haber una forma mejor 
