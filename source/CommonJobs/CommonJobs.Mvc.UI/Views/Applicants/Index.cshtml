@@ -29,7 +29,7 @@
             <div class="cardDescription">
                 <p class="name"><a class="clickable-link" href="<%= urlGenerator.action("Edit", "Applicants", item.Id) %>">
                     <% if (item.FirstName || item.LastName) { %>
-                        <%= item.FirstName %> <%= item.LastName %>
+                        <%= item.LastName %>, <%= item.FirstName %>
                     <% } else { %>
                         <i>Sin nombre</i>
                     <% } %>
