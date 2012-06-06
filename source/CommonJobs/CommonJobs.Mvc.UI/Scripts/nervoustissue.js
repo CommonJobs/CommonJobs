@@ -169,14 +169,18 @@
             },
             write: function (value) {
                 var firstName = '';
-                var lastName = '';
+                var lastName = value;
                 if (value.split) {
                     var aux = value.split(',');
-                    if (aux.length > 0) {
+                    if (aux.length > 1) {
                         lastName = $.trim(aux.shift());
-                    }
-                    if (aux.length > 0) {
                         firstName = $.trim(aux.join(','));
+                    } else {
+                        aux = value.split(' ');
+                        if (aux.length > 1) {
+                            lastName = $.trim(aux.pop());
+                            firstName = $.trim(aux.join(' '));
+                        }
                     }
                 }
                 var obj = {};
