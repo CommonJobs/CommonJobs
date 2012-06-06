@@ -3,22 +3,16 @@
 
 *Los números son los Story Points asignados a cada Tarea/User Story.*
 
-* (1) Agregar banner de entorno (PROD / DEV).
-* (5) Error cropping fotos con IE (bug).
-* (2) Agregar campo de filtrado por estado de baja.
-* (10) Permitir resaltados por cada usuario.
-* (10) Ordenamiento de Applicants.
-* (8) Modificar el image cropping para que solo recorte el thumbnail.
-* (7) Hacer que los campos "acepten" el cambio una vez que se hace click fuera de ellos.
-* (15) Convertir estilo in-line a visión tabular como en el mockup (Vacaciones).
-* (5) Revisar porque no se renderizan las referencias a los css y js en /Home/Index (bug).
-*  (3) Error deshaciendo una migración (bug).
-* (15) UI específica para buscar archivos adjuntos de cualquier entidad del sistema.
+* (4) Reemplazar el self-signed SSL certificate por un certificado de terceros.
 * (20) Empleados: Definir links para vistas (quizá temporales) para poder compartir cierta información.
 * (50) Como usuario del sistema, me gustaría poder leer información de los perfiles de mis contactos en LinkedIn para poder manejar mi base de contactos como postulantes de forma eficiente.
-* Refrescar listados al utilizar el back del browser
-* (2) Al hacer click en "Agregar nuevo" (empleado o postulante) no se cancelan los cambios, y aparece un empleado con datos en blanco.
-* (20) Como responsable de recursos humanos me gustaría tener información realmente útil en el sistema de legajo de usuario (Refinar)
+* (2) Agregar un estado "Dado de baja" para los employees.
+* (5) Aceptar barra y guión en los campos de fecha.
+* (7) Auditoría de cambios (log).
+* (7) Hacer que los campos "acepten" el cambio una vez que se hace click fuera de ellos.
+* (10) Ordenamiento de applicants.
+* (2) Al hacer click en "Agregar nuevo" (empleado o postulante) y se cancelan los cambios, aparece un empleado con datos en blanco.
+* (20) Como responsable de recursos humanos me gustaría tener información realmente útil en el sistema de legajo de usuario (Refinar).
 * Empleados: Definir cuáles son los datos que sirven para la búsqueda avanzada (en lugar de todos).
 * (5) Como usuario del sistema, me gustaría poder compartir resultados del sistema (búsquedas, información de postulantes, etc.).
 * (3) Como usuario del sistema, me gustaría poder ver el listado de postulantes a una oferta en particular, de forma de saber cuáles son aquellos que respondieron a ella.
@@ -28,6 +22,7 @@
 * (20) Como usuario del sistema, me gustaría que el sistema automáticamente determinara según las calificaciones de un postulante, qué requerimientos cumple y qué nivel de seniority posee él, para poder tomar decisiones eficientemente.
 * (50) Como administrador del sistema, me gustaría poder alterar los criterios para definir el seniority de un postulante, creando y quitando niveles, para poder ajustarlo a los criterios de la empresa.
 * (20) Como usuario del sistema, me gustaría que el sistema me permita ver cuál es el postulante más apropiado según las calificaciones cumplidas para un puesto en particular, para poder tomar decisiones acertadas.
+* (2) Agregar campo de filtrado por estado de baja.
 * (5) Checkboxes para cambios binarios.
 * (50) Como usuario del sistema, me gustaría poder obtener información de postulantes desde emails, para poder facilitar el proceso de importación de datos.
 * (3) Arreglar overlay de imagen de avatar.
@@ -40,9 +35,12 @@
 * (3) Como usuario del sistema, me gustaría poder agregar notas personalizadas a la información de un postulante, para poder ser acertado en mis decisiones futuras y/o hacer seguimientos específicos sobre ese postulante.
 * (1) Como usuario del sistema, me gustaría poder asignar tags (etiquetas) a los postulantes, de forma de poder clasificarlos según varios criterios simultáneos.
 * (1) Como usuario, quisiera poder quitar a un empleado para poder hacer más fácil el trabajo con los empleados restantes.
+* (10) Crear estilos / presentación para la pantalla posterior al login.
+* (8) Modificar el image cropping para que solo recorte el thumbnail.
+* (5) Error cropping fotos con IE (bug).
+* (10) Permitir resaltados por cada usuario.
 * (2) Indicar claramente cuando una sección está colapsada o expandida.
 * (3) Quién refirió a un postulante?
-* (2) Como responsable de RRHH me gustaría agregar o quitar personas con acceso al sistema.
 * (8) Como usuario me gustaría poder recuperar mi contraseña en caso de perderla
 * (3) Como usuario del sistema, me gustaría poder actualizar la información de un postulante, de forma de poder mantener su información actualizada.
 * (5) Como usuario del sistema, me gustaría poder alterar qué información veré de los postulantes al momento de efectuar una búsqueda, de forma de poder ver rápidamente la información más relevante.
@@ -57,7 +55,7 @@
 * (1) Como manager de RRHH, me gustaría poder convertir un postulante en un empleado, para diferenciarlo de aquellos que habiéndose postulado a una oferta no consiguieron el puesto.
 * (1) Como manager de RRHH, me gustaría poder ver un listado de postulantes que luego se convirtieron en empleados de la empresa, para así poder evaluar las eficiencias en nuestras búsquedas.
 * (1) Como usuario del sistema, me gustaría que el sistema me permita acceder a los perfiles en distintos sitios del postulante, como para poder analizar yo mismo la información allí disponible.
-* (1) Como usuario, me gustaria poder modificar los datos extraidos en las entrevistas a los postulante para corregir errores o agregar información omitida.
+* (1) Como usuario, me gustaría poder modificar los datos extraídos en las entrevistas a los postulante para corregir errores o agregar información omitida.
 * (5) Previsualización de formato en notas.
 
 # Línea de fin de proyecto
@@ -86,7 +84,6 @@
 * (50) Como usuario del sistema, me gustaría que la información de un postulante se mantenga actualizada según su información obtenida desde un email, para poder facilitar el proceso de manutención de datos.
 * (50) Como usuario del sistema, me gustaría que la información de un postulante se pueda actualizar desde Boomerang, para poder facilitar el proceso de manutención de datos.
 * (9) Como soporte a futuro del sistema, me gustaría que el sistema dispusiera de una API o sistema de plugins de importación de datos para que pueda agregar soporte en otros sitios de empleos.
-* (9) Como soporte a futuro del sistema, me gustaría que el sistema dispusiera de una API o sistema de plugins de actualización de datos para que pueda agregar soporte en otros sitios de empleos.
 * (50) Como usuario del sistema, me gustaría poder obtener información de postulantes desde BuscoJobs, para poder facilitar el proceso de importación de datos.
 * (50) Como usuario del sistema, me gustaría poder obtener información de postulantes desde BaseJobs, para poder facilitar el proceso de importación de datos.
 * (50) Como usuario del sistema, me gustaría que la información de un postulante se pueda actualizar desde Basejobs, para poder facilitar el proceso de manutención de datos.
