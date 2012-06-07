@@ -1,0 +1,4 @@
+﻿@if (!"PROD".Equals(System.Configuration.ConfigurationManager.AppSettings["Environment"], StringComparison.InvariantCultureIgnoreCase))
+{
+  <div style='background-color:Yellow; font-weight:bold; color:Red'>ENTORNO DE PRUEBAS</div>
+}
