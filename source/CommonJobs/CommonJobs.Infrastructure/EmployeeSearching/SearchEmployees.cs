@@ -49,7 +49,7 @@ namespace CommonJobs.Infrastructure.EmployeeSearching
             if (Parameters.SearchInAttachments)
                 predicate = predicate.Or(x => x.AttachmentContent.Any(y => y.StartsWith(Parameters.Term)));
 
-            query = query.Where(predicate).OrderBy(x => x.FullName1);
+            query = query.Where(predicate).OrderBy(x => x.LastName).ThenBy(x => x.FirstName);
 
             if (Parameters.Skip > 0)
                 query = query.Skip(Parameters.Skip);
