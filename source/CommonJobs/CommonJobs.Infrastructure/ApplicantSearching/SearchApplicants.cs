@@ -53,7 +53,7 @@ namespace CommonJobs.Infrastructure.ApplicantSearching
             if (Parameters.Highlighted)
                 query = query.Where(x => x.IsHighlighted);
 
-            query = query.OrderBy(x => x.FullName1);
+            query = query.OrderBy(x => x.LastName).ThenBy(x => x.FirstName);
 
             if (Parameters.Skip > 0)
                 query = query.Skip(Parameters.Skip);
