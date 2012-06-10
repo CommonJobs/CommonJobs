@@ -51,6 +51,18 @@ namespace CommonJobs.Mvc.UI
             RegisterGlobalFilters(GlobalFilters.Filters);
 
             RegisterRoutes(RouteTable.Routes);
+
+            //TODO: Hacer depender esto del environment, por ejemplo un grupo en DEV podría ser CommonJobsDEV_Users y en PROD CommonJobs_Users
+            CommonJobsAuthorizeAttribute.SetPrefixMapping("CommonJobsDEV_");
+
+            //TODO: Solo en DEV local no en RABBITMQ, para saltarnos AD
+            CommonJobsAuthorizeAttribute.SetFakeRolesFromSetting("FakeGroups");
+
+            //NOTA: en los unit tests se podría hacer algo así:
+            //CommonJobsAuthorizeAttribute.SetFakeRolesFromString("Users, Migrators");
+            //Assert(MigrationsWorks);
+            //CommonJobsAuthorizeAttribute.SetFakeRolesFromString("Users");
+            //Assert(MigrationsNotWorks);
         }
     }
 }

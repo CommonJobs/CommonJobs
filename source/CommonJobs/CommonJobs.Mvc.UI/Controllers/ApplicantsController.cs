@@ -13,7 +13,7 @@ using CommonJobs.Infrastructure.ApplicantSearching;
 
 namespace CommonJobs.Mvc.UI.Controllers
 {
-    [Authorize]
+    [CommonJobsAuthorize]
     public class ApplicantsController : CommonJobsController
     {
         //

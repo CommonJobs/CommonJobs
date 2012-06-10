@@ -63,6 +63,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommonJobsAuthorizeAttribute.cs" />
     <Compile Include="JsonDotNetValueProviderFactory.cs" />
     <Compile Include="CommonJobsApplication.cs" />
     <Compile Include="CommonJobsController.cs" />
