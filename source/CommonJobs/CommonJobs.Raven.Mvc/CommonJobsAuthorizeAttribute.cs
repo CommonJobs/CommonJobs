@@ -5,79 +5,45 @@ using System.Text;
 using System.Web.Mvc;
 using System.Web;
 using System.Configuration;
+using CommonJobs.Raven.Mvc.Authorize;
 
 namespace CommonJobs.Raven.Mvc
 {
     public class CommonJobsAuthorizeAttribute : AuthorizeAttribute
     {
-        public static Func<string, string> RoleMapToOurs { get; set; }
-        public static Func<string, string> RoleMapToAD { get; set; }
-        public static Func<CommonJobsAuthorizeAttribute, HttpContextBase, Func<HttpContextBase, bool>, bool> OverrideAuthorize { get; set; }
-
-        private string ApplyMapping(string from, Func<string, string> mapping)
+        public static IAuthorizationBehavior AuthorizationBehavior { get; set; }
+                
+        private string ApplyMapping(string from, Func<IEnumerable<string>, IEnumerable<string>> mapping)
         {
-            return from == null ? null
-                : string.Join(", ", StringToList(from).Select(x => mapping(x)));
-        }
+            if (from == null)
+                return null;
 
-        private static IEnumerable<string> StringToList(string from)
-        {
-            return from.Split(new[] { ',' }).Select(x => x.Trim());
-        }
-
-        public static void SetPrefixMapping(string prefix)
-        {
-            RoleMapToOurs = x => x.StartsWith(prefix) ? x.Substring(prefix.Length) : x;
-            RoleMapToAD = x => prefix + x;
-        }
-
-        public static void SetFakeRolesFromString(string actualRoles)
-        {
-            OverrideAuthorize = (me, httpContext, authorizeCore) =>
-            {
-                return ValidateRoles(me.Roles, () => actualRoles);
-            };
-        }
-
-        public static void SetFakeRolesFromSetting(string appSettingsKey)
-        {
-            OverrideAuthorize = (me, httpContext, authorizeCore) =>
-            {
-                return ValidateRoles(me.Roles, () => ConfigurationManager.AppSettings[appSettingsKey]);
-            };
-        }
-
-        private static bool ValidateRoles(string required, Func<string> getActualRoles)
-        {
-            var actualRoles = getActualRoles();
-
-            if (String.IsNullOrEmpty(actualRoles))
-                return false;
-
-            if (String.IsNullOrEmpty(required))
-                return true;
-
-            return new HashSet<string>(StringToList(actualRoles)).Intersect(StringToList(required)).Any();
+            var fromList = from.ToRoleList();
+            var resultList = mapping(fromList);
+            return resultList.ToRolesString();
         }
 
         public new string Roles
         {
             get
             {
-                return RoleMapToOurs == null ? base.Roles
-                    : ApplyMapping(base.Roles, RoleMapToOurs);
+                return AuthorizationBehavior == null ? base.Roles
+                    : ApplyMapping(base.Roles, AuthorizationBehavior.AdGroupsToAppRoles);
             }
             set
             {
-                base.Roles = RoleMapToAD == null ? value
-                    : ApplyMapping(value, RoleMapToAD);
+                base.Roles = AuthorizationBehavior == null ? value
+                    : ApplyMapping(value, AuthorizationBehavior.AppRolesToAdGroups);
             }
         }
 
         protected override bool AuthorizeCore(System.Web.HttpContextBase httpContext)
         {
-            return OverrideAuthorize == null ? base.AuthorizeCore(httpContext)
-                : OverrideAuthorize(this, httpContext, base.AuthorizeCore);
+            bool? result = AuthorizationBehavior == null ? null 
+                : AuthorizationBehavior.OverrideAuthorize(this, httpContext);
+
+            return result.HasValue ? result.Value
+                : base.AuthorizeCore(httpContext);
         }
     }
 }

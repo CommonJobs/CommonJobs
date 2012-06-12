@@ -8,6 +8,7 @@ using CommonJobs.Raven.Mvc;
 using CommonJobs.Infrastructure.Indexes;
 using CommonJobs.ContentExtraction;
 using CommonJobs.ContentExtraction.Extractors;
+using CommonJobs.Raven.Mvc.Authorize;
 
 namespace CommonJobs.Mvc.UI
 {
@@ -53,15 +54,15 @@ namespace CommonJobs.Mvc.UI
             RegisterRoutes(RouteTable.Routes);
 
             //TODO: Hacer depender esto del environment, por ejemplo un grupo en DEV podría ser CommonJobsDEV_Users y en PROD CommonJobs_Users
-            CommonJobsAuthorizeAttribute.SetPrefixMapping("CommonJobsDEV_");
+            CommonJobsAuthorizeAttribute.AuthorizationBehavior = new PrefixAuthorizationBehavior("CommonJobsDEV_");
 
             //TODO: Solo en DEV local no en RABBITMQ, para saltarnos AD
-            CommonJobsAuthorizeAttribute.SetFakeRolesFromSetting("FakeGroups");
+            CommonJobsAuthorizeAttribute.AuthorizationBehavior = new ForcedGroupsFromSettingsAuthorizationBehavior("FakeGroups");
 
             //NOTA: en los unit tests se podría hacer algo así:
-            //CommonJobsAuthorizeAttribute.SetFakeRolesFromString("Users, Migrators");
+            //CommonJobsAuthorizeAttribute.ForcedGroupsAuthorizationBehavior("Users, Migrators");
             //Assert(MigrationsWorks);
-            //CommonJobsAuthorizeAttribute.SetFakeRolesFromString("Users");
+            //CommonJobsAuthorizeAttribute.ForcedGroupsAuthorizationBehavior("Users");
             //Assert(MigrationsNotWorks);
         }
     }
