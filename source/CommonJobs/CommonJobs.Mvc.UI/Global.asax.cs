@@ -53,17 +53,11 @@ namespace CommonJobs.Mvc.UI
 
             RegisterRoutes(RouteTable.Routes);
 
-            //TODO: Hacer depender esto del environment, por ejemplo un grupo en DEV podría ser CommonJobsDEV_Users y en PROD CommonJobs_Users
-            CommonJobsAuthorizeAttribute.AuthorizationBehavior = new PrefixAuthorizationBehavior("CommonJobsDEV_");
-
-            //TODO: Solo en DEV local no en RABBITMQ, para saltarnos AD
-            CommonJobsAuthorizeAttribute.AuthorizationBehavior = new ForcedGroupsFromSettingsAuthorizationBehavior("FakeGroups");
-
-            //NOTA: en los unit tests se podría hacer algo así:
-            //CommonJobsAuthorizeAttribute.ForcedGroupsAuthorizationBehavior("Users, Migrators");
-            //Assert(MigrationsWorks);
-            //CommonJobsAuthorizeAttribute.ForcedGroupsAuthorizationBehavior("Users");
-            //Assert(MigrationsNotWorks);
+#if NO_AD
+            CommonJobsAuthorizeAttribute.AuthorizationBehavior = new ForcedGroupsFromSettingsAuthorizationBehavior("CommonJobs/FakeADGroups");
+#else
+            CommonJobsAuthorizeAttribute.AuthorizationBehavior = new PrefixFromSettingsAuthorizationBehavior("CommonJobs/ADGroupsPrefix");
+#endif
         }
     }
 }
