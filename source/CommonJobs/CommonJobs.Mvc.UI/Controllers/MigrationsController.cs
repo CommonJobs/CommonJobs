@@ -10,11 +10,6 @@ using Miscellaneous.Attributes.Controller;
 
 namespace CommonJobs.Mvc.UI.Controllers
 {
-    //[FilterIP(
-    //        ConfigurationKeyAllowedMaskedIPs = "AllowedMigrationMaskedIPs",
-    //        ConfigurationKeyAllowedSingleIPs = "AllowedMigrationSingleIPs",
-    //        ConfigurationKeyDeniedMaskedIPs = "DeniedMigrationMaskedIPs",
-    //        ConfigurationKeyDeniedSingleIPs = "DeniedMigrationSingleIPs")]
     [CommonJobsAuthorize(Roles="Migrators")]
     public class MigrationsController : Controller
     {

@@ -18,6 +18,7 @@ using System.IO;
 
 namespace CommonJobs.Mvc.UI.Controllers
 {
+    [CommonJobsAuthorize]
     public class AttachmentsController : CommonJobsController
     {
         //TODO: permitir no usar los nombres de las acciones
