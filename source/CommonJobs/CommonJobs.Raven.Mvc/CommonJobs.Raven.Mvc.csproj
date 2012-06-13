@@ -70,7 +70,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CommonJobsAuthorizeAttribute.cs" />
+    <Compile Include="Authorize\CommonJobsAuthorizeAttribute.cs" />
     <Compile Include="Authorize\ForcedGroupsAuthorizationBehavior.cs" />
     <Compile Include="Authorize\ForcedGroupsAuthorizationBehaviorBase.cs" />
     <Compile Include="Authorize\ForcedGroupsFromSettingsAuthorizationBehavior.cs" />
