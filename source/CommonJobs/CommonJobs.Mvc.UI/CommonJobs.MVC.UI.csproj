@@ -106,7 +106,6 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ApplicantsController.cs" />
     <Compile Include="Controllers\AttachmentsController.cs">
       <SubType>Code</SubType>
@@ -150,10 +149,6 @@
     <Content Include="Content\ListingCommon\PersonListing.less" />
     <Content Include="Content\PersonsBase.less" />
     <Content Include="Content\StylesBase.less" />
-    <Content Include="Views\Account\ChangePassword.cshtml" />
-    <Content Include="Views\Account\ChangePasswordSuccess.cshtml" />
-    <Content Include="Views\Account\LogOn.cshtml" />
-    <Content Include="Views\Shared\_LogOnPartial.cshtml" />
     <Content Include="Views\Migrations\Index.cshtml" />
     <Content Include="Views\Shared\EnvironmentBanner.cshtml" />
     <Content Include="Web.DEV.config">
