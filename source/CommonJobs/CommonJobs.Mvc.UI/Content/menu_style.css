@@ -1,8 +1,9 @@
 .bg {background: url(images/button4.gif);}
 .menu {padding:0 0 0 32px; margin:0; list-style:none; height:40px; background:#fff url(images/button1a.gif) repeat-x; position:relative; font-family:arial, verdana, sans-serif; }
 .menu li.top {display:block; float:left; position:relative;}
-.menu li a.top_link {display:block; float:left; height:40px; line-height:33px; color:#bbb; text-decoration:none; font-size:11px; font-weight:bold; padding:0 0 0 12px; cursor:pointer;}
-.menu li a.top_link span {float:left; font-weight:bold; display:block; padding:0 24px 0 12px; height:40px;}
+.menu li.top { width: 200px; text-align: center; }
+.menu li a.top_link {display:block; margin: 0 auto; /*float:left;*/ height:40px; line-height:33px; color:#bbb; text-decoration:none; font-size:11px; font-weight:bold;/* padding:0 0 0 12px*/; cursor:pointer;}
+.menu li a.top_link span{float:left; font-weight:bold; display:block; padding:0 24px 0 12px; height:40px;}
 .menu li a.top_link span.down {float:left; display:block; padding:0 24px 0 12px; height:40px; background:url(images/down.gif) no-repeat right top;}
 .menu li a.top_link:hover {color:#000; background: url(images/button4.gif) no-repeat;}
 .menu li a.top_link:hover span {background:url(images/button4.gif) no-repeat right top;}
