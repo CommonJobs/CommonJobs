@@ -19,7 +19,7 @@ REM Contar los primeros N y eliminar los posteriores uno a uno,
 REM ordenandolos por fecha de creación más reciente primero
 
 REM http://stackoverflow.com/q/51054/147507
-FORFILES -p "%backupFolder%" -m %fileMask% -d %keepRecentDays% -c "cmd /c del @path"
+FORFILES -p %backupFolder% -m %fileMask% -d -%keepRecentDays% -c "cmd /c del @path"
 
 ECHO Finalizado.
 GOTO END
