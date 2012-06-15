@@ -7,7 +7,7 @@
     ScriptManager.RegisterGlobalizationEntries(Url.Content("~/Scripts/jquery.globalize"), priority: 900);
     ScriptManager.RegisterCss(Url.Content("~/Content/themes/base/jquery.ui.all.css"), priority: 900);
     ScriptManager.RegisterCss(Url.Content("~/Content/Site.css"), priority: 900);
-    
+    ScriptManager.RegisterCss(Url.Content("~/Content/menu_style.css"), priority: 900);
     ScriptManager.RegisterJs(Url.Content("~/Scripts/css3-mediaqueries.js"), priority: 900);
     ScriptManager.RegisterJs(Url.Content("~/Scripts/underscore.js"), priority: 900);
     ScriptManager.RegisterJs(Url.Content("~/Scripts/backbone.js"), priority: 900);
@@ -21,27 +21,22 @@
     <meta charset="utf-8" />
     <title>@ViewBag.Title</title>
     @Html.RenderScriptManagerEntries()
-
     <link rel="shortcut icon" href="@Url.Content("~/Content/Images/favicon.ico")" />
 </head>
-
 <body>
-    <div class="page">
-        <header style="float:right; text-align:center">
-            @Html.Partial("EnvironmentBanner")
-            <div id="logindisplay">@User.Identity.Name</div>
-            <nav>
-                <ul id="menu">
-                    <li>@Html.ActionLink("Postulantes", "Index", "Applicants")</li>
-                    <li>@Html.ActionLink("Empleados", "Index", "Employees")</li>
+        <div class="page">
+            @Html.Partial("EnvironmentBanner")       
+			@if (Request.IsAuthenticated)
+			{
+				@User.Identity.Name
+			}
+            <div>
+                <ul class="menu">                 
+                    <li class="top">  @Html.ActionLink("Postulantes", "Index", "Applicants", null, new { @class = "top_link" }) </li>       
+                    <li class="top">  @Html.ActionLink("Empleados", "Index", "Employees", null, new { @class = "top_link" }) </li>
                 </ul>
-            </nav>
-        </header>
-        <section id="main">
-            @RenderBody()
-        </section>
-        <footer>
-        </footer>
-    </div>
+            </div>
+            @RenderBody()  
+         </div>     
 </body>
 </html>
