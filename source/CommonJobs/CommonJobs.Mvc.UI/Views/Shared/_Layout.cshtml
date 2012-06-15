@@ -25,15 +25,13 @@
 </head>
 <body>
         <div class="page">
-            @Html.Partial("EnvironmentBanner")       
-			@if (Request.IsAuthenticated)
-			{
-				@User.Identity.Name
-			}
+            
             <div>
                 <ul class="menu">                 
                     <li class="top">  @Html.ActionLink("Postulantes", "Index", "Applicants", null, new { @class = "top_link" }) </li>       
                     <li class="top">  @Html.ActionLink("Empleados", "Index", "Employees", null, new { @class = "top_link" }) </li>
+                    @Html.Partial("EnvironmentBanner")
+                    <li class="username"><span>@User.Identity.Name</span></li>
                 </ul>
             </div>
             @RenderBody()  

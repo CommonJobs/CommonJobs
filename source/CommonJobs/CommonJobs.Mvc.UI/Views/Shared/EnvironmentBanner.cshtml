@@ -2,7 +2,9 @@
   var environment = System.Configuration.ConfigurationManager.AppSettings["CommonJobs/Environment"];
   if (!"PROD".Equals(environment, StringComparison.InvariantCultureIgnoreCase))
   {
-    <div style='background-color:Yellow; font-weight:bold; color:Red'>ENTORNO DE PRUEBAS (@environment)</div>
+    <li class="environmentBanner">
+      <span>ENTORNO DE PRUEBAS (@environment)</span>
+    </li>
   }
 }
   
