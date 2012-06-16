@@ -5,7 +5,7 @@ using System.Text;
 using Raven.Client.Indexes;
 using CommonJobs.Domain;
 
-namespace CommonJobs.Infrastructure.Indexes
+namespace CommonJobs.Infrastructure.AttachmentIndexing
 {
     public class Attachments_ByContentExtractorConfigurationHash : AbstractIndexCreationTask<Attachment>
     {

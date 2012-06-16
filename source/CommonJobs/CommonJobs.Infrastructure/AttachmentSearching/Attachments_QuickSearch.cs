@@ -6,16 +6,18 @@ using Raven.Client.Indexes;
 using CommonJobs.Domain;
 using Raven.Abstractions.Indexing;
 
-namespace CommonJobs.Infrastructure.Indexes
+namespace CommonJobs.Infrastructure.AttachmentSearching
 {
-    public class Attachments_QuickSearch : AbstractMultiMapIndexCreationTask<Attachments_QuickSearch.Result>
+    public class Attachments_QuickSearch : AbstractMultiMapIndexCreationTask<Attachments_QuickSearch.Projection>
     {
         //TODO: permitir indexar coleccion de key/values para metadatos (Por ejemplo los de los archivos de word)
+        private const int PartialTextLenght = 200;
 
-        public class Result
+        public class Projection
         {
             public string AttachmentId { get; set; }
-            public string PlainContent { get; set; }
+            public string FullText { get; set; }
+            public string PartialText { get; set; }
             public string ContentType { get; set; }
             public string FileName { get; set; }
             public string RelatedEntityId { get; set; }
@@ -30,7 +32,8 @@ namespace CommonJobs.Infrastructure.Indexes
                 select new
                 {
                     AttachmentId = attachment.Id,
-                    PlainContent = attachment.PlainContent,
+                    FullText = new string[] { attachment.PlainContent, attachment.FileName, attachment.ContentType },
+                    PartialText = attachment.PlainContent.Length < PartialTextLenght ? attachment.PlainContent : attachment.PlainContent.Substring(0, PartialTextLenght),
                     ContentType = attachment.ContentType,
                     FileName = attachment.FileName,
                     RelatedEntityId = attachment.RelatedEntityId,
@@ -38,14 +41,15 @@ namespace CommonJobs.Infrastructure.Indexes
                     IsOrphan = true
                 });
 
-            //TODO: hacer esto para cualquier entidad que tenga la propiedad AllAttachmentReferences
+            //TODO: hacer esto automático para cualquier entidad que tenga la propiedad AllAttachmentReferences
             AddMap<Employee>(employees =>
                 from entity in employees
                 from attachmentReference in entity.AllAttachmentReferences
                 select new
                 {
                     AttachmentId = attachmentReference.Id,
-                    PlainContent = (string)null,
+                    FullText = new string[] { entity.LastName, entity.FirstName, entity.Id, entity.Email, entity.Platform },
+                    PartialText = (string)null,
                     ContentType = (string)null,
                     FileName = (string)null,
                     RelatedEntityId = (string)null,
@@ -59,7 +63,8 @@ namespace CommonJobs.Infrastructure.Indexes
                 select new
                 {
                     AttachmentId = attachmentReference.Id,
-                    PlainContent = (string)null,
+                    FullText = new string[] { entity.LastName, entity.FirstName, entity.Id, entity.Email },
+                    PartialText = (string)null,
                     ContentType = (string)null,
                     FileName = (string)null,
                     RelatedEntityId = (string)null,
@@ -72,17 +77,17 @@ namespace CommonJobs.Infrastructure.Indexes
                              select new
                              {
                                 AttachmentId = g.Key,
-                                PlainContent = g.Select(x => x.PlainContent).Where(x => x != null).FirstOrDefault(),
-                                ContentType = g.Select(x => x.ContentType).Where(x => x != null).FirstOrDefault(),
-                                FileName = g.Select(x => x.FileName).Where(x => x != null).FirstOrDefault(),
-                                RelatedEntityId = g.Select(x => x.RelatedEntityId).Where(x => x != null).FirstOrDefault(),
-                                ContentExtractorConfigurationHash = g.Select(x => x.ContentExtractorConfigurationHash).Where(x => x != null).FirstOrDefault(),
-                                IsOrphan = g.Select(x => x.IsOrphan).All(x => x)
+                                FullText = g.Select(x => x.FullText).ToArray(),
+                                PartialText = g.Select(x => x.PartialText).FirstOrDefault(x => x != null),
+                                ContentType = g.Select(x => x.ContentType).FirstOrDefault(x => x != null),
+                                FileName = g.Select(x => x.FileName).FirstOrDefault(x => x != null),
+                                RelatedEntityId = g.Select(x => x.RelatedEntityId).FirstOrDefault(x => x != null),
+                                ContentExtractorConfigurationHash = g.Select(x => x.ContentExtractorConfigurationHash).FirstOrDefault(x => x != null),
+                                IsOrphan = g.All(x => x.IsOrphan)
                              };
 
-            Index(x => x.PlainContent, FieldIndexing.Analyzed);
-            //TODO: permitir busquedas por nombre de archivos con comodines
-            Index(x => x.FileName, FieldIndexing.Analyzed);
+            Index(x => x.FullText, FieldIndexing.Analyzed);
+            Index(x => x.PartialText, FieldIndexing.No);
         }
     }
 }
