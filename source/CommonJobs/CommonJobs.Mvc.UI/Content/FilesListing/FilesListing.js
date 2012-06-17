@@ -21,9 +21,9 @@ $(function () {
         qs.redirect();
     });
 
-    $(".results").on("click", ".clickable", function (e) {
+    $(".results").on("click", ".fileResult", function (e) {
         e.preventDefault();
-        window.location = $(this).find(".clickable-link").attr("href");
+        window.location = $(this).find(".fileTitle a").first().attr("href");
     });
 
     qs.search();
@@ -56,5 +56,8 @@ var FileSearchUtilities = {
         }
 
         return null;
+    },
+    urlToFile: function (attachmentId) {
+        return urlGenerator.action("Get", "Attachments", attachmentId);
     }
 };
