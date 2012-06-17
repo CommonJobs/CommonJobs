@@ -8,13 +8,13 @@ using CommonJobs.Infrastructure.AttachmentStorage;
 using CommonJobs.Domain;
 using System.Diagnostics;
 using Raven.Client.Linq;
-using CommonJobs.Mvc.UI.Models;
 using CommonJobs.Infrastructure.Indexes;
 using CommonJobs.Infrastructure.AttachmentIndexing;
 using RavenData = Raven.Abstractions.Data;
 using Raven.Json.Linq;
 using System.Drawing;
 using System.IO;
+using CommonJobs.Infrastructure.AttachmentSearching;
 
 namespace CommonJobs.Mvc.UI.Controllers
 {
@@ -134,36 +134,16 @@ namespace CommonJobs.Mvc.UI.Controllers
         }
 
         [Authorize]
-        public ActionResult AttachmentsQuickSearch(AttachmentSearchModel searchModel)
+        public ActionResult AttachmentsQuickSearch(AttachmentSearchParameters searchParameters)
         {
-            //TODO: agregar soporte para filtrar por tipo de archivos o con comodines en el nombre y para filtrar por id de usuario
-            RavenQueryStatistics statistics;
-            var query = RavenSession.Query<Attachments_QuickSearch.Result, Attachments_QuickSearch>()
-                .Statistics(out statistics)
-                .Skip(searchModel.Skip)
-                .Take(searchModel.Take);
-
-            if (!string.IsNullOrWhiteSpace(searchModel.Term))
-                query = query.Where(x => x.PlainContent.StartsWith(searchModel.Term) || x.FileName.StartsWith(searchModel.Term));
-
-            if (searchModel.Orphans == AttachmentSearchModel.OrphansMode.NoOrphans)
-                query = query.Where(x => !x.IsOrphan);
-            else if (searchModel.Orphans == AttachmentSearchModel.OrphansMode.OnlyOrphans)
-                query = query.Where(x => x.IsOrphan);
-
-            var results = query
-                //To do not bring PlainContent (big field)
-                .Select(x => new 
-                { 
-                    x.AttachmentId, 
-                    x.ContentType, 
-                    x.FileName,
-                    x.RelatedEntityId,
-                    x.IsOrphan
-                })
-                .ToArray();
-
-            return Json(new { Statistics = statistics, Results = results });
+            var query = new SearchAttachments(searchParameters);
+            var results = Query(query);
+            return Json(new
+            {
+                Items = results,
+                Skiped = searchParameters.Skip,
+                TotalResults = query.Stats.TotalResults
+            });
         }
     }
 }
