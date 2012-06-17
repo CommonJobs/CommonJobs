@@ -9,6 +9,51 @@
     ScriptManager.RegisterJs(Url.Content("~/Content/FilesListing/FilesListing.js"));
 }
 
+<!--
+<script type="text/template" id="add-new-card-template">
+    <div class="card column clickable add-new-card">
+        <img class="cardPicture" src="@Url.Content("~/Content/Images/AddEmployee.png")" alt="Agregar nuevo..."  />
+        <div class="cardDescription">
+            <p>@Html.ActionLink("Agregar nuevo...", "Create", null, new { @class = "clickable-link" })</p>
+        </div>
+    </div>
+</script>
+-->
+
+<script type="text/template" id="get-more-cards-template">
+    <div class="card column loading get-more-cards">
+        <p class="ready-content">Click para obtener más...</p>
+    </div>
+</script>
+
+<script type="text/template" id="card-template">
+    <% _.each(model.items, function(item) { %>
+        <div class="">
+            <img class="cardPicture" 
+                src="<%= item.Photo ? urlGenerator.action("Get", "Attachments", item.Photo.Thumbnail.Id) : urlGenerator.content("Images/NoPicture.png")  %>" 
+                alt="<%= item.FirstName %> <%= item.LastName %>'s picture" />
+            <div class="cardDescription">
+                <p class="name"><a class="clickable-link" href="<%= urlGenerator.action("Edit", "Employees", item.Id) %>">
+                    <% if (item.FirstName || item.LastName) { %>
+                        <%= item.LastName %>, <%= item.FirstName %>
+                    <% } else { %>
+                        <i>Sin nombre</i>
+                    <% } %>
+                </a></p>
+                <p class="employeeProject"><%= item.CurrentProject %></p>
+                <p class="position"><%= item.CurrentPosition %></p>
+                <p class="tags">
+                    <% if (_.isString(item.Skills)) { 
+                        _.each(item.Skills.split(','), function(tag) { %>
+                            <span class="tag"><%= $.trim(tag) %></span>
+                        <% });
+                    } %>
+                </p>
+            </div>
+        </div>
+    <% }) %>
+</script>
+
 <div class="container searchContainer">
     <h1>Archivos</h1>
 
@@ -28,4 +73,14 @@
     </div>
 </div>
 <div class="results">
+    <div>
+        <img src="testIcon.png" alt="PDF file" class="fileIcon" />
+        <p>File title</p>
+        <p class="relatedTo">Related to</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vel lectus id est tincidunt elementum ut ac dui. Nam nec enim mi, ut aliquet risus.
+        Ut vestibulum magna sed justo placerat eu ullamcorper massa scelerisque. Nulla eget nisl sodales quam convallis imperdiet. Donec sagittis imperdiet nisl.
+        In hac habitasse platea dictumst. Quisque congue hendrerit tempus. Maecenas ac neque vel dolor blandit imperdiet. Vivamus blandit sollicitudin metus eu egestas.
+        Quisque pulvinar lacus diam, a ullamcorper massa.
+        </p>
+    </div>
 </div>

@@ -24,6 +24,10 @@
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <OldToolsVersion>4.0</OldToolsVersion>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -125,6 +129,23 @@
     <Content Include="Content\Images\ajax-loader.gif" />
     <Content Include="Content\Images\Diploma.png" />
     <Content Include="Content\Images\favicon.ico" />
+    <Content Include="Content\Images\filetypes\avi.png" />
+    <Content Include="Content\Images\filetypes\bmp.png" />
+    <Content Include="Content\Images\filetypes\docx.png" />
+    <Content Include="Content\Images\filetypes\gif.png" />
+    <Content Include="Content\Images\filetypes\jpeg.png" />
+    <Content Include="Content\Images\filetypes\mov.png" />
+    <Content Include="Content\Images\filetypes\mp3.png" />
+    <Content Include="Content\Images\filetypes\mpeg.png" />
+    <Content Include="Content\Images\filetypes\pdf.png" />
+    <Content Include="Content\Images\filetypes\png.png" />
+    <Content Include="Content\Images\filetypes\pptx.png" />
+    <Content Include="Content\Images\filetypes\rar.png" />
+    <Content Include="Content\Images\filetypes\txt.png" />
+    <Content Include="Content\Images\filetypes\unknown.png" />
+    <Content Include="Content\Images\filetypes\wmv.png" />
+    <Content Include="Content\Images\filetypes\xlsx.png" />
+    <Content Include="Content\Images\filetypes\zip.png" />
     <Content Include="Content\Images\Highlighted.png" />
     <Content Include="Content\Images\Jcrop.gif" />
     <Content Include="Content\Images\NoDiploma.png" />

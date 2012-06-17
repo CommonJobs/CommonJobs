@@ -1,4 +1,6 @@
-﻿$(function () {
+﻿//TODO uncomment
+/*
+$(function () {
     var qs = new QuickSearchPage({
         //pageSize: 3,
         generateRedirectUrl: function (searchParameters) {
@@ -8,10 +10,7 @@
             return urlGenerator.action("List", "Files", searchParameters);
         },
         fillOtherSearchParameters: function (searchParameters) {
-            if ($("#SearchInAttachmentsCheck").prop("checked"))
-                searchParameters.searchInAttachments = true;
-            if ($("#SearchInNotesCheck").prop("checked"))
-                searchParameters.searchInNotes = true;
+            //nothing to do here, the function is left for future addition of options
         }
     });
 
@@ -27,3 +26,5 @@
 
     qs.search();
 });
+
+*/
