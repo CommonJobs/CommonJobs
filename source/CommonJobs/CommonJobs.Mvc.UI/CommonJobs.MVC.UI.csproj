@@ -110,7 +110,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Controllers\EmployeesController.cs" />
-    <Compile Include="Controllers\FilesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MigrationsController.cs" />
     <Compile Include="Global.asax.cs">
@@ -177,7 +176,7 @@
     <Content Include="Views\Account\LogOn.cshtml" />
     <Content Include="Views\Migrations\Index.cshtml" />
     <Content Include="Views\Shared\EnvironmentBanner.cshtml" />
-    <Content Include="Views\Files\Index.cshtml" />
+    <Content Include="Views\Attachments\Index.cshtml" />
     <Content Include="Content\FilesListing\FilesListing.less" />
     <Content Include="Content\ListingCommon\ListingBase.less" />
     <None Include="_bin_deployableAssemblies\System.Web.Mvc.dll" />
