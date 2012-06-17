@@ -135,6 +135,11 @@
     <Content Include="Content\Images\favicon.ico" />
     <Content Include="Content\Images\filetypes\avi.png" />
     <Content Include="Content\Images\filetypes\bmp.png" />
+    <Content Include="Content\Images\filetypes\xls.png" />
+    <Content Include="Content\Images\filetypes\ppt.png" />
+    <Content Include="Content\Images\filetypes\mpg.png" />
+    <Content Include="Content\Images\filetypes\jpg.png" />
+    <Content Include="Content\Images\filetypes\doc.png" />
     <Content Include="Content\Images\filetypes\docx.png" />
     <Content Include="Content\Images\filetypes\gif.png" />
     <Content Include="Content\Images\filetypes\jpeg.png" />
