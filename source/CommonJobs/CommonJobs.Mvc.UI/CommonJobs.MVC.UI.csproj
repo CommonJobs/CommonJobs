@@ -127,7 +127,13 @@
     <Content Include="Content\EditEmployee\uploadAvatar.png" />
     <Content Include="Content\EmployeesListing\EmployeesListing.js" />
     <Content Include="Content\Images\ajax-loader.gif" />
+    <Content Include="Content\Images\arrow.gif" />
+    <Content Include="Content\Images\arrow_over.gif" />
+    <Content Include="Content\Images\button1a.gif" />
+    <Content Include="Content\Images\button4.gif" />
+    <Content Include="Content\Images\button4a.gif" />
     <Content Include="Content\Images\Diploma.png" />
+    <Content Include="Content\Images\down.gif" />
     <Content Include="Content\Images\favicon.ico" />
     <Content Include="Content\Images\filetypes\avi.png" />
     <Content Include="Content\Images\filetypes\bmp.png" />
@@ -152,6 +158,7 @@
     <Content Include="Content\Images\Unhighlighted.png" />
     <Content Include="Content\jquery.Jcrop.min.css" />
     <Content Include="Content\ListingCommon\QuickSearch.js" />
+    <Content Include="Content\menu_style.css" />
     <Content Include="Scripts\jquery.Jcrop.min.js" />
     <Content Include="Scripts\url-generator.js" />
     <Content Include="Scripts\nervoustissue-uploader.js" />
@@ -169,7 +176,6 @@
     <Content Include="Views\Account\ChangePassword.cshtml" />
     <Content Include="Views\Account\ChangePasswordSuccess.cshtml" />
     <Content Include="Views\Account\LogOn.cshtml" />
-    <Content Include="Views\Shared\_LogOnPartial.cshtml" />
     <Content Include="Views\Migrations\Index.cshtml" />
     <Content Include="Views\Shared\EnvironmentBanner.cshtml" />
     <Content Include="Views\Files\Index.cshtml" />
