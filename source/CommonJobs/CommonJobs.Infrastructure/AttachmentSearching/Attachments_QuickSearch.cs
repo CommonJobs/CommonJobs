@@ -11,7 +11,7 @@ namespace CommonJobs.Infrastructure.AttachmentSearching
     public class Attachments_QuickSearch : AbstractMultiMapIndexCreationTask<Attachments_QuickSearch.Projection>
     {
         //TODO: permitir indexar coleccion de key/values para metadatos (Por ejemplo los de los archivos de word)
-        private const int PartialTextLenght = 200;
+        private const int PartialTextLength = 200;
 
         public class Projection
         {
@@ -33,7 +33,7 @@ namespace CommonJobs.Infrastructure.AttachmentSearching
                 {
                     AttachmentId = attachment.Id,
                     FullText = new string[] { attachment.PlainContent, attachment.FileName, attachment.ContentType },
-                    PartialText = attachment.PlainContent.Length < PartialTextLenght ? attachment.PlainContent : attachment.PlainContent.Substring(0, PartialTextLenght),
+                    PartialText = attachment.PlainContent.Length < PartialTextLength ? attachment.PlainContent : attachment.PlainContent.Substring(0, PartialTextLength),
                     ContentType = attachment.ContentType,
                     FileName = attachment.FileName,
                     RelatedEntityId = attachment.RelatedEntityId,
