@@ -45,10 +45,10 @@ namespace CommonJobs.Infrastructure.ApplicantSearching
             query = query.Where(predicate);
 
             if (Parameters.HaveInterview)
-                query = query.Where(x => x.HaveInterview);
+                query = query.Where(x => x.HasInterview);
 
             if (Parameters.HaveTechnicalInterview)
-                query = query.Where(x => x.HaveTechnicalInterview);
+                query = query.Where(x => x.HasTechnicalInterview);
 
             if (Parameters.Highlighted)
                 query = query.Where(x => x.IsHighlighted);
