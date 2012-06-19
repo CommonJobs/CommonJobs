@@ -11,7 +11,7 @@ namespace CommonJobs.Infrastructure.AttachmentSearching
     public class Attachments_QuickSearch : AbstractMultiMapIndexCreationTask<Attachments_QuickSearch.Projection>
     {
         //TODO: permitir indexar coleccion de key/values para metadatos (Por ejemplo los de los archivos de word)
-        private const int PartialTextLength = 200;
+        private const int PartialTextLength = 2000;
 
         public class Projection
         {

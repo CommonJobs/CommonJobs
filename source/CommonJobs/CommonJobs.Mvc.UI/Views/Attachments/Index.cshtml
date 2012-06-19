@@ -23,7 +23,13 @@
             <% if (item.RelatedEntity != null) { %>
                 <p class="fileRelatedTo">(<a href="<%= FileSearchUtilities.urlToRelatedEntity(item.RelatedEntity.Id, item.RelatedEntity.$type) %>"><%= item.RelatedEntity.LastName %>, <%= item.RelatedEntity.FirstName %></a>)</p>
             <% } %>
-            <p class="fileDescription"><% item.PartialText %></p>
+            <% if (item.PartialText != null) {
+                var counter = 0;
+                _.each(item.PartialText.split('\n'), function(paragraph) {
+                    if (counter++ > 5) return false; 
+                    %> <p class="fileDescription"><%= paragraph %></p> <%
+                });
+            } %>
         </div>
     <% }) %>
 </script>
