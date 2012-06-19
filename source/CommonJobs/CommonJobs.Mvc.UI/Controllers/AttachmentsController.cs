@@ -18,7 +18,6 @@ using CommonJobs.Infrastructure.AttachmentSearching;
 
 namespace CommonJobs.Mvc.UI.Controllers
 {
-    [CommonJobsAuthorize]
     public class AttachmentsController : CommonJobsController
     {
         //TODO: permitir no usar los nombres de las acciones
@@ -134,7 +133,7 @@ namespace CommonJobs.Mvc.UI.Controllers
             });
         }
 
-        [Authorize]
+        [CommonJobsAuthorize(Roles = "Users")]
         public ActionResult AttachmentsQuickSearch(AttachmentSearchParameters searchParameters)
         {
             var query = new SearchAttachments(searchParameters);
@@ -147,7 +146,7 @@ namespace CommonJobs.Mvc.UI.Controllers
             });
         }
 
-        [Authorize]
+        [CommonJobsAuthorize(Roles = "Users")]
         public ActionResult Index(AttachmentSearchParameters searchParameters)
         {
             return View(searchParameters ?? new AttachmentSearchParameters());
