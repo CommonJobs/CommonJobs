@@ -162,6 +162,9 @@
     <Content Include="Content\jquery.Jcrop.min.css" />
     <Content Include="Content\ListingCommon\QuickSearch.js" />
     <Content Include="Content\menu_style.css" />
+    <Content Include="Content\Tests\FileListingTest.html" />
+    <Content Include="Content\Tests\qunit\qunit.css" />
+    <Content Include="Content\Tests\qunit\qunit.js" />
     <Content Include="Scripts\jquery.Jcrop.min.js" />
     <Content Include="Scripts\url-generator.js" />
     <Content Include="Scripts\nervoustissue-uploader.js" />
