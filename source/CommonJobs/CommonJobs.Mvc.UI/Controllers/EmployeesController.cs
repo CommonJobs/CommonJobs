@@ -6,7 +6,6 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using CommonJobs.Infrastructure.Indexes;
-using CommonJobs.Mvc.UI.Models;
 using Raven.Client.Linq;
 using CommonJobs.Raven.Mvc;
 using CommonJobs.Domain;
