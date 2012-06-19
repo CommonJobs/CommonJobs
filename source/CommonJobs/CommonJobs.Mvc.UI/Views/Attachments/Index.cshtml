@@ -1,0 +1,56 @@
+﻿@model CommonJobs.Infrastructure.AttachmentSearching.AttachmentSearchParameters
+@{
+    ViewBag.Title = "Archivos | CommonJobs";
+    ScriptManager.RegisterCss(Url.Content("~/Content/ie.css"), priority: 500, htmlAttributes: new { media = "screen" }, patchCondition: "lte IE 9");
+    ScriptManager.RegisterCss(Url.Content("~/Content/1140.css"), priority: 500, htmlAttributes: new { media = "screen" });
+    ScriptManager.RegisterCss(Url.Content("~/Content/reset.css"), priority: 500);
+    ScriptManager.RegisterCss(Url.Content("~/Content/FilesListing/FilesListing.less"));
+    ScriptManager.RegisterJs(Url.Content("~/Content/ListingCommon/QuickSearch.js"));
+    ScriptManager.RegisterJs(Url.Content("~/Content/FilesListing/FilesListing.js"));
+}
+
+<script type="text/template" id="get-more-cards-template">
+    <div class="card column loading get-more-cards">
+        <p class="ready-content">Click para obtener más...</p>
+    </div>
+</script>
+
+<script type="text/template" id="card-template">
+    <% _.each(model.items, function(item) { %>
+        <div class="fileResult">
+            <img alt="File icon" class="fileIcon" src="<%= FileSearchUtilities.fileIconFromExtension(item.FileName) %>" />
+            <p class="fileTitle"><a href="<%= FileSearchUtilities.urlToFile(item.AttachmentId) %>"><%= item.FileName == null ? "(Sin nombre)" : item.FileName %></a></p>
+            <% if (item.RelatedEntity != null) { %>
+                <p class="fileRelatedTo">(<a href="<%= FileSearchUtilities.urlToRelatedEntity(item.RelatedEntity.Id, item.RelatedEntity.$type) %>"><%= item.RelatedEntity.LastName %>, <%= item.RelatedEntity.FirstName %></a>)</p>
+            <% } %>
+            <% if (item.PartialText != null) {
+                var counter = 0;
+                _.each(item.PartialText.split('\n'), function(paragraph) {
+                    if (counter++ > 5) return false; 
+                    %> <p class="fileDescription"><%= paragraph %></p> <%
+                });
+            } %>
+        </div>
+    <% }) %>
+</script>
+
+<div class="container searchContainer">
+    <h1>Archivos</h1>
+
+    <div class="row">
+        <div class="twocol"></div>
+        <div class="eightcol quickSearchContainer">
+            <form method="get" action="javascript:void(0);">
+                <div class="mainSearch">
+                    <label for="quickSearch">Búsqueda rápida:</label>
+                    <input type="text" id="quickSearch" name="Term" value="@Model.Term" />
+                    <input type="submit" id="quickSearchSubmit" value=">>" />
+                </div>
+            </form>
+            <p id="resultCountNotice">Hay <span id="resultCount">0</span> resultado(s).</p>
+        </div>
+        <div class="twocol last"></div>
+    </div>
+</div>
+<div class="results">
+</div>
