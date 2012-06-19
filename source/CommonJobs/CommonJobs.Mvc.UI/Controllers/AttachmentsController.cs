@@ -133,7 +133,7 @@ namespace CommonJobs.Mvc.UI.Controllers
             });
         }
 
-        [Authorize]
+        [CommonJobsAuthorize(Roles = "Users")]
         public ActionResult AttachmentsQuickSearch(AttachmentSearchParameters searchParameters)
         {
             var query = new SearchAttachments(searchParameters);
@@ -146,7 +146,7 @@ namespace CommonJobs.Mvc.UI.Controllers
             });
         }
 
-        [Authorize]
+        [CommonJobsAuthorize(Roles = "Users")]
         public ActionResult Index(AttachmentSearchParameters searchParameters)
         {
             return View(searchParameters ?? new AttachmentSearchParameters());

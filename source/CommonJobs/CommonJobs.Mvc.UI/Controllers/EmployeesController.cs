@@ -15,7 +15,7 @@ using CommonJobs.Infrastructure.EmployeeSearching;
 
 namespace CommonJobs.Mvc.UI.Controllers
 {
-    [Authorize]
+    [CommonJobsAuthorize(Roles="Users")]
     public class EmployeesController : CommonJobsController
     {
         //

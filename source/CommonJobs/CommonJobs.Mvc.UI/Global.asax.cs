@@ -8,6 +8,7 @@ using CommonJobs.Raven.Mvc;
 using CommonJobs.Infrastructure.Indexes;
 using CommonJobs.ContentExtraction;
 using CommonJobs.ContentExtraction.Extractors;
+using CommonJobs.Raven.Mvc.Authorize;
 
 namespace CommonJobs.Mvc.UI
 {
@@ -51,6 +52,12 @@ namespace CommonJobs.Mvc.UI
             RegisterGlobalFilters(GlobalFilters.Filters);
 
             RegisterRoutes(RouteTable.Routes);
+
+#if NO_AD
+            CommonJobsAuthorizeAttribute.AuthorizationBehavior = new ForcedGroupsFromSettingsAuthorizationBehavior("CommonJobs/FakeADGroups");
+#else
+            CommonJobsAuthorizeAttribute.AuthorizationBehavior = new PrefixFromSettingsAuthorizationBehavior("CommonJobs/ADGroupsPrefix");
+#endif
         }
     }
 }
