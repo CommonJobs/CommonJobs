@@ -33,20 +33,27 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <OutputPath>bin</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NO_AD</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DeployIisAppPath>Default Web Site</DeployIisAppPath>
     <PublishDatabases>false</PublishDatabases>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'PROD|AnyCPU'">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\</OutputPath>
+    <OutputPath>bin</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DEV|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <PropertyGroup>
     <SlowCheetahTargets Condition=" '$(SlowCheetahTargets)'=='' ">$(SolutionDir)\Libs\SlowCheetah\v1\SlowCheetah.Transforms.targets</SlowCheetahTargets>
@@ -104,11 +111,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\FilesListing\FilesListing.js" />
-    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ApplicantsController.cs" />
-    <Compile Include="Controllers\AttachmentsController.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="Controllers\AttachmentsController.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MigrationsController.cs" />
@@ -179,11 +183,14 @@
     <Content Include="Content\ListingCommon\PersonListing.less" />
     <Content Include="Content\PersonsBase.less" />
     <Content Include="Content\StylesBase.less" />
-    <Content Include="Views\Account\ChangePassword.cshtml" />
-    <Content Include="Views\Account\ChangePasswordSuccess.cshtml" />
-    <Content Include="Views\Account\LogOn.cshtml" />
     <Content Include="Views\Migrations\Index.cshtml" />
     <Content Include="Views\Shared\EnvironmentBanner.cshtml" />
+    <Content Include="Web.DEV.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.PROD.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
     <Content Include="Views\Attachments\Index.cshtml" />
     <Content Include="Content\FilesListing\FilesListing.less" />
     <Content Include="Content\ListingCommon\ListingBase.less" />
@@ -655,16 +662,6 @@
     <Content Include="Web.config">
       <SubType>Designer</SubType>
       <TransformOnBuild>true</TransformOnBuild>
-    </Content>
-    <Content Include="Web.Debug.config">
-      <DependentUpon>Web.config</DependentUpon>
-      <IsTransformFile>True</IsTransformFile>
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Web.Release.config">
-      <DependentUpon>Web.config</DependentUpon>
-      <IsTransformFile>True</IsTransformFile>
-      <SubType>Designer</SubType>
     </Content>
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />

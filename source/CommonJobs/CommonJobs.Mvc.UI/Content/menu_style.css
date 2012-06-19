@@ -37,3 +37,9 @@
 .menu :hover ul :hover ul :hover ul :hover ul,
 .menu :hover ul :hover ul :hover ul :hover ul :hover ul
 {left:90px; top:-4px; background: #fff; padding:3px 0; border:1px solid 999999; white-space:nowrap; width:93px; z-index:200; height:auto;}
+
+.menu li.username { display:block; float:right; position:relative; }
+.menu li.username span { display:block; margin: 0 auto; height:40px; line-height:33px; color:#FFF; text-decoration:none; font-size:11px; font-weight:bold; padding-right:12px; padding-left:12px;}
+
+.menu li.environmentBanner { display:block; float:right; position:relative; }
+.menu li.environmentBanner span { display:block; margin: 0 auto; height:40px; line-height:33px; color:#FFF; text-decoration:blink; font-size:11px; font-weight:bold; padding-right:12px; padding-left:12px; color:Yellow; }

@@ -24,25 +24,20 @@
     <link rel="shortcut icon" href="@Url.Content("~/Content/Images/favicon.ico")" />
 </head>
 <body>
-    <div class="page">
-        @Html.Partial("EnvironmentBanner")       
-        <div>
-            <ul class="menu">                 
-                @if (Request.IsAuthenticated)
-                {
-                    <li class="top">@Html.ActionLink(string.Format("Cerrar sesión de {0}", User.Identity.Name), "LogOff", "Account", null, new { @class = "top_link" })</li>
-                    <li class="top">@Html.ActionLink("Cambiar contraseña", "ChangePassword", "Account", null, new { @class = "top_link" })</li>
-                    <li class="top">@Html.ActionLink("Postulantes", "Index", "Applicants", null, new { @class = "top_link" })</li>
-                    <li class="top">@Html.ActionLink("Empleados", "Index", "Employees", null, new { @class = "top_link" })</li>
-                    <li class="top">@Html.ActionLink("Archivos", "Index", "Attachments", null, new { @class = "top_link" })</li>
-                }
-                @if (!Request.IsAuthenticated)
-                {
-                    <li class="top"> @Html.ActionLink("Iniciar sesión", "LogOn", "Account", null, new { @class = "top_link" })</li>
-                }
-            </ul>
-        </div>
-        @RenderBody()
-    </div>
+	<div class="page">
+		<div>
+			<ul class="menu">                 
+				<li class="top">  @Html.ActionLink("Postulantes", "Index", "Applicants", null, new { @class = "top_link" }) </li>       
+				<li class="top">  @Html.ActionLink("Empleados", "Index", "Employees", null, new { @class = "top_link" }) </li>
+				@Html.Partial("EnvironmentBanner")
+				@if (Request.IsAuthenticated && User != null && User.Identity != null && User.Identity.Name != null) 
+				{
+					//TODO: verify if the `if` is really necessary
+					<li class="username"><span>@User.Identity.Name</span></li>
+				}
+			</ul>
+		</div>
+		@RenderBody()  
+	 </div>     
 </body>
 </html>
