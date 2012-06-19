@@ -7,7 +7,6 @@ using CommonJobs.Raven.Mvc;
 
 namespace CommonJobs.Mvc.UI.Controllers
 {
-    [CommonJobsAuthorize]
     public class HomeController : Controller
     {
         //
