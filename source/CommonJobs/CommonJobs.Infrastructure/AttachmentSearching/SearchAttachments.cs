@@ -28,7 +28,7 @@ namespace CommonJobs.Infrastructure.AttachmentSearching
                 .ApplyPagination(Parameters);
 
             if (!string.IsNullOrWhiteSpace(Parameters.Term))
-                query = query.Where(x => x.FullText.StartsWith(Parameters.Term) || x.FileName.StartsWith(Parameters.Term));
+                query = query.Where(x => x.FullText.Any(y => y.StartsWith(Parameters.Term)));
 
             if (Parameters.Orphans == OrphansMode.NoOrphans)
                 query = query.Where(x => !x.IsOrphan);

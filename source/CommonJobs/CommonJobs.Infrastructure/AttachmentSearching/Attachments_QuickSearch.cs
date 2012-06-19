@@ -16,7 +16,7 @@ namespace CommonJobs.Infrastructure.AttachmentSearching
         public class Projection
         {
             public string AttachmentId { get; set; }
-            public string FullText { get; set; }
+            public string[] FullText { get; set; }
             public string PartialText { get; set; }
             public string ContentType { get; set; }
             public string FileName { get; set; }
@@ -51,7 +51,7 @@ namespace CommonJobs.Infrastructure.AttachmentSearching
                     FullText = new string[] { entity.LastName, entity.FirstName, entity.Id, entity.Email, entity.Platform },
                     PartialText = (string) null,
                     ContentType = (string)null,
-                    FileName = (string) attachmentReference.FileName,
+                    FileName = (string)null,
                     RelatedEntityId = (string)null,
                     ContentExtractorConfigurationHash = (string)null,
                     IsOrphan = false
@@ -66,7 +66,7 @@ namespace CommonJobs.Infrastructure.AttachmentSearching
                     FullText = new string[] { entity.LastName, entity.FirstName, entity.Id, entity.Email },
                     PartialText = (string)null,
                     ContentType = (string)null,
-                    FileName = (string) attachmentReference.FileName,
+                    FileName = (string)null,
                     RelatedEntityId = (string)null,
                     ContentExtractorConfigurationHash = (string)null,
                     IsOrphan = false
@@ -77,7 +77,7 @@ namespace CommonJobs.Infrastructure.AttachmentSearching
                              select new
                              {
                                 AttachmentId = g.Key,
-                                FullText = g.Select(x => x.FullText).ToArray(),
+                                FullText = g.SelectMany(x => x.FullText).ToArray(),
                                 PartialText = g.Select(x => x.PartialText).FirstOrDefault(x => x != null),
                                 ContentType = g.Select(x => x.ContentType).FirstOrDefault(x => x != null),
                                 FileName = g.Select(x => x.FileName).FirstOrDefault(x => x != null),
@@ -87,8 +87,7 @@ namespace CommonJobs.Infrastructure.AttachmentSearching
                              };
 
             Index(x => x.FullText, FieldIndexing.Analyzed);
-            Index(x => x.PartialText, FieldIndexing.Analyzed);
-            Index(x => x.FileName, FieldIndexing.Analyzed);
+            Index(x => x.PartialText, FieldIndexing.No);
         }
     }
 }
