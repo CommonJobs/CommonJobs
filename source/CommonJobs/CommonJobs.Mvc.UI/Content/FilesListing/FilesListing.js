@@ -47,6 +47,8 @@ var FileSearchUtilities = {
         return urlGenerator.content("Images/filetypes/" + iconName + ".png");
     },
     urlToRelatedEntity: function (relatedEntityId, relatedEntityType) {
+        if (relatedEntityId == null) return null;
+
         if (relatedEntityType.indexOf("Applicant") != -1) {
             return urlGenerator.action("Edit", "Applicants", relatedEntityId);
         }
