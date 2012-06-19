@@ -20,6 +20,7 @@ TestResults
 *~
 App_Data
 [Tt]humbs.db
+.DS_Store
 
 #RavenDB server //TODO: enhance it
 Data

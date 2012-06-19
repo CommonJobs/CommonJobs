@@ -24,17 +24,20 @@
     <link rel="shortcut icon" href="@Url.Content("~/Content/Images/favicon.ico")" />
 </head>
 <body>
-        <div class="page">
-            
-            <div>
-                <ul class="menu">                 
-                    <li class="top">  @Html.ActionLink("Postulantes", "Index", "Applicants", null, new { @class = "top_link" }) </li>       
-                    <li class="top">  @Html.ActionLink("Empleados", "Index", "Employees", null, new { @class = "top_link" }) </li>
-                    @Html.Partial("EnvironmentBanner")
-                    <li class="username"><span>@User.Identity.Name</span></li>
-                </ul>
-            </div>
-            @RenderBody()  
-         </div>     
+	<div class="page">
+		<div>
+			<ul class="menu">                 
+				<li class="top">  @Html.ActionLink("Postulantes", "Index", "Applicants", null, new { @class = "top_link" }) </li>       
+				<li class="top">  @Html.ActionLink("Empleados", "Index", "Employees", null, new { @class = "top_link" }) </li>
+				@Html.Partial("EnvironmentBanner")
+				@if (Request.IsAuthenticated && User != null && User.Identity != null && User.Identity.Name != null) 
+				{
+					//TODO: verify if the `if` is really necessary
+					<li class="username"><span>@User.Identity.Name</span></li>
+				}
+			</ul>
+		</div>
+		@RenderBody()  
+	 </div>     
 </body>
 </html>

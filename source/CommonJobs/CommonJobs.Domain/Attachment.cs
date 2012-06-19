@@ -8,6 +8,7 @@ namespace CommonJobs.Domain
 {
     public class Attachment
     {
+        //TODO: Agregar fecha de subida del archivo y tal vez tambien de los metadatos
         public string Id { get; set; }
         public string RelatedEntityId { get; set; }
         public string FileName { get; set; }

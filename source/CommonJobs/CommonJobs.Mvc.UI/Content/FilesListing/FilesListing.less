@@ -1,0 +1,41 @@
+﻿@import "../StylesBase.less";
+@import "../ListingCommon/ListingBase.less";
+
+.fileDescription {
+	margin-top: 0.5em;
+}
+
+.fileIcon {
+	float: left;
+	display: inline;
+	height: 100px;
+	width: 100px;
+}
+
+.fileRelatedTo {
+	display: inline;
+}
+
+.fileResult {
+	clear: both;
+	margin: 1em 1em 0 1em;
+	min-height: 100px;
+	padding: 0.5em 0;
+
+	&:hover {
+		background-color: @color_primary_lighter;
+		cursor: pointer;
+	}
+}
+
+.fileTitle {
+	display: inline;
+	font-family: Cambria;
+	font-size: 1.5em;
+	font-weight: bold;
+
+	a {
+		color: black;
+		text-decoration: none;
+	}
+}

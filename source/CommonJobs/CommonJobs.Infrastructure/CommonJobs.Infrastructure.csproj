@@ -64,6 +64,10 @@
     <Compile Include="ApplicantSearching\SearchApplicants.cs" />
     <Compile Include="AttachmentIndexing\GetNotIndexedAttachments.cs" />
     <Compile Include="AttachmentIndexing\IndexAttachment.cs" />
+    <Compile Include="AttachmentSearching\AttachmentSearchParameters.cs" />
+    <Compile Include="AttachmentSearching\AttachmentSearchResult.cs" />
+    <Compile Include="AttachmentSearching\OrphansMode.cs" />
+    <Compile Include="AttachmentSearching\SearchAttachments.cs" />
     <Compile Include="AttachmentStorage\ReadAttachment.cs" />
     <Compile Include="AttachmentStorage\SaveAttachment.cs" />
     <Compile Include="AttachmentStorage\SavePhotoAttachments.cs" />
@@ -72,10 +76,10 @@
     <Compile Include="EmployeeSearching\EmployeeSearchResult.cs" />
     <Compile Include="EmployeeSearching\EmployeeSearchParameters.cs" />
     <Compile Include="EmployeeSearching\SearchEmployees.cs" />
-    <Compile Include="Indexes\Attachments_ByContentExtractorConfigurationHash.cs" />
-    <Compile Include="Indexes\Attachments_QuickSearch.cs" />
+    <Compile Include="AttachmentIndexing\Attachments_ByContentExtractorConfigurationHash.cs" />
+    <Compile Include="AttachmentSearching\Attachments_QuickSearch.cs" />
     <Compile Include="EmployeeSearching\Employee_QuickSearch.cs" />
-    <Compile Include="Indexes\NullIndex.cs" />
+    <Compile Include="NullIndex.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
