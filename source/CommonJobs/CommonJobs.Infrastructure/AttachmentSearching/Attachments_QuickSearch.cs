@@ -49,9 +49,9 @@ namespace CommonJobs.Infrastructure.AttachmentSearching
                 {
                     AttachmentId = attachmentReference.Id,
                     FullText = new string[] { entity.LastName, entity.FirstName, entity.Id, entity.Email, entity.Platform },
-                    PartialText = (string)null,
+                    PartialText = (string) null,
                     ContentType = (string)null,
-                    FileName = (string)null,
+                    FileName = (string) attachmentReference.FileName,
                     RelatedEntityId = (string)null,
                     ContentExtractorConfigurationHash = (string)null,
                     IsOrphan = false
@@ -66,7 +66,7 @@ namespace CommonJobs.Infrastructure.AttachmentSearching
                     FullText = new string[] { entity.LastName, entity.FirstName, entity.Id, entity.Email },
                     PartialText = (string)null,
                     ContentType = (string)null,
-                    FileName = (string)null,
+                    FileName = (string) attachmentReference.FileName,
                     RelatedEntityId = (string)null,
                     ContentExtractorConfigurationHash = (string)null,
                     IsOrphan = false
@@ -87,7 +87,8 @@ namespace CommonJobs.Infrastructure.AttachmentSearching
                              };
 
             Index(x => x.FullText, FieldIndexing.Analyzed);
-            Index(x => x.PartialText, FieldIndexing.No);
+            Index(x => x.PartialText, FieldIndexing.Analyzed);
+            Index(x => x.FileName, FieldIndexing.Analyzed);
         }
     }
 }
