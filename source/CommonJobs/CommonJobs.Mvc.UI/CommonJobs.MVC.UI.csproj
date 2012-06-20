@@ -128,6 +128,7 @@
     <Content Include="Content\EditApplicant\EditApplicant.js" />
     <Content Include="Content\EditEmployee\uploadAvatar.png" />
     <Content Include="Content\EmployeesListing\EmployeesListing.js" />
+    <Content Include="Content\Images\Actions-go-next-view-page-icon.png" />
     <Content Include="Content\Images\ajax-loader.gif" />
     <Content Include="Content\Images\arrow.gif" />
     <Content Include="Content\Images\arrow_over.gif" />
