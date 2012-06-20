@@ -39,3 +39,42 @@
 		text-decoration: none;
 	}
 }
+
+
+.get-more-cards .fileTitle
+{
+	font-style: italic;
+}
+
+.get-more-cards
+{
+	clear: both;
+	margin: 1em 1em 0 1em;
+	min-height: 100px;
+	padding: 0.5em 0;
+}
+
+.get-more-cards div 
+{
+	height: 60px;
+	margin: 1em 120px;
+}
+
+.get-more-cards.ready
+{
+	&:hover {
+		background-color: @color_primary_lighter;
+		cursor: pointer;
+	}
+}
+
+.get-more-cards.loading .ready-content
+{
+	display: none;
+}
+
+.get-more-cards.loading div {
+   background-image: url("../../Content/Images/ajax-loader.gif");
+   background-position: left center;
+   background-repeat: no-repeat;
+}

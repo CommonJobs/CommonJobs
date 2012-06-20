@@ -38,6 +38,7 @@ namespace CommonJobs.Mvc.UI.Controllers
                 return File(stream, attachment.ContentType);                
         }
 
+        [CommonJobsAuthorize(Roles = "Users")]
         public ActionResult CropImageAttachment(string id, int x, int y, int width, int height)
         {
             // get image
@@ -72,7 +73,7 @@ namespace CommonJobs.Mvc.UI.Controllers
         }
 
         [HttpPost]
-        [Authorize]
+        [CommonJobsAuthorize(Roles = "Users")]
         public ActionResult Post(string id)
         {
             var entity = RavenSession.Load<object>(id);
@@ -88,7 +89,7 @@ namespace CommonJobs.Mvc.UI.Controllers
             return Json(new { success = true, attachment = attachment });
         }
 
-        [Authorize]
+        [CommonJobsAuthorize(Roles = "Migrators")]
         public ActionResult CleanAttachmentIndexInformation()
         {
             //TODO: revisar si funciona ilimitados documentos
@@ -114,7 +115,7 @@ namespace CommonJobs.Mvc.UI.Controllers
             return Json(new { ok = true });
         }
 
-        [Authorize]
+        [CommonJobsAuthorize(Roles = "Migrators")]
         public ActionResult IndexAttachments(int quantity = 10)
         {
             var stopwatch = new Stopwatch();
