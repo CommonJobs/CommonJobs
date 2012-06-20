@@ -15,8 +15,8 @@ QuickSearchPage.prototype = {
         resultCountSelector: "#resultCount",
         cardTemplateSelector: "#card-template",
         addnewCardTemplateSelector: "#add-new-card-template",
-        getMoreCardsTemplateSelector: "#get-more-cards-template",
-        getMoreCardsSelector: ".get-more-cards",
+        getMoreCardsTemplateSelector: "#get-more-items-template",
+        getMoreCardsSelector: ".get-more-items",
         readyClass: "ready",
         loadingClass: "loading"
     },
