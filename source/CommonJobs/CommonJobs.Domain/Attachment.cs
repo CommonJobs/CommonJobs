@@ -8,7 +8,8 @@ namespace CommonJobs.Domain
 {
     public class Attachment
     {
-        //TODO: Agregar fecha de subida del archivo y tal vez tambien de los metadatos
+        public const string AttachmentIdPrefix = "attachments";
+        public DateTime UploadDate { get; set; }
         public string Id { get; set; }
         public string RelatedEntityId { get; set; }
         public string FileName { get; set; }
@@ -18,13 +19,14 @@ namespace CommonJobs.Domain
 
         public Attachment()
         {
-            //TODO: verify if it empty constructor is really necessary for RavenDB
+            //for RavenDB materialization
         }
 
         public Attachment(string relatedEntityId, string filename)
         {
             RelatedEntityId = relatedEntityId;
-            Id = string.Format("{0}/{1}", RelatedEntityId, Guid.NewGuid().ToString());
+            UploadDate = DateTime.Now;
+            Id = string.Format("{0}/{1}/{2}", AttachmentIdPrefix, RelatedEntityId, Guid.NewGuid().ToString());
             FileName = filename;
             ContentType = GetContentTypeFromExtension(Path.GetExtension(FileName));
         }

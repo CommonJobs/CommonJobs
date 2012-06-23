@@ -9,15 +9,21 @@ namespace CommonJobs.Raven.Migrations
     [AttributeUsage(AttributeTargets.Class)]
     public sealed class MigrationAttribute : Attribute
     {
-        public string Id { get; private set; }
-        public string Description { get; private set; }
-
-        public MigrationAttribute(string id)
+        public string Id 
         {
-            Id = id;
+            get { return ObsoleteId ? Key : "MigrationDescriptors/" + Key; }
         }
 
-        public MigrationAttribute(string id, string description) : this(id)
+        public string Key { get; private set; }
+        public string Description { get; private set; }
+        public bool ObsoleteId { get; set; }
+
+        public MigrationAttribute(string key)
+        {
+            Key = key;
+        }
+
+        public MigrationAttribute(string key, string description) : this(key)
         {
             Description = description;
         }
