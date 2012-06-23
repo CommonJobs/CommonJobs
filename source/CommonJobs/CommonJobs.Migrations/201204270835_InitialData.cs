@@ -10,7 +10,7 @@ using CommonJobs.Domain;
 
 namespace CommonJobs.Migrations
 {
-    [Migration("201204270835", "Fill database with sample data")]
+    [Migration("201204270835", "Fill database with sample data", ObsoleteId = true)]
     public class InitialData : Migration
     {
         public override void Up()

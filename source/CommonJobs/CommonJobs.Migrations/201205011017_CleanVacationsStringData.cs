@@ -10,7 +10,7 @@ using CommonJobs.Domain;
 
 namespace CommonJobs.Migrations
 {
-    [Migration("201205011017", "Clean vacations string data")]
+    [Migration("201205011017", "Clean vacations string data", ObsoleteId=true)]
     public class CleanVacationsStringData : Migration
     {
         const string UpBackupKey = "MigrationBackup_Up_201205011017_CleanVacationsStringData";

@@ -9,7 +9,7 @@ using Raven.Json.Linq;
 
 namespace CommonJobs.Migrations
 {
-    [Migration("201205220859", "Employee.Certification String => List<String>")]
+    [Migration("201205220859", "Employee.Certification String => List<String>", ObsoleteId = true)]
     public class EmployeeCertificationsToList : Migration
     {
         const int PageSize = 64;
