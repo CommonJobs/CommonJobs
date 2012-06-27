@@ -17,8 +17,7 @@
 * Los archivos .less no se están incluyendo en el deploy (bug).
 * En los listados mostrar Apellido, Nombre.
 * Ordenar employees alfabéticamente.
-* UI específica para buscar archivos adjuntos de cualquier entidad del 
-sistema.
+* UI específica para buscar archivos adjuntos de cualquier entidad del sistema.
 * Buscar archivos adjuntos (backend side).
 * Utilizar Active Directory para administrar usuarios y permisos.
 * Revisar el comportamiento y el estilo del botón de obtener más en el listado de archivos.
