@@ -8,7 +8,6 @@
 ## Grupo 1
 
 * (40) Como usuario del sistema, me gustaría poder leer información de los perfiles de mis contactos en LinkedIn para poder manejar mi base de contactos como postulantes de forma eficiente.
-* (50) Como usuario del sistema, me gustaría poder obtener información de postulantes desde LinkedIn, para poder facilitar el proceso de importación de datos.
 
 ## Grupo 2
 
