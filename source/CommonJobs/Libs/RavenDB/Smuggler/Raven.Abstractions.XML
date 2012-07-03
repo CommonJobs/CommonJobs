@@ -665,6 +665,11 @@
             use the Cutoff date option, instead.
             </remarks>
         </member>
+        <member name="P:Raven.Abstractions.Data.IndexQuery.DefaultField">
+            <summary>
+            The default field to use when querying directly on the Lucene query
+            </summary>
+        </member>
         <member name="P:Raven.Abstractions.Data.IndexQuery.SkipTransformResults">
             <summary>
             If set to true, RavenDB won't execute the transform results function
@@ -710,7 +715,7 @@
             <summary>
             Gets or sets the radius.
             </summary>
-            <value>The radius.</value>
+            <value>The radius, in miles.</value>
         </member>
         <member name="T:Raven.Abstractions.Data.StringDistanceTypes">
             <summary>
@@ -805,6 +810,26 @@
             </summary>
             <value>The timeout.</value>
         </member>
+        <member name="T:Raven.Abstractions.Extensions.ExceptionExtensions">
+            <summary>
+             Extension methods to handle common scenarios
+            </summary>
+        </member>
+        <member name="M:Raven.Abstractions.Extensions.ExceptionExtensions.ExtractSingleInnerException(System.AggregateException)">
+            <summary>
+            Recursively examines the inner exceptions of an <see cref="T:System.AggregateException"/> and returns a single child exception.
+            </summary>
+            <returns>
+            If any of the aggregated exceptions have more than one inner exception, null is returned.
+            </returns>
+        </member>
+        <member name="M:Raven.Abstractions.Extensions.ExceptionExtensions.SimplifyError(System.Exception)">
+            <summary>
+            Extracts a portion of an exception for a user friendly display
+            </summary>
+            <param name="e">The exception.</param>
+            <returns>The primary portion of the exception message.</returns>
+        </member>
         <member name="T:Raven.Abstractions.Exceptions.ConcurrencyException">
             <summary>
             This exception is raised when a concurrency conflict is encountered
@@ -865,7 +890,6 @@
             <summary>
              Turn an expression like x=&lt; x.User.Name to "User.Name"
             </summary>
-            <param name="expr">Expression for member access</param>
         </member>
         <member name="T:Raven.Abstractions.Extensions.JsonExtensions">
             <summary>
@@ -2621,6 +2645,18 @@
             Gets or sets the id.
             </summary>
             <value>The id.</value>
+        </member>
+        <member name="P:Raven.Abstractions.Smuggler.SmugglerOptions.File">
+            <summary>
+            A file to write to when doing an export or read from when doing an import.
+            </summary>
+        </member>
+        <member name="P:Raven.Abstractions.Smuggler.SmugglerOptions.OperateOnTypes">
+            <summary>
+            Specify the types to operate on. You can specify more than one type by combining items with the OR parameter.
+            Default is all items.
+            Usage example: OperateOnTypes = ItemType.Indexes | ItemType.Documents | ItemType.Attachments.
+            </summary>
         </member>
     </members>
 </doc>

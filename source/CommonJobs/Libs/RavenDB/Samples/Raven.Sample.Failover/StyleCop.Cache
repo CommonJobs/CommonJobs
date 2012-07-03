@@ -2,41 +2,41 @@
   <version>11</version>
   <sourcecode name=".NETFramework,Version=v4.0,Profile=Client.AssemblyAttributes.cs" parser="StyleCop.CSharp.CsParser">
     <settings>
-      <timestamp>04/30/2012 08:40:40</timestamp>
-      <milliseconds>518</milliseconds>
+      <timestamp>07/02/2012 08:14:13</timestamp>
+      <milliseconds>219</milliseconds>
     </settings>
-    <timestamp>01/16/2012 09:25:22</timestamp>
-    <milliseconds>334</milliseconds>
+    <timestamp>06/25/2012 07:53:04</timestamp>
+    <milliseconds>687</milliseconds>
     <violations />
   </sourcecode>
   <sourcecode name="User.cs" parser="StyleCop.CSharp.CsParser">
     <settings>
-      <timestamp>04/30/2012 08:40:40</timestamp>
-      <milliseconds>518</milliseconds>
+      <timestamp>07/02/2012 08:14:13</timestamp>
+      <milliseconds>219</milliseconds>
     </settings>
-    <timestamp>04/30/2012 08:40:40</timestamp>
-    <milliseconds>490</milliseconds>
+    <timestamp>07/02/2012 08:14:13</timestamp>
+    <milliseconds>184</milliseconds>
     <violations />
   </sourcecode>
   <sourcecode name="Program.cs" parser="StyleCop.CSharp.CsParser">
     <settings>
-      <timestamp>04/30/2012 08:40:40</timestamp>
-      <milliseconds>518</milliseconds>
+      <timestamp>07/02/2012 08:14:13</timestamp>
+      <milliseconds>219</milliseconds>
     </settings>
-    <timestamp>04/30/2012 08:40:40</timestamp>
-    <milliseconds>488</milliseconds>
+    <timestamp>07/02/2012 08:14:13</timestamp>
+    <milliseconds>181</milliseconds>
     <violations />
   </sourcecode>
-  <project key="-1348123436">
+  <project key="1234788498">
     <configuration>DEBUG;TRACE</configuration>
   </project>
   <sourcecode name="CommonAssemblyInfo.cs" parser="StyleCop.CSharp.CsParser">
     <settings>
-      <timestamp>04/30/2012 08:40:40</timestamp>
-      <milliseconds>518</milliseconds>
+      <timestamp>07/02/2012 08:14:13</timestamp>
+      <milliseconds>219</milliseconds>
     </settings>
-    <timestamp>04/30/2012 11:35:09</timestamp>
-    <milliseconds>543</milliseconds>
+    <timestamp>07/03/2012 09:00:45</timestamp>
+    <milliseconds>598</milliseconds>
     <violations />
   </sourcecode>
 </stylecopresultscache>
