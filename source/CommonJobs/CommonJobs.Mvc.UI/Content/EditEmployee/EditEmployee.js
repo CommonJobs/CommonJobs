@@ -333,6 +333,7 @@
                 SharedLinks:
                 {
                     controlLink: "Collection",
+                    subtemplate: _.template('<li><button class="remove-button">&#x2717;</button><span class="editable-field" data-bind="item"></span></li>'),
                     item: {
                         controlLink: "Compound",
                         template: _.template('<span data-bind="Link"></span> (<span data-bind="ExpirationDate"></span>)'),
