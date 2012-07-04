@@ -74,6 +74,7 @@
         initialize: function () {
             this.initCollectionField("Notes", App.Notes);
             this.initCollectionField("Certifications");
+            this.initCollectionField("SharedLinks");
 
             //TODO: move related logic to App.Salary and App.Salaries models
             this.initCollectionField("SalaryChanges", App.Notes);
@@ -328,6 +329,19 @@
                 {
                     controlLink: "Collection",
                     item: { controlLink: "Text", name: "description", field: "Description" }
+                },
+                SharedLinks:
+                {
+                    controlLink: "Collection",
+                    item: {
+                        controlLink: "Compound",
+                        template: _.template('<span data-bind="Link"></span> (<span data-bind="ExpirationDate"></span>)'),
+                        items:
+                        [
+                            { controlLink: "LinkEditableText", name: "Link", dataLink: "UrlLink", textField: "FriendlyName", urlField: "Url" },
+                            { controlLink: "Date", name: "ExpirationDate", field: "ExpirationDate" }
+                        ]
+                    }
                 }
             }
     });

@@ -60,6 +60,7 @@
     <Compile Include="ImageAttachment.cs" />
     <Compile Include="MaritalStatus.cs" />
     <Compile Include="Person.cs" />
+    <Compile Include="SharedLink.cs" />
     <Compile Include="SimpleNote.cs" />
     <Compile Include="Event.cs" />
     <Compile Include="Employee.cs" />

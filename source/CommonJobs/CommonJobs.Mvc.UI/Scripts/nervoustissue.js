@@ -152,6 +152,31 @@
             }
         });
 
+        // Nervoustissue.DataLinking.UrlLink
+        // ---------------------------------------------
+
+        m.UrlLink = m.Model.extend({
+            read: function () {
+                return {
+                    url: this.model.get(this.urlField),
+                    text: this.model.get(this.textField)
+                }
+            },
+            write: function (newText, newUrl) {
+                newUrl = newUrl || this.model.get(this.urlField);
+                newText = newText || this.model.get(this.textField);
+
+                var obj = {};
+                obj[this.urlField] = newUrl;
+                obj[this.textField] = newText;
+                this.model.set(obj);
+            },
+            onChange: function (action, context) {
+                this.viewDataBinder.registerModelEvent(this.model, "change:" + this.urlField, action, context);
+                this.viewDataBinder.registerModelEvent(this.model, "change:" + this.textField, action, context);
+            }
+        });
+
         // Nervoustissue.DataLinking.FullName
         // ---------------------------------------------
 
@@ -307,7 +332,6 @@
                 }
             }
         });
-
 
         // Nervoustissue.UILinking.BaseModel
         // ------------------------------------
@@ -564,6 +588,31 @@
                 //TODO: Acá estoy llamando al onKeyPress de Text, tiene que haber una forma mejor 
                 this.base
                 this.__proto__.__proto__.onKeyPress.call(this, e);
+            }
+        });
+
+        m.LinkEditableText = m.Text.extend({
+            template: _.template('<span class="view-editable-empty"><a href="#">(Sin datos)</a> <span class="icon-edit">E</span></span><span class="view-editable"><a href="<%= url %>" style="display: none;"><%= text %></a> <span class="icon-edit">E</span></span><input class="editor-editable" type="text" value="" style="display: none;"/>'),
+            bindUI: function () {
+                var me = this;
+                me.$el.on("click", ".view-editable .icon-edit,.view-editable-empty icon-edit", null, function () {
+                    me.onEditableClick();
+                });
+                me.$el.on("keyup", ".editor-editable", null, function (e) {
+                    me.onKeyUp(e);
+                });
+                me.$el.on("keypress", ".editor-editable", null, function (e) {
+                    me.onKeyPress(e);
+                });
+            },
+            getTemplateModel: function () {
+                return this.linkedData.read();
+            },
+            valueToContent: function (value) {
+                return _.template('<span class="view-editable"><a href="<%= url %>"><%= text %></a> <span class="icon-edit">E</span></span>', value);
+            },
+            refreshEdit: function (value) {
+                this.$editor.val(value.text);
             }
         });
 

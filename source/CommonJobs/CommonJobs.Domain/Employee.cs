@@ -125,5 +125,18 @@ namespace CommonJobs.Domain
         {
             get { return base.AllAttachmentReferences.Union(Notes.EmptyIfNull().Select(x => x.Attachment)).Where(x => x != null); }
         }
+
+        public IEnumerable<SharedLink> SharedLinks
+        {
+            get 
+            {
+                return new List<SharedLink>()
+                {
+                    new SharedLink() { ExpirationDate = new DateTime(2012, 5, 22), FriendlyName = "Sergio", Url = "http://commonjobs.myserver.com/SharedLink/8273973" },
+                    new SharedLink() { ExpirationDate = new DateTime(2012, 5, 10), FriendlyName = "Link 2", Url = "http://commonjobs.myserver.com/SharedLink/4588152" },
+                    new SharedLink() { ExpirationDate = new DateTime(2012, 6, 10), FriendlyName = "JD", Url = "http://commonjobs.myserver.com/SharedLink/8273973" },
+                };
+            }
+        }
     }
 }
