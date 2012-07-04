@@ -106,6 +106,18 @@ Para configurar la seguridad del sistema se crearán los grupos `LAN-SERVER-NAME
 
 ![ ](Images/RavenConfig_PROD.jpg)
 
+#### Instalación de los servicios
+
+La instalación de los servicios se realizará desde la línea de comandos de la siguiente manera:
+
+    CD {DEV_Physical_Path}
+    Raven.Server.exe --service-name="RavenDB CommonJobs DEV" --install
+
+    CD {PROD_Physical_Path}
+    Raven.Server.exe --service-name="RavenDB CommonJobs PROD" --install
+
+_Nota_: El key `Raven/WindowsServiceName` que se muestra en las capturas de pantalla está obsoleto.
+
 ## Firewall
 
 Mediante Windows Firewall vamos a limitar el acceso a los diferentes servicios.
