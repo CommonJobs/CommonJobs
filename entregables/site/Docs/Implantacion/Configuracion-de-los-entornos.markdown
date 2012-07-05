@@ -7,6 +7,7 @@ Por cuestiones de seguridad, se han reemplazado algunos identificadores por las 
 * `LAN-SERVER-NAME`
 * `LAN-SERVER-IP`
 * `DNS-SERVER-NAME`
+* `AD-DOMAIN-NAME`
 
 También se han ocultado en las capturas de pantalla.
 
@@ -29,9 +30,11 @@ Los servicios de base de datos correrán en el mismo servidor. El servicio corre
 
 Para configurar la seguridad del sistema se crearán los grupos `LAN-SERVER-NAME\CommonJobsDEV` y `LAN-SERVER-NAME\CommonJobsPROD` que representarán los usuarios admitidos para acceder al sistema de archivos y a la base de datos de cada entorno. Los usuarios `LAN-SERVER-NAME\CommonJobsDEVUsr` y `LAN-SERVER-NAME\CommonJobsPRODUsr` corresponden a los usuarios de los Application Pool que ejecutarán la aplicación .NET en cada uno de los entornos, en las siguientes secciones se verán más detalles relacionados.
 
+* Grupo `AD-DOMAIN-NAME\CommonJobsDEV`
+   * Usuarios de dominio correspondientes a los desarrolladores del sistema.
 * Grupo `LAN-SERVER-NAME\CommonJobsDEV`
    * Usuario `LAN-SERVER-NAME\CommonJobsDEVUsr`
-   * Usuarios de dominio correspondientes a los desarrolladores del sistema.
+   * Grupo `AD-DOMAIN-NAME\CommonJobsDEV`
 * Grupo `LAN-SERVER-NAME\CommonJobsPROD`
    * Usuario `LAN-SERVER-NAME\CommonJobsPRODUsr`
    * Usuarios de dominio correspondientes a los administradores del sistema.

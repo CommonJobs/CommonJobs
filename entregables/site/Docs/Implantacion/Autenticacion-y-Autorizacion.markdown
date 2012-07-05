@@ -10,7 +10,7 @@ Actualmente el sistema verifica los siguientes roles (_Este documento será actu
 
 ## Active Directory
 
-Los roles del sistema se corresponderán con grupos de Active Directory del dominio CS según el entorno:
+Los roles del sistema se corresponderán con grupos de Active Directory del dominio de la empresa, según el entorno:
 
 * Entorno `PROD`: Se utilizará el prefijo `CommonJobs_`. Estos grupos serán administrados por el cliente como mejor lo considere.
   * Grupo `CommonJobs_Migrators`, sugerimos que se le asigne a quien realiza el despliegue de la aplicación y tal vez a un usuario del sistema o un desarrollador.
@@ -18,8 +18,8 @@ Los roles del sistema se corresponderán con grupos de Active Directory del domi
 * Entorno `DEV`: Se utilizará el prefijo `CommonJobsDEV_`.
   * Grupo `CommonJobsDEV_Migrators` 
      * Asignado al grupo `CommonJobsDEV`, para que los desarrolladores puedan acceder a las migraciones del entorno `DEV`.
-     * Asignado al grupo `CommonJobsDEV_Migrators`, para que quienes realizan las migraciones en `PROD` puedan hacer pruebas en `DEV`.
+     * Asignado al grupo `CommonJobs_Migrators`, para que quienes realizan las migraciones en `PROD` puedan hacer pruebas en `DEV`.
   * `CommonJobsDEV_Users`
      * Asignado al grupo `CommonJobsDEV`, para que los desarrolladores puedan acceder al entorno `DEV`.
-     * Asignado al grupo `CommonJobsDEV_Users`, para que quienes utilizan el sistema en `PROD` puedan hacer pruebas en `DEV`.
+     * Asignado al grupo `CommonJobs_Users`, para que quienes utilizan el sistema en `PROD` puedan hacer pruebas en `DEV`.
 
