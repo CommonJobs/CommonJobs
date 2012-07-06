@@ -57,6 +57,9 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Raven.Abstractions">
+      <HintPath>..\..\Client\Raven.Abstractions.dll</HintPath>
+    </Reference>
     <Reference Include="Raven.Client.Lightweight">
       <HintPath>..\..\Bundles\Raven.Client.Lightweight.dll</HintPath>
     </Reference>
