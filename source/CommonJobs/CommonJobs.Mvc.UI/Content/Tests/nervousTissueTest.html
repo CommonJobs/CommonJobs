@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>FileListing.js unit tests</title>
+    <link href="qunit/qunit.css" media="screen" rel="stylesheet" />
+    
+    <script src="../../Scripts/jquery-1.7.1.js" type="text/javascript"></script>
+    <script src="../../Scripts/jquery-ui-1.8.17.js" type="text/javascript"></script>
+    <script src="../../Scripts/underscore.js" type="text/javascript"></script>
+    <!--<script src="../../Scripts/url-generator.js" type="text/javascript"></script>-->
+    <script src="qunit/qunit.js" type="text/javascript"></script>
+
+    <script src="../../Scripts/jquery.globalize/globalize.js" type="text/javascript"></script>
+    <script src="../../Scripts/jquery.globalize/cultures/globalize.culture.es-AR.js" type="text/javascript"></script>
+    <script src="../../Scripts/jquery.globalize/cultures/globalize.culture.es.js" type="text/javascript"></script>
+    <script src="../../Scripts/backbone.js" type="text/javascript"></script>
+    <script src="../../Scripts/nervoustissue.js" type="text/javascript"></script>
+
+    <script>
+        $(function () {
+            module("NervousTissue.UILinking.Date", {
+                setup: function () {
+                    this.$container = $('<div />').append('<span data-bind="date" />');
+
+                    var DataBinder = Nervoustissue.FormBinder.extend({
+                        dataBindings: {
+                            date: {
+                                controlLink: "Date",
+                                name: "date",
+                                field: "date"
+                            }
+                        }
+                    });
+                    var DateModel = Backbone.Model.extend({
+                        defaults: function() {
+                            return {
+                                date: "2012-07-04"
+                            };
+                        },
+                        initialize: function () {
+                        }
+                    });
+                    var dateModel = new DateModel({ date: "2012-07-04" });
+                    this.dataBinder = new DataBinder({ el: this.$container[0], model: dateModel });
+                    //this.date = new Nervoustissue.UILinking.Date({ el: this.$container[0] });
+                    //this.date.el = this.$container[0];
+                    //this.date.render();
+                }
+            });
+            test("internal views", function () {
+                notEqual(this.$container.find('.view-editable-empty').length, 0, "has class for empty view");
+                notEqual(this.$container.find('.view-editable').length, 0, "has class for editable view");
+                notEqual(this.$container.find('.editor-editable').length, 0, "has class for editor view");
+                equal(this.$container.find('.editor-editable').is(":visible"), false, "editor is hidden");
+            });
+            test("valueToContent takes a string date in yyyy-mm-dd format", function() {
+                var result = this.date.valueToContent('2012-07-04');
+                strictEqual(result, "7/4/2012", "parses the date to a string");
+            });
+            test("refreshEdit works with a date string", function () {
+                this.date.refreshEdit("2012-07-11");
+
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <h1 id="qunit-header">QUnit example</h1>
+    <h2 id="qunit-banner"></h2>
+    <div id="qunit-testrunner-toolbar"></div>
+    <h2 id="qunit-userAgent"></h2>
+    <ol id="qunit-tests"></ol>
+    <!--<div id="qunit-fixture"></div>-->
+</body>
+</html>
