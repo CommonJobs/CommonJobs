@@ -168,6 +168,7 @@
     <Content Include="Content\jquery.Jcrop.min.css" />
     <Content Include="Content\ListingCommon\QuickSearch.js" />
     <Content Include="Content\menu_style.css" />
+    <Content Include="Content\Tests\nervousTissueTest.html" />
     <Content Include="Content\Tests\FileListingTest.html" />
     <Content Include="Content\Tests\qunit\qunit.css" />
     <Content Include="Content\Tests\qunit\qunit.js" />
