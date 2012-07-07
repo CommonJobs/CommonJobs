@@ -22,7 +22,13 @@ namespace CommonJobs.Mvc.UI
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-            
+
+            routes.MapRoute(
+                "Shared", // Route name
+                "{controller}/{action}/shared/{sharedCode}/{*id}", // URL with parameters
+                new { controller = "Home", action = "Index", id = UrlParameter.Optional } // Parameter defaults
+            );
+
             routes.MapRoute(
                 "Default", // Route name
                 "{controller}/{action}/{*id}", // URL with parameters

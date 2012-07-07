@@ -37,6 +37,15 @@ namespace CommonJobs.Raven.Mvc
             }
         }
 
+        public override void OnAuthorization(AuthorizationContext filterContext)
+        {
+            var actionAlternatives = filterContext.ActionDescriptor.GetCustomAttributes(true).OfType<IAlternativeAuthorizationAttribute>();
+            var controllerAlternatives = filterContext.ActionDescriptor.ControllerDescriptor.GetCustomAttributes(true).OfType<IAlternativeAuthorizationAttribute>();
+
+            if (!actionAlternatives.Union(controllerAlternatives).Any(x => x.Authorize(filterContext)))
+                base.OnAuthorization(filterContext);
+        }
+
         protected override bool AuthorizeCore(System.Web.HttpContextBase httpContext)
         {
             bool? result = AuthorizationBehavior == null ? null 

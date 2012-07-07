@@ -48,6 +48,12 @@
             The Cluster service is installed, configured, and running on the node.
             </summary>
         </member>
+        <member name="M:Raven.Database.Indexing.BaseBatchSizeAutoTuner.OutOfMemoryExceptionHappened">
+            <summary>
+            This let us know that an OOME has happened, and we need to be much more
+            conservative with regards to how fast we can grow memory.
+            </summary>
+        </member>
         <member name="M:Raven.Database.Indexing.DefaultBackgroundTaskExecuter.ExecuteAll``1(Raven.Database.Config.InMemoryRavenConfiguration,System.Threading.Tasks.TaskScheduler,System.Collections.Generic.IList{``0},System.Action{``0,System.Int64})">
             <summary>
             Note that we assume that source is a relatively small number, expected to be 
@@ -96,6 +102,43 @@
              This method SHOULD NOT modify either the document or the metadata
              </remarks><param name="key">The document key</param><param name="document">The document that was put into Raven</param><param name="metadata">The document metadata</param>
             <param name="etag">The etag of the just put document</param>
+        </member>
+        <member name="M:Raven.Database.Plugins.AbstractDeleteTrigger.AllowDelete(System.String,Raven.Abstractions.Data.TransactionInformation)">
+            <summary>
+             Ask the trigger whatever the DELETE should be vetoed.
+             If the trigger vote to veto the DELETE, it needs to provide a human readable 
+             explanation why the DELETE was rejected.
+             </summary><remarks>
+             This method SHOULD NOT modify either the document or the metadata.
+             </remarks><param name="key">The document key</param><param name="transactionInformation">The current transaction, if any</param><returns>Whatever the put was vetoed or not</returns>
+        </member>
+        <member name="M:Raven.Database.Plugins.AbstractDeleteTrigger.OnDelete(System.String,Raven.Abstractions.Data.TransactionInformation)">
+            <summary>
+             Allow the trigger to perform any logic just before the document is deleted.
+             </summary><remarks>
+             If the trigger need to access the previous state of the document, the trigger should
+             implement <seealso cref="T:Raven.Database.Plugins.IRequiresDocumentDatabaseInitialization"/> and use the provided
+             <seealso cref="T:Raven.Database.DocumentDatabase"/> instance to Get it. The returned result would be the old
+             document (if it exists) or null.
+             Any call to the provided <seealso cref="T:Raven.Database.DocumentDatabase"/> instance will be done under the
+             same transaction as the DELETE operation.
+             </remarks><param name="transactionInformation">The current transaction, if any</param><param name="key">The document key</param>
+        </member>
+        <member name="M:Raven.Database.Plugins.AbstractDeleteTrigger.AfterDelete(System.String,Raven.Abstractions.Data.TransactionInformation)">
+            <summary>
+             Allow the trigger to perform any logic after the document was deleted but still in the 
+             same transaction as the delete.
+             This method is called only if a row was actually deleted
+             </summary><remarks>
+             Any call to the provided <seealso cref="T:Raven.Database.DocumentDatabase"/> instance will be done under the
+             same transaction as the DELETE operation.
+             </remarks><param name="transactionInformation">The current transaction, if any</param><param name="key">The document key</param>
+        </member>
+        <member name="M:Raven.Database.Plugins.AbstractDeleteTrigger.AfterCommit(System.String)">
+            <summary>
+             Allow the trigger to perform any logic _after_ the transaction was committed.
+             For example, by notifying interested parties.
+             </summary><param name="key">The document key</param>
         </member>
         <member name="T:Rhino.Licensing.AbstractLicenseValidator">
             <summary>
@@ -740,6 +783,11 @@
             Returns the document matching this id, if exists, or null if it doesn't
             </summary>
         </member>
+        <member name="M:Raven.Database.Linq.ITranslatorDatabaseAccessor.Include(System.Object)">
+            <summary>
+            Returns null object
+            </summary>
+        </member>
         <member name="M:Raven.Database.Linq.Ast.TransformNullCoalasingOperatorTransformer.VisitBinaryOperatorExpression(ICSharpCode.NRefactory.Ast.BinaryOperatorExpression,System.Object)">
             <summary>
             We have to replace code such as:
@@ -748,43 +796,6 @@
             	doc.FirstName != null ? doc.FirstName : ""
             Because we use DynamicNullObject instead of null, and that preserve the null coallasing semantics.
             </summary>
-        </member>
-        <member name="M:Raven.Database.Plugins.AbstractDeleteTrigger.AllowDelete(System.String,Raven.Abstractions.Data.TransactionInformation)">
-            <summary>
-             Ask the trigger whatever the DELETE should be vetoed.
-             If the trigger vote to veto the DELETE, it needs to provide a human readable 
-             explanation why the DELETE was rejected.
-             </summary><remarks>
-             This method SHOULD NOT modify either the document or the metadata.
-             </remarks><param name="key">The document key</param><param name="transactionInformation">The current transaction, if any</param><returns>Whatever the put was vetoed or not</returns>
-        </member>
-        <member name="M:Raven.Database.Plugins.AbstractDeleteTrigger.OnDelete(System.String,Raven.Abstractions.Data.TransactionInformation)">
-            <summary>
-             Allow the trigger to perform any logic just before the document is deleted.
-             </summary><remarks>
-             If the trigger need to access the previous state of the document, the trigger should
-             implement <seealso cref="T:Raven.Database.Plugins.IRequiresDocumentDatabaseInitialization"/> and use the provided
-             <seealso cref="T:Raven.Database.DocumentDatabase"/> instance to Get it. The returned result would be the old
-             document (if it exists) or null.
-             Any call to the provided <seealso cref="T:Raven.Database.DocumentDatabase"/> instance will be done under the
-             same transaction as the DELETE operation.
-             </remarks><param name="transactionInformation">The current transaction, if any</param><param name="key">The document key</param>
-        </member>
-        <member name="M:Raven.Database.Plugins.AbstractDeleteTrigger.AfterDelete(System.String,Raven.Abstractions.Data.TransactionInformation)">
-            <summary>
-             Allow the trigger to perform any logic after the document was deleted but still in the 
-             same transaction as the delete.
-             This method is called only if a row was actually deleted
-             </summary><remarks>
-             Any call to the provided <seealso cref="T:Raven.Database.DocumentDatabase"/> instance will be done under the
-             same transaction as the DELETE operation.
-             </remarks><param name="transactionInformation">The current transaction, if any</param><param name="key">The document key</param>
-        </member>
-        <member name="M:Raven.Database.Plugins.AbstractDeleteTrigger.AfterCommit(System.String)">
-            <summary>
-             Allow the trigger to perform any logic _after_ the transaction was committed.
-             For example, by notifying interested parties.
-             </summary><param name="key">The document key</param>
         </member>
         <member name="T:Raven.Database.Exceptions.IndexDoesNotExistsException">
             <summary>
@@ -945,6 +956,15 @@
             <param name="inclusive"></param>
             <returns></returns>
         </member>
+        <member name="M:Raven.Database.Indexing.SpatialIndex.MakeQuery(System.Double,System.Double,System.Double)">
+            <summary>
+            Make a spatial query
+            </summary>
+            <param name="lat"></param>
+            <param name="lng"></param>
+            <param name="radius">Radius, in miles</param>
+            <returns></returns>
+        </member>
         <member name="P:Raven.Database.Config.InMemoryRavenConfiguration.ResetIndexOnUncleanShutdown">
             <summary>
             When the database is shut down rudely, determine whatever to reset the index or to check it.
@@ -998,7 +1018,19 @@
         <member name="P:Raven.Database.Config.InMemoryRavenConfiguration.InitialNumberOfItemsToIndexInSingleBatch">
             <summary>
             The initial number of items to take when indexing a batch
-            Default: 5,000
+            Default: 512 or 256 depending on CPU architecture
+            </summary>
+        </member>
+        <member name="P:Raven.Database.Config.InMemoryRavenConfiguration.MaxNumberOfItemsToReduceInSingleBatch">
+            <summary>
+            Max number of items to take for reducing in a batch
+            Minimum: 128
+            </summary>
+        </member>
+        <member name="P:Raven.Database.Config.InMemoryRavenConfiguration.InitialNumberOfItemsToReduceInSingleBatch">
+            <summary>
+            The initial number of items to take when reducing a batch
+            Default: 256 or 128 depending on CPU architecture
             </summary>
         </member>
         <member name="P:Raven.Database.Config.InMemoryRavenConfiguration.MaxNumberOfParallelIndexTasks">
@@ -1121,11 +1153,6 @@
         <member name="P:Raven.Database.Config.InMemoryRavenConfiguration.OAuthTokenCertificate">
             <summary>
             The certificate to use when verifying access token signatures for OAuth
-            </summary>
-        </member>
-        <member name="P:Raven.Database.Config.InMemoryRavenConfiguration.WindowsServiceName">
-            <summary>
-            Register with this Windows service name.
             </summary>
         </member>
         <member name="P:Raven.Database.Config.InMemoryRavenConfiguration.DataDirectory">

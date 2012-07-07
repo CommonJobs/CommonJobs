@@ -74,6 +74,7 @@
     <Compile Include="Authorize\ForcedGroupsAuthorizationBehavior.cs" />
     <Compile Include="Authorize\ForcedGroupsAuthorizationBehaviorBase.cs" />
     <Compile Include="Authorize\ForcedGroupsFromSettingsAuthorizationBehavior.cs" />
+    <Compile Include="Authorize\IAlternativeAuthorizationAttribute.cs" />
     <Compile Include="Authorize\InternalUtilities.cs" />
     <Compile Include="Authorize\PrefixFromSettingsAuthorizationBehavior.cs" />
     <Compile Include="Authorize\PrefixAuthorizationBehavior.cs" />
