@@ -2,68 +2,68 @@
   <version>11</version>
   <sourcecode name="ShoppingCartCustomer.cs" parser="StyleCop.CSharp.CsParser">
     <settings>
-      <timestamp>04/30/2012 08:40:40</timestamp>
-      <milliseconds>518</milliseconds>
+      <timestamp>07/02/2012 08:14:13</timestamp>
+      <milliseconds>219</milliseconds>
     </settings>
-    <timestamp>04/30/2012 08:40:40</timestamp>
-    <milliseconds>480</milliseconds>
+    <timestamp>07/02/2012 08:14:13</timestamp>
+    <milliseconds>171</milliseconds>
     <violations />
   </sourcecode>
   <sourcecode name="ShoppingCart.cs" parser="StyleCop.CSharp.CsParser">
     <settings>
-      <timestamp>04/30/2012 08:40:40</timestamp>
-      <milliseconds>518</milliseconds>
+      <timestamp>07/02/2012 08:14:13</timestamp>
+      <milliseconds>219</milliseconds>
     </settings>
-    <timestamp>04/30/2012 08:40:40</timestamp>
-    <milliseconds>479</milliseconds>
+    <timestamp>07/02/2012 08:14:13</timestamp>
+    <milliseconds>170</milliseconds>
     <violations />
   </sourcecode>
   <sourcecode name="ShoppingCartItem.cs" parser="StyleCop.CSharp.CsParser">
     <settings>
-      <timestamp>04/30/2012 08:40:40</timestamp>
-      <milliseconds>518</milliseconds>
+      <timestamp>07/02/2012 08:14:13</timestamp>
+      <milliseconds>219</milliseconds>
     </settings>
-    <timestamp>04/30/2012 08:40:40</timestamp>
-    <milliseconds>481</milliseconds>
-    <violations />
-  </sourcecode>
-  <sourcecode name="ShoppingCartItemProduct.cs" parser="StyleCop.CSharp.CsParser">
-    <settings>
-      <timestamp>04/30/2012 08:40:40</timestamp>
-      <milliseconds>518</milliseconds>
-    </settings>
-    <timestamp>04/30/2012 08:40:40</timestamp>
-    <milliseconds>481</milliseconds>
+    <timestamp>07/02/2012 08:14:13</timestamp>
+    <milliseconds>172</milliseconds>
     <violations />
   </sourcecode>
   <sourcecode name=".NETFramework,Version=v4.0.AssemblyAttributes.cs" parser="StyleCop.CSharp.CsParser">
     <settings>
-      <timestamp>04/30/2012 08:40:40</timestamp>
-      <milliseconds>518</milliseconds>
+      <timestamp>07/02/2012 08:14:13</timestamp>
+      <milliseconds>219</milliseconds>
     </settings>
-    <timestamp>01/14/2012 09:55:04</timestamp>
-    <milliseconds>899</milliseconds>
+    <timestamp>06/23/2012 11:10:49</timestamp>
+    <milliseconds>67</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="ShoppingCartItemProduct.cs" parser="StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>07/02/2012 08:14:13</timestamp>
+      <milliseconds>219</milliseconds>
+    </settings>
+    <timestamp>07/02/2012 08:14:13</timestamp>
+    <milliseconds>172</milliseconds>
     <violations />
   </sourcecode>
   <sourcecode name="ShoppingCartEventsToShopingCart.cs" parser="StyleCop.CSharp.CsParser">
     <settings>
-      <timestamp>04/30/2012 08:40:40</timestamp>
-      <milliseconds>518</milliseconds>
+      <timestamp>07/02/2012 08:14:13</timestamp>
+      <milliseconds>219</milliseconds>
     </settings>
-    <timestamp>04/30/2012 08:40:40</timestamp>
-    <milliseconds>480</milliseconds>
+    <timestamp>07/02/2012 08:14:13</timestamp>
+    <milliseconds>171</milliseconds>
     <violations />
   </sourcecode>
-  <project key="171590304">
+  <project key="-1245928134">
     <configuration>DEBUG;TRACE</configuration>
   </project>
   <sourcecode name="CommonAssemblyInfo.cs" parser="StyleCop.CSharp.CsParser">
     <settings>
-      <timestamp>04/30/2012 08:40:40</timestamp>
-      <milliseconds>518</milliseconds>
+      <timestamp>07/02/2012 08:14:13</timestamp>
+      <milliseconds>219</milliseconds>
     </settings>
-    <timestamp>04/30/2012 11:35:09</timestamp>
-    <milliseconds>543</milliseconds>
+    <timestamp>07/03/2012 09:00:45</timestamp>
+    <milliseconds>598</milliseconds>
     <violations />
   </sourcecode>
 </stylecopresultscache>
