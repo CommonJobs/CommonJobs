@@ -42,6 +42,9 @@
                         model: this.model,
                         viewDataBinder: new DateFormBinder({ el: this.$boundDom, model: this.model })
                     }, { el: this.$boundDom }));
+                },
+                teardown: function () {
+                    $('#ui-datepicker-div').hide();
                 }
             });
             test("internal views", function () {
