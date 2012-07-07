@@ -619,7 +619,9 @@
 
         m.Date = m.BaseModel.extend({
             template: _.template('<span class="view-editable-empty">Sin datos</span><span class="view-editable" style="display: none;"></span><input class="editor-editable" type="text" value="" style="display: none;"/>'),
+            //dateFormat: "yyyy-mm-dd",
             valueToContent: function (value) {
+                //var dateValue = $.datepicker.parseDate(this.dateFormat, value);
                 // date in format: yyyy-mm-dd
                 // indexes:        0123 56 89
                 var year = value.substring(0, 4);
