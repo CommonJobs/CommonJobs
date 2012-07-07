@@ -5,8 +5,9 @@ using System.Text;
 
 namespace CommonJobs.Domain
 {
-    public interface IShareableResource
+    public interface IShareableEntity
     {
+        string Id { get; set; }
         SharedLinkList SharedLinks { get; set; }
     }
 }

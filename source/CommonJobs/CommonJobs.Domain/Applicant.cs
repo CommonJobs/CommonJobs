@@ -8,7 +8,7 @@ using CommonJobs.Utilities;
 namespace CommonJobs.Domain
 {
     //TODO could this and Employee be refactored into a Person base class? How will be RavenDB affected?
-    public class Applicant : Person, IShareableResource
+    public class Applicant : Person, IShareableEntity
     {
         [Display(Name = "Compañías")]
         public List<CompanyHistory> CompanyHistory { get; set; }

@@ -57,7 +57,7 @@
     <Compile Include="Certification.cs" />
     <Compile Include="CompanyHistory.cs" />
     <Compile Include="SharedLinkList.cs" />
-    <Compile Include="IShareableResource.cs" />
+    <Compile Include="IShareableEntity.cs" />
     <Compile Include="NoteWithAttachment.cs" />
     <Compile Include="ImageAttachment.cs" />
     <Compile Include="MaritalStatus.cs" />

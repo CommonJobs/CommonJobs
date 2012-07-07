@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using CommonJobs.Domain;
+using CommonJobs.Infrastructure.SharedLinks;
+using CommonJobs.Raven.Mvc;
 using CommonJobs.Raven.Mvc.Authorize;
 
 namespace CommonJobs.Mvc.UI.Infrastructure
@@ -43,6 +45,10 @@ namespace CommonJobs.Mvc.UI.Infrastructure
         
         public bool Authorize(AuthorizationContext filterContext)
         {
+            var controller = filterContext.Controller as CommonJobsController;
+            if (controller == null)
+                return false;
+
             string entityId;
             string sharedCode;
             ReadEntityIdAndSharedCode(filterContext, out entityId, out sharedCode);
@@ -50,28 +56,12 @@ namespace CommonJobs.Mvc.UI.Infrastructure
             if (sharedCode == null)
                 return false;
 
-            #region //TODO: find sharedLinks by code and id (if id is not null) in RavenDB index by sharedLink code.
+            var entityIdFound = controller.Query(new SearchSharedEntity(sharedCode, entityId));
 
-            var indexResults = new[] {
-                new {
-                    SharedEntityId = "applicants/1",
-                    SharedLink = new SharedLink()
-                    {
-                        SharedCode = sharedCode,
-                        ExpirationDate = DateTime.Now.AddDays(1),
-                        FriendlyName = "Prueba"
-                    }
-                }};
-
-            #endregion
-
-            indexResults = indexResults.Take(2).ToArray();
-            if (indexResults.Length != 1)
+            if (entityIdFound == null)
                 return false;
 
-            var indexResult = indexResults.First();
-
-            filterContext.Controller.ValueProvider = new OverrideValueProvider(filterContext.Controller.ValueProvider, EntityIdKey, SharedCodeKey, indexResult.SharedEntityId, indexResult.SharedLink.SharedCode);
+            filterContext.Controller.ValueProvider = new OverrideValueProvider(filterContext.Controller.ValueProvider, EntityIdKey, SharedCodeKey, entityIdFound, sharedCode);
             /*
              * La otra opción es setear a mano los valores en RouteData, pero tengo el problema de la precendencia ya que hay otras fuentes antes de route
              * Además si ya se habia inicializado filterContext.Controller.ValueProvider no me acepta las modificaciones
