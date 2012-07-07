@@ -17,34 +17,31 @@
     <script src="../../Scripts/nervoustissue.js" type="text/javascript"></script>
 
     <script>
-        $(function () {
+       $(function () {
             module("NervousTissue.UILinking.Date", {
                 setup: function () {
-                    this.$container = $('<div />').append('<span data-bind="date" />');
+                    this.$container = $('<div><span data-bind="date" /></div>');
+                    this.$boundDom = this.$container.find('span');
 
-                    var DataBinder = Nervoustissue.FormBinder.extend({
+                    var bindingOptions = {
+                        controlLink: "Date",
+                        field: "date",
+                        name: "date"
+                    };
+
+                    var DateModel = Backbone.Model.extend();
+                    this.model = new DateModel();
+
+                    var DateFormBinder = Nervoustissue.FormBinder.extend({
                         dataBindings: {
-                            date: {
-                                controlLink: "Date",
-                                name: "date",
-                                field: "date"
-                            }
+                            date: bindingOptions
                         }
                     });
-                    var DateModel = Backbone.Model.extend({
-                        defaults: function() {
-                            return {
-                                date: "2012-07-04"
-                            };
-                        },
-                        initialize: function () {
-                        }
-                    });
-                    var dateModel = new DateModel({ date: "2012-07-04" });
-                    this.dataBinder = new DataBinder({ el: this.$container[0], model: dateModel });
-                    //this.date = new Nervoustissue.UILinking.Date({ el: this.$container[0] });
-                    //this.date.el = this.$container[0];
-                    //this.date.render();
+
+                    this.dateBinder = new Nervoustissue.UILinking.Date(_.extend({}, bindingOptions, {
+                        model: this.model,
+                        viewDataBinder: new DateFormBinder({ el: this.$boundDom, model: this.model })
+                    }, { el: this.$boundDom }));
                 }
             });
             test("internal views", function () {
@@ -54,12 +51,12 @@
                 equal(this.$container.find('.editor-editable').is(":visible"), false, "editor is hidden");
             });
             test("valueToContent takes a string date in yyyy-mm-dd format", function() {
-                var result = this.date.valueToContent('2012-07-04');
+                var result = this.dateBinder.valueToContent('2012-07-04');
                 strictEqual(result, "7/4/2012", "parses the date to a string");
             });
             test("refreshEdit works with a date string", function () {
-                this.date.refreshEdit("2012-07-11");
-
+                this.dateBinder.refreshEdit("2012-07-11");
+                equal(this.$boundDom.find('.editor-editable').hasClass('hasDatepicker'), true, "editor has datepicker");
             });
         });
     </script>
@@ -71,6 +68,6 @@
     <div id="qunit-testrunner-toolbar"></div>
     <h2 id="qunit-userAgent"></h2>
     <ol id="qunit-tests"></ol>
-    <!--<div id="qunit-fixture"></div>-->
+    <div id="qunit-fixture"></div>
 </body>
 </html>
