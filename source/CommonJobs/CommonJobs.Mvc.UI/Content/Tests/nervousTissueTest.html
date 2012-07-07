@@ -7,7 +7,6 @@
     <script src="../../Scripts/jquery-1.7.1.js" type="text/javascript"></script>
     <script src="../../Scripts/jquery-ui-1.8.17.js" type="text/javascript"></script>
     <script src="../../Scripts/underscore.js" type="text/javascript"></script>
-    <!--<script src="../../Scripts/url-generator.js" type="text/javascript"></script>-->
     <script src="qunit/qunit.js" type="text/javascript"></script>
 
     <script src="../../Scripts/jquery.globalize/globalize.js" type="text/javascript"></script>
@@ -53,16 +52,16 @@
                 notEqual(this.$container.find('.editor-editable').length, 0, "has class for editor view");
                 equal(this.$container.find('.editor-editable').is(":visible"), false, "editor is hidden");
             });
-            test("valueToContent takes a string date in yyyy-mm-dd format", function() {
-                var result = this.dateBinder.valueToContent('2012-07-04');
-                strictEqual(result, "7/4/2012", "parses the date to a string");
+            test("valueToContent takes a string date in yyyy-mm-ddT00:00:00 format", function() {
+                var result = this.dateBinder.valueToContent('2012-07-04T00:00:00');
+                strictEqual(result, "4/7/2012", "parses the date to a string");
             });
             test("refreshEdit works with a date string", function () {
                 this.dateBinder.refreshEdit("2012-07-11");
                 equal(this.$boundDom.find('.editor-editable').hasClass('hasDatepicker'), true, "editor has datepicker");
             });
             test("refreshEdit works with a datetime string", function () {
-                this.dateBinder.refreshEdit("2012-07-11 11:46 AM");
+                this.dateBinder.refreshEdit("2012-07-11T00:00:00");
                 equal(this.$boundDom.find('.editor-editable').hasClass('hasDatepicker'), true, "editor has datepicker");
             });
             test("readUI returns current UI value for date", function () {
@@ -73,7 +72,14 @@
             });
             test("readUI returns current UI value for datetime", function () {
                 var expected = "2012-07-11";
-                this.dateBinder.refreshEdit(expected + " 11:45 AM");
+                this.dateBinder.refreshEdit(expected + "T05:01:50");
+                var result = this.dateBinder.readUI();
+                equal(result, expected, "returns the same value it has been set without time");
+            });
+            test("readUI returns current UI value for datetime, overriden format", function () {
+                var expected = "2012/7/11";
+                this.dateBinder.dateFormat = "yy/m/d";
+                this.dateBinder.refreshEdit(expected);
                 var result = this.dateBinder.readUI();
                 equal(result, expected, "returns the same value it has been set without time");
             });

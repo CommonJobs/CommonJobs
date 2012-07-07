@@ -340,7 +340,7 @@
                         items:
                         [
                             { controlLink: "LinkEditableText", name: "Link", dataLink: "UrlLink", textField: "FriendlyName", urlField: "Url" },
-                            { controlLink: "Date", name: "ExpirationDate", field: "ExpirationDate" }
+                            { controlLink: "Date", name: "ExpirationDate", field: "ExpirationDate", uiDateFormat: "d/m" }
                         ]
                     }
                 }
