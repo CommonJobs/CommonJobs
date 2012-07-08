@@ -27,6 +27,22 @@
 	width: 100px;
 	height: 100px;
 	border: solid 1px black;
-	float: left;
 	margin-right: 10px;
+	margin-bottom: 10px;
 }
+
+.photo button.view-editable-clear 
+{
+    font-weight: bolder;
+	background-color: transparent;
+	.rounded_corners(5px);
+	margin-top: 0;
+	top: -30px;
+	position: relative;
+
+	&:hover 
+	{
+		background-color: @color_primary_lighter;
+	}
+}
+
