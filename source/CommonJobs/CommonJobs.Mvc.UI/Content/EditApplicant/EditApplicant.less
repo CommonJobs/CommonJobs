@@ -25,13 +25,39 @@ body.highlighted
 	border-right: 1px solid black;
 }
 
-h1.fullName
+.firstInfo
 {
 	float: left;
-	clear: both;
+}
+
+.fullName 
+{
+	margin-top: 0;
 }
 
 .isHighligted 
 {
 	float:  right;
+}
+
+.additional-info-section.shared-profile {
+	width: 200px;
+	margin-top: 1em;
+	padding: 1em;
+	border: 1px solid black;
+	.rounded_corners(10px);
+	
+	.remove-button  {
+		padding-left: 5px;
+		padding-right: 5px;
+		.rounded_corners(0);
+		background-color: transparent;
+		border: 0;
+		font-size: 0.8em;
+		margin: 0;
+
+		&:hover {
+			color: @color_primary_semi_light;
+		}
+	}
 }

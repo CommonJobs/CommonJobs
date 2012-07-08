@@ -16,9 +16,10 @@ namespace CommonJobs.Raven.Mvc
     {
         public IDocumentSession RavenSession { get; protected set; }
 
-        protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        protected override void OnAuthorization(AuthorizationContext filterContext)
         {
             RavenSession = RavenSessionManager.GetCurrentSession();
+            base.OnAuthorization(filterContext);
         }
 
         public ScriptManager ScriptManager
@@ -47,20 +48,20 @@ namespace CommonJobs.Raven.Mvc
         }
 
         //TODO: Tal vez sea util en los tests: http://ayende.com/blog/154273/limit-your-abstractions-and-how-do-you-handle-testing
-        protected void ExecuteCommand(Command cmd)
+        public void ExecuteCommand(Command cmd)
         {
             cmd.RavenSession = RavenSession;
             cmd.Execute();
         }
 
-        protected TResult ExecuteCommand<TResult>(Command<TResult> cmd)
+        public TResult ExecuteCommand<TResult>(Command<TResult> cmd)
         {
             cmd.RavenSession = RavenSession;
             cmd.Execute();
             return cmd.Result;
         }
 
-        protected TResult Query<TResult>(Query<TResult> qry)
+        public TResult Query<TResult>(Query<TResult> qry)
         {
             qry.RavenSession = RavenSession;
             return qry.Execute();

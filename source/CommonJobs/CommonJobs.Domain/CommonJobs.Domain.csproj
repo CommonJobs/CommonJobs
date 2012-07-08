@@ -56,10 +56,13 @@
     <Compile Include="AttachmentReference.cs" />
     <Compile Include="Certification.cs" />
     <Compile Include="CompanyHistory.cs" />
+    <Compile Include="SharedLinkList.cs" />
+    <Compile Include="IShareableEntity.cs" />
     <Compile Include="NoteWithAttachment.cs" />
     <Compile Include="ImageAttachment.cs" />
     <Compile Include="MaritalStatus.cs" />
     <Compile Include="Person.cs" />
+    <Compile Include="SharedLink.cs" />
     <Compile Include="SimpleNote.cs" />
     <Compile Include="Event.cs" />
     <Compile Include="Employee.cs" />

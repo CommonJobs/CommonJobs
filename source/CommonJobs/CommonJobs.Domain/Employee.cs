@@ -109,18 +109,6 @@ namespace CommonJobs.Domain
         [Display(Name = "Historial de sueldos")]
         public List<SalaryChange> SalaryChanges { get; set; }
 
-        ////It is not nessesary now, I was testing something
-        //public IEnumerable<Event> Events 
-        //{
-        //    get
-        //    {
-        //        return Notes.EmptyIfNull().Cast<Event>()
-        //            .Union(SalaryChanges.EmptyIfNull().Cast<Event>())
-        //            .OrderByDescending(x => x.RealDate)
-        //            .ThenBy(x => x.RegisterDate);
-        //    }
-        //}
-
         public override IEnumerable<AttachmentReference> AllAttachmentReferences
         {
             get { return base.AllAttachmentReferences.Union(Notes.EmptyIfNull().Select(x => x.Attachment)).Where(x => x != null); }

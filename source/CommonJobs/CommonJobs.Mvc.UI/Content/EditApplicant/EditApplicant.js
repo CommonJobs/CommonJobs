@@ -34,8 +34,20 @@
         },
         initialize: function () {
             this.initCollectionField("Notes", App.Notes);
-            //TODO: Consider to create model App.CompanyHistory and App.CompanyHistoryList
+            this.initCollectionField("SharedLinks");
             this.initCollectionField("CompanyHistory");
+            //TODO: Consider to create model App.CompanyHistory and App.CompanyHistoryList
+
+            this.get("SharedLinks").on("change:FriendlyName", this.sharedLinkUpdated, this);
+        },
+        urlFriendlyCode: function(code) {
+            return code.replace(/[^A-Za-z0-9]/, '');
+        },
+        sharedLinkUpdated: function (model) {
+            var friendlyName = model.get('FriendlyName');
+            var sharedCode = this.urlFriendlyCode(friendlyName);
+            model.set('SharedCode', sharedCode);
+            model.set('Url', urlGenerator.action('Edit', 'Applicants', this.get('Id'), { sharedCode: sharedCode }));
         }
     });
 
@@ -234,6 +246,20 @@
                         { controlLink: "CjApplicantAttachment", name: "attachment", field: "Attachment" },
                         { controlLink: "MultilineText", name: "text", field: "Note" },
                         { controlLink: "Options", name: "NoteType", field: "NoteType", options: [{ value: 0, text: "Nota Genérica" }, { value: 1, text: "Nota de entrevista" }, { value: 2, text: "Nota de entrevista técnica"}] }
+                    ]
+                }
+            },
+            SharedLinks:
+            {
+                controlLink: "Collection",
+                subtemplate: _.template('<li><button class="remove-button">&#x2717;</button><span class="editable-field" data-bind="item"></span></li>'),
+                item: {
+                    controlLink: "Compound",
+                    template: _.template('<span data-bind="Link"></span> (<span data-bind="ExpirationDate"></span>)'),
+                    items:
+                    [
+                        { controlLink: "LinkEditableText", name: "Link", dataLink: "UrlLink", textField: "FriendlyName", urlField: "Url" },
+                        { controlLink: "Date", name: "ExpirationDate", field: "ExpirationDate", uiDateFormat: "d/m" }
                     ]
                 }
             }

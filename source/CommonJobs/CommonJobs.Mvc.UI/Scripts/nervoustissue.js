@@ -152,6 +152,31 @@
             }
         });
 
+        // Nervoustissue.DataLinking.UrlLink
+        // ---------------------------------------------
+
+        m.UrlLink = m.Model.extend({
+            read: function () {
+                return {
+                    url: this.model.get(this.urlField),
+                    text: this.model.get(this.textField)
+                }
+            },
+            write: function (newText, newUrl) {
+                newUrl = newUrl || this.model.get(this.urlField);
+                newText = newText || this.model.get(this.textField);
+
+                var obj = {};
+                obj[this.urlField] = newUrl;
+                obj[this.textField] = newText;
+                this.model.set(obj);
+            },
+            onChange: function (action, context) {
+                this.viewDataBinder.registerModelEvent(this.model, "change:" + this.urlField, action, context);
+                this.viewDataBinder.registerModelEvent(this.model, "change:" + this.textField, action, context);
+            }
+        });
+
         // Nervoustissue.DataLinking.FullName
         // ---------------------------------------------
 
@@ -307,7 +332,6 @@
                 }
             }
         });
-
 
         // Nervoustissue.UILinking.BaseModel
         // ------------------------------------
@@ -567,40 +591,62 @@
             }
         });
 
-        m.Date = m.BaseModel.extend({
-            template: _.template('<span class="view-editable-empty">Sin datos</span><span class="view-editable" style="display: none;"></span><input class="editor-editable" type="text" value="" style="display: none;"/>'),
+        m.LinkEditableText = m.Text.extend({
+            template: _.template('<span class="view-editable-empty"><a href="#">(Sin datos)</a> <span class="icon-edit">&nbsp;</span></span><span class="view-editable"><a href="<%= url %>" style="display: none;"><%= text %></a> <span class="icon-edit">&nbsp;</span></span><input class="editor-editable" type="text" value="" style="display: none;"/>'),
+            bindUI: function () {
+                var me = this;
+                me.$el.on("click", ".view-editable .icon-edit,.view-editable-empty icon-edit", null, function () {
+                    me.onEditableClick();
+                });
+                me.$el.on("keyup", ".editor-editable", null, function (e) {
+                    me.onKeyUp(e);
+                });
+                me.$el.on("keypress", ".editor-editable", null, function (e) {
+                    me.onKeyPress(e);
+                });
+            },
+            getTemplateModel: function () {
+                return this.linkedData.read();
+            },
             valueToContent: function (value) {
-                // date in format: yyyy-mm-dd
-                // indexes:        0123 56 89
-                var year = value.substring(0, 4);
-                var month = value.substring(5, 7) - 1; //months go from 0 to 11, wtf javascript
-                var day = value.substring(8, 10);
-                var dateValue = new Date(year, month, day, 0, 0, 0, 0);
-                return Globalize.format(dateValue, "d");
+                return _.template('<span class="view-editable"><a href="<%= url %>"><%= text %></a> <span class="icon-edit">&nbsp;</span></span>', value);
             },
             refreshEdit: function (value) {
-                if (value != null && typeof (value) != 'undefined') {
-                    value = value.substring(0, 10);
+                this.$editor.val(value.text);
+            },
+            undoEdition: function () { }
+        });
+
+        m.Date = m.BaseModel.extend({
+            template: _.template('<span class="view-editable-empty">Sin datos</span><span class="view-editable" style="display: none;"></span><input class="editor-editable" type="text" value="" style="display: none;"/>'),
+            /*new*/
+            dateFormat: "yy-mm-dd",
+            //TODO this should be an option in $.datepicker.parseDate
+            ignoreInDateParse: /T\d\d:\d\d:\d\d/,
+            uiDateFormat: "d/m/yy",
+            //*/
+            valueToContent: function (value) {
+                value = value.replace(this.ignoreInDateParse, '');
+                var dateValue = $.datepicker.parseDate(this.dateFormat, value);
+                return $.datepicker.formatDate(this.uiDateFormat, dateValue);
+            },
+            refreshEdit: function (value) {
+                if (typeof (value) == 'string') {
+                    value = value.replace(this.ignoreInDateParse, '');
+                    value = $.datepicker.parseDate(this.dateFormat, value);
                 }
 
                 this.$editor.datepicker("setDate", value);
             },
             readUI: function () {
                 var date = this.$editor.datepicker("getDate");
-                var noTimezoneDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0, 0);
 
-                var month = noTimezoneDate.getMonth() + 1;
-                if (month < 10) month = "0" + month;
-
-                var day = date.getDate().toString();
-                if (day.length == 1) day = "0" + day;
-
-                return (date.getFullYear() + "-" + month + "-" + day);
+                return $.datepicker.formatDate(this.dateFormat, date);
             },
             bindUI: function () {
                 var me = this;
                 me.$editor.datepicker({
-                    dateFormat: "yy-mm-dd",
+                    dateFormat: this.uiDateFormat,
                     onClose: function () {
                         me.update();
                         me.focusOnEditor();
