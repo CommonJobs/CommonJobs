@@ -37,6 +37,17 @@
             this.initCollectionField("SharedLinks");
             this.initCollectionField("CompanyHistory");
             //TODO: Consider to create model App.CompanyHistory and App.CompanyHistoryList
+
+            this.get("SharedLinks").on("change:FriendlyName", this.sharedLinkUpdated, this);
+        },
+        urlFriendlyCode: function(code) {
+            return code.replace(/[^A-Za-z0-9]/, '');
+        },
+        sharedLinkUpdated: function (model) {
+            var friendlyName = model.get('FriendlyName');
+            var sharedCode = this.urlFriendlyCode(friendlyName);
+            model.set('SharedCode', sharedCode);
+            model.set('Url', urlGenerator.action('Edit', 'Applicants', this.get('Id'), { sharedCode: sharedCode }));
         }
     });
 

@@ -37,20 +37,6 @@ namespace CommonJobs.Domain
         }
 
         //TODO: automatically remove expired links
-        public SharedLinkList SharedLinks
-        {
-            get 
-            {
-                return new SharedLinkList()
-                {
-                    new SharedLink() { ExpirationDate = new DateTime(2012, 5, 22), FriendlyName = "Sergio", Url = "http://commonjobs.myserver.com/SharedLink/8273973" },
-                    new SharedLink() { ExpirationDate = new DateTime(2012, 5, 10), FriendlyName = "Link 2", Url = "http://commonjobs.myserver.com/SharedLink/4588152" },
-                    new SharedLink() { ExpirationDate = new DateTime(2012, 6, 10), FriendlyName = "JD", Url = "http://commonjobs.myserver.com/SharedLink/8273973" },
-                };
-            }
-            set
-            { 
-            }
-        }
+        public SharedLinkList SharedLinks { get; set; }
     }
 }
