@@ -5,6 +5,8 @@ using System.Text;
 using CommonJobs.Raven.Infrastructure;
 using Raven.Client.Linq;
 using CommonJobs.Domain;
+using System.Linq.Expressions;
+using CommonJobs.Utilities;
 
 namespace CommonJobs.Infrastructure.AttachmentSearching
 {
@@ -28,7 +30,29 @@ namespace CommonJobs.Infrastructure.AttachmentSearching
                 .ApplyPagination(Parameters);
 
             if (!string.IsNullOrWhiteSpace(Parameters.Term))
-                query = query.Where(x => x.FullText.Any(y => y.StartsWith(Parameters.Term)));
+            {
+                //TODO Soportar comodines o algún tipo de expressión
+                Expression<Func<Attachments_QuickSearch.Projection, bool>> predicate = x =>
+                    x.FileName.StartsWith(Parameters.Term);
+
+                if (!Parameters.SearchOnlyInFileName)
+                    predicate = predicate.Or(x => x.FullText.Any(y => y.StartsWith(Parameters.Term)));
+
+                query = query.Where(predicate);
+            }
+            /*
+            if (!string.IsNullOrWhiteSpace(Parameters.Term))
+                ;
+             * 
+             SearchOnlyInFileName
+             * 
+             if (Parameters.SearchInAttachments)
+                predicate.Or(x => x.AttachmentContent.Any(y => y.StartsWith(Parameters.Term)));
+            */
+
+
+            if (!Parameters.IncludeFilesWithoutText)
+                query = query.Where(x => x.HasText);
 
             if (Parameters.Orphans == OrphansMode.NoOrphans)
                 query = query.Where(x => !x.IsOrphan);

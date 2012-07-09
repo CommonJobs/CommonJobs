@@ -22,6 +22,7 @@ namespace CommonJobs.Infrastructure.AttachmentSearching
             public string FileName { get; set; }
             public string RelatedEntityId { get; set; }
             public bool IsOrphan { get; set; }
+            public bool HasText { get; set; }
             public string ContentExtractorConfigurationHash { get; set; }
         }
 
@@ -38,7 +39,8 @@ namespace CommonJobs.Infrastructure.AttachmentSearching
                     FileName = attachment.FileName,
                     RelatedEntityId = attachment.RelatedEntityId,
                     ContentExtractorConfigurationHash = attachment.ContentExtractorConfigurationHash,
-                    IsOrphan = true
+                    IsOrphan = true,
+                    HasText = !string.IsNullOrEmpty(attachment.PlainContent)
                 });
 
             //TODO: hacer esto automático para cualquier entidad que tenga la propiedad AllAttachmentReferences
@@ -54,7 +56,8 @@ namespace CommonJobs.Infrastructure.AttachmentSearching
                     FileName = (string)null,
                     RelatedEntityId = (string)null,
                     ContentExtractorConfigurationHash = (string)null,
-                    IsOrphan = false
+                    IsOrphan = false,
+                    HasText = false
                 });
 
             AddMap<Applicant>(applicants =>
@@ -69,7 +72,8 @@ namespace CommonJobs.Infrastructure.AttachmentSearching
                     FileName = (string)null,
                     RelatedEntityId = (string)null,
                     ContentExtractorConfigurationHash = (string)null,
-                    IsOrphan = false
+                    IsOrphan = false,
+                    HasText = false
                 });
 
             Reduce = docs => from doc in docs
@@ -83,7 +87,8 @@ namespace CommonJobs.Infrastructure.AttachmentSearching
                                 FileName = g.Select(x => x.FileName).FirstOrDefault(x => x != null),
                                 RelatedEntityId = g.Select(x => x.RelatedEntityId).FirstOrDefault(x => x != null),
                                 ContentExtractorConfigurationHash = g.Select(x => x.ContentExtractorConfigurationHash).FirstOrDefault(x => x != null),
-                                IsOrphan = g.All(x => x.IsOrphan)
+                                IsOrphan = g.All(x => x.IsOrphan),
+                                HasText = g.Any(x => x.HasText)
                              };
 
             Index(x => x.FullText, FieldIndexing.Analyzed);
