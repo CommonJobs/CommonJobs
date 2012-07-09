@@ -47,7 +47,7 @@
             var friendlyName = model.get('FriendlyName');
             var sharedCode = this.urlFriendlyCode(friendlyName);
             model.set('SharedCode', sharedCode);
-            model.set('Url', urlGenerator.action('Edit', 'Applicants', this.get('Id'), { sharedCode: sharedCode }));
+            model.set('Url', urlGenerator.sharedAction('Edit', 'Applicants', null, sharedCode));
         }
     });
 
