@@ -135,7 +135,7 @@ window.urlGenerator = new UrlGenerator(window.baseUrl);
 //Utilities
 UrlGenerator.randomString = function (length, chars) {
     chars = chars || "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
-    length = length || 8;
+    length = length || 12;
     var randomstring = '';
     for (var i = 0; i < length; i++) {
         var rnum = Math.floor(Math.random() * chars.length);
