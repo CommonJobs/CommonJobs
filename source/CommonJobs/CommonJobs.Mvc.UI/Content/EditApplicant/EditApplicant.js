@@ -1,6 +1,8 @@
 ﻿/// <reference path="../../Scripts/jquery-1.7.1-vsdoc.js" />
 /// <reference path="../../Scripts/underscore.js" />
 /// <reference path="../../Scripts/backbone.js" />
+/// <reference path="../../Scripts/moment.js" />
+
 (function () {
     var App = this.App = {};
 
@@ -20,6 +22,26 @@
     App.Notes = Backbone.Collection.extend({
         model: App.Note
     });
+    
+    App.SharedLink = Backbone.Model.extend({
+        defaults: function () {
+            return {
+                SharedCode: UrlGenerator.randomString(),
+                ExpirationDate: moment().add('days', 3).format("YYYY-MM-DD")
+            }
+        },
+        initialize: function () {
+            this.on("add", this.added, this);
+        },
+        added: function () {
+            if (!this.get('FriendlyName'))
+                this.set('FriendlyName', "Link #" + this.collection.length);
+        }
+    });
+
+    App.SharedLinks = Backbone.Collection.extend({
+        model: App.SharedLink
+    });
 
     App.Applicant = Backbone.Model.extend({
         defaults: function () {
@@ -34,7 +56,7 @@
         },
         initialize: function () {
             this.initCollectionField("Notes", App.Notes);
-            //TODO: Consider to create model App.CompanyHistory and App.CompanyHistoryList
+            this.initCollectionField("SharedLinks", App.SharedLinks);
             this.initCollectionField("CompanyHistory");
         }
     });
@@ -232,8 +254,27 @@
                     [
                         { controlLink: "Date", name: "date", field: "RealDate" },
                         { controlLink: "CjApplicantAttachment", name: "attachment", field: "Attachment" },
-                        { controlLink: "MultilineText", name: "text", field: "Note" },
+                        { controlLink: "Markdown", name: "text", field: "Note" },
                         { controlLink: "Options", name: "NoteType", field: "NoteType", options: [{ value: 0, text: "Nota Genérica" }, { value: 1, text: "Nota de entrevista" }, { value: 2, text: "Nota de entrevista técnica"}] }
+                    ]
+                }
+            },
+            SharedLinks:
+            {
+                controlLink: "Collection",
+                subtemplate: _.template('<li><button class="remove-button">&#x2717;</button><span class="editable-field" data-bind="item"></span></li>'),
+                item: {
+                    controlLink: "Compound",
+                    template: _.template('<span data-bind="Link"></span> (<span data-bind="ExpirationDate"></span>)'),
+                    items:
+                    [
+                        { 
+                            controlLink: "LinkEditableText", name: "Link", dataLink: "UrlLink", textField: "FriendlyName", urlField: "SharedCode",
+                            valueToContent: function (value) {
+                                return _.template('<span class="view-editable"><a href="<%= urlGenerator.sharedAction("Edit", "Applicants", null, url) %>"><%= text %></a> <span class="icon-edit">&nbsp;</span></span>', value);
+                            },
+                        },
+                        { controlLink: "Date", name: "ExpirationDate", field: "ExpirationDate", uiDateFormat: "d/m" }
                     ]
                 }
             }
@@ -250,6 +291,10 @@
             this.dataBinder = new App.EditApplicantAppViewDataBinder({ el: this.el, model: this.model });
             this.model.on("change:IsHighlighted", this.refreshHighlightedView, this);
             this.refreshHighlightedView();
+            if (this.options.forceReadOnly) {
+                this.$el.addClass("edition-force-readonly");
+                this.editionReadonly();
+            }   
         },
         events: {
             "click .saveApplicant": "saveApplicant",
@@ -293,9 +338,13 @@
             }
         },
         editionNormal: function () {
-            this.dataBinder.editionMode("normal");
-            this.$el.removeClass("edition-readonly edition-full-edit");
-            this.$el.addClass("edition-normal");
+            if (this.options.forceReadOnly) {
+                this.editionReadonly();
+            } else {
+                this.dataBinder.editionMode("normal");
+                this.$el.removeClass("edition-readonly edition-full-edit");
+                this.$el.addClass("edition-normal");
+            }
         },
         editionReadonly: function () {
             this.dataBinder.editionMode("readonly");
@@ -303,9 +352,13 @@
             this.$el.addClass("edition-readonly");
         },
         editionFullEdit: function () {
-            this.dataBinder.editionMode("full-edit");
-            this.$el.removeClass("edition-readonly edition-normal");
-            this.$el.addClass("edition-full-edit");
+            if (this.options.forceReadOnly) {
+                this.editionReadonly();
+            } else {
+                this.dataBinder.editionMode("full-edit");
+                this.$el.removeClass("edition-readonly edition-normal");
+                this.$el.addClass("edition-full-edit");
+            }
         },
         refreshHighlightedView: function () {
             //TODO how to avoid making references out of the view?
@@ -323,6 +376,7 @@
 $(function () {
     App.appView = new App.EditApplicantAppView({
         el: $("#EditApp"),
+        forceReadOnly: ViewData.forceReadOnly,
         model: new App.Applicant(ViewData.applicant)
     });
 });

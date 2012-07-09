@@ -43,13 +43,21 @@
             <p><button class="deleteApplicant">Eliminar postulante</button></p>
         </div>
         <div class="back-link">
-        @Html.ActionLink("« Volver al listado", "Index")
-    </div>
+            @Html.ActionLink("« Volver al listado", "Index")
+        </div>
     </div>
         
-    <div class="editable-field photo" data-bind="Photo"></div>
-    <h1 class="fullName"><span class="editable-field" data-bind="fullName"></span></h1>
-    <div class="isHighligted" class="editable-field" data-bind="IsHighlighted"></div>
+    <div class="info-section firstInfo">
+        <h1 class="fullName"><span class="editable-field" data-bind="fullName"></span></h1>
+        <div class="editable-field photo" data-bind="Photo"></div>
+    </div>
+    <div class="additional-info-section shared-profile admin-section">
+        <div class="isHighligted" class="editable-field" data-bind="IsHighlighted"></div>
+        <div>
+            <h3>Links de acceso</h3>
+            <div class="editable-field" data-bind="SharedLinks"></div>
+        </div>
+    </div>
     
     <div class="info-section">
         <h2>Datos Personales</h2>

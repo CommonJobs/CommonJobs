@@ -75,7 +75,7 @@
     <Compile Include="BaseSearchParameters.cs" />
     <Compile Include="EmployeeSearching\EmployeeSearchResult.cs" />
     <Compile Include="EmployeeSearching\EmployeeSearchParameters.cs" />
-    <Compile Include="EmployeeSearching\SearchEmployees.cs" />
+    <Compile Include="SharedLinks\SearchSharedEntity.cs" />
     <Compile Include="AttachmentIndexing\Attachments_ByContentExtractorConfigurationHash.cs" />
     <Compile Include="AttachmentSearching\Attachments_QuickSearch.cs" />
     <Compile Include="EmployeeSearching\Employee_QuickSearch.cs" />
@@ -86,6 +86,8 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="SharedLinks\SharedLinks_Entities.cs" />
+    <Compile Include="EmployeeSearching\SearchEmployees.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

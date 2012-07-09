@@ -9,6 +9,7 @@ using CommonJobs.Domain;
 using Raven.Client.Linq;
 using CommonJobs.Infrastructure.AttachmentStorage;
 using CommonJobs.Infrastructure.ApplicantSearching;
+using CommonJobs.Mvc.UI.Infrastructure;
 
 namespace CommonJobs.Mvc.UI.Controllers
 {
@@ -53,20 +54,23 @@ namespace CommonJobs.Mvc.UI.Controllers
             return RedirectToAction("Edit", new { id = newApplicant.Id });
         }
 
-        public ActionResult Edit(string id)
+        [SharedEntityAlternativeAuthorization]
+        public ActionResult Edit(string id, string sharedCode = null) 
         {
             var applicant = RavenSession.Load<Applicant>(id);
             ScriptManager.RegisterGlobalJavascript(
                 "ViewData",
                 new
                 {
-                    applicant = applicant
+                    applicant = applicant,
+                    forceReadOnly = sharedCode != null
                 },
                 500);
             return View();
         }
 
-        public JsonNetResult Get(string id)
+        [SharedEntityAlternativeAuthorization]
+        public JsonNetResult Get(string id, string sharedCode = null) 
         {
             var applicant = RavenSession.Load<Applicant>(id);
             return Json(applicant);
