@@ -62,7 +62,8 @@ namespace CommonJobs.Mvc.UI.Controllers
                 "ViewData",
                 new
                 {
-                    applicant = applicant
+                    applicant = applicant,
+                    forceReadOnly = sharedCode != null
                 },
                 500);
             return View();

@@ -324,7 +324,7 @@
             refresh: function () { },
             applyMode: function (mode) {
                 var formMode = this.viewDataBinder.editionMode();
-                var buttons = this.$el.find(".add-button,.remove-button");
+                var buttons = this.$el.find(".add-button,.remove-button,.view-editable-clear");
                 if (formMode == "readonly") {
                     buttons.hide();
                 } else {

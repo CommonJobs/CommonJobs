@@ -291,6 +291,10 @@
             this.dataBinder = new App.EditApplicantAppViewDataBinder({ el: this.el, model: this.model });
             this.model.on("change:IsHighlighted", this.refreshHighlightedView, this);
             this.refreshHighlightedView();
+            if (this.options.forceReadOnly) {
+                this.$el.addClass("edition-force-readonly");
+                this.editionReadonly();
+            }   
         },
         events: {
             "click .saveApplicant": "saveApplicant",
@@ -334,9 +338,14 @@
             }
         },
         editionNormal: function () {
-            this.dataBinder.editionMode("normal");
-            this.$el.removeClass("edition-readonly edition-full-edit");
-            this.$el.addClass("edition-normal");
+            if (this.options.forceReadOnly) {
+                console.debug("2");
+                this.editionReadonly();
+            } else {
+                this.dataBinder.editionMode("normal");
+                this.$el.removeClass("edition-readonly edition-full-edit");
+                this.$el.addClass("edition-normal");
+            }
         },
         editionReadonly: function () {
             this.dataBinder.editionMode("readonly");
@@ -344,9 +353,14 @@
             this.$el.addClass("edition-readonly");
         },
         editionFullEdit: function () {
-            this.dataBinder.editionMode("full-edit");
-            this.$el.removeClass("edition-readonly edition-normal");
-            this.$el.addClass("edition-full-edit");
+            if (this.options.forceReadOnly) {
+                console.debug("2");
+                this.editionReadonly();
+            } else {
+                this.dataBinder.editionMode("full-edit");
+                this.$el.removeClass("edition-readonly edition-normal");
+                this.$el.addClass("edition-full-edit");
+            }
         },
         refreshHighlightedView: function () {
             //TODO how to avoid making references out of the view?
@@ -364,6 +378,7 @@
 $(function () {
     App.appView = new App.EditApplicantAppView({
         el: $("#EditApp"),
+        forceReadOnly: ViewData.forceReadOnly,
         model: new App.Applicant(ViewData.applicant)
     });
 });
