@@ -12,11 +12,12 @@ $(function () {
             return urlGenerator.action("AttachmentsQuickSearch", "Attachments", searchParameters);
         },
         fillOtherSearchParameters: function (searchParameters) {
-            //nothing to do here, the function is left for future addition of options
+            if ($("#SearchOnlyInFileName").prop("checked"))
+                searchParameters.SearchOnlyInFileName = true;
         }
     });
 
-    $("#quickSearchSubmit").click(function () {
+    $("#SearchOnlyInFileName, #quickSearchSubmit").click(function () {
         //It also catches "enter"s in form inputs
         qs.redirect();
     });

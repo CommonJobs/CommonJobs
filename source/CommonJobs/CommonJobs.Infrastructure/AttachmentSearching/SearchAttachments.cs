@@ -31,25 +31,16 @@ namespace CommonJobs.Infrastructure.AttachmentSearching
 
             if (!string.IsNullOrWhiteSpace(Parameters.Term))
             {
-                //TODO Soportar comodines o algún tipo de expressión
                 Expression<Func<Attachments_QuickSearch.Projection, bool>> predicate = x =>
-                    x.FileName.StartsWith(Parameters.Term);
+                    x.FileNameWithoutSpaces.StartsWith(Parameters.Term.Replace(" ", string.Empty)); 
+                //Soporta comodines, pero no estoy seguro de que en futuras versiones lo haga
+                //El Equals no soporta comodines
 
                 if (!Parameters.SearchOnlyInFileName)
                     predicate = predicate.Or(x => x.FullText.Any(y => y.StartsWith(Parameters.Term)));
 
                 query = query.Where(predicate);
             }
-            /*
-            if (!string.IsNullOrWhiteSpace(Parameters.Term))
-                ;
-             * 
-             SearchOnlyInFileName
-             * 
-             if (Parameters.SearchInAttachments)
-                predicate.Or(x => x.AttachmentContent.Any(y => y.StartsWith(Parameters.Term)));
-            */
-
 
             if (!Parameters.IncludeFilesWithoutText)
                 query = query.Where(x => x.HasText);

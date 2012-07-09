@@ -20,6 +20,8 @@ namespace CommonJobs.Infrastructure.AttachmentSearching
             public string PartialText { get; set; }
             public string ContentType { get; set; }
             public string FileName { get; set; }
+            //TODO: research about analysers and remove this ugly field
+            public string FileNameWithoutSpaces { get; set; }
             public string RelatedEntityId { get; set; }
             public bool IsOrphan { get; set; }
             public bool HasText { get; set; }
@@ -37,6 +39,7 @@ namespace CommonJobs.Infrastructure.AttachmentSearching
                     PartialText = attachment.PlainContent.Length < PartialTextLength ? attachment.PlainContent : attachment.PlainContent.Substring(0, PartialTextLength),
                     ContentType = attachment.ContentType,
                     FileName = attachment.FileName,
+                    FileNameWithoutSpaces = attachment.FileName.Replace(" ", string.Empty),
                     RelatedEntityId = attachment.RelatedEntityId,
                     ContentExtractorConfigurationHash = attachment.ContentExtractorConfigurationHash,
                     IsOrphan = true,
@@ -54,6 +57,7 @@ namespace CommonJobs.Infrastructure.AttachmentSearching
                     PartialText = (string) null,
                     ContentType = (string)null,
                     FileName = (string)null,
+                    FileNameWithoutSpaces = (string)null,
                     RelatedEntityId = (string)null,
                     ContentExtractorConfigurationHash = (string)null,
                     IsOrphan = false,
@@ -70,6 +74,7 @@ namespace CommonJobs.Infrastructure.AttachmentSearching
                     PartialText = (string)null,
                     ContentType = (string)null,
                     FileName = (string)null,
+                    FileNameWithoutSpaces = (string)null,
                     RelatedEntityId = (string)null,
                     ContentExtractorConfigurationHash = (string)null,
                     IsOrphan = false,
@@ -85,6 +90,7 @@ namespace CommonJobs.Infrastructure.AttachmentSearching
                                 PartialText = g.Select(x => x.PartialText).FirstOrDefault(x => x != null),
                                 ContentType = g.Select(x => x.ContentType).FirstOrDefault(x => x != null),
                                 FileName = g.Select(x => x.FileName).FirstOrDefault(x => x != null),
+                                FileNameWithoutSpaces = g.Select(x => x.FileNameWithoutSpaces).FirstOrDefault(x => x != null),
                                 RelatedEntityId = g.Select(x => x.RelatedEntityId).FirstOrDefault(x => x != null),
                                 ContentExtractorConfigurationHash = g.Select(x => x.ContentExtractorConfigurationHash).FirstOrDefault(x => x != null),
                                 IsOrphan = g.All(x => x.IsOrphan),
@@ -93,6 +99,7 @@ namespace CommonJobs.Infrastructure.AttachmentSearching
 
             Index(x => x.FullText, FieldIndexing.Analyzed);
             Index(x => x.PartialText, FieldIndexing.No);
+            Index(x => x.FileNameWithoutSpaces, FieldIndexing.Analyzed);
         }
     }
 }

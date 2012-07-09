@@ -7,7 +7,6 @@ namespace CommonJobs.Infrastructure.AttachmentSearching
 {
     public class AttachmentSearchParameters : BaseSearchParameters
     {
-        //TODO: include in UI
         public bool SearchOnlyInFileName { get; set; } 
         public bool IncludeFilesWithoutText { get; set; } 
         public OrphansMode Orphans { get; set; }
