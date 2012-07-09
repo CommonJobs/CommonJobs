@@ -131,3 +131,15 @@ var UrlGenerator = function (baseUrl) {
 };
 
 window.urlGenerator = new UrlGenerator(window.baseUrl);
+
+//Utilities
+UrlGenerator.randomString = function (length, chars) {
+    chars = chars || "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
+    length = length || 8;
+    var randomstring = '';
+    for (var i = 0; i < length; i++) {
+        var rnum = Math.floor(Math.random() * chars.length);
+        randomstring += chars.substring(rnum, rnum + 1);
+    }
+    return randomstring;
+}
