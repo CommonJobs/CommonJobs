@@ -339,7 +339,6 @@
         },
         editionNormal: function () {
             if (this.options.forceReadOnly) {
-                console.debug("2");
                 this.editionReadonly();
             } else {
                 this.dataBinder.editionMode("normal");
@@ -354,7 +353,6 @@
         },
         editionFullEdit: function () {
             if (this.options.forceReadOnly) {
-                console.debug("2");
                 this.editionReadonly();
             } else {
                 this.dataBinder.editionMode("full-edit");
