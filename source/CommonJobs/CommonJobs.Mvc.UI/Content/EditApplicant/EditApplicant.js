@@ -254,7 +254,7 @@
                     [
                         { controlLink: "Date", name: "date", field: "RealDate" },
                         { controlLink: "CjApplicantAttachment", name: "attachment", field: "Attachment" },
-                        { controlLink: "MultilineText", name: "text", field: "Note" },
+                        { controlLink: "Markdown", name: "text", field: "Note" },
                         { controlLink: "Options", name: "NoteType", field: "NoteType", options: [{ value: 0, text: "Nota Genérica" }, { value: 1, text: "Nota de entrevista" }, { value: 2, text: "Nota de entrevista técnica"}] }
                     ]
                 }

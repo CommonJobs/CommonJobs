@@ -303,7 +303,7 @@
                         [
                             { controlLink: "CjEmployeeAttachment", name: "attachment", field: "Attachment" },
                             { controlLink: "Date", name: "date", field: "RealDate" },
-                            { controlLink: "MultilineText", name: "text", field: "Note" }
+                            { controlLink: "Markdown", name: "text", field: "Note" }
                         ]
                     }
                 },

@@ -167,9 +167,14 @@ div.mdd_links
 	float:right;
 }
 
+.commonjobs_help_text
+{
+	color:#404040;
+	font-size:smaller;
+}
+
 div.mdd_links a
 {
-	text-decoration:none;
 	color:#404040;
 	font-size:smaller;
 }
