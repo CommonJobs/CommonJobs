@@ -1,6 +1,8 @@
 ﻿/// <reference path="../../Scripts/jquery-1.7.1-vsdoc.js" />
 /// <reference path="../../Scripts/underscore.js" />
 /// <reference path="../../Scripts/backbone.js" />
+/// <reference path="../../Scripts/moment.js" />
+
 (function () {
     var App = this.App = {};
 
@@ -20,6 +22,26 @@
     App.Notes = Backbone.Collection.extend({
         model: App.Note
     });
+    
+    App.SharedLink = Backbone.Model.extend({
+        defaults: function () {
+            return {
+                SharedCode: UrlGenerator.randomString(),
+                ExpirationDate: moment().add('days', 3).format("YYYY-MM-DD")
+            }
+        },
+        initialize: function () {
+            this.on("add", this.added, this);
+        },
+        added: function () {
+            if (!this.get('FriendlyName'))
+                this.set('FriendlyName', "Link #" + this.collection.length);
+        }
+    });
+
+    App.SharedLinks = Backbone.Collection.extend({
+        model: App.SharedLink
+    });
 
     App.Applicant = Backbone.Model.extend({
         defaults: function () {
@@ -34,20 +56,8 @@
         },
         initialize: function () {
             this.initCollectionField("Notes", App.Notes);
-            this.initCollectionField("SharedLinks");
+            this.initCollectionField("SharedLinks", App.SharedLinks);
             this.initCollectionField("CompanyHistory");
-            //TODO: Consider to create model App.CompanyHistory and App.CompanyHistoryList
-
-            this.get("SharedLinks").on("change:FriendlyName", this.sharedLinkUpdated, this);
-        },
-        urlFriendlyCode: function(code) {
-            return code.replace(/[^A-Za-z0-9]/, '');
-        },
-        sharedLinkUpdated: function (model) {
-            var friendlyName = model.get('FriendlyName');
-            var sharedCode = this.urlFriendlyCode(friendlyName);
-            model.set('SharedCode', sharedCode);
-            model.set('Url', urlGenerator.sharedAction('Edit', 'Applicants', null, sharedCode));
         }
     });
 
@@ -258,7 +268,12 @@
                     template: _.template('<span data-bind="Link"></span> (<span data-bind="ExpirationDate"></span>)'),
                     items:
                     [
-                        { controlLink: "LinkEditableText", name: "Link", dataLink: "UrlLink", textField: "FriendlyName", urlField: "Url" },
+                        { 
+                            controlLink: "LinkEditableText", name: "Link", dataLink: "UrlLink", textField: "FriendlyName", urlField: "SharedCode",
+                            valueToContent: function (value) {
+                                return _.template('<span class="view-editable"><a href="<%= urlGenerator.sharedAction("Edit", "Applicants", null, url) %>"><%= text %></a> <span class="icon-edit">&nbsp;</span></span>', value);
+                            },
+                        },
                         { controlLink: "Date", name: "ExpirationDate", field: "ExpirationDate", uiDateFormat: "d/m" }
                     ]
                 }

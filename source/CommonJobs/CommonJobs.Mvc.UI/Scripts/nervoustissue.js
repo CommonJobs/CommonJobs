@@ -592,7 +592,7 @@
         });
 
         m.LinkEditableText = m.Text.extend({
-            template: _.template('<span class="view-editable-empty"><a href="#">(Sin datos)</a> <span class="icon-edit">&nbsp;</span></span><span class="view-editable"><a href="<%= url %>" style="display: none;"><%= text %></a> <span class="icon-edit">&nbsp;</span></span><input class="editor-editable" type="text" value="" style="display: none;"/>'),
+            template: _.template('<span class="view-editable-empty"><a href="#">(Sin datos)</a> <span class="icon-edit">&nbsp;</span></span><span class="view-editable"></span><input class="editor-editable" type="text" value="" style="display: none;"/>'),
             bindUI: function () {
                 var me = this;
                 me.$el.on("click", ".view-editable .icon-edit,.view-editable-empty icon-edit", null, function () {
@@ -608,6 +608,7 @@
             getTemplateModel: function () {
                 return this.linkedData.read();
             },
+            //TODO: move html to template. 
             valueToContent: function (value) {
                 return _.template('<span class="view-editable"><a href="<%= url %>"><%= text %></a> <span class="icon-edit">&nbsp;</span></span>', value);
             },
