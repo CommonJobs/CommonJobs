@@ -21,11 +21,11 @@ $(function () {
         qs.redirect();
     });
 
-    $(".results").on("click", ".fileResult", function (e) {
-        e.preventDefault();
-        window.location = $(this).find(".fileTitle a").first().attr("href");
-    });
-
+    $(".results")
+        .delegate(".fileResult", "mouseenter", function () { $(this).find(".fileTitle a").addClass('clickable'); })
+        .delegate(".fileResult", "mouseleave", function () { $(this).find(".fileTitle a").removeClass('clickable'); }
+    );
+    
     qs.search();
 });
 
