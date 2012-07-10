@@ -26,7 +26,7 @@ $(function () {
 });
 
 var FileSearchUtilities = {
-    fileIconFromExtension: function(fileName) {
+    fileIconFromExtension: function (fileName) {
         if (fileName == null) return urlGenerator.content("Images/filetypes/unknown.png");
 
         var extensionSeparatorLocation = fileName.lastIndexOf('.');
@@ -65,6 +65,14 @@ var FileSearchUtilities = {
         return this.normalizeNewLines(text).split('\n');
     },
     searchHighlight: function (text, matchString) {
+        if (!_.isString(matchString)) return text;
+
+        matchString = matchString
+            .replace(/^(\*|\?)*|(\*|\?)*$/g, '')
+            .replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&")
+            .replace(/\\\*/g, ".*")
+            .replace(/\\\?/g, ".");
+            
         if (!matchString) return text;
 
         var regex = new RegExp('(' + matchString + ')', 'gi');
