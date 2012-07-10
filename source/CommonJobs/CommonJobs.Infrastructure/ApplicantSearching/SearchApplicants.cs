@@ -40,7 +40,7 @@ namespace CommonJobs.Infrastructure.ApplicantSearching
                     || x.AttachmentNames.Any(y => y.StartsWith(Parameters.Term));
 
             if (Parameters.SearchInAttachments)
-                predicate.Or(x => x.AttachmentContent.Any(y => y.StartsWith(Parameters.Term)));
+                predicate = predicate.Or(x => x.AttachmentContent.Any(y => y.StartsWith(Parameters.Term)));
 
             query = query.Where(predicate);
 

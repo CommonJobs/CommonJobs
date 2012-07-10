@@ -49,6 +49,9 @@
                     <input type="text" id="quickSearch" name="Term" value="@Model.Term" />
                     <input type="submit" id="quickSearchSubmit" value=">>" />
                 </div>
+                <div class="secondarySearch">
+                    <label title="Se busca por comienzo o nombre completo, es posible utilizar los comodines '*' y '?'">Buscar solo en nombre de archivo</label><input type="checkbox" id="SearchOnlyInFileName" name="SearchOnlyInFileName" @(Model.SearchOnlyInFileName ? "checked='checked'" : string.Empty)/>
+                </div>
             </form>
             <p id="resultCountNotice">Hay <span id="resultCount">0</span> resultado(s).</p>
         </div>
