@@ -274,7 +274,7 @@
                                 return _.template('<span class="view-editable"><a href="<%= urlGenerator.sharedAction("Edit", "Applicants", null, url) %>"><%= text %></a> <span class="icon-edit">&nbsp;</span></span>', value);
                             },
                         },
-                        { controlLink: "Date", name: "ExpirationDate", field: "ExpirationDate", uiDateFormat: "d/m" }
+                        { controlLink: "Date", name: "ExpirationDate", field: "ExpirationDate", uiDateFormat: "d/m/y" }
                     ]
                 }
             }
