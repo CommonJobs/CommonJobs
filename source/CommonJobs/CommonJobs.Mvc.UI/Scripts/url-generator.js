@@ -7,6 +7,14 @@ var UrlGenerator = function (baseUrl) {
     else if (baseUrl.slice(-1) == "/")
         baseUrl = baseUrl.slice(0, -1);
 
+    var sharedAction = function (action, controller, id, sharedCode, parameters, fragment) {
+        var sections = [controller, action, "shared", sharedCode];
+        if (id) {
+            sections = _.union(sections, id);
+        }
+        return bySections(sections, parameters, fragment);
+    }
+
     var action = function (action, controller, id, parameters, fragment) {
         /// <summary>
         ///     Return action URL assuming this route format: "{controller}/{action}/{id}"
@@ -114,6 +122,7 @@ var UrlGenerator = function (baseUrl) {
     }
 
     _.extend(this, {
+        sharedAction: sharedAction,
         action: action,
         content: content,
         bySections: bySections,
@@ -122,3 +131,15 @@ var UrlGenerator = function (baseUrl) {
 };
 
 window.urlGenerator = new UrlGenerator(window.baseUrl);
+
+//Utilities
+UrlGenerator.randomString = function (length, chars) {
+    chars = chars || "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
+    length = length || 12;
+    var randomstring = '';
+    for (var i = 0; i < length; i++) {
+        var rnum = Math.floor(Math.random() * chars.length);
+        randomstring += chars.substring(rnum, rnum + 1);
+    }
+    return randomstring;
+}

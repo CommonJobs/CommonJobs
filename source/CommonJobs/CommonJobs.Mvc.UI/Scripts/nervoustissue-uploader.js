@@ -775,8 +775,9 @@
             this.showView();
             if (formMode == "readonly") {
                 this.uploader.disable();
-                this.$clearButton.hide();
+                this.$(".view-editable-clear").hide();
             } else {
+                this.$(".view-editable-clear").show();
                 this.uploader.enable();
             }
         },
