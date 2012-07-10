@@ -128,7 +128,21 @@
                 actual = FileSearchUtilities.splitByNewLines(text).length;
                 equal(actual, expected, "split by \\s\\t correctly");
             });
+            module("FileSearchUtilities.searchHighlight");
+            test("splits by different line endings", function () {
+                var text = "Hello world";
+                var expected = '<span class="searchHighlighted">Hello</span> world';
 
+                var actual = FileSearchUtilities.searchHighlight(text, "Hello");
+
+                equal(actual, expected, "creates highglight span");
+
+                var actual = FileSearchUtilities.searchHighlight(text, "HELlo");
+                equal(actual, expected, "is case insensitive");
+
+                var actual = FileSearchUtilities.searchHighlight(text, "hELlO");
+                equal(actual, expected, "respects original casing");
+            });
         });
     </script>
 </head>

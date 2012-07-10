@@ -68,7 +68,7 @@ var FileSearchUtilities = {
     splitByNewLines: function (text) {
         return this.normalizeNewLines(text).split('\n');
     },
-    strongify: function (text, matchString) {
+    searchHighlight: function (text, matchString) {
         if (!matchString) return text;
 
         var regex = new RegExp('(' + matchString + ')', 'gi');
