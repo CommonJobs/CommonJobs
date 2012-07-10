@@ -67,5 +67,11 @@ var FileSearchUtilities = {
     },
     splitByNewLines: function (text) {
         return this.normalizeNewLines(text).split('\n');
+    },
+    strongify: function (text, matchString) {
+        if (!matchString) return text;
+
+        var regex = new RegExp('(' + matchString + ')', 'gi');
+        return text.replace(regex, '<span class="searchHighlighted">$1</span>');
     }
 };

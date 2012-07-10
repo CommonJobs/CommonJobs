@@ -19,7 +19,8 @@
 </script>
 
 <script type="text/template" id="card-template">
-    <% _.each(model.items, function(item) { %>
+    <% var searchTerm = $('#quickSearch').val();
+        _.each(model.items, function(item) { %>
         <div class="fileResult">
             <img alt="File icon" class="fileIcon" src="<%= FileSearchUtilities.fileIconFromExtension(item.FileName) %>" />
             <p class="fileTitle"><a href="<%= FileSearchUtilities.urlToFile(item.AttachmentId) %>"><%= item.FileName == null ? "(Sin nombre)" : item.FileName %></a></p>
@@ -29,8 +30,9 @@
             <% if (item.PartialText != null) {
                 var counter = 0;
                 _.each(FileSearchUtilities.splitByNewLines(item.PartialText), function(paragraph) {
+                    if (!paragraph || !paragraph.replace(/\s+/, "").length) return true;
                     if (counter++ > 5) return false; 
-                    %> <p class="fileDescription"><%= paragraph %></p> <%
+                    %> <p class="fileDescription"><%= FileSearchUtilities.strongify(paragraph, searchTerm) %></p> <%
                 });
             } %>
         </div>
