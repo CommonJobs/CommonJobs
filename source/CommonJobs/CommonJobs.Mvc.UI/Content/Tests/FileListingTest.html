@@ -74,6 +74,61 @@
                 notEqual(result.indexOf("/Get/"), -1, "contains a reference to the Get action");
                 notEqual(attachmentId, -1, "contains a reference to the attachment ID");
             });
+            module("FileSearchUtilities.normalizeNewLines");
+            test("turns different line endings in \\n", function () {
+                var text = "Hello\rWorld";
+                var expected = "Hello\nWorld";
+                var actual = FileSearchUtilities.normalizeNewLines(text);
+                equal(actual, expected, "replaced \\r correctly");
+
+                text = "Hello\r\nWorld";
+                actual = FileSearchUtilities.normalizeNewLines(text);
+                equal(actual, expected, "replaced \\r\\n correctly");
+
+                text = "Hello\n\rWorld";
+                actual = FileSearchUtilities.normalizeNewLines(text);
+                equal(actual, expected, "replaced \\n\\r correctly");
+
+                text = "Hello\n\nWorld";
+                actual = FileSearchUtilities.normalizeNewLines(text);
+                equal(actual, expected, "replaced \\n\\n correctly");
+
+                text = "Hello  World";
+                actual = FileSearchUtilities.normalizeNewLines(text);
+                equal(actual, expected, "replaced \\s\\s correctly");
+
+                text = "Hello \tWorld";
+                actual = FileSearchUtilities.normalizeNewLines(text);
+                equal(actual, expected, "replaced \\s\\t correctly");
+            });
+            module("FileSearchUtilities.splitByNewLines");
+            test("splits by different line endings", function () {
+                var text = "Hello\rWorld";
+                var expected = 2;
+                var actual = FileSearchUtilities.splitByNewLines(text).length;
+                equal(actual, expected, "split by \\r correctly");
+
+                text = "Hello\r\nWorld";
+                actual = FileSearchUtilities.splitByNewLines(text).length;
+                equal(actual, expected, "split by \\r\\n correctly");
+
+                text = "Hello\n\rWorld";
+                actual = FileSearchUtilities.splitByNewLines(text).length;
+                equal(actual, expected, "split by \\n\\r correctly");
+
+                text = "Hello\n\nWorld";
+                actual = FileSearchUtilities.splitByNewLines(text).length;
+                equal(actual, expected, "split by \\n\\n correctly");
+
+                text = "Hello  World";
+                actual = FileSearchUtilities.splitByNewLines(text).length;
+                equal(actual, expected, "split by \\s\\s correctly");
+
+                text = "Hello \tWorld";
+                actual = FileSearchUtilities.splitByNewLines(text).length;
+                equal(actual, expected, "split by \\s\\t correctly");
+            });
+
         });
     </script>
 </head>

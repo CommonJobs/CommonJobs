@@ -61,5 +61,11 @@ var FileSearchUtilities = {
     },
     urlToFile: function (attachmentId) {
         return urlGenerator.action("Get", "Attachments", attachmentId);
+    },
+    normalizeNewLines: function (text) {
+        return text.replace(/[\r\n]+|\s\s+/, '\n');
+    },
+    splitByNewLines: function (text) {
+        return this.normalizeNewLines(text).split('\n');
     }
 };

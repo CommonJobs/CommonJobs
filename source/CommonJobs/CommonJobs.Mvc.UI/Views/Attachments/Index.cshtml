@@ -28,7 +28,7 @@
             <% } %>
             <% if (item.PartialText != null) {
                 var counter = 0;
-                _.each(item.PartialText.split('\n'), function(paragraph) {
+                _.each(FileSearchUtilities.splitByNewLines(item.PartialText), function(paragraph) {
                     if (counter++ > 5) return false; 
                     %> <p class="fileDescription"><%= paragraph %></p> <%
                 });
