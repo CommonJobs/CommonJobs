@@ -5,7 +5,7 @@
 .menu li a.top_link {display:block; margin: 0 auto; /*float:left;*/ height:35px; line-height:33px; color:#EBEBEB; text-decoration:none; font-size:11px; font-weight:bold;/* padding:0 0 0 12px*/; cursor:pointer;}
 .menu li a.top_link span{float:left; font-weight:bold; display:block; padding:0 24px 0 12px; height:35px;}
 .menu li a.top_link span.down {float:left; display:block; padding:0 24px 0 12px; height:40px; background:url(images/down.gif) no-repeat right top;}
-.menu li a.top_link:hover {color:#000; background: #BCC4DCno-repeat;}
+.menu li a.top_link:hover {color:#000; background: #BCC4DC;}
 .menu li a.top_link:hover span {background:url(images/button4.gif) no-repeat right top;}
 .menu li a.top_link:hover span.down {background:url(images/button4a.gif) no-repeat right top;}
 
