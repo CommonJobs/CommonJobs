@@ -21,11 +21,6 @@ $(function () {
         qs.redirect();
     });
 
-    $(".results")
-        .delegate(".fileResult", "mouseenter", function () { $(this).find(".fileTitle a").addClass('clickable'); })
-        .delegate(".fileResult", "mouseleave", function () { $(this).find(".fileTitle a").removeClass('clickable'); }
-    );
-    
     qs.search();
 });
 
