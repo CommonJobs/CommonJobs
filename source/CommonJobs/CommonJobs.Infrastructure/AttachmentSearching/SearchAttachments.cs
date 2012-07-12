@@ -22,34 +22,51 @@ namespace CommonJobs.Infrastructure.AttachmentSearching
 
         public override AttachmentSearchResult[] Execute()
         {
-            //TODO: agregar soporte para filtrar por tipo de archivos o con comodines en el nombre 
             RavenQueryStatistics stats;
-            var query = RavenSession.Query<Attachments_QuickSearch.Projection, Attachments_QuickSearch>()
-                .Statistics(out stats)
-                .Include<Attachments_QuickSearch.Projection>(x => x.RelatedEntityId) //Con esto el Load no necesita consultar la DB
-                .ApplyPagination(Parameters);
+            var baseQuery = RavenSession.Query<Attachments_QuickSearch.Projection, Attachments_QuickSearch>();
+
+            var ravenQuery = baseQuery;
 
             if (!string.IsNullOrWhiteSpace(Parameters.Term))
             {
-                Expression<Func<Attachments_QuickSearch.Projection, bool>> predicate = x =>
-                    x.FileNameWithoutSpaces.StartsWith(Parameters.Term.Replace(" ", string.Empty)); 
-                //Soporta comodines, pero no estoy seguro de que en futuras versiones lo haga
-                //El Equals no soporta comodines
-
+                ravenQuery = ravenQuery.Search(x => x.FileNameWithoutSpaces, Parameters.Term.Replace(" ", string.Empty), escapeQueryOptions: EscapeQueryOptions.AllowAllWildcards);
+                
                 if (!Parameters.SearchOnlyInFileName)
-                    predicate = predicate.Or(x => x.FullText.Any(y => y.StartsWith(Parameters.Term)));
+                    ravenQuery = ravenQuery.Search(x => x.FullText, Parameters.Term, escapeQueryOptions: EscapeQueryOptions.AllowPostfixWildcard);
+                        //.Or(x => x.FullText.Any(y => y.StartsWith(Parameters.Term)));
 
-                query = query.Where(predicate);
+                //ravenQuery = ravenQuery.Where(predicate);
             }
 
+            //TODO: 
+            // * similatr behaviour to startwith in FullText search
+            // * Add Orphans and HasText filters
+
+            /*
             if (!Parameters.IncludeFilesWithoutText)
-                query = query.Where(x => x.HasText);
+            {
+                var a = baseQuery.Where(x => x.HasText);
+                var c = ravenQuery.Intersect(a);
+
+                ravenQuery = ravenQuery.Intersect(baseQuery.Where(x => x.HasText));
+            }
 
             if (Parameters.Orphans == OrphansMode.NoOrphans)
-                query = query.Where(x => !x.IsOrphan);
+            {
+                ravenQuery = ravenQuery.Intersect(baseQuery.Where(x => !x.IsOrphan));
+            }
             else if (Parameters.Orphans == OrphansMode.OnlyOrphans)
-                query = query.Where(x => x.IsOrphan);
+            {
+                ravenQuery = ravenQuery.Intersect(baseQuery.Where(x => x.IsOrphan));
+            }
+            */
 
+            var query = 
+                ravenQuery
+                .Statistics(out stats)
+                .Include<Attachments_QuickSearch.Projection>(x => x.RelatedEntityId) //Con esto el Load no necesita consultar la DB
+                .ApplyPagination(Parameters);
+            
             var aux = query
                 //Projection in order to do not bring PlainContent (big field)
                 .Select(x => new
