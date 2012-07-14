@@ -61,6 +61,10 @@
       <Project>{FCF0DC4A-8A75-499D-AE7D-25D2F5174E38}</Project>
       <Name>CommonJobs.ContentExtraction</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CommonJobs.Utilities\CommonJobs.Utilities.csproj">
+      <Project>{fabfcafa-f6f2-47c2-b393-66e97203f107}</Project>
+      <Name>CommonJobs.Utilities</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
