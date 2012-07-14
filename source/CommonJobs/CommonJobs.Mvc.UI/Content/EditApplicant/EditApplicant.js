@@ -100,7 +100,7 @@
                            + '</div>'
                            + '<span class="view-attached" style="display: none;">'
                            + '    <div class="view-editable-content"></div>'
-                           + '    <button class="view-editable-clear">-</button>'
+                           + '    <button class="view-editable-clear">&#x2717;</button>'
                            + '</span>'
                            + '<div class="cropDialog">'
                            + '    <div class="originalImage"></div>'
@@ -262,7 +262,6 @@
             SharedLinks:
             {
                 controlLink: "Collection",
-                subtemplate: _.template('<li><button class="remove-button">&#x2717;</button><span class="editable-field" data-bind="item"></span></li>'),
                 item: {
                     controlLink: "Compound",
                     template: _.template('<span data-bind="Link"></span> (<span data-bind="ExpirationDate"></span>)'),

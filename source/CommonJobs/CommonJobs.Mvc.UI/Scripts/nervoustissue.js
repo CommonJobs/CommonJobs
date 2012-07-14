@@ -295,7 +295,7 @@
 
         m.Collection = m.Base.extend({
             template: _.template('<ul class="list-editable"></ul><button class="add-button">+</button>'),
-            subtemplate: _.template('<li><button class="remove-button">-</button><span class="editable-field" data-bind="item"></span></li>'),
+            subtemplate: _.template('<li><button class="remove-button">&#x2717;</button><span class="editable-field" data-bind="item"></span></li>'),
             dataLink: Nervoustissue.DataLinking.Collection,
             _initialize: function () {
                 var me = this;

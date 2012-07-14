@@ -89,8 +89,7 @@ a.editable-field.editable-link, a.view-editable-empty.editable-link
     margin-right: 6px;
     padding-left: 10px;
     padding-right: 10px;
-    font-weight: bolder;
-	.rounded_corners(5px);
+    .rounded_corners(5px);
 }
 
 .editable-field .add-button
@@ -107,12 +106,12 @@ a.editable-field.editable-link, a.view-editable-empty.editable-link
 .editable-field .remove-button
 {
     background-color: @color_primary_light;
-}
+	font-size: 0.8em;
 
-.editable-field .remove-button:hover
-{
-    background-color: @color_primary_medium;
-	color: white;
+	&:hover {
+		background-color: @color_primary_medium;
+		color: white;
+	}
 }
 
 .field-name
