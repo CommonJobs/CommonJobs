@@ -22,35 +22,48 @@ namespace CommonJobs.Infrastructure.AttachmentSearching
 
         public override AttachmentSearchResult[] Execute()
         {
-            //TODO: agregar soporte para filtrar por tipo de archivos o con comodines en el nombre 
+            var term = string.IsNullOrWhiteSpace(Parameters.Term) ? "*" : Parameters.Term.Trim();
             RavenQueryStatistics stats;
-            var query = RavenSession.Query<Attachments_QuickSearch.Projection, Attachments_QuickSearch>()
+
+            var query = RavenSession
+                .Query<Attachments_QuickSearch.Projection, Attachments_QuickSearch>()
                 .Statistics(out stats)
-                .Include<Attachments_QuickSearch.Projection>(x => x.RelatedEntityId) //Con esto el Load no necesita consultar la DB
-                .ApplyPagination(Parameters);
+                .Include<Attachments_QuickSearch.Projection>(x => x.RelatedEntityId); //Con esto el Load no necesita consultar la DB
 
-            if (!string.IsNullOrWhiteSpace(Parameters.Term))
+            var nameTerm = term.TrimEnd(new[] { '*', '?' }) + '*';
+
+            //Hack porque FieldIndexing.Default hace algo raro cuando busco con espacios, hay que investigarlo mas
+            query = query.Search(x => x.FileNameWithoutSpaces, nameTerm.Replace(" ", "·"), escapeQueryOptions: EscapeQueryOptions.AllowAllWildcards);
+
+            if (!Parameters.SearchOnlyInFileName)
             {
-                Expression<Func<Attachments_QuickSearch.Projection, bool>> predicate = x =>
-                    x.FileNameWithoutSpaces.StartsWith(Parameters.Term.Replace(" ", string.Empty)); 
-                //Soporta comodines, pero no estoy seguro de que en futuras versiones lo haga
-                //El Equals no soporta comodines
-
-                if (!Parameters.SearchOnlyInFileName)
-                    predicate = predicate.Or(x => x.FullText.Any(y => y.StartsWith(Parameters.Term)));
-
-                query = query.Where(predicate);
+                var fullTextTerm = term.Trim(new[] { '*', '?' }) + '*';
+                query = query.Search(x => x.FullText, fullTextTerm, escapeQueryOptions: EscapeQueryOptions.AllowPostfixWildcard);
             }
+            
 
             if (!Parameters.IncludeFilesWithoutText)
-                query = query.Where(x => x.HasText);
-
+            {
+                //Hack porque 
+                //  ravenQuery = ravenQuery.Search(x => x.HasText, true.ToString(), options: SearchOptions.And);
+                //debería generar
+                //  FileNameWithoutSpaces:<<*english.pdf*>> AND HasText:<<True>>
+                //y genera
+                //  FileNameWithoutSpaces:<<*english.pdf*>> HasText:<<True>>
+                query = query.Search(x => x.HasText, false.ToString(), options: SearchOptions.And | SearchOptions.Not);
+            }
+    
             if (Parameters.Orphans == OrphansMode.NoOrphans)
-                query = query.Where(x => !x.IsOrphan);
+            {
+                query = query.Search(x => x.IsOrphan, true.ToString(), options: SearchOptions.And | SearchOptions.Not);
+            }
             else if (Parameters.Orphans == OrphansMode.OnlyOrphans)
-                query = query.Where(x => x.IsOrphan);
+            {
+                query = query.Search(x => x.IsOrphan, false.ToString(), options: SearchOptions.And | SearchOptions.Not);
+            }
 
             var aux = query
+                .ApplyPagination(Parameters)
                 //Projection in order to do not bring PlainContent (big field)
                 .Select(x => new
                 {
