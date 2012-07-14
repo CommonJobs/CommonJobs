@@ -74,7 +74,7 @@ var FileSearchUtilities = {
             
         if (!matchString) return text;
 
-        var regex = new RegExp('(\\\s|^)(' + matchString + ')(\\\s|$)', 'gi');
+        var regex = new RegExp('(\\\s|^)(' + matchString + '[^\\\s]*)(\\\s|$)', 'gi');
         return text.replace(regex, '$1<span class="searchHighlighted">$2</span>$3');
     }
 };
