@@ -4,11 +4,13 @@ using System.Linq;
 using System.Text;
 using Raven.Client;
 using System.Reflection;
+using NLog;
 
 namespace CommonJobs.Raven.Migrations
 {
     public class Migrator 
     {
+        private static Logger log = LogManager.GetCurrentClassLogger();
         public IDocumentStore DocumentStore { get; set; }
         public Assembly MigrationsAssembly { get; set; }
 
@@ -87,6 +89,7 @@ namespace CommonJobs.Raven.Migrations
 
         public void Up(MigrationDescriptor descriptor)
         {
+            log.Debug("Run up migration", descriptor);
             try
             {
                 using (var session = DocumentStore.OpenSession())
@@ -109,6 +112,7 @@ namespace CommonJobs.Raven.Migrations
             }
             catch (Exception e)
             {
+                log.ErrorException("Error runing up migration", e);
                 using (var session = DocumentStore.OpenSession())
                 {
                     descriptor.Messages.Add(new MigrationMessage(MigrationActionType.Up, e));
@@ -120,6 +124,7 @@ namespace CommonJobs.Raven.Migrations
 
         public void Down(MigrationDescriptor descriptor)
         {
+            log.Debug("Run down migration", descriptor);
             try
             {
                 using (var session = DocumentStore.OpenSession())
@@ -145,6 +150,7 @@ namespace CommonJobs.Raven.Migrations
             }
             catch (Exception e)
             {
+                log.ErrorException("Error runing down migration", e);
                 using (var session = DocumentStore.OpenSession())
                 {
                     descriptor.Messages.Add(new MigrationMessage(MigrationActionType.Down, e));
@@ -167,6 +173,7 @@ namespace CommonJobs.Raven.Migrations
 
         public void RunActions(IEnumerable<MigrationAction> actions)
         {
+            log.Debug("Run Migration Actions", actions);
             var descriptors = GetMigrationStatus();
             var itemsToRun = actions
                 .Where(x => x.Action != MigrationActionType.None)
