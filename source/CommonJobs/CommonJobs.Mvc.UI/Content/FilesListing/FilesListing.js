@@ -68,14 +68,13 @@ var FileSearchUtilities = {
         if (!_.isString(matchString)) return text;
 
         matchString = matchString
-            .replace(/^(\*|\?)*|(\*|\?)*$/g, '')
-            .replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&")
-            .replace(/\\\*/g, ".*")
-            .replace(/\\\?/g, ".");
+            .replace(/[-[\]{}()+.,\\^$|#\s]/g, "\\$&")
+            .replace(/\*/g, "[^\\\s]*")
+            .replace(/\?/g, "[^\\\s]");
             
         if (!matchString) return text;
 
-        var regex = new RegExp('(' + matchString + ')', 'gi');
-        return text.replace(regex, '<span class="searchHighlighted">$1</span>');
+        var regex = new RegExp('(\\\s|^)(' + matchString + '[^\\\s]*)(\\\s|$)', 'gi');
+        return text.replace(regex, '$1<span class="searchHighlighted">$2</span>$3');
     }
 };

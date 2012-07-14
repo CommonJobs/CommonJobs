@@ -129,7 +129,7 @@
                 equal(actual, expected, "split by \\s\\t correctly");
             });
             module("FileSearchUtilities.searchHighlight");
-            test("splits by different line endings", function () {
+            test("highlights the searched text", function () {
                 var text = "Hello world";
                 var expected = '<span class="searchHighlighted">Hello</span> world';
 
@@ -142,6 +142,24 @@
 
                 var actual = FileSearchUtilities.searchHighlight(text, "hELlO");
                 equal(actual, expected, "respects original casing");
+
+                var actual = FileSearchUtilities.searchHighlight(text, "H*lo");
+                equal(actual, expected, "works with * wildcard at middle");
+
+                var actual = FileSearchUtilities.searchHighlight(text, "He*");
+                equal(actual, expected, "works with * wildcard at end");
+
+                var actual = FileSearchUtilities.searchHighlight(text, "*lo");
+                equal(actual, expected, "works with * wildcard at beginning");
+
+                var actual = FileSearchUtilities.searchHighlight(text, "???lo");
+                equal(actual, expected, "works with ? wildcard at beginning");
+
+                var actual = FileSearchUtilities.searchHighlight(text, "He?lo");
+                equal(actual, expected, "works with ? wildcard in the middle");
+
+                var actual = FileSearchUtilities.searchHighlight(text, "Hel??");
+                equal(actual, expected, "works with ? wildcard at the end");
             });
         });
     </script>
