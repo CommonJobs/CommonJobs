@@ -15,6 +15,7 @@ using Raven.Json.Linq;
 using System.Drawing;
 using System.IO;
 using CommonJobs.Infrastructure.AttachmentSearching;
+using System.Text.RegularExpressions;
 
 namespace CommonJobs.Mvc.UI.Controllers
 {
@@ -139,12 +140,27 @@ namespace CommonJobs.Mvc.UI.Controllers
         {
             var query = new SearchAttachments(searchParameters);
             var results = Query(query);
+            FlattenTextExtract(results);
             return Json(new
             {
                 Items = results,
                 Skiped = searchParameters.Skip,
                 TotalResults = query.Stats.TotalResults
             });
+        }
+
+        public void FlattenTextExtract(IEnumerable<AttachmentSearchResult> results)
+        {
+            var replaceDots = new Regex("\\.\\.+");
+            var replaceLines = new Regex("\r\n|\n|\r");
+            foreach (var result in results)
+            {
+                result.PartialText = result.PartialText.Replace("<", "&lt;");
+                result.PartialText = result.PartialText.Replace(">", "&gt;");
+                //TODO: hablabamos de que tal vez era una buena idea remover todos los saltos de línea, pero aún queda muy feo, habría que revisar los estilos
+                //result.PartialText = replaceLines.Replace(result.PartialText, " ");
+                result.PartialText = replaceDots.Replace(result.PartialText, ".");
+            }
         }
 
         [CommonJobsAuthorize(Roles = "Users")]
