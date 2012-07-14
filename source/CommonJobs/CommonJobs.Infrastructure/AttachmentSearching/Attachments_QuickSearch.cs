@@ -39,7 +39,8 @@ namespace CommonJobs.Infrastructure.AttachmentSearching
                     PartialText = attachment.PlainContent.Length < PartialTextLength ? attachment.PlainContent : attachment.PlainContent.Substring(0, PartialTextLength),
                     ContentType = attachment.ContentType,
                     FileName = attachment.FileName,
-                    FileNameWithoutSpaces = attachment.FileName.Replace(" ", string.Empty),
+                    //Hack porque FieldIndexing.Default hace algo raro cuando busco con espacios, hay que investigarlo mas
+                    FileNameWithoutSpaces = attachment.FileName.Replace(" ", "·"),
                     RelatedEntityId = attachment.RelatedEntityId,
                     ContentExtractorConfigurationHash = attachment.ContentExtractorConfigurationHash,
                     IsOrphan = true,
@@ -99,7 +100,7 @@ namespace CommonJobs.Infrastructure.AttachmentSearching
 
             Index(x => x.FullText, FieldIndexing.Analyzed);
             Index(x => x.PartialText, FieldIndexing.No);
-            Index(x => x.FileNameWithoutSpaces, FieldIndexing.Analyzed);
+            Index(x => x.FileNameWithoutSpaces, FieldIndexing.Default);
         }
     }
 }

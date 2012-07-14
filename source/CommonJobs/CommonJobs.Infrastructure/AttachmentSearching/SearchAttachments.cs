@@ -22,52 +22,48 @@ namespace CommonJobs.Infrastructure.AttachmentSearching
 
         public override AttachmentSearchResult[] Execute()
         {
+            var term = string.IsNullOrWhiteSpace(Parameters.Term) ? "*" : Parameters.Term.Trim();
             RavenQueryStatistics stats;
-            var baseQuery = RavenSession.Query<Attachments_QuickSearch.Projection, Attachments_QuickSearch>();
 
-            var ravenQuery = baseQuery;
+            var query = RavenSession
+                .Query<Attachments_QuickSearch.Projection, Attachments_QuickSearch>()
+                .Statistics(out stats)
+                .Include<Attachments_QuickSearch.Projection>(x => x.RelatedEntityId); //Con esto el Load no necesita consultar la DB
 
-            if (!string.IsNullOrWhiteSpace(Parameters.Term))
+            var nameTerm = term.TrimEnd(new[] { '*', '?' }) + '*';
+
+            //Hack porque FieldIndexing.Default hace algo raro cuando busco con espacios, hay que investigarlo mas
+            query = query.Search(x => x.FileNameWithoutSpaces, nameTerm.Replace(" ", "·"), escapeQueryOptions: EscapeQueryOptions.AllowAllWildcards);
+
+            if (!Parameters.SearchOnlyInFileName)
             {
-                ravenQuery = ravenQuery.Search(x => x.FileNameWithoutSpaces, Parameters.Term.Replace(" ", string.Empty), escapeQueryOptions: EscapeQueryOptions.AllowAllWildcards);
-                
-                if (!Parameters.SearchOnlyInFileName)
-                    ravenQuery = ravenQuery.Search(x => x.FullText, Parameters.Term, escapeQueryOptions: EscapeQueryOptions.AllowPostfixWildcard);
-                        //.Or(x => x.FullText.Any(y => y.StartsWith(Parameters.Term)));
-
-                //ravenQuery = ravenQuery.Where(predicate);
+                var fullTextTerm = term.Trim(new[] { '*', '?' }) + '*';
+                query = query.Search(x => x.FullText, fullTextTerm, escapeQueryOptions: EscapeQueryOptions.AllowPostfixWildcard);
             }
+            
 
-            //TODO: 
-            // * similatr behaviour to startwith in FullText search
-            // * Add Orphans and HasText filters
-
-            /*
             if (!Parameters.IncludeFilesWithoutText)
             {
-                var a = baseQuery.Where(x => x.HasText);
-                var c = ravenQuery.Intersect(a);
-
-                ravenQuery = ravenQuery.Intersect(baseQuery.Where(x => x.HasText));
+                //Hack porque 
+                //  ravenQuery = ravenQuery.Search(x => x.HasText, true.ToString(), options: SearchOptions.And);
+                //debería generar
+                //  FileNameWithoutSpaces:<<*english.pdf*>> AND HasText:<<True>>
+                //y genera
+                //  FileNameWithoutSpaces:<<*english.pdf*>> HasText:<<True>>
+                query = query.Search(x => x.HasText, false.ToString(), options: SearchOptions.And | SearchOptions.Not);
             }
-
+    
             if (Parameters.Orphans == OrphansMode.NoOrphans)
             {
-                ravenQuery = ravenQuery.Intersect(baseQuery.Where(x => !x.IsOrphan));
+                query = query.Search(x => x.IsOrphan, true.ToString(), options: SearchOptions.And | SearchOptions.Not);
             }
             else if (Parameters.Orphans == OrphansMode.OnlyOrphans)
             {
-                ravenQuery = ravenQuery.Intersect(baseQuery.Where(x => x.IsOrphan));
+                query = query.Search(x => x.IsOrphan, false.ToString(), options: SearchOptions.And | SearchOptions.Not);
             }
-            */
 
-            var query = 
-                ravenQuery
-                .Statistics(out stats)
-                .Include<Attachments_QuickSearch.Projection>(x => x.RelatedEntityId) //Con esto el Load no necesita consultar la DB
-                .ApplyPagination(Parameters);
-            
             var aux = query
+                .ApplyPagination(Parameters)
                 //Projection in order to do not bring PlainContent (big field)
                 .Select(x => new
                 {
