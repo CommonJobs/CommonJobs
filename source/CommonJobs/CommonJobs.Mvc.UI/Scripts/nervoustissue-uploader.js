@@ -540,22 +540,30 @@
                 $input.attr("accept", this._options.accept);
             }
 
-            this.$el.append($input);
+            var $uploadButton = $("<div class='qq-upload-button-indicator' />");
+
+            this.$el.append($input)
+                .append($uploadButton);
 
             $input.on('change', function () {
                 me._onInputChange();
             });
+            $uploadButton.on('click', function () {
+                $input.trigger('click');
+            });
 
-            $input.on('mouseover', function () {
+            var $eventHandlers = $uploadButton.add($input);
+            $eventHandlers.on('mouseover', function () {
                 me.$el.addClass(me._options.hoverClass);
             });
-            $input.on('mouseout', function () {
+
+            $eventHandlers.on('mouseout', function () {
                 me.$el.removeClass(me._options.hoverClass);
             });
-            $input.on('focus', function () {
+            $eventHandlers.on('focus', function () {
                 me.$el.addClass(me._options.focusClass);
             });
-            $input.on('blur', function () {
+            $eventHandlers.on('blur', function () {
                 me.$el.removeClass(me._options.focusClass);
             });
 

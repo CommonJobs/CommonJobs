@@ -29,19 +29,37 @@
 	border: solid 1px black;
 	margin-right: 10px;
 	margin-bottom: 10px;
-}
-
-.photo button.view-editable-clear 
-{
-    background-color: transparent;
-	.rounded_corners(5px);
-	margin-top: 0;
-	top: -30px;
 	position: relative;
 
-	&:hover 
+	.upload-element {
+		height: 100px;
+
+		input {
+			width: 100px;
+			height: 100px;
+		}
+	}
+
+	.view-attached {
+		position: absolute;
+		top: 0;
+	}
+
+	button.view-editable-clear 
 	{
-		background-color: @color_primary_lighter;
+		background-color: @color_primary_medium;
+		.rounded_corners(5px);
+		margin-top: 0;
+		top: -30px;
+		left: 3px;
+		width: 23px;
+		position: relative;
+		padding: 0;
+
+		&:hover 
+		{
+			background-color: @color_primary_lighter;
+		}
 	}
 }
 
