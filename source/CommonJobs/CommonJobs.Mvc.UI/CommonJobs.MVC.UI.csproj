@@ -82,6 +82,9 @@
     <Reference Include="Raven.Client.Lightweight, Version=1.0.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
       <HintPath>..\Libs\RavenDB\Client\Raven.Client.Lightweight.dll</HintPath>
     </Reference>
+    <Reference Include="Raven.Client.MvcIntegration">
+      <HintPath>..\Libs\RavenDB\Client\Raven.Client.MvcIntegration.dll</HintPath>
+    </Reference>
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Web.Helpers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">

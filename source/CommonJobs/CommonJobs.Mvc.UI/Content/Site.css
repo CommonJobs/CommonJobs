@@ -73,3 +73,13 @@ textarea
 {
     display: none;
 }
+
+body span.rdbprofilerbutton
+{
+    background: none repeat scroll 0 0 #505979;
+    border: 1px solid #A7ACBC;
+    color: #A7ACBC;
+    font-size: 8px;
+    width: 32px;
+    text-align: center; 
+}
