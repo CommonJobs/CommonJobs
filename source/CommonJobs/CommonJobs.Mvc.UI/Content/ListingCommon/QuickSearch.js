@@ -53,9 +53,9 @@ QuickSearchPage.prototype = {
         this.$results.on("click", self._config.getMoreCardsSelector + "." + self._config.readyClass, function (e) {
             self.getNextPage();
         });
-        this.$quickSearch.bind('propertychange keyup input paste', function (e) {
+        this.$quickSearch.bind('input', function (e) {
             var current = self.$quickSearch.val();
-            if (e.keyCode != 13 && current != self._previousQuickSearchText) {
+            if (current != self._previousQuickSearchText) {
                 self._previousQuickSearchText = current;
                 self.search();
             }
