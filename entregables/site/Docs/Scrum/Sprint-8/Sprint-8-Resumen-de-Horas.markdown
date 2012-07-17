@@ -25,7 +25,7 @@ Total: 28 horas
 * Planificación: 2 horas
 * Desarrollo: 3 horas
 
-total:19hs 
+Total:19 horas 
 
 *Andrés:*
 

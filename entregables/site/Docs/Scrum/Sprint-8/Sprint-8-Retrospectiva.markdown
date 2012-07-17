@@ -13,4 +13,4 @@
 
 * Empezamos con las tareas más difíciles, nos permitió organizar mejor el tiempo
 * Un poco más de motivación, algo bueno, la empresa está más involucrada.
-* Riesgo de bloquearse por desconocimiento en RavenDB, comenzará a meterse del lado del backend con tareas más simples que involucren a esta tecnología
+* Riesgo de bloquearse por desconocimiento en RavenDB, comenzará a meterse del lado del backend con tareas más simples que involucren a esta tecnología.
