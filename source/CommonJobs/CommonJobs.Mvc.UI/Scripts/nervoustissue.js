@@ -457,12 +457,12 @@
                 if (e.keyCode == 27) {
                     this.undoEdition();
                     this.applyMode("view");
-                } else {
-                    this.update();
-                    if (!e.altKey && !e.shiftKey && e.keyCode == 13) {
-                        this.applyMode("view");
-                    }
+                } else if (!e.altKey && !e.shiftKey && e.keyCode == 13) {
+                    this.applyMode("view");
                 }
+            },
+            onInput: function (e) {
+                this.update();
             },
             onKeyPress: function (e) {
             },
@@ -473,6 +473,9 @@
                 });
                 me.$el.on("keyup", ".editor-editable", null, function (e) {
                     me.onKeyUp(e);
+                });
+                me.$el.on("input", ".editor-editable", null, function (e) {
+                    me.onInput(e);
                 });
                 me.$el.on("keypress", ".editor-editable", null, function (e) {
                     me.onKeyPress(e);
@@ -493,13 +496,18 @@
                 me.$el.on("keyup", ".editor-editable textarea", null, function (e) {
                     me.onKeyUp(e);
                 });
+                me.$el.on("input", ".editor-editable", null, function (e) {
+                    me.onInput(e);
+                });
+            },
+            onInput: function (e) {
+                this.update();
             },
             onKeyUp: function (e) {
                 if (e.keyCode == 27) {
                     this.undoEdition();
                     this.applyMode("view");
                 } else {
-                    this.update();
                     //I am waiting for ctrl + enter to accept changes
                     if (e.ctrlKey && e.keyCode == 13) {
                         this.applyMode("view");
@@ -540,13 +548,18 @@
                 me.$el.on("keyup", ".editor-editable textarea", null, function (e) {
                     me.onKeyUp(e);
                 });
+                me.$el.on("input", ".editor-editable", null, function (e) {
+                    me.onInput(e);
+                });
+            },
+            onInput: function (e) {
+                this.update();
             },
             onKeyUp: function (e) {
                 if (e.keyCode == 27) {
                     this.undoEdition();
                     this.applyMode("view");
                 } else {
-                    this.update();
                     if (e.ctrlKey && e.keyCode == 13) {
                         this.applyMode("view");
                     }
@@ -604,6 +617,12 @@
                 me.$el.on("keypress", ".editor-editable", null, function (e) {
                     me.onKeyPress(e);
                 });
+                me.$el.on("input", ".editor-editable", null, function (e) {
+                    me.onInput(e);
+                });
+            },
+            onInput: function (e) {
+                this.update();
             },
             getTemplateModel: function () {
                 return this.linkedData.read();
