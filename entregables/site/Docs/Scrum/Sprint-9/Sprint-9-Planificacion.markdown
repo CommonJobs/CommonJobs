@@ -1,9 +1,9 @@
 # Planificación de Sprint 9
 
 ## Fecha inicio:
- 16 de julio.
+ 11 de julio.
 ## Fecha fin:
- 6 de agosto.
+ 1 de agosto.
 ## Tareas
 
 *Los números son los Story Points asignados a cada Tarea/User Story.*

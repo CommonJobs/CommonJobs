@@ -3,7 +3,7 @@
 ## Fecha inicio:
  21 de junio.
 ## Fecha fin:
- 16 de julio.
+ 11 de julio.
 ## Tareas
 
 *Los números son los Story Points asignados a cada Tarea/User Story.*
