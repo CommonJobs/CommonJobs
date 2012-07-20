@@ -339,6 +339,21 @@
         m.BaseModel = m.Base.extend({
             _initialize: function () {
                 var me = this;
+
+                var clickOutside = function (e) {
+                    if (!me.$el.find(e.target).length) {
+                        me.applyMode("view");
+                    }
+                };
+                me.stopLisenOutside = function () {
+                    $("body").off("click", clickOutside);
+                };
+                me.startLisenOutside = function () {
+                    me.stopLisenOutside();
+                    $("body").on("click", clickOutside);
+                };
+
+
                 me.$view = this.$(".view-editable");
                 var $viewContent = this.$(".view-editable-content");
                 me.$viewContent = $viewContent.length ? $viewContent : me.$view;
@@ -385,6 +400,7 @@
                 this.$editor.val(value);
             },
             showView: function () {
+                this.stopLisenOutside(); 
                 this.$editor.hide();
                 if (!this.dataEmpty()) {
                     this.$viewEmpty.hide();
@@ -399,6 +415,7 @@
                 this.$view.hide();
                 this.$viewEmpty.hide();
                 this.$editor.show();
+                this.startLisenOutside();
             },
             clearData: function () {
                 this.linkedData.write(null);
