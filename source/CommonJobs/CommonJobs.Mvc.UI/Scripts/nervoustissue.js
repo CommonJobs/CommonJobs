@@ -345,11 +345,11 @@
                         me.applyMode("view");
                     }
                 };
-                me.stopLisenOutside = function () {
+                me.stopListenOutside = function () {
                     $("body").off("click", clickOutside);
                 };
-                me.startLisenOutside = function () {
-                    me.stopLisenOutside();
+                me.startListenOutside = function () {
+                    me.stopListenOutside();
                     $("body").on("click", clickOutside);
                 };
 
@@ -400,7 +400,7 @@
                 this.$editor.val(value);
             },
             showView: function () {
-                this.stopLisenOutside(); 
+                this.stopListenOutside(); 
                 this.$editor.hide();
                 if (!this.dataEmpty()) {
                     this.$viewEmpty.hide();
@@ -415,7 +415,7 @@
                 this.$view.hide();
                 this.$viewEmpty.hide();
                 this.$editor.show();
-                this.startLisenOutside();
+                this.startListenOutside();
             },
             clearData: function () {
                 this.linkedData.write(null);
