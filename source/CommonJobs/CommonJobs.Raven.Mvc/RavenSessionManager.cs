@@ -48,7 +48,6 @@ namespace CommonJobs.Raven.Mvc
                 return; // prevent misuse
 
             DocumentStore = new DocumentStore() { ConnectionStringName = connectionStringName }.Initialize();
-            global::Raven.Client.MvcIntegration.RavenProfiler.InitializeFor(DocumentStore);
             TryCreatingIndexesOrRedirectToErrorPage(indexAssemblies, errorUrl);
         }
 

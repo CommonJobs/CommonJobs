@@ -58,6 +58,7 @@ namespace CommonJobs.Raven.Mvc
         private void InitializeDocumentStore()
         {
             RavenSessionManager.InitializeDocumentStore(GetIndexAssemblies(), GetConnectionStringName(), GetConnectionErrorUrl());
+            global::Raven.Client.MvcIntegration.RavenProfiler.InitializeFor(RavenSessionManager.DocumentStore);
         }
 
         private void CommonJobsBindingConfiguration()
