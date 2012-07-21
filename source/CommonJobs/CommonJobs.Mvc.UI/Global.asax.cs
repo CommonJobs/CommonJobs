@@ -9,6 +9,7 @@ using CommonJobs.Infrastructure.Indexes;
 using CommonJobs.ContentExtraction;
 using CommonJobs.ContentExtraction.Extractors;
 using CommonJobs.Raven.Mvc.Authorize;
+using Raven.Client.Listeners;
 
 namespace CommonJobs.Mvc.UI
 {
@@ -41,7 +42,12 @@ namespace CommonJobs.Mvc.UI
         {
             return new[] { typeof(NullIndex).Assembly };
         }
-        
+
+        protected override IEnumerable<IDocumentStoreListener> GetDocumentStoreListeners()
+        {
+            yield return new SetLastModifiedByMetadataListener();
+        }
+
         protected void Application_Start()
         {
             //TODO: acá se podrían invocar las migraciones automáticas
