@@ -47,6 +47,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Libs\RavenDB\Client\NLog.dll</HintPath>
     </Reference>
+    <Reference Include="Raven.Abstractions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libs\RavenDB\Client\Raven.Abstractions.dll</HintPath>
+    </Reference>
     <Reference Include="Raven.Client.Debug">
       <HintPath>..\Libs\RavenDB\Client\Raven.Client.Debug.dll</HintPath>
     </Reference>
@@ -101,6 +105,7 @@
     <Compile Include="RequestAttachmentReader.cs" />
     <Compile Include="ScriptManager.cs" />
     <Compile Include="ScriptManagerEntry.cs" />
+    <Compile Include="SetLastModifiedByMetadataListener.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CommonJobs.Raven.Infrastructure\CommonJobs.Raven.Infrastructure.csproj">

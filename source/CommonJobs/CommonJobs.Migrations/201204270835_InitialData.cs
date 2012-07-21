@@ -17,13 +17,6 @@ namespace CommonJobs.Migrations
         {
             using (var session = DocumentStore.OpenSession())
             {
-                var thereAreUsers = session.Query<User>().Any();
-                if (!thereAreUsers)
-                {
-                    var user = new User("admin", "admin");
-                    session.Store(user);
-                }
-
                 var thereAreApplicants = session.Query<Applicant>().Any();
                 if (!thereAreApplicants)
                 {
