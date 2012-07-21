@@ -659,7 +659,7 @@
             /*new*/
             dateFormat: "yy-mm-dd",
             //TODO this should be an option in $.datepicker.parseDate
-            ignoreInDateParse: /T\d\d:\d\d:\d\d/,
+            ignoreInDateParse: /T.*/,
             uiDateFormat: "d/m/yy",
             //*/
             valueToContent: function (value) {
