@@ -121,6 +121,12 @@ La instalación de los servicios se realizará desde la línea de comandos de la
 
 _Nota_: El key `Raven/WindowsServiceName` que se muestra en las capturas de pantalla está obsoleto.
 
+### Versioning Bundle
+
+Para mantener el [historial de las entidades](../Proyecto/Historial-de-Cambios-de-Entidades) se utiliza la extensión de Raven DB [Versioning Bundle](http://ravendb.net/docs/server/bundles/versioning) para configurarla solo es necesario copiar el archivo `Raven.Bundles.Versioning.dll` distribuido con el paquete de RavenDB a la carpeta `Plugins` correspondiente al servicio.
+
+![ ](Images/VersioningBundleInstallation.jpg)
+
 ## Firewall
 
 Mediante Windows Firewall vamos a limitar el acceso a los diferentes servicios.
