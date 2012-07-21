@@ -5,6 +5,8 @@ using System.Web;
 using System.Reflection;
 using System.Web.Mvc;
 using CommonJobs.Utilities;
+using Raven.Client.Document;
+using Raven.Client.Listeners;
 
 namespace CommonJobs.Raven.Mvc
 {
@@ -41,6 +43,10 @@ namespace CommonJobs.Raven.Mvc
         }
 
         protected abstract Assembly[] GetIndexAssemblies();
+        protected virtual IEnumerable<IDocumentConversionListener> GetConversionListeners() { yield break; }
+        protected virtual IEnumerable<IDocumentDeleteListener> GetDeleteListeners() { yield break; }
+        protected virtual IEnumerable<IDocumentQueryListener> GetQueryListeners() { yield break; }
+        protected virtual IEnumerable<IDocumentStoreListener> GetDocumentStoreListeners() { yield break; }
 
         public static AssemblyName AppName { get; private set; }
         public static string AppNameHash { get; private set; }
@@ -59,6 +65,28 @@ namespace CommonJobs.Raven.Mvc
         {
             RavenSessionManager.InitializeDocumentStore(GetIndexAssemblies(), GetConnectionStringName(), GetConnectionErrorUrl());
             global::Raven.Client.MvcIntegration.RavenProfiler.InitializeFor(RavenSessionManager.DocumentStore);
+            RegisterListeners();
+        }
+
+        private void RegisterListeners()
+        {
+            var documentStore = (DocumentStore)RavenSessionManager.DocumentStore;
+            foreach (var listener in GetConversionListeners())
+            {
+                documentStore.RegisterListener(listener);
+            }
+            foreach (var listener in GetDeleteListeners())
+            {
+                documentStore.RegisterListener(listener);
+            }
+            foreach (var listener in GetQueryListeners())
+            {
+                documentStore.RegisterListener(listener);
+            }
+            foreach (var listener in GetDocumentStoreListeners())
+            {
+                documentStore.RegisterListener(listener);
+            }
         }
 
         private void CommonJobsBindingConfiguration()
