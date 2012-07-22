@@ -11,10 +11,11 @@ using System.Reflection;
 
 namespace CommonJobs.Raven.Mvc
 {
+    //TODO: refactor it totally!
     public static class RavenSessionManager
     {
         private const string CURRENT_REQUEST_RAVEN_SESSION_KEY = "_COMMOMJOBS_CURRENT_REQUEST_RAVEN_SESSION_";
-       
+
         public static IDocumentStore DocumentStore { get; private set; }
 
         internal static IDocumentSession GetCurrentSession()
@@ -48,7 +49,6 @@ namespace CommonJobs.Raven.Mvc
                 return; // prevent misuse
 
             DocumentStore = new DocumentStore() { ConnectionStringName = connectionStringName }.Initialize();
-            global::Raven.Client.MvcIntegration.RavenProfiler.InitializeFor(DocumentStore);
             TryCreatingIndexesOrRedirectToErrorPage(indexAssemblies, errorUrl);
         }
 

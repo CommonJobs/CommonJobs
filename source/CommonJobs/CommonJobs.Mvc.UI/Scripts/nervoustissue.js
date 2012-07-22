@@ -339,6 +339,21 @@
         m.BaseModel = m.Base.extend({
             _initialize: function () {
                 var me = this;
+
+                var clickOutside = function (e) {
+                    if (!me.$el.find(e.target).length) {
+                        me.applyMode("view");
+                    }
+                };
+                me.stopListenOutside = function () {
+                    $("body").off("click", clickOutside);
+                };
+                me.startListenOutside = function () {
+                    me.stopListenOutside();
+                    $("body").on("click", clickOutside);
+                };
+
+
                 me.$view = this.$(".view-editable");
                 var $viewContent = this.$(".view-editable-content");
                 me.$viewContent = $viewContent.length ? $viewContent : me.$view;
@@ -385,6 +400,7 @@
                 this.$editor.val(value);
             },
             showView: function () {
+                this.stopListenOutside(); 
                 this.$editor.hide();
                 if (!this.dataEmpty()) {
                     this.$viewEmpty.hide();
@@ -399,6 +415,7 @@
                 this.$view.hide();
                 this.$viewEmpty.hide();
                 this.$editor.show();
+                this.startListenOutside();
             },
             clearData: function () {
                 this.linkedData.write(null);
@@ -642,7 +659,7 @@
             /*new*/
             dateFormat: "yy-mm-dd",
             //TODO this should be an option in $.datepicker.parseDate
-            ignoreInDateParse: /T\d\d:\d\d:\d\d/,
+            ignoreInDateParse: /T.*/,
             uiDateFormat: "d/m/yy",
             //*/
             valueToContent: function (value) {
