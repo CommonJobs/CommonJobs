@@ -1,0 +1,72 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using CommonJobs.Domain;
+using CommonJobs.Infrastructure.JobSearchSearching;
+using CommonJobs.Raven.Mvc;
+
+namespace CommonJobs.Mvc.UI.Controllers
+{
+    [CommonJobsAuthorize(Roles = "Users")]
+    public class JobSearchController : CommonJobsController
+    {
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+        //TODO Search parameters
+        public JsonNetResult List(JobSearchSearchParameters searchParameters)
+        {
+            var query = new SearchJobSearches(searchParameters);
+            var results = Query(query);
+            return Json(new
+            {
+                Items = results,
+                Skiped = searchParameters.Skip,
+                TotalResults = query.Stats.TotalResults
+            });
+        }
+
+        public ActionResult Create()
+        {
+            var newJobSearch = new JobSearch();
+            RavenSession.Store(newJobSearch);
+            return RedirectToAction("Edit", new { id = newJobSearch.Id });
+        }
+
+        public ActionResult Edit(string id)
+        {
+            var jobSearch = RavenSession.Load<JobSearch>(id);
+            ScriptManager.RegisterGlobalJavascript(
+                "ViewData",
+                new
+                {
+                    jobSearch = jobSearch
+                },
+                500);
+            return View();
+        }
+
+        public JsonNetResult Get(string id)
+        {
+            var jobSearch = RavenSession.Load<JobSearch>(id);
+            return Json(jobSearch);
+        }
+
+        public JsonNetResult Post(JobSearch jobSearch)
+        {
+            RavenSession.Store(jobSearch);
+            return Get(jobSearch.Id);
+        }
+
+        public ActionResult Delete(string id)
+        {
+            var jobSearch = RavenSession.Load<JobSearch>(id);
+            RavenSession.Delete(jobSearch);
+            return RedirectToAction("Index");
+        }
+    }
+}
