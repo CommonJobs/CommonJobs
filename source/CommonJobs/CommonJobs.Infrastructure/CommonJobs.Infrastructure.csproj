@@ -79,6 +79,10 @@
     <Compile Include="BaseSearchParameters.cs" />
     <Compile Include="EmployeeSearching\EmployeeSearchResult.cs" />
     <Compile Include="EmployeeSearching\EmployeeSearchParameters.cs" />
+    <Compile Include="JobSearchSearching\JobSearchSearchParameters.cs" />
+    <Compile Include="JobSearchSearching\JobSearchSearchResult.cs" />
+    <Compile Include="JobSearchSearching\JobSearch_QuickSearch.cs" />
+    <Compile Include="JobSearchSearching\SearchJobSearches.cs" />
     <Compile Include="SharedLinks\SearchSharedEntity.cs" />
     <Compile Include="AttachmentIndexing\Attachments_ByContentExtractorConfigurationHash.cs" />
     <Compile Include="AttachmentSearching\Attachments_QuickSearch.cs" />

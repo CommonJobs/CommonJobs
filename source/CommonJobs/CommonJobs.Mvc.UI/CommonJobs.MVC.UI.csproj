@@ -123,6 +123,7 @@
     <Compile Include="Controllers\AttachmentsController.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\JobSearchController.cs" />
     <Compile Include="Controllers\MigrationsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
