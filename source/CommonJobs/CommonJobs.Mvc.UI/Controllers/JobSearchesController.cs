@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -44,9 +45,11 @@ namespace CommonJobs.Mvc.UI.Controllers
                 "ViewData",
                 new
                 {
-                    jobSearch = jobSearch
+                    jobSearch = jobSearch,
+                    publicSiteUrl = ConfigurationManager.AppSettings["CommonJobs/PublicSiteUrl"]
                 },
                 500);
+            
             return View();
         }
 
