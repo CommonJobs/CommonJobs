@@ -1,7 +1,33 @@
 ﻿@import "../StylesBase.less";
-@import "../ListingCommon/PersonListing.less";
+@import "../ListingCommon/CardListing.less";
+
+.column 
+{
+    min-width: 344px;
+}
 
 .card 
 {
 	height: 80px;
+}
+
+.cardDescription {
+	font-size: 1.5em;
+
+	p {
+		line-height: 2em;
+	}
+}
+
+.item-card {
+	.cardDescription {
+		height: 100%;
+	}
+
+	a {
+		text-decoration: none;
+		color: black;
+		font-weight: normal;
+		white-space: nowrap;
+	}
 }
