@@ -123,7 +123,7 @@
     <Compile Include="Controllers\AttachmentsController.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\JobSearchController.cs" />
+    <Compile Include="Controllers\JobSearchesController.cs" />
     <Compile Include="Controllers\MigrationsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -145,6 +145,7 @@
     <Content Include="Content\Images\button1a.gif" />
     <Content Include="Content\Images\button4.gif" />
     <Content Include="Content\Images\button4a.gif" />
+    <Content Include="Content\Images\AddJobSearch.png" />
     <Content Include="Content\Images\Diploma.png" />
     <Content Include="Content\Images\down.gif" />
     <Content Include="Content\Images\favicon.ico" />
@@ -174,6 +175,7 @@
     <Content Include="Content\Images\Jcrop.gif" />
     <Content Include="Content\Images\NoDiploma.png" />
     <Content Include="Content\Images\Unhighlighted.png" />
+    <Content Include="Content\JobSearches\JobSearchListing.js" />
     <Content Include="Content\jquery.Jcrop.min.css" />
     <Content Include="Content\ListingCommon\QuickSearch.js" />
     <Content Include="Content\menu_style.css" />
@@ -214,6 +216,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Views\JobSearches\Index.cshtml" />
+    <Content Include="Content\JobSearches\JobSearches.less" />
     <None Include="_bin_deployableAssemblies\System.Web.Mvc.dll" />
     <None Include="_bin_deployableAssemblies\System.Web.WebPages.xml" />
     <None Include="_bin_deployableAssemblies\System.Web.WebPages.Razor.xml" />

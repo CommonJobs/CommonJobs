@@ -10,7 +10,7 @@ using CommonJobs.Raven.Mvc;
 namespace CommonJobs.Mvc.UI.Controllers
 {
     [CommonJobsAuthorize(Roles = "Users")]
-    public class JobSearchController : CommonJobsController
+    public class JobSearchesController : CommonJobsController
     {
         public ActionResult Index()
         {
