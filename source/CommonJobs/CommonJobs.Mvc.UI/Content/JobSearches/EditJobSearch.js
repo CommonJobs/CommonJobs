@@ -1,6 +1,8 @@
 ﻿(function () {
     var App = this.App = { };
 
+    App.publicUrlGenerator = new UrlGenerator(ViewData.publicSiteUrl);
+
     App.SharedLink = Backbone.Model.extend({
         defaults: function () {
             return {
@@ -54,7 +56,7 @@
                         { 
                             controlLink: "LinkEditableText", name: "Link", dataLink: "UrlLink", textField: "FriendlyName", urlField: "SharedCode",
                             valueToContent: function (value) {
-                                return _.template('<span class="view-editable"><a href="<%= urlGenerator.byUrl(ViewData.publicSiteUrl, { jobCode: url }) %>"><%= text %></a> <span class="icon-edit">&nbsp;</span></span>', value);
+                                return _.template('<span class="view-editable"><a href="<%= App.publicUrlGenerator.bySections([ "new", url ]) %>"><%= text %></a> <span class="icon-edit">&nbsp;</span></span>', value);
                             },
                         },
                         { controlLink: "Date", name: "ExpirationDate", field: "ExpirationDate", uiDateFormat: "d/m/y" }
