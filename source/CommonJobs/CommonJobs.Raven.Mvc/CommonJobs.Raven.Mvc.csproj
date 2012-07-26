@@ -99,6 +99,7 @@
     <Compile Include="JsonDotNetModelBinder.cs" />
     <Compile Include="JsonNetResult.cs" />
     <Compile Include="Miscellaneous.Attributes.Controller\FilterIPAttribute.cs" />
+    <Compile Include="OverrideValueProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rainbow.Framework.Helpers\IPList.cs" />
     <Compile Include="RavenSessionManager.cs" />
