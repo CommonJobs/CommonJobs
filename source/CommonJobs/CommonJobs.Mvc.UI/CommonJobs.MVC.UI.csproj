@@ -175,6 +175,7 @@
     <Content Include="Content\Images\Jcrop.gif" />
     <Content Include="Content\Images\NoDiploma.png" />
     <Content Include="Content\Images\Unhighlighted.png" />
+    <Content Include="Content\JobSearches\EditJobSearch.js" />
     <Content Include="Content\JobSearches\JobSearchListing.js" />
     <Content Include="Content\jquery.Jcrop.min.css" />
     <Content Include="Content\ListingCommon\QuickSearch.js" />
@@ -217,6 +218,8 @@
     </Content>
     <Content Include="Views\JobSearches\Index.cshtml" />
     <Content Include="Content\JobSearches\JobSearches.less" />
+    <Content Include="Views\JobSearches\Edit.cshtml" />
+    <Content Include="Content\JobSearches\EditJobSearch.less" />
     <None Include="_bin_deployableAssemblies\System.Web.Mvc.dll" />
     <None Include="_bin_deployableAssemblies\System.Web.WebPages.xml" />
     <None Include="_bin_deployableAssemblies\System.Web.WebPages.Razor.xml" />

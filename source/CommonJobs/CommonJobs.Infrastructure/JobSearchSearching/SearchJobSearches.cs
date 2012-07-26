@@ -31,11 +31,8 @@ namespace CommonJobs.Infrastructure.JobSearchSearching
             //TODO set up criteria for real parameters
 
             //TODO set order -- whichever order works ok for now
-            if (Parameters.Skip > 0)
-                query = query.Skip(Parameters.Skip);
 
-            if (Parameters.Take > 0)
-                query = query.Take(Parameters.Take);
+            query = Parameters.ApplyPagination(query);
 
             var result = query.ToArray();
             Stats = stats;

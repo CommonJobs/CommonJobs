@@ -1,0 +1,31 @@
+﻿@import "../StylesBase.less";
+@import "../EditCommon/EditScreen.less";
+
+.isPublic {
+	float: right;
+
+	a {
+		text-decoration: none;
+	}
+}
+
+.checkmark {
+	font-size: 3.5em;
+
+	&.checked {
+		color: #208DA8;
+	}
+
+	&.nonChecked {
+		color: #DBDBDB;
+		text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+	}
+}
+
+.title {
+	float: left;
+}
+
+h2 {
+	clear: both;
+}
