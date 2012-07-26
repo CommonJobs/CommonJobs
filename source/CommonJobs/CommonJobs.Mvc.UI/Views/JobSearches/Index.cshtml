@@ -26,7 +26,7 @@
 
 <script type="text/template" id="card-template">
     <% _.each(model.items, function(item) { %>
-        <div class="card column clickable item-card">
+        <div class="card column clickable item-card <%= item.IsPublic ? "public" : "" %>">
             <div class="cardDescription">
                 <p class="name"><a class="clickable-link" href="<%= urlGenerator.action("Edit", "JobSearches", item.Id) %>">
                     <% if (item.Title) { %>
