@@ -20,14 +20,12 @@ namespace CommonJobs.Raven.Mvc
         IValueProvider OriginalValueProvider { get; set; }
         Dictionary<string, ValueProviderResult> HardcodedValues { get; set; }
 
-        public OverrideValueProvider(IValueProvider originalValueProvider, string entityIdkey, string sharedCodeKey, string entityId, string sharedCode)
+        public OverrideValueProvider(IValueProvider originalValueProvider, IDictionary<string, string> values)
         {
             OriginalValueProvider = originalValueProvider;
-            HardcodedValues = new Dictionary<string, ValueProviderResult>()
-            {
-                { entityIdkey, new ValueProviderResult(entityId, entityId, System.Globalization.CultureInfo.InvariantCulture) },
-                { sharedCodeKey, new ValueProviderResult(sharedCode, sharedCode, System.Globalization.CultureInfo.InvariantCulture) }
-            };
+            HardcodedValues = values.ToDictionary(
+                x => x.Key,
+                x => new ValueProviderResult(x.Value, x.Value, System.Globalization.CultureInfo.InvariantCulture));
         }
 
         public bool ContainsPrefix(string prefix)
