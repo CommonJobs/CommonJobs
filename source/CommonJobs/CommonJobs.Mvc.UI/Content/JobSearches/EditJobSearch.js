@@ -31,7 +31,10 @@
             PublicCode: {
                 controlLink: "Text",
                 name: "PublicCode",
-                template: _.template('<span class="view-editable" style="display: none;"></span><input class="editor-editable" type="text" value="" style="display: none;"/>'),
+                template: _.template('<span class="view-editable" style="display: none;"></span><span class="editor-editable" style="display: none;"><%= App.publicUrlGenerator.bySections(["new"]) + "/" %><input class="editor-editable" type="text" value="" /></span>'),
+                readUI: function () {
+                    return this.$editor.filter("input").val();
+                },
                 dataEmpty: function () { return false; },
                 valueToContent: function (value) {
                     if (!value) value = "nuevaBusqueda";
