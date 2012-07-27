@@ -16,6 +16,14 @@ namespace CommonJobs.Mvc.UI.Controllers
     {
         public ActionResult Index()
         {
+            ScriptManager.RegisterGlobalJavascript(
+                "ViewData",
+                new
+                {
+                    publicSiteUrl = ConfigurationManager.AppSettings["CommonJobs/PublicSiteUrl"]
+                },
+                500);
+
             return View();
         }
 
