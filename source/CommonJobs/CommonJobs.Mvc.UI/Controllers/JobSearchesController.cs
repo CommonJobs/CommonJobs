@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 using CommonJobs.Domain;
@@ -33,7 +34,13 @@ namespace CommonJobs.Mvc.UI.Controllers
 
         public ActionResult Create()
         {
-            var newJobSearch = new JobSearch();
+            //TODO search for last public code and add 1 to it, probably need to create a new Raven Index to search on those strings
+            var newPublicCode = ConfigurationManager.AppSettings["CommonJobs/NewJobSearchDefaultPrefix"] + Guid.NewGuid().ToString();
+
+            var newJobSearch = new JobSearch()
+            {
+                PublicCode = newPublicCode
+            };
             RavenSession.Store(newJobSearch);
             return RedirectToAction("Edit", new { id = newJobSearch.Id });
         }

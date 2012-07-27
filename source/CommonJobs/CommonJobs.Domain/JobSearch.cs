@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CommonJobs.Domain
 {
-    public class JobSearch : IShareableEntity
+    public class JobSearch
     {
         public string Id { get; set; }
         public string Title { get; set; }
@@ -13,6 +13,6 @@ namespace CommonJobs.Domain
         public string PrivateNotes { get; set; }
         public bool IsPublic { get; set; }
 
-        public SharedLinkList SharedLinks { get; set; }
+        public string PublicCode { get; set; }
     }
 }

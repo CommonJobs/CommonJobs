@@ -5,10 +5,6 @@
 
     App.SharedLink = Backbone.Model.extend({
         defaults: function () {
-            return {
-                SharedCode: UrlGenerator.randomString(),
-                ExpirationDate: moment().add('days', 3).format("YYYY-MM-DD")
-            }
         },
         initialize: function () {
             this.on("add", this.added, this);
@@ -19,49 +15,29 @@
         }
     });
 
-    App.SharedLinks = Backbone.Collection.extend({
-        model: App.SharedLink
-    });
-
     App.JobSearch = Backbone.Model.extend({
-        initCollectionField: function (fieldName, fieldType) {
-            fieldType = fieldType || Backbone.Collection;
-            this.set(fieldName, new fieldType(this.get(fieldName)));
-            this.get(fieldName).on("add remove reset change", function () { this.trigger("change"); }, this);
-            this.get(fieldName).parentModel = this;
-        },
-        initialize: function () {
-            this.initCollectionField("SharedLinks", App.SharedLinks);
-        }
     });
 
     App.EditJobSearchAppViewDataBinder = Nervoustissue.FormBinder.extend({
-       dataBindings: {
-           Title: { controlLink: "Text" },
-           PublicNotes: { controlLink: "Markdown" },
-           PrivateNotes: { controlLink: "Markdown" },
-           IsPublic: {
-               controlLink: "Toggle",
-               onTemplate: _.template('<span class="checkmark checked" title="Público">&#x2713;</span>'),
-               offTemplate: _.template('<span class="checkmark nonChecked" title="No público">&#x2713;</span>')
-           },
-           SharedLinks:
-            {
-                controlLink: "Collection",
-                item: {
-                    controlLink: "Compound",
-                    template: _.template('<span data-bind="Link"></span> (<span data-bind="ExpirationDate"></span>)'),
-                    items:
-                    [
-                        { 
-                            controlLink: "LinkEditableText", name: "Link", dataLink: "UrlLink", textField: "FriendlyName", urlField: "SharedCode",
-                            valueToContent: function (value) {
-                                return _.template('<span class="view-editable"><a href="<%= App.publicUrlGenerator.bySections([ "new", url ]) %>"><%= text %></a> <span class="icon-edit">&nbsp;</span></span>', value);
-                            },
-                        },
-                        { controlLink: "Date", name: "ExpirationDate", field: "ExpirationDate", uiDateFormat: "d/m/y" }
-                    ]
-                }
+        dataBindings: {
+            Title: { controlLink: "Text" },
+            PublicNotes: { controlLink: "Markdown" },
+            PrivateNotes: { controlLink: "Markdown" },
+            IsPublic: {
+                controlLink: "Toggle",
+                onTemplate: _.template('<span class="checkmark checked" title="Público">&#x2713;</span>'),
+                offTemplate: _.template('<span class="checkmark nonChecked" title="No público">&#x2713;</span>')
+            },
+            PublicCode: {
+                controlLink: "Text",
+                name: "PublicCode",
+                template: _.template('<span class="view-editable" style="display: none;"></span><input class="editor-editable" type="text" value="" style="display: none;"/>'),
+                dataEmpty: function () { return false; },
+                valueToContent: function (value) {
+                    if (!value) value = "nuevaBusqueda";
+                    var url = App.publicUrlGenerator.bySections(["new", value]);
+                    return _.template('<span class="view-editable"><a href="<%= url %>"><%= url %></a> <span class="icon-edit">&nbsp;</span></span>', { url: url });
+                },
             }
         } 
     });

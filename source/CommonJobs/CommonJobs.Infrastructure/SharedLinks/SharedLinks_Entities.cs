@@ -29,18 +29,6 @@ namespace CommonJobs.Infrastructure.SharedLinks
                     SharedCode = sharedLink.SharedCode,
                     ExpirationDate = sharedLink.ExpirationDate
                 });
-
-            //TODO: No estoy muy seguro de que JobSearch sea realmente un SharedEntity
-            AddMap<JobSearch>(entities =>
-                from entity in entities
-                from sharedLink in entity.SharedLinks
-                where entity.IsPublic
-                select new
-                {
-                    EntityId = entity.Id,
-                    SharedCode = sharedLink.SharedCode,
-                    ExpirationDate = sharedLink.ExpirationDate
-                });
 		}
     }
 }
