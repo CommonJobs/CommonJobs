@@ -5,7 +5,7 @@
             return urlGenerator.action("Index", "JobSearches", searchParameters);
         },
         generateSearchUrl: function(searchParameters) {
-            return urlGenerator.action("List", "JobSearches", searchParameters)
+            return urlGenerator.action("List", "JobSearches", searchParameters);
         },
         fillOtherSearchParameters: function(searchParameters) {
             //nothing in here for the moment

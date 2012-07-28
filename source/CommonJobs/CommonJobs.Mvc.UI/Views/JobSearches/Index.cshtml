@@ -25,17 +25,21 @@
 </script>
 
 <script type="text/template" id="card-template">
-    <% _.each(model.items, function(item) { %>
-        <div class="card column clickable item-card <%= item.IsPublic ? "public" : "" %>">
+    <% _.each(model.items, function(item) { 
+            var jobSearch = item.jobSearch;
+            var publicUrl = item.publicUrl;
+        %>
+        <div class="card column clickable item-card <%= jobSearch.IsPublic ? "public" : "" %>">
             <div class="cardDescription">
-                <p class="name"><a class="clickable-link" href="<%= urlGenerator.action("Edit", "JobSearches", item.Id) %>">
-                    <% if (item.Title) { %>
-                        <%= item.Title %>
+                <p class="name"><a class="clickable-link" href="<%= urlGenerator.action("Edit", "JobSearches", jobSearch.Id) %>">
+                    <% if (jobSearch.Title) { %>
+                        <%= jobSearch.Title %>
                     <% } else { %>
                         <i>Sin título</i>
                     <% } %>
                 </a></p>
-                <p class="publicUrl"><a href="<%= ViewData.publicSiteUrl %>"><%= ViewData.publicSiteUrl %></a></p>
+                <% var url = publicUrlGenerator.bySections(["new", publicUrl, jobSearch.PublicCode]); %>
+                <p class="publicUrl"><a href="<%= url %>"><%= url %></a></p>
             </div>
         </div>
     <% }) %>
@@ -48,3 +52,7 @@
 <!-- TODO separate public from non-public results -->
 <div class="results">
 </div>
+
+<script>
+    publicUrlGenerator = new UrlGenerator(ViewData.publicSiteUrl);
+</script>

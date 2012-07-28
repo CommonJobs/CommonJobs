@@ -35,7 +35,11 @@ namespace CommonJobs.Mvc.UI.Controllers
             var results = Query(query);
             return Json(new
             {
-                Items = results,
+                Items = results.Select(j => new
+                {
+                    jobSearch = j,
+                    publicUrl = RavenSession.ExtractNumericIdentityPart(j)
+                }).ToArray(),
                 Skiped = searchParameters.Skip,
                 TotalResults = query.Stats.TotalResults
             });
@@ -64,7 +68,7 @@ namespace CommonJobs.Mvc.UI.Controllers
                 {
                     jobSearch = jobSearch,
                     //TODO: verify this:
-                    publicSiteUrl = ConfigurationManager.AppSettings["CommonJobs/PublicSiteUrl"] + "new/" + RavenSession.ExtractNumericIdentityPart(jobSearch)
+                    publicSiteUrl = ConfigurationManager.AppSettings["CommonJobs/PublicSiteUrl"] + RavenSession.ExtractNumericIdentityPart(jobSearch)
                 },
                 500);
             
