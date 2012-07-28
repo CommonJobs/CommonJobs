@@ -8,26 +8,23 @@ using CommonJobs.Domain;
 using CommonJobs.Infrastructure.AttachmentStorage;
 using CommonJobs.Infrastructure.SharedLinks;
 using CommonJobs.Raven.Mvc;
+using CommonJobs.Raven.Infrastructure;
 
 namespace CommonJobs.Mvc.PublicUI.Controllers
 {
     public class PostulationsController : CommonJobsController
     {
-        public ActionResult Create(string sharedCode)
+        public ActionResult Create(long jobSearchNumber, string slug = null)
         {
-            var id = Query(new SearchSharedEntity(sharedCode));
-            if (id == null)
-                return HttpNotFound();
-
-            var jobSearch = RavenSession.Load<JobSearch>(id);
-            if (jobSearch == null)
+            var jobSearch = RavenSession.Load<JobSearch>(jobSearchNumber);
+            if (!jobSearch.IsPublic)
                 return HttpNotFound();
 
             var md = new MarkdownDeep.Markdown();
 
             ViewBag.Title = jobSearch.Title;
             ViewBag.PublicNotes = new MvcHtmlString(md.Transform(jobSearch.PublicNotes));
-
+            
             return View();
         } 
 

@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using CommonJobs.Domain;
 using CommonJobs.Infrastructure.JobSearchSearching;
 using CommonJobs.Raven.Mvc;
+using CommonJobs.Raven.Infrastructure;
 
 namespace CommonJobs.Mvc.UI.Controllers
 {
@@ -42,12 +43,10 @@ namespace CommonJobs.Mvc.UI.Controllers
 
         public ActionResult Create()
         {
-            //TODO search for last public code and add 1 to it, probably need to create a new Raven Index to search on those strings
-            var newPublicCode = ConfigurationManager.AppSettings["CommonJobs/NewJobSearchDefaultPrefix"] + Guid.NewGuid().ToString();
-
             var newJobSearch = new JobSearch()
             {
-                PublicCode = newPublicCode
+                //TODO: maybe NewJobSearchDefaultPrefix name is not appropiated now.
+                PublicCode = ConfigurationManager.AppSettings["CommonJobs/NewJobSearchDefaultPrefix"]
             };
             RavenSession.Store(newJobSearch);
             return RedirectToAction("Edit", new { id = newJobSearch.Id });
@@ -56,12 +55,16 @@ namespace CommonJobs.Mvc.UI.Controllers
         public ActionResult Edit(string id)
         {
             var jobSearch = RavenSession.Load<JobSearch>(id);
+            if (jobSearch == null)
+                return HttpNotFound(); 
+            
             ScriptManager.RegisterGlobalJavascript(
                 "ViewData",
                 new
                 {
                     jobSearch = jobSearch,
-                    publicSiteUrl = ConfigurationManager.AppSettings["CommonJobs/PublicSiteUrl"]
+                    //TODO: verify this:
+                    publicSiteUrl = ConfigurationManager.AppSettings["CommonJobs/PublicSiteUrl"] + "new/" + RavenSession.ExtractNumericIdentityPart(jobSearch)
                 },
                 500);
             

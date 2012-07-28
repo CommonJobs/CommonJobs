@@ -24,18 +24,11 @@ namespace CommonJobs.Mvc.PublicUI
 
             routes.MapRoute(
                 "CreatePostulation", // Route name
-                "new/{sharedCode}", // URL with parameters
-                new { controller = "Postulations", action = "Create" } // Parameter defaults
+                "new/{jobSearchNumber}/{*slug}", // URL with parameters
+                new { controller = "Postulations", action = "Create", slug = UrlParameter.Optional } // Parameter defaults
             );
-
-            routes.MapRoute(
-                "Default", // Route name
-                "{controller}/{action}/{*id}", // URL with parameters
-                new { controller = "Home", action = "Index", id = UrlParameter.Optional } // Parameter defaults
-            );
-
         }
-
+         
         protected override System.Reflection.Assembly[] GetIndexAssemblies()
         {
             return new[] { typeof(NullIndex).Assembly };

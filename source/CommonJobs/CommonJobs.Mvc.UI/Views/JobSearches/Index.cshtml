@@ -35,8 +35,7 @@
                         <i>Sin título</i>
                     <% } %>
                 </a></p>
-                <% var publicUrl = publicUrlGenerator.bySections(["new", item.PublicCode]); %>
-                <p class="publicUrl"><a href="<%= publicUrl %>"><%= publicUrl %></a></p>
+                <p class="publicUrl"><a href="<%= ViewData.publicSiteUrl %>"><%= ViewData.publicSiteUrl %></a></p>
             </div>
         </div>
     <% }) %>
@@ -49,7 +48,3 @@
 <!-- TODO separate public from non-public results -->
 <div class="results">
 </div>
-
-<script>
-    publicUrlGenerator = new UrlGenerator(ViewData.publicSiteUrl);
-</script>
