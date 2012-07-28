@@ -1,6 +1,7 @@
 ﻿(function () {
     var App = this.App = { };
-
+    App.publicUrlGenerator = new UrlGenerator(ViewData.publicSiteUrl);
+    
     App.SharedLink = Backbone.Model.extend({
         defaults: function () {
         },
@@ -29,14 +30,15 @@
             PublicCode: {
                 controlLink: "Text",
                 name: "PublicCode",
-                template: _.template('<span class="view-editable" style="display: none;"></span><span class="editor-editable" style="display: none;"><%= ViewData.publicSiteUrl %><input class="editor-editable" type="text" value="" /></span>'),
+                template: _.template('<span class="view-editable" style="display: none;"></span><span class="editor-editable" style="display: none;"><%= App.publicUrlGenerator.bySections() %><input class="editor-editable" type="text" value="" /></span>'),
                 readUI: function () {
                     return this.$editor.filter("input").val();
                 },
                 dataEmpty: function () { return false; },
                 valueToContent: function (value) {
                     if (!value) value = "nuevaBusqueda";
-                    return _.template('<span class="view-editable"><a href="<%= ViewData.publicSiteUrl %>"><%= ViewData.publicSiteUrl %></a> <span class="icon-edit">&nbsp;</span></span>', { url: ViewData.publicSiteUrl });
+                    var url = App.publicUrlGenerator.bySections([value]);
+                    return _.template('<span class="view-editable"><a href="<%= url %>"><%= url %></a> <span class="icon-edit">&nbsp;</span></span>', { url: url });
                 },
             }
         } 

@@ -9,12 +9,24 @@ using CommonJobs.Domain;
 using CommonJobs.Infrastructure.JobSearchSearching;
 using CommonJobs.Raven.Mvc;
 using CommonJobs.Raven.Infrastructure;
+using CommonJobs.Utilities;
 
 namespace CommonJobs.Mvc.UI.Controllers
 {
     [CommonJobsAuthorize(Roles = "Users")]
     public class JobSearchesController : CommonJobsController
     {
+        private string GetJobSearchPublicUrl(JobSearch j, bool includePublicCode = true)
+        {
+            return ConfigurationManager.AppSettings["CommonJobs/PublicSiteUrl"].AppendIfDoesNotEndWith("/")
+                   + ConfigurationManager.AppSettings["CommonJobs/PublicSitePostulantBaseUrl"].AppendIfDoesNotEndWith("/")
+                   + RavenSession.ExtractNumericIdentityPart(j).ToString().AppendIfDoesNotEndWith("/")
+                   + ((string.IsNullOrEmpty(j.PublicCode) || !includePublicCode)
+                        ? string.Empty 
+                        : j.PublicCode
+                    );
+        }
+
         public ActionResult Index()
         {
             ScriptManager.RegisterGlobalJavascript(
@@ -38,7 +50,7 @@ namespace CommonJobs.Mvc.UI.Controllers
                 Items = results.Select(j => new
                 {
                     jobSearch = j,
-                    publicUrl = RavenSession.ExtractNumericIdentityPart(j)
+                    publicUrl = GetJobSearchPublicUrl(j)
                 }).ToArray(),
                 Skiped = searchParameters.Skip,
                 TotalResults = query.Stats.TotalResults
@@ -47,11 +59,7 @@ namespace CommonJobs.Mvc.UI.Controllers
 
         public ActionResult Create()
         {
-            var newJobSearch = new JobSearch()
-            {
-                //TODO: maybe NewJobSearchDefaultPrefix name is not appropiated now.
-                PublicCode = ConfigurationManager.AppSettings["CommonJobs/NewJobSearchDefaultPrefix"]
-            };
+            var newJobSearch = new JobSearch();
             RavenSession.Store(newJobSearch);
             return RedirectToAction("Edit", new { id = newJobSearch.Id });
         }
@@ -67,8 +75,7 @@ namespace CommonJobs.Mvc.UI.Controllers
                 new
                 {
                     jobSearch = jobSearch,
-                    //TODO: verify this:
-                    publicSiteUrl = ConfigurationManager.AppSettings["CommonJobs/PublicSiteUrl"] + RavenSession.ExtractNumericIdentityPart(jobSearch)
+                    publicSiteUrl = GetJobSearchPublicUrl(jobSearch, false)
                 },
                 500);
             

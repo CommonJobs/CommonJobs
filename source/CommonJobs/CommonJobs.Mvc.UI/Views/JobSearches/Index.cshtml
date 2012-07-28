@@ -38,8 +38,7 @@
                         <i>Sin título</i>
                     <% } %>
                 </a></p>
-                <% var url = publicUrlGenerator.bySections(["new", publicUrl, jobSearch.PublicCode]); %>
-                <p class="publicUrl"><a href="<%= url %>"><%= url %></a></p>
+                <p class="publicUrl"><a href="<%= publicUrl %>"><%= publicUrl %></a></p>
             </div>
         </div>
     <% }) %>
@@ -52,7 +51,3 @@
 <!-- TODO separate public from non-public results -->
 <div class="results">
 </div>
-
-<script>
-    publicUrlGenerator = new UrlGenerator(ViewData.publicSiteUrl);
-</script>
