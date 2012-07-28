@@ -60,6 +60,8 @@ namespace CommonJobs.Mvc.UI.Controllers
         public ActionResult Edit(string id)
         {
             var employee = RavenSession.Load<Employee>(id);
+            if (employee == null)
+                return HttpNotFound();
             ScriptManager.RegisterGlobalJavascript(
                 "ViewData", 
                 new { 
