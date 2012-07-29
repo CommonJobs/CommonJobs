@@ -45,8 +45,7 @@
 
     App.Applicant = Backbone.Model.extend({
         defaults: function () {
-            return {
-            }
+            return { };
         },
         initCollectionField: function (fieldName, fieldType) {
             fieldType = fieldType || Backbone.Collection;

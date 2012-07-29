@@ -1,0 +1,79 @@
+﻿.section-container {
+    display: block;
+}
+
+#postulations.inner-container {
+    text-align: left;
+    padding-left: 100px;
+    padding-right: 100px;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.center {
+    text-align: center;
+}
+
+.textField .editor-field {
+}
+
+p em {
+    font-style: italic;
+}
+
+.textField .editor-field {
+    -webkit-transition: border-color 0.2s linear;
+    -moz-transition: border-color 0.2s linear;
+    -ms-transition: border-color 0.2s linear;
+    -o-transition: border-color 0.2s linear;
+    border-bottom: 1px solid #6d7e79;
+    display: inline-block;
+    padding-bottom: 5px;
+    transition: border-color 0.2s linear;
+    width: 275px;
+}
+
+.editor-label {
+    display: inline-block;
+    width: 200px;
+}
+
+.notes {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.notes p {
+    margin-bottom: 1em;
+}
+
+.inputField {
+    margin-bottom: 10px;
+}
+
+.fileField>.editor-field {
+    display: inline-block;
+}
+
+.careers-section {
+    background: url(/Content/careers_background.jpg) no-repeat center center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/Content/careers_background.jpg', sizingMethod='scale');
+    -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/Content/careers_background.jpg', sizingMethod='scale')";
+}
+
+.careers-section .outer-container {
+    background: url(/Content/repeatable_green_background.png) repeat;
+}
+
+input {
+    background-color: transparent;
+    width: 275px;
+}
+
+.bigThanks {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+}
