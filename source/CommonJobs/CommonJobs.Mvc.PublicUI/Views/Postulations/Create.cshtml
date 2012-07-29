@@ -23,7 +23,8 @@
                 @ViewBag.PublicNotes
             </div>
 
-            @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" })) {
+            @using (Html.BeginForm("Create", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
                 @Html.ValidationSummary(true)
                 <fieldset>
                     <div class="textField inputField">
@@ -44,6 +45,16 @@
                             @Html.EditorFor(model => model.LastName)
                         </div>
                         @Html.ValidationMessageFor(model => model.LastName)
+                    </div>
+
+                    <div class="textField inputField">
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.Phone)
+                        </div>
+                        <div class="editor-field">
+                            @Html.EditorFor(model => model.Phone)
+                        </div>
+                        @Html.ValidationMessageFor(model => model.Phone)
                     </div>
       
                     <div class="textField inputField">

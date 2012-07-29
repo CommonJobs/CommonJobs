@@ -23,6 +23,12 @@ namespace CommonJobs.Mvc.PublicUI
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                "PostulationSubmitted", 
+                "new/thanks",
+                new { controller = "Postulations", action = "Thanks" }
+            );
+
+            routes.MapRoute(
                 "CreatePostulation", // Route name
                 "new/{jobSearchNumber}/{*slug}", // URL with parameters
                 new { controller = "Postulations", action = "Create", slug = UrlParameter.Optional } // Parameter defaults

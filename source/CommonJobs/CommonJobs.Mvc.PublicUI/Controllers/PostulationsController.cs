@@ -26,10 +26,12 @@ namespace CommonJobs.Mvc.PublicUI.Controllers
             ViewBag.PublicNotes = new MvcHtmlString(md.Transform(jobSearch.PublicNotes));
             
             return View();
-        } 
+        }
 
         private TemporalFileReference SaveTemporalFile(HttpPostedFileBase file)
         {
+            if (file == null) return null;
+
             var temporalFolderPath = System.Configuration.ConfigurationManager.AppSettings["CommonJobs/TemporalUploadsPath"];
             var internalFileName = Guid.NewGuid().ToString();
             var temporalFullName = Path.Combine(temporalFolderPath, internalFileName);
@@ -52,15 +54,18 @@ namespace CommonJobs.Mvc.PublicUI.Controllers
             };
             RavenSession.Store(applicant);
 
-            var curriculum = GenerateAttachment(applicant, postulation.Curriculum);
-            applicant.Notes.Add(new ApplicantNote()
+            if (postulation.Curriculum != null)
             {
-                Note = "Curriculum",
-                NoteType = ApplicantNoteType.GeneralNote,
-                RealDate = DateTime.Now,
-                RegisterDate = DateTime.Now,
-                Attachment = curriculum
-            });
+                var curriculum = GenerateAttachment(applicant, postulation.Curriculum);
+                applicant.Notes.Add(new ApplicantNote()
+                {
+                    Note = "Curriculum",
+                    NoteType = ApplicantNoteType.GeneralNote,
+                    RealDate = DateTime.Now,
+                    RegisterDate = DateTime.Now,
+                    Attachment = curriculum
+                });
+            }
 
             return applicant;
         }
@@ -93,12 +98,17 @@ namespace CommonJobs.Mvc.PublicUI.Controllers
                 //TODO: do it asynchronously?
                 GenerateApplicant(postulation);
 
-                return RedirectToAction("index", "Home");
+                return RedirectToAction("Thanks", "Postulations");
             }
             catch
             {
                 return View();
             }
+        }
+
+        public ActionResult Thanks()
+        {
+            return View("Thanks");
         }
     }
 }
