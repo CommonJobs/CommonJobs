@@ -72,3 +72,8 @@ input {
     background-color: transparent;
     width: 275px;
 }
+
+.bigThanks {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+}
