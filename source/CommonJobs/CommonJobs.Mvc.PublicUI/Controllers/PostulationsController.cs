@@ -10,6 +10,7 @@ using CommonJobs.Infrastructure.SharedLinks;
 using CommonJobs.Raven.Mvc;
 using CommonJobs.Raven.Infrastructure;
 using NLog;
+using CommonJobs.Utilities;
 
 namespace CommonJobs.Mvc.PublicUI.Controllers
 {
@@ -60,13 +61,21 @@ namespace CommonJobs.Mvc.PublicUI.Controllers
                         RegisterDate = DateTime.Now,
                         Attachment = curriculum
                     }};
+                    DeleteTemporalAttachment(postulation.Curriculum);
                 }
             }
             catch (Exception e)
             {
                 log.ErrorException("Unexpected error generating applicant from postulation", e);
-                //TODO: dump all postulation data
+                log.Dump(LogLevel.Error, postulation);
             }
+        }
+
+        private void DeleteTemporalAttachment(TemporalFileReference temporalReference)
+        {
+            var temporalFolderPath = System.Configuration.ConfigurationManager.AppSettings["CommonJobs/TemporalUploadsPath"];
+            var temporalFilePath = Path.Combine(temporalFolderPath, temporalReference.InternalFileName);
+            System.IO.File.Delete(temporalFilePath);
         }
 
         private AttachmentReference GenerateAttachment(object entity, TemporalFileReference temporalReference)
@@ -81,7 +90,6 @@ namespace CommonJobs.Mvc.PublicUI.Controllers
                     temporalReference.OriginalFileName,
                     stream));
             }
-            System.IO.File.Delete(temporalFilePath);
             return result;
         }
 
