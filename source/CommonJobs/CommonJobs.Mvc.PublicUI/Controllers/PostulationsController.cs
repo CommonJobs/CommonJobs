@@ -14,20 +14,6 @@ namespace CommonJobs.Mvc.PublicUI.Controllers
 {
     public class PostulationsController : CommonJobsController
     {
-        public ActionResult Create(long jobSearchNumber, string slug = null)
-        {
-            var jobSearch = RavenSession.Load<JobSearch>(jobSearchNumber);
-            if (!jobSearch.IsPublic)
-                return HttpNotFound();
-
-            var md = new MarkdownDeep.Markdown();
-
-            ViewBag.Title = jobSearch.Title;
-            ViewBag.PublicNotes = new MvcHtmlString(md.Transform(jobSearch.PublicNotes));
-            
-            return View();
-        }
-
         private TemporalFileReference SaveTemporalFile(HttpPostedFileBase file)
         {
             if (file == null) return null;
@@ -86,6 +72,19 @@ namespace CommonJobs.Mvc.PublicUI.Controllers
             return result;
         }
 
+        public ActionResult Create(long jobSearchNumber, string slug = null)
+        {
+            var jobSearch = RavenSession.Load<JobSearch>(jobSearchNumber);
+            if (!jobSearch.IsPublic)
+                return HttpNotFound();
+
+            var md = new MarkdownDeep.Markdown();
+
+            ViewBag.Title = jobSearch.Title;
+            ViewBag.PublicNotes = new MvcHtmlString(md.Transform(jobSearch.PublicNotes));
+
+            return View();
+        }
 
         [HttpPost]
         public ActionResult Create(Postulation postulation, HttpPostedFileBase curriculumFile)
