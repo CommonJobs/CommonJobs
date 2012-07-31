@@ -9,11 +9,14 @@ using CommonJobs.Infrastructure.AttachmentStorage;
 using CommonJobs.Infrastructure.SharedLinks;
 using CommonJobs.Raven.Mvc;
 using CommonJobs.Raven.Infrastructure;
+using NLog;
 
 namespace CommonJobs.Mvc.PublicUI.Controllers
 {
     public class PostulationsController : CommonJobsController
     {
+        private static Logger log = LogManager.GetCurrentClassLogger();
+
         private TemporalFileReference SaveTemporalFile(HttpPostedFileBase file)
         {
             var temporalFolderPath = System.Configuration.ConfigurationManager.AppSettings["CommonJobs/TemporalUploadsPath"];
@@ -59,9 +62,10 @@ namespace CommonJobs.Mvc.PublicUI.Controllers
                     }};
                 }
             }
-            catch
+            catch (Exception e)
             {
-                //LOG
+                log.ErrorException("Unexpected error generating applicant from postulation", e);
+                //TODO: dump all postulation data
             }
         }
 
@@ -113,8 +117,9 @@ namespace CommonJobs.Mvc.PublicUI.Controllers
                     postulation.Curriculum = SaveTemporalFile(curriculumFile);
                 }
             }
-            catch
+            catch (Exception e)
             {
+                log.ErrorException("Error uploading file", e);
                 ModelState.AddModelError("curriculumFile", "Error recibiendo el archivo, por favor intente nuevamente.");
             }
             
@@ -128,6 +133,7 @@ namespace CommonJobs.Mvc.PublicUI.Controllers
                 }
                 catch (Exception e)
                 {
+                    log.ErrorException("Unexpected error creating postulations", e);
                     ModelState.AddModelError(string.Empty, "Error inesperado, por favor intente más tarde.");
                 }
             }
