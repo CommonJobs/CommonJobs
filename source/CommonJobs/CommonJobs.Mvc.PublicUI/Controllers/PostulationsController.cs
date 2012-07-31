@@ -16,9 +16,11 @@ namespace CommonJobs.Mvc.PublicUI.Controllers
     {
         private TemporalFileReference SaveTemporalFile(HttpPostedFileBase file)
         {
-            if (file == null) return null;
-
             var temporalFolderPath = System.Configuration.ConfigurationManager.AppSettings["CommonJobs/TemporalUploadsPath"];
+            if (!Directory.Exists(temporalFolderPath))
+            {
+                Directory.CreateDirectory(temporalFolderPath);
+            }
             var internalFileName = Guid.NewGuid().ToString();
             var temporalFullName = Path.Combine(temporalFolderPath, internalFileName);
             file.SaveAs(temporalFullName);
@@ -29,31 +31,38 @@ namespace CommonJobs.Mvc.PublicUI.Controllers
             };
         }
 
-        private Applicant GenerateApplicant(Postulation postulation)
+        private void GenerateApplicant(Postulation postulation)
         {
-            //TODO: move it to an Action
-            var applicant = new Applicant()
+            try
             {
-                Email = postulation.Email,
-                FirstName = postulation.FirstName,
-                LastName = postulation.LastName
-            };
-            RavenSession.Store(applicant);
-
-            if (postulation.Curriculum != null)
-            {
-                var curriculum = GenerateAttachment(applicant, postulation.Curriculum);
-                applicant.Notes.Add(new ApplicantNote()
+                //TODO: move it to an Action
+                var applicant = new Applicant()
                 {
-                    Note = "Curriculum",
-                    NoteType = ApplicantNoteType.GeneralNote,
-                    RealDate = DateTime.Now,
-                    RegisterDate = DateTime.Now,
-                    Attachment = curriculum
-                });
-            }
+                    JobSearchId = postulation.JobSearchId,
+                    Email = postulation.Email,
+                    FirstName = postulation.FirstName,
+                    LastName = postulation.LastName
+                };
+                RavenSession.Store(applicant);
 
-            return applicant;
+                if (postulation.Curriculum != null)
+                {
+                    var curriculum = GenerateAttachment(applicant, postulation.Curriculum);
+                    applicant.Notes = new List<ApplicantNote>() {
+                    new ApplicantNote()
+                    {
+                        Note = "Curriculum",
+                        NoteType = ApplicantNoteType.GeneralNote,
+                        RealDate = DateTime.Now,
+                        RegisterDate = DateTime.Now,
+                        Attachment = curriculum
+                    }};
+                }
+            }
+            catch
+            {
+                //LOG
+            }
         }
 
         private AttachmentReference GenerateAttachment(object entity, TemporalFileReference temporalReference)
@@ -72,37 +81,59 @@ namespace CommonJobs.Mvc.PublicUI.Controllers
             return result;
         }
 
+        private void PrepareCreateView(JobSearch jobSearch)
+        {
+            var md = new MarkdownDeep.Markdown();
+            ViewBag.JobSearchId = jobSearch.Id;
+            ViewBag.Title = jobSearch.Title;
+            ViewBag.PublicNotes = new MvcHtmlString(md.Transform(jobSearch.PublicNotes));
+        }
+
         public ActionResult Create(long jobSearchNumber, string slug = null)
         {
             var jobSearch = RavenSession.Load<JobSearch>(jobSearchNumber);
-            if (!jobSearch.IsPublic)
+            if (jobSearch == null || !jobSearch.IsPublic)
                 return HttpNotFound();
 
-            var md = new MarkdownDeep.Markdown();
-
-            ViewBag.Title = jobSearch.Title;
-            ViewBag.PublicNotes = new MvcHtmlString(md.Transform(jobSearch.PublicNotes));
-
+            PrepareCreateView(jobSearch);
             return View();
         }
 
         [HttpPost]
         public ActionResult Create(Postulation postulation, HttpPostedFileBase curriculumFile)
         {
+            var jobSearch = RavenSession.Load<JobSearch>(postulation.JobSearchId);
+            if (jobSearch == null || !jobSearch.IsPublic)
+                return HttpNotFound();
+
             try
             {
-                //TODO: Validate
-                postulation.Curriculum = SaveTemporalFile(curriculumFile);
-
-                //TODO: do it asynchronously?
-                GenerateApplicant(postulation);
-
-                return RedirectToAction("Thanks", "Postulations");
+                if (curriculumFile != null)
+                {
+                    postulation.Curriculum = SaveTemporalFile(curriculumFile);
+                }
             }
             catch
             {
-                return View();
+                ModelState.AddModelError("curriculumFile", "Error recibiendo el archivo, por favor intente nuevamente.");
             }
+            
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    GenerateApplicant(postulation);
+
+                    return RedirectToAction("Thanks", "Postulations");
+                }
+                catch (Exception e)
+                {
+                    ModelState.AddModelError(string.Empty, "Error inesperado, por favor intente más tarde.");
+                }
+            }
+
+            PrepareCreateView(jobSearch);
+            return View();
         }
 
         public ActionResult Thanks()

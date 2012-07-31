@@ -38,5 +38,7 @@ namespace CommonJobs.Domain
 
         //TODO: automatically remove expired links
         public SharedLinkList SharedLinks { get; set; }
+
+        public string JobSearchId { get; set; }
     }
 }

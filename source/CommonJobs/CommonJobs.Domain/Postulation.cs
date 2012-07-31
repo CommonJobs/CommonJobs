@@ -8,6 +8,8 @@ namespace CommonJobs.Domain
 {
     public class Postulation
     {
+        public string JobSearchId { get; set; }
+
         [Required(ErrorMessage = "Requerido")]
         [Display(Name = "Nombre")]
         public string FirstName { get; set; }

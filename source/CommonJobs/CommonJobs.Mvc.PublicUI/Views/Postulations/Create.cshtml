@@ -25,6 +25,7 @@
 
             @using (Html.BeginForm("Create", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
+                @Html.Hidden("JobSearchId")
                 @Html.ValidationSummary(true)
                 <fieldset>
                     <div class="textField inputField">
@@ -75,6 +76,7 @@
                         <div class="editor-field">
                             <input type="file" name="curriculumFile" id="curriculumFile" />
                         </div>
+                        @Html.ValidationMessage("curriculumFile")
                     </div>
 
                     <p class="center">
