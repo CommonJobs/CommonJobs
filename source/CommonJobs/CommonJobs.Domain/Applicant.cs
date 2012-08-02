@@ -13,19 +13,19 @@ namespace CommonJobs.Domain
         [Display(Name = "Compañías")]
         public List<CompanyHistory> CompanyHistory { get; set; }
 
-        //TODO attachments?
-
         [Display(Name = "Resaltado")]
         public bool IsHighlighted { get; set; }
 
         [Display(Name = "Notas")]
         public List<ApplicantNote> Notes { get; set; }
 
+        //TODO replace for "HasInterview"
         public bool HaveInterview
         {
             get { return Notes != null && Notes.Any(x => x.NoteType == ApplicantNoteType.InteviewNote); }
         }
 
+        //TODO replace for "HasTechnicalInterview"
         public bool HaveTechnicalInterview
         {
             get { return Notes != null && Notes.Any(x => x.NoteType == ApplicantNoteType.TechnicalInterviewNote); }
@@ -38,5 +38,7 @@ namespace CommonJobs.Domain
 
         //TODO: automatically remove expired links
         public SharedLinkList SharedLinks { get; set; }
+
+        public string JobSearchId { get; set; }
     }
 }

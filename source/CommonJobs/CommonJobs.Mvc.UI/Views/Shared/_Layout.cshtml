@@ -31,6 +31,7 @@
 				<li class="top">@Html.ActionLink("Postulantes", "Index", "Applicants", null, new { @class = "top_link" })</li>
 				<li class="top">@Html.ActionLink("Empleados", "Index", "Employees", null, new { @class = "top_link" })</li>
                 <li class="top">@Html.ActionLink("Archivos", "Index", "Attachments", null, new { @class = "top_link" })</li>
+                <li class="top">@Html.ActionLink("Búsquedas", "Index", "JobSearches", null, new { @class = "top_link" })</li>
 				@Html.Partial("EnvironmentBanner")
 				@if (Request.IsAuthenticated && User != null && User.Identity != null && User.Identity.Name != null) 
 				{

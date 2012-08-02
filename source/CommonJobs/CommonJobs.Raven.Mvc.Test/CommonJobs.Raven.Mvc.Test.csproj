@@ -89,7 +89,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CommonJobs.Raven.Mvc\CommonJobs.Raven.Mvc.csproj">
-      <Project>{658EAF8E-02A2-4029-AC52-942261EE486C}</Project>
+      <Project>{658eaf8e-02a2-4029-ac52-942261ee486c}</Project>
       <Name>CommonJobs.Raven.Mvc</Name>
     </ProjectReference>
     <ProjectReference Include="..\CommonJobs.Utilities\CommonJobs.Utilities.csproj">

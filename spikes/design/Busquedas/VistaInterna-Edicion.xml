@@ -1,0 +1,69 @@
+<mockup version="1.0" skin="sketch" measuredW="1404" measuredH="630" mockupW="926" mockupH="554">
+  <controls>
+    <control controlID="36" controlTypeID="com.balsamiq.mockups::BrowserWindow" x="478" y="76" w="926" h="554" measuredW="450" measuredH="400" zOrder="0" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>CommonJobs%0Ahttp%3A//commonjobs.myserver.com/</text>
+        <value>0</value>
+        <verticalScrollbar>false</verticalScrollbar>
+      </controlProperties>
+    </control>
+    <control controlID="38" controlTypeID="com.balsamiq.mockups::HRule" x="478" y="189" w="919" h="-1" measuredW="100" measuredH="5" zOrder="1" locked="false" isInGroup="-1"/>
+    <control controlID="40" controlTypeID="com.balsamiq.mockups::LinkBar" x="493" y="160" w="-1" h="-1" measuredW="314" measuredH="21" zOrder="2" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Postulantes%2C%20Empleados%2C%20Archivos%2C%20B%FAsquedas</text>
+      </controlProperties>
+    </control>
+    <control controlID="41" controlTypeID="com.balsamiq.mockups::LinkBar" x="1244" y="160" w="-1" h="-1" measuredW="145" measuredH="21" zOrder="3" locked="false" isInGroup="-1">
+      <controlProperties>
+        <selectedIndex>0</selectedIndex>
+        <text>DOMAIN%5Cuser%2C%20Logout</text>
+      </controlProperties>
+    </control>
+    <control controlID="45" controlTypeID="com.balsamiq.mockups::SubTitle" x="662" y="224" w="-1" h="-1" measuredW="231" measuredH="33" zOrder="5" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Senior%20C%23%20Developer</text>
+        <underline>false</underline>
+      </controlProperties>
+    </control>
+    <control controlID="56" controlTypeID="com.balsamiq.mockups::Canvas" x="647" y="209" w="580" h="362" measuredW="100" measuredH="70" zOrder="4" locked="false" isInGroup="-1">
+      <controlProperties>
+        <borderStyle>roundedSolid</borderStyle>
+      </controlProperties>
+    </control>
+    <control controlID="57" controlTypeID="com.balsamiq.mockups::Label" x="662" y="257" w="-1" h="-1" measuredW="102" measuredH="22" zOrder="6" locked="false" isInGroup="-1">
+      <controlProperties>
+        <bold>true</bold>
+        <size>14</size>
+        <text>Notas%20p%FAblicas%3A</text>
+      </controlProperties>
+    </control>
+    <control controlID="58" controlTypeID="com.balsamiq.mockups::Label" x="662" y="279" w="550" h="53" measuredW="1197" measuredH="21" zOrder="7" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>%A1Hola%21%20Gracias%20por%20interesarte%20en%20esta%20oferta.%20Actualmente%20estamos%20buscando%20a%20alguien%20con%20actitud%20proactiva%20que%20est%E9%20dispuesto%20a%20afrontar%20desaf%EDos%20y%20trabajar%20en%20equipos%20con%20aprendizaje%20y%20desaf%EDos%20constantes.</text>
+      </controlProperties>
+    </control>
+    <control controlID="59" controlTypeID="com.balsamiq.mockups::Label" x="662" y="332" w="550" h="42" measuredW="742" measuredH="21" zOrder="8" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Por%20favor%20dej%E1%20tus%20datos%20a%20continuaci%F3n%20para%20que%20nos%20comuniquemos%20con%20vos.%20Mientras%20m%E1s%20datos%20dejes%2C%20m%E1s%20f%E1cil%20ser%E1%20contactarte.</text>
+      </controlProperties>
+    </control>
+    <control controlID="60" controlTypeID="com.balsamiq.mockups::Label" x="662" y="374" w="117" h="22" measuredW="105" measuredH="22" zOrder="9" locked="false" isInGroup="-1">
+      <controlProperties>
+        <bold>true</bold>
+        <size>14</size>
+        <text>Notas%20privadas%3A</text>
+      </controlProperties>
+    </control>
+    <control controlID="61" controlTypeID="com.balsamiq.mockups::Label" x="662" y="396" w="550" h="53" measuredW="1449" measuredH="21" zOrder="10" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Necesitamos%20alguien%20con%20al%20menos%203%20a%F1os%20de%20experiencia.%20Si%20pide%20m%E1s%20de%20%24%205.000%20lo%20dejamos%20para%20otro%20momento.%20Tiene%20que%20integrarse%20LO%20M%C1S%20PRONTO%20POSIBLE%20al%20proyecto%20Zapat%EDn%20porque%20Juan%20Carlos%20Mondongo%20deja%20la%20empresa%20la%20semana%20que%20viene.</text>
+      </controlProperties>
+    </control>
+    <control controlID="63" controlTypeID="com.balsamiq.mockups::IconLabel" x="1110" y="224" w="-1" h="-1" measuredW="102" measuredH="53" zOrder="11" locked="false" isInGroup="-1">
+      <controlProperties>
+        <icon>CheckMarkIcon%7Cmedium</icon>
+        <text>B%FAsqueda%20Activa</text>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>
