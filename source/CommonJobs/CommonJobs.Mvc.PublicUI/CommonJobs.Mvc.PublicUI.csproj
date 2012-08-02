@@ -205,7 +205,10 @@
       <DependentUpon>jquery.validate.js</DependentUpon>
     </Content>
     <Content Include="Scripts\modernizr-2.0.6-development-only.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+      <TransformOnBuild>true</TransformOnBuild>
+    </Content>
     <Content Include="Web.DEV.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
