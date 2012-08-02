@@ -61,45 +61,10 @@ namespace CommonJobs.Mvc.UI.Infrastructure
             if (entityIdFound == null)
                 return false;
 
-            filterContext.Controller.ValueProvider = new OverrideValueProvider(filterContext.Controller.ValueProvider, EntityIdKey, SharedCodeKey, entityIdFound, sharedCode);
-            /*
-             * La otra opción es setear a mano los valores en RouteData, pero tengo el problema de la precendencia ya que hay otras fuentes antes de route
-             * Además si ya se habia inicializado filterContext.Controller.ValueProvider no me acepta las modificaciones
-             *
-             *    filterContext.RouteData.Values[EntityIdKey] = indexResult.SharedEntityId;
-             *    filterContext.RouteData.Values[SharedCodeKey] = indexResult.SharedLink.SharedCode;
-             */
+            filterContext.Controller.ValueProvider = new OverrideValueProvider(filterContext.Controller.ValueProvider, 
+                new Dictionary<string, string>() { { EntityIdKey, SharedCodeKey }, { entityIdFound, sharedCode } });
 
             return true;
-        }
-
-        private class OverrideValueProvider : IValueProvider
-        {
-            IValueProvider OriginalValueProvider { get; set; }
-            Dictionary<string, ValueProviderResult> HardcodedValues { get; set; }
-
-            public OverrideValueProvider(IValueProvider originalValueProvider, string entityIdkey, string sharedCodeKey, string entityId, string sharedCode)
-            {
-                OriginalValueProvider = originalValueProvider;
-                HardcodedValues = new Dictionary<string, ValueProviderResult>()
-                {
-                    { entityIdkey, new ValueProviderResult(entityId, entityId, System.Globalization.CultureInfo.InvariantCulture) },
-                    { sharedCodeKey, new ValueProviderResult(sharedCode, sharedCode, System.Globalization.CultureInfo.InvariantCulture) }
-                };
-            }
-
-            public bool ContainsPrefix(string prefix)
-            {
-                return HardcodedValues.ContainsKey(prefix) || OriginalValueProvider.ContainsPrefix(prefix);
-            }
-
-            public ValueProviderResult GetValue(string key)
-            {
-                if (HardcodedValues.ContainsKey(key))
-                    return HardcodedValues[key];
-                else
-                    return OriginalValueProvider.GetValue(key);
-            }
         }
     }
 }

@@ -1,0 +1,51 @@
+﻿@{
+    ViewBag.Title = "Edit";
+    ScriptManager.RegisterCss(Url.Content("~/Scripts/mdd_styles.css"));
+    ScriptManager.RegisterCss(Url.Content("~/Content/JobSearches/EditJobSearch.less"));
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/MarkdownDeepLib.min.js"));
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/nervoustissue.js"));
+    ScriptManager.RegisterJs(Url.Content("~/Content/JobSearches/EditJobSearch.js"));
+}
+
+<div id="EditApp">
+    <div class="editing-bar">
+        <div class="references">
+            <h3>Referencias</h3>
+            <ul>
+                <li>Click en un <span class="reference-editable-field">campo subrayado</span> para editarlo.</li>
+                <li>Click en <em>Guardar cambios</em> luego de editar.</li>
+                <li>Click en <em>Modo de edición &rArr; Todos los campos</em> para editar todos los campos.</li>
+            </ul>
+        </div>
+        <div class="edition-mode">
+            <h3>Modo de edición</h3>
+            <p><button class="editionNormal">Normal</button></p>
+            <p><button class="editionFullEdit">Todos los campos</button></p>
+            <!-- <p><button class="editionReadonly">Sólo lectura</button></p> -->
+        </div>
+        <div class="change-management-options">
+            <h3>Cambios</h3>
+            <p><button class="saveJobSearch">Guardar cambios</button></p>
+            <p><button class="reloadJobSearch">Descartar cambios</button></p>
+        </div>
+        <div class="danger-zone">
+            <h3>¡Precaución!</h3>
+            <p><button class="deleteJobSearch">Eliminar búsqueda</button></p>
+        </div>
+        <div class="back-link">
+            @Html.ActionLink("« Volver al listado", "Index")
+        </div>
+    </div>
+    
+    <h1 class="editable-field title" data-bind="Title"></h1>
+    
+    <div class="editable-field isPublic" data-bind="IsPublic"></div>
+    <div class="editable-field publicCode" data-bind="PublicCode"></div>
+
+    <h2>Notas públicas</h2>
+    <div class="editable-field" data-bind="PublicNotes"></div>
+
+    <h2>Notas privadas</h2>
+    <div class="editable-field" data-bind="PrivateNotes"></div>
+    
+</div>

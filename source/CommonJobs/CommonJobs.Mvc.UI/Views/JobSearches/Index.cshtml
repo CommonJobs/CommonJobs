@@ -1,0 +1,53 @@
+﻿@model CommonJobs.Infrastructure.JobSearchSearching.JobSearchSearchParameters
+@{
+    ViewBag.Title = "Búsquedas | CommonJobs";
+    ScriptManager.RegisterCss(Url.Content("~/Content/ie.css"), priority: 500, htmlAttributes: new { media = "screen" }, patchCondition: "lte IE 9");
+    ScriptManager.RegisterCss(Url.Content("~/Content/1140.css"), priority: 500, htmlAttributes: new { media = "screen" });
+    ScriptManager.RegisterCss(Url.Content("~/Content/reset.css"), priority: 500);
+    ScriptManager.RegisterCss(Url.Content("~/Content/JobSearches/JobSearches.less"));
+    ScriptManager.RegisterJs(Url.Content("~/Content/ListingCommon/QuickSearch.js"));
+    ScriptManager.RegisterJs(Url.Content("~/Content/JobSearches/JobSearchListing.js"));
+}
+
+<script type="text/template" id="add-new-card-template">
+    <div class="card column clickable add-new-card">
+        <img class="cardPicture" src="@Url.Content("~/Content/Images/AddJobSearch.png")" alt="Agregar nueva..."  />
+        <div class="cardDescription">
+            <p>@Html.ActionLink("Agregar nueva...", "Create", null, new { @class = "clickable-link" })</p>
+        </div>
+    </div>
+</script>
+
+<script type="text/template" id="get-more-items-template">
+    <div class="card column loading get-more-items">
+        <p class="ready-content">Click para obtener más...</p>
+    </div>
+</script>
+
+<script type="text/template" id="card-template">
+    <% _.each(model.items, function(item) { 
+            var jobSearch = item.jobSearch;
+            var publicUrl = item.publicUrl;
+        %>
+        <div class="card column clickable item-card <%= jobSearch.IsPublic ? "public" : "" %>">
+            <div class="cardDescription">
+                <p class="name"><a class="clickable-link" href="<%= urlGenerator.action("Edit", "JobSearches", jobSearch.Id) %>">
+                    <% if (jobSearch.Title) { %>
+                        <%= jobSearch.Title %>
+                    <% } else { %>
+                        <i>Sin título</i>
+                    <% } %>
+                </a></p>
+                <p class="publicUrl"><a href="<%= publicUrl %>"><%= publicUrl %></a></p>
+            </div>
+        </div>
+    <% }) %>
+</script>
+
+<div class="container searchContainer">
+    <h1>Búsquedas</h1>
+</div>
+
+<!-- TODO separate public from non-public results -->
+<div class="results">
+</div>
