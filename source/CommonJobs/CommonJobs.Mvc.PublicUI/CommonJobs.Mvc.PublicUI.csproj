@@ -170,6 +170,7 @@
     <Content Include="Content\themes\base\jquery.ui.theme.css" />
     <Content Include="Content\website_green_logo.png" />
     <Content Include="Global.asax" />
+    <Content Include="RavenNotReachable.htm" />
     <Content Include="_bin_deployableAssemblies\System.Web.WebPages.xml" />
     <Content Include="_bin_deployableAssemblies\System.Web.WebPages.Razor.xml" />
     <Content Include="_bin_deployableAssemblies\System.Web.WebPages.Razor.dll" />
@@ -188,6 +189,7 @@
     <Content Include="Content\asap-regular-webfont.woff" />
     <Content Include="Content\asap-regular-webfont.eot" />
     <Content Include="Content\asap-regular-webfont.ttf" />
+    <Content Include="NLog.config" />
     <None Include="Scripts\jquery-1.6.2-vsdoc.js" />
     <Content Include="Scripts\jquery-1.6.2.js" />
     <Content Include="Scripts\jquery-1.6.2.min.js">
