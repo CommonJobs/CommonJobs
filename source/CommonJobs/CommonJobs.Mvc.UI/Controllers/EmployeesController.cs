@@ -13,6 +13,7 @@ using CommonJobs.Utilities;
 using CommonJobs.Infrastructure.AttachmentStorage;
 using CommonJobs.Infrastructure.EmployeeSearching;
 using NLog;
+using CommonJobs.Infrastructure.AttachmentSlots;
 
 namespace CommonJobs.Mvc.UI.Controllers
 {
@@ -25,18 +26,16 @@ namespace CommonJobs.Mvc.UI.Controllers
         // GET: /Employees/
         public ViewResult Index(EmployeeSearchParameters searchParameters)
         {
-            //TODO: only for demo purposes
-            /* NOTE:
-             * Esto no funcionaba:
-             *      .Where(x => x.RelatedEntityType == typeof(Employee))
-             * porque Newtonsoft Json serializa el tipo con el nombre largo ("CommonJobs.Domain.Employee, CommonJobs.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null") 
-             * y RavenDB busca por el corto (CommonJobs.Domain.Employee)
-             * 
-             * Otra opción sería buscar por prefijo del id (http://mattwarren.org/2012/07/12/fun-with-ravendb-documents-keys/)
-             * */
-            //TODO refactor it as Query
-            var slotsToShow = RavenSession.Query<AttachmentSlot>().Where(x => x.RelatedEntityTypeName == typeof(Employee).Name).ToList();
+            //TODO: It is here only for demo purposes
+            AttachmentSlot[] slotsToShow = Query(new AttachmentSlotsQuery<Employee>());
             log.Dump(LogLevel.Debug, slotsToShow);
+            ScriptManager.RegisterGlobalJavascript(
+                "ViewData",
+                new
+                {
+                    attachmentSlots = slotsToShow
+                },
+                500);
 
             return View(searchParameters);
         }
@@ -78,10 +77,16 @@ namespace CommonJobs.Mvc.UI.Controllers
             var employee = RavenSession.Load<Employee>(id);
             if (employee == null)
                 return HttpNotFound();
+
+            //TODO: It is here only for demo purposes
+            AttachmentSlot[] slotsToShow = Query(new AttachmentSlotsQuery<Employee>());
+            log.Dump(LogLevel.Debug, slotsToShow);
+
             ScriptManager.RegisterGlobalJavascript(
                 "ViewData", 
                 new { 
-                    employee = employee
+                    employee = employee,
+                    attachmentSlots = slotsToShow //TODO: It is here only for demo purposes
                 }, 
                 500);
             return View();
