@@ -12,16 +12,31 @@ using CommonJobs.Domain;
 using CommonJobs.Utilities;
 using CommonJobs.Infrastructure.AttachmentStorage;
 using CommonJobs.Infrastructure.EmployeeSearching;
+using NLog;
+using CommonJobs.Utilities;
 
 namespace CommonJobs.Mvc.UI.Controllers
 {
     [CommonJobsAuthorize(Roles="Users")]
     public class EmployeesController : CommonJobsController
     {
+        private static Logger log = LogManager.GetCurrentClassLogger();
+
         //
         // GET: /Employees/
         public ViewResult Index(EmployeeSearchParameters searchParameters)
         {
+            //TODO: only for demo purposes
+            /* NOTE:
+             * Esto no funcionaba:
+             *      .Where(x => x.RelatedEntityType == typeof(Employee))
+             * porque Newtonsoft Json serializa el tipo con el nombre largo ("CommonJobs.Domain.Employee, CommonJobs.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null") 
+             * y RavenDB busca por el corto (CommonJobs.Domain.Employee)
+             * */
+            //TODO refactor it as Query
+            var slotsToShow = RavenSession.Query<AttachmentSlot>().Where(x => x.RelatedEntityTypeName == typeof(Employee).Name).ToList();
+            log.Dump(LogLevel.Debug, slotsToShow);
+
             return View(searchParameters);
         }
 
