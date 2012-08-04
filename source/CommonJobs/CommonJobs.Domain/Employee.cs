@@ -12,6 +12,7 @@ namespace CommonJobs.Domain
         public Employee()
         {
             Vacations = new VacationList();
+            AttachmentsBySlot = new List<SlotWithAttachment>();
         }
 
         [Display(Name = "Fecha Inicio")]
@@ -111,7 +112,14 @@ namespace CommonJobs.Domain
 
         public override IEnumerable<AttachmentReference> AllAttachmentReferences
         {
-            get { return base.AllAttachmentReferences.Union(Notes.EmptyIfNull().Select(x => x.Attachment)).Where(x => x != null); }
+            get 
+            { 
+                return base.AllAttachmentReferences
+                    .Union(Notes.EmptyIfNull().Select(x => x.Attachment)).Where(x => x != null)
+                    .Union(AttachmentsBySlot.EmptyIfNull().Select(x => x.Attachment).Where(x => x != null)); 
+            }
         }
+
+        public List<SlotWithAttachment> AttachmentsBySlot { get; set; }
     }
 }
