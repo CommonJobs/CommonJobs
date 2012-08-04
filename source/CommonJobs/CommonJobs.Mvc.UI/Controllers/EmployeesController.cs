@@ -13,7 +13,6 @@ using CommonJobs.Utilities;
 using CommonJobs.Infrastructure.AttachmentStorage;
 using CommonJobs.Infrastructure.EmployeeSearching;
 using NLog;
-using CommonJobs.Utilities;
 
 namespace CommonJobs.Mvc.UI.Controllers
 {
@@ -32,6 +31,8 @@ namespace CommonJobs.Mvc.UI.Controllers
              *      .Where(x => x.RelatedEntityType == typeof(Employee))
              * porque Newtonsoft Json serializa el tipo con el nombre largo ("CommonJobs.Domain.Employee, CommonJobs.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null") 
              * y RavenDB busca por el corto (CommonJobs.Domain.Employee)
+             * 
+             * Otra opción sería buscar por prefijo del id (http://mattwarren.org/2012/07/12/fun-with-ravendb-documents-keys/)
              * */
             //TODO refactor it as Query
             var slotsToShow = RavenSession.Query<AttachmentSlot>().Where(x => x.RelatedEntityTypeName == typeof(Employee).Name).ToList();
