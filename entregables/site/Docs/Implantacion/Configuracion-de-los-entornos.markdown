@@ -8,6 +8,7 @@ Por cuestiones de seguridad, se han reemplazado algunos identificadores por las 
 * `LAN-SERVER-IP`
 * `DNS-SERVER-NAME`
 * `AD-DOMAIN-NAME`
+* `PUBLIC-DNS-SERVER-NAME`
 
 También se han ocultado en las capturas de pantalla.
 
@@ -24,6 +25,10 @@ Para ambos entornos DEV y PROD, el cliente pone a disposición el servidor `LAN-
 Ambos servidores web, DEV y PROD, serán accesibles externamente mediante las siguientes URLs https://DNS-SERVER-NAME:8888 y https://DNS-SERVER-NAME respectivamente.
 
 Los servicios de base de datos correrán en el mismo servidor. El servicio correspondiente a DEV será accesible externamente a través del puerto `8080` por los desarrolladores del sistema autenticados mediante _Windows Authentication_. La base de datos PROD solo será accesible localmente por el servidor web de PROD.
+
+### Sitio público
+
+Algunas funciones del sistema requieren de un sitio accesible públicamente sin autenticación. Para eso se reservaron las direcciones http://PUBLIC-DNS-SERVER-NAME para el entorno PROD y http://DNS-SERVER-NAME:8889 para el entorno DEV. 
 
 
 ## Configuración de los usuarios y grupos
@@ -76,7 +81,7 @@ Para configurar la seguridad del sistema se crearán los grupos `LAN-SERVER-NAME
 
 ![ ](Images/IIS_DEV_Documentation_Site.jpg)
 
-* `CommonJobs PROD`
+* `CommonJobs PROD` (https://DNS-SERVER-NAME)
    * Bindings: `https:*:443:` 
    * Application Pool: `CommonJobs PROD AppPool`
    * Physical Path: `C:\Sites\CommonJobs\DNS-SERVER-NAME`
@@ -86,6 +91,20 @@ Para configurar la seguridad del sistema se crearán los grupos `LAN-SERVER-NAME
 ![ ](Images/IIS_PROD_Site.jpg)
 
 ![ ](Images/FileSystem_PROD.jpg)
+
+* `CommonJobs Careers DEV` (https://DNS-SERVER-NAME:8889)
+   * Bindings: `http:*:8889:`
+   * Application Pool: `CommonJobs DEV AppPool`
+   * Physical Path: `C:\CommonJobsDEV\DNS-SERVER-NAME_8889`
+   * Physical Path Credentials: `LAN-SERVER-NAME\CommonJobsDEVUsr`
+   * Permisos completos en el sistema de archivos y _File Sharing_ habilitado para `LAN-SERVER-NAME\CommonJobsDEV` 
+
+* `CommonJobs Careers PROD` (http://PUBLIC-DNS-SERVER-NAME)
+   * Bindings: `http:PUBLIC-DNS-SERVER-NAME:` 
+   * Application Pool: `CommonJobs PROD AppPool`
+   * Physical Path: `C:\Sites\CommonJobs\PUBLIC-DNS-SERVER-NAME`
+   * Physical Path Credentials: `LAN-SERVER-NAME\CommonJobsPRODUsr`
+   * Permisos completos en el sistema de archivos para `LAN-SERVER-NAME\CommonJobsPROD`
 
 ## Configuración del Servidor de Base de Datos
 
@@ -134,6 +153,8 @@ Mediante Windows Firewall vamos a limitar el acceso a los diferentes servicios.
 * Bloqueado todo acceso no local al puerto `8090` (servicio de base de datos de PROD)
 * Permitido acceso externo al puerto `443` (sitio web de PROD)
 * Permitido acceso externo al puerto `8888` (sitio web de DEV)
+* Permitido acceso externo al puerto `80` (sitio web público de PROD)
+* Permitido acceso externo al puerto `8889` (sitio web público de DEV)
 * Permitido acceso externo al puerto `8080` (servicio de base de datos de DEV)
 
 ![ ](Images/Firewall.jpg)
