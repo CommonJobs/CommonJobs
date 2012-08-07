@@ -95,12 +95,20 @@ namespace CommonJobs.Mvc.UI.Controllers
         public ActionResult SavePhoto(string id)
         {
             var applicant = RavenSession.Load<Applicant>(id);
-            var attachmentReader = new RequestAttachmentReader(Request);
-            applicant.Photo = ExecuteCommand(new SavePhotoAttachments(
-                applicant, 
-                attachmentReader.FileName, 
-                attachmentReader.Stream));
-            return Json(new { success = true, attachment = applicant.Photo });
+
+            using (var attachmentReader = new RequestAttachmentReader(Request))
+            {
+                if (attachmentReader.Count != 1)
+                    throw new NotSupportedException("One and only one photo is required.");
+
+                var attachment = attachmentReader.First();
+
+                applicant.Photo = ExecuteCommand(new SavePhotoAttachments(
+                    applicant,
+                    attachment.Key,
+                    attachment.Value));
+                return Json(new { success = true, attachment = applicant.Photo });
+            }
         }
     }
 }

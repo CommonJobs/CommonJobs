@@ -22,13 +22,20 @@ namespace CommonJobs.Mvc.PublicUI.Controllers
             if (entity == null)
                 return HttpNotFound("Specified entity does not exists");
 
-            var attachmentReader = new RequestAttachmentReader(Request);
-            var attachment = ExecuteCommand(new SaveAttachment(
-                entity,
-                attachmentReader.FileName,
-                attachmentReader.Stream));
+            using (var attachmentReader = new RequestAttachmentReader(Request))
+            {
+                if (attachmentReader.Count != 1)
+                    throw new NotSupportedException("One and only one attachment is required.");
 
-            return Json(new { success = true, attachment = attachment });
+                var attachment = attachmentReader.First();
+
+                var result = ExecuteCommand(new SaveAttachment(
+                    entity,
+                    attachment.Key,
+                    attachment.Value));
+
+                return Json(new { success = true, attachment = result });
+            }
         }
     }
 }
