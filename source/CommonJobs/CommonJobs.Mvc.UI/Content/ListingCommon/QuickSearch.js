@@ -102,6 +102,7 @@ QuickSearchPage.prototype = {
         });
     },
     _appendNewCard: function () {
+        var self = this;
         self.$results.html(self.addNewCardTemplate());
     },
     _startLoading: function () {
