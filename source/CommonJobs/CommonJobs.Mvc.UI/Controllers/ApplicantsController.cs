@@ -54,6 +54,24 @@ namespace CommonJobs.Mvc.UI.Controllers
             return RedirectToAction("Edit", new { id = newApplicant.Id });
         }
 
+        [HttpPost]
+        public ActionResult CreateWithAttachments()
+        {
+            var newApplicant = new Applicant();
+            RavenSession.Store(newApplicant);
+
+            using (var attachmentReader = new RequestAttachmentReader(Request))
+            {
+                var attachments = attachmentReader
+                    .Select(x => ExecuteCommand(new SaveAttachment(newApplicant, x.Key, x.Value)))
+                    .ToArray();
+                //TODO: agregar a notas
+            }
+            //TODO: esto lo está haciendo en la llamada "ajax", no debería
+            return Json(new { redirectTo = Url.Action("Edit", new { id = newApplicant.Id }) });
+            //return RedirectToAction("Edit", new { id = newApplicant.Id });
+        }
+
         [SharedEntityAlternativeAuthorization]
         public ActionResult Edit(string id, string sharedCode = null) 
         {

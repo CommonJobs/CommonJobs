@@ -103,7 +103,33 @@ QuickSearchPage.prototype = {
     },
     _appendNewCard: function () {
         var self = this;
-        self.$results.html(self.addNewCardTemplate());
+        var newCardElement = $(self.addNewCardTemplate());
+
+        newCardElement.bind('drop dragover', function (e) {
+            e.preventDefault();
+        });
+
+        console.debug(newCardElement);
+        console.debug(newCardElement.find('.fileupload'));
+
+        newCardElement.find('.fileupload').fileupload({
+            //no envía el nombre de archivo en IE
+            dataType: 'json',
+            singleFileUploads: false, //si no se pone esta linea se agrega un add por cada archivo
+            dropZone: newCardElement,
+            dragover: function (e, f) {
+                if (_.any(e.dataTransfer.types, function (x) { return x == "Files" })) {
+                    console.debug("arrastrando archivos");
+                }
+            },
+            done: function (e, data) {
+                //TODO: controlar errores
+                window.location = data.result.redirectTo;
+            }
+        });
+
+
+        self.$results.html(newCardElement);
     },
     _startLoading: function () {
         $(this._config.getMoreCardsSelector).removeClass(this._config.readyClass).addClass(this._config.loadingClass);
