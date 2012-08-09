@@ -12,16 +12,31 @@ using CommonJobs.Domain;
 using CommonJobs.Utilities;
 using CommonJobs.Infrastructure.AttachmentStorage;
 using CommonJobs.Infrastructure.EmployeeSearching;
+using NLog;
+using CommonJobs.Infrastructure.AttachmentSlots;
 
 namespace CommonJobs.Mvc.UI.Controllers
 {
     [CommonJobsAuthorize(Roles="Users")]
     public class EmployeesController : CommonJobsController
     {
+        private static Logger log = LogManager.GetCurrentClassLogger();
+
         //
         // GET: /Employees/
         public ViewResult Index(EmployeeSearchParameters searchParameters)
         {
+            //TODO: It is here only for demo purposes
+            AttachmentSlot[] slotsToShow = Query(new AttachmentSlotsQuery<Employee>());
+            log.Dump(LogLevel.Debug, slotsToShow);
+            ScriptManager.RegisterGlobalJavascript(
+                "ViewData",
+                new
+                {
+                    attachmentSlots = slotsToShow
+                },
+                500);
+
             return View(searchParameters);
         }
 
@@ -62,10 +77,16 @@ namespace CommonJobs.Mvc.UI.Controllers
             var employee = RavenSession.Load<Employee>(id);
             if (employee == null)
                 return HttpNotFound();
+
+            //TODO: It is here only for demo purposes
+            AttachmentSlot[] slotsToShow = Query(new AttachmentSlotsQuery<Employee>());
+            log.Dump(LogLevel.Debug, slotsToShow);
+
             ScriptManager.RegisterGlobalJavascript(
                 "ViewData", 
                 new { 
-                    employee = employee
+                    employee = employee,
+                    attachmentSlots = slotsToShow //TODO: It is here only for demo purposes
                 }, 
                 500);
             return View();

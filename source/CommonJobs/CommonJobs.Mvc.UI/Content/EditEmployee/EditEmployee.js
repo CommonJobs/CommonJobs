@@ -74,6 +74,7 @@
         initialize: function () {
             this.initCollectionField("Notes", App.Notes);
             this.initCollectionField("Certifications");
+            this.initCollectionField("AttachmentsBySlot");
 
             //TODO: move related logic to App.Salary and App.Salaries models
             this.initCollectionField("SalaryChanges", App.Notes);
