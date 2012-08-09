@@ -97,9 +97,12 @@ QuickSearchPage.prototype = {
         .done(function (result) {
             self._skip = 0;
             self._lastSearchParameters = searchParameters;
-            self.$results.html(self.addNewCardTemplate());
+            self._appendNewCard();
             self._appendResults(result);
         });
+    },
+    _appendNewCard: function () {
+        self.$results.html(self.addNewCardTemplate());
     },
     _startLoading: function () {
         $(this._config.getMoreCardsSelector).removeClass(this._config.readyClass).addClass(this._config.loadingClass);
