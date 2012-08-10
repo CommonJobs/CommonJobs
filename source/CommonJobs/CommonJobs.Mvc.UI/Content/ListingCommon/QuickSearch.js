@@ -109,8 +109,9 @@ QuickSearchPage.prototype = {
             e.preventDefault();
         });
 
-        console.debug(newCardElement);
-        console.debug(newCardElement.find('.fileupload'));
+        newCardElement.bind('dragleave', function (e, b) {
+            $(e.target).removeClass("dragging-file");
+        });
 
         newCardElement.find('.fileupload').fileupload({
             //no envía el nombre de archivo en IE
@@ -119,8 +120,11 @@ QuickSearchPage.prototype = {
             dropZone: newCardElement,
             dragover: function (e, f) {
                 if (_.any(e.dataTransfer.types, function (x) { return x == "Files" })) {
-                    console.debug("arrastrando archivos");
+                    newCardElement.addClass("dragging-file");
                 }
+            },
+            drop: function () {
+                newCardElement.removeClass("dragging-file");
             },
             done: function (e, data) {
                 //TODO: controlar errores
