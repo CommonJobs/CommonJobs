@@ -105,6 +105,7 @@ QuickSearchPage.prototype = {
         var self = this;
         var newCardElement = $(self.addNewCardTemplate());
 
+        //TODO: apply https://github.com/blueimp/jQuery-File-Upload/wiki/Drop-zone-effects
         newCardElement.bind('drop dragover', function (e) {
             e.preventDefault();
         });
