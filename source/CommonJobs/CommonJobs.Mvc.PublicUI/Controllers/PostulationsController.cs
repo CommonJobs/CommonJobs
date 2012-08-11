@@ -105,7 +105,11 @@ namespace CommonJobs.Mvc.PublicUI.Controllers
         {
             var jobSearch = RavenSession.Load<JobSearch>(jobSearchNumber);
             if (jobSearch == null || !jobSearch.IsPublic)
-                return HttpNotFound();
+            {
+                Response.StatusCode = 404;
+                Response.StatusDescription = "Not found or not available";
+                return View("NotFound");                
+            }
 
             PrepareCreateView(jobSearch);
             return View();
