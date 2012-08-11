@@ -117,6 +117,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\DragAndDrop\DragAndDrop.js" />
     <Content Include="Content\EditCommon\icon-edit.png" />
     <Content Include="Content\FilesListing\FilesListing.js" />
     <Compile Include="Controllers\ApplicantsController.cs" />

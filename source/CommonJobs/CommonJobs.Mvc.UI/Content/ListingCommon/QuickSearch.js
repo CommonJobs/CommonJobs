@@ -18,7 +18,9 @@ QuickSearchPage.prototype = {
         getMoreCardsTemplateSelector: "#get-more-items-template",
         getMoreCardsSelector: ".get-more-items",
         readyClass: "ready",
-        loadingClass: "loading"
+        loadingClass: "loading",
+        prepareNewCard: function ($card) { },
+        prepareResultCards: function ($cards) { }
     },
     generateRedirectUrl: function (searchParameters) {
         throw "generateRedirectUrl is not implemented";
@@ -105,35 +107,10 @@ QuickSearchPage.prototype = {
         var self = this;
         var newCardElement = $(self.addNewCardTemplate());
 
-        //TODO: apply https://github.com/blueimp/jQuery-File-Upload/wiki/Drop-zone-effects
-        newCardElement.bind('drop dragover', function (e) {
-            e.preventDefault();
-        });
-
-        newCardElement.bind('dragleave', function (e, b) {
-            $(e.target).removeClass("dragging-file");
-        });
-
-        newCardElement.find('.fileupload').fileupload({
-            //no envía el nombre de archivo en IE
-            dataType: 'json',
-            singleFileUploads: false, //si no se pone esta linea se agrega un add por cada archivo
-            dropZone: newCardElement,
-            dragover: function (e, f) {
-                if (_.any(e.dataTransfer.types, function (x) { return x == "Files" })) {
-                    newCardElement.addClass("dragging-file");
-                }
-            },
-            drop: function () {
-                newCardElement.removeClass("dragging-file");
-            },
-            done: function (e, data) {
-                //TODO: controlar errores
-                window.location = data.result.redirectTo;
-            }
-        });
-
-
+        if (self._config.prepareNewCard) {
+            self._config.prepareNewCard(newCardElement);
+        }
+        
         self.$results.html(newCardElement);
     },
     _startLoading: function () {
@@ -154,8 +131,15 @@ QuickSearchPage.prototype = {
         });
     },
     _appendResults: function (result) {
+        var self = this;
         this.$resultCount.html(result.TotalResults);
-        this.$results.append(this.cardTemplate({ model: { items: result.Items} }));
+        var $cards = $(this.cardTemplate({ model: { items: result.Items } }));
+        
+        if (self._config.prepareResultCards) {
+            self._config.prepareResultCards($cards);
+        }
+
+        this.$results.append($cards);
         this._skip = this._skip + result.Items.length;
         if (this._skip < result.TotalResults) {
             this.$results.append(this.getMoreCardsTemplate());

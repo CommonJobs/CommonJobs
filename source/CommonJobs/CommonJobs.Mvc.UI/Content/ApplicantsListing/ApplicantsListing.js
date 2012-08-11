@@ -1,4 +1,6 @@
-﻿$(function () {
+﻿/// <reference path="../DragAndDrop/DragAndDrop.js" />
+$(function () {
+    var dragAndDrop = new DragAndDrop();
     var qs = new QuickSearchPage({
         //pageSize: 3,
         generateRedirectUrl: function (searchParameters) {
@@ -16,6 +18,18 @@
                 searchParameters.HaveTechnicalInterview = true;
             if ($("#SearchInAttachmentsCheck").prop("checked"))
                 searchParameters.SearchInAttachments = true;
+        },
+        prepareNewCard: function ($card) {
+            dragAndDrop.prepareFileDropzone($card, {
+                done: function (e, data) {
+                    window.location = data.result.editUrl;
+                }
+            });
+        },
+        prepareResultCards: function ($cards) {
+            dragAndDrop.prepareFileDropzone($cards, {
+                //done: 
+            });
         }
     });
 

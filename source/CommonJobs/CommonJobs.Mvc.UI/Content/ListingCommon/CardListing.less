@@ -101,8 +101,20 @@
 	background-color: #D9FAD9;
 }
 
-.dragging-file {
-	background-color: #EEEEEE;
+.file-dropzone.hover {
+	background-color: #DDD;
 	border-style: dashed;
-	border-width: 2px;
+	border-width: 2px; 
+}
+
+.file-dropzone.fade {
+    -webkit-transition: background-color .5s ease-out;
+    -moz-transition: background-color .5s ease-out;
+    -ms-transition: background-color .5s ease-out;
+    -o-transition: background-color .5s ease-out;
+    transition: background-color .5s ease-out;
+}
+
+.file-dropzone input[type='file'] {
+	display: none
 }

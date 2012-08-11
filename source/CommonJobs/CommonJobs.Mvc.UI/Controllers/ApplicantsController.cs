@@ -55,21 +55,56 @@ namespace CommonJobs.Mvc.UI.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateWithAttachments()
+        public ActionResult QuickAttachment()
         {
-            var newApplicant = new Applicant();
-            RavenSession.Store(newApplicant);
+            Applicant applicant;
+            //No me anda el binding normal
+            var id = RouteData.Values["id"] as string;
+            if (id == null)
+            {
+                applicant = new Applicant();
+                RavenSession.Store(applicant);
+            }
+            else
+            {
+                applicant = RavenSession.Load<Applicant>(id);
+                if (applicant == null)
+                    return HttpNotFound();
+            }
 
             using (var attachmentReader = new RequestAttachmentReader(Request))
             {
                 var attachments = attachmentReader
-                    .Select(x => ExecuteCommand(new SaveAttachment(newApplicant, x.Key, x.Value)))
+                    .Select(x => ExecuteCommand(new SaveAttachment(applicant, x.Key, x.Value)))
                     .ToArray();
-                //TODO: agregar a notas
+
+                var notes = attachments.Select(x => new ApplicantNote() 
+                    {
+                        Attachment = x,
+                        Note = "QuickAttachment!",
+                        NoteType = ApplicantNoteType.GeneralNote,
+                        RealDate = DateTime.Now,
+                        RegisterDate = DateTime.Now
+                    });
+
+                if (applicant.Notes == null)
+                {
+                    applicant.Notes = notes.ToList();
+                }
+                else
+                {
+                    applicant.Notes.AddRange(notes);
+                }
+
+                return Json(new
+                {
+                    success = true,
+                    entityId = applicant.Id,
+                    editUrl = Url.Action("Edit", new { id = applicant.Id }),
+                    attachment = attachments.FirstOrDefault(),
+                    attachments = attachments
+                });
             }
-            //TODO: esto lo está haciendo en la llamada "ajax", no debería
-            return Json(new { redirectTo = Url.Action("Edit", new { id = newApplicant.Id }) });
-            //return RedirectToAction("Edit", new { id = newApplicant.Id });
         }
 
         [SharedEntityAlternativeAuthorization]
