@@ -54,6 +54,59 @@ namespace CommonJobs.Mvc.UI.Controllers
             return RedirectToAction("Edit", new { id = newApplicant.Id });
         }
 
+        [HttpPost]
+        public ActionResult QuickAttachment()
+        {
+            Applicant applicant;
+            //No me anda el binding normal
+            var id = RouteData.Values["id"] as string;
+            if (id == null)
+            {
+                applicant = new Applicant();
+                RavenSession.Store(applicant);
+            }
+            else
+            {
+                applicant = RavenSession.Load<Applicant>(id);
+                if (applicant == null)
+                    return HttpNotFound();
+            }
+
+            using (var attachmentReader = new RequestAttachmentReader(Request))
+            {
+                var attachments = attachmentReader
+                    .Select(x => ExecuteCommand(new SaveAttachment(applicant, x.Key, x.Value)))
+                    .ToArray();
+
+                var notes = attachments.Select(x => new ApplicantNote() 
+                    {
+                        Attachment = x,
+                        Note = "QuickAttachment!",
+                        NoteType = ApplicantNoteType.GeneralNote,
+                        RealDate = DateTime.Now,
+                        RegisterDate = DateTime.Now
+                    });
+
+                if (applicant.Notes == null)
+                {
+                    applicant.Notes = notes.ToList();
+                }
+                else
+                {
+                    applicant.Notes.AddRange(notes);
+                }
+
+                return Json(new
+                {
+                    success = true,
+                    entityId = applicant.Id,
+                    editUrl = Url.Action("Edit", new { id = applicant.Id }),
+                    attachment = attachments.FirstOrDefault(),
+                    attachments = attachments
+                });
+            }
+        }
+
         [SharedEntityAlternativeAuthorization]
         public ActionResult Edit(string id, string sharedCode = null) 
         {
@@ -95,12 +148,20 @@ namespace CommonJobs.Mvc.UI.Controllers
         public ActionResult SavePhoto(string id)
         {
             var applicant = RavenSession.Load<Applicant>(id);
-            var attachmentReader = new RequestAttachmentReader(Request);
-            applicant.Photo = ExecuteCommand(new SavePhotoAttachments(
-                applicant, 
-                attachmentReader.FileName, 
-                attachmentReader.Stream));
-            return Json(new { success = true, attachment = applicant.Photo });
+
+            using (var attachmentReader = new RequestAttachmentReader(Request))
+            {
+                if (attachmentReader.Count != 1)
+                    throw new NotSupportedException("One and only one photo is required.");
+
+                var attachment = attachmentReader.First();
+
+                applicant.Photo = ExecuteCommand(new SavePhotoAttachments(
+                    applicant,
+                    attachment.Key,
+                    attachment.Value));
+                return Json(new { success = true, attachment = applicant.Photo });
+            }
         }
     }
 }

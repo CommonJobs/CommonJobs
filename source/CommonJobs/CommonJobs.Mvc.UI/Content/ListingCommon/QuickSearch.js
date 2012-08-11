@@ -18,7 +18,9 @@ QuickSearchPage.prototype = {
         getMoreCardsTemplateSelector: "#get-more-items-template",
         getMoreCardsSelector: ".get-more-items",
         readyClass: "ready",
-        loadingClass: "loading"
+        loadingClass: "loading",
+        prepareNewCard: function ($card) { },
+        prepareResultCards: function ($cards) { }
     },
     generateRedirectUrl: function (searchParameters) {
         throw "generateRedirectUrl is not implemented";
@@ -97,9 +99,19 @@ QuickSearchPage.prototype = {
         .done(function (result) {
             self._skip = 0;
             self._lastSearchParameters = searchParameters;
-            self.$results.html(self.addNewCardTemplate());
+            self._appendNewCard();
             self._appendResults(result);
         });
+    },
+    _appendNewCard: function () {
+        var self = this;
+        var newCardElement = $(self.addNewCardTemplate());
+
+        if (self._config.prepareNewCard) {
+            self._config.prepareNewCard(newCardElement);
+        }
+        
+        self.$results.html(newCardElement);
     },
     _startLoading: function () {
         $(this._config.getMoreCardsSelector).removeClass(this._config.readyClass).addClass(this._config.loadingClass);
@@ -119,8 +131,15 @@ QuickSearchPage.prototype = {
         });
     },
     _appendResults: function (result) {
+        var self = this;
         this.$resultCount.html(result.TotalResults);
-        this.$results.append(this.cardTemplate({ model: { items: result.Items} }));
+        var $cards = $(this.cardTemplate({ model: { items: result.Items } }));
+        
+        if (self._config.prepareResultCards) {
+            self._config.prepareResultCards($cards);
+        }
+
+        this.$results.append($cards);
         this._skip = this._skip + result.Items.length;
         if (this._skip < result.TotalResults) {
             this.$results.append(this.getMoreCardsTemplate());
