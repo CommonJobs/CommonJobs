@@ -80,14 +80,15 @@ namespace CommonJobs.Mvc.UI.Controllers
             var entity = RavenSession.Load<object>(id);
             if (entity == null)
                 return HttpNotFound("Specified entity does not exists");
-            
-            var attachmentReader = new RequestAttachmentReader(Request);
-            var attachment = ExecuteCommand(new SaveAttachment(
-                entity,
-                attachmentReader.FileName,
-                attachmentReader.Stream));
 
-            return Json(new { success = true, attachment = attachment });
+            using (var attachmentReader = new RequestAttachmentReader(Request))
+            {
+                var attachments = attachmentReader
+                    .Select(x => ExecuteCommand(new SaveAttachment(entity, x.Key, x.Value)))
+                    .ToArray();
+
+                return Json(new { success = true, attachment = attachments.FirstOrDefault(), attachments = attachments });
+            }
         }
 
         [CommonJobsAuthorize(Roles = "Migrators")]
