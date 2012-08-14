@@ -12,7 +12,7 @@
 * (40) Como usuario del sistema, desearía que las ofertas de trabajo puedan generarse en base a pedidos realizados en el proyecto de Jira "Sales Pipeline", para así trabajar más eficientemente (Implementación).
 * (7) Mostrar la antigüedad laboral y permitir buscar por ese criterio.
 * (5) Como usuario me gustaría que las búsquedas con postulantes asociados aparezcan en la pantalla de búsqueda de postulantes y me permitan filtrar por ellas y mostrarme cuantos postulantes asociados tiene.
-* (3) Como usuario me gustaría poder asociar un postulante a una búsqueda de SalesPipeline mediante Id tel ticket de Jira y permitir filtrar postulantes por ese criterio.
+* (3) Como usuario me gustaría poder asociar un postulante a una búsqueda de SalesPipeline mediante Id del ticket de Jira y permitir filtrar postulantes por ese criterio.
 * (10) Como usuario del sistema, desearía que las ofertas de trabajo puedan generarse en base a pedidos realizados en el proyecto de Jira "Sales Pipeline", para así trabajar más eficientemente (Investigación y diseño).
 * (20) Importar CV como postulante.
 

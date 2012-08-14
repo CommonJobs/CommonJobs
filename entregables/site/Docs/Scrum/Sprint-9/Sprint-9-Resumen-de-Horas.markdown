@@ -13,7 +13,7 @@ _Se incluyen las reuniones de planificación, revisión y retrospectiva_
 *JD:*
 
 * Analisis: 1 hora
-* Desarrollo: 25,45 horas
+* Desarrollo: 25:45 horas
 * Planificación: 2 horas
 * Infraestructura: 0:45 horas
 
