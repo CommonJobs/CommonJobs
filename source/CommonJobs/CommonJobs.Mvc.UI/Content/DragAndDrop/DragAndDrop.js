@@ -75,4 +75,48 @@ DragAndDrop.prototype = {
     }
 };
 
+var UploadModal = function ($modal) {
+    $modal.removeClass("error");
+
+    this.$modal = $modal;
+
+    this.show = function () {
+        $modal.modal();
+        return this;
+    };
+
+    this.person = function ($card) {
+        $modal.find("img.cardPicture").remove();
+        $modal.find(".modal-header").prepend($card.find("img.cardPicture").clone());
+        $modal.find(".person-name").text($card.find(".name").text());
+        return this;
+    };
+
+    this.title = function (title) {
+        $modal.find(".title").text(title);
+        return this;
+    };
+
+    this.error = function () {
+        $modal.addClass("error");
+        return this;
+    };
+
+    this.files = function (data) {
+        var files = data.files;
+        var key = "name";
+        if (data.result && data.result.attachments) {
+            var key = "FileName";
+            files = data.result.attachments;
+        }
+        var html = [];
+        for (var i in files) {
+            html.push("<li>");
+            html.push(files[i][key]);
+            html.push("</li>");
+        }
+        $modal.find("ul.file-list").html(html.join(""));
+        return this;
+    };
+};
 
