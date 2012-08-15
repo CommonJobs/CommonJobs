@@ -18,8 +18,10 @@ $(function () {
         },
         prepareResultCards: function ($cards) {
             dragAndDrop.prepareFileDropzone($cards, {
-                singleFileUploads: true, //Un cuadro de dialogo por cada archivo
                 add: function (e, data, $el) {
+                    console.debug(e);
+                    console.debug(data);
+                    //todo: DAR A ELEGIR LOS SLOT DE CADA ARCHIVO O TAL VEZ MANDAR TODO AL GENERL                    
                     if ($el.hasClass("item-card")) {
                         new UploadModal($('#generic-modal'))
                             .person($el)
