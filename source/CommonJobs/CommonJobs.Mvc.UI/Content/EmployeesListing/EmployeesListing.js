@@ -25,7 +25,8 @@ $(function () {
                             .person($el)
                             .title("Adjuntar Archivo")
                             .files(data)
-                            .modal();
+                            .hide(".detail-link")
+                            .modal(/*function () { data.submit(); }*/);
                     }
                 },
                 done: function (e, data, $el) {
@@ -33,16 +34,17 @@ $(function () {
                         .person($el)
                         .title("Archivos subidos")
                         .files(data)
+                        .$(".detail-link", function () {
+                            this.attr("href", data.result.editUrl);
+                            this.show();
+                        })
                         .modal();
-
-                    //TODO:
-                    //modal.find("a.detail-link").attr("href", data.result.editUrl).text("Ver...");
-
                 },
                 fail: function (e, data, $el) {
                     new UploadModal($('#generic-modal'))
                         .person($el)
                         .title("Error subiendo archivos")
+                        .hide(".detail-link")
                         .error()
                         .files(data)
                         .modal();

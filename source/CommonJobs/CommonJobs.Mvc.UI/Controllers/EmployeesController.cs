@@ -71,6 +71,52 @@ namespace CommonJobs.Mvc.UI.Controllers
             RavenSession.Store(newEmployee);
             return RedirectToAction("Edit", new { id = newEmployee.Id });  
         }
+
+        [HttpPost]
+        public ActionResult QuickAttachment()
+        {
+            //No me anda el binding normal
+            var id = RouteData.Values["id"] as string;
+            if (string.IsNullOrEmpty(id))
+                return HttpNotFound();
+
+            var employee = RavenSession.Load<Employee>(id);
+            if (employee == null)
+                return HttpNotFound();
+
+            using (var attachmentReader = new RequestAttachmentReader(Request))
+            {
+                var attachments = attachmentReader
+                    .Select(x => ExecuteCommand(new SaveAttachment(employee, x.Key, x.Value)))
+                    .ToArray();
+
+                var notes = attachments.Select(x => new NoteWithAttachment()
+                {
+                    Attachment = x,
+                    Note = "QuickAttachment!",
+                    RealDate = DateTime.Now,
+                    RegisterDate = DateTime.Now
+                });
+
+                if (employee.Notes == null)
+                {
+                    employee.Notes = notes.ToList();
+                }
+                else
+                {
+                    employee.Notes.AddRange(notes);
+                }
+
+                return Json(new
+                {
+                    success = true,
+                    entityId = employee.Id,
+                    editUrl = Url.Action("Edit", new { id = employee.Id }),
+                    attachment = attachments.FirstOrDefault(),
+                    attachments = attachments
+                });
+            }
+        }
          
         public ActionResult Edit(string id)
         {

@@ -26,7 +26,7 @@
 <script type="text/template" id="card-template">
     <% _.each(model.items, function(item) { %>
         <div class="card column clickable item-card file-dropzone fade well">
-            <input type="file" data-url="@Url.Action("TODO")<%= item.Id %>" multiple>
+            <input type="file" data-url="@Url.Action("QuickAttachment")<%= item.Id %>" multiple>
             <img class="cardPicture" 
                 src="<%= item.Photo ? urlGenerator.action("Get", "Attachments", item.Photo.Thumbnail.Id) : urlGenerator.content("Images/NoPicture.png")  %>" 
                 alt="<%= item.FirstName %> <%= item.LastName %>'s picture" />
@@ -88,7 +88,7 @@
             <ul class="file-list">
             </ul>
             <br />
-            <a class="detail-link" href="#">Ver detalle del postulante</a>
+            <a class="detail-link" href="#">Ver empleado</a>
         </div>
         <div class="modal-footer">
             <a href="#" class="btn" data-dismiss="modal">Cerrar</a>
