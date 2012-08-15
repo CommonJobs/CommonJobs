@@ -77,46 +77,73 @@ DragAndDrop.prototype = {
 
 var UploadModal = function ($modal) {
     $modal.removeClass("error");
+    var me = this;
+    me.$modal = $modal;
 
-    this.$modal = $modal;
 
-    this.show = function () {
+    me.$ = function (selector, action) {
+        var $el = $modal.find(selector);
+        if (!action) {
+            return $el;
+        } else {
+            action.apply($el);
+            return me;
+        }
+    };
+
+    me.modal = function () {
         $modal.modal();
-        return this;
+        return me;
     };
 
-    this.person = function ($card) {
-        $modal.find("img.cardPicture").remove();
-        $modal.find(".modal-header").prepend($card.find("img.cardPicture").clone());
-        $modal.find(".person-name").text($card.find(".name").text());
-        return this;
+    me.person = function ($card) {
+        return me
+            .$("img.cardPicture", function () { this.remove(); })
+            .$(".modal-header", function () { this.prepend($card.find("img.cardPicture").clone()) })
+            .text(".person-name", $card.find(".name").text());
     };
 
-    this.title = function (title) {
-        $modal.find(".title").text(title);
-        return this;
+    me.title = function (title) {
+        return me.text(".title", title);
     };
 
-    this.error = function () {
+    me.error = function () {
         $modal.addClass("error");
-        return this;
+        return me;
     };
 
-    this.files = function (data) {
-        var files = data.files;
-        var key = "name";
-        if (data.result && data.result.attachments) {
-            var key = "FileName";
-            files = data.result.attachments;
-        }
-        var html = [];
-        for (var i in files) {
-            html.push("<li>");
-            html.push(files[i][key]);
-            html.push("</li>");
-        }
-        $modal.find("ul.file-list").html(html.join(""));
-        return this;
+    me.files = function (data) {
+        return me.$("ul.file-list", function () {
+            var files = data.files;
+            var key = "name";
+            if (data.result && data.result.attachments) {
+                var key = "FileName";
+                files = data.result.attachments;
+            }
+            var html = [];
+            for (var i in files) {
+                html.push("<li>");
+                html.push(files[i][key]);
+                html.push("</li>");
+            }
+            this.html(html.join(""));
+        });
+    };
+
+    me.show = function (selector) {
+        return me.$(selector, function () { this.show(); });
+    };
+
+    me.hide = function (selector) {
+        return me.$(selector, function () { this.hide(); });
+    };
+
+    me.text = function (selector, value) {
+        return me.$(selector, function () { this.text(value); });
+    };
+
+    me.attr = function (selector, attr, value) {
+        return me.$(selector, function () { this.attr(attr, value); });
     };
 };
 

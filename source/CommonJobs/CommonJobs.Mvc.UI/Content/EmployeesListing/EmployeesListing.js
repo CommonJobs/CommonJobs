@@ -25,7 +25,7 @@ $(function () {
                             .person($el)
                             .title("Adjuntar Archivo")
                             .files(data)
-                            .show();
+                            .modal();
                     }
                 },
                 done: function (e, data, $el) {
@@ -33,7 +33,7 @@ $(function () {
                         .person($el)
                         .title("Archivos subidos")
                         .files(data)
-                        .show();
+                        .modal();
 
                     //TODO:
                     //modal.find("a.detail-link").attr("href", data.result.editUrl).text("Ver...");
@@ -45,7 +45,7 @@ $(function () {
                         .title("Error subiendo archivos")
                         .error()
                         .files(data)
-                        .show();
+                        .modal();
                 }
             });
         }
