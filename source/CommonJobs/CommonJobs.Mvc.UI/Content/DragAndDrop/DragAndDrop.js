@@ -77,6 +77,7 @@ DragAndDrop.prototype = {
 
 var UploadModal = function ($modal) {
     $modal.removeClass("error");
+    $modal.off("hide");
     var me = this;
     me.$modal = $modal;
 
@@ -91,7 +92,10 @@ var UploadModal = function ($modal) {
         }
     };
 
-    me.modal = function () {
+    me.modal = function (onHide) {
+        if (onHide) {
+            $modal.on("hide", onHide);
+        }
         $modal.modal();
         return me;
     };
