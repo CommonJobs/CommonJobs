@@ -76,48 +76,46 @@ DragAndDrop.prototype = {
 };
 
 var UploadModal = function ($modal) {
-    $modal.removeClass("error");
-    $modal.off("hide");
-    var me = this;
-    me.$modal = $modal;
+    this._init($modal);
+};
 
-
-    me.$ = function (selector, action) {
-        var $el = $modal.find(selector);
+UploadModal.prototype = {
+    _init: function($modal) {
+        $modal.removeClass("error");
+        $modal.off("hide");
+        this.$modal = $modal;
+    },
+    $: function (selector, action) {
+        var $el = this.$modal.find(selector);
         if (!action) {
             return $el;
         } else {
             action.apply($el);
-            return me;
+            return this;
         }
-    };
-
-    me.modal = function (onHide) {
+    },
+    modal: function (onHide) {
         if (onHide) {
-            $modal.on("hide", onHide);
+            this.$modal.on("hide", onHide);
         }
-        $modal.modal();
-        return me;
-    };
-
-    me.person = function ($card) {
-        return me
+        this.$modal.modal();
+        return this;
+    },
+    person: function ($card) {
+        return this
             .$("img.cardPicture", function () { this.remove(); })
             .$(".modal-header", function () { this.prepend($card.find("img.cardPicture").clone()) })
             .text(".person-name", $card.find(".name").text());
-    };
-
-    me.title = function (title) {
-        return me.text(".title", title);
-    };
-
-    me.error = function () {
-        $modal.addClass("error");
-        return me;
-    };
-
-    me.files = function (data) {
-        return me.$("ul.file-list", function () {
+    },
+    title: function (title) {
+        return this.text(".title", title);
+    },
+    error: function () {
+        this.$modal.addClass("error");
+        return this;
+    },
+    files: function (data) {
+        return this.$("ul.file-list", function () {
             var files = data.files;
             var key = "name";
             if (data.result && data.result.attachments) {
@@ -132,22 +130,18 @@ var UploadModal = function ($modal) {
             }
             this.html(html.join(""));
         });
-    };
-
-    me.show = function (selector) {
-        return me.$(selector, function () { this.show(); });
-    };
-
-    me.hide = function (selector) {
-        return me.$(selector, function () { this.hide(); });
-    };
-
-    me.text = function (selector, value) {
-        return me.$(selector, function () { this.text(value); });
-    };
-
-    me.attr = function (selector, attr, value) {
-        return me.$(selector, function () { this.attr(attr, value); });
-    };
+    },
+    show: function (selector) {
+        return this.$(selector, function () { this.show(); });
+    },
+    hide: function (selector) {
+        return this.$(selector, function () { this.hide(); });
+    },
+    text: function (selector, value) {
+        return this.$(selector, function () { this.text(value); });
+    },
+    attr: function (selector, attr, value) {
+        return this.$(selector, function () { this.attr(attr, value); });
+    }
 };
 
