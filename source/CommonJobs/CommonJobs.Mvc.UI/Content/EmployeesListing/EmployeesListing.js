@@ -2,6 +2,14 @@
 $(function () {
     var dragAndDrop = new DragAndDrop();
 
+    UploadModal.prototype.drawSlots = function ($el, item) {
+        console.debug("drawSlots. $el:");
+        console.debug($el);
+        console.debug("drawSlots. item:");
+        console.debug(item);
+        return this;
+    };
+
     var qs = new QuickSearchPage({
         //pageSize: 3,
         generateRedirectUrl: function (searchParameters) {
@@ -16,8 +24,8 @@ $(function () {
             if ($("#SearchInNotesCheck").prop("checked"))
                 searchParameters.searchInNotes = true;
         },
-        prepareResultCards: function ($cards) {
-            dragAndDrop.prepareFileDropzone($cards, {
+        prepareResultCard: function ($card, item) {
+            dragAndDrop.prepareFileDropzone($card, {
                 add: function (e, data, $el) {
                     console.debug(e);
                     console.debug(data);
@@ -27,6 +35,7 @@ $(function () {
                             .person($el)
                             .title("Adjuntar Archivo")
                             .files(data)
+                            .drawSlots($el, item)
                             .hide(".detail-link")
                             .modal(/*function () { data.submit(); }*/);
                     }

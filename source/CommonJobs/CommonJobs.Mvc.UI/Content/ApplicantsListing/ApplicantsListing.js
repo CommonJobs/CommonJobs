@@ -37,8 +37,8 @@ $(function () {
                 }
             });
         },
-        prepareResultCards: function ($cards) {
-            dragAndDrop.prepareFileDropzone($cards, {
+        prepareResultCard: function ($card, item) {
+            dragAndDrop.prepareFileDropzone($card, {
                 done: function (e, data, $el) {
                     new UploadModal($('#generic-modal'))
                         .person($el)
