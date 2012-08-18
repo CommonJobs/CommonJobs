@@ -26,9 +26,8 @@ namespace CommonJobs.Mvc.UI.Controllers
         // GET: /Employees/
         public ViewResult Index(EmployeeSearchParameters searchParameters)
         {
-            //TODO: It is here only for demo purposes
             AttachmentSlot[] slotsToShow = Query(new AttachmentSlotsQuery<Employee>());
-            log.Dump(LogLevel.Debug, slotsToShow);
+            log.Dump(LogLevel.Debug, slotsToShow, "attachmentSlots");
             ScriptManager.RegisterGlobalJavascript(
                 "ViewData",
                 new

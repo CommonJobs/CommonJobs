@@ -80,10 +80,14 @@ var UploadModal = function ($modal) {
 };
 
 UploadModal.prototype = {
-    _init: function($modal) {
+    _init: function ($modal) {
+        console.debug("viejo");
+        console.debug(this);
+        console.debug($modal);
         $modal.removeClass("error");
         $modal.off("hide");
         this.$modal = $modal;
+        this._files = null;
     },
     $: function (selector, action) {
         var $el = this.$modal.find(selector);
@@ -115,18 +119,18 @@ UploadModal.prototype = {
         return this;
     },
     files: function (data) {
-        return this.$("ul.file-list", function () {
-            var files = data.files;
-            var key = "name";
-            if (data.result && data.result.attachments) {
-                var key = "FileName";
-                files = data.result.attachments;
-            }
+        if (data.result && data.result.attachments) {
+            this._files = _.map(data.result.attachments, function (x) { return { name: x.FileName }; });
+        } else {
+            this._files = _.map(data.files, function (x) { return { name: x.name }; });
+        }
+        var files = this._files;
+        return this.$(".file-list", function () {
             var html = [];
             for (var i in files) {
-                html.push("<li>");
-                html.push(files[i][key]);
-                html.push("</li>");
+                html.push("<pre>");
+                html.push(files[i].name);
+                html.push("</pre>");
             }
             this.html(html.join(""));
         });

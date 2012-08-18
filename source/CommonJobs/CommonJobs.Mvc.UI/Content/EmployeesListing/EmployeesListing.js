@@ -1,12 +1,49 @@
-﻿/// <reference path="../../Scripts/jquery-1.7.1-vsdoc.js" />
+﻿/// <reference path="../../Scripts/underscore.js" />
+/// <reference path="../../Scripts/jquery-1.7.1-vsdoc.js" />
 $(function () {
     var dragAndDrop = new DragAndDrop();
 
-    UploadModal.prototype.drawSlots = function ($el, item) {
-        console.debug("drawSlots. $el:");
-        console.debug($el);
-        console.debug("drawSlots. item:");
-        console.debug(item);
+    //Extend UploadModal
+    var slotsTemplate = _.template($("#available-slots-template").text());
+    var previousInit = UploadModal.prototype._init;
+    UploadModal.prototype._init = function ($modal) {
+        _.bind(previousInit, this)($modal);
+        this.$(".slots").empty();
+    };
+    UploadModal.prototype.drawSlots = function ($el, employee) {
+        //TODO: traer esto de la base de datos
+        employee.AttachmentsBySlot = [{
+            SlotId: "AttachmentSlots/Employee/CV",
+            Date: "2012-01-01",
+            Attachment: {
+                Id: "idididididid",
+                FileName: "filename.txt"
+            }
+        }];
+        
+        var filledById = {};
+        _.each(employee.AttachmentsBySlot, function (filledItem) {
+            filledById[filledItem.SlotId] = filledItem;
+        });
+
+        var model = {
+            fileCount: this._files.length,
+            slotsByNecessity: {}
+        };
+
+        _.each(ViewData.attachmentSlots, function (slot) {
+            slot = _.clone(slot);
+            slot.filled = filledById[slot.Id];
+            if (!model.slotsByNecessity[slot.Necessity]) {
+                model.slotsByNecessity[slot.Necessity] = [];
+            }
+            model.slotsByNecessity[slot.Necessity].push(slot);
+        });
+
+        console.debug(model);
+        var $slots = $(slotsTemplate({ model: model }));
+        this.$(".slots").html($slots);
+        
         return this;
     };
 
@@ -33,7 +70,7 @@ $(function () {
                     if ($el.hasClass("item-card")) {
                         new UploadModal($('#generic-modal'))
                             .person($el)
-                            .title("Adjuntar Archivo")
+                            .title("Adjuntar Archivos")
                             .files(data)
                             .drawSlots($el, item)
                             .hide(".detail-link")
