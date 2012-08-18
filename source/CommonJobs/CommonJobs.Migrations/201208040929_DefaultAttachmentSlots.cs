@@ -15,20 +15,15 @@ namespace CommonJobs.Migrations
     public class DefaultAttachmentSlots : Migration
     {
         private AttachmentSlot[] newEmployeeSlots = new[] {
-            new AttachmentSlot(typeof(Employee), "EarlyTaxpayerStatement")
-            {
-                Description = "Alta Temprana",
-                Necessity = AttachmentSlotNecessity.MustHave
-            },
-            new AttachmentSlot(typeof(Employee), "DNI")
+            new AttachmentSlot(typeof(Employee), "Altas")
             {
                 Necessity = AttachmentSlotNecessity.MustHave
             },
-            new AttachmentSlot(typeof(Employee), "Degree")
+            new AttachmentSlot(typeof(Employee), "CV")
             {
-                Necessity = AttachmentSlotNecessity.NiceToHave
+                Necessity = AttachmentSlotNecessity.MustHave
             },
-            new AttachmentSlot(typeof(Employee), "Curriculum")
+            new AttachmentSlot(typeof(Employee), "Bajas")
             {
                 Necessity = AttachmentSlotNecessity.Optional
             }
