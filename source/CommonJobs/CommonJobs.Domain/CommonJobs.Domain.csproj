@@ -62,6 +62,7 @@
     <Compile Include="Certification.cs" />
     <Compile Include="CompanyHistory.cs" />
     <Compile Include="JobSearch.cs" />
+    <Compile Include="SlotWithAttachment.cs" />
     <Compile Include="TemporalFileReference.cs" />
     <Compile Include="Postulation.cs" />
     <Compile Include="SharedLinkList.cs" />
