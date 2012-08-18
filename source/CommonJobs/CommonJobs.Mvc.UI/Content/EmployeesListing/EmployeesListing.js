@@ -40,7 +40,6 @@ $(function () {
             model.slotsByNecessity[slot.Necessity].push(slot);
         });
 
-        console.debug(model);
         var $slots = $(slotsTemplate({ model: model }));
         this.$(".slots").html($slots);
         
@@ -64,8 +63,6 @@ $(function () {
         prepareResultCard: function ($card, item) {
             dragAndDrop.prepareFileDropzone($card, {
                 add: function (e, data, $el) {
-                    console.debug(e);
-                    console.debug(data);
                     //todo: DAR A ELEGIR LOS SLOT DE CADA ARCHIVO O TAL VEZ MANDAR TODO AL GENERL                    
                     if ($el.hasClass("item-card")) {
                         new UploadModal($('#generic-modal'))
@@ -73,7 +70,15 @@ $(function () {
                             .title("Adjuntar Archivos")
                             .files(data)
                             .drawSlots($el, item)
+                            //TODO: attach submit event to slots
+                            //TODO: show detail-link with employee link 
                             .hide(".detail-link")
+                            /*
+                            .$(".detail-link", function () {
+                                this.attr("href", data.result.editUrl);
+                                this.show();
+                            })
+                            */
                             .modal(/*function () { data.submit(); }*/);
                     }
                 },

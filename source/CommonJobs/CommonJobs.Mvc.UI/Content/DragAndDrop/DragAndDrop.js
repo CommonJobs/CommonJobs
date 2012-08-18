@@ -81,9 +81,6 @@ var UploadModal = function ($modal) {
 
 UploadModal.prototype = {
     _init: function ($modal) {
-        console.debug("viejo");
-        console.debug(this);
-        console.debug($modal);
         $modal.removeClass("error");
         $modal.off("hide");
         this.$modal = $modal;
