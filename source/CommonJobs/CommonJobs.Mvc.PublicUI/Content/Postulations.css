@@ -32,9 +32,16 @@ p em {
     width: 275px;
 }
 
+.textField.largeTextField .editor-field
+{
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
 .editor-label {
     display: inline-block;
     width: 200px;
+    vertical-align: top;
 }
 
 .notes {
@@ -47,7 +54,7 @@ p em {
 }
 
 .inputField {
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 
 .fileField>.editor-field {
@@ -68,9 +75,18 @@ p em {
     background: url(/Content/repeatable_green_background.png) repeat;
 }
 
-input {
+input, textarea {
     background-color: transparent;
     width: 275px;
+    font-family: "AsapRegular", 'Palatino Linotype', Palatino, Arial, sans-serif;
+}
+
+textarea
+{
+    background-image: url(/Content/textareaLines.png);
+    background-repeat: repeat;
+    background-attachment: local;
+    line-height: 32px;
 }
 
 .bigThanks {
