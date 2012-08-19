@@ -37,22 +37,20 @@ namespace CommonJobs.Mvc.PublicUI.Controllers
 
         private void GenerateApplicant(Postulation postulation)
         {
-            try
+            //TODO: move it to an Action
+            var applicant = new Applicant()
             {
-                //TODO: move it to an Action
-                var applicant = new Applicant()
-                {
-                    JobSearchId = postulation.JobSearchId,
-                    Email = postulation.Email,
-                    FirstName = postulation.FirstName,
-                    LastName = postulation.LastName
-                };
-                RavenSession.Store(applicant);
+                JobSearchId = postulation.JobSearchId,
+                Email = postulation.Email,
+                FirstName = postulation.FirstName,
+                LastName = postulation.LastName
+            };
+            RavenSession.Store(applicant);
 
-                if (postulation.Curriculum != null)
-                {
-                    var curriculum = GenerateAttachment(applicant, postulation.Curriculum);
-                    applicant.Notes = new List<ApplicantNote>() {
+            if (postulation.Curriculum != null)
+            {
+                var curriculum = GenerateAttachment(applicant, postulation.Curriculum);
+                applicant.Notes = new List<ApplicantNote>() {
                     new ApplicantNote()
                     {
                         Note = "Curriculum",
@@ -61,13 +59,6 @@ namespace CommonJobs.Mvc.PublicUI.Controllers
                         RegisterDate = DateTime.Now,
                         Attachment = curriculum
                     }};
-                    DeleteTemporalAttachment(postulation.Curriculum);
-                }
-            }
-            catch (Exception e)
-            {
-                log.ErrorException("Unexpected error generating applicant from postulation", e);
-                log.Dump(LogLevel.Error, postulation);
             }
         }
 
@@ -93,7 +84,7 @@ namespace CommonJobs.Mvc.PublicUI.Controllers
             return result;
         }
 
-        private void PrepareCreateView(JobSearch jobSearch)
+        private void PrepareJobSearchView(JobSearch jobSearch)
         {
             var md = new MarkdownDeep.Markdown();
             ViewBag.JobSearchId = jobSearch.Id;
@@ -101,56 +92,79 @@ namespace CommonJobs.Mvc.PublicUI.Controllers
             ViewBag.PublicNotes = new MvcHtmlString(md.Transform(jobSearch.PublicNotes));
         }
 
+        private ActionResult NotFoundOrNotAvailable()
+        {
+            Response.StatusCode = 404;
+            Response.StatusDescription = "Not found or not available";
+            return View("NotFound");
+        }
+
+        private ActionResult InternalError()
+        {
+            Response.StatusCode = 500;
+            Response.StatusDescription = "Internal error";
+            return View("Error");
+        }
+
         public ActionResult Create(long jobSearchNumber, string slug = null)
         {
             var jobSearch = RavenSession.Load<JobSearch>(jobSearchNumber);
             if (jobSearch == null || !jobSearch.IsPublic)
-            {
-                Response.StatusCode = 404;
-                Response.StatusDescription = "Not found or not available";
-                return View("NotFound");                
-            }
+                return NotFoundOrNotAvailable();
 
-            PrepareCreateView(jobSearch);
+            PrepareJobSearchView(jobSearch);
             return View();
         }
 
         [HttpPost]
         public ActionResult Create(Postulation postulation, HttpPostedFileBase curriculumFile)
         {
-            var jobSearch = RavenSession.Load<JobSearch>(postulation.JobSearchId);
-            if (jobSearch == null || !jobSearch.IsPublic)
-                return HttpNotFound();
-
+            JobSearch jobSearch = null;
             try
             {
-                if (curriculumFile != null)
-                {
-                    postulation.Curriculum = SaveTemporalFile(curriculumFile);
-                }
+                jobSearch = RavenSession.Load<JobSearch>(postulation.JobSearchId);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                log.ErrorException("Error uploading file", e);
-                ModelState.AddModelError("curriculumFile", "Error recibiendo el archivo, por favor intente nuevamente.");
+                log.ErrorException("Error loading job search", ex);
+                return InternalError();
             }
+
+            if (jobSearch == null || !jobSearch.IsPublic)
+                return NotFoundOrNotAvailable();
+
+            if (curriculumFile == null)
+                ModelState.AddModelError("curriculumFile", "El archivo de currículum es requerido.");
             
             if (ModelState.IsValid)
             {
                 try
                 {
+                    postulation.Curriculum = SaveTemporalFile(curriculumFile);
+                }
+                catch (Exception e)
+                {
+                    log.ErrorException("Error uploading file", e);
+                    log.Dump(LogLevel.Error, postulation);
+                    return InternalError();
+                }
+
+                try
+                {
                     GenerateApplicant(postulation);
+                    DeleteTemporalAttachment(postulation.Curriculum);
 
                     return RedirectToAction("Thanks", "Postulations");
                 }
                 catch (Exception e)
                 {
                     log.ErrorException("Unexpected error creating postulations", e);
-                    ModelState.AddModelError(string.Empty, "Error inesperado, por favor intente más tarde.");
+                    log.Dump(LogLevel.Error, postulation);
+                    return InternalError();
                 }
             }
 
-            PrepareCreateView(jobSearch);
+            PrepareJobSearchView(jobSearch);
             return View();
         }
 
