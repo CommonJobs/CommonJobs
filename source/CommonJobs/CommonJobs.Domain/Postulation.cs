@@ -25,7 +25,6 @@ namespace CommonJobs.Domain
         [Display(Name = "Teléfono")]
         public string Phone { get; set; }
 
-        [Required(ErrorMessage = "Requerido")]
         [Display(Name = "Currículum")]
         public TemporalFileReference Curriculum { get; set; }
 
