@@ -20,7 +20,7 @@ namespace CommonJobs.Mvc.PublicUI.Controllers
 
         private TemporalFileReference SaveTemporalFile(HttpPostedFileBase file)
         {
-            var temporalFolderPath = System.Configuration.ConfigurationManager.AppSettings["CommonJobs/TemporalUploadsPath"];
+            var temporalFolderPath = Configuration.TemporalUploadsPath;
             if (!Directory.Exists(temporalFolderPath))
             {
                 Directory.CreateDirectory(temporalFolderPath);
@@ -64,7 +64,7 @@ namespace CommonJobs.Mvc.PublicUI.Controllers
 
         private void DeleteTemporalAttachment(TemporalFileReference temporalReference)
         {
-            var temporalFolderPath = System.Configuration.ConfigurationManager.AppSettings["CommonJobs/TemporalUploadsPath"];
+            var temporalFolderPath = Configuration.TemporalUploadsPath;
             var temporalFilePath = Path.Combine(temporalFolderPath, temporalReference.InternalFileName);
             System.IO.File.Delete(temporalFilePath);
         }
@@ -72,7 +72,7 @@ namespace CommonJobs.Mvc.PublicUI.Controllers
         private AttachmentReference GenerateAttachment(object entity, TemporalFileReference temporalReference)
         {
             AttachmentReference result;
-            var temporalFolderPath = System.Configuration.ConfigurationManager.AppSettings["CommonJobs/TemporalUploadsPath"];
+            var temporalFolderPath = Configuration.TemporalUploadsPath;
             var temporalFilePath = Path.Combine(temporalFolderPath, temporalReference.InternalFileName);
             using (var stream = System.IO.File.OpenRead(temporalFilePath))
             {
