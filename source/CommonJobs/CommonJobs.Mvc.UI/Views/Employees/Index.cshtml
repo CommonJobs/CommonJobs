@@ -50,6 +50,10 @@
     </div>
 </script>
 
+<script type="text/template" id="need-attachments-mark-template">
+    <img class="need-attachments-element" width="15px" src="<%= urlGenerator.content("Images/NoPicture.png") %>" alt="<%= model.message %>" title="<%= model.message %>" />
+</script>
+
 <script type="text/template" id="card-template">
     <div class="card column clickable item-card file-dropzone fade well">
         <input type="file" data-url="@Url.Action("QuickAttachment")<%= item.Id %>" multiple>

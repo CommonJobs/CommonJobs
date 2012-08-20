@@ -3,6 +3,21 @@
 $(function () {
     var dragAndDrop = new DragAndDrop();
 
+    //Attachments utilities
+    var getEmployeeAttachmentsBySlot = function (employee) {
+        var filledById = {};
+        if (employee) {
+            _.chain(employee.AttachmentsBySlot)
+            .filter(function (filledItem) {
+                return !!filledItem.Attachment;
+            })
+            .each(function (filledItem) {
+                filledById[filledItem.SlotId] = filledItem;
+            });
+        }
+        return filledById;
+    };
+
     //Extend UploadModal
     var slotBtnTemplate = _.template($("#slot-button-template").text());
     var slotsTemplate = _.template($("#available-slots-template").text());
@@ -15,13 +30,8 @@ $(function () {
     UploadModal.prototype.drawSlots = function ($el, employee) {
         var me = this;
 
-        var filledById = {};
-        if (employee) {
-            _.each(employee.AttachmentsBySlot, function (filledItem) {
-                filledById[filledItem.SlotId] = filledItem;
-            });
-        }
-
+        var filledById = getEmployeeAttachmentsBySlot(employee);
+        
         var singleFile = this._files.length == 1;
         var $slots = $(slotsTemplate({ model: { singleFile: singleFile } }));
 
@@ -74,6 +84,25 @@ $(function () {
         return this;
     }
 
+
+    var needAttachmentsMarkTemplate = _.template($("#need-attachments-mark-template").text());
+    var markEmployeesThatNeedsAttachments = function ($card, employee) {
+        var filledById = getEmployeeAttachmentsBySlot(employee);
+        var missedSlots = _.filter(ViewData.attachmentSlots, function (slot) {
+            return slot.Necessity == 2 && !filledById[slot.Id];
+        });
+
+        $card.removeClass("need-attachments");
+        $card.find(".need-attachments-element").remove();
+
+        if (missedSlots.length > 0) {
+            var names = _.map(missedSlots, function (slot) { return "`" + slot.Name + "`"; });
+            var message = "Slots requeridos: " + names.join(", ");
+            $card.prepend(needAttachmentsMarkTemplate({ model: { message: message } }));
+            $card.addClass("need-attachments");
+        }
+    };
+
     var qs = new QuickSearchPage({
         //pageSize: 3,
         generateRedirectUrl: function (searchParameters) {
@@ -115,6 +144,7 @@ $(function () {
             });
         },
         prepareResultCard: function ($card, item) {
+            markEmployeesThatNeedsAttachments($card, item);
             dragAndDrop.prepareFileDropzone($card, {
                 add: function (e, data, $el) {               
                     if ($el.hasClass("item-card")) {
@@ -134,6 +164,7 @@ $(function () {
                             item.AttachmentsBySlot = [];
                         item.AttachmentsBySlot.push(data.result.added);
                     }
+                    markEmployeesThatNeedsAttachments($card, item);
                     new UploadModal($('#generic-modal'))
                         .person($el)
                         .title("Archivos subidos")
