@@ -4,11 +4,14 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using CommonJobs.Utilities;
+using NLog;
 
 namespace CommonJobs.Domain
 {
     public class Employee: Person
     {
+        private static Logger log = LogManager.GetCurrentClassLogger();
+
         public Employee()
         {
             Vacations = new VacationList();
@@ -121,5 +124,28 @@ namespace CommonJobs.Domain
         }
 
         public List<SlotWithAttachment> AttachmentsBySlot { get; set; }
+
+        public void AddAttachment(AttachmentReference attachmentReference, AttachmentSlot slot)
+        {
+            if (AttachmentsBySlot == null)
+            {
+                AttachmentsBySlot = new List<SlotWithAttachment>();
+            }
+            else if (AttachmentsBySlot.Any(x => x.SlotId == slot.Id))
+            {
+                log.Dump(
+                    LogLevel.Error,
+                    new { slot, attachmentReference },
+                    "Slot is not free");
+                throw new ApplicationException(string.Format("Slot `{0}` is not free", slot.Id));
+            }
+
+            AttachmentsBySlot.Add(new SlotWithAttachment()
+            {
+                Date = DateTime.Now,
+                Attachment = attachmentReference,
+                SlotId = slot.Id
+            });
+        }
     }
 }

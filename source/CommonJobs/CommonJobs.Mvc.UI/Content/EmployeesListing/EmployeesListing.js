@@ -14,19 +14,8 @@ $(function () {
         this.hide(".detail-link");
     };
     UploadModal.prototype.drawSlots = function ($el, employee) {
-        /*
-        //TODO: traer esto de la base de datos
-        employee.AttachmentsBySlot = [{
-            SlotId: "AttachmentSlots/Employee/CV",
-            Date: "2012-01-01",
-            Attachment: {
-                Id: "idididididid",
-                FileName: "filename.txt"
-            }
-        }];
-        */
-        //console.debug(employee.AttachmentsBySlot);
-        
+        var me = this;
+
         var filledById = {};
         _.each(employee.AttachmentsBySlot, function (filledItem) {
             filledById[filledItem.SlotId] = filledItem;
@@ -44,14 +33,20 @@ $(function () {
                     $btn.prop("disabled", true);
                 } else {
                     $btn = $(slotBtnTemplate({ model: { caption: slot.Name } }));
-                    $btn.on("click", function () { alert("//TODO: upload in the slot!!!"); });
+                    $btn.on("click", function () {
+                        me.data.formData = { slot: slot.Id };
+                        me.data.submit();
+                        //TODO: fill slot on successful upload
+                    });
                 }
 
                 $slots.find(".slots-necessity-" + slot.Necessity).show().find(".btn-container").append($btn);
             });
         }
 
-        $slots.find(".slot-general").on("click", function () { alert("//TODO: upload in notes!!!"); });
+        $slots.find(".slot-general").on("click", function () {
+            me.data.submit();
+        });
 
         this.$(".slots").html($slots);
         

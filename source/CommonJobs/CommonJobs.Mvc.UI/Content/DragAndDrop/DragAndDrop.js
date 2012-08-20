@@ -116,6 +116,7 @@ UploadModal.prototype = {
         return this;
     },
     files: function (data) {
+        this.data = data;
         if (data.result && data.result.attachments) {
             this._files = _.map(data.result.attachments, function (x) { return { name: x.FileName }; });
         } else {

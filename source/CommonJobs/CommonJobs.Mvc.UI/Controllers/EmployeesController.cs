@@ -76,6 +76,9 @@ namespace CommonJobs.Mvc.UI.Controllers
         {
             //No me anda el binding normal
             var id = RouteData.Values["id"] as string;
+            var slotId = Request.Form["slot"] as string;
+            var uploadToNotes = string.IsNullOrEmpty(slotId);
+
             if (string.IsNullOrEmpty(id))
                 return HttpNotFound();
 
@@ -85,25 +88,24 @@ namespace CommonJobs.Mvc.UI.Controllers
 
             using (var attachmentReader = new RequestAttachmentReader(Request))
             {
-                var attachments = attachmentReader
-                    .Select(x => ExecuteCommand(new SaveAttachment(employee, x.Key, x.Value)))
-                    .ToArray();
-
-                var notes = attachments.Select(x => new NoteWithAttachment()
+                var reading = attachmentReader.Select(x => ExecuteCommand(new SaveAttachment(employee, x.Key, x.Value)));
+                if (!uploadToNotes)
                 {
-                    Attachment = x,
-                    Note = "QuickAttachment!",
-                    RealDate = DateTime.Now,
-                    RegisterDate = DateTime.Now
-                });
+                    reading = reading.Take(1);
+                }
+                var attachments = reading.ToArray();
 
-                if (employee.Notes == null)
+                if (string.IsNullOrEmpty(slotId))
                 {
-                    employee.Notes = notes.ToList();
+                    QuickAttachToNotes(employee, attachments);
                 }
                 else
                 {
-                    employee.Notes.AddRange(notes);
+                    var slot = RavenSession.Load<AttachmentSlot>(slotId);
+                    if (slot == null)
+                        return HttpNotFound();
+                    
+                    employee.AddAttachment(attachments.First(), slot);
                 }
 
                 return Json(new
@@ -112,8 +114,29 @@ namespace CommonJobs.Mvc.UI.Controllers
                     entityId = employee.Id,
                     editUrl = Url.Action("Edit", new { id = employee.Id }),
                     attachment = attachments.FirstOrDefault(),
-                    attachments = attachments
+                    attachments = attachments,
+                    slot = slotId
                 });
+            }
+        }
+
+        private static void QuickAttachToNotes(Employee employee, AttachmentReference[] attachments)
+        {
+            var notes = attachments.Select(x => new NoteWithAttachment()
+            {
+                Attachment = x,
+                Note = "QuickAttachment!",
+                RealDate = DateTime.Now,
+                RegisterDate = DateTime.Now
+            });
+
+            if (employee.Notes == null)
+            {
+                employee.Notes = notes.ToList();
+            }
+            else
+            {
+                employee.Notes.AddRange(notes);
             }
         }
          
