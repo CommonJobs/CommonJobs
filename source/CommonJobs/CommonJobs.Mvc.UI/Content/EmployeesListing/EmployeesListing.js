@@ -96,10 +96,18 @@ $(function () {
         $card.find(".need-attachments-element").remove();
 
         if (missedSlots.length > 0) {
-            var names = _.map(missedSlots, function (slot) { return "`" + slot.Name + "`"; });
-            var message = "Slots requeridos: " + names.join(", ");
-            $card.prepend(needAttachmentsMarkTemplate({ model: { message: message } }));
+            $el = $(needAttachmentsMarkTemplate({
+                model: {
+                    message: "Slots requeridos: " + _.map(missedSlots, function (slot) { return "`" + slot.Name + "`"; }).join(", "),
+                    needItems: "<ul>" + _.map(missedSlots, function (slot) { return "<li>" + slot.Name + "</li>"; }).join("") + "</ul>",
+                    title: "Faltan adjuntos"
+                }
+            }));
+
+            $card.prepend($el);
             $card.addClass("need-attachments");
+            $el.find(".need-attachments-element").popover();
+            //another option: $el.tooltip()
         }
     };
 

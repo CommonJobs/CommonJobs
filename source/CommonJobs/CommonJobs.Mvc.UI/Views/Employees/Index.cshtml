@@ -51,7 +51,9 @@
 </script>
 
 <script type="text/template" id="need-attachments-mark-template">
-    <img class="need-attachments-element" width="15px" src="<%= urlGenerator.content("Images/NoPicture.png") %>" alt="<%= model.message %>" title="<%= model.message %>" />
+<span class="bootstrap-scope">
+    <span class="need-attachments-element label label-important" title="<%= model.title %>" data-content="<%= model.needItems %>" >Slots</span>
+</span>
 </script>
 
 <script type="text/template" id="card-template">
