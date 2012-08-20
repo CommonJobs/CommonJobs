@@ -57,7 +57,7 @@ namespace CommonJobs.Mvc.PublicUI.Controllers
 
             if (!string.IsNullOrEmpty(postulation.Comment))
             {
-                applicant.AddGeneralNote("Nota de postulación: " + postulation.Comment);
+                applicant.AddGeneralNote("Nota de postulación:\n\n" + postulation.Comment);
             }
 
             //TODO change this when links are in place
