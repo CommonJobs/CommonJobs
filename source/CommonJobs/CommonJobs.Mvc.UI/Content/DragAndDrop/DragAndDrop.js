@@ -85,6 +85,8 @@ UploadModal.prototype = {
         $modal.off("hide");
         this.$modal = $modal;
         this._files = null;
+        this.data = null;
+        this.hide(".detail-link");
     },
     $: function (selector, action) {
         var $el = this.$modal.find(selector);
@@ -106,7 +108,10 @@ UploadModal.prototype = {
         return this
             .$("img.cardPicture", function () { this.remove(); })
             .$(".modal-header", function () { this.prepend($card.find("img.cardPicture").clone()) })
-            .text(".person-name", $card.find(".name").text());
+            .text(".person-name", $card.find(".name").text())
+            .$(".detail-link", function () {
+                this.attr("href", $card.find(".clickable-link").attr("href"));
+            });
     },
     title: function (title) {
         return this.text(".title", title);

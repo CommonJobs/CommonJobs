@@ -125,13 +125,13 @@ namespace CommonJobs.Domain
 
         public List<SlotWithAttachment> AttachmentsBySlot { get; set; }
 
-        public void AddAttachment(AttachmentReference attachmentReference, AttachmentSlot slot)
+        public SlotWithAttachment AddAttachment(AttachmentReference attachmentReference, AttachmentSlot slot)
         {
             if (AttachmentsBySlot == null)
             {
                 AttachmentsBySlot = new List<SlotWithAttachment>();
             }
-            else if (AttachmentsBySlot.Any(x => x.SlotId == slot.Id))
+            else if (AttachmentsBySlot.Any(x => x.SlotId == slot.Id && x.Attachment != null))
             {
                 log.Dump(
                     LogLevel.Error,
@@ -139,13 +139,21 @@ namespace CommonJobs.Domain
                     "Slot is not free");
                 throw new ApplicationException(string.Format("Slot `{0}` is not free", slot.Id));
             }
+            else
+            {
+                AttachmentsBySlot.RemoveAll(x => x.Attachment == null);
+            }
 
-            AttachmentsBySlot.Add(new SlotWithAttachment()
+            var added = new SlotWithAttachment()
             {
                 Date = DateTime.Now,
                 Attachment = attachmentReference,
                 SlotId = slot.Id
-            });
+            };
+
+            AttachmentsBySlot.Add(added);
+
+            return added;
         }
     }
 }

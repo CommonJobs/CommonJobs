@@ -94,6 +94,7 @@ namespace CommonJobs.Mvc.UI.Controllers
                     reading = reading.Take(1);
                 }
                 var attachments = reading.ToArray();
+                SlotWithAttachment added = null;
 
                 if (string.IsNullOrEmpty(slotId))
                 {
@@ -104,8 +105,8 @@ namespace CommonJobs.Mvc.UI.Controllers
                     var slot = RavenSession.Load<AttachmentSlot>(slotId);
                     if (slot == null)
                         return HttpNotFound();
-                    
-                    employee.AddAttachment(attachments.First(), slot);
+
+                    added = employee.AddAttachment(attachments.First(), slot);
                 }
 
                 return Json(new
@@ -115,7 +116,7 @@ namespace CommonJobs.Mvc.UI.Controllers
                     editUrl = Url.Action("Edit", new { id = employee.Id }),
                     attachment = attachments.FirstOrDefault(),
                     attachments = attachments,
-                    slot = slotId
+                    added = added
                 });
             }
         }

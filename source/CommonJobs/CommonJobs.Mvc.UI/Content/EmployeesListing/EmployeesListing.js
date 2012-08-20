@@ -11,7 +11,6 @@ $(function () {
         _.bind(previousInit, this)($modal);
         this.$(".slots").empty();
         this.closeButtonText("Cerrar");
-        this.hide(".detail-link");
     };
     UploadModal.prototype.drawSlots = function ($el, employee) {
         var me = this;
@@ -25,10 +24,12 @@ $(function () {
         var $slots = $(slotsTemplate({ model: { singleFile: singleFile } }));
 
         if (singleFile) {
+            var btns = {};
+
             _.each(ViewData.attachmentSlots, function (slot) {
                 var filled = filledById[slot.Id];
                 var $btn;
-                if (filled) {
+                if (filled && filled.Attachment) {
                     $btn = $(slotBtnTemplate({ model: { caption: slot.Name + ": " + filled.Attachment.FileName } }));
                     $btn.prop("disabled", true);
                 } else {
@@ -36,12 +37,24 @@ $(function () {
                     $btn.on("click", function () {
                         me.data.formData = { slot: slot.Id };
                         me.data.submit();
-                        //TODO: fill slot on successful upload
                     });
                 }
-
-                $slots.find(".slots-necessity-" + slot.Necessity).show().find(".btn-container").append($btn);
+                
+                var key = ".slots-necessity-" + slot.Necessity;
+                if (!btns[key])
+                    btns[key] = [];
+                btns[key].push($btn);
             });
+
+            for (var key in btns) {
+                var group = $slots.find(key);
+                group.show();
+                var title = group.find("h5");
+                var $btn;
+                while($btn = btns[key].shift()) { 
+                    title.after($btn);
+                }
+            }
         }
 
         $slots.find(".slot-general").on("click", function () {
@@ -54,7 +67,7 @@ $(function () {
     };
     UploadModal.prototype.closeButtonText = function (text) {
         this.$(".close-button", function () {
-            this.text("Cancelar");
+            this.text(text);
         });
         return this;
     }
@@ -83,28 +96,22 @@ $(function () {
                             .title("Adjuntar Archivos")
                             .files(data)
                             .drawSlots($el, item)
-                            //TODO: attach submit event to slots
-                            //TODO: show detail-link with employee link 
-                            .hide(".detail-link")
-                            /*
-                            .$(".detail-link", function () {
-                                this.attr("href", data.result.editUrl);
-                                this.show();
-                            })
-                            */
+                            .show(".detail-link")
                             .closeButtonText("Cancelar")
-                            .modal(/*function () { data.submit(); }*/);
+                            .modal();
                     }
                 },
                 done: function (e, data, $el) {
+                    if (data.result.added) {
+                        if (item.AttachmentsBySlot == null)
+                            item.AttachmentsBySlot = [];
+                        item.AttachmentsBySlot.push(data.result.added);
+                    }
                     new UploadModal($('#generic-modal'))
                         .person($el)
                         .title("Archivos subidos")
                         .files(data)
-                        .$(".detail-link", function () {
-                            this.attr("href", data.result.editUrl);
-                            this.show();
-                        })
+                        .show(".detail-link")
                         .modal();
                 },
                 fail: function (e, data, $el) {
@@ -113,6 +120,7 @@ $(function () {
                         .title("Error subiendo archivos")
                         .error()
                         .files(data)
+                        .show(".detail-link")
                         .modal();
                 }
             });
