@@ -4,6 +4,7 @@ $(function () {
     var dragAndDrop = new DragAndDrop();
 
     //Extend UploadModal
+    var slotBtnTemplate = _.template($("#slot-button-template").text());
     var slotsTemplate = _.template($("#available-slots-template").text());
     var previousInit = UploadModal.prototype._init;
     UploadModal.prototype._init = function ($modal) {
@@ -24,28 +25,34 @@ $(function () {
             }
         }];
         */
-        console.debug(employee.AttachmentsBySlot);
+        //console.debug(employee.AttachmentsBySlot);
         
         var filledById = {};
         _.each(employee.AttachmentsBySlot, function (filledItem) {
             filledById[filledItem.SlotId] = filledItem;
         });
 
-        var model = {
-            fileCount: this._files.length,
-            slotsByNecessity: {}
-        };
+        var singleFile = this._files.length == 1;
+        var $slots = $(slotsTemplate({ model: { singleFile: singleFile } }));
 
-        _.each(ViewData.attachmentSlots, function (slot) {
-            slot = _.clone(slot);
-            slot.filled = filledById[slot.Id];
-            if (!model.slotsByNecessity[slot.Necessity]) {
-                model.slotsByNecessity[slot.Necessity] = [];
-            }
-            model.slotsByNecessity[slot.Necessity].push(slot);
-        });
+        if (singleFile) {
+            _.each(ViewData.attachmentSlots, function (slot) {
+                var filled = filledById[slot.Id];
+                var $btn;
+                if (filled) {
+                    $btn = $(slotBtnTemplate({ model: { caption: slot.Name + ": " + filled.Attachment.FileName } }));
+                    $btn.prop("disabled", true);
+                } else {
+                    $btn = $(slotBtnTemplate({ model: { caption: slot.Name } }));
+                    $btn.on("click", function () { alert("//TODO: upload in the slot!!!"); });
+                }
 
-        var $slots = $(slotsTemplate({ model: model }));
+                $slots.find(".slots-necessity-" + slot.Necessity).show().find(".btn-container").append($btn);
+            });
+        }
+
+        $slots.find(".slot-general").on("click", function () { alert("//TODO: upload in notes!!!"); });
+
         this.$(".slots").html($slots);
         
         return this;
