@@ -9,6 +9,8 @@ $(function () {
     UploadModal.prototype._init = function ($modal) {
         _.bind(previousInit, this)($modal);
         this.$(".slots").empty();
+        this.closeButtonText("Cerrar");
+        this.hide(".detail-link");
     };
     UploadModal.prototype.drawSlots = function ($el, employee) {
         //TODO: traer esto de la base de datos
@@ -45,6 +47,12 @@ $(function () {
         
         return this;
     };
+    UploadModal.prototype.closeButtonText = function (text) {
+        this.$(".close-button", function () {
+            this.text("Cancelar");
+        });
+        return this;
+    }
 
     var qs = new QuickSearchPage({
         //pageSize: 3,
@@ -79,6 +87,7 @@ $(function () {
                                 this.show();
                             })
                             */
+                            .closeButtonText("Cancelar")
                             .modal(/*function () { data.submit(); }*/);
                     }
                 },
@@ -97,7 +106,6 @@ $(function () {
                     new UploadModal($('#generic-modal'))
                         .person($el)
                         .title("Error subiendo archivos")
-                        .hide(".detail-link")
                         .error()
                         .files(data)
                         .modal();
