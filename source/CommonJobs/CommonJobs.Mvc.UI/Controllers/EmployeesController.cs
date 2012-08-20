@@ -79,12 +79,18 @@ namespace CommonJobs.Mvc.UI.Controllers
             var slotId = Request.Form["slot"] as string;
             var uploadToNotes = string.IsNullOrEmpty(slotId);
 
-            if (string.IsNullOrEmpty(id))
-                return HttpNotFound();
-
-            var employee = RavenSession.Load<Employee>(id);
-            if (employee == null)
-                return HttpNotFound();
+            Employee employee;
+            if (id == null)
+            {
+                employee = new Employee();
+                RavenSession.Store(employee);
+            }
+            else
+            {
+                employee = RavenSession.Load<Employee>(id);
+                if (employee == null)
+                    return HttpNotFound();
+            }
 
             using (var attachmentReader = new RequestAttachmentReader(Request))
             {

@@ -30,7 +30,7 @@ $(function () {
                         .error()
                         .person($el)
                         .text(".person-name", "Crear postulante con adjuntos")
-                        .title("Error adjuntando archivos")
+                        .title("Error subiendo archivos")
                         .files(data)
                         .modal();
                 }

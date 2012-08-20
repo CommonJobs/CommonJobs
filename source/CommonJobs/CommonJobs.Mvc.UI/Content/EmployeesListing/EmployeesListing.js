@@ -16,9 +16,11 @@ $(function () {
         var me = this;
 
         var filledById = {};
-        _.each(employee.AttachmentsBySlot, function (filledItem) {
-            filledById[filledItem.SlotId] = filledItem;
-        });
+        if (employee) {
+            _.each(employee.AttachmentsBySlot, function (filledItem) {
+                filledById[filledItem.SlotId] = filledItem;
+            });
+        }
 
         var singleFile = this._files.length == 1;
         var $slots = $(slotsTemplate({ model: { singleFile: singleFile } }));
@@ -86,10 +88,35 @@ $(function () {
             if ($("#SearchInNotesCheck").prop("checked"))
                 searchParameters.searchInNotes = true;
         },
-        prepareResultCard: function ($card, item) {
+        prepareNewCard: function ($card) {
             dragAndDrop.prepareFileDropzone($card, {
                 add: function (e, data, $el) {
-                    //todo: DAR A ELEGIR LOS SLOT DE CADA ARCHIVO O TAL VEZ MANDAR TODO AL GENERL                    
+                    new UploadModal($('#generic-modal'))
+                        .person($el)
+                        .title("Adjuntar Archivos")
+                        .text(".person-name", "Crear empleado con adjuntos")
+                        .files(data)
+                        .drawSlots($el, null)
+                        .closeButtonText("Cancelar")
+                        .modal();
+                },
+                done: function (e, data) {
+                    window.location = data.result.editUrl;
+                },
+                fail: function (e, data, $el) {
+                    new UploadModal($('#generic-modal'))
+                        .person($el)
+                        .text(".person-name", "Crear empleado con adjuntos")
+                        .title("Error subiendo archivos")
+                        .error()
+                        .files(data)
+                        .modal();
+                }
+            });
+        },
+        prepareResultCard: function ($card, item) {
+            dragAndDrop.prepareFileDropzone($card, {
+                add: function (e, data, $el) {               
                     if ($el.hasClass("item-card")) {
                         new UploadModal($('#generic-modal'))
                             .person($el)
