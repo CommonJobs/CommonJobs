@@ -19,6 +19,22 @@ namespace CommonJobs.Domain
         [Display(Name = "Notas")]
         public List<ApplicantNote> Notes { get; set; }
 
+        public void AddNote(ApplicantNote note)
+        {
+            this.Notes.Add(note);
+        }
+        public void AddGeneralNote(string note, AttachmentReference attachment = null)
+        {
+            AddNote(new ApplicantNote()
+            {
+                Note = note,
+                NoteType = ApplicantNoteType.GeneralNote,
+                RealDate = DateTime.Now,
+                RegisterDate = DateTime.Now,
+                Attachment = attachment
+            });
+        }
+
         //TODO replace for "HasInterview"
         public bool HaveInterview
         {
