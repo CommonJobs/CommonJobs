@@ -13,6 +13,7 @@ $(function () {
         this.hide(".detail-link");
     };
     UploadModal.prototype.drawSlots = function ($el, employee) {
+        /*
         //TODO: traer esto de la base de datos
         employee.AttachmentsBySlot = [{
             SlotId: "AttachmentSlots/Employee/CV",
@@ -22,6 +23,8 @@ $(function () {
                 FileName: "filename.txt"
             }
         }];
+        */
+        console.debug(employee.AttachmentsBySlot);
         
         var filledById = {};
         _.each(employee.AttachmentsBySlot, function (filledItem) {

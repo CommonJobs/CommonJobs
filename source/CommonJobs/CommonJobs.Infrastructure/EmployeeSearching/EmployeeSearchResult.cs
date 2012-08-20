@@ -15,5 +15,6 @@ namespace CommonJobs.Infrastructure.EmployeeSearching
         public ImageAttachment Photo { get; set; }
         public string CurrentProject { get; set; }
         public string CurrentPosition { get; set; }
+        public SlotWithAttachment[] AttachmentsBySlot { get; set; }
     }
 }
