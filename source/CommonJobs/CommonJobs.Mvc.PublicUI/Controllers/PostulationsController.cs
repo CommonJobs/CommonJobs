@@ -47,18 +47,23 @@ namespace CommonJobs.Mvc.PublicUI.Controllers
             };
             RavenSession.Store(applicant);
 
+            applicant.Notes = new List<ApplicantNote>();
+
             if (postulation.Curriculum != null)
             {
                 var curriculum = GenerateAttachment(applicant, postulation.Curriculum);
-                applicant.Notes = new List<ApplicantNote>() {
-                    new ApplicantNote()
-                    {
-                        Note = "Curriculum",
-                        NoteType = ApplicantNoteType.GeneralNote,
-                        RealDate = DateTime.Now,
-                        RegisterDate = DateTime.Now,
-                        Attachment = curriculum
-                    }};
+                applicant.AddGeneralNote("Currículum", curriculum);
+            }
+
+            if (!string.IsNullOrEmpty(postulation.Comment))
+            {
+                applicant.AddGeneralNote("Nota de postulación:\n\n" + postulation.Comment);
+            }
+
+            //TODO change this when links are in place
+            if (!string.IsNullOrEmpty(postulation.LinkedInUrl))
+            {
+                applicant.AddGeneralNote("Perfil de LinkedIn: " + postulation.LinkedInUrl);
             }
         }
 
@@ -134,7 +139,7 @@ namespace CommonJobs.Mvc.PublicUI.Controllers
                 return NotFoundOrNotAvailable();
 
             if (curriculumFile == null)
-                ModelState.AddModelError("curriculumFile", "El archivo de currículum es requerido.");
+                ModelState.AddModelError("curriculumFile", "Requerido");
             
             if (ModelState.IsValid)
             {
