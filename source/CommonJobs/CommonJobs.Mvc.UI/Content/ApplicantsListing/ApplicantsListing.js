@@ -30,9 +30,8 @@ $(function () {
                         .error()
                         .person($el)
                         .text(".person-name", "Crear postulante con adjuntos")
-                        .title("Error adjuntando archivos")
+                        .title("Error subiendo archivos")
                         .files(data)
-                        .hide(".detail-link")
                         .modal();
                 }
             });
@@ -44,10 +43,7 @@ $(function () {
                         .person($el)
                         .title("Archivos subidos")
                         .files(data)
-                        .$(".detail-link", function () {
-                            this.attr("href", data.result.editUrl);
-                            this.show();
-                        })
+                        .show(".detail-link")
                         .modal();
                 },
                 fail: function (e, data, $el) {
@@ -56,7 +52,7 @@ $(function () {
                         .person($el)
                         .title("Error adjuntando archivos")
                         .files(data)
-                        .hide(".detail-link")
+                        .show(".detail-link")
                         .modal();
                 }
             });

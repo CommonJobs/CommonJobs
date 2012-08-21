@@ -9,7 +9,8 @@
     ScriptManager.RegisterJs(Url.Content("~/Content/EmployeesListing/EmployeesListing.js"));
 }
 <script type="text/template" id="add-new-card-template">
-    <div class="card column clickable add-new-card">
+    <div class="card column clickable add-new-card file-dropzone">
+        <input type="file" data-url="@Url.Action("QuickAttachment")" multiple>
         <img class="cardPicture" src="@Url.Content("~/Content/Images/AddEmployee.png")" alt="Agregar nuevo..."  />
         <div class="cardDescription">
             <p>@Html.ActionLink("Agregar nuevo...", "Create", null, new { @class = "clickable-link" })</p>
@@ -17,66 +18,42 @@
     </div>
 </script>
 
+<script type="text/template" id="slot-button-template">
+    <input type="button" class="btn btn-primary" value="<%= model.caption %>" /> 
+</script>
+
 <script type="text/template" id="available-slots-template">
-    <% if (model.fileCount == 1) {%>
+    <div class="slots">
+    <% if (model.singleFile) {%>
         <p>Seleccione el slot al que se subirá el archivo:</p>
-        <% if (model.slotsByNecessity[2] && model.slotsByNecessity[2].length) {%>
-            <div class="slots-must-have">
-                <h5>Slots requeridos</h5>
-                <% 
-                  _.each(model.slotsByNecessity[2], function(slot) { 
-                    var text = slot.Name;
-                    var disabled = "";
-                    if (slot.filled) {
-                        text = text + ": " + slot.filled.Attachment.FileName;
-                        disabled = "disabled='disabled'";
-                    }
-                %>
-                    <input type="button" class="btn btn-primary" value="<%= text %>" <%= disabled %> />
-                <% }) %>    
-            </div>
-        <% } %>    
-        <% if (model.slotsByNecessity[1] && model.slotsByNecessity[1].length) {%>
-            <h5>Slots deseables</h5>
-            <div class="slots-nice-to-have">
-                <% _.each(model.slotsByNecessity[1], function(slot) { 
-                    var text = slot.Name;
-                    var disabled = "";
-                    if (slot.filled) {
-                        text = text + ": " + slot.filled.Attachment.FileName;
-                        disabled = "disabled='disabled'";
-                    }
-                %>
-                    <input type="button" class="btn btn-primary" value="<%= slot.Name %>" <%= slot.filled ? "disabled=disabled data-content='" + slot.filled.Attachment.FileName + "'" : "" %> />
-                <% }) %>    
-            </div>
-        <% } %>    
-        <div class="slots-optional">
-            <h5>Slots opcionales</h5>
-            <% _.each(model.slotsByNecessity[0], function(slot) { 
-                    var text = slot.Name;
-                    var disabled = "";
-                    if (slot.filled) {
-                        text = text + ": " + slot.filled.Attachment.FileName;
-                        disabled = "disabled='disabled'";
-                    }
-                %>
-                <input type="button" class="btn btn-primary" value="<%= slot.Name %>" <%= slot.filled ? "disabled=disabled data-content='" + slot.filled.Attachment.FileName + "'" : "" %> />
-            <% }) %>    
-            <input type="button" class="btn btn-primary" value="Otros forms (En notas)" />
+        <div class="slots-necessity-2" style="display: none">
+            <h5>Slots requeridos</h5>
         </div>
-    <% } %>
-    <% if (model.fileCount != 1) {%>
-        <input type="button" class="btn btn-primary" value="Guardar en notas" />
+        <div class="slots-necessity-1" style="display: none">
+            <h5>Slots deseables</h5>
+        </div>
+        <div class="slots-necessity-0">
+            <h5>Slots opcionales</h5><input type="button" class="btn btn-primary slot-general" value="Otros forms (En notas)" />
+        </div>
+    <% } else {%>
+        <input type="button" class="btn btn-primary slot-general" value="Guardar en notas" />
         <br /><br />
         <p><em>Se está arrastrando más de un archivo. Para seleccionar un slot diferente los archivos deben arrastrarse de manera individual.</em></p>
     <% } %>
+        <br />
+    </div>
 </script>
 
 <script type="text/template" id="get-more-items-template">
     <div class="card column loading get-more-items">
         <p class="ready-content">Click para obtener más...</p>
     </div>
+</script>
+
+<script type="text/template" id="need-attachments-mark-template">
+<span class="bootstrap-scope">
+    <span class="need-attachments-element label label-important" title="<%= model.title %>" data-content="<%= model.needItems %>" >Slots</span>
+</span>
 </script>
 
 <script type="text/template" id="card-template">
@@ -143,10 +120,10 @@
             </div>
             <br />
             <div class="slots"></div>
-            <a class="detail-link" href="#">Ver empleado</a>
+            <a class="detail-link" href="#" target="_blank">Ver empleado</a>
         </div>
         <div class="modal-footer">
-            <a href="#" class="btn" data-dismiss="modal">Cerrar</a>
+            <a href="#" class="btn close-button" data-dismiss="modal">Cerrar</a>
         </div>
     </div>
 </div>
