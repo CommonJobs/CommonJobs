@@ -19,8 +19,8 @@ namespace CommonJobs.Domain
         [Display(Name = "Notas")]
         public List<ApplicantNote> Notes { get; set; }
 
-        [Display(Name = "Linkedin")]
-        public string LinkedinLink { get; set; }
+        [Display(Name = "LinkedIn")]
+        public string LinkedInLink { get; set; }
 
         //TODO replace for "HasInterview"
         public bool HaveInterview
