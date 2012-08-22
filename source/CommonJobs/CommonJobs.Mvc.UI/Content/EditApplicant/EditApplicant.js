@@ -377,4 +377,9 @@ $(function () {
         forceReadOnly: ViewData.forceReadOnly,
         model: new App.Applicant(ViewData.applicant)
     });
+    
+    $('#linkedinLink').attr('href', $('.editable-field[data-bind="LinkedinLink"] input').val());
+    $('.editable-field[data-bind="LinkedinLink"] input').blur(function(){
+       $('#linkedinLink').attr('href', $('.editable-field[data-bind="LinkedinLink"] input').val());
+    });
 });
