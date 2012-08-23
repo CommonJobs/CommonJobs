@@ -124,8 +124,55 @@
         <h2>Notas <span class="confidential-info-title">Mostrar/Ocultar</span></h2>
         <div class="editable-field confidential-info-data notes-data" data-bind="Notes"></div> 
     </div>
-    <div class="info-section">
+    <div class="info-section files-data file-dropzone">
         <h2>Archivos adjuntos <span class="confidential-info-title">Mostrar/Ocultar</span></h2>
-        <div class="editable-field confidential-info-data files-data" data-bind="AttachmentsBySlot"></div>
+        <div class="editable-field confidential-info-data" data-bind="AttachmentsBySlot"></div>
+        <input type="file" class="quickUploader" />
     </div>
 </div>
+
+<div class="bootstrap-scope">
+    <div class="modal fade" id="generic-modal">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">×</button>
+            <h3 class="person-name"></h3>
+            <h6 class="title"></h6>
+        </div>
+        <div class="modal-body">
+            <div class="file-list">
+            </div>
+            <br />
+            <div class="slots"></div>
+        </div>
+        <div class="modal-footer">
+            <a href="#" class="btn close-button" data-dismiss="modal">Cerrar</a>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/template" id="slot-button-template">
+    <input type="button" class="btn btn-primary" value="<%= model.caption %>" /> 
+</script>
+
+<script type="text/template" id="available-slots-template">
+    <div class="slots">
+    <% if (model.singleFile) {%>
+        <p>Seleccione el slot al que se subirá el archivo:</p>
+        <div class="slots-necessity-2" style="display: none">
+            <h5>Slots requeridos</h5>
+        </div>
+        <div class="slots-necessity-1" style="display: none">
+            <h5>Slots deseables</h5>
+        </div>
+        <div class="slots-necessity-0">
+            <h5>Slots opcionales</h5><input type="button" class="btn btn-primary slot-general" value="Otros forms (En notas)" />
+        </div>
+    <% } else {%>
+        <input type="button" class="btn btn-primary slot-general" value="Guardar en notas" />
+        <br /><br />
+        <p><em>Se está arrastrando más de un archivo. Para seleccionar un slot diferente los archivos deben arrastrarse de manera individual.</em></p>
+    <% } %>
+        <br />
+    </div>
+</script>
