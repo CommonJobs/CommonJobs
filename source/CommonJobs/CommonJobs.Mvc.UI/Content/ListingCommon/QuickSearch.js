@@ -20,7 +20,7 @@ QuickSearchPage.prototype = {
         readyClass: "ready",
         loadingClass: "loading",
         prepareNewCard: function ($card) { },
-        prepareResultCards: function ($cards) { }
+        prepareResultCard: function ($card, item) { }
     },
     generateRedirectUrl: function (searchParameters) {
         throw "generateRedirectUrl is not implemented";
@@ -133,13 +133,16 @@ QuickSearchPage.prototype = {
     _appendResults: function (result) {
         var self = this;
         this.$resultCount.html(result.TotalResults);
-        var $cards = $(this.cardTemplate({ model: { items: result.Items } }));
-        
-        if (self._config.prepareResultCards) {
-            self._config.prepareResultCards($cards);
+
+        for (var i in result.Items) {
+            var item = result.Items[i];
+            var $card = $(this.cardTemplate({ item: item }));
+            if (self._config.prepareResultCard) {
+                self._config.prepareResultCard($card, item);
+            }
+            this.$results.append($card);
         }
 
-        this.$results.append($cards);
         this._skip = this._skip + result.Items.length;
         if (this._skip < result.TotalResults) {
             this.$results.append(this.getMoreCardsTemplate());

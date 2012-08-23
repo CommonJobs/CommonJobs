@@ -19,24 +19,22 @@
 </script>
 
 <script type="text/template" id="card-template">
-    <% var searchTerm = $('#quickSearch').val();
-        _.each(model.items, function(item) { %>
-        <div class="fileResult">
-            <img alt="File icon" class="fileIcon" src="<%= FileSearchUtilities.fileIconFromExtension(item.FileName) %>" />
-            <p class="fileTitle"><a href="<%= FileSearchUtilities.urlToFile(item.AttachmentId) %>"><%= item.FileName == null ? "(Sin nombre)" : FileSearchUtilities.searchHighlight(item.FileName, searchTerm) %></a></p>
-            <% if (item.RelatedEntity != null) { %>
-                <p class="fileRelatedTo">(<a href="<%= FileSearchUtilities.urlToRelatedEntity(item.RelatedEntity.Id, item.RelatedEntity.$type) %>"><%= item.RelatedEntity.LastName %>, <%= item.RelatedEntity.FirstName %></a>)</p>
-            <% } %>
-            <% if (item.PartialText != null) {
-                var counter = 0;
-                _.each(FileSearchUtilities.splitByNewLines(item.PartialText), function(paragraph) {
-                    if (!paragraph || !paragraph.replace(/\s+/, "").length) return true;
-                    if (counter++ > 5) return false; 
-                    %> <p class="fileDescription"><%= FileSearchUtilities.searchHighlight(paragraph, searchTerm) %></p> <%
-                });
-            } %>
-        </div>
-    <% }) %>
+    <% var searchTerm = $('#quickSearch').val(); %>
+    <div class="fileResult">
+        <img alt="File icon" class="fileIcon" src="<%= FileSearchUtilities.fileIconFromExtension(item.FileName) %>" />
+        <p class="fileTitle"><a href="<%= FileSearchUtilities.urlToFile(item.AttachmentId) %>"><%= item.FileName == null ? "(Sin nombre)" : FileSearchUtilities.searchHighlight(item.FileName, searchTerm) %></a></p>
+        <% if (item.RelatedEntity != null) { %>
+            <p class="fileRelatedTo">(<a href="<%= FileSearchUtilities.urlToRelatedEntity(item.RelatedEntity.Id, item.RelatedEntity.$type) %>"><%= item.RelatedEntity.LastName %>, <%= item.RelatedEntity.FirstName %></a>)</p>
+        <% } %>
+        <% if (item.PartialText != null) {
+            var counter = 0;
+            _.each(FileSearchUtilities.splitByNewLines(item.PartialText), function(paragraph) {
+                if (!paragraph || !paragraph.replace(/\s+/, "").length) return true;
+                if (counter++ > 5) return false; 
+                %> <p class="fileDescription"><%= FileSearchUtilities.searchHighlight(paragraph, searchTerm) %></p> <%
+            });
+        } %>
+    </div>
 </script>
 
 <div class="container searchContainer">

@@ -43,7 +43,6 @@
       this.$element = $(element)
       this.options = this.getOptions(options)
       this.enabled = true
-
       if (this.options.trigger != 'manual') {
         eventIn  = this.options.trigger == 'hover' ? 'mouseenter' : 'focus'
         eventOut = this.options.trigger == 'hover' ? 'mouseleave' : 'blur'
@@ -119,7 +118,7 @@
         $tip
           .remove()
           .css({ top: 0, left: 0, display: 'block' })
-          .appendTo(inside ? this.$element : document.body)
+          .appendTo(inside ? this.$element : $(".bootstrap-scope")[0])
 
         pos = this.getPosition(inside)
 

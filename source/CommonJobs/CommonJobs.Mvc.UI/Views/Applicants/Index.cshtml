@@ -25,29 +25,27 @@
 </script>
 
 <script type="text/template" id="card-template">
-    <% _.each(model.items, function(item) { %>
-        <div class="card column clickable item-card <%= item.IsHighlighted ? "highlighted" : "" %> file-dropzone fade well">
-            <input type="file" data-url="@Url.Action("QuickAttachment")<%= item.Id %>" multiple>
-            <div class="cardDescription">
-                <p class="name"><a class="clickable-link" href="<%= urlGenerator.action("Edit", "Applicants", item.Id) %>">
-                    <% if (item.FirstName || item.LastName) { %>
-                        <%= item.LastName %>, <%= item.FirstName %>
-                    <% } else { %>
-                        <i>Sin nombre</i>
-                    <% } %>
-                </a></p>
-                <p class="employeeProject"><%= item.CurrentProject %></p>
-                <p class="position"><%= item.Companies ? item.Companies.join(", ", item.Companies) : "<i>(Sin experiencia previa)</i>" %></p>
-                <p class="tags">
-                    <% if (_.isString(item.Skills)) { 
-                        _.each(item.Skills.split(','), function(tag) { %>
-                            <span class="tag"><%= $.trim(tag) %></span>
-                        <% });
-                    } %>
-                </p>
-            </div>
+    <div class="card column clickable item-card <%= item.IsHighlighted ? "highlighted" : "" %> file-dropzone fade well">
+        <input type="file" data-url="@Url.Action("QuickAttachment")<%= item.Id %>" multiple>
+        <div class="cardDescription">
+            <p class="name"><a class="clickable-link" href="<%= urlGenerator.action("Edit", "Applicants", item.Id) %>">
+                <% if (item.FirstName || item.LastName) { %>
+                    <%= item.LastName %>, <%= item.FirstName %>
+                <% } else { %>
+                    <i>Sin nombre</i>
+                <% } %>
+            </a></p>
+            <p class="employeeProject"><%= item.CurrentProject %></p>
+            <p class="position"><%= item.Companies ? item.Companies.join(", ", item.Companies) : "<i>(Sin experiencia previa)</i>" %></p>
+            <p class="tags">
+                <% if (_.isString(item.Skills)) { 
+                    _.each(item.Skills.split(','), function(tag) { %>
+                        <span class="tag"><%= $.trim(tag) %></span>
+                    <% });
+                } %>
+            </p>
         </div>
-    <% }) %>
+    </div>
 </script>
 <div class="container searchContainer">
     <h1>Postulantes</h1>
@@ -76,30 +74,17 @@
 <div class="results">
 </div>
 <div class="bootstrap-scope">
-    <div class="modal fade" id="upload-error-modal">
+    <div class="modal fade" id="generic-modal">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal">×</button>
-            <h3 class="title" style="color: red">Error uploading</h3>
-        </div>
-        <div class="modal-body">
-            <ul class="file-list">
-            </ul>
-            <p class="text"></p>
-        </div>
-        <div class="modal-footer">
-            <a href="#" class="btn" data-dismiss="modal">Cerrar</a>
-        </div>
-    </div>
-    <div class="modal fade" id="upload-ok-modal">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">×</button>
-            <h3 class="title">Archivos subidos</h3>
+            <h3 class="person-name"></h3>
+            <h6 class="title"></h6>
         </div>
         <div class="modal-body">
             <ul class="file-list">
             </ul>
             <br />
-            <a class="detail-link" href="#">Ver detalle del postulante</a>
+            <a class="detail-link" href="#" target="_blank">Ver postulante</a>
         </div>
         <div class="modal-footer">
             <a href="#" class="btn" data-dismiss="modal">Cerrar</a>
