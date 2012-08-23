@@ -275,6 +275,15 @@
                         { controlLink: "Date", name: "ExpirationDate", field: "ExpirationDate", uiDateFormat: "d/m/y" }
                     ]
                 }
+            },
+            LinkedInLink: {
+                controlLink: "Text",
+                name: "LinkedInLink",
+                valueToContent: function (value) {
+                    if (!value) return value;
+
+                    return value + " <a href='" + value + "'>(visitar)</a>";
+                }
             }
         }
     });
@@ -376,5 +385,10 @@ $(function () {
         el: $("#EditApp"),
         forceReadOnly: ViewData.forceReadOnly,
         model: new App.Applicant(ViewData.applicant)
+    });
+    
+    $('#linkedinLink').attr('href', $('.editable-field[data-bind="LinkedinLink"] input').val());
+    $('.editable-field[data-bind="LinkedinLink"] input').blur(function(){
+       $('#linkedinLink').attr('href', $('.editable-field[data-bind="LinkedinLink"] input').val());
     });
 });
