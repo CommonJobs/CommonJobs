@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,6 +18,9 @@ namespace CommonJobs.Domain
 
         [Display(Name = "Notas")]
         public List<ApplicantNote> Notes { get; set; }
+
+        [Display(Name = "LinkedIn")]
+        public string LinkedInLink { get; set; }
 
         public void AddNote(ApplicantNote note)
         {
