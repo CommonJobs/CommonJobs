@@ -275,6 +275,15 @@
                         { controlLink: "Date", name: "ExpirationDate", field: "ExpirationDate", uiDateFormat: "d/m/y" }
                     ]
                 }
+            },
+            LinkedInLink: {
+                controlLink: "Text",
+                name: "LinkedInLink",
+                valueToContent: function (value) {
+                    if (!value) return value;
+
+                    return value + " <a href='" + value + "'>(visitar)</a>";
+                }
             }
         }
     });
