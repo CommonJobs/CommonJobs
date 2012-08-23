@@ -25,23 +25,22 @@
 </script>
 
 <script type="text/template" id="card-template">
-    <% _.each(model.items, function(item) { 
-            var jobSearch = item.jobSearch;
-            var publicUrl = item.publicUrl;
-        %>
-        <div class="card column clickable item-card <%= jobSearch.IsPublic ? "public" : "" %>">
-            <div class="cardDescription">
-                <p class="name"><a class="clickable-link" href="<%= urlGenerator.action("Edit", "JobSearches", jobSearch.Id) %>">
-                    <% if (jobSearch.Title) { %>
-                        <%= jobSearch.Title %>
-                    <% } else { %>
-                        <i>Sin título</i>
-                    <% } %>
-                </a></p>
-                <p class="publicUrl"><a href="<%= publicUrl %>"><%= publicUrl %></a></p>
-            </div>
+    <% 
+        var jobSearch = item.jobSearch;
+        var publicUrl = item.publicUrl;
+    %>
+    <div class="card column clickable item-card <%= jobSearch.IsPublic ? "public" : "" %>">
+        <div class="cardDescription">
+            <p class="name"><a class="clickable-link" href="<%= urlGenerator.action("Edit", "JobSearches", jobSearch.Id) %>">
+                <% if (jobSearch.Title) { %>
+                    <%= jobSearch.Title %>
+                <% } else { %>
+                    <i>Sin título</i>
+                <% } %>
+            </a></p>
+            <p class="publicUrl"><a href="<%= publicUrl %>"><%= publicUrl %></a></p>
         </div>
-    <% }) %>
+    </div>
 </script>
 
 <div class="container searchContainer">

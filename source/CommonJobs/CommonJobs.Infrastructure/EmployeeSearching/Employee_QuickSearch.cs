@@ -40,6 +40,7 @@ namespace CommonJobs.Infrastructure.EmployeeSearching
             public string[] AttachmentIds { get; set; }
             public string[] AttachmentNames { get; set; }
             public string[] AttachmentContent { get; set; }
+            public SlotWithAttachment[] AttachmentsBySlot { get; set; }
 
             public bool IsEmployee { get; set; }
             public OrphanAttachment[] OrphanAttachments { get; set; }
@@ -60,6 +61,7 @@ namespace CommonJobs.Infrastructure.EmployeeSearching
                     AttachmentIds = employee.AllAttachmentReferences.Select(x => x.Id).ToArray(),
                     AttachmentNames = employee.AllAttachmentReferences.Select(x => x.FileName).ToArray(),
                     AttachmentContent = new string[0],
+                    AttachmentsBySlot = employee.AttachmentsBySlot,
                     IsEmployee = true,
                     OrphanAttachments = new dynamic[0], 
                     FileId = employee.FileId,
@@ -101,6 +103,7 @@ namespace CommonJobs.Infrastructure.EmployeeSearching
                     AttachmentIds = new string[0],
                     AttachmentNames = new string[0],
                     AttachmentContent = new string[0],
+                    AttachmentsBySlot = new dynamic[0],
                     IsEmployee = false,
                     FileId = (string)null,
                     Platform = (string)null,
@@ -139,7 +142,9 @@ namespace CommonJobs.Infrastructure.EmployeeSearching
                     AttachmentContent = g.SelectMany(x => x.AttachmentContent).Union(
                         g.SelectMany(x => x.OrphanAttachments).Where(x => g.SelectMany(y => y.AttachmentIds).Contains(x.Id)).Select(x => x.PlainContent)
                     ).ToArray(),
-                    OrphanAttachments = g.SelectMany(x => x.OrphanAttachments).Where(x => !g.SelectMany(y => y.AttachmentIds).Contains(x.Id)).ToArray()
+                    OrphanAttachments = g.SelectMany(x => x.OrphanAttachments).Where(x => !g.SelectMany(y => y.AttachmentIds).Contains(x.Id)).ToArray(),
+
+                    AttachmentsBySlot = g.SelectMany(x => x.AttachmentsBySlot).Where(x => x != null).ToArray()
                 };
             
             Indexes.Add(x => x.FullName1, FieldIndexing.Analyzed);

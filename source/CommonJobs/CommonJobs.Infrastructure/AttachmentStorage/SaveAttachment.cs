@@ -33,6 +33,9 @@ namespace CommonJobs.Infrastructure.AttachmentStorage
 
         public override AttachmentReference ExecuteWithResult()
         {
+            if (Stream.Length == 0)
+                throw new ApplicationException("Empty files not allowed");
+
             var relatedEntityId = RavenSession.Advanced.GetDocumentId(RelatedEntity);
             if (relatedEntityId == null)
                 throw new ApplicationException("Supplied related entity is not stored in database yet");

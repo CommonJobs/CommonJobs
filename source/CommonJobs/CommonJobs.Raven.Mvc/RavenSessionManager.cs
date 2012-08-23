@@ -8,12 +8,14 @@ using Raven.Client;
 using Raven.Client.Document;
 using Raven.Client.Indexes;
 using System.Reflection;
+using NLog;
 
 namespace CommonJobs.Raven.Mvc
 {
     //TODO: refactor it totally!
     public static class RavenSessionManager
     {
+        private static Logger log = LogManager.GetCurrentClassLogger();
         private const string CURRENT_REQUEST_RAVEN_SESSION_KEY = "_COMMOMJOBS_CURRENT_REQUEST_RAVEN_SESSION_";
 
         public static IDocumentStore DocumentStore { get; private set; }
@@ -36,8 +38,12 @@ namespace CommonJobs.Raven.Mvc
                 if (session == null)
                     return;
 
-                if (HttpContext.Current.Server.GetLastError() != null)
+                var error = HttpContext.Current.Server.GetLastError();
+                if (error != null)
+                {
+                    log.ErrorException("Uncatched exception", error);
                     return;
+                }
 
                 session.SaveChanges();
             }

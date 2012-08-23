@@ -22,11 +22,17 @@ namespace CommonJobs.Domain
         [Display(Name = "Email")]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "Requerido")]
         [Display(Name = "Teléfono")]
         public string Phone { get; set; }
-        
+
         [Display(Name = "Currículum")]
         public TemporalFileReference Curriculum { get; set; }
+
+        [Display(Name = "URL de perfil de LinkedIn")]
+        public string LinkedInUrl { get; set; }
+
+        [UIHint("MultilineText")]
+        [Display(Name = "Comentarios")]
+        public string Comment { get; set; }
     }
 }

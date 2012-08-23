@@ -72,6 +72,7 @@
     <Compile Include="AttachmentSearching\AttachmentSearchResult.cs" />
     <Compile Include="AttachmentSearching\OrphansMode.cs" />
     <Compile Include="AttachmentSearching\SearchAttachments.cs" />
+    <Compile Include="AttachmentSlots\AttachmentSlotsByRelatedEntityType.cs" />
     <Compile Include="AttachmentStorage\ReadAttachment.cs" />
     <Compile Include="AttachmentStorage\SaveAttachment.cs" />
     <Compile Include="AttachmentStorage\SavePhotoAttachments.cs" />

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,6 +21,22 @@ namespace CommonJobs.Domain
 
         [Display(Name = "LinkedIn")]
         public string LinkedInLink { get; set; }
+
+        public void AddNote(ApplicantNote note)
+        {
+            this.Notes.Add(note);
+        }
+        public void AddGeneralNote(string note, AttachmentReference attachment = null)
+        {
+            AddNote(new ApplicantNote()
+            {
+                Note = note,
+                NoteType = ApplicantNoteType.GeneralNote,
+                RealDate = DateTime.Now,
+                RegisterDate = DateTime.Now,
+                Attachment = attachment
+            });
+        }
 
         //TODO replace for "HasInterview"
         public bool HaveInterview
