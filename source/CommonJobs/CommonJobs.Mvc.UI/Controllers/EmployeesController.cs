@@ -12,16 +12,30 @@ using CommonJobs.Domain;
 using CommonJobs.Utilities;
 using CommonJobs.Infrastructure.AttachmentStorage;
 using CommonJobs.Infrastructure.EmployeeSearching;
+using NLog;
+using CommonJobs.Infrastructure.AttachmentSlots;
 
 namespace CommonJobs.Mvc.UI.Controllers
 {
     [CommonJobsAuthorize(Roles="Users")]
     public class EmployeesController : CommonJobsController
     {
+        private static Logger log = LogManager.GetCurrentClassLogger();
+
         //
         // GET: /Employees/
         public ViewResult Index(EmployeeSearchParameters searchParameters)
         {
+            AttachmentSlot[] slotsToShow = Query(new AttachmentSlotsQuery<Employee>());
+            log.Dump(LogLevel.Debug, slotsToShow, "attachmentSlots");
+            ScriptManager.RegisterGlobalJavascript(
+                "ViewData",
+                new
+                {
+                    attachmentSlots = slotsToShow
+                },
+                500);
+
             return View(searchParameters);
         }
 
@@ -56,16 +70,98 @@ namespace CommonJobs.Mvc.UI.Controllers
             RavenSession.Store(newEmployee);
             return RedirectToAction("Edit", new { id = newEmployee.Id });  
         }
+
+        [HttpPost]
+        public ActionResult QuickAttachment()
+        {
+            //No me anda el binding normal
+            var id = RouteData.Values["id"] as string;
+            var slotId = Request.Form["slot"] as string;
+            var uploadToNotes = string.IsNullOrEmpty(slotId);
+
+            Employee employee;
+            if (id == null)
+            {
+                employee = new Employee();
+                RavenSession.Store(employee);
+            }
+            else
+            {
+                employee = RavenSession.Load<Employee>(id);
+                if (employee == null)
+                    return HttpNotFound();
+            }
+
+            using (var attachmentReader = new RequestAttachmentReader(Request))
+            {
+                var reading = attachmentReader.Select(x => ExecuteCommand(new SaveAttachment(employee, x.Key, x.Value)));
+                if (!uploadToNotes)
+                {
+                    reading = reading.Take(1);
+                }
+                var attachments = reading.ToArray();
+                SlotWithAttachment added = null;
+
+                if (string.IsNullOrEmpty(slotId))
+                {
+                    QuickAttachToNotes(employee, attachments);
+                }
+                else
+                {
+                    var slot = RavenSession.Load<AttachmentSlot>(slotId);
+                    if (slot == null)
+                        return HttpNotFound();
+
+                    added = employee.AddAttachment(attachments.First(), slot);
+                }
+
+                return Json(new
+                {
+                    success = true,
+                    entityId = employee.Id,
+                    editUrl = Url.Action("Edit", new { id = employee.Id }),
+                    attachment = attachments.FirstOrDefault(),
+                    attachments = attachments,
+                    added = added
+                });
+            }
+        }
+
+        private static void QuickAttachToNotes(Employee employee, AttachmentReference[] attachments)
+        {
+            var notes = attachments.Select(x => new NoteWithAttachment()
+            {
+                Attachment = x,
+                Note = "QuickAttachment!",
+                RealDate = DateTime.Now,
+                RegisterDate = DateTime.Now
+            });
+
+            if (employee.Notes == null)
+            {
+                employee.Notes = notes.ToList();
+            }
+            else
+            {
+                employee.Notes.AddRange(notes);
+            }
+        }
          
         public ActionResult Edit(string id)
         {
             var employee = RavenSession.Load<Employee>(id);
             if (employee == null)
                 return HttpNotFound();
+
+            //TODO: It is here only for demo purposes
+            AttachmentSlot[] slotsToShow = Query(new AttachmentSlotsQuery<Employee>());
+            log.Dump(LogLevel.Debug, slotsToShow);
+
             ScriptManager.RegisterGlobalJavascript(
                 "ViewData", 
                 new { 
-                    employee = employee
+                    employee = employee,
+                    attachmentSlots = slotsToShow //TODO: It is here only for demo purposes
                 }, 
                 500);
             return View();

@@ -74,6 +74,7 @@
         initialize: function () {
             this.initCollectionField("Notes", App.Notes);
             this.initCollectionField("Certifications");
+            this.initCollectionField("AttachmentsBySlot");
 
             //TODO: move related logic to App.Salary and App.Salaries models
             this.initCollectionField("SalaryChanges", App.Notes);
@@ -286,7 +287,7 @@
                     firstNameField: "FirstName"
                 },
                 Photo: { controlLink: "CjEmployeePicture" },
-                IsGraduated: { controlLink: "Options", options: [{ value: false, text: "No recibido" }, { value: true, text: "Recibido"}] },
+                IsGraduated: { controlLink: "Options", options: [{ value: false, text: "No recibido" }, { value: true, text: "Recibido" }] },
                 BirthDate: { controlLink: "Date", valueToContent: formatLongDateWithYears },
                 MaritalStatus: { controlLink: "Options", options: [{ value: 0, text: "Soltero" }, { value: 1, text: "Casado" }, { value: 2, text: "Divorciado"}] },
                 HiringDate: { controlLink: "Date", valueToContent: formatLongDateWithYears },
@@ -328,6 +329,10 @@
                 {
                     controlLink: "Collection",
                     item: { controlLink: "Text", name: "description", field: "Description" }
+                },
+                AttachmentsBySlot: {
+                    controlLink: "Collection",
+                    item: { controlLink: "CjEmployeeAttachment", name: "attachment", field: "Attachment" }
                 }
             }
     });
