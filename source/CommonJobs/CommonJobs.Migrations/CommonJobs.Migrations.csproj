@@ -73,6 +73,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="201208250850_RefactorAllAttachmentData.cs" />
+    <Compile Include="201208250950_MoveAltasAttachmentsToSlot.cs" />
+    <Compile Include="201208251107_MoveBajasAttachmentsToSlot.cs" />
+    <Compile Include="201208251121_MoveCVAttachmentsToSlot.cs" />
+    <Compile Include="MoveAttachmentToSlotBaseMigration.cs" />
     <Compile Include="MigrationClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

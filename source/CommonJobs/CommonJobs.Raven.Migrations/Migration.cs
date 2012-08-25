@@ -34,8 +34,11 @@ namespace CommonJobs.Raven.Migrations
             Action<RavenJObject> action, 
             string query = "*:*", 
             int pageSize = 64, 
-            string index = "Dynamic", 
-            string[] includes = null)
+            string index = null, 
+            string[] includes = null,
+            string[] fieldsToFetch = null,
+            string sortedBy = null
+            )
         {
             int start = 0;
             while (true)
@@ -47,7 +50,22 @@ namespace CommonJobs.Raven.Migrations
                     Start = start //TODO: consider to use another thing in place of start
                 };
 
-                var results = DocumentStore.DatabaseCommands.Query(index, qry, includes);
+                if (fieldsToFetch != null)
+                {
+                    qry.FieldsToFetch = fieldsToFetch;
+                }
+
+                if (sortedBy != null)
+                {
+                    qry.SortedFields = new SortedField[] { new SortedField(sortedBy) };
+                }
+
+                if (index != null)
+                {
+                    CheckStale(index);
+                }
+
+                var results = DocumentStore.DatabaseCommands.Query(index ?? "Dynamic", qry, includes);
 
                 if (results.Results.Count == 0)
                     break;
@@ -56,6 +74,18 @@ namespace CommonJobs.Raven.Migrations
                     action(result);
 
                 start += pageSize;
+            }
+        }
+
+        public void CheckStale(string index, int timeOut = 3000)
+        {
+            if (DocumentStore.DatabaseCommands.GetStatistics().StaleIndexes.Contains(index))
+            {
+                System.Threading.Thread.Sleep(timeOut);
+                if (DocumentStore.DatabaseCommands.GetStatistics().StaleIndexes.Contains(index))
+                {
+                    throw new ApplicationException(string.Format("Index {0} is stale after waiting for {1} ms.", index, timeOut));
+                }
             }
         }
 
