@@ -5,6 +5,7 @@ using System.Text;
 using Raven.Client;
 using Raven.Abstractions.Data;
 using Raven.Json.Linq;
+using System.Linq.Expressions;
 
 namespace CommonJobs.Raven.Migrations
 {
@@ -33,8 +34,11 @@ namespace CommonJobs.Raven.Migrations
             Action<RavenJObject> action, 
             string query = "*:*", 
             int pageSize = 64, 
-            string index = "Dynamic", 
-            string[] includes = null)
+            string index = null, 
+            string[] includes = null,
+            string[] fieldsToFetch = null,
+            string sortedBy = null
+            )
         {
             int start = 0;
             while (true)
@@ -46,7 +50,22 @@ namespace CommonJobs.Raven.Migrations
                     Start = start //TODO: consider to use another thing in place of start
                 };
 
-                var results = DocumentStore.DatabaseCommands.Query(index, qry, includes);
+                if (fieldsToFetch != null)
+                {
+                    qry.FieldsToFetch = fieldsToFetch;
+                }
+
+                if (sortedBy != null)
+                {
+                    qry.SortedFields = new SortedField[] { new SortedField(sortedBy) };
+                }
+
+                if (index != null)
+                {
+                    CheckStale(index);
+                }
+
+                var results = DocumentStore.DatabaseCommands.Query(index ?? "Dynamic", qry, includes);
 
                 if (results.Results.Count == 0)
                     break;
@@ -56,6 +75,38 @@ namespace CommonJobs.Raven.Migrations
 
                 start += pageSize;
             }
+        }
+
+        public void CheckStale(string index, int timeOut = 3000)
+        {
+            if (DocumentStore.DatabaseCommands.GetStatistics().StaleIndexes.Contains(index))
+            {
+                System.Threading.Thread.Sleep(timeOut);
+                if (DocumentStore.DatabaseCommands.GetStatistics().StaleIndexes.Contains(index))
+                {
+                    throw new ApplicationException(string.Format("Index {0} is stale after waiting for {1} ms.", index, timeOut));
+                }
+            }
+        }
+
+        public void ReSaveAll<TEntity, TKey>(Expression<Func<TEntity, TKey>> orderByExpr, int size = 10)
+        {
+            var current = 0;
+            TEntity[] entities;
+            do
+            {
+                using (var session = DocumentStore.OpenSession())
+                {
+                    entities = session.Query<TEntity>().OrderBy(orderByExpr).Skip(current).Take(size).ToArray();
+                    current += size;
+                    foreach (var entity in entities)
+                    {
+                        session.Store(entity);
+                    }
+                    session.SaveChanges();
+                }
+            }
+            while (entities.Length > 0);
         }
     }
 }

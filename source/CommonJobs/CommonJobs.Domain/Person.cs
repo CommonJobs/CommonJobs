@@ -52,16 +52,9 @@ namespace CommonJobs.Domain
         //Only in detailed view
         public string Skills { get; set; }
 
-        public virtual IEnumerable<AttachmentReference> AllAttachmentReferences
+        public virtual IEnumerable<SlotWithAttachment> AllAttachmentReferences
         {
-            get
-            {
-                if (Photo != null && Photo.Original != null)
-                    yield return Photo.Original;
-                if (Photo != null && Photo.Thumbnail != null)
-                    yield return Photo.Thumbnail;
-                yield break;
-            }
+            get { return SlotWithAttachment.GenerateFromImage(Photo); }
         }
     }
 }
