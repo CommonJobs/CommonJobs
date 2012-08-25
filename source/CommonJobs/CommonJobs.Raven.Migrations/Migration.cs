@@ -5,6 +5,7 @@ using System.Text;
 using Raven.Client;
 using Raven.Abstractions.Data;
 using Raven.Json.Linq;
+using System.Linq.Expressions;
 
 namespace CommonJobs.Raven.Migrations
 {
@@ -56,6 +57,26 @@ namespace CommonJobs.Raven.Migrations
 
                 start += pageSize;
             }
+        }
+
+        public void ReSaveAll<TEntity, TKey>(Expression<Func<TEntity, TKey>> orderByExpr, int size = 10)
+        {
+            var current = 0;
+            TEntity[] entities;
+            do
+            {
+                using (var session = DocumentStore.OpenSession())
+                {
+                    entities = session.Query<TEntity>().OrderBy(orderByExpr).Skip(current).Take(size).ToArray();
+                    current += size;
+                    foreach (var entity in entities)
+                    {
+                        session.Store(entity);
+                    }
+                    session.SaveChanges();
+                }
+            }
+            while (entities.Length > 0);
         }
     }
 }
