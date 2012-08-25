@@ -57,8 +57,8 @@ namespace CommonJobs.Infrastructure.ApplicantSearching
                     IsHighlighted = applicant.IsHighlighted,
                     HasInterview = applicant.HaveInterview,
                     HasTechnicalInterview = applicant.HaveTechnicalInterview,
-                    AttachmentIds = applicant.AllAttachmentReferences.Select(x => x.Id).ToArray(),
-                    AttachmentNames = applicant.AllAttachmentReferences.Select(x => x.FileName).ToArray(),
+                    AttachmentIds = applicant.AllAttachmentReferences.Select(x => x.Attachment.Id).ToArray(),
+                    AttachmentNames = applicant.AllAttachmentReferences.Select(x => x.Attachment.FileName).ToArray(),
                     AttachmentContent = new string[0],
                     IsApplicant = true,
                     OrphanAttachments = new dynamic[0]

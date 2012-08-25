@@ -72,6 +72,7 @@
     <Compile Include="201208040929_DefaultAttachmentSlots.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="201208250850_RefactorAllAttachmentData.cs" />
     <Compile Include="MigrationClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

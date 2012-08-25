@@ -26,6 +26,8 @@ namespace CommonJobs.Infrastructure.AttachmentSearching
             public bool IsOrphan { get; set; }
             public bool HasText { get; set; }
             public string ContentExtractorConfigurationHash { get; set; }
+            public string RelatedEntityType { get; set; }
+            public string RelatedEntitySlotId { get; set; }
         }
 
         public Attachments_QuickSearch()
@@ -44,8 +46,10 @@ namespace CommonJobs.Infrastructure.AttachmentSearching
                     RelatedEntityId = attachment.RelatedEntityId,
                     ContentExtractorConfigurationHash = attachment.ContentExtractorConfigurationHash,
                     IsOrphan = true,
-                    HasText = !string.IsNullOrEmpty(attachment.PlainContent)
-                });
+                    HasText = !string.IsNullOrEmpty(attachment.PlainContent),
+                    RelatedEntityType = (string)null,
+                    RelatedEntitySlotId = (string)null
+                }); 
 
             //TODO: hacer esto automático para cualquier entidad que tenga la propiedad AllAttachmentReferences
             AddMap<Employee>(employees =>
@@ -53,7 +57,7 @@ namespace CommonJobs.Infrastructure.AttachmentSearching
                 from attachmentReference in entity.AllAttachmentReferences
                 select new
                 {
-                    AttachmentId = attachmentReference.Id,
+                    AttachmentId = attachmentReference.Attachment.Id,
                     FullText = new string[] { entity.LastName, entity.FirstName, entity.Id, entity.Email, entity.Platform },
                     PartialText = (string) null,
                     ContentType = (string)null,
@@ -62,7 +66,9 @@ namespace CommonJobs.Infrastructure.AttachmentSearching
                     RelatedEntityId = (string)null,
                     ContentExtractorConfigurationHash = (string)null,
                     IsOrphan = false,
-                    HasText = false
+                    HasText = false,
+                    RelatedEntityType = "Employee",
+                    RelatedEntitySlotId = attachmentReference.SlotId
                 });
 
             AddMap<Applicant>(applicants =>
@@ -70,7 +76,7 @@ namespace CommonJobs.Infrastructure.AttachmentSearching
                 from attachmentReference in entity.AllAttachmentReferences
                 select new
                 {
-                    AttachmentId = attachmentReference.Id,
+                    AttachmentId = attachmentReference.Attachment.Id,
                     FullText = new string[] { entity.LastName, entity.FirstName, entity.Id, entity.Email },
                     PartialText = (string)null,
                     ContentType = (string)null,
@@ -79,7 +85,9 @@ namespace CommonJobs.Infrastructure.AttachmentSearching
                     RelatedEntityId = (string)null,
                     ContentExtractorConfigurationHash = (string)null,
                     IsOrphan = false,
-                    HasText = false
+                    HasText = false,
+                    RelatedEntityType = "Applicant",
+                    RelatedEntitySlotId = attachmentReference.SlotId
                 });
 
             Reduce = docs => from doc in docs
@@ -95,7 +103,9 @@ namespace CommonJobs.Infrastructure.AttachmentSearching
                                 RelatedEntityId = g.Select(x => x.RelatedEntityId).FirstOrDefault(x => x != null),
                                 ContentExtractorConfigurationHash = g.Select(x => x.ContentExtractorConfigurationHash).FirstOrDefault(x => x != null),
                                 IsOrphan = g.All(x => x.IsOrphan),
-                                HasText = g.Any(x => x.HasText)
+                                HasText = g.Any(x => x.HasText),
+                                RelatedEntityType = g.Select(x => x.RelatedEntityType).FirstOrDefault(x => x != null),
+                                RelatedEntitySlotId = g.Select(x => x.RelatedEntitySlotId).FirstOrDefault(x => x != null)
                              };
 
             Index(x => x.FullText, FieldIndexing.Analyzed);

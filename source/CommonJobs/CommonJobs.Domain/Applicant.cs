@@ -50,9 +50,9 @@ namespace CommonJobs.Domain
             get { return Notes != null && Notes.Any(x => x.NoteType == ApplicantNoteType.TechnicalInterviewNote); }
         }
 
-        public override IEnumerable<AttachmentReference> AllAttachmentReferences
+        public override IEnumerable<SlotWithAttachment> AllAttachmentReferences
         {
-            get { return base.AllAttachmentReferences.Union(Notes.EmptyIfNull().Select(x => x.Attachment)).Where(x => x != null); }
+            get { return base.AllAttachmentReferences.Union(SlotWithAttachment.GenerateFromNotes(Notes)); }
         }
 
         //TODO: automatically remove expired links
