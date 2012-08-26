@@ -111,3 +111,32 @@
 	margin-left: 2px;
 	margin-right: 2px;
 }
+
+
+.attachment-container {
+	padding: 0;
+
+	.attachment-slots {
+		.attachment-slot {
+			border: 1px solid black;
+			box-sizing: border-box;
+			float: left;
+			height: 200px;
+			margin: 0 20px 1em 0;
+			padding: 1em;
+			width: 185px;
+
+			&.last {
+				margin-right: 0;
+			}
+		}
+	}
+
+	.attachment-general-slot {
+		width: 800px;
+		border: 1px solid black;
+		padding: 1em;
+		clear: both;
+		box-sizing: border-box;
+	}
+}
