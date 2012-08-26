@@ -113,13 +113,13 @@ namespace CommonJobs.Domain
         [Display(Name = "Historial de sueldos")]
         public List<SalaryChange> SalaryChanges { get; set; }
 
-        public override IEnumerable<AttachmentReference> AllAttachmentReferences
+        public override IEnumerable<SlotWithAttachment> AllAttachmentReferences
         {
             get 
             { 
                 return base.AllAttachmentReferences
-                    .Union(Notes.EmptyIfNull().Select(x => x.Attachment)).Where(x => x != null)
-                    .Union(AttachmentsBySlot.EmptyIfNull().Select(x => x.Attachment).Where(x => x != null)); 
+                    .Union(SlotWithAttachment.GenerateFromNotes(Notes))
+                    .Union(AttachmentsBySlot.EmptyIfNull().Where(x => x.Attachment != null)); 
             }
         }
 

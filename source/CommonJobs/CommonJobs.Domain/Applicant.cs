@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,6 +18,9 @@ namespace CommonJobs.Domain
 
         [Display(Name = "Notas")]
         public List<ApplicantNote> Notes { get; set; }
+
+        [Display(Name = "LinkedIn")]
+        public string LinkedInLink { get; set; }
 
         public void AddNote(ApplicantNote note)
         {
@@ -47,9 +50,9 @@ namespace CommonJobs.Domain
             get { return Notes != null && Notes.Any(x => x.NoteType == ApplicantNoteType.TechnicalInterviewNote); }
         }
 
-        public override IEnumerable<AttachmentReference> AllAttachmentReferences
+        public override IEnumerable<SlotWithAttachment> AllAttachmentReferences
         {
-            get { return base.AllAttachmentReferences.Union(Notes.EmptyIfNull().Select(x => x.Attachment)).Where(x => x != null); }
+            get { return base.AllAttachmentReferences.Union(SlotWithAttachment.GenerateFromNotes(Notes)); }
         }
 
         //TODO: automatically remove expired links
