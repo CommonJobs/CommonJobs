@@ -121,13 +121,49 @@
 			border: 1px solid black;
 			box-sizing: border-box;
 			float: left;
-			height: 200px;
+			height: 240px;
 			margin: 0 20px 1em 0;
 			padding: 1em;
 			width: 185px;
 
 			&.last {
 				margin-right: 0;
+			}
+
+			p {
+				margin-top: 0;
+				margin-bottom: 0.5em;
+			}
+
+			p.file-name {
+				text-align: center;
+			}
+
+			p.file-icon-image {
+				text-align: center;
+				margin: 0 auto;
+			}
+
+			.file-icon {
+				padding: 1em 0;
+				.rounded_corners;
+
+				&:hover {
+					background-color: @color_primary_lighter;
+				}
+			}
+		}
+
+		.attachment {
+			height: 128px;
+			width: 128px;
+			background-repeat: no-repeat;
+			background-position: 50% 50%;
+
+			&.empty { 
+				border: 1px dashed black; 
+				height: 182px;
+				width: 156px;
 			}
 		}
 	}
