@@ -131,8 +131,7 @@
 			}
 
 			p {
-				margin-top: 0;
-				margin-bottom: 0.5em;
+				margin: 0;
 			}
 
 			p.file-name {
@@ -141,12 +140,12 @@
 
 			p.file-icon-image {
 				text-align: center;
-				margin: 0 auto;
 			}
 
 			.file-icon {
 				padding: 1em 0;
 				.rounded_corners;
+				height: 160px;
 
 				&:hover {
 					background-color: @color_primary_lighter;
@@ -154,16 +153,19 @@
 			}
 		}
 
-		.attachment {
-			height: 128px;
-			width: 128px;
-			background-repeat: no-repeat;
-			background-position: 50% 50%;
+		.attachment-slot-empty {
+			height: 182px;
+			width: 156px;
+			border: 1px dashed black; 
+			.rounded_corners;
 
-			&.empty { 
-				border: 1px dashed black; 
-				height: 182px;
-				width: 156px;
+			&:hover {
+				background-color: @color_primary_lighter;
+			}
+
+			p {
+				line-height: 182px;
+				text-align: center;
 			}
 		}
 	}
@@ -174,5 +176,30 @@
 		padding: 1em;
 		clear: both;
 		box-sizing: border-box;
+
+		p {
+			margin: 0;
+		}
+
+		.file-icon {
+			display: inline-block;
+			margin-top: 1em;
+			margin-left: 1.2em;
+			margin-right: 1.25em;
+			text-align: center;
+			padding: 1em 0;
+			.rounded_corners;
+			width: 156px;
+			height: 160px;
+			vertical-align: top;
+
+			&:hover {
+				background-color: @color_primary_lighter;
+			}
+
+			.file-name {
+				margin: 0;
+			}
+		}
 	}
 }
