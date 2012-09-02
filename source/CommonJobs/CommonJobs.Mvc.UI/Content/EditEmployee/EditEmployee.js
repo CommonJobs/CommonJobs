@@ -448,10 +448,6 @@
                 {
                     controlLink: "Collection",
                     item: { controlLink: "Text", name: "description", field: "Description" }
-                },
-                AttachmentsBySlot: {
-                    controlLink: "Collection",
-                    item: { controlLink: "CjEmployeeAttachment", name: "attachment", field: "Attachment" }
                 }
             }
     });
