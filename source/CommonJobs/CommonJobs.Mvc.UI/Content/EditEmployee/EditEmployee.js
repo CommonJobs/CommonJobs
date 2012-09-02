@@ -456,6 +456,53 @@
             }
     });
 
+    App.EmployeeSlotsView = Backbone.View.extend({
+        initialize: function () {
+            this.emptySlotTemplate = _.template($("#empty-slot-template").html());
+            this.regularSlotTemplate = _.template($("#regular-slot-template").html());
+            this.generalAttachmentTemplate = _.template($("#general-attachment-template").html());
+            this.render();
+        },
+        render: function () {
+            //this.model.slots -- normal object
+            //this.model.attachmentsBySlot -- backbone model
+
+            var $attachmentSlotsDiv = $("<div/>").addClass("attachment-slots");
+            // for each slot
+            _.each(this.model.slots, function (slot) {
+                // find if any attachment is associated to it
+                var attachment = _.find(this.model.attachmentsBySlot.models, function(a) {
+                    return a.get('SlotId') == slot.Id;
+                });
+                var isEmpty = !attachment;
+                var templateToUse = isEmpty ? this.emptySlotTemplate : this.regularSlotTemplate;
+
+                // add proper template for slot
+                $attachmentSlotsDiv.append(templateToUse({
+                    SlotName: slot.Name,
+                    FileName: isEmpty ? null : attachment.get('Attachment').FileName
+                }));
+            }, this);
+            $attachmentSlotsDiv.children().last().addClass("last");
+
+            // get the rest of the attachments, not present in any slot
+            var attachmentsNotInSlots = _.filter(this.model.attachmentsBySlot.models, function (a) {
+                return !a.get('SlotId');
+            });
+
+            // create a general place for them
+            var $attachmentGeneralSlotDiv = $("<div />").addClass("attachment-general-slot").append("<p>General</p>");
+            _.each(attachmentsNotInSlots, function (generalAttachment) {
+                $attachmentGeneralSlotDiv.append(
+                    this.generalAttachmentTemplate({ FileName: generalAttachment.get('Attachment').FileName })
+                );
+            }, this);
+
+            this.$el.append($attachmentSlotsDiv);
+            this.$el.append($attachmentGeneralSlotDiv);
+        }
+    });
+
     App.EditEmployeeAppView = Backbone.View.extend({
         setModel: function (model) {
             this.model = model;
@@ -464,6 +511,13 @@
         initialize: function () {
             this.dataBinder = new App.EditEmployeeAppViewDataBinder({ el: this.el, model: this.model });
             prepareAttachmentZone($(this.el).find(".files-data"), this.model.toJSON());
+            this.attachmentSlotView = new App.EmployeeSlotsView({
+                el: this.$(".attachment-container"),
+                model: { 
+                    attachmentsBySlot: this.model.get('AttachmentsBySlot'),
+                    slots: ViewData.attachmentSlots
+                }
+            });
         },
         events: {
             "click .saveEmployee": "saveEmployee",
