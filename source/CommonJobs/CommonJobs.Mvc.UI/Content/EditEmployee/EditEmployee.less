@@ -136,6 +136,7 @@
 
 			p.file-name {
 				text-align: center;
+				word-wrap: break-word;
 			}
 
 			p.file-icon-image {
@@ -146,6 +147,7 @@
 				padding: 1em 0;
 				.rounded_corners;
 				height: 160px;
+				overflow-y: hidden;
 
 				&:hover {
 					background-color: @color_primary_lighter;
@@ -192,6 +194,7 @@
 			width: 156px;
 			height: 160px;
 			vertical-align: top;
+			overflow-y: hidden;
 
 			&:hover {
 				background-color: @color_primary_lighter;
@@ -199,6 +202,7 @@
 
 			.file-name {
 				margin: 0;
+				word-wrap: break-word;
 			}
 		}
 	}
