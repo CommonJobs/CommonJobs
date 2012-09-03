@@ -22,6 +22,7 @@
     <IISExpressUseClassicPipelineMode />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <AutoParameterizationWebConfigConnectionStrings>false</AutoParameterizationWebConfigConnectionStrings>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -209,7 +210,6 @@
     <Content Include="Scripts\modernizr-2.0.6-development-only.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
-      <TransformOnBuild>true</TransformOnBuild>
     </Content>
     <Content Include="Web.DEV.config">
       <DependentUpon>Web.config</DependentUpon>
