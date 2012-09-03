@@ -146,9 +146,11 @@
 				.rounded_corners;
 				height: 160px;
 				overflow-y: hidden;
+				position: relative;
 
 				&:hover {
 					background-color: @color_primary_lighter;
+					cursor: pointer;
 				}
 			}
 		}
@@ -193,9 +195,11 @@
 			height: 160px;
 			vertical-align: top;
 			overflow-y: hidden;
+			position: relative;
 
 			&:hover {
 				background-color: @color_primary_lighter;
+				cursor: pointer;
 			}
 
 			.file-name {
@@ -204,6 +208,28 @@
 			}
 		}
 	}
+}
+
+.file-icon .file-delete {
+	display: none;
+}
+
+.file-icon:hover .file-delete {
+	display: block;
+	position: absolute;
+	top: 1em;
+	right: 1em;
+	width: 20px;
+	height: 20px;
+	border: 1px dashed black;
+	.rounded_corners;
+	text-align: center;
+}
+
+.file-icon:hover .file-delete:hover {
+	background-color: @color_primary_lighter;
+	cursor: pointer;
+	border-style: solid;
 }
 
 .bootstrap-scope {

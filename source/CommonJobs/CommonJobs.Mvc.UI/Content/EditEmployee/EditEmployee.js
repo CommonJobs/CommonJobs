@@ -474,6 +474,12 @@
     });
 
     App.EmployeeSlotsView = Backbone.View.extend({
+        events: {
+            "click .file-delete": "deleteFile"
+        },
+        deleteFile: function () {
+            
+        },
         initialize: function () {
             this.emptySlotTemplate = _.template($("#empty-slot-template").html());
             this.regularSlotTemplate = _.template($("#regular-slot-template").html());
@@ -483,6 +489,7 @@
         render: function () {
             //this.model.slots -- normal object
             //this.model.attachmentsBySlot -- backbone model
+            this.$el.html(null);
 
             var $attachmentSlotsDiv = $("<div/>").addClass("attachment-slots");
             // for each slot
@@ -495,10 +502,18 @@
                 var templateToUse = isEmpty ? this.emptySlotTemplate : this.regularSlotTemplate;
 
                 // add proper template for slot
-                $attachmentSlotsDiv.append(templateToUse({
+                var newRender = templateToUse({
                     SlotName: slot.Name,
                     FileName: isEmpty ? null : attachment.get('Attachment').FileName
-                }));
+                });
+
+                var view = this;
+                var collection = this.model.attachmentsBySlot;
+                var $newRender = $(newRender).on("click", ".file-delete", function () {
+                    collection.remove(attachment);
+                    view.render();
+                });
+                $attachmentSlotsDiv.append($newRender);
             }, this);
             $attachmentSlotsDiv.children().last().addClass("last");
 
