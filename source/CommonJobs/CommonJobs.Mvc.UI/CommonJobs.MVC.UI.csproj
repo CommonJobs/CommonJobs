@@ -260,6 +260,7 @@
     <Content Include="Content\twitter-bootstrap\less\tests\css-tests.html" />
     <Content Include="Content\twitter-bootstrap\less\tests\forms.html" />
     <Content Include="Content\twitter-bootstrap\less\tests\navbar.html" />
+    <Content Include="Scripts\FileUtilities.js" />
     <Content Include="Scripts\jquery.Jcrop.min.js" />
     <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\moment.min.js">

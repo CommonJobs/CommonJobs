@@ -113,11 +113,6 @@ UploadModal.prototype = {
                 this.attr("href", $card.find(".clickable-link").attr("href"));
             });
     },
-    personDetail: function (employee, $el) {
-        return this
-            .$(".modal-header", function () { this.prepend($el.find(".editable-field.photo .view-editable-content img").clone()) })
-            .text(".person-name", employee.LastName + ", " + employee.FirstName);
-    },
     title: function (title) {
         return this.text(".title", title);
     },

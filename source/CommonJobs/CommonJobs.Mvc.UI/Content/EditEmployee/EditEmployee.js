@@ -10,22 +10,25 @@
     var getEmployeeAttachmentsBySlot = function (employee) {
         var filledById = {};
         if (employee) {
-            _.chain(employee.AttachmentsBySlot)
+            _.chain(employee.get('AttachmentsBySlot').models)
             .filter(function (filledItem) {
-                return !!filledItem.Attachment;
+                return !!filledItem.get('Attachment');
             })
             .each(function (filledItem) {
-                filledById[filledItem.SlotId] = filledItem;
+                filledById[filledItem.get('SlotId')] = filledItem;
             });
         }
         return filledById;
     };
 
     //Extend UploadModal
-    var slotBtnTemplate = _.template($("#slot-button-template").text());
-    var slotsTemplate = _.template($("#available-slots-template").text());
+    var slotBtnTemplate = null;
+    var slotsTemplate = null;
     var previousInit = UploadModal.prototype._init;
     UploadModal.prototype._init = function ($modal) {
+        slotBtnTemplate = _.template($("#slot-button-template").text());
+        slotsTemplate = _.template($("#available-slots-template").text());
+
         _.bind(previousInit, this)($modal);
         this.$(".slots").empty();
         this.closeButtonText("Cerrar");
@@ -44,8 +47,8 @@
             _.each(ViewData.attachmentSlots, function (slot) {
                 var filled = filledById[slot.Id];
                 var $btn;
-                if (filled && filled.Attachment) {
-                    $btn = $(slotBtnTemplate({ model: { caption: slot.Name + ": " + filled.Attachment.FileName } }));
+                if (filled && filled.get('Attachment')) {
+                    $btn = $(slotBtnTemplate({ model: { caption: slot.Name + ": " + filled.get('Attachment').FileName } }));
                     $btn.prop("disabled", true);
                 } else {
                     $btn = $(slotBtnTemplate({ model: { caption: slot.Name } }));
@@ -86,8 +89,26 @@
         });
         return this;
     }
+    UploadModal.prototype.personDetail = function (employee, $el) {
+        //employee: backbone model object
+        return this
+            // remove old photo
+            .$("img.uploadPicture", function () { this.remove(); })
+            // include photo
+            .$(".modal-header", function () {
+                this.prepend($('<img />')
+                    .attr("src", urlGenerator.action("Get", "Attachments", employee.get('Photo').Thumbnail.Id, { returnName: false }))
+                    .addClass("uploadPicture")
+                );
+            })
+            // include employee name
+            .text(".person-name", employee.get('LastName') + ", " + employee.get('FirstName'))
+    };
 
     var prepareAttachmentZone = function (dropZone, model) {
+        var uploader = dropZone.find('input[type=file]');
+        uploader.attr('data-url', uploader.attr('data-url') + model.get('Id'));
+
         dragAndDrop.prepareFileDropzone(dropZone, {
             add: function (e, data, $el) {
                 if ($el.hasClass("files-data")) {
@@ -506,7 +527,6 @@
         },
         initialize: function () {
             this.dataBinder = new App.EditEmployeeAppViewDataBinder({ el: this.el, model: this.model });
-            prepareAttachmentZone($(this.el).find(".files-data"), this.model.toJSON());
             this.attachmentSlotView = new App.EmployeeSlotsView({
                 el: this.$(".attachment-container"),
                 model: { 
@@ -514,6 +534,7 @@
                     slots: ViewData.attachmentSlots
                 }
             });
+            prepareAttachmentZone($(this.el).find(".files-data"), this.model);
         },
         events: {
             "click .saveEmployee": "saveEmployee",
