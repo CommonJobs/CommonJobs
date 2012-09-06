@@ -490,12 +490,20 @@
             //this.model.slots -- normal object
             //this.model.attachmentsBySlot -- backbone model
             this.$el.html(null);
+            var collection = this.model.attachmentsBySlot;
+            var view = this;
+            var bindDeleteEvent = function (renderedTemplate, attachment) {
+                return $(renderedTemplate).on("click", ".file-delete", function () {
+                    collection.remove(attachment);
+                    view.render();
+                });
+            };
 
             var $attachmentSlotsDiv = $("<div/>").addClass("attachment-slots");
             // for each slot
             _.each(this.model.slots, function (slot) {
                 // find if any attachment is associated to it
-                var attachment = _.find(this.model.attachmentsBySlot.models, function(a) {
+                var attachment = _.find(collection.models, function(a) {
                     return a.get('SlotId') == slot.Id;
                 });
                 var isEmpty = !attachment;
@@ -507,27 +515,21 @@
                     FileName: isEmpty ? null : attachment.get('Attachment').FileName
                 });
 
-                var view = this;
-                var collection = this.model.attachmentsBySlot;
-                var $newRender = $(newRender).on("click", ".file-delete", function () {
-                    collection.remove(attachment);
-                    view.render();
-                });
-                $attachmentSlotsDiv.append($newRender);
+                $attachmentSlotsDiv.append(bindDeleteEvent(newRender, attachment));
             }, this);
             $attachmentSlotsDiv.children().last().addClass("last");
 
             // get the rest of the attachments, not present in any slot
-            var attachmentsNotInSlots = _.filter(this.model.attachmentsBySlot.models, function (a) {
+            var attachmentsNotInSlots = _.filter(collection.models, function (a) {
                 return !a.get('SlotId');
             });
 
             // create a general place for them
             var $attachmentGeneralSlotDiv = $("<div />").addClass("attachment-general-slot").append("<p>General</p>");
             _.each(attachmentsNotInSlots, function (generalAttachment) {
-                $attachmentGeneralSlotDiv.append(
-                    this.generalAttachmentTemplate({ FileName: generalAttachment.get('Attachment').FileName })
-                );
+                var newGeneralItem = this.generalAttachmentTemplate({ FileName: generalAttachment.get('Attachment').FileName });
+
+                $attachmentGeneralSlotDiv.append(bindDeleteEvent(newGeneralItem, generalAttachment));
             }, this);
 
             this.$el.append($attachmentSlotsDiv);
