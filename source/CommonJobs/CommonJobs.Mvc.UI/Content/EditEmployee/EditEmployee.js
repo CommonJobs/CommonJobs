@@ -483,7 +483,6 @@
         initialize: function () {
             this.emptySlotTemplate = _.template($("#empty-slot-template").html());
             this.regularSlotTemplate = _.template($("#regular-slot-template").html());
-            this.generalAttachmentTemplate = _.template($("#general-attachment-template").html());
             this.render();
         },
         render: function () {
@@ -524,16 +523,7 @@
                 return !a.get('SlotId');
             });
 
-            // create a general place for them
-            var $attachmentGeneralSlotDiv = $("<div />").addClass("attachment-general-slot").append("<p>General</p>");
-            _.each(attachmentsNotInSlots, function (generalAttachment) {
-                var newGeneralItem = this.generalAttachmentTemplate({ FileName: generalAttachment.get('Attachment').FileName });
-
-                $attachmentGeneralSlotDiv.append(bindDeleteEvent(newGeneralItem, generalAttachment));
-            }, this);
-
             this.$el.append($attachmentSlotsDiv);
-            this.$el.append($attachmentGeneralSlotDiv);
         }
     });
 
