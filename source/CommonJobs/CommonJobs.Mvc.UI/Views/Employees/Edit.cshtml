@@ -9,6 +9,8 @@
     ScriptManager.RegisterJs(Url.Content("~/Scripts/nervoustissue.js"));
     ScriptManager.RegisterJs(Url.Content("~/Scripts/nervoustissue-uploader.js"));
     ScriptManager.RegisterJs(Url.Content("~/Content/EditEmployee/EditEmployee.js"));
+
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/FileUtilities.js"));
 }
 @if (false)
 {
@@ -69,7 +71,7 @@
                 <li><span class="field-name">Fecha de nacimiento:</span><span class="editable-field" data-bind="BirthDate"><span class="view-editable view-editable-prototype">5 de Octubre de 1984 (28 años)</span></span></li>
                 <li><span class="field-name">Estado Civil:</span><span class="editable-field" data-bind="MaritalStatus"><span class="view-editable view-editable-prototype">Soltero</span></span></li>
                 <li><span class="field-name">Dirección:</span><span class="editable-field" data-bind="Address"></span></li>
-                <li><span class="field-name">Teléfonos:</span><span class="editable-field" data-bind="Telephones"</span></li>
+                <li><span class="field-name">Teléfonos:</span><span class="editable-field" data-bind="Telephones"></span></li>
                 <li><span class="field-name">Plataforma:</span><span class="editable-field" data-bind="Platform"></span></li>
             </ul>
         </div>
@@ -79,7 +81,7 @@
                 <li><span class="field-name">Seniority:</span><span class="editable-field" data-bind="Seniority"></span></li>
                 <li><span class="field-name">Nivel de Inglés:</span><span class="editable-field" data-bind="EnglishLevel"></span></li>
                 <li><span class="field-name">Título:</span><span class="editable-field" data-bind="Degree"></span> (<span class="editable-field" data-bind="IsGraduated"><span class="view-editable view-editable-prototype">No graduado</span></span>)</li>
-                <li><span class="field-name">Universidad:</span><span class="editable-field" data-bind="College"></li>
+                <li><span class="field-name">Universidad:</span><span class="editable-field" data-bind="College"></span></li>
                 <li><span class="field-name">Skills:</span><span class="editable-field" data-bind="Skills"></span></li>
                 <li>
                   <span class="field-name">Certificaciones:</span>
@@ -124,8 +126,75 @@
         <h2>Notas <span class="confidential-info-title">Mostrar/Ocultar</span></h2>
         <div class="editable-field confidential-info-data notes-data" data-bind="Notes"></div> 
     </div>
-    <div class="info-section">
+    <div class="info-section files-data file-dropzone">
         <h2>Archivos adjuntos <span class="confidential-info-title">Mostrar/Ocultar</span></h2>
-        <div class="editable-field confidential-info-data files-data" data-bind="AttachmentsBySlot"></div>
+        <div class="attachment-container"></div>
+        <input type="file" class="quickUploader" multiple data-url="@Url.Action("QuickAttachment")" />
+        <p class="uiInstruction">Arrastre un archivo aquí para adjuntarlo a este empleado.</p>
     </div>
 </div>
+
+<div class="bootstrap-scope">
+    <div class="modal fade" id="generic-modal">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">×</button>
+            <h3 class="person-name"></h3>
+            <h6 class="title"></h6>
+        </div>
+        <div class="modal-body">
+            <div class="file-list">
+            </div>
+            <br />
+            <div class="slots"></div>
+        </div>
+        <div class="modal-footer">
+            <a href="#" class="btn close-button" data-dismiss="modal">Cerrar</a>
+        </div>
+    </div>
+</div>
+
+<script type="text/template" id="regular-slot-template">
+    <div class="attachment-slot">
+        <p><%= SlotName %></p>
+        <div class="file-icon">
+            <div class="file-delete">&#x2717;</div>
+            <p class="file-icon-image"><img src="<%= FileSearchUtilities.fileSmallIconFromExtension(FileName) %>" alt="<%= FileName %>" /></p>
+            <p class="file-name"><%= FileName %></p>
+        </div>
+    </div>
+</script>
+
+<script type="text/template" id="empty-slot-template">
+    <div class="attachment-slot">
+        <p><%= SlotName %></p>
+        <div class="attachment-slot-empty">
+            <p>(Faltante)</p>
+        </div>
+    </div>
+</script>
+
+<script type="text/template" id="slot-button-template">
+    <input type="button" class="btn btn-primary" value="<%= model.caption %>" /> 
+</script>
+
+<script type="text/template" id="available-slots-template">
+    <div class="slots">
+    <% if (model.singleFile) {%>
+        <p>Seleccione el slot al que se subirá el archivo:</p>
+        <div class="slots-necessity-2" style="display: none">
+            <h5>Slots requeridos</h5>
+        </div>
+        <div class="slots-necessity-1" style="display: none">
+            <h5>Slots deseables</h5>
+        </div>
+        <div class="slots-necessity-0">
+            <h5>Slots opcionales</h5><input type="button" class="btn btn-primary slot-general" value="Otros forms (En notas)" />
+        </div>
+    <% } else {%>
+        <input type="button" class="btn btn-primary slot-general" value="Guardar en notas" />
+        <br /><br />
+        <p><em>Se está arrastrando más de un archivo. Para seleccionar un slot diferente los archivos deben arrastrarse de manera individual.</em></p>
+    <% } %>
+        <br />
+    </div>
+</script>
