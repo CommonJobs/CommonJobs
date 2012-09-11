@@ -32,7 +32,7 @@ DragAndDrop.prototype = {
         myConfig = $.extend({}, self._config, myConfig);
         $(el).each(function () {
             var $el = $(this);
-            var $input = $el.find("input[type='file']");
+            var $input = myConfig.input ? $(myConfig.input) : $el.find("input[type='file']");
             if (!$input || $input.length != 1) {
                 return;
             }
