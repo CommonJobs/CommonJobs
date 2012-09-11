@@ -4,6 +4,146 @@
 /// <reference path="../../Scripts/url-generator.js" />
 
 (function () {
+    var dragAndDrop = new DragAndDrop();
+
+    //Attachments utilities
+    var getEmployeeAttachmentsBySlot = function (employee) {
+        var filledById = {};
+        if (employee) {
+            _.chain(employee.get('AttachmentsBySlot').models)
+            .filter(function (filledItem) {
+                return !!filledItem.get('Attachment');
+            })
+            .each(function (filledItem) {
+                filledById[filledItem.get('SlotId')] = filledItem;
+            });
+        }
+        return filledById;
+    };
+
+    //Extend UploadModal
+    var slotBtnTemplate = null;
+    var slotsTemplate = null;
+    var previousInit = UploadModal.prototype._init;
+    UploadModal.prototype._init = function ($modal) {
+        slotBtnTemplate = _.template($("#slot-button-template").text());
+        slotsTemplate = _.template($("#available-slots-template").text());
+
+        _.bind(previousInit, this)($modal);
+        this.$(".slots").empty();
+        this.closeButtonText("Cerrar");
+    };
+    UploadModal.prototype.drawSlots = function ($el, employee) {
+        var me = this;
+
+        var filledById = getEmployeeAttachmentsBySlot(employee);
+
+        var singleFile = this._files.length == 1;
+        var $slots = $(slotsTemplate({ model: { singleFile: singleFile } }));
+
+        if (singleFile) {
+            var btns = {};
+
+            _.each(ViewData.attachmentSlots, function (slot) {
+                var filled = filledById[slot.Id];
+                var $btn;
+                if (filled && filled.get('Attachment')) {
+                    $btn = $(slotBtnTemplate({ model: { caption: slot.Name + ": " + filled.get('Attachment').FileName } }));
+                    $btn.prop("disabled", true);
+                } else {
+                    $btn = $(slotBtnTemplate({ model: { caption: slot.Name } }));
+                    $btn.on("click", function () {
+                        me.data.formData = { slot: slot.Id };
+                        me.data.submit();
+                    });
+                }
+
+                var key = ".slots-necessity-" + slot.Necessity;
+                if (!btns[key])
+                    btns[key] = [];
+                btns[key].push($btn);
+            });
+
+            for (var key in btns) {
+                var group = $slots.find(key);
+                group.show();
+                var title = group.find("h5");
+                var $btn;
+                while ($btn = btns[key].shift()) {
+                    title.after($btn);
+                }
+            }
+        }
+
+        $slots.find(".slot-general").on("click", function () {
+            me.data.submit();
+        });
+
+        this.$(".slots").html($slots);
+
+        return this;
+    };
+    UploadModal.prototype.closeButtonText = function (text) {
+        this.$(".close-button", function () {
+            this.text(text);
+        });
+        return this;
+    }
+    UploadModal.prototype.personDetail = function (employee, $el) {
+        //employee: backbone model object
+        return this
+            // remove old photo
+            .$("img.uploadPicture", function () { this.remove(); })
+            // include photo
+            .$(".modal-header", function () {
+                this.prepend($('<img />')
+                    .attr("src", urlGenerator.action("Get", "Attachments", employee.get('Photo').Thumbnail.Id, { returnName: false }))
+                    .addClass("uploadPicture")
+                );
+            })
+            // include employee name
+            .text(".person-name", employee.get('LastName') + ", " + employee.get('FirstName'))
+    };
+
+    var prepareAttachmentZone = function (dropZone, model) {
+        var uploader = dropZone.find('input[type=file]');
+        uploader.attr('data-url', uploader.attr('data-url') + model.get('Id'));
+
+        dragAndDrop.prepareFileDropzone(dropZone, {
+            add: function (e, data, $el) {
+                if ($el.hasClass("files-data")) {
+                    new UploadModal($('#generic-modal'))
+                        .personDetail(model, $el)
+                        .title("Adjuntar Archivos")
+                        .files(data)
+                        .drawSlots($el, model)
+                        .closeButtonText("Cancelar")
+                        .modal();
+                }
+            },
+            done: function (e, data, $el) {
+                if (data.result.added) {
+                    if (model.AttachmentsBySlot == null)
+                        model.AttachmentsBySlot = [];
+                    model.AttachmentsBySlot.push(data.result.added);
+                }
+                new UploadModal($('#generic-modal'))
+                    .personDetail(model, $el)
+                    .title("Archivos subidos")
+                    .files(data)
+                    .modal();
+            },
+            fail: function (e, data, $el) {
+                new UploadModal($('#generic-modal'))
+                    .personDetail(model, $el)
+                    .title("Error subiendo archivos")
+                    .error()
+                    .files(data)
+                    .modal();
+            }
+        });
+    };
+
     var App = this.App = {};
 
     App.Note = Backbone.Model.extend({
@@ -329,12 +469,62 @@
                 {
                     controlLink: "Collection",
                     item: { controlLink: "Text", name: "description", field: "Description" }
-                },
-                AttachmentsBySlot: {
-                    controlLink: "Collection",
-                    item: { controlLink: "CjEmployeeAttachment", name: "attachment", field: "Attachment" }
                 }
             }
+    });
+
+    App.EmployeeSlotsView = Backbone.View.extend({
+        events: {
+            "click .file-delete": "deleteFile"
+        },
+        deleteFile: function () {
+            
+        },
+        initialize: function () {
+            this.emptySlotTemplate = _.template($("#empty-slot-template").html());
+            this.regularSlotTemplate = _.template($("#regular-slot-template").html());
+            this.render();
+        },
+        render: function () {
+            //this.model.slots -- normal object
+            //this.model.attachmentsBySlot -- backbone model
+            this.$el.html(null);
+            var collection = this.model.attachmentsBySlot;
+            var view = this;
+            var bindDeleteEvent = function (renderedTemplate, attachment) {
+                return $(renderedTemplate).on("click", ".file-delete", function () {
+                    collection.remove(attachment);
+                    view.render();
+                });
+            };
+
+            var $attachmentSlotsDiv = $("<div/>").addClass("attachment-slots");
+            // for each slot
+            _.each(this.model.slots, function (slot) {
+                // find if any attachment is associated to it
+                var attachment = _.find(collection.models, function(a) {
+                    return a.get('SlotId') == slot.Id;
+                });
+                var isEmpty = !attachment;
+                var templateToUse = isEmpty ? this.emptySlotTemplate : this.regularSlotTemplate;
+
+                // add proper template for slot
+                var newRender = templateToUse({
+                    SlotName: slot.Name,
+                    FileName: isEmpty ? null : attachment.get('Attachment').FileName
+                });
+
+                $attachmentSlotsDiv.append(bindDeleteEvent(newRender, attachment));
+            }, this);
+            $attachmentSlotsDiv.children().last().addClass("last");
+
+            // get the rest of the attachments, not present in any slot
+            var attachmentsNotInSlots = _.filter(collection.models, function (a) {
+                return !a.get('SlotId');
+            });
+
+            this.$el.append($attachmentSlotsDiv);
+        }
     });
 
     App.EditEmployeeAppView = Backbone.View.extend({
@@ -344,6 +534,14 @@
         },
         initialize: function () {
             this.dataBinder = new App.EditEmployeeAppViewDataBinder({ el: this.el, model: this.model });
+            this.attachmentSlotView = new App.EmployeeSlotsView({
+                el: this.$(".attachment-container"),
+                model: { 
+                    attachmentsBySlot: this.model.get('AttachmentsBySlot'),
+                    slots: ViewData.attachmentSlots
+                }
+            });
+            prepareAttachmentZone($(this.el).find(".files-data"), this.model);
         },
         events: {
             "click .saveEmployee": "saveEmployee",
