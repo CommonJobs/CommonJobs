@@ -301,7 +301,28 @@
             if (this.options.forceReadOnly) {
                 this.$el.addClass("edition-force-readonly");
                 this.editionReadonly();
-            }   
+            }
+
+            console.debug(this.$(".dropzoneinput"));
+
+            var dragAndDrop = new DragAndDrop();
+            dragAndDrop.prepareFileDropzone(this.el, {
+                input: this.$(".dropzoneinput"),
+                done: function (e, data) {
+                    //TODO
+                    console.debug(e);
+                    console.debug(data);
+                    alert("done")
+                },
+                fail: function (e, data, $el) {
+                    //TODO
+                    console.debug(e);
+                    console.debug(data);
+                    console.debug($el);
+                    alert("fail")
+                }
+            });
+
         },
         events: {
             "click .saveApplicant": "saveApplicant",
