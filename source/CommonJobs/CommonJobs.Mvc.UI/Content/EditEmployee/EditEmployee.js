@@ -122,6 +122,7 @@
             done: function (e, data, $el) {
                 console.debug(data.formData.slot);
                 console.debug(data.result);
+
                 var modal = new UploadModal($('#generic-modal'))
                     .personDetail(model, $el)
                     .files(data);
@@ -503,6 +504,9 @@
         initialize: function () {
             this.emptySlotTemplate = _.template($("#empty-slot-template").html());
             this.regularSlotTemplate = _.template($("#regular-slot-template").html());
+
+            this.model.attachmentsBySlot.on('add remove', this.render, this);
+
             this.render();
         },
         render: function () {
