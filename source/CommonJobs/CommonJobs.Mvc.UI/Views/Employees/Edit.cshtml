@@ -156,11 +156,13 @@
 <script type="text/template" id="regular-slot-template">
     <div class="attachment-slot">
         <p><%= SlotName %></p>
-        <div class="file-icon">
-            <div class="file-delete">&#x2717;</div>
-            <p class="file-icon-image"><img src="<%= FileSearchUtilities.fileSmallIconFromExtension(FileName) %>" alt="<%= FileName %>" /></p>
-            <p class="file-name"><%= FileName %></p>
-        </div>
+        <a href="<%= Url %>">
+            <div class="file-icon">
+                <div class="file-delete">&#x2717;</div>
+                <p class="file-icon-image"><img src="<%= FileSearchUtilities.fileSmallIconFromExtension(FileName) %>" alt="<%= FileName %>" /></p>
+                <p class="file-name"><%= FileName %></p>
+            </div>
+        </a>
     </div>
 </script>
 

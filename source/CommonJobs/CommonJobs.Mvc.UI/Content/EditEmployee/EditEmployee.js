@@ -511,7 +511,8 @@
                 // add proper template for slot
                 var newRender = templateToUse({
                     SlotName: slot.Name,
-                    FileName: isEmpty ? null : attachment.get('Attachment').FileName
+                    FileName: isEmpty ? null : attachment.get('Attachment').FileName,
+                    Url: isEmpty ? null : urlGenerator.action("Get", "Attachments", attachment.get('Attachment').Id)
                 });
 
                 $attachmentSlotsDiv.append(bindDeleteEvent(newRender, attachment));
