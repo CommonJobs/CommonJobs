@@ -122,15 +122,15 @@
             </div>
         </div>
     </div>    
-    <div class="info-section">
-        <h2>Notas <span class="confidential-info-title">Mostrar/Ocultar</span></h2>
-        <div class="editable-field confidential-info-data notes-data" data-bind="Notes"></div> 
-    </div>
     <div class="info-section files-data file-dropzone">
         <h2>Archivos adjuntos <span class="confidential-info-title">Mostrar/Ocultar</span></h2>
         <div class="attachment-container"></div>
         <input type="file" class="quickUploader" multiple data-url="@Url.Action("QuickAttachment")" />
-        <p class="uiInstruction">Arrastre un archivo aquí para adjuntarlo a este empleado.</p>
+        <p class="uiInstruction clearFloats">Arrastre un archivo aquí para adjuntarlo a este empleado.</p>
+    </div>
+    <div class="info-section">
+        <h2>Notas <span class="confidential-info-title">Mostrar/Ocultar</span></h2>
+        <div class="editable-field confidential-info-data notes-data" data-bind="Notes"></div> 
     </div>
 </div>
 
