@@ -495,6 +495,7 @@
                 return $(renderedTemplate).on("click", ".file-delete", function () {
                     collection.remove(attachment);
                     view.render();
+                    return false;
                 });
             };
 
