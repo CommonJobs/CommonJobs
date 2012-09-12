@@ -106,10 +106,8 @@
     };
 
     var prepareAttachmentZone = function (dropZone, model) {
-        var uploader = dropZone.find('input[type=file]');
-        uploader.attr('data-url', uploader.attr('data-url') + model.get('Id'));
-
         dragAndDrop.prepareFileDropzone(dropZone, {
+            url: urlGenerator.action("QuickAttachment", "Employees", model.get('Id')), //TODO: use urlGenerator.action("Post", "Attachments", model.get('Id')),
             add: function (e, data, $el) {
                 if ($el.hasClass("files-data")) {
                     new UploadModal($('#generic-modal'))
