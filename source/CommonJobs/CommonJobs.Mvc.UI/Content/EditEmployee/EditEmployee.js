@@ -120,9 +120,6 @@
                 }
             },
             done: function (e, data, $el) {
-                console.debug(data.formData.slot);
-                console.debug(data.result);
-
                 var modal = new UploadModal($('#generic-modal'))
                     .personDetail(model, $el)
                     .files(data);
