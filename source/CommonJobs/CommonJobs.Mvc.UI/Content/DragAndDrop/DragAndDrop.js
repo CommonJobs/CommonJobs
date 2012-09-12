@@ -32,7 +32,7 @@ DragAndDrop.prototype = {
         myConfig = $.extend({}, self._config, myConfig);
         $(el).each(function () {
             var $el = $(this);
-            var $input = $el.find("input[type='file']");
+            var $input = myConfig.input ? $(myConfig.input) : $el.find("input[type='file']");
             if (!$input || $input.length != 1) {
                 return;
             }
@@ -68,6 +68,9 @@ DragAndDrop.prototype = {
             }
             if (myConfig.fail) {
                 fileuploadOptions.fail = function (e, data) { myConfig.fail(e, data, $el) };
+            }
+            if (myConfig.url) {
+                fileuploadOptions.url = myConfig.url;
             }
 
             $input.fileupload(fileuploadOptions);
