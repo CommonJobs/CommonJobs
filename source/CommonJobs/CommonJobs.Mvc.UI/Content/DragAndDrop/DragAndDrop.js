@@ -69,6 +69,9 @@ DragAndDrop.prototype = {
             if (myConfig.fail) {
                 fileuploadOptions.fail = function (e, data) { myConfig.fail(e, data, $el) };
             }
+            if (myConfig.url) {
+                fileuploadOptions.url = myConfig.url;
+            }
 
             $input.fileupload(fileuploadOptions);
         });
