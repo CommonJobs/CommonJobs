@@ -295,6 +295,7 @@
             this.dataBinder.setModel(model);
         },
         initialize: function () {
+            var me = this;
             this.dataBinder = new App.EditApplicantAppViewDataBinder({ el: this.el, model: this.model });
             this.model.on("change:IsHighlighted", this.refreshHighlightedView, this);
             this.refreshHighlightedView();
@@ -303,23 +304,31 @@
                 this.editionReadonly();
             }
 
-            console.debug(this.$(".dropzoneinput"));
-
             var dragAndDrop = new DragAndDrop();
             dragAndDrop.prepareFileDropzone(this.el, {
                 input: this.$(".dropzoneinput"),
+                url: urlGenerator.action("Post", "Attachments", /* TODO */this.model.get('Id')),
                 done: function (e, data) {
-                    //TODO
-                    console.debug(e);
-                    console.debug(data);
-                    alert("done")
+                    var notes = me.model.get("Notes");
+                    _.each(data.result.attachments, function (attachment) {
+                        notes.add({
+                            Note: "QuickAttachment!",
+                            Attachment: attachment,
+                        });
+                    });
+                    new UploadModal($('#generic-modal'))
+                        .text(".person-name", me.$("h1.fullName .view-editable").text())
+                        .title("Archivos subidos (agregados a las notas)")
+                        .files(data)
+                        .modal();
                 },
                 fail: function (e, data, $el) {
-                    //TODO
-                    console.debug(e);
-                    console.debug(data);
-                    console.debug($el);
-                    alert("fail")
+                    new UploadModal($('#generic-modal'))
+                        .error()
+                        .text(".person-name", me.$("h1.fullName .view-editable").text())
+                        .title("Error adjuntando archivos")
+                        .files(data)
+                        .modal();
                 }
             });
 
