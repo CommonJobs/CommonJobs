@@ -127,8 +127,18 @@
                     .files(data);
 
                 if (data.formData.slot) {
-                    //TODO: update slot
                     modal.title("Archivos subidos (agregados a slot)")
+                    var slots = model.get("AttachmentsBySlot");
+                    var filtered = slots.filter(function (slot) { return slot.get("SlotId") == data.formData.slot; })
+                    if (filtered.length > 0) {
+                        filtered[0].set("Date", new Date().toJSON());
+                        filtered[0].set("Attachment", data.result.attachments[0]);
+                    } else {
+                        slots.add({
+                            SlotId: data.formData.slot,
+                            Attachment: data.result.attachments[0]
+                        });
+                    }
                 } else {
                     modal.title("Archivos subidos (agregados a las notas)")
                     var notes = model.get("Notes");
