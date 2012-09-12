@@ -17,7 +17,7 @@
 }
 <div id="EditApp" class="edition-normal file-dropzone">
     
-    <input type="file" class="dropzoneinput" data-url="//TODO: add URL" multiple />
+    <input type="file" class="dropzoneinput" multiple />
 
     <div class="editing-bar">
         <div class="references">
@@ -95,5 +95,21 @@
     <div class="info-section">
         <h2>Notas</h2>
         <div class="editable-field" data-bind="Notes"></div> 
+    </div>
+</div>
+<div class="bootstrap-scope">
+    <div class="modal fade" id="generic-modal">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">×</button>
+            <h3 class="person-name"></h3>
+            <h6 class="title"></h6>
+        </div>
+        <div class="modal-body">
+            <ul class="file-list">
+            </ul>
+        </div>
+        <div class="modal-footer">
+            <a href="#" class="btn" data-dismiss="modal">Cerrar</a>
+        </div>
     </div>
 </div>
