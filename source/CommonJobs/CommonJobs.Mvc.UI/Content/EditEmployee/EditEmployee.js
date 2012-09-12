@@ -107,7 +107,7 @@
 
     var prepareAttachmentZone = function (dropZone, model) {
         dragAndDrop.prepareFileDropzone(dropZone, {
-            url: urlGenerator.action("QuickAttachment", "Employees", model.get('Id')), //TODO: use urlGenerator.action("Post", "Attachments", model.get('Id')),
+            url: urlGenerator.action("Post", "Attachments", model.get('Id')),
             add: function (e, data, $el) {
                 if ($el.hasClass("files-data")) {
                     new UploadModal($('#generic-modal'))
@@ -120,16 +120,27 @@
                 }
             },
             done: function (e, data, $el) {
-                if (data.result.added) {
-                    if (model.AttachmentsBySlot == null)
-                        model.AttachmentsBySlot = [];
-                    model.AttachmentsBySlot.push(data.result.added);
-                }
-                new UploadModal($('#generic-modal'))
+                console.debug(data.formData.slot);
+                console.debug(data.result);
+                var modal = new UploadModal($('#generic-modal'))
                     .personDetail(model, $el)
-                    .title("Archivos subidos")
-                    .files(data)
-                    .modal();
+                    .files(data);
+
+                if (data.formData.slot) {
+                    //TODO: update slot
+                    modal.title("Archivos subidos (agregados a slot)")
+                } else {
+                    modal.title("Archivos subidos (agregados a las notas)")
+                    var notes = model.get("Notes");
+                    _.each(data.result.attachments, function (attachment) {
+                        notes.add({
+                            Note: "QuickAttachment!",
+                            Attachment: attachment,
+                        });
+                    });
+                }
+                
+                modal.modal();  
             },
             fail: function (e, data, $el) {
                 new UploadModal($('#generic-modal'))
@@ -150,7 +161,8 @@
                 RealDate: new Date().toJSON(),
                 //TODO: move RegisterDate to a better place
                 RegisterDate: new Date().toJSON(),
-                Note: ""
+                Note: "",
+                Attachment: null
             }
         }
     });
