@@ -106,18 +106,17 @@
     };
 
     var prepareAttachmentZone = function (dropZone, model) {
-        dragAndDrop.prepareFileDropzone(dropZone, {
+        dragAndDrop.prepareFileDropzone("#EditApp", {
+            input: this.$(".dropzoneinput"),
             url: urlGenerator.action("Post", "Attachments", model.get('Id')),
             add: function (e, data, $el) {
-                if ($el.hasClass("files-data")) {
-                    new UploadModal($('#generic-modal'))
-                        .personDetail(model, $el)
-                        .title("Adjuntar Archivos")
-                        .files(data)
-                        .drawSlots($el, model)
-                        .closeButtonText("Cancelar")
-                        .modal();
-                }
+                new UploadModal($('#generic-modal'))
+                    .personDetail(model, $el)
+                    .title("Adjuntar Archivos")
+                    .files(data)
+                    .drawSlots($el, model)
+                    .closeButtonText("Cancelar")
+                    .modal();
             },
             done: function (e, data, $el) {
                 var modal = new UploadModal($('#generic-modal'))
