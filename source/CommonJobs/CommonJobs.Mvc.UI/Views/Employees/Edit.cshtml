@@ -17,9 +17,9 @@
     <link href="../../Content/EditEmployee/EditEmployee.css" rel="stylesheet" type="text/css" />
     <script src="../../Content/EditEmployee/EditEmployee.js" type="text/javascript"></script>
 }
-<div id="EditApp" class="edition-normal">
+<div id="EditApp" class="edition-normal file-dropzone">
     
-
+    <input type="file" class="dropzoneinput" multiple />
     <div class="editing-bar">
         <div class="references">
             <h3>Referencias</h3>
@@ -125,7 +125,6 @@
     <div class="info-section files-data file-dropzone">
         <h2>Archivos adjuntos <span class="confidential-info-title">Mostrar/Ocultar</span></h2>
         <div class="attachment-container"></div>
-        <input type="file" class="quickUploader" multiple data-url="@Url.Action("QuickAttachment")" />
         <p class="uiInstruction clearFloats">Arrastre un archivo aquí para adjuntarlo a este empleado.</p>
     </div>
     <div class="info-section">

@@ -106,32 +106,48 @@
     };
 
     var prepareAttachmentZone = function (dropZone, model) {
-        var uploader = dropZone.find('input[type=file]');
-        uploader.attr('data-url', uploader.attr('data-url') + model.get('Id'));
-
-        dragAndDrop.prepareFileDropzone(dropZone, {
+        dragAndDrop.prepareFileDropzone("#EditApp", {
+            input: this.$(".dropzoneinput"),
+            url: urlGenerator.action("Post", "Attachments", model.get('Id')),
             add: function (e, data, $el) {
-                if ($el.hasClass("files-data")) {
-                    new UploadModal($('#generic-modal'))
-                        .personDetail(model, $el)
-                        .title("Adjuntar Archivos")
-                        .files(data)
-                        .drawSlots($el, model)
-                        .closeButtonText("Cancelar")
-                        .modal();
-                }
-            },
-            done: function (e, data, $el) {
-                if (data.result.added) {
-                    if (model.AttachmentsBySlot == null)
-                        model.AttachmentsBySlot = [];
-                    model.AttachmentsBySlot.push(data.result.added);
-                }
                 new UploadModal($('#generic-modal'))
                     .personDetail(model, $el)
-                    .title("Archivos subidos")
+                    .title("Adjuntar Archivos")
                     .files(data)
+                    .drawSlots($el, model)
+                    .closeButtonText("Cancelar")
                     .modal();
+            },
+            done: function (e, data, $el) {
+                var modal = new UploadModal($('#generic-modal'))
+                    .personDetail(model, $el)
+                    .files(data);
+
+                if (data.formData.slot) {
+                    modal.title("Archivos subidos (agregados a slot)")
+                    var slots = model.get("AttachmentsBySlot");
+                    var filtered = slots.filter(function (slot) { return slot.get("SlotId") == data.formData.slot; })
+                    if (filtered.length > 0) {
+                        filtered[0].set("Date", new Date().toJSON());
+                        filtered[0].set("Attachment", data.result.attachments[0]);
+                    } else {
+                        slots.add({
+                            SlotId: data.formData.slot,
+                            Attachment: data.result.attachments[0]
+                        });
+                    }
+                } else {
+                    modal.title("Archivos subidos (agregados a las notas)")
+                    var notes = model.get("Notes");
+                    _.each(data.result.attachments, function (attachment) {
+                        notes.add({
+                            Note: "QuickAttachment!",
+                            Attachment: attachment,
+                        });
+                    });
+                }
+                
+                modal.modal();  
             },
             fail: function (e, data, $el) {
                 new UploadModal($('#generic-modal'))
@@ -152,7 +168,8 @@
                 RealDate: new Date().toJSON(),
                 //TODO: move RegisterDate to a better place
                 RegisterDate: new Date().toJSON(),
-                Note: ""
+                Note: "",
+                Attachment: null
             }
         }
     });
@@ -483,6 +500,9 @@
         initialize: function () {
             this.emptySlotTemplate = _.template($("#empty-slot-template").html());
             this.regularSlotTemplate = _.template($("#regular-slot-template").html());
+
+            this.model.attachmentsBySlot.on('add remove', this.render, this);
+
             this.render();
         },
         render: function () {
@@ -495,6 +515,7 @@
                 return $(renderedTemplate).on("click", ".file-delete", function () {
                     collection.remove(attachment);
                     view.render();
+                    return false;
                 });
             };
 
@@ -529,20 +550,24 @@
     });
 
     App.EditEmployeeAppView = Backbone.View.extend({
-        setModel: function (model) {
-            this.model = model;
-            this.dataBinder.setModel(model);
-        },
-        initialize: function () {
-            this.dataBinder = new App.EditEmployeeAppViewDataBinder({ el: this.el, model: this.model });
+        prepareSlots: function () {
             this.attachmentSlotView = new App.EmployeeSlotsView({
                 el: this.$(".attachment-container"),
-                model: { 
+                model: {
                     attachmentsBySlot: this.model.get('AttachmentsBySlot'),
                     slots: ViewData.attachmentSlots
                 }
             });
             prepareAttachmentZone($(this.el).find(".files-data"), this.model);
+        },
+        setModel: function (model) {
+            this.model = model;
+            this.dataBinder.setModel(model);
+            this.prepareSlots();
+        },
+        initialize: function () {
+            this.dataBinder = new App.EditEmployeeAppViewDataBinder({ el: this.el, model: this.model });
+            this.prepareSlots();
         },
         events: {
             "click .saveEmployee": "saveEmployee",
