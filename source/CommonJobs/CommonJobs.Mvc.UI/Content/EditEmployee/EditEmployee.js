@@ -551,20 +551,24 @@
     });
 
     App.EditEmployeeAppView = Backbone.View.extend({
-        setModel: function (model) {
-            this.model = model;
-            this.dataBinder.setModel(model);
-        },
-        initialize: function () {
-            this.dataBinder = new App.EditEmployeeAppViewDataBinder({ el: this.el, model: this.model });
+        prepareSlots: function () {
             this.attachmentSlotView = new App.EmployeeSlotsView({
                 el: this.$(".attachment-container"),
-                model: { 
+                model: {
                     attachmentsBySlot: this.model.get('AttachmentsBySlot'),
                     slots: ViewData.attachmentSlots
                 }
             });
             prepareAttachmentZone($(this.el).find(".files-data"), this.model);
+        },
+        setModel: function (model) {
+            this.model = model;
+            this.dataBinder.setModel(model);
+            this.prepareSlots();
+        },
+        initialize: function () {
+            this.dataBinder = new App.EditEmployeeAppViewDataBinder({ el: this.el, model: this.model });
+            this.prepareSlots();
         },
         events: {
             "click .saveEmployee": "saveEmployee",
