@@ -61,7 +61,7 @@
       <HintPath>..\Libs\RavenDB\Client\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="NLog">
-      <HintPath>..\Libs\RavenDB\Client\NLog.dll</HintPath>
+      <HintPath>..\packages\NLog.2.0.0.2000\lib\net40\NLog.dll</HintPath>
     </Reference>
     <Reference Include="Raven.Abstractions">
       <HintPath>..\Libs\RavenDB\Client\Raven.Abstractions.dll</HintPath>

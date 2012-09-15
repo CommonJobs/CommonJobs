@@ -1,0 +1,77 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2010
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DomainIndependent", "DomainIndependent", "{956941F4-8905-499B-BA53-E65672714AC3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DomainDependent", "DomainDependent", "{D686F982-B15B-4AAE-AF11-97BFF60C26F3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonJobs.Domain", "CommonJobs.Domain\CommonJobs.Domain.csproj", "{CC2939C6-A278-4789-B937-ADB693E69C89}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonJobs.Infrastructure", "CommonJobs.Infrastructure\CommonJobs.Infrastructure.csproj", "{4D58F500-CDC4-4697-8DA5-15568E804317}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonJobs.Raven.Mvc", "CommonJobs.Raven.Mvc\CommonJobs.Raven.Mvc.csproj", "{658EAF8E-02A2-4029-AC52-942261EE486C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonJobs.Utilities", "CommonJobs.Utilities\CommonJobs.Utilities.csproj", "{FABFCAFA-F6F2-47C2-B393-66E97203F107}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonJobs.Mvc.UI", "CommonJobs.Mvc.UI\CommonJobs.Mvc.UI.csproj", "{8663EC74-0F8F-482D-9CFF-DCB4F5C12E0C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonJobs.Raven.Infrastructure", "CommonJobs.Raven.Infrastructure\CommonJobs.Raven.Infrastructure.csproj", "{7B4A0A21-0CDE-432A-A785-599D4339AD8E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonJobs.ContentExtraction", "CommonJobs.ContentExtraction\CommonJobs.ContentExtraction.csproj", "{FCF0DC4A-8A75-499D-AE7D-25D2F5174E38}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonJobs.ContentExtraction.Extractors", "CommonJobs.ContentExtraction.Extractors\CommonJobs.ContentExtraction.Extractors.csproj", "{BD46EC5E-D3DD-42C2-81D1-D7B2B05B7A4E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonJobs.ContentExtraction.IFilterExtraction", "CommonJobs.ContentExtraction.IFilterExtraction\CommonJobs.ContentExtraction.IFilterExtraction.csproj", "{3B252589-C00B-49F6-92A0-EE2C8E7C671F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonJobs.Raven.Migrations", "CommonJobs.Raven.Migrations\CommonJobs.Raven.Migrations.csproj", "{B6D54592-07C8-4B5E-A607-DD7FE49A43B6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonJobs.Migrations", "CommonJobs.Migrations\CommonJobs.Migrations.csproj", "{E01BBAFF-4FD7-4A4F-89A6-4FA54CC622BA}"
+EndProject
+Global
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = CommonJobs.vsmdi
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CC2939C6-A278-4789-B937-ADB693E69C89}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC2939C6-A278-4789-B937-ADB693E69C89}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{4D58F500-CDC4-4697-8DA5-15568E804317}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D58F500-CDC4-4697-8DA5-15568E804317}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{658EAF8E-02A2-4029-AC52-942261EE486C}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{658EAF8E-02A2-4029-AC52-942261EE486C}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{FABFCAFA-F6F2-47C2-B393-66E97203F107}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{FABFCAFA-F6F2-47C2-B393-66E97203F107}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{8663EC74-0F8F-482D-9CFF-DCB4F5C12E0C}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{8663EC74-0F8F-482D-9CFF-DCB4F5C12E0C}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{7B4A0A21-0CDE-432A-A785-599D4339AD8E}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B4A0A21-0CDE-432A-A785-599D4339AD8E}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{FCF0DC4A-8A75-499D-AE7D-25D2F5174E38}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCF0DC4A-8A75-499D-AE7D-25D2F5174E38}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{BD46EC5E-D3DD-42C2-81D1-D7B2B05B7A4E}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD46EC5E-D3DD-42C2-81D1-D7B2B05B7A4E}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{3B252589-C00B-49F6-92A0-EE2C8E7C671F}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B252589-C00B-49F6-92A0-EE2C8E7C671F}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{B6D54592-07C8-4B5E-A607-DD7FE49A43B6}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6D54592-07C8-4B5E-A607-DD7FE49A43B6}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{E01BBAFF-4FD7-4A4F-89A6-4FA54CC622BA}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{E01BBAFF-4FD7-4A4F-89A6-4FA54CC622BA}.Release|Any CPU.Build.0 = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{658EAF8E-02A2-4029-AC52-942261EE486C} = {956941F4-8905-499B-BA53-E65672714AC3}
+		{FABFCAFA-F6F2-47C2-B393-66E97203F107} = {956941F4-8905-499B-BA53-E65672714AC3}
+		{7B4A0A21-0CDE-432A-A785-599D4339AD8E} = {956941F4-8905-499B-BA53-E65672714AC3}
+		{FCF0DC4A-8A75-499D-AE7D-25D2F5174E38} = {956941F4-8905-499B-BA53-E65672714AC3}
+		{BD46EC5E-D3DD-42C2-81D1-D7B2B05B7A4E} = {956941F4-8905-499B-BA53-E65672714AC3}
+		{3B252589-C00B-49F6-92A0-EE2C8E7C671F} = {956941F4-8905-499B-BA53-E65672714AC3}
+		{B6D54592-07C8-4B5E-A607-DD7FE49A43B6} = {956941F4-8905-499B-BA53-E65672714AC3}
+		{CC2939C6-A278-4789-B937-ADB693E69C89} = {D686F982-B15B-4AAE-AF11-97BFF60C26F3}
+		{4D58F500-CDC4-4697-8DA5-15568E804317} = {D686F982-B15B-4AAE-AF11-97BFF60C26F3}
+		{8663EC74-0F8F-482D-9CFF-DCB4F5C12E0C} = {D686F982-B15B-4AAE-AF11-97BFF60C26F3}
+		{E01BBAFF-4FD7-4A4F-89A6-4FA54CC622BA} = {D686F982-B15B-4AAE-AF11-97BFF60C26F3}
+	EndGlobalSection
+EndGlobal
