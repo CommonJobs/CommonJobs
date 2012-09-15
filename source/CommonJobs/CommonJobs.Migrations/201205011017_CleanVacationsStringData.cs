@@ -18,7 +18,7 @@ namespace CommonJobs.Migrations
 
         private void ForAllEmployees(Action<RavenJObject> action)
         {
-            DoInResults(action, index: "Dynamic/Employees");
+            DoInResults(action, sortedBy: "Id", index: "Dynamic/Employees");
         }
 
         public override void Up()
