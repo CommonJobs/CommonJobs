@@ -42,9 +42,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Libs\RavenDB\Client\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="NLog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Libs\RavenDB\Client\NLog.dll</HintPath>
+    <Reference Include="NLog">
+      <HintPath>..\packages\NLog.2.0.0.2000\lib\net40\NLog.dll</HintPath>
     </Reference>
     <Reference Include="Raven.Abstractions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
       <HintPath>..\Libs\RavenDB\Client\Raven.Abstractions.dll</HintPath>
@@ -89,6 +88,9 @@
       <Project>{B6D54592-07C8-4B5E-A607-DD7FE49A43B6}</Project>
       <Name>CommonJobs.Raven.Migrations</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
