@@ -299,9 +299,6 @@
     <Content Include="Views\Attachments\Index.cshtml" />
     <Content Include="Content\FilesListing\FilesListing.less" />
     <Content Include="Content\ListingCommon\ListingBase.less" />
-    <Content Include="NLog.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Views\JobSearches\Index.cshtml" />
     <Content Include="Content\JobSearches\JobSearches.less" />
     <Content Include="Views\JobSearches\Edit.cshtml" />
