@@ -14,6 +14,7 @@ using CommonJobs.Infrastructure.AttachmentStorage;
 using CommonJobs.Infrastructure.EmployeeSearching;
 using NLog;
 using CommonJobs.Infrastructure.AttachmentSlots;
+using CommonJobs.Infrastructure;
 
 namespace CommonJobs.Mvc.UI.Controllers
 {
@@ -66,9 +67,15 @@ namespace CommonJobs.Mvc.UI.Controllers
         
         public ActionResult Create()
         {
+            var newEmployee = CreateEmployee();
+            return RedirectToAction("Edit", new { id = newEmployee.Id });  
+        }
+
+        private Employee CreateEmployee()
+        {
             var newEmployee = new Employee();
             RavenSession.Store(newEmployee);
-            return RedirectToAction("Edit", new { id = newEmployee.Id });  
+            return newEmployee;
         }
 
         [HttpPost]
@@ -82,8 +89,7 @@ namespace CommonJobs.Mvc.UI.Controllers
             Employee employee;
             if (id == null)
             {
-                employee = new Employee();
-                RavenSession.Store(employee);
+                employee = CreateEmployee();
             }
             else
             {
@@ -149,19 +155,34 @@ namespace CommonJobs.Mvc.UI.Controllers
          
         public ActionResult Edit(string id)
         {
+            log.Info("Edit employee (id: " + id + ")");
             var employee = RavenSession.Load<Employee>(id);
+
             if (employee == null)
                 return HttpNotFound();
 
-            //TODO: It is here only for demo purposes
+            try
+            {
+                //JavaScript Command DEMO:
+                //TODO: remove this code
+                var calculated = ExecuteScript(new CommonJobs.Infrastructure.Scripts.CalculateVacations()
+                {
+                    Employee = employee
+                });
+                log.Dump(LogLevel.Info, calculated, "JavaScript Command DEMO");
+            }
+            catch (Exception e)
+            {
+                log.ErrorException("Exception in ExecuteScript", e);
+            }
+
             AttachmentSlot[] slotsToShow = Query(new AttachmentSlotsQuery<Employee>());
-            log.Dump(LogLevel.Debug, slotsToShow);
 
             ScriptManager.RegisterGlobalJavascript(
                 "ViewData", 
                 new { 
                     employee = employee,
-                    attachmentSlots = slotsToShow //TODO: It is here only for demo purposes
+                    attachmentSlots = slotsToShow 
                 }, 
                 500);
             return View();
@@ -171,18 +192,23 @@ namespace CommonJobs.Mvc.UI.Controllers
         {
             var employee = RavenSession.Load<Employee>(id);
             return Json(employee);
-        }   
+        }
 
-        public JsonNetResult Post(Employee employee)
+        public ActionResult Post(string id)
         {
-            RavenSession.Store(employee);
-            return Get(employee.Id);
+            var employee = RavenSession.Load<Employee>(id);
+            if (employee == null)
+                return HttpNotFound();
+            this.TryUpdateModel(employee);
+            return Json(employee);
         }
 
         public ActionResult Delete(string id)
         {
             var employee = RavenSession.Load<Employee>(id);
             RavenSession.Delete(employee);
+            if (employee == null)
+                return HttpNotFound();
             return RedirectToAction("Index");
         }
 

@@ -31,19 +31,12 @@ namespace CommonJobs.Raven.Mvc
             return session;
         }
 
-        internal static void CloseCurrentSession()
+        internal static void CloseCurrentSession(bool error)
         {
             using (var session = (IDocumentSession)HttpContext.Current.Items[CURRENT_REQUEST_RAVEN_SESSION_KEY])
             {
-                if (session == null)
+                if (session == null || error)
                     return;
-
-                var error = HttpContext.Current.Server.GetLastError();
-                if (error != null)
-                {
-                    log.ErrorException("Uncatched exception", error);
-                    return;
-                }
 
                 session.SaveChanges();
             }

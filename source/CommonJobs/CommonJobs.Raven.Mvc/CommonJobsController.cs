@@ -9,12 +9,14 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json.Converters;
 using CommonJobs.Raven.Infrastructure;
+using CommonJobs.JavaScript;
 
 namespace CommonJobs.Raven.Mvc
 {
     public abstract class CommonJobsController : Controller
     {
         public IDocumentSession RavenSession { get; protected set; }
+        public readonly Lazy<ScriptContext> LazyScriptContext = new Lazy<ScriptContext>(() => new ScriptContext());
 
         protected override void OnAuthorization(AuthorizationContext filterContext)
         {
@@ -59,6 +61,12 @@ namespace CommonJobs.Raven.Mvc
             cmd.RavenSession = RavenSession;
             cmd.Execute();
             return cmd.Result;
+        }
+
+        public TResult ExecuteScript<TResult>(ScriptCommand<TResult> cmd)
+        {
+            cmd.LazyContext = LazyScriptContext;
+            return cmd.Execute();
         }
 
         public TResult Query<TResult>(Query<TResult> qry)
