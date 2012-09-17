@@ -90,20 +90,20 @@ namespace CommonJobs.Migrations
 
             DoInResults(
                 (result) => ExtractDataAndDo(result, MoveToSlot),
-                string.Format("RelatedEntitySlotId:\"__NOTE__\" AND ({0}) AND RelatedEntityType:\"Employee\"", fullTextFilters),
+                sortedBy: "RelatedEntityId",
+                query: string.Format("RelatedEntitySlotId:\"__NOTE__\" AND ({0}) AND RelatedEntityType:\"Employee\"", fullTextFilters),
                 index: "Attachments/QuickSearch",
-                fieldsToFetch: new[] { "AttachmentId", "RelatedEntityId" },
-                sortedBy: "RelatedEntityId");
+                fieldsToFetch: new[] { "AttachmentId", "RelatedEntityId" });
         }
 
         public override void Down()
         {
             DoInResults(
                 (result) => ExtractDataAndDo(result, MoveFromSlot),
-                string.Format("RelatedEntitySlotId:\"{0}\" AND RelatedEntityType:\"Employee\"", SlotId),
+                sortedBy: "RelatedEntityId",
+                query: string.Format("RelatedEntitySlotId:\"{0}\" AND RelatedEntityType:\"Employee\"", SlotId),
                 index: "Attachments/QuickSearch",
-                fieldsToFetch: new[] { "AttachmentId", "RelatedEntityId" },
-                sortedBy: "RelatedEntityId");
+                fieldsToFetch: new[] { "AttachmentId", "RelatedEntityId" });
         }
 
     }

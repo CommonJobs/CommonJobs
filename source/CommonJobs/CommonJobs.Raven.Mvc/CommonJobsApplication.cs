@@ -7,17 +7,28 @@ using System.Web.Mvc;
 using CommonJobs.Utilities;
 using Raven.Client.Document;
 using Raven.Client.Listeners;
+using NLog;
 
 namespace CommonJobs.Raven.Mvc
 {
     public abstract class CommonJobsApplication : HttpApplication
     {
+        private static Logger log = LogManager.GetCurrentClassLogger();
         static bool initialized = false;
         static readonly object block = new object();
 
         public CommonJobsApplication()
         {
-            EndRequest += (sender, args) => RavenSessionManager.CloseCurrentSession();
+            EndRequest += (sender, args) =>
+            {
+                var error = HttpContext.Current.Server.GetLastError();
+                if (error != null)
+                {
+                    log.ErrorException("Uncatched exception", error);
+                    LogManager.Flush(1000);
+                }               
+                RavenSessionManager.CloseCurrentSession(error != null);
+            };
             lock (block)
             {
                 if (!initialized)

@@ -32,12 +32,12 @@ namespace CommonJobs.Raven.Migrations
 
         protected void DoInResults(
             Action<RavenJObject> action, 
+            string sortedBy,
             string query = "*:*", 
             int pageSize = 64, 
             string index = null, 
             string[] includes = null,
-            string[] fieldsToFetch = null,
-            string sortedBy = null
+            string[] fieldsToFetch = null
             )
         {
             int start = 0;

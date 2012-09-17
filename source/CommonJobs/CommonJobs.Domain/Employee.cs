@@ -14,7 +14,7 @@ namespace CommonJobs.Domain
 
         public Employee()
         {
-            Vacations = new VacationList();
+            Vacations = new List<Vacation>();
             AttachmentsBySlot = new List<SlotWithAttachment>();
         }
 
@@ -95,19 +95,9 @@ namespace CommonJobs.Domain
         public string Agreement { get; set; }
 
         [Display(Name = "Vacaciones")]
-        //Only in detailed view
-        public VacationList Vacations { get; set; }
-
-        public int VacationsTotalDays
-        {
-            get
-            {
-                return Vacations.TotalDays;
-            }
-        }
+        public List<Vacation> Vacations { get; set; }
 
         [Display(Name = "Observaciones")]
-        //Only in detailed view
         public List<NoteWithAttachment> Notes { get; set; }
 
         [Display(Name = "Historial de sueldos")]

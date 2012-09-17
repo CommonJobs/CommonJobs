@@ -5,18 +5,10 @@ using System.Text;
 
 namespace CommonJobs.Domain
 {
-    public class Vacation
+    public struct Vacation
     {
         public int Period { get; set; }
         public DateTime From { get; set; }
         public DateTime To { get; set; }
-
-        public int TotalDays
-        {
-            get
-            {
-                return To.Date.Subtract(From.Date).Days + 1;
-            }
-        }
     }
 }
