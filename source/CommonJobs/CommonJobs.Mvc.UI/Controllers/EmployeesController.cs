@@ -166,7 +166,7 @@ namespace CommonJobs.Mvc.UI.Controllers
             {
                 //JavaScript Command DEMO:
                 //TODO: remove this code
-                var calculated = ExecuteScript(new CommonJobs.Infrastructure.Scripts.CalculateVacations()
+                var calculated = ExecuteScript(new CalculateVacations()
                 {
                     Employee = employee
                 });

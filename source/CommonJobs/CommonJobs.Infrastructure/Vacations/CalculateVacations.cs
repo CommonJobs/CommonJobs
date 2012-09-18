@@ -6,7 +6,7 @@ using CommonJobs.Raven.Infrastructure;
 using CommonJobs.Domain;
 using CommonJobs.JavaScript;
 
-namespace CommonJobs.Infrastructure.Scripts
+namespace CommonJobs.Infrastructure.Vacations
 {
     public class CalculateVacations : ScriptCommand<CalculatedVacations>
     {

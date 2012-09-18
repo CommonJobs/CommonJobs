@@ -1,4 +1,4 @@
-﻿using CommonJobs.Infrastructure.Scripts;
+﻿using CommonJobs.Infrastructure.Vacations;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using CommonJobs.Domain;
