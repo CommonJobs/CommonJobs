@@ -3,14 +3,17 @@
     ScriptManager.RegisterCss(Url.Content("~/Content/ie.css"), priority: 500, htmlAttributes: new { media = "screen" }, patchCondition: "lte IE 9");
     ScriptManager.RegisterCss(Url.Content("~/Content/1140.css"), priority: 500, htmlAttributes: new { media = "screen" });
     ScriptManager.RegisterCss(Url.Content("~/Content/reset.css"), priority: 500);
+    ScriptManager.RegisterJs(Url.Content("~/CJLogic/CJLogic.CalculateVacations.js"));
 }
-
 <h2>Vacations</h2>
-<code id="demoElement">
-
-</code>
+<code id="demoElement" />
 <script type="text/javascript">
     $(function () {
-        $("#demoElement").load("VacationBunch?Skip=0&Take=10");
+        jQuery.getJSON("VacationBunch", { Take: 10 }, function (data, textStatus, jqXHR) {
+            _.each(data.Items, function (employee) {
+                employee.CalculatedVacations = CJLogic.CalculateVacations(employee.HiringDate, employee.Vacations);
+            });
+            $("#demoElement").text(JSON.stringify(data));
+        });
     });
 </script>
