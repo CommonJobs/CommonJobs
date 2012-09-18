@@ -95,6 +95,9 @@
     </Compile>
     <Compile Include="SharedLinks\SharedLinks_Entities.cs" />
     <Compile Include="EmployeeSearching\SearchEmployees.cs" />
+    <Compile Include="Vacations\Vacations_Search.cs" />
+    <Compile Include="Vacations\VacationsSearchResult.cs" />
+    <Compile Include="Vacations\SearchVacations.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

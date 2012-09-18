@@ -15,6 +15,7 @@ using CommonJobs.Infrastructure.EmployeeSearching;
 using NLog;
 using CommonJobs.Infrastructure.AttachmentSlots;
 using CommonJobs.Infrastructure;
+using CommonJobs.Infrastructure.Vacations;
 
 namespace CommonJobs.Mvc.UI.Controllers
 {
@@ -230,6 +231,23 @@ namespace CommonJobs.Mvc.UI.Controllers
                     attachment.Value));
                 return Json(new { success = true, attachment = employee.Photo });
             }
+        }
+
+        public ActionResult Vacations()
+        {
+            return View();
+        }
+
+        public JsonNetResult VacationBunch(BaseSearchParameters parameters)
+        {
+            var query = new SearchVacations(parameters);
+            var results = Query(query);
+            return Json(new
+            {
+                Items = results,
+                Skiped = parameters.Skip,
+                TotalResults = query.Stats.TotalResults
+            });
         }
     }
 }

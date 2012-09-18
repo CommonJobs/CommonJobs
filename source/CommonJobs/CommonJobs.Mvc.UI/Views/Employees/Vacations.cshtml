@@ -1,0 +1,16 @@
+﻿@{
+    ViewBag.Title = "Vacations";
+    ScriptManager.RegisterCss(Url.Content("~/Content/ie.css"), priority: 500, htmlAttributes: new { media = "screen" }, patchCondition: "lte IE 9");
+    ScriptManager.RegisterCss(Url.Content("~/Content/1140.css"), priority: 500, htmlAttributes: new { media = "screen" });
+    ScriptManager.RegisterCss(Url.Content("~/Content/reset.css"), priority: 500);
+}
+
+<h2>Vacations</h2>
+<code id="demoElement">
+
+</code>
+<script type="text/javascript">
+    $(function () {
+        $("#demoElement").load("VacationBunch?Skip=0&Take=10");
+    });
+</script>

@@ -138,6 +138,7 @@
     <Compile Include="Infrastructure\SharedEntityAlternativeAuthorizationAttribute.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="Views\Employees\Vacations.cshtml" />
     <None Include="_bin_deployableAssemblies\FSharp.Core.dll" />
   </ItemGroup>
   <ItemGroup>
