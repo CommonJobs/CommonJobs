@@ -11,6 +11,7 @@ namespace CommonJobs.Infrastructure.Vacations
         public string Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        //TODO: add fields
+        public List<Vacation> Vacations { get; set; }
+        public DateTime? HiringDate { get; set; }
     }
 }
