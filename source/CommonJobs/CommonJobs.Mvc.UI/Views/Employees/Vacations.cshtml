@@ -6,14 +6,31 @@
     ScriptManager.RegisterJs(Url.Content("~/CJLogic/CJLogic.CalculateVacations.js"));
 }
 <h2>Vacations</h2>
-<code id="demoElement" />
+<pre id="demoElement"></pre>
 <script type="text/javascript">
     $(function () {
-        jQuery.getJSON("VacationBunch", { Take: 10 }, function (data, textStatus, jqXHR) {
-            _.each(data.Items, function (employee) {
-                employee.CalculatedVacations = CJLogic.CalculateVacations(employee.HiringDate, employee.Vacations);
+        var whileTrue = function (getData, callback, take, skip) {
+            skip = skip || 0;
+            take = take || 10;
+            getData(take, skip, function (data) {
+                callback(data, take, skip) && whileTrue(getData, callback, take, skip + take);
             });
-            $("#demoElement").text(JSON.stringify(data));
-        });
+        };
+
+        whileTrue(
+            function (take, skip, callback) {
+                jQuery.getJSON("VacationBunch", { Skip: skip, Take: take }, function (data, textStatus, jqXHR) {
+                    callback(data);
+                });
+            },
+            function (data, take, skip) {
+                _.each(data.Items, function (employee) {
+                    if (data.Items.length) {
+                        employee.CalculatedVacations = CJLogic.CalculateVacations(employee.HiringDate, employee.Vacations);
+                    }
+                });
+                $("#demoElement").append("\n\n" + JSON.stringify(data));
+                return skip + take < data.TotalResults
+            });
     });
 </script>
