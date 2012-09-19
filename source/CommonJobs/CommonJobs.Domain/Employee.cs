@@ -64,8 +64,17 @@ namespace CommonJobs.Domain
         [Display(Name = "Almuerzo")]
         public bool Lunch { get; set; }
         
-        [Display(Name = "Banco")]
+        [Display(Name = "Número de Cuenta")]
         public string BankAccount { get; set; }
+
+        [Display(Name = "Sucursal")]
+        public string BankBranch { get; set; }
+
+        [Display(Name = "CBU")]
+        public string UniqueBankCode { get; set; }
+
+        [Display(Name = "Banco")]
+        public string BankName{ get; set; }
         
         [Display(Name = "Obra Social")]
         public string HealthInsurance { get; set; }
