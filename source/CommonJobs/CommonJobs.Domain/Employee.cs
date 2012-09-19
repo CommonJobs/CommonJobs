@@ -75,6 +75,9 @@ namespace CommonJobs.Domain
 
         [Display(Name = "Banco")]
         public string BankName{ get; set; }
+
+        [Display(Name = "CUIL")]
+        public string Cuil { get; set; }
         
         [Display(Name = "Obra Social")]
         public string HealthInsurance { get; set; }
