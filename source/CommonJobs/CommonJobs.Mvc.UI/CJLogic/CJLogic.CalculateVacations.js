@@ -19,39 +19,31 @@ CJLogic.CalculateVacations = function (hiringDate, vacationList) {
     var h = CJLogic.CalculateVacationsHelpers;
 
     var result = {
-        TotalTaken: 0,
-        //TODO: replace demo data
-        TotalPending: 17,
-        //TODO: replace demo data
-        ByYear: {
-            "2010": {
-                Antiquity: 0,
-                Earned: 3,
-                Taken: 0,
-                Pending: 3
-            },
-            "2011": {
-                Antiquity: 1,
-                Earned: 14,
-                Taken: 7,
-                Pending: 7
-            },
-            "2012": {
-                Antiquity: 2,
-                Earned: 14,
-                Taken: 7,
-                Pending: 7
-            }
-        }
+        TotalTaked: 0,
+        TotalPending: 0,
+        ByYear: { }
     };
 
     var now = new Date();
-    
+    var currentYear = moment(now).year();
+    var hiringYear = moment(hiringDate).year();
+
+    var takedVacationsByYear = {};
     _.each(vacationList, function (vacation) {
-        var days = h.getDays(vacation.From, vacation.To);
-        result.TotalTaken += days;
+        takedVacationsByYear[vacation.Period] = (takedVacationsByYear[vacation.Period] || 0) + h.getDays(vacation.From, vacation.To);
     });
 
+    var antiquity = 0;
+    for (var year = hiringYear; year <= currentYear; year++) {
+        var item = result.ByYear[year] = {};
+        item.Antiquity = antiquity++; //TODO fix it because antiquity could be calculated different depending on hiring month 
+        item.Earned = 14; //TODO fix it because earned could be calculated different depending on hiring month and antiquity
+        item.Taked = takedVacationsByYear[year] || 0;
+        item.Pending = item.Earned - item.Taked;
+        result.TotalTaked += item.Taked;
+        result.TotalPending += item.Pending;
+    }
+    
     return result;
 }
 
