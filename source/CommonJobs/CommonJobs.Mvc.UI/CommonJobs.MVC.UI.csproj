@@ -145,6 +145,7 @@
     <Content Include="Content\FilesListing\FilesListing.js" />
     <Compile Include="Controllers\ApplicantsController.cs" />
     <Compile Include="Controllers\AttachmentsController.cs" />
+    <Compile Include="Controllers\EmployeeFilesController.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\JobSearchesController.cs" />
@@ -156,6 +157,7 @@
     <Compile Include="Infrastructure\SharedEntityAlternativeAuthorizationAttribute.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+<<<<<<< HEAD
     <Content Include="Content\DataTablesHelpers\DataTablesHelpers.js" />
     <Content Include="Content\TableTools-2.1.4\media\css\TableTools.css" />
     <Content Include="Content\TableTools-2.1.4\media\css\TableTools_JUI.css" />
@@ -192,6 +194,8 @@
     <Content Include="Content\TableTools-2.1.4\media\images\psd\file_types.psd" />
     <Content Include="Content\TableTools-2.1.4\media\images\psd\printer.psd" />
     <Content Include="Content\TableTools-2.1.4\media\js\TableTools.min.js.gz" />
+=======
+    <Content Include="Views\EmployeeFiles\Index.cshtml" />
     <None Include="_bin_deployableAssemblies\FSharp.Core.dll" />
   </ItemGroup>
   <ItemGroup>
