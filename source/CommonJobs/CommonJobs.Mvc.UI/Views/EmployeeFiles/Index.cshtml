@@ -1,6 +1,11 @@
 ﻿@{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Legajos | CommonJobs";
+    ScriptManager.RegisterCss(Url.Content("~/Content/ie.css"), priority: 500, htmlAttributes: new { media = "screen" }, patchCondition: "lte IE 9");
+    ScriptManager.RegisterCss(Url.Content("~/Content/1140.css"), priority: 500, htmlAttributes: new { media = "screen" });
+    ScriptManager.RegisterCss(Url.Content("~/Content/reset.css"), priority: 500);
+    ScriptManager.RegisterCss(Url.Content("~/Content/EmployeeFilesBase.less"), priority: 500);
+
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Employee Files</h2>
+<h2>Legajos</h2>
