@@ -110,20 +110,28 @@
             </div>
         </div>
         <div class="misc-data additional-info-section">
+            <h3>Datos bancarios</h3>
+            <ul>
+                <li><span class="field-name">Banco:</span><span class="editable-field" data-bind="BankName"></span></li>
+                <li><span class="field-name">Sucursal:</span><span class="editable-field" data-bind="BankBranch"></span></li>
+                <li><span class="field-name">CBU:</span><span class="editable-field" data-bind="UniqueBankCode"></span></li>
+                <li><span class="field-name">Número de cuenta:</span><span class="editable-field" data-bind="BankAccount"></span></li>
+            </ul>
             <h3>Otros datos</h3>
             <ul>
-                <li><span class="field-name">Almuerzo:</span><span class="editable-field" data-bind="Lunch"><span class="view-editable view-editable-prototype">Si</span></span></li>
-                <li><span class="field-name">Cuenta Bancaria:</span><span class="editable-field" data-bind="BankAccount"></span></li>
                 <li><span class="field-name">Obra Social:</span><span class="editable-field" data-bind="HealthInsurance"></span></li>
+                <li><span class="field-name">Almuerzo:</span><span class="editable-field" data-bind="Lunch"><span class="view-editable view-editable-prototype">Si</span></span></li>
             </ul>
-            <h3>Vacaciones <span class="confidential-info-title">Mostrar/Ocultar</span></h3>
+        </div>
+        <div class="info-section">
+            <h2>Vacaciones <span class="confidential-info-title">Mostrar/Ocultar</span></h2>
             <div class="confidential-info-data">
                 <div class="vacation-items editable-field" data-bind="Vacations"></div>
             </div>
         </div>
     </div>    
     <div class="info-section files-data file-dropzone">
-        <h2>Archivos adjuntos <span class="confidential-info-title">Mostrar/Ocultar</span></h2>
+        <h2>Archivos adjuntos</h2>
         <div class="attachment-container"></div>
         <p class="uiInstruction clearFloats">Arrastre un archivo aquí para adjuntarlo a este empleado.</p>
     </div>
