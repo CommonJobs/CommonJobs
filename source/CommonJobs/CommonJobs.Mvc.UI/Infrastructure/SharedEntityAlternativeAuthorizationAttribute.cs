@@ -61,8 +61,8 @@ namespace CommonJobs.Mvc.UI.Infrastructure
             if (entityIdFound == null)
                 return false;
 
-            filterContext.Controller.ValueProvider = new OverrideValueProvider(filterContext.Controller.ValueProvider, 
-                new Dictionary<string, string>() { { EntityIdKey, SharedCodeKey }, { entityIdFound, sharedCode } });
+            filterContext.Controller.ValueProvider = new OverrideValueProvider(filterContext.Controller.ValueProvider,
+                new Dictionary<string, string>() { { EntityIdKey, entityIdFound }, { SharedCodeKey, sharedCode } });
 
             return true;
         }
