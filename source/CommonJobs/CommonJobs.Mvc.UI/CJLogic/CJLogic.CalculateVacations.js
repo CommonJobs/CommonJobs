@@ -5,42 +5,52 @@
 
 var CJLogic = CJLogic || {};
 
-CJLogic.CalculateVacationsHelpers = {
-    getDays: function (from, to) {
-        var period = new Twix(from, to, true)
-        return period.countDays();
-    }
-};
-
-CJLogic.CalculateVacations = function (hiringDate, vacationList) {
+CJLogic.CalculateVacations = function (hiringDate, vacationList, now) {
     if (!hiringDate)
         return null;
 
-    var h = CJLogic.CalculateVacationsHelpers;
+    now = now || new Date();
 
     var result = {
-        TotalTaked: 0,
+        TotalTaken: 0,
         TotalPending: 0,
         ByYear: { }
     };
 
-    var now = new Date();
+    hiringDate = moment(hiringDate);
     var currentYear = moment(now).year();
-    var hiringYear = moment(hiringDate).year();
+    var hiringYear = hiringDate.year();
+    var hiringMonth = hiringDate.month() + 1;
 
-    var takedVacationsByYear = {};
+    var TakenVacationsByYear = {};
     _.each(vacationList, function (vacation) {
-        takedVacationsByYear[vacation.Period] = (takedVacationsByYear[vacation.Period] || 0) + h.getDays(vacation.From, vacation.To);
+        TakenVacationsByYear[vacation.Period] = (TakenVacationsByYear[vacation.Period] || 0) + new Twix(vacation.From, vacation.To, true).countDays();
     });
 
     var antiquity = 0;
     for (var year = hiringYear; year <= currentYear; year++) {
         var item = result.ByYear[year] = {};
-        item.Antiquity = antiquity++; //TODO fix it because antiquity could be calculated different depending on hiring month 
-        item.Earned = 14; //TODO fix it because earned could be calculated different depending on hiring month and antiquity
-        item.Taked = takedVacationsByYear[year] || 0;
-        item.Pending = item.Earned - item.Taked;
-        result.TotalTaked += item.Taked;
+
+        if (year != hiringYear || hiringMonth < 7) {
+            antiquity++;
+        }
+        item.Antiquity = antiquity;
+                 
+        if (antiquity == 0) {
+            item.Earned = 13 - hiringMonth;
+        } else if (antiquity <= 5) {
+            item.Earned = 14;
+        } else if (antiquity <= 10) {
+            item.Earned = 21;
+        } else if (antiquity <= 20) {
+            item.Earned = 28;
+        } else {
+            item.Earned = 35;
+        }
+
+        item.Taken = TakenVacationsByYear[year] || 0;
+        item.Pending = item.Earned - item.Taken;
+        result.TotalTaken += item.Taken;
         result.TotalPending += item.Pending;
     }
     

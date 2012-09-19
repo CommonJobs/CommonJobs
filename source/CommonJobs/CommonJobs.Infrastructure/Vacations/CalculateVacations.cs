@@ -12,6 +12,7 @@ namespace CommonJobs.Infrastructure.Vacations
     {
         public DateTime? HiringDate { get; set; }
         public IEnumerable<Vacation> Vacations { get; set; }
+        public DateTime? Now { get; set; }
         public Employee Employee
         {
             set
@@ -23,7 +24,7 @@ namespace CommonJobs.Infrastructure.Vacations
 
         protected override object[] GetParameters()
         {
-            return new object[] { HiringDate, Vacations };
+            return new object[] { HiringDate, Vacations, Now ?? DateTime.Now };
         }
 
         public CalculateVacations()

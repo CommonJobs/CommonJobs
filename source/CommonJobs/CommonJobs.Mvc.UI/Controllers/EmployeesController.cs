@@ -235,6 +235,13 @@ namespace CommonJobs.Mvc.UI.Controllers
 
         public ActionResult Vacations()
         {
+            ScriptManager.RegisterGlobalJavascript(
+                "ViewData",
+                new
+                {
+                    now = DateTime.Now
+                },
+                500);
             return View();
         }
 

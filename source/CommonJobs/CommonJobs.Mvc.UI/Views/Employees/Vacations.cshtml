@@ -26,7 +26,7 @@
             function (data, take, skip) {
                 _.each(data.Items, function (employee) {
                     if (data.Items.length) {
-                        employee.CalculatedVacations = CJLogic.CalculateVacations(employee.HiringDate, employee.Vacations);
+                        employee.CalculatedVacations = CJLogic.CalculateVacations(employee.HiringDate, employee.Vacations, ViewData.now);
                     }
                 });
                 $("#demoElement").append("\n\n" + JSON.stringify(data));
