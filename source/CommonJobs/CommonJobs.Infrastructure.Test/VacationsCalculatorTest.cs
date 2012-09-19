@@ -29,7 +29,7 @@ namespace CommonJobs.Infrastructure.Test
             };
             var calculated = calculator.Execute();
             var expected = 10;
-            int actual = calculated.TotalDays;
+            int actual = calculated.TotalTaken;
             Assert.AreEqual(expected, actual);
         }
 
@@ -48,7 +48,7 @@ namespace CommonJobs.Infrastructure.Test
             };
             var calculated = calculator.Execute();
             var expected = 10;
-            int actual = calculated.TotalDays;
+            int actual = calculated.TotalTaken;
             Assert.AreEqual(expected, actual);
         }
 
@@ -68,7 +68,7 @@ namespace CommonJobs.Infrastructure.Test
             };
             var calculated = calculator.Execute();
             var expected = 1;
-            int actual = calculated.TotalDays;
+            int actual = calculated.TotalTaken;
             Assert.AreEqual(expected, actual);
         }
     }

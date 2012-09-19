@@ -13,38 +13,46 @@ CJLogic.CalculateVacationsHelpers = {
 };
 
 CJLogic.CalculateVacations = function (hiringDate, vacationList) {
+    if (!hiringDate)
+        return null;
+
     var h = CJLogic.CalculateVacationsHelpers;
-    var debug = "";
-    var totalTaked = 0;
-    var takedByPeriod = {};
 
-    if (hiringDate) {
-        debug += " " + hiringDate + " " + typeof (hiringDate) + "\n";
-    } else {
-        debug += " NO HIRING DATE \n";
-    }
-    
-    var now = new Date();
-    debug += now.toString() + " " + typeof (now) + "\n";
-
-
-    
-    _.each(vacationList, function (vacation) {
-        if (!takedByPeriod[vacation.Period]) {
-            takedByPeriod[vacation.Period] = 0;
+    var result = {
+        TotalTaken: 0,
+        //TODO: replace demo data
+        TotalPending: 17,
+        //TODO: replace demo data
+        ByYear: {
+            "2010": {
+                Antiquity: 0,
+                Earned: 3,
+                Taken: 0,
+                Pending: 3
+            },
+            "2011": {
+                Antiquity: 1,
+                Earned: 14,
+                Taken: 7,
+                Pending: 7
+            },
+            "2012": {
+                Antiquity: 2,
+                Earned: 14,
+                Taken: 7,
+                Pending: 7
+            }
         }
-        var days = h.getDays(vacation.From, vacation.To);
-        takedByPeriod[vacation.Period] += days;
-        totalTaked += days;
-    });
-    
-    debug += JSON.stringify(takedByPeriod);
-
-    var calculatedVacations = {
-        Debug: debug,
-        TotalDays: totalTaked
     };
 
-    return calculatedVacations;
-};
+    var now = new Date();
+    
+    _.each(vacationList, function (vacation) {
+        var days = h.getDays(vacation.From, vacation.To);
+        result.TotalTaken += days;
+    });
+
+    return result;
+}
+
 
