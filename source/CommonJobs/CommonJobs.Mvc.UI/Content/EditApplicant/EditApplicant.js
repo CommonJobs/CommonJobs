@@ -269,7 +269,7 @@
                         { 
                             controlLink: "LinkEditableText", name: "Link", dataLink: "UrlLink", textField: "FriendlyName", urlField: "SharedCode",
                             valueToContent: function (value) {
-                                return _.template('<span class="view-editable"><a href="<%= urlGenerator.sharedAction("Edit", "Applicants", ViewData.applicant.Id, url) %>"><%= text %></a> <span class="icon-edit">&nbsp;</span></span>', value);
+                                return _.template('<span class="view-editable"><a href="<%= urlGenerator.sharedAction("Edit", "Applicants", null, url) %>"><%= text %></a> <span class="icon-edit">&nbsp;</span></span>', value);
                             },
                         },
                         { controlLink: "Date", name: "ExpirationDate", field: "ExpirationDate", uiDateFormat: "d/m/y" }
