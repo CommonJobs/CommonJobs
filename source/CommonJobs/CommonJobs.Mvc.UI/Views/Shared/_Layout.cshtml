@@ -1,4 +1,4 @@
-﻿@{
+@{
     ScriptManager.RegisterJs(Url.Content("~/Scripts/jquery-1.7.1.min.js"), priority: 900);
     ScriptManager.RegisterJs(Url.Content("~/Scripts/jquery-ui-1.8.17.min.js"), priority: 900);
     ScriptManager.RegisterJs(Url.Content("~/Scripts/jquery-ui-i18n.min.js"), priority: 900);
@@ -39,6 +39,7 @@
 				<li class="top">@Html.ActionLink("Empleados", "Index", "Employees", null, new { @class = "top_link" })</li>
                 <li class="top">@Html.ActionLink("Archivos", "Index", "Attachments", null, new { @class = "top_link" })</li>
                 <li class="top">@Html.ActionLink("Búsquedas", "Index", "JobSearches", null, new { @class = "top_link" })</li>
+                <li class="top">@Html.ActionLink("Vacaciones", "Index", "Vacations", null, new { @class = "top_link" })</li>
 				@Html.Partial("EnvironmentBanner")
 				@if (Request.IsAuthenticated && User != null && User.Identity != null && User.Identity.Name != null) 
 				{
