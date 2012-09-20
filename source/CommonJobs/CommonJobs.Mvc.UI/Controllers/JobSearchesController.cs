@@ -52,7 +52,7 @@ namespace CommonJobs.Mvc.UI.Controllers
                     jobSearch = j,
                     publicUrl = GetJobSearchPublicUrl(j)
                 }).ToArray(),
-                Skiped = searchParameters.Skip,
+                Skipped = searchParameters.Skip,
                 TotalResults = query.Stats.TotalResults
             });
         }

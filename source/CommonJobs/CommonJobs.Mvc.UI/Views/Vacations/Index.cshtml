@@ -1,0 +1,37 @@
+﻿@{
+    ViewBag.Title = "Vacations";
+    ScriptManager.RegisterCss(Url.Content("~/Content/ie.css"), priority: 500, htmlAttributes: new { media = "screen" }, patchCondition: "lte IE 9");
+    ScriptManager.RegisterCss(Url.Content("~/Content/1140.css"), priority: 500, htmlAttributes: new { media = "screen" });
+    ScriptManager.RegisterCss(Url.Content("~/Content/reset.css"), priority: 500);
+    ScriptManager.RegisterJs(Url.Content("~/CJLogic/CJLogic.CalculateVacations.js"));
+}
+<h2>Vacations</h2>
+<pre id="demoElement"></pre>
+<script type="text/javascript">
+    $(function () {
+        var whileTrue = function (getData, callback, take, skip) {
+            skip = skip || 0;
+            take = take || 10;
+            getData(take, skip, function (data) {
+                callback(data, take, skip) && whileTrue(getData, callback, take, skip + take);
+            });
+        };
+
+        whileTrue(
+            function (take, skip, callback) {
+                jQuery.getJSON(urlGenerator.action("VacationBunch", "Vacations"), { Skip: skip, Take: take }, function (data, textStatus, jqXHR) {
+                    callback(data);
+                });
+            },
+            function (data, take, skip) {
+                $("#demoElement").append("\n\nSkipped: " + data.Skipped + "; TotalResults: " + data.TotalResults);
+                _.each(data.Items, function (employee) {
+                    if (data.Items.length) {
+                        employee.CalculatedVacations = CJLogic.CalculateVacations(employee.HiringDate, employee.Vacations, ViewData.now);
+                    }
+                    $("#demoElement").append("\n" + JSON.stringify(employee));
+                });
+                return skip + take < data.TotalResults
+            });
+    });
+</script>

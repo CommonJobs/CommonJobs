@@ -5,46 +5,56 @@
 
 var CJLogic = CJLogic || {};
 
-CJLogic.CalculateVacationsHelpers = {
-    getDays: function (from, to) {
-        var period = new Twix(from, to, true)
-        return period.countDays();
-    }
-};
+CJLogic.CalculateVacations = function (hiringDate, vacationList, now) {
+    if (!hiringDate)
+        return null;
 
-CJLogic.CalculateVacations = function (hiringDate, vacationList) {
-    var h = CJLogic.CalculateVacationsHelpers;
-    var debug = "";
-    var totalTaked = 0;
-    var takedByPeriod = {};
+    now = now || new Date();
 
-    if (hiringDate) {
-        debug += " " + hiringDate + " " + typeof (hiringDate) + "\n";
-    } else {
-        debug += " NO HIRING DATE \n";
-    }
-    
-    var now = new Date();
-    debug += now.toString() + " " + typeof (now) + "\n";
-
-
-    
-    _.each(vacationList, function (vacation) {
-        if (!takedByPeriod[vacation.Period]) {
-            takedByPeriod[vacation.Period] = 0;
-        }
-        var days = h.getDays(vacation.From, vacation.To);
-        takedByPeriod[vacation.Period] += days;
-        totalTaked += days;
-    });
-    
-    debug += JSON.stringify(takedByPeriod);
-
-    var calculatedVacations = {
-        Debug: debug,
-        TotalDays: totalTaked
+    var result = {
+        TotalTaken: 0,
+        TotalPending: 0,
+        ByYear: { }
     };
 
-    return calculatedVacations;
-};
+    hiringDate = moment(hiringDate);
+    var currentYear = moment(now).year();
+    var hiringYear = hiringDate.year();
+    var hiringMonth = hiringDate.month() + 1;
+
+    var TakenVacationsByYear = {};
+    _.each(vacationList, function (vacation) {
+        TakenVacationsByYear[vacation.Period] = (TakenVacationsByYear[vacation.Period] || 0) + new Twix(vacation.From, vacation.To, true).countDays();
+    });
+
+    var antiquity = 0;
+    for (var year = hiringYear; year <= currentYear; year++) {
+        var item = result.ByYear[year] = {};
+
+        if (year != hiringYear || hiringMonth < 7) {
+            antiquity++;
+        }
+        item.Antiquity = antiquity;
+                 
+        if (antiquity == 0) {
+            item.Earned = 13 - hiringMonth;
+        } else if (antiquity <= 5) {
+            item.Earned = 14;
+        } else if (antiquity <= 10) {
+            item.Earned = 21;
+        } else if (antiquity <= 20) {
+            item.Earned = 28;
+        } else {
+            item.Earned = 35;
+        }
+
+        item.Taken = TakenVacationsByYear[year] || 0;
+        item.Pending = item.Earned - item.Taken;
+        result.TotalTaken += item.Taken;
+        result.TotalPending += item.Pending;
+    }
+    
+    return result;
+}
+
 

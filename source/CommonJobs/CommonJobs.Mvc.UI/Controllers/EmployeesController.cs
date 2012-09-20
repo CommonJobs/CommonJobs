@@ -49,7 +49,7 @@ namespace CommonJobs.Mvc.UI.Controllers
             return Json(new
             {
                 Items = results,
-                Skiped = searchParameters.Skip,
+                Skipped = searchParameters.Skip,
                 TotalResults = query.Stats.TotalResults
             });
         } 
@@ -160,21 +160,6 @@ namespace CommonJobs.Mvc.UI.Controllers
 
             if (employee == null)
                 return HttpNotFound();
-
-            try
-            {
-                //JavaScript Command DEMO:
-                //TODO: remove this code
-                var calculated = ExecuteScript(new CommonJobs.Infrastructure.Scripts.CalculateVacations()
-                {
-                    Employee = employee
-                });
-                log.Dump(LogLevel.Info, calculated, "JavaScript Command DEMO");
-            }
-            catch (Exception e)
-            {
-                log.ErrorException("Exception in ExecuteScript", e);
-            }
 
             AttachmentSlot[] slotsToShow = Query(new AttachmentSlotsQuery<Employee>());
 

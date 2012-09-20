@@ -1,7 +1,7 @@
 .bg {background: url(images/button4.gif);}
 .menu {padding:0 0 0 32px; margin:0; list-style:none; height:35px; background:#505979 repeat-x; position:relative; font-family:arial, verdana, sans-serif; }
 .menu li.top {display:block; float:left; position:relative;}
-.menu li.top { width: 260px; text-align: center; }
+.menu li.top { width: 175px; text-align: center; }
 .menu li a.top_link {display:block; margin: 0 auto; /*float:left;*/ height:35px; line-height:33px; color:#EBEBEB; text-decoration:none; font-size:11px; font-weight:bold;/* padding:0 0 0 12px*/; cursor:pointer;}
 .menu li a.top_link span{float:left; font-weight:bold; display:block; padding:0 24px 0 12px; height:35px;}
 .menu li a.top_link span.down {float:left; display:block; padding:0 24px 0 12px; height:40px; background:url(images/down.gif) no-repeat right top;}

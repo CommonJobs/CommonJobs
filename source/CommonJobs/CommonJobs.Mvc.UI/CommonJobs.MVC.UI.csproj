@@ -132,12 +132,14 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\JobSearchesController.cs" />
     <Compile Include="Controllers\MigrationsController.cs" />
+    <Compile Include="Controllers\VacationsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\SharedEntityAlternativeAuthorizationAttribute.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="Views\Vacations\Index.cshtml" />
     <None Include="_bin_deployableAssemblies\FSharp.Core.dll" />
   </ItemGroup>
   <ItemGroup>
