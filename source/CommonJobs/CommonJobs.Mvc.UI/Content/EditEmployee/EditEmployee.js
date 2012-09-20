@@ -91,18 +91,22 @@
     }
     UploadModal.prototype.personDetail = function (employee, $el) {
         //employee: backbone model object
-        return this
+        var result = this
             // remove old photo
-            .$("img.uploadPicture", function () { this.remove(); })
-            // include photo
-            .$(".modal-header", function () {
+            .$("img.uploadPicture", function () { this.remove(); });
+
+        var photo = employee.get('Photo');
+
+        if (photo && photo.photo.Thumbnail && photo.Thumbnail.Id) {
+            result = result.$(".modal-header", function () {
                 this.prepend($('<img />')
-                    .attr("src", urlGenerator.action("Get", "Attachments", employee.get('Photo').Thumbnail.Id, { returnName: false }))
+                    .attr("src", urlGenerator.action("Get", "Attachments", photo.Thumbnail.Id, { returnName: false }))
                     .addClass("uploadPicture")
                 );
-            })
-            // include employee name
-            .text(".person-name", employee.get('LastName') + ", " + employee.get('FirstName'))
+            });
+        }
+        
+        return result.text(".person-name", employee.get('LastName') + ", " + employee.get('FirstName'))
     };
 
     var prepareAttachmentZone = function (dropZone, model) {
