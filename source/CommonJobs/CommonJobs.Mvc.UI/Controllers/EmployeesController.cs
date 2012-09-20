@@ -15,7 +15,6 @@ using CommonJobs.Infrastructure.EmployeeSearching;
 using NLog;
 using CommonJobs.Infrastructure.AttachmentSlots;
 using CommonJobs.Infrastructure;
-using CommonJobs.Infrastructure.Vacations;
 
 namespace CommonJobs.Mvc.UI.Controllers
 {
@@ -162,21 +161,6 @@ namespace CommonJobs.Mvc.UI.Controllers
             if (employee == null)
                 return HttpNotFound();
 
-            try
-            {
-                //JavaScript Command DEMO:
-                //TODO: remove this code
-                var calculated = ExecuteScript(new CalculateVacations()
-                {
-                    Employee = employee
-                });
-                log.Dump(LogLevel.Info, calculated, "JavaScript Command DEMO");
-            }
-            catch (Exception e)
-            {
-                log.ErrorException("Exception in ExecuteScript", e);
-            }
-
             AttachmentSlot[] slotsToShow = Query(new AttachmentSlotsQuery<Employee>());
 
             ScriptManager.RegisterGlobalJavascript(
@@ -231,30 +215,6 @@ namespace CommonJobs.Mvc.UI.Controllers
                     attachment.Value));
                 return Json(new { success = true, attachment = employee.Photo });
             }
-        }
-
-        public ActionResult Vacations()
-        {
-            ScriptManager.RegisterGlobalJavascript(
-                "ViewData",
-                new
-                {
-                    now = DateTime.Now
-                },
-                500);
-            return View();
-        }
-
-        public JsonNetResult VacationBunch(BaseSearchParameters parameters)
-        {
-            var query = new SearchVacations(parameters);
-            var results = Query(query);
-            return Json(new
-            {
-                Items = results,
-                Skiped = parameters.Skip,
-                TotalResults = query.Stats.TotalResults
-            });
         }
     }
 }

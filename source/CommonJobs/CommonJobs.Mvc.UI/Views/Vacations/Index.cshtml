@@ -19,17 +19,18 @@
 
         whileTrue(
             function (take, skip, callback) {
-                jQuery.getJSON("VacationBunch", { Skip: skip, Take: take }, function (data, textStatus, jqXHR) {
+                jQuery.getJSON(urlGenerator.action("VacationBunch", "Vacations"), { Skip: skip, Take: take }, function (data, textStatus, jqXHR) {
                     callback(data);
                 });
             },
             function (data, take, skip) {
+                $("#demoElement").append("\n\nSkiped: " + data.Skiped + "; TotalResults: " + data.TotalResults);
                 _.each(data.Items, function (employee) {
                     if (data.Items.length) {
                         employee.CalculatedVacations = CJLogic.CalculateVacations(employee.HiringDate, employee.Vacations, ViewData.now);
                     }
+                    $("#demoElement").append("\n" + JSON.stringify(employee));
                 });
-                $("#demoElement").append("\n\n" + JSON.stringify(data));
                 return skip + take < data.TotalResults
             });
     });
