@@ -33,7 +33,7 @@ namespace CommonJobs.Mvc.UI.Controllers
             return Json(new
             {
                 Items = results,
-                Skiped = parameters.Skip,
+                Skipped = parameters.Skip,
                 TotalResults = query.Stats.TotalResults
             });
         }

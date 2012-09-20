@@ -24,7 +24,7 @@
                 });
             },
             function (data, take, skip) {
-                $("#demoElement").append("\n\nSkiped: " + data.Skiped + "; TotalResults: " + data.TotalResults);
+                $("#demoElement").append("\n\nSkipped: " + data.Skipped + "; TotalResults: " + data.TotalResults);
                 _.each(data.Items, function (employee) {
                     if (data.Items.length) {
                         employee.CalculatedVacations = CJLogic.CalculateVacations(employee.HiringDate, employee.Vacations, ViewData.now);
