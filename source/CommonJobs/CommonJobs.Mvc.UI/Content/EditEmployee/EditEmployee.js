@@ -1,4 +1,4 @@
-﻿/// <reference path="../../Scripts/jquery-1.7.1-vsdoc.js" />
+﻿/// <reference path="../../Scripts/jquery-1.7.2-vsdoc.js" />
 /// <reference path="../../Scripts/underscore.js" />
 /// <reference path="../../Scripts/backbone.js" />
 /// <reference path="../../Scripts/url-generator.js" />
