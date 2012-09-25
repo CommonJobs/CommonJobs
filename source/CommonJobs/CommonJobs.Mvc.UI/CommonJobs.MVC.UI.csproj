@@ -123,6 +123,23 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="CJLogic\CJLogic.CalculateVacations.js" />
+    <Content Include="Content\DataTables\css\demo_page.css" />
+    <Content Include="Content\DataTables\css\demo_table.css" />
+    <Content Include="Content\DataTables\css\demo_table_jui.css" />
+    <Content Include="Content\DataTables\css\jquery.dataTables.css" />
+    <Content Include="Content\DataTables\css\jquery.dataTables_themeroller.css" />
+    <Content Include="Content\DataTables\images\back_disabled.png" />
+    <Content Include="Content\DataTables\images\back_enabled.png" />
+    <Content Include="Content\DataTables\images\back_enabled_hover.png" />
+    <Content Include="Content\DataTables\images\favicon.ico" />
+    <Content Include="Content\DataTables\images\forward_disabled.png" />
+    <Content Include="Content\DataTables\images\forward_enabled.png" />
+    <Content Include="Content\DataTables\images\forward_enabled_hover.png" />
+    <Content Include="Content\DataTables\images\sort_asc.png" />
+    <Content Include="Content\DataTables\images\sort_asc_disabled.png" />
+    <Content Include="Content\DataTables\images\sort_both.png" />
+    <Content Include="Content\DataTables\images\sort_desc.png" />
+    <Content Include="Content\DataTables\images\sort_desc_disabled.png" />
     <Content Include="Content\DragAndDrop\DragAndDrop.js" />
     <Content Include="Content\EditCommon\icon-edit.png" />
     <Content Include="Content\FilesListing\FilesListing.js" />
@@ -139,7 +156,9 @@
     <Compile Include="Infrastructure\SharedEntityAlternativeAuthorizationAttribute.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="Scripts\DataTables\jquery.dataTables.js" />
     <Content Include="Views\Vacations\Index.cshtml" />
+    <Content Include="Content\DataTables\images\Sorting icons.psd" />
     <None Include="_bin_deployableAssemblies\FSharp.Core.dll" />
   </ItemGroup>
   <ItemGroup>
