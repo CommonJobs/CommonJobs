@@ -156,6 +156,7 @@
     <Compile Include="Infrastructure\SharedEntityAlternativeAuthorizationAttribute.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="Content\Vacations\Vacations.js" />
     <Content Include="Scripts\DataTables\jquery.dataTables.js" />
     <Content Include="Views\Vacations\Index.cshtml" />
     <Content Include="Content\DataTables\images\Sorting icons.psd" />
