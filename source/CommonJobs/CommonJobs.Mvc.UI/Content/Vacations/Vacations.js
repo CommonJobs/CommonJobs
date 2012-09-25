@@ -89,6 +89,21 @@
             }
         ]
         //  , "sDom": "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'p>>"
+        , "sDom": 'T<"clear">lfrtip'
+        //TODO: Read 
+        // * http://datatables.net/release-datatables/extras/TableTools/bootstrap.html
+        // * http://datatables.net/extras/tabletools/button_options
+        ,"oTableTools": {
+            "aButtons": [
+                "copy",
+                "print",
+                {
+                	"sExtends":    "collection",
+                	"sButtonText": "Save",
+                	"aButtons":    [ "csv", "xls", "pdf" ]
+                }
+		    ]
+        }
     });
 
     whileTrue(

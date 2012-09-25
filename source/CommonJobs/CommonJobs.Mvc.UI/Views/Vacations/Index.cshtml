@@ -6,9 +6,12 @@
     ScriptManager.RegisterJs(Url.Content("~/Scripts/DataTables/jquery.dataTables.js"));
     ScriptManager.RegisterJs(Url.Content("~/CJLogic/CJLogic.CalculateVacations.js"));
     ScriptManager.RegisterJs(Url.Content("~/Content/Vacations/Vacations.js"));
-    ScriptManager.RegisterCss(Url.Content("~/Content/DataTables/css/jquery.dataTables.css"), priority: 500);
+    ScriptManager.RegisterCss(Url.Content("~/Content/DataTables/css/jquery.dataTables.css"));
+    ScriptManager.RegisterJs(Url.Content("~/Content/TableTools-2.1.4/media/js/ZeroClipboard.js"));
+    ScriptManager.RegisterJs(Url.Content("~/Content/TableTools-2.1.4/media/js/TableTools.js"));
+    ScriptManager.RegisterCss(Url.Content("~/Content/TableTools-2.1.4/media/css/TableTools.css"));
 
-    <!--    <script src="/Content/DataTables/extras/TableTools/media/js/ZeroClipboard.js" type="text/javascript"></script><script src="/Content/DataTables/extras/TableTools/media/js/TableTools.js" type="text/javascript"></script>    -->
+    ScriptManager.RegisterGlobalJavascript("TableTools.DEFAULTS.sSwfPath", Url.Content("~/Content/TableTools-2.1.4/media/swf/copy_csv_xls_pdf.swf"));
 }
 
 <div class="bootstrap-scope">
