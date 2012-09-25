@@ -123,6 +123,23 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="CJLogic\CJLogic.CalculateVacations.js" />
+    <Content Include="Content\DataTables\css\demo_page.css" />
+    <Content Include="Content\DataTables\css\demo_table.css" />
+    <Content Include="Content\DataTables\css\demo_table_jui.css" />
+    <Content Include="Content\DataTables\css\jquery.dataTables.css" />
+    <Content Include="Content\DataTables\css\jquery.dataTables_themeroller.css" />
+    <Content Include="Content\DataTables\images\back_disabled.png" />
+    <Content Include="Content\DataTables\images\back_enabled.png" />
+    <Content Include="Content\DataTables\images\back_enabled_hover.png" />
+    <Content Include="Content\DataTables\images\favicon.ico" />
+    <Content Include="Content\DataTables\images\forward_disabled.png" />
+    <Content Include="Content\DataTables\images\forward_enabled.png" />
+    <Content Include="Content\DataTables\images\forward_enabled_hover.png" />
+    <Content Include="Content\DataTables\images\sort_asc.png" />
+    <Content Include="Content\DataTables\images\sort_asc_disabled.png" />
+    <Content Include="Content\DataTables\images\sort_both.png" />
+    <Content Include="Content\DataTables\images\sort_desc.png" />
+    <Content Include="Content\DataTables\images\sort_desc_disabled.png" />
     <Content Include="Content\DragAndDrop\DragAndDrop.js" />
     <Content Include="Content\EditCommon\icon-edit.png" />
     <Content Include="Content\FilesListing\FilesListing.js" />
@@ -139,7 +156,40 @@
     <Compile Include="Infrastructure\SharedEntityAlternativeAuthorizationAttribute.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="Content\TableTools-2.1.4\media\css\TableTools.css" />
+    <Content Include="Content\TableTools-2.1.4\media\css\TableTools_JUI.css" />
+    <Content Include="Content\TableTools-2.1.4\media\images\background.png" />
+    <Content Include="Content\TableTools-2.1.4\media\images\collection.png" />
+    <Content Include="Content\TableTools-2.1.4\media\images\collection_hover.png" />
+    <Content Include="Content\TableTools-2.1.4\media\images\copy.png" />
+    <Content Include="Content\TableTools-2.1.4\media\images\copy_hover.png" />
+    <Content Include="Content\TableTools-2.1.4\media\images\csv.png" />
+    <Content Include="Content\TableTools-2.1.4\media\images\csv_hover.png" />
+    <Content Include="Content\TableTools-2.1.4\media\images\pdf.png" />
+    <Content Include="Content\TableTools-2.1.4\media\images\pdf_hover.png" />
+    <Content Include="Content\TableTools-2.1.4\media\images\print.png" />
+    <Content Include="Content\TableTools-2.1.4\media\images\print_hover.png" />
+    <Content Include="Content\TableTools-2.1.4\media\images\xls.png" />
+    <Content Include="Content\TableTools-2.1.4\media\images\xls_hover.png" />
+    <Content Include="Content\TableTools-2.1.4\media\js\TableTools.js" />
+    <Content Include="Content\TableTools-2.1.4\media\js\TableTools.min.js">
+      <DependentUpon>TableTools.js</DependentUpon>
+    </Content>
+    <Content Include="Content\TableTools-2.1.4\media\js\ZeroClipboard.js" />
+    <Content Include="Content\TableTools-2.1.4\media\swf\copy_csv_xls.swf" />
+    <Content Include="Content\TableTools-2.1.4\media\swf\copy_csv_xls_pdf.swf" />
+    <Content Include="Content\Vacations\Vacations.js" />
+    <Content Include="Scripts\DataTables\jquery.dataTables.js" />
     <Content Include="Views\Vacations\Index.cshtml" />
+    <Content Include="Content\DataTables\images\Sorting icons.psd" />
+    <Content Include="Content\TableTools-2.1.4\media\as3\lib\AlivePDF.swc" />
+    <Content Include="Content\TableTools-2.1.4\media\as3\ZeroClipboard.as" />
+    <Content Include="Content\TableTools-2.1.4\media\as3\ZeroClipboardPdf.as" />
+    <Content Include="Content\TableTools-2.1.4\media\images\psd\collection.psd" />
+    <Content Include="Content\TableTools-2.1.4\media\images\psd\copy document.psd" />
+    <Content Include="Content\TableTools-2.1.4\media\images\psd\file_types.psd" />
+    <Content Include="Content\TableTools-2.1.4\media\images\psd\printer.psd" />
+    <Content Include="Content\TableTools-2.1.4\media\js\TableTools.min.js.gz" />
     <None Include="_bin_deployableAssemblies\FSharp.Core.dll" />
   </ItemGroup>
   <ItemGroup>
