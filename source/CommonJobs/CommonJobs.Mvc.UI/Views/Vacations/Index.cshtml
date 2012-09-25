@@ -3,35 +3,30 @@
     ScriptManager.RegisterCss(Url.Content("~/Content/ie.css"), priority: 500, htmlAttributes: new { media = "screen" }, patchCondition: "lte IE 9");
     ScriptManager.RegisterCss(Url.Content("~/Content/1140.css"), priority: 500, htmlAttributes: new { media = "screen" });
     ScriptManager.RegisterCss(Url.Content("~/Content/reset.css"), priority: 500);
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/DataTables/jquery.dataTables.js"));
     ScriptManager.RegisterJs(Url.Content("~/CJLogic/CJLogic.CalculateVacations.js"));
-}
-<h2>Vacations</h2>
-<pre id="demoElement"></pre>
-<script type="text/javascript">
-    $(function () {
-        var whileTrue = function (getData, callback, take, skip) {
-            skip = skip || 0;
-            take = take || 10;
-            getData(take, skip, function (data) {
-                callback(data, take, skip) && whileTrue(getData, callback, take, skip + take);
-            });
-        };
+    ScriptManager.RegisterJs(Url.Content("~/Content/Vacations/Vacations.js"));
+    ScriptManager.RegisterCss(Url.Content("~/Content/DataTables/css/jquery.dataTables.css"));
+    ScriptManager.RegisterJs(Url.Content("~/Content/TableTools-2.1.4/media/js/ZeroClipboard.js"));
+    ScriptManager.RegisterJs(Url.Content("~/Content/TableTools-2.1.4/media/js/TableTools.js"));
+    ScriptManager.RegisterCss(Url.Content("~/Content/TableTools-2.1.4/media/css/TableTools.css"));
 
-        whileTrue(
-            function (take, skip, callback) {
-                jQuery.getJSON(urlGenerator.action("VacationBunch", "Vacations"), { Skip: skip, Take: take }, function (data, textStatus, jqXHR) {
-                    callback(data);
-                });
-            },
-            function (data, take, skip) {
-                $("#demoElement").append("\n\nSkipped: " + data.Skipped + "; TotalResults: " + data.TotalResults);
-                _.each(data.Items, function (employee) {
-                    if (data.Items.length) {
-                        employee.CalculatedVacations = CJLogic.CalculateVacations(employee.HiringDate, employee.Vacations, ViewData.now);
-                    }
-                    $("#demoElement").append("\n" + JSON.stringify(employee));
-                });
-                return skip + take < data.TotalResults
-            });
-    });
-</script>
+    ScriptManager.RegisterGlobalJavascript("TableTools.DEFAULTS.sSwfPath", Url.Content("~/Content/TableTools-2.1.4/media/swf/copy_csv_xls_pdf.swf"));
+}
+
+<div class="bootstrap-scope">
+    <table id="vacations-table" cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered table-hover table-condensed">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Ingreso</th>
+            <th>Adeudadas</th>
+            <th>Tomadas</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+    </table>
+
+    <pre id="debug-element"></pre>
+</div>
