@@ -20,12 +20,12 @@
         "bInfo": false,
         "bAutoWidth": false,
         "aoColumns": [
-            DataTablesHelpers.columns.fullName(
+            DataTablesHelpers.column.fullName(
                 function (data) { return data.employee.LastName; },
                 function (data) { return data.employee.FirstName; }),
-            DataTablesHelpers.columns.date(function (data) { return data.employee.HiringDate; }),
-            DataTablesHelpers.columns.number(function (data) { return data.vacations.TotalPending; }),
-            DataTablesHelpers.columns.number(function (data) { return data.vacations.TotalTaken; })
+            DataTablesHelpers.column.date(function (data) { return data.employee.HiringDate; }),
+            DataTablesHelpers.column.number(function (data) { return data.vacations.TotalPending; }),
+            DataTablesHelpers.column.number(function (data) { return data.vacations.TotalTaken; })
         ]
         ,"sDom": 'T<"clear">lfrtip'
         //TODO: Read 
