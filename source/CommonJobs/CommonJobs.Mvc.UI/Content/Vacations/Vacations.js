@@ -76,24 +76,9 @@
             });
         },
         function (data, take, skip) {
-            //#region Debug
-            $debugElement.append("\n\nSkipped: " + data.Skipped + "; TotalResults: " + data.TotalResults);
-            //#endregion
-
             $table.dataTable().fnAddData(
                 _.map(data.Items, function (employee) {
-
-                    var vacations = $.extend({}, CJLogic.CalculateVacations(employee.HiringDate, employee.Vacations, ViewData.now));
-
-                    //#region Debug
-                    $debugElement.append("\n" + JSON.stringify(employee));
-                    if (vacations) {
-                        $debugElement.append("\n" + JSON.stringify(vacations));
-                    }
-                    $debugElement.append("\n");
-                    //#endregion
-
-                    return { employee: employee, vacations: vacations };
+                    return { employee: employee, vacations: $.extend({}, CJLogic.CalculateVacations(employee.HiringDate, employee.Vacations, ViewData.now)) };
                 }));
 
             var thereAreMore = skip + take < data.TotalResults;
