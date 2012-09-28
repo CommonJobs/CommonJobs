@@ -12,6 +12,33 @@
     var $table = $('#vacations-table');
     var years = _.range(moment(ViewData.now).year(), moment(ViewData.now).year() - 9, -1);
 
+    var getVacationByYear = function (vacations, year) {
+        var result = { Earned: 0, Taken: 0 };
+        if (vacations && vacations.ByYear && vacations.ByYear[year]) {
+            var v = vacations.ByYear[year];
+            result.Earned += (+v.Earned || 0);
+            result.Taken += (+v.Taken || 0);
+        }
+        return result;
+    };
+
+    var getOldVacations = function (vacations, fromYear) {
+        var result = { Earned: 0, Taken: 0 };
+        if (vacations && vacations.ByYear) {
+            _.each(vacations.ByYear, function (v, k) {
+                if (k <= fromYear) {
+                    result.Earned += (+v.Earned || 0);
+                    result.Taken += (+v.Taken || 0);
+                }
+            });
+        }
+        return result;
+    };
+
+    var formatVacation = function(earned, taken) {
+        return !earned && !taken ? ' - ' : "" + taken + " / " + earned;
+    };
+
     $.extend(DataTablesHelpers.column, {
         vacationCell: function (getVal, moreOptions) {
             return jQuery.extend({
@@ -22,8 +49,8 @@
                     var earned = val.Earned || 0;
                     var taken = val.Taken || 0;
                     switch (type) {
-                        case 'filter': return !earned && !taken ? ' - ' : "" + taken + " / " + earned;
-                        case 'display': return !earned && !taken ? ' - ' : "" + taken + " / " + earned;
+                        case 'filter': 
+                        case 'display': return formatVacation(earned, taken);
                         default: return !earned && !taken ? null : taken;
                     }
                 }
@@ -31,27 +58,12 @@
         },
         vacationsByYear: function (year, moreOptions) {
             return DataTablesHelpers.column.vacationCell(
-                function (data) {
-                    return !data || !data.vacations || !data.vacations.ByYear || !data.vacations.ByYear[year]
-                        ? {}
-                        : data.vacations.ByYear[year];
-                },
+                function (data) { return getVacationByYear(data.vacations, year); },
                 moreOptions);
         },
         vacationsOld: function (fromYear, moreOptions) {
             return DataTablesHelpers.column.vacationCell(
-                function (data) {
-                    var result = { Earned: 0, Taken: 0 };
-                    if (data && data.vacations && data.vacations.ByYear) {
-                        _.each(data.vacations.ByYear, function (v, k) {
-                            if (k <= fromYear) {
-                                result.Earned += (+v.Earned || 0);
-                                result.Taken += (+v.Taken || 0);
-                            }
-                        });
-                    }
-                    return result;
-                },
+                function (data) { return getOldVacations(data.vacations, fromYear) },
                 moreOptions);
         }
     });
@@ -101,24 +113,49 @@
             var $footer = $(nFoot);
             var cells = {
                 pending: $footer.find(".pending"),
-                taken: $footer.find(".taken")
+                taken: $footer.find(".taken"),
+                old: $footer.find(".old")
             };
-            _.chain(aiDisplay)
+
+            _.each(years, function (y) {
+                cells[y] = $footer.find(".year-" + y);
+            });
+
+            var cleanReduce = { pending: 0, taken: 0, old: { Taken: 0, Earned: 0 } };
+            _.each(years, function (v) {
+                cleanReduce[v] = { Taken: 0, Earned: 0 };
+            });
+
+            var totals = _.chain(aiDisplay)
                 .map(function (x) { return vacations = aaData[x].vacations; })
                 .filter(function (x) { return x; })
                 .reduce(
-                    function (memo, x) {
-                        return {
-                            pending: x.TotalPending ? x.TotalPending + memo.pending : memo.pending,
-                            taken: x.TotalTaken ? x.TotalTaken + memo.taken : memo.taken
-                        };
+                    function (memo, data) {
+                        memo.pending += +data.TotalPending || 0;
+                        memo.taken += +data.TotalTaken || 0;
+
+                        var old = getOldVacations(data, moment(ViewData.now).year() - 9);
+                        memo.old.Taken += old.Taken;
+                        memo.old.Earned += old.Earned;
+
+                        _.each(years, function (y) {
+                            var v = getVacationByYear(data, y);
+                            memo[y].Taken += v.Taken;
+                            memo[y].Earned += v.Earned;
+                        });
+                        return memo;
                     },
-                    {
-                        pending: 0, taken: 0
-                    })
-                .each(function (v, k) {
-                    cells[k].text(v);
-                });
+                    cleanReduce).value();
+
+            
+            _.each(years, function(y) {
+                totals[y] = formatVacation(totals[y].Earned, totals[y].Taken);
+            });
+            totals.old = formatVacation(totals.old.Earned, totals.old.Taken);
+
+            _.each(totals, function (v, k) {
+                cells[k].text(v);
+            });
         }
     });
 
