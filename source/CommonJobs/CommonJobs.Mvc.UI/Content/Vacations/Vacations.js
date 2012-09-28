@@ -8,7 +8,6 @@
         });
     };
 
-    var $debugElement = $('#debug-element');
     var $table = $('#vacations-table');
     var currentYear = _.first(ViewData.years);
     var yearColumns = ViewData.years.length;
