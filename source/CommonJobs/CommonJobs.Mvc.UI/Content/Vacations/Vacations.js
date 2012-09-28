@@ -13,33 +13,46 @@
     var years = _.range(moment(ViewData.now).year(), moment(ViewData.now).year() - 9, -1);
 
     $.extend(DataTablesHelpers.column, {
-        vacationsByYear: function (year, moreOptions) {
+        vacationCell: function (getVal, moreOptions) {
             return jQuery.extend({
                 "sType": "nulls-below-string",
                 "mData": function (data, type, val) {
                     if (type === 'set') return; //TODO
-                    var val = year;//getVal(data);
+                    var val = getVal(data);
+                    var earned = val.Earned || 0;
+                    var taken = val.Taken || 0;
                     switch (type) {
-                        case 'filter': return val;
-                        case 'display': return val;
-                        default: return val;
+                        case 'filter': return !earned && !taken ? ' - ' : "" + taken + " / " + earned;
+                        case 'display': return !earned && !taken ? ' - ' : "" + taken + " / " + earned;
+                        default: return !earned && !taken ? null : taken;
                     }
                 }
             }, moreOptions);
         },
+        vacationsByYear: function (year, moreOptions) {
+            return DataTablesHelpers.column.vacationCell(
+                function (data) {
+                    return !data || !data.vacations || !data.vacations.ByYear || !data.vacations.ByYear[year]
+                        ? {}
+                        : data.vacations.ByYear[year];
+                },
+                moreOptions);
+        },
         vacationsOld: function (fromYear, moreOptions) {
-            return jQuery.extend({
-                "sType": "nulls-below-string",
-                "mData": function (data, type, val) {
-                    if (type === 'set') return; //TODO
-                    var val = fromYear;//getVal(data);
-                    switch (type) {
-                        case 'filter': return val;
-                        case 'display': return val;
-                        default: return val;
+            return DataTablesHelpers.column.vacationCell(
+                function (data) {
+                    var result = { Earned: 0, Taken: 0 };
+                    if (data && data.vacations && data.vacations.ByYear) {
+                        _.each(function (v, k) {
+                            if (k < fromYear) {
+                                result.Earned += (+v.Earned || 0);
+                                result.Taken += (+v.Taken || 0);
+                            }
+                        });
                     }
-                }
-            }, moreOptions);
+                    return result;
+                },
+                moreOptions);
         }
     });
     
@@ -116,6 +129,9 @@
         function (data, take, skip) {
             $table.dataTable().fnAddData(
                 _.map(data.Items, function (employee) {
+                    var debug = CJLogic.CalculateVacations(employee.HiringDate, employee.Vacations, ViewData.now);
+                    if (debug)
+                        console.debug(debug);
                     return { employee: employee, vacations: $.extend({}, CJLogic.CalculateVacations(employee.HiringDate, employee.Vacations, ViewData.now)) };
                 }));
 
