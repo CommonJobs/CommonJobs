@@ -43,8 +43,8 @@
                 function (data) {
                     var result = { Earned: 0, Taken: 0 };
                     if (data && data.vacations && data.vacations.ByYear) {
-                        _.each(function (v, k) {
-                            if (k < fromYear) {
+                        _.each(data.vacations.ByYear, function (v, k) {
+                            if (k <= fromYear) {
                                 result.Earned += (+v.Earned || 0);
                                 result.Taken += (+v.Taken || 0);
                             }
@@ -131,9 +131,6 @@
         function (data, take, skip) {
             $table.dataTable().fnAddData(
                 _.map(data.Items, function (employee) {
-                    var debug = CJLogic.CalculateVacations(employee.HiringDate, employee.Vacations, ViewData.now);
-                    if (debug)
-                        console.debug(debug);
                     return { employee: employee, vacations: $.extend({}, CJLogic.CalculateVacations(employee.HiringDate, employee.Vacations, ViewData.now)) };
                 }));
 
