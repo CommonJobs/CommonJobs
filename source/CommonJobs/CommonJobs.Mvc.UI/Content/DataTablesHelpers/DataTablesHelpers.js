@@ -90,6 +90,21 @@
                         }
                     }
                 }, moreOptions);
+            },
+            link: function (columnDefinition, generateUrl, moreOptions) {
+                return jQuery.extend(
+                    {},
+                    columnDefinition,
+                    {
+                        "mData": function (data, type, val) {
+                            if (type === 'display') {
+                                return "<a href='" + generateUrl(data) + "'>" + columnDefinition.mData(data, type, val) + "</a>";
+                            } else {
+                                return columnDefinition.mData(data, type, val);
+                            }
+                        }
+                    },
+                moreOptions);
             }
         }
     };
