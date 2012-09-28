@@ -83,3 +83,15 @@ body span.rdbprofilerbutton
     width: 32px;
     text-align: center; 
 }
+
+.bootstrap-scope table td.center,
+.bootstrap-scope table th.center
+{
+    text-align: center
+}
+
+.bootstrap-scope table td.right,
+.bootstrap-scope table th.right
+{
+    text-align: right
+}

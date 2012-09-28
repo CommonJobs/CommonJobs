@@ -87,29 +87,25 @@
 
     $table.dataTable(
     {
-        "bPaginate": false,
-        "bLengthChange": false,
-        "bFilter": true,
-        //"bSort": false,
-        "bInfo": false,
-        "bAutoWidth": false,
-        "aoColumns": columns,
-        "sDom": 'T<"clear">lfrtip'
-        //TODO: Read 
-        // * http://datatables.net/release-datatables/extras/TableTools/bootstrap.html
-        // * http://datatables.net/extras/tabletools/button_options
-        ,"oTableTools": {
-            "aButtons": [
+        bPaginate: false,
+        bAutoWidth: false,
+        aoColumns: columns,
+        sDom: 'T<"clear">lfrtip',
+        oTableTools: {
+            aButtons: [
                 "copy",
                 "print",
                 {
-                	"sExtends":    "collection",
-                	"sButtonText": "Save",
-                	"aButtons":    [ "csv", "xls", "pdf" ]
+                	sExtends: "collection",
+                	sButtonText: "Save",
+                	aButtons: [ "csv", "xls", "pdf" ]
                 }
 		    ]
-        }
-        , "fnFooterCallback": function (nFoot, aaData, iStart, iEnd, aiDisplay) {
+        },
+        fnCreatedRow: function (nRow, aData, iDataIndex) {
+            $(nRow).find("td").first().nextAll().addClass("center");
+        },
+        fnFooterCallback: function (nFoot, aaData, iStart, iEnd, aiDisplay) {
             var $footer = $(nFoot);
             var cells = {
                 pending: $footer.find(".pending"),
