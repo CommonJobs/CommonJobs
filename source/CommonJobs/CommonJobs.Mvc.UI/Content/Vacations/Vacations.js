@@ -10,6 +10,53 @@
 
     var $debugElement = $('#debug-element');
     var $table = $('#vacations-table');
+    var years = _.range(moment(ViewData.now).year(), moment(ViewData.now).year() - 9, -1);
+
+    $.extend(DataTablesHelpers.column, {
+        vacationsByYear: function (year, moreOptions) {
+            return jQuery.extend({
+                "sType": "nulls-below-string",
+                "mData": function (data, type, val) {
+                    if (type === 'set') return; //TODO
+                    var val = year;//getVal(data);
+                    switch (type) {
+                        case 'filter': return val;
+                        case 'display': return val;
+                        default: return val;
+                    }
+                }
+            }, moreOptions);
+        },
+        vacationsOld: function (fromYear, moreOptions) {
+            return jQuery.extend({
+                "sType": "nulls-below-string",
+                "mData": function (data, type, val) {
+                    if (type === 'set') return; //TODO
+                    var val = fromYear;//getVal(data);
+                    switch (type) {
+                        case 'filter': return val;
+                        case 'display': return val;
+                        default: return val;
+                    }
+                }
+            }, moreOptions);
+        }
+    });
+    
+    var columns = [
+            DataTablesHelpers.column.fullName(
+                function (data) { return data.employee.LastName; },
+                function (data) { return data.employee.FirstName; }),
+            DataTablesHelpers.column.date(function (data) { return data.employee.HiringDate; }),
+            DataTablesHelpers.column.number(function (data) { return data.vacations.TotalPending; }),
+            DataTablesHelpers.column.number(function (data) { return data.vacations.TotalTaken; })
+    ];
+
+    _.each(years, function(y) {
+        columns.push(DataTablesHelpers.column.vacationsByYear(y));
+    });
+
+    columns.push(DataTablesHelpers.column.vacationsOld(moment(ViewData.now).year() - 9));
 
     $table.dataTable(
     {
@@ -19,17 +66,8 @@
         //"bSort": false,
         "bInfo": false,
         "bAutoWidth": false,
-        "aoColumns": [
-            DataTablesHelpers.column.link(
-                DataTablesHelpers.column.fullName(
-                    function (data) { return data.employee.LastName; },
-                    function (data) { return data.employee.FirstName; }),
-                function(data) { return urlGenerator.action("Edit", "Employees", data.employee.Id); }),
-            DataTablesHelpers.column.date(function (data) { return data.employee.HiringDate; }),
-            DataTablesHelpers.column.number(function (data) { return data.vacations.TotalPending; }),
-            DataTablesHelpers.column.number(function (data) { return data.vacations.TotalTaken; })
-        ]
-        ,"sDom": 'T<"clear">lfrtip'
+        "aoColumns": columns,
+        "sDom": 'T<"clear">lfrtip'
         //TODO: Read 
         // * http://datatables.net/release-datatables/extras/TableTools/bootstrap.html
         // * http://datatables.net/extras/tabletools/button_options

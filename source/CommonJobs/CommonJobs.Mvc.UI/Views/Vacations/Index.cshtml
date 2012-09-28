@@ -12,6 +12,7 @@
     ScriptManager.RegisterJs(Url.Content("~/Content/TableTools-2.1.4/media/js/TableTools.js"));
     ScriptManager.RegisterCss(Url.Content("~/Content/TableTools-2.1.4/media/css/TableTools.css"));
     ScriptManager.RegisterGlobalJavascript("TableTools.DEFAULTS.sSwfPath", Url.Content("~/Content/TableTools-2.1.4/media/swf/copy_csv_xls_pdf.swf"));
+    var years = Enumerable.Range(DateTime.Now.Year - 8, 9).Reverse().ToArray();
 }
 
 <div class="bootstrap-scope">
@@ -22,6 +23,11 @@
             <th>Ingreso</th>
             <th>Adeudadas</th>
             <th>Tomadas</th>
+            @foreach (var y in years)
+            {
+                <th class="year-@y">@y</th>
+            } 
+            <th class="year-old">Anteriores</th>
         </tr>
     </thead>
     <tbody>
@@ -32,6 +38,11 @@
             <th></th>
             <th class="pending"></th>
             <th class="taken"></th>
+            @foreach (var y in years)
+            {
+                <th class="year-@y"></th>
+            } 
+            <th class="year-old"></th>
 		</tr>
 	</tfoot>
     </table>
