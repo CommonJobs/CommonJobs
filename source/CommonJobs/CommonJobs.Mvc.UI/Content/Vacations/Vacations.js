@@ -45,7 +45,6 @@
 		    ]
         }
         , "fnFooterCallback": function (nFoot, aaData, iStart, iEnd, aiDisplay) {
-            
             var $footer = $(nFoot);
             var cells = {
                 pending: $footer.find(".pending"),
@@ -81,23 +80,21 @@
             $debugElement.append("\n\nSkipped: " + data.Skipped + "; TotalResults: " + data.TotalResults);
             //#endregion
 
-            _.each(data.Items, function (employee) {
-                var vacations = {};
-                if (data.Items.length) {
-                    vacations = $.extend(vacations, CJLogic.CalculateVacations(employee.HiringDate, employee.Vacations, ViewData.now));
-                }
+            $table.dataTable().fnAddData(
+                _.map(data.Items, function (employee) {
 
-                //#region Debug
-                $debugElement.append("\n" + JSON.stringify(employee));
-                if (vacations) {
-                    $debugElement.append("\n" + JSON.stringify(vacations));
-                }
-                $debugElement.append("\n");
-                //#endregion
+                    var vacations = $.extend({}, CJLogic.CalculateVacations(employee.HiringDate, employee.Vacations, ViewData.now));
 
-                //TODO: call in bunches
-                $table.dataTable().fnAddData({ employee: employee, vacations: vacations });
-            });
+                    //#region Debug
+                    $debugElement.append("\n" + JSON.stringify(employee));
+                    if (vacations) {
+                        $debugElement.append("\n" + JSON.stringify(vacations));
+                    }
+                    $debugElement.append("\n");
+                    //#endregion
+
+                    return { employee: employee, vacations: vacations };
+                }));
 
             var thereAreMore = skip + take < data.TotalResults;
 
