@@ -44,6 +44,30 @@
                 }
 		    ]
         }
+        , "fnFooterCallback": function (nFoot, aaData, iStart, iEnd, aiDisplay) {
+            
+            var $footer = $(nFoot);
+            var cells = {
+                pending: $footer.find(".pending"),
+                taken: $footer.find(".taken")
+            };
+            _.chain(aiDisplay)
+                .map(function (x) { return vacations = aaData[x].vacations; })
+                .filter(function (x) { return x; })
+                .reduce(
+                    function (memo, x) {
+                        return {
+                            pending: x.TotalPending ? x.TotalPending + memo.pending : memo.pending,
+                            taken: x.TotalTaken ? x.TotalTaken + memo.taken : memo.taken
+                        };
+                    },
+                    {
+                        pending: 0, taken: 0
+                    })
+                .each(function (v, k) {
+                    cells[k].text(v);
+                });
+        }
     });
 
     whileTrue(
@@ -71,6 +95,7 @@
                 $debugElement.append("\n");
                 //#endregion
 
+                //TODO: call in bunches
                 $table.dataTable().fnAddData({ employee: employee, vacations: vacations });
             });
 
