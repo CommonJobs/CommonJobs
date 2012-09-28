@@ -2,7 +2,7 @@
     var rowTemplate = _.template($("#row-template").text());
     var whileTrue = function (getData, callback, take, skip) {
         skip = skip || 0;
-        take = take || 10;
+        take = take || ViewData.bsize;
         getData(take, skip, function (data) {
             callback(data, take, skip) && whileTrue(getData, callback, take, skip + take);
         });
@@ -10,7 +10,9 @@
 
     var $debugElement = $('#debug-element');
     var $table = $('#vacations-table');
-    var years = _.range(moment(ViewData.now).year(), moment(ViewData.now).year() - 9, -1);
+    var currentYear = _.first(ViewData.years);
+    var yearColumns = ViewData.years.length;
+    var years = ViewData.years;
 
     var getVacationByYear = function (vacations, year) {
         var result = { Earned: 0, Taken: 0 };
@@ -83,7 +85,7 @@
         columns.push(DataTablesHelpers.column.vacationsByYear(y));
     });
 
-    columns.push(DataTablesHelpers.column.vacationsOld(moment(ViewData.now).year() - 9));
+    columns.push(DataTablesHelpers.column.vacationsOld(currentYear - yearColumns));
 
     $table.dataTable(
     {
@@ -130,7 +132,7 @@
                         memo.pending += +data.TotalPending || 0;
                         memo.taken += +data.TotalTaken || 0;
 
-                        var old = getOldVacations(data, moment(ViewData.now).year() - 9);
+                        var old = getOldVacations(data, currentYear - yearColumns);
                         memo.old.Taken += old.Taken;
                         memo.old.Earned += old.Earned;
 
