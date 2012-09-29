@@ -1,6 +1,6 @@
 ﻿$(function () {
     $.extend($.fn.DataTable.defaults.oLanguage, {
-            "sEmptyTable": "No data available in table",
+            "sEmptyTable": "No hay datos disponibles",
             "sInfo": "Mostrando desde _START_ hasta _END_ de _TOTAL_ registros",
             "sInfoEmpty": "Mostrando desde 0 hasta 0 de 0 registros",
             "sInfoFiltered": "(filtrado de _MAX_ registros en total)",
