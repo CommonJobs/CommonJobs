@@ -39,7 +39,7 @@
         var filledById = getEmployeeAttachmentsBySlot(employee);
 
         var singleFile = this._files.length == 1;
-        var $slots = $(slotsTemplate({ model: { singleFile: singleFile } }));
+        var $slots = $(slotsTemplate({ model: { singleFile: singleFile} }));
 
         if (singleFile) {
             var btns = {};
@@ -48,10 +48,10 @@
                 var filled = filledById[slot.Id];
                 var $btn;
                 if (filled && filled.get('Attachment')) {
-                    $btn = $(slotBtnTemplate({ model: { caption: slot.Name + ": " + filled.get('Attachment').FileName } }));
+                    $btn = $(slotBtnTemplate({ model: { caption: slot.Name + ": " + filled.get('Attachment').FileName} }));
                     $btn.prop("disabled", true);
                 } else {
-                    $btn = $(slotBtnTemplate({ model: { caption: slot.Name } }));
+                    $btn = $(slotBtnTemplate({ model: { caption: slot.Name} }));
                     $btn.on("click", function () {
                         me.data.formData = { slot: slot.Id };
                         me.data.submit();
@@ -92,7 +92,7 @@
     UploadModal.prototype.personDetail = function (employee, $el) {
         //employee: backbone model object
         var result = this
-            // remove old photo
+        // remove old photo
             .$("img.uploadPicture", function () { this.remove(); });
 
         var photo = employee.get('Photo');
@@ -105,7 +105,7 @@
                 );
             });
         }
-        
+
         return result.text(".person-name", employee.get('LastName') + ", " + employee.get('FirstName'))
     };
 
@@ -114,13 +114,16 @@
             input: this.$(".dropzoneinput"),
             url: urlGenerator.action("Post", "Attachments", model.get('Id')),
             add: function (e, data, $el) {
-                new UploadModal($('#generic-modal'))
-                    .personDetail(model, $el)
-                    .title("Adjuntar Archivos")
-                    .files(data)
-                    .drawSlots($el, model)
-                    .closeButtonText("Cancelar")
-                    .modal();
+                if ((data.result && data.result.attachments && data.result.attachments.length)
+                    || (data.files && data.files.length)) {
+                        new UploadModal($('#generic-modal'))
+                        .personDetail(model, $el)
+                        .title("Adjuntar Archivos")
+                        .files(data)
+                        .drawSlots($el, model)
+                        .closeButtonText("Cancelar")
+                        .modal();
+                }
             },
             done: function (e, data, $el) {
                 var modal = new UploadModal($('#generic-modal'))
@@ -150,8 +153,8 @@
                         });
                     });
                 }
-                
-                modal.modal();  
+
+                modal.modal();
             },
             fail: function (e, data, $el) {
                 new UploadModal($('#generic-modal'))
@@ -448,7 +451,7 @@
                     firstNameField: "FirstName"
                 },
                 Photo: { controlLink: "CjEmployeePicture" },
-                IsGraduated: { controlLink: "Options", options: [{ value: false, text: "No recibido" }, { value: true, text: "Recibido" }] },
+                IsGraduated: { controlLink: "Options", options: [{ value: false, text: "No recibido" }, { value: true, text: "Recibido"}] },
                 BirthDate: { controlLink: "Date", valueToContent: formatLongDateWithYears },
                 MaritalStatus: { controlLink: "Options", options: [{ value: 0, text: "Soltero" }, { value: 1, text: "Casado" }, { value: 2, text: "Divorciado"}] },
                 HiringDate: { controlLink: "Date", valueToContent: formatLongDateWithYears },
@@ -499,7 +502,7 @@
             "click .file-delete": "deleteFile"
         },
         deleteFile: function () {
-            
+
         },
         initialize: function () {
             this.emptySlotTemplate = _.template($("#empty-slot-template").html());
@@ -527,7 +530,7 @@
             // for each slot
             _.each(this.model.slots, function (slot) {
                 // find if any attachment is associated to it
-                var attachment = _.find(collection.models, function(a) {
+                var attachment = _.find(collection.models, function (a) {
                     return a.get('SlotId') == slot.Id;
                 });
                 var isEmpty = !attachment;
