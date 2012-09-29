@@ -57,15 +57,15 @@
 
     window.DataTablesHelpers = {
         column: {
-            date: function (getVal, moreOptions) {
+            month: function (getVal, moreOptions) {
                 return jQuery.extend({
                     "sType": "nulls-below-string",
                     "mData": function (data, type, val) {
                         if (type === 'set') return; //TODO
                         var val = getVal(data);
                         switch (type) {
-                            case 'filter': return val ? moment(val).format("MMMM DD-MM-YYYY-MM-DD") : "Sin fecha";
-                            case 'display': return val ? moment(val).format("MMMM YYYY") : "<em>Sin fecha</em>";
+                            case 'filter': return val ? moment(val).format("DD-MM-YY MMM YY MMMM YYYY-MM-DD") : "Sin fecha";
+                            case 'display': return val ? moment(val).format("MMM YYYY") : "<em>Sin fecha</em>";
                             default: return val ? moment(val).format("YYYY-MM-DD") : null;
                         }
                     }
