@@ -14,15 +14,19 @@ namespace CommonJobs.Mvc.UI.Controllers
     {
         private static Logger log = LogManager.GetCurrentClassLogger();
 
-        public ActionResult Index()
+        public ActionResult Index(int yquantity = 6, int bsize = 20)
         {
+            var years = Enumerable.Range(DateTime.Now.Year + 1 - yquantity, yquantity).Reverse().ToArray();
+
             ScriptManager.RegisterGlobalJavascript(
                 "ViewData",
-                new
-                {
-                    now = DateTime.Now
-                },
-                500);
+                new { 
+                    years = years,
+                    bsize = bsize
+                }, 500);
+
+            ViewBag.years = years;
+
             return View();
         }
 

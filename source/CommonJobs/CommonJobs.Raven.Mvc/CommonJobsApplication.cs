@@ -25,7 +25,14 @@ namespace CommonJobs.Raven.Mvc
                 if (error != null)
                 {
                     log.ErrorException("Uncatched exception", error);
-                    LogManager.Flush(1000);
+                    try
+                    {
+                        LogManager.Flush(1000);
+                    }
+                    catch
+                    {
+                        //What can I do?
+                    }
                 }               
                 RavenSessionManager.CloseCurrentSession(error != null);
             };
