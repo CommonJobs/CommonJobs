@@ -75,7 +75,7 @@
                     function (data) { return data.employee.LastName; },
                     function (data) { return data.employee.FirstName; }),
                 function (data) { return urlGenerator.action("Edit", "Employees", data.employee.Id); }),
-            DataTablesHelpers.column.date(function (data) { return data.employee.HiringDate; }),
+            DataTablesHelpers.column.month(function (data) { return data.employee.HiringDate; }),
             DataTablesHelpers.column.number(function (data) { return data.vacations.TotalPending; }),
             DataTablesHelpers.column.number(function (data) { return data.vacations.TotalTaken; })
     ];
