@@ -176,10 +176,6 @@
 
             var thereAreMore = skip + take < data.TotalResults;
 
-            if (thereAreMore) {
-                return true;
-            } else {
-                return false;
-            }
+            return thereAreMore;
         });
 });
