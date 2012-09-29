@@ -313,7 +313,7 @@
                     _.each(data.result.attachments, function (attachment) {
                         notes.add({
                             Note: "QuickAttachment!",
-                            Attachment: attachment,
+                            Attachment: attachment
                         });
                     });
                     new UploadModal($('#generic-modal'))
