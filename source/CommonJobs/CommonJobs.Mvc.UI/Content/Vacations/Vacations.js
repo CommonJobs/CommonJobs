@@ -94,11 +94,17 @@
         sDom: 'T<"clear">lfrtip',
         oTableTools: {
             aButtons: [
-                "copy",
-                "print",
+                {
+                    sExtends: "copy",
+                    sButtonText: "Copiar"
+                },
+                {
+                    sExtends: "print",
+                    sButtonText: "Imprimir"
+                },
                 {
                 	sExtends: "collection",
-                	sButtonText: "Save",
+                	sButtonText: "Exportar",
                 	aButtons: [ "csv", "xls", "pdf" ]
                 }
 		    ]
