@@ -285,7 +285,7 @@
     <Content Include="Content\jquery.jqGrid\ellipsis-xbl.xml" />
     <Content Include="Content\jquery.jqGrid\ui.jqgrid.css" />
     <Content Include="Content\ListingCommon\QuickSearch.js" />
-    <Content Include="Content\menu_style.css" />
+    <None Include="Content\menu_style.less" />
     <Content Include="Content\Tests\nervousTissueTest.html" />
     <Content Include="Content\Tests\FileListingTest.html" />
     <Content Include="Content\Tests\qunit\qunit.css" />
