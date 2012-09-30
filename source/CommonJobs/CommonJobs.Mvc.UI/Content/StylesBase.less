@@ -20,6 +20,13 @@
     border-radius: @radius;
 }
 
+.right_rounded_corners(@radius: 10px)
+{
+    -moz-border-radius: 0px @radius @radius 0px;
+    -webkit-border-radius: 0px @radius @radius 0px;
+    border-radius: 0px @radius @radius 0px;
+}
+
 .box_sizing_border_box
 {
 	-webkit-box-sizing: border-box;

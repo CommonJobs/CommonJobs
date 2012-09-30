@@ -10,7 +10,7 @@
     ScriptManager.RegisterGlobalizationEntries(Url.Content("~/Scripts/jquery.globalize"), priority: 900);
     ScriptManager.RegisterCss(Url.Content("~/Content/themes/base/jquery.ui.all.css"), priority: 900);
     ScriptManager.RegisterCss(Url.Content("~/Content/Site.css"), priority: 900);
-    ScriptManager.RegisterCss(Url.Content("~/Content/menu_style.css"), priority: 900);
+    ScriptManager.RegisterCss(Url.Content("~/Content/menu_style.less"), priority: 900);
     ScriptManager.RegisterJs(Url.Content("~/Scripts/css3-mediaqueries.js"), priority: 900);
     ScriptManager.RegisterJs(Url.Content("~/Scripts/underscore.js"), priority: 900);
     ScriptManager.RegisterJs(Url.Content("~/Scripts/backbone.js"), priority: 900);
@@ -38,6 +38,7 @@
 			<ul class="menu">                 
 				<li class="top">@Html.ActionLink("Postulantes", "Index", "Applicants", null, new { @class = "top_link" })</li>
 				<li class="top">@Html.ActionLink("Empleados", "Index", "Employees", null, new { @class = "top_link" })</li>
+                <li class="top">@Html.ActionLink("Legajos", "Index", "EmployeeFiles", null, new { @class = "top_link" })</li>
                 <li class="top">@Html.ActionLink("Archivos", "Index", "Attachments", null, new { @class = "top_link" })</li>
                 <li class="top">@Html.ActionLink("Búsquedas", "Index", "JobSearches", null, new { @class = "top_link" })</li>
                 <li class="top">@Html.ActionLink("Vacaciones", "Index", "Vacations", null, new { @class = "top_link" })</li>
