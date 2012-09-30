@@ -53,10 +53,12 @@
                     aButtons: ["csv", "xls", "pdf"]
                 }
             ]
-        },
-        fnCreatedRow: function (nRow, aData, iDataIndex) {
-            $(nRow).find("td").first().nextAll().addClass("center");
         }
+        //TODO: format cells
+        //,
+        //fnCreatedRow: function (nRow, aData, iDataIndex) {
+        //    $(nRow).find("td").first().nextAll().addClass("center");
+        //}
     });
 
     whileTrue(
