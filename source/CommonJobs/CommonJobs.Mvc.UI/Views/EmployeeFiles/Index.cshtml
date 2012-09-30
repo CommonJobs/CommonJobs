@@ -3,16 +3,37 @@
     ScriptManager.RegisterCss(Url.Content("~/Content/ie.css"), priority: 500, htmlAttributes: new { media = "screen" }, patchCondition: "lte IE 9");
     ScriptManager.RegisterCss(Url.Content("~/Content/1140.css"), priority: 500, htmlAttributes: new { media = "screen" });
     ScriptManager.RegisterCss(Url.Content("~/Content/reset.css"), priority: 500);
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/DataTables/jquery.dataTables.js"));
+    ScriptManager.RegisterJs(Url.Content("~/Content/DataTablesHelpers/DataTablesHelpers.js"));
+    ScriptManager.RegisterJs(Url.Content("~/Content/EmployeeFiles/EmployeeFiles.js"));    
     ScriptManager.RegisterCss(Url.Content("~/Content/EmployeeFilesBase.less"), priority: 500);
-    ScriptManager.RegisterJs(Url.Content("~/Content/EmployeeFiles/EmployeeFiles.js"), priority: 500);
-    
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ScriptManager.RegisterCss(Url.Content("~/Content/DataTables/css/jquery.dataTables.css"));
+    ScriptManager.RegisterJs(Url.Content("~/Content/TableTools-2.1.4/media/js/ZeroClipboard.js"));
+    ScriptManager.RegisterJs(Url.Content("~/Content/TableTools-2.1.4/media/js/TableTools.js"));
+    ScriptManager.RegisterCss(Url.Content("~/Content/TableTools-2.1.4/media/css/TableTools.css"));
+    ScriptManager.RegisterGlobalJavascript("TableTools.DEFAULTS.sSwfPath", Url.Content("~/Content/TableTools-2.1.4/media/swf/copy_csv_xls_pdf.swf"));
 }
 
-<h2>Legajos</h2>
-
-<!--
-    TODO: Template for rendering each specific employee
-    Then apply the table sorter of choice.
-    Then apply styles. 
-    -->
+<h1>Legajos</h1>
+<div class="bootstrap-scope">
+    <table id="employee-files-table" class="table table-striped table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Número de legajo</th>
+                <th>Nombre</th>
+                <th>CUIL</th>
+                <th>Fecha de Ingreso</th>
+                <th>Banco</th>
+                <th>Sucursal de Banco</th>
+                <th>Cuenta bancaria</th>
+                <th>CBU</th>
+                <th>Obra Social</th>
+                <th>Convenio</th>
+                <th>Tarea</th>
+                <th>Fecha de nacimiento</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
