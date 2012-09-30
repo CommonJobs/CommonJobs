@@ -142,9 +142,11 @@
     <Content Include="Content\DataTables\images\sort_desc_disabled.png" />
     <Content Include="Content\DragAndDrop\DragAndDrop.js" />
     <Content Include="Content\EditCommon\icon-edit.png" />
+    <Content Include="Content\EmployeeFiles\EmployeeFiles.js" />
     <Content Include="Content\FilesListing\FilesListing.js" />
     <Compile Include="Controllers\ApplicantsController.cs" />
     <Compile Include="Controllers\AttachmentsController.cs" />
+    <Compile Include="Controllers\EmployeeFilesController.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\JobSearchesController.cs" />
@@ -192,6 +194,8 @@
     <Content Include="Content\TableTools-2.1.4\media\images\psd\file_types.psd" />
     <Content Include="Content\TableTools-2.1.4\media\images\psd\printer.psd" />
     <Content Include="Content\TableTools-2.1.4\media\js\TableTools.min.js.gz" />
+    <Content Include="Views\EmployeeFiles\Index.cshtml" />
+    <Content Include="Content\EmployeeFilesBase.less" />
     <None Include="_bin_deployableAssemblies\FSharp.Core.dll" />
   </ItemGroup>
   <ItemGroup>
@@ -281,7 +285,7 @@
     <Content Include="Content\jquery.jqGrid\ellipsis-xbl.xml" />
     <Content Include="Content\jquery.jqGrid\ui.jqgrid.css" />
     <Content Include="Content\ListingCommon\QuickSearch.js" />
-    <Content Include="Content\menu_style.css" />
+    <Content Include="Content\menu_style.less" />
     <Content Include="Content\Tests\nervousTissueTest.html" />
     <Content Include="Content\Tests\FileListingTest.html" />
     <Content Include="Content\Tests\qunit\qunit.css" />

@@ -126,6 +126,17 @@
                         }
                     },
                 moreOptions);
+            },
+            string: function (getVal, moreOptions) {
+                return jQuery.extend({
+                    "sType": "nulls-below-string",
+                    "mData": function (data, type, val) {
+                        if (type === 'set') return; //TODO
+
+                        return getVal(data);
+                    }
+                },
+                moreOptions);
             }
         }
     };
