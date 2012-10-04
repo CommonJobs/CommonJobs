@@ -11,6 +11,7 @@ namespace CommonJobs.Mvc.UI.Controllers
 {
     //NOTE: "Employee Files" as a name refers to the file that is the source of record for employee data
     //It is NOT meant as an synonym to "attachment"
+    [CommonJobsAuthorize(Roles = "Users")]
     public class EmployeeFilesController : CommonJobsController
     {
         public ActionResult Index(int batchSize = 100)
