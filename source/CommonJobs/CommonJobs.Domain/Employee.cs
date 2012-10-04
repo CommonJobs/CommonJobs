@@ -18,6 +18,13 @@ namespace CommonJobs.Domain
             AttachmentsBySlot = new List<SlotWithAttachment>();
         }
 
+        [Display(Name = "Usuario")]
+        public string UserName { get; set; }
+
+        [Display(Name = "E-mail corporativo")]
+        [DataType(DataType.EmailAddress)]
+        public string CorporativeEmail { get; set; }
+
         [Display(Name = "Fecha Inicio")]
         [DataType(DataType.Date)]
         public DateTime? HiringDate { get; set; }
