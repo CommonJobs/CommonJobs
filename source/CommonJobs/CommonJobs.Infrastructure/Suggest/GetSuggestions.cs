@@ -32,7 +32,7 @@ namespace CommonJobs.Infrastructure.Suggestions
                 .Distinct()
                 .Take(MaxSuggestions);
 
-            var results = query.ToList();
+            var results = query.AsEnumerable().Where(x => !string.IsNullOrWhiteSpace(x)).ToList();
 
             if (results.Count < MaxSuggestions)
             {
