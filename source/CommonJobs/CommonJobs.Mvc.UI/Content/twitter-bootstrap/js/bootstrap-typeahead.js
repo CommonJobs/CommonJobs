@@ -33,7 +33,11 @@
     this.sorter = this.options.sorter || this.sorter
     this.highlighter = this.options.highlighter || this.highlighter
     this.updater = this.options.updater || this.updater
-    this.$menu = $(this.options.menu).appendTo('body')
+
+    var scope = $("<div class='bootstrap-scope'></div>");
+    scope.appendTo('body');
+    this.$menu = $(this.options.menu).appendTo(scope)
+
     this.source = this.options.source
     this.shown = false
     this.listen()
@@ -48,6 +52,7 @@
       this.$element
         .val(this.updater(val))
         .change()
+        .trigger("input") 
       return this.hide()
     }
 
@@ -205,7 +210,7 @@
   , keypress: function (e) {
       if (!this.shown) return
 
-      switch(e.keyCode) {
+      switch (e.keyCode) {
         case 9: // tab
         case 13: // enter
         case 27: // escape
@@ -213,13 +218,13 @@
           break
 
         case 38: // up arrow
-          if (e.type != 'keydown') break
+          //if (e.type != 'keydown') break
           e.preventDefault()
           this.prev()
           break
 
         case 40: // down arrow
-          if (e.type != 'keydown') break
+          //if (e.type != 'keydown') break
           e.preventDefault()
           this.next()
           break
