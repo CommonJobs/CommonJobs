@@ -54,13 +54,45 @@ namespace CommonJobs.Mvc.UI.Controllers
             return Json(new { suggestions = results });
         }
 
-        //BankName
-        //InitialPosition
-        //CurrentPosition
-        //Seniority
+        public JsonNetResult BankName(string term, int maxSuggestions = 10)
+        {
+            var results = Query(new GetSuggestions(x => x.BankName, term, maxSuggestions));
+            return Json(new { suggestions = results });
+        }
+
+        public JsonNetResult Seniority(string term, int maxSuggestions = 10)
+        {
+            var results = Query(new GetSuggestions(x => x.Seniority, term, maxSuggestions));
+            return Json(new { suggestions = results });
+        }
+
+        public JsonNetResult Platform(string term, int maxSuggestions = 10)
+        {
+            var results = Query(new GetSuggestions(x => x.Platform, term, maxSuggestions));
+            return Json(new { suggestions = results });
+        }
+
+        [CommonJobsAuthorize(Roles = "Users")]
+        public JsonNetResult Project(string term, int maxSuggestions = 10)
+        {
+            var results = Query(new GetSuggestions(x => x.Project, term, maxSuggestions));
+            return Json(new { suggestions = results });
+        }
+
+        [CommonJobsAuthorize(Roles = "Users")]
+        public JsonNetResult Agreement(string term, int maxSuggestions = 10)
+        {
+            var results = Query(new GetSuggestions(x => x.Agreement, term, maxSuggestions));
+            return Json(new { suggestions = results });
+        }
+
+        public JsonNetResult Position(string term, int maxSuggestions = 10)
+        {
+            var results = Query(new GetSuggestions(x => x.Position, term, maxSuggestions));
+            return Json(new { suggestions = results });
+        }
+
         //Skills
-        //Platform
-        //CurrentProject
-        //Agreement
+
     }
 }
