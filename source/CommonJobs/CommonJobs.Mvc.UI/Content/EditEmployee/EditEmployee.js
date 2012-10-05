@@ -648,7 +648,15 @@ $(function () {
     });
 
     $(".editable-field[data-bind=Seniority] .editor-editable").typeahead({
-        source: ["uno", "dos", "tres", "cuatro", "siete"]
+        source: function (query, process) {
+            $.ajax({
+                url: "/Suggest/Seniority?term=" + query,
+                success: function (data) {
+                    process(data.suggestions);
+                }
+            });
+        }
+        , matcher: function () { return true; }
     });
 
 });
