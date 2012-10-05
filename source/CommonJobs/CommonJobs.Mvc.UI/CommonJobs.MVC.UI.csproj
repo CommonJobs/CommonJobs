@@ -142,6 +142,7 @@
     <Content Include="Content\DataTables\images\sort_desc_disabled.png" />
     <Content Include="Content\DragAndDrop\DragAndDrop.js" />
     <Content Include="Content\EditCommon\icon-edit.png" />
+    <Content Include="Content\EditCommon\Suggest.js" />
     <Content Include="Content\EmployeeFiles\EmployeeFiles.js" />
     <Content Include="Content\FilesListing\FilesListing.js" />
     <Compile Include="Controllers\ApplicantsController.cs" />
