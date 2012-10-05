@@ -92,7 +92,10 @@ namespace CommonJobs.Mvc.UI.Controllers
             return Json(new { suggestions = results });
         }
 
-        //Skills
-
+        public JsonNetResult Skill(string term, int maxSuggestions = 10)
+        {
+            var results = Query(new GetSuggestions(x => x.Skill, term, maxSuggestions));
+            return Json(new { suggestions = results });
+        }
     }
 }

@@ -24,7 +24,8 @@ namespace CommonJobs.Infrastructure.Persons
             public string Platform { get; set; }
             public string Project { get; set; }
             public string Agreement { get; set; }
-            public string Position  { get; set; }
+            public string Position { get; set; }
+            public string Skill { get; set; }
         }
 
         public Persons_Suggestions()
@@ -46,7 +47,8 @@ namespace CommonJobs.Infrastructure.Persons
                     Platform = entity.Platform,
                     Project = entity.CurrentProject,
                     Agreement = entity.Agreement,
-                    Position = entity.InitialPosition
+                    Position = entity.InitialPosition,
+                    Skill = (string)null
                 });
 
             //Secondary employees indexer (Corporative email and CurrentPosition)
@@ -66,7 +68,30 @@ namespace CommonJobs.Infrastructure.Persons
                     Platform = (string)null,
                     Project = (string)null,
                     Agreement = (string)null,
-                    Position = entity.CurrentPosition
+                    Position = entity.CurrentPosition,
+                    Skill = (string)null
+                });
+
+            //Third employees indexer (Skills)
+            AddMap<Employee>(employees =>
+                from entity in employees
+                from skill in entity.Skills.Split(new[] { " ", "," }, StringSplitOptions.RemoveEmptyEntries)
+                select new
+                {
+                    College = (string)null,
+                    EnglishLevel = (string)null,
+                    Degree = (string)null,
+                    Email = (string)null,
+                    EmailDomain = (string)null,
+                    EntityType = "Employee",
+                    Id = entity.Id,
+                    BankName = (string)null,
+                    Seniority = (string)null,
+                    Platform = (string)null,
+                    Project = (string)null,
+                    Agreement = (string)null,
+                    Position = (string)null,
+                    Skill = skill
                 });
 
             //Main applicants indexer
@@ -86,7 +111,30 @@ namespace CommonJobs.Infrastructure.Persons
                     Platform = (string)null,
                     Project = (string)null,
                     Agreement = (string)null,
-                    Position = (string)null
+                    Position = (string)null,
+                    Skill = (string)null
+                });
+
+            //Secondary applicants indexer (Skills)
+            AddMap<Applicant>(applicant =>
+                from entity in applicant
+                from skill in entity.Skills.Split(new[] { " ", "," }, StringSplitOptions.RemoveEmptyEntries)
+                select new
+                {
+                    College = (string)null,
+                    EnglishLevel = (string)null,
+                    Degree = (string)null,
+                    Email = (string)null,
+                    EmailDomain = (string)null,
+                    EntityType = "Applicant",
+                    Id = entity.Id,
+                    BankName = (string)null,
+                    Seniority = (string)null,
+                    Platform = (string)null,
+                    Project = (string)null,
+                    Agreement = (string)null,
+                    Position = (string)null,
+                    Skill = skill
                 });
 
             Reduce = docs => from doc in docs
@@ -94,7 +142,8 @@ namespace CommonJobs.Infrastructure.Persons
                              { 
                                  doc.Id, 
                                  doc.Email,
-                                 doc.Position
+                                 doc.Position,
+                                 doc.Skill
                              } into g
                              select new
                              {
@@ -110,7 +159,8 @@ namespace CommonJobs.Infrastructure.Persons
                                 Platform = g.Select(x => x.Platform).FirstOrDefault(),
                                 Project = g.Select(x => x.Project).FirstOrDefault(),
                                 Agreement = g.Select(x => x.Agreement).FirstOrDefault(),
-                                Position = g.Select(x => x.Position).FirstOrDefault()
+                                Position = g.Select(x => x.Position).FirstOrDefault(),
+                                Skill = g.Select(x => x.Skill).FirstOrDefault()
                              };
 
             Index(x => x.College, FieldIndexing.Analyzed);
@@ -124,6 +174,7 @@ namespace CommonJobs.Infrastructure.Persons
             Index(x => x.Project, FieldIndexing.Analyzed);
             Index(x => x.Agreement, FieldIndexing.Analyzed);
             Index(x => x.Position, FieldIndexing.Analyzed);
+            Index(x => x.Skill, FieldIndexing.Analyzed);
         }
     }
 }
