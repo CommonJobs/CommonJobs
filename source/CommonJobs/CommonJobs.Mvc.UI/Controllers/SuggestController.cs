@@ -53,5 +53,14 @@ namespace CommonJobs.Mvc.UI.Controllers
                 .ToArray();
             return Json(new { suggestions = results });
         }
+
+        //BankName
+        //InitialPosition
+        //CurrentPosition
+        //Seniority
+        //Skills
+        //Platform
+        //CurrentProject
+        //Agreement
     }
 }

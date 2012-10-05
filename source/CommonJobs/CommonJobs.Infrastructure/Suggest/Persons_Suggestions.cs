@@ -23,6 +23,7 @@ namespace CommonJobs.Infrastructure.Persons
 
         public Persons_Suggestions()
         {
+            //Main employees indexer
             AddMap<Employee>(employees =>
                 from entity in employees
                 select new
@@ -36,19 +37,21 @@ namespace CommonJobs.Infrastructure.Persons
                     Id = entity.Id
                 });
 
+            //Corporative email employees indexer
             AddMap<Employee>(employees =>
                 from entity in employees
                 select new
                 {
-                    College = entity.College,
-                    EnglishLevel = entity.EnglishLevel,
-                    Degree = entity.Degree,
+                    College = (string)null,
+                    EnglishLevel = (string)null,
+                    Degree = (string)null,
                     Email = entity.CorporativeEmail,
                     EmailDomain = entity.CorporativeEmail == null || !entity.CorporativeEmail.Contains("@") ? null : entity.CorporativeEmail.Split(new[] { '@' }, 2)[1],
                     EntityType = "Employee",
                     Id = entity.Id
                 });
 
+            //Main applicants indexer
             AddMap<Applicant>(applicants =>
                 from entity in applicants
                 select new
