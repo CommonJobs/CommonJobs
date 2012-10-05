@@ -646,4 +646,9 @@ $(function () {
         el: $("#EditApp"),
         model: new App.Employee(ViewData.employee)
     });
+
+    $(".editable-field[data-bind=Seniority] .editor-editable").typeahead({
+        source: ["uno", "dos", "tres", "cuatro", "siete"]
+    });
+
 });
