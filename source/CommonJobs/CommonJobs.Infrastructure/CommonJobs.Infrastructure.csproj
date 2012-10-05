@@ -83,6 +83,8 @@
     <Compile Include="EmployeeSearching\EmployeeSearchParameters.cs" />
     <Compile Include="JobSearchSearching\JobSearchSearchParameters.cs" />
     <Compile Include="JobSearchSearching\SearchJobSearches.cs" />
+    <Compile Include="Suggest\Persons_Suggestions.cs" />
+    <Compile Include="Suggest\GetSuggestions.cs" />
     <Compile Include="Vacations\CalculateVacations.cs" />
     <Compile Include="SharedLinks\SearchSharedEntity.cs" />
     <Compile Include="AttachmentIndexing\Attachments_ByContentExtractorConfigurationHash.cs" />
