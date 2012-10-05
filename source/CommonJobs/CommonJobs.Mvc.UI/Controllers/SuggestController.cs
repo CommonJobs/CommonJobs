@@ -20,6 +20,18 @@ namespace CommonJobs.Mvc.UI.Controllers
             return Json(new { suggestions = results });
         }
 
+        public JsonNetResult EnglishLevel(string term, int maxSuggestions = 10)
+        {
+            var results = Query(new GetSuggestions(x => x.EnglishLevel, term, maxSuggestions));
+            return Json(new { suggestions = results });
+        }
+
+        public JsonNetResult Degree(string term, int maxSuggestions = 10)
+        {
+            var results = Query(new GetSuggestions(x => x.Degree, term, maxSuggestions));
+            return Json(new { suggestions = results });
+        }
+
         [CommonJobsAuthorize(Roles = "Users")]
         public JsonNetResult Email(string term, int maxSuggestions = 10)
         {
