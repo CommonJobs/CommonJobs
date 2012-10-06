@@ -483,8 +483,24 @@
             },
             onKeyPress: function (e) {
             },
+            suggestInit: function () {
+                //Quick and dirty!
+                var suggestKey;
+                var fn = null;
+                if (suggestKey = this.$el.attr("data-cj-suggest")) {
+                    fn = window.cjSuggest;
+                } else if (suggestKey = this.$el.attr("data-cj-suggest-emaildomain")) {
+                    fn = window.cjSuggestEmailDomain;
+                } else if (suggestKey = this.$el.attr("data-cj-suggest-multiple")) {
+                    fn = window.cjSuggestMultiple;
+                }
+                if (fn) {
+                    fn(this.$el.find(".editor-editable"), suggestKey);
+                }
+            },
             bindUI: function () {
                 var me = this;
+                
                 me.$el.on("click", ".view-editable,.view-editable-empty", null, function () {
                     me.onEditableClick();
                 });
@@ -497,6 +513,8 @@
                 me.$el.on("keypress", ".editor-editable", null, function (e) {
                     me.onKeyPress(e);
                 });
+
+                me.suggestInit();
             },
             valueToContent: function (value) {
                 return value.toString();

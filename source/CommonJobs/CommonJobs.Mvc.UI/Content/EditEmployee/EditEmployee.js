@@ -646,5 +646,4 @@ $(function () {
         el: $("#EditApp"),
         model: new App.Employee(ViewData.employee)
     });
-    InitializeSuggest();
 });

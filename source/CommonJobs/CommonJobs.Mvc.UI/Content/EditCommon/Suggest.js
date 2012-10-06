@@ -1,87 +1,81 @@
-﻿function InitializeSuggest() {
-    //TODO: refactorize
+﻿function cjSuggest(el, key) {
+    var $el = $(el);
+    el = $el[0];
+    var _previousXHR = null;
+    $el.typeahead({
+        source: function (query, process) {
+            if (_previousXHR)
+                _previousXHR.abort();
+            _previousXHR = $
+                .ajax({ url: urlGenerator.action(key, "Suggest", { term: query }) })
+                .done(function (data) {
+                    if (data && data.suggestions)
+                        process(data.suggestions);
+                });
+        }
+    , matcher: function () { return true; }
+    });
+}
 
-    $(".editable-field[data-cj-suggest]").each(function () {
-        var $el = $(this);
-        var key = $el.attr("data-cj-suggest");
-        var _previousXHR = null;
-        $el.find(".editor-editable").typeahead({
-            source: function (query, process) {
-                if (_previousXHR)
-                    _previousXHR.abort();
+function cjSuggestEmailDomain(el, key) {
+    var $el = $(el);
+    el = $el[0];
+    var _previousXHR = null;
+    $el.typeahead({
+        source: function (query, process) {
+            if (_previousXHR)
+                _previousXHR.abort();
+            if (query && query.indexOf("@") != -1 && query.indexOf("@") < query.length - 1) {
                 _previousXHR = $
                     .ajax({ url: urlGenerator.action(key, "Suggest", { term: query }) })
                     .done(function (data) {
                         if (data && data.suggestions)
                             process(data.suggestions);
                     });
+            } else {
+                return [];
             }
+        }
         , matcher: function () { return true; }
-        });
     });
+}
 
-    $(".editable-field[data-cj-suggest-emaildomain]").each(function () {
-        var $el = $(this);
-        var key = $el.attr("data-cj-suggest-emaildomain");
-        var _previousXHR = null;
-        $el.find(".editor-editable").typeahead({
-            source: function (query, process) {
-                if (_previousXHR)
-                    _previousXHR.abort();
-                if (query && query.indexOf("@") != -1 && query.indexOf("@") < query.length - 1) {
-                    _previousXHR = $
-                        .ajax({ url: urlGenerator.action(key, "Suggest", { term: query }) })
-                        .done(function (data) {
-                            if (data && data.suggestions)
-                                process(data.suggestions);
-                        });
-                } else {
-                    return [];
-                }
-            }
-        , matcher: function () { return true; }
-        });
-    });
+function cjSuggestMultiple_extractor(query) {
+    var result = /([^,]+)$/.exec(query);
+    if (result && result[1])
+        return result[1].trim();
+    return '';
+}
 
-    function extractor(query) {
-        var result = /([^,]+)$/.exec(query);
-        if (result && result[1])
-            return result[1].trim();
-        return '';
-    }
-
-    $(".editable-field[data-cj-suggest-multiple]").each(function () {
-        var $el = $(this);
-        var key = $el.attr("data-cj-suggest-multiple");
-        var $input = $el.find(".editor-editable");
-        var _previousXHR = null;
-        $input.typeahead({
-            source: function (query, process) {
-                if (_previousXHR)
-                    _previousXHR.abort();
-                var input = $input[0];
-                var term;
-                if (query.length == input.selectionStart && query.length == input.selectionEnd && (term = extractor(query))) {
-                    _previousXHR = $
-                        .ajax({ url: urlGenerator.action(key, "Suggest", { term: term }) })
-                        .done(function (data) {
-                            if (data && data.suggestions)
-                                process(data.suggestions);
-                        });
-                } else {
-                    return [];
-                }
+function cjSuggestMultiple(el, key) {
+    var $el = $(el);
+    el = $el[0];
+    var _previousXHR = null;
+    $el.typeahead({
+        source: function (query, process) {
+            if (_previousXHR)
+                _previousXHR.abort();
+            var term;
+            if (query.length == el.selectionStart && query.length == el.selectionEnd && (term = cjSuggestMultiple_extractor(query))) {
+                _previousXHR = $
+                    .ajax({ url: urlGenerator.action(key, "Suggest", { term: term }) })
+                    .done(function (data) {
+                        if (data && data.suggestions)
+                            process(data.suggestions);
+                    });
+            } else {
+                return [];
             }
-            , matcher: function () { return true; }
-            , updater: function (item) {
-                return this.$element.val().replace(/[^,\s]*$/, '') + item + ', ';
-            }
-            , highlighter: function (item) {
-                var query = extractor(this.query).replace(/[\-\[\]{}()*+?.,\\\^$|#\s]/g, '\\$&')
-                return item.replace(new RegExp('(' + query + ')', 'ig'), function ($1, match) {
-                    return '<strong>' + match + '</strong>'
-                })
-            }
-        });
+        },
+        matcher: function () { return true; },
+        updater: function (item) {
+            return this.$element.val().replace(/[^,\s]*$/, '') + item + ', ';
+        },
+        highlighter: function (item) {
+            var query = cjSuggestMultiple_extractor(this.query).replace(/[\-\[\]{}()*+?.,\\\^$|#\s]/g, '\\$&')
+            return item.replace(new RegExp('(' + query + ')', 'ig'), function ($1, match) {
+                return '<strong>' + match + '</strong>'
+            })
+        }
     });
 }

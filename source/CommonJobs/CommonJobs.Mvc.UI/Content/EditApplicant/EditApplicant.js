@@ -232,7 +232,7 @@
                 item:
                 {
                     controlLink: "Compound",
-                    template: _.template('De <span data-bind="StartDate"></span> a <span data-bind="EndDate"></span>: <span data-bind="CompanyName"></span> (<span data-bind="IsCurrent"></span>)'),
+                    template: _.template('De <span data-bind="StartDate"></span> a <span data-bind="EndDate"></span>: <span data-bind="CompanyName" data-cj-suggest="CompanyName"></span> (<span data-bind="IsCurrent"></span>)'),
                     items:
                     [
                         { controlLink: "Date", name: "StartDate", field: "StartDate" },
@@ -421,5 +421,4 @@ $(function () {
     $('.editable-field[data-bind="LinkedinLink"] input').blur(function(){
        $('#linkedinLink').attr('href', $('.editable-field[data-bind="LinkedinLink"] input').val());
     });
-    InitializeSuggest();
 });
