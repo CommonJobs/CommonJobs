@@ -421,4 +421,5 @@ $(function () {
     $('.editable-field[data-bind="LinkedinLink"] input').blur(function(){
        $('#linkedinLink').attr('href', $('.editable-field[data-bind="LinkedinLink"] input').val());
     });
+    InitializeSuggest();
 });
