@@ -37,22 +37,22 @@ namespace CommonJobs.Infrastructure.Persons
                 from entity in employees
                 select new
                 {
-                    College = entity.College,
-                    EnglishLevel = entity.EnglishLevel,
-                    Degree = entity.Degree,
-                    Email = entity.Email,
-                    EmailDomain = entity.Email == null || !entity.Email.Contains("@") ? null : entity.Email.Split(new[] { '@' }, 2)[1],
+                    College = entity.College ?? string.Empty,
+                    EnglishLevel = entity.EnglishLevel ?? string.Empty,
+                    Degree = entity.Degree ?? string.Empty,
+                    Email = entity.Email ?? string.Empty,
+                    EmailDomain = entity.Email == null || !entity.Email.Contains("@") ? string.Empty : entity.Email.Split(new[] { '@' }, 2)[1] ?? string.Empty,
                     EntityType = "Employee",
                     Id = entity.Id,
-                    BankName = entity.BankName,
-                    HealthInsurance = entity.HealthInsurance,
-                    BankBranch = entity.BankBranch,
-                    Seniority = entity.Seniority,
-                    Platform = entity.Platform,
-                    Project = entity.CurrentProject,
-                    Agreement = entity.Agreement,
-                    Position = entity.InitialPosition,
-                    Skill = (string)null
+                    BankName = entity.BankName ?? string.Empty,
+                    HealthInsurance = entity.HealthInsurance ?? string.Empty,
+                    BankBranch = entity.BankBranch ?? string.Empty,
+                    Seniority = entity.Seniority ?? string.Empty,
+                    Platform = entity.Platform ?? string.Empty,
+                    Project = entity.CurrentProject ?? string.Empty,
+                    Agreement = entity.Agreement ?? string.Empty,
+                    Position = entity.InitialPosition ?? string.Empty,
+                    Skill = string.Empty
                 });
 
             //Secondary employees indexer (Corporative email and CurrentPosition)
@@ -60,45 +60,45 @@ namespace CommonJobs.Infrastructure.Persons
                 from entity in employees
                 select new
                 {
-                    College = (string)null,
-                    EnglishLevel = (string)null,
-                    Degree = (string)null,
+                    College = string.Empty,
+                    EnglishLevel = string.Empty,
+                    Degree = string.Empty,
                     Email = entity.CorporativeEmail,
-                    EmailDomain = entity.CorporativeEmail == null || !entity.CorporativeEmail.Contains("@") ? null : entity.CorporativeEmail.Split(new[] { '@' }, 2)[1],
+                    EmailDomain = entity.CorporativeEmail == null || !entity.CorporativeEmail.Contains("@") ? string.Empty : entity.CorporativeEmail.Split(new[] { '@' }, 2)[1] ?? string.Empty,
                     EntityType = "Employee",
                     Id = entity.Id,
-                    BankName = (string)null,
-                    HealthInsurance = (string)null,
-                    BankBranch = (string)null,
-                    Seniority = (string)null,
-                    Platform = (string)null,
-                    Project = (string)null,
-                    Agreement = (string)null,
+                    BankName = string.Empty,
+                    HealthInsurance = string.Empty,
+                    BankBranch = string.Empty,
+                    Seniority = string.Empty,
+                    Platform = string.Empty,
+                    Project = string.Empty,
+                    Agreement = string.Empty,
                     Position = entity.CurrentPosition,
-                    Skill = (string)null
+                    Skill = string.Empty
                 });
 
             //Third employees indexer (Skills)
             AddMap<Employee>(employees =>
                 from entity in employees
-                from skill in entity.Skills.Split(new[] { " ", "," }, StringSplitOptions.RemoveEmptyEntries)
+                from skill in entity.Skills.Split(new[] { '-', ',', ';' }, StringSplitOptions.RemoveEmptyEntries)
                 select new
                 {
-                    College = (string)null,
-                    EnglishLevel = (string)null,
-                    Degree = (string)null,
-                    Email = (string)null,
-                    EmailDomain = (string)null,
+                    College = string.Empty,
+                    EnglishLevel = string.Empty,
+                    Degree = string.Empty,
+                    Email = string.Empty,
+                    EmailDomain = string.Empty,
                     EntityType = "Employee",
                     Id = entity.Id,
-                    BankName = (string)null,
-                    HealthInsurance = (string)null,
-                    BankBranch = (string)null,
-                    Seniority = (string)null,
-                    Platform = (string)null,
-                    Project = (string)null,
-                    Agreement = (string)null,
-                    Position = (string)null,
+                    BankName = string.Empty,
+                    HealthInsurance = string.Empty,
+                    BankBranch = string.Empty,
+                    Seniority = string.Empty,
+                    Platform = string.Empty,
+                    Project = string.Empty,
+                    Agreement = string.Empty,
+                    Position = string.Empty,
                     Skill = skill
                 });
 
@@ -107,45 +107,45 @@ namespace CommonJobs.Infrastructure.Persons
                 from entity in applicants
                 select new
                 {
-                    College = entity.College,
-                    EnglishLevel = entity.EnglishLevel,
-                    Degree = entity.Degree,
-                    Email = entity.Email,
-                    EmailDomain = entity.Email == null || !entity.Email.Contains("@") ? null : entity.Email.Split(new[] { '@' }, 2)[1],
+                    College = entity.College ?? string.Empty,
+                    EnglishLevel = entity.EnglishLevel ?? string.Empty,
+                    Degree = entity.Degree ?? string.Empty,
+                    Email = entity.Email ?? string.Empty,
+                    EmailDomain = entity.Email == null || !entity.Email.Contains("@") ? string.Empty : entity.Email.Split(new[] { '@' }, 2)[1] ?? string.Empty,
                     EntityType = "Applicant",
                     Id = entity.Id,
-                    BankName = (string)null,
-                    HealthInsurance = (string)null,
-                    BankBranch = (string)null,
-                    Seniority = (string)null,
-                    Platform = (string)null,
-                    Project = (string)null,
-                    Agreement = (string)null,
-                    Position = (string)null,
-                    Skill = (string)null
+                    BankName = string.Empty,
+                    HealthInsurance = string.Empty,
+                    BankBranch = string.Empty,
+                    Seniority = string.Empty,
+                    Platform = string.Empty,
+                    Project = string.Empty,
+                    Agreement = string.Empty,
+                    Position = string.Empty,
+                    Skill = string.Empty
                 });
 
             //Secondary applicants indexer (Skills)
             AddMap<Applicant>(applicant =>
                 from entity in applicant
-                from skill in entity.Skills.Split(new[] { " ", "," }, StringSplitOptions.RemoveEmptyEntries)
+                from skill in entity.Skills.Split(new[] { '-', ',', ';' }, StringSplitOptions.RemoveEmptyEntries)
                 select new
                 {
-                    College = (string)null,
-                    EnglishLevel = (string)null,
-                    Degree = (string)null,
-                    Email = (string)null,
-                    EmailDomain = (string)null,
+                    College = string.Empty,
+                    EnglishLevel = string.Empty,
+                    Degree = string.Empty,
+                    Email = string.Empty,
+                    EmailDomain = string.Empty,
                     EntityType = "Applicant",
                     Id = entity.Id,
-                    BankName = (string)null,
-                    HealthInsurance = (string)null,
-                    BankBranch = (string)null,
-                    Seniority = (string)null,
-                    Platform = (string)null,
-                    Project = (string)null,
-                    Agreement = (string)null,
-                    Position = (string)null,
+                    BankName = string.Empty,
+                    HealthInsurance = string.Empty,
+                    BankBranch = string.Empty,
+                    Seniority = string.Empty,
+                    Platform = string.Empty,
+                    Project = string.Empty,
+                    Agreement = string.Empty,
+                    Position = string.Empty,
                     Skill = skill
                 });
 
@@ -165,7 +165,7 @@ namespace CommonJobs.Infrastructure.Persons
                                  Email = g.Select(x => x.Email.Trim()).FirstOrDefault(),
                                  EmailDomain = g.Select(x => x.EmailDomain.Trim()).FirstOrDefault(),
                                  EntityType = g.Select(x => x.EntityType.Trim()).FirstOrDefault(),
-                                Id = g.Select(x => x.Id).FirstOrDefault(),
+                                 Id = g.Select(x => x.Id).FirstOrDefault(),
                                  BankName = g.Select(x => x.BankName.Trim()).FirstOrDefault(),
                                  BankBranch = g.Select(x => x.BankBranch.Trim()).FirstOrDefault(),
                                  HealthInsurance = g.Select(x => x.HealthInsurance.Trim()).FirstOrDefault(),
