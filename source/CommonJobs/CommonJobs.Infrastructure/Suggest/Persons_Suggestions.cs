@@ -20,6 +20,8 @@ namespace CommonJobs.Infrastructure.Persons
             public string EntityType { get; set; }
             public string Id { get; set; }
             public string BankName { get; set; }
+            public string HealthInsurance { get; set; }
+            public string BankBranch { get; set; }
             public string Seniority { get; set; }
             public string Platform { get; set; }
             public string Project { get; set; }
@@ -43,6 +45,8 @@ namespace CommonJobs.Infrastructure.Persons
                     EntityType = "Employee",
                     Id = entity.Id,
                     BankName = entity.BankName,
+                    HealthInsurance = entity.HealthInsurance,
+                    BankBranch = entity.BankBranch,
                     Seniority = entity.Seniority,
                     Platform = entity.Platform,
                     Project = entity.CurrentProject,
@@ -64,6 +68,8 @@ namespace CommonJobs.Infrastructure.Persons
                     EntityType = "Employee",
                     Id = entity.Id,
                     BankName = (string)null,
+                    HealthInsurance = (string)null,
+                    BankBranch = (string)null,
                     Seniority = (string)null,
                     Platform = (string)null,
                     Project = (string)null,
@@ -86,6 +92,8 @@ namespace CommonJobs.Infrastructure.Persons
                     EntityType = "Employee",
                     Id = entity.Id,
                     BankName = (string)null,
+                    HealthInsurance = (string)null,
+                    BankBranch = (string)null,
                     Seniority = (string)null,
                     Platform = (string)null,
                     Project = (string)null,
@@ -107,6 +115,8 @@ namespace CommonJobs.Infrastructure.Persons
                     EntityType = "Applicant",
                     Id = entity.Id,
                     BankName = (string)null,
+                    HealthInsurance = (string)null,
+                    BankBranch = (string)null,
                     Seniority = (string)null,
                     Platform = (string)null,
                     Project = (string)null,
@@ -129,6 +139,8 @@ namespace CommonJobs.Infrastructure.Persons
                     EntityType = "Applicant",
                     Id = entity.Id,
                     BankName = (string)null,
+                    HealthInsurance = (string)null,
+                    BankBranch = (string)null,
                     Seniority = (string)null,
                     Platform = (string)null,
                     Project = (string)null,
@@ -155,6 +167,8 @@ namespace CommonJobs.Infrastructure.Persons
                                 EntityType = g.Select(x => x.EntityType).FirstOrDefault(),
                                 Id = g.Select(x => x.Id).FirstOrDefault(),
                                 BankName = g.Select(x => x.BankName).FirstOrDefault(),
+                                BankBranch = g.Select(x => x.BankBranch).FirstOrDefault(),
+                                HealthInsurance = g.Select(x => x.HealthInsurance).FirstOrDefault(),
                                 Seniority = g.Select(x => x.Seniority).FirstOrDefault(),
                                 Platform = g.Select(x => x.Platform).FirstOrDefault(),
                                 Project = g.Select(x => x.Project).FirstOrDefault(),
@@ -169,6 +183,8 @@ namespace CommonJobs.Infrastructure.Persons
             Index(x => x.Email, FieldIndexing.NotAnalyzed);
             Index(x => x.EmailDomain, FieldIndexing.NotAnalyzed);
             Index(x => x.BankName, FieldIndexing.Analyzed);
+            Index(x => x.HealthInsurance, FieldIndexing.Analyzed);
+            Index(x => x.BankBranch, FieldIndexing.Analyzed);
             Index(x => x.Seniority, FieldIndexing.Analyzed);
             Index(x => x.Platform, FieldIndexing.Analyzed);
             Index(x => x.Project, FieldIndexing.Analyzed);

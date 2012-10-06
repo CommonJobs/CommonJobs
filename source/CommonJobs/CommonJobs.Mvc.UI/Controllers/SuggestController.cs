@@ -59,6 +59,18 @@ namespace CommonJobs.Mvc.UI.Controllers
             var results = Query(new GetSuggestions(x => x.BankName, term, maxSuggestions));
             return Json(new { suggestions = results });
         }
+        
+        public JsonNetResult BankBranch(string term, int maxSuggestions = 10)
+        {
+            var results = Query(new GetSuggestions(x => x.BankBranch, term, maxSuggestions));
+            return Json(new { suggestions = results });
+        }
+
+        public JsonNetResult HealthInsurance(string term, int maxSuggestions = 10)
+        {
+            var results = Query(new GetSuggestions(x => x.HealthInsurance, term, maxSuggestions));
+            return Json(new { suggestions = results });
+        }
 
         public JsonNetResult Seniority(string term, int maxSuggestions = 10)
         {
