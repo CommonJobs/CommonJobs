@@ -55,12 +55,12 @@
         <div class="editable-field photo" data-bind="Photo"></div>
         <div class="main-data">
             <ul>
-                <li><span class="field-name">Posición:</span><span class="editable-field" data-bind="CurrentPosition" data-suggest="Position"></span></li>
-                <li class="additional-info">(<span class="field-name">Posición inicial:</span><span class="editable-field" data-bind="InitialPosition" data-suggest="Position"></span>)</li>
-                <li><span class="field-name">Proyecto Actual:</span><span class="editable-field" data-bind="CurrentProject" data-suggest="Project"></span></li>
-                <li><span class="field-name">Título:</span><span class="editable-field" data-bind="Degree" data-suggest="Degree"></span> (<span class="editable-field" data-bind="IsGraduated"><span class="view-editable view-editable-prototype">No graduado</span></span>)</li>
+                <li><span class="field-name">Posición:</span><span class="editable-field" data-bind="CurrentPosition" data-cj-suggest="Position"></span></li>
+                <li class="additional-info">(<span class="field-name">Posición inicial:</span><span class="editable-field" data-bind="InitialPosition" data-cj-suggest="Position"></span>)</li>
+                <li><span class="field-name">Proyecto Actual:</span><span class="editable-field" data-bind="CurrentProject" data-cj-suggest="Project"></span></li>
+                <li><span class="field-name">Título:</span><span class="editable-field" data-bind="Degree" data-cj-suggest="Degree"></span> (<span class="editable-field" data-bind="IsGraduated"><span class="view-editable view-editable-prototype">No graduado</span></span>)</li>
                 <li class="additional-info"><span class="field-name">Usuario de Dominio:</span><span class="editable-field" data-bind="UserName"></span></li>
-                <li class="additional-info"><span class="field-name">Email Corporativo:</span><span class="editable-field" data-bind="CorporativeEmail" data-suggest="EmailDomain"></span></li>
+                <li class="additional-info"><span class="field-name">Email Corporativo:</span><span class="editable-field" data-bind="CorporativeEmail" data-cj-suggest="EmailDomain"></span></li>
             </ul>
         </div>
     </div>
@@ -74,18 +74,18 @@
                 <li><span class="field-name">Estado Civil:</span><span class="editable-field" data-bind="MaritalStatus"><span class="view-editable view-editable-prototype">Soltero</span></span></li>
                 <li><span class="field-name">Dirección:</span><span class="editable-field" data-bind="Address"></span></li>
                 <li><span class="field-name">Teléfonos:</span><span class="editable-field" data-bind="Telephones"></span></li>
-                <li><span class="field-name">Email Personal:</span><span class="editable-field" data-bind="Email" data-suggest="EmailDomain"></span></li>
-                <li><span class="field-name">Plataforma:</span><span class="editable-field" data-bind="Platform" data-suggest="Platform"></span></li>
+                <li><span class="field-name">Email Personal:</span><span class="editable-field" data-bind="Email" data-cj-suggest="EmailDomain"></span></li>
+                <li><span class="field-name">Plataforma:</span><span class="editable-field" data-bind="Platform" data-cj-suggest="Platform"></span></li>
                 <li><span class="field-name">CUIL:</span><span class="editable-field" data-bind="Cuil"></span></li>
             </ul>
         </div>
         <div class="aptitude-data additional-info-section">
             <h3>Aptitudes</h3>
             <ul>
-                <li><span class="field-name">Seniority:</span><span class="editable-field" data-bind="Seniority" data-suggest="Seniority"></span></li>
-                <li><span class="field-name">Nivel de Inglés:</span><span class="editable-field" data-bind="EnglishLevel" data-suggest="EnglishLevel"></span></li>
-                <li><span class="field-name">Título:</span><span class="editable-field" data-bind="Degree" data-suggest="Degree"></span> (<span class="editable-field" data-bind="IsGraduated"><span class="view-editable view-editable-prototype">No graduado</span></span>)</li>
-                <li><span class="field-name">Universidad:</span><span class="editable-field" data-bind="College" data-suggest="College"></span></li>
+                <li><span class="field-name">Seniority:</span><span class="editable-field" data-bind="Seniority" data-cj-suggest="Seniority"></span></li>
+                <li><span class="field-name">Nivel de Inglés:</span><span class="editable-field" data-bind="EnglishLevel" data-cj-suggest="EnglishLevel"></span></li>
+                <li><span class="field-name">Título:</span><span class="editable-field" data-bind="Degree" data-cj-suggest="Degree"></span> (<span class="editable-field" data-bind="IsGraduated"><span class="view-editable view-editable-prototype">No graduado</span></span>)</li>
+                <li><span class="field-name">Universidad:</span><span class="editable-field" data-bind="College" data-cj-suggest="College"></span></li>
                 <li><span class="field-name">Skills:</span><span class="editable-field" data-bind="Skills"></span></li>
                 <li>
                   <span class="field-name">Certificaciones:</span>
@@ -103,7 +103,7 @@
                 <li><span class="field-name">Fecha de ingreso:</span><span class="editable-field" data-bind="HiringDate"><span class="view-editable view-editable-prototype">15 de Octubre de 2009 (3 años)</span></span></li>
                 <li><span class="field-name">Carga Horaria:</span><span class="editable-field" data-bind="WorkingHours"><span class="view-editable view-editable-prototype">41 horas</span></span></li>
                 <li><span class="field-name">Horario:</span><span class="editable-field" data-bind="Schedule"></span></li>
-                <li><span class="field-name">Acuerdo:</span><span class="editable-field" data-bind="Agreement" data-suggest="Agreement"></span></li>
+                <li><span class="field-name">Acuerdo:</span><span class="editable-field" data-bind="Agreement" data-cj-suggest="Agreement"></span></li>
             </ul>
             <h3>Remuneración <span class="confidential-info-title">Mostrar/Ocultar</span></h3>
             <div class="salary-data confidential-info-data">
@@ -116,14 +116,14 @@
         <div class="misc-data additional-info-section">
             <h3>Datos bancarios</h3>
             <ul>
-                <li><span class="field-name">Banco:</span><span class="editable-field" data-bind="BankName" data-suggest="BankName"></span></li>
-                <li><span class="field-name">Sucursal:</span><span class="editable-field" data-bind="BankBranch" data-suggest="BankBranch"></span></li>
+                <li><span class="field-name">Banco:</span><span class="editable-field" data-bind="BankName" data-cj-suggest="BankName"></span></li>
+                <li><span class="field-name">Sucursal:</span><span class="editable-field" data-bind="BankBranch" data-cj-suggest="BankBranch"></span></li>
                 <li><span class="field-name">CBU:</span><span class="editable-field" data-bind="UniqueBankCode"></span></li>
                 <li><span class="field-name">Número de cuenta:</span><span class="editable-field" data-bind="BankAccount"></span></li>
             </ul>
             <h3>Otros datos</h3>
             <ul>
-                <li><span class="field-name">Obra Social:</span><span class="editable-field" data-bind="HealthInsurance" data-suggest="HealthInsurance"></span></li>
+                <li><span class="field-name">Obra Social:</span><span class="editable-field" data-bind="HealthInsurance" data-cj-suggest="HealthInsurance"></span></li>
                 <li><span class="field-name">Almuerzo:</span><span class="editable-field" data-bind="Lunch"><span class="view-editable view-editable-prototype">Si</span></span></li>
             </ul>
         </div>

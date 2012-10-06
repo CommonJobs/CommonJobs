@@ -26,7 +26,7 @@ namespace CommonJobs.Infrastructure.Suggestions
         public override IEnumerable<string> Execute()
         {
             var query = RavenSession.Query<Persons_Suggestions.Projection, Persons_Suggestions>()
-                .Search(FieldSelector, Term + "*", escapeQueryOptions: EscapeQueryOptions.AllowPostfixWildcard)
+                .Search(FieldSelector, Term.TrimEnd('*', '?') + "*", escapeQueryOptions: EscapeQueryOptions.AllowPostfixWildcard)
                 .Select(FieldSelector)
                 .As<string>()
                 .Distinct()

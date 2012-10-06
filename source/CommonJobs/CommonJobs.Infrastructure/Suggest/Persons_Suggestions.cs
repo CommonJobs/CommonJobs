@@ -178,10 +178,10 @@ namespace CommonJobs.Infrastructure.Persons
                              };
 
             Index(x => x.College, FieldIndexing.Analyzed);
-            Index(x => x.EnglishLevel, FieldIndexing.NotAnalyzed);
-            Index(x => x.Degree, FieldIndexing.NotAnalyzed);
-            Index(x => x.Email, FieldIndexing.NotAnalyzed);
-            Index(x => x.EmailDomain, FieldIndexing.NotAnalyzed);
+            Index(x => x.EnglishLevel, FieldIndexing.Analyzed);
+            Index(x => x.Degree, FieldIndexing.Analyzed);
+            Index(x => x.Email, FieldIndexing.Analyzed);
+            Index(x => x.EmailDomain, FieldIndexing.Analyzed);
             Index(x => x.BankName, FieldIndexing.Analyzed);
             Index(x => x.HealthInsurance, FieldIndexing.Analyzed);
             Index(x => x.BankBranch, FieldIndexing.Analyzed);

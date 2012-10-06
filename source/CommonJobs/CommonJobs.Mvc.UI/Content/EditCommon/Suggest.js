@@ -1,7 +1,7 @@
 ﻿function InitializeSuggest() {
-    $(".editable-field[data-suggest]").each(function () {
+    $(".editable-field[data-cj-suggest]").each(function () {
         var $el = $(this);
-        var key = $el.attr("data-suggest");
+        var key = $el.attr("data-cj-suggest");
         $el.find(".editor-editable").typeahead({
             source: function (query, process) {
                 $.ajax({
