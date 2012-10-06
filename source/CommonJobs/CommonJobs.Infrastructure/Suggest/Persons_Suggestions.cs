@@ -159,22 +159,22 @@ namespace CommonJobs.Infrastructure.Persons
                              } into g
                              select new
                              {
-                                College = g.Select(x => x.College).FirstOrDefault(),
-                                EnglishLevel = g.Select(x => x.EnglishLevel).FirstOrDefault(),
-                                Degree = g.Select(x => x.Degree).FirstOrDefault(),
-                                Email = g.Select(x => x.Email).FirstOrDefault(),
-                                EmailDomain = g.Select(x => x.EmailDomain).FirstOrDefault(),
-                                EntityType = g.Select(x => x.EntityType).FirstOrDefault(),
+                                 College = g.Select(x => x.College.Trim()).FirstOrDefault(),
+                                 EnglishLevel = g.Select(x => x.EnglishLevel.Trim()).FirstOrDefault(),
+                                 Degree = g.Select(x => x.Degree.Trim()).FirstOrDefault(),
+                                 Email = g.Select(x => x.Email.Trim()).FirstOrDefault(),
+                                 EmailDomain = g.Select(x => x.EmailDomain.Trim()).FirstOrDefault(),
+                                 EntityType = g.Select(x => x.EntityType.Trim()).FirstOrDefault(),
                                 Id = g.Select(x => x.Id).FirstOrDefault(),
-                                BankName = g.Select(x => x.BankName).FirstOrDefault(),
-                                BankBranch = g.Select(x => x.BankBranch).FirstOrDefault(),
-                                HealthInsurance = g.Select(x => x.HealthInsurance).FirstOrDefault(),
-                                Seniority = g.Select(x => x.Seniority).FirstOrDefault(),
-                                Platform = g.Select(x => x.Platform).FirstOrDefault(),
-                                Project = g.Select(x => x.Project).FirstOrDefault(),
-                                Agreement = g.Select(x => x.Agreement).FirstOrDefault(),
-                                Position = g.Select(x => x.Position).FirstOrDefault(),
-                                Skill = g.Select(x => x.Skill).FirstOrDefault()
+                                 BankName = g.Select(x => x.BankName.Trim()).FirstOrDefault(),
+                                 BankBranch = g.Select(x => x.BankBranch.Trim()).FirstOrDefault(),
+                                 HealthInsurance = g.Select(x => x.HealthInsurance.Trim()).FirstOrDefault(),
+                                 Seniority = g.Select(x => x.Seniority.Trim()).FirstOrDefault(),
+                                 Platform = g.Select(x => x.Platform.Trim()).FirstOrDefault(),
+                                 Project = g.Select(x => x.Project.Trim()).FirstOrDefault(),
+                                 Agreement = g.Select(x => x.Agreement.Trim()).FirstOrDefault(),
+                                 Position = g.Select(x => x.Position.Trim()).FirstOrDefault(),
+                                 Skill = g.Select(x => x.Skill.Trim()).FirstOrDefault()
                              };
 
             Index(x => x.College, FieldIndexing.Analyzed);

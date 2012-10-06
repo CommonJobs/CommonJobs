@@ -16,7 +16,7 @@ namespace CommonJobs.Infrastructure.Suggestions
         public string Term { get; set; }
         public int MaxSuggestions { get; set; }
 
-        public GetSuggestions(Expression<Func<Persons_Suggestions.Projection, object>> fieldSelector, string term, int maxSuggestions = 10)
+        public GetSuggestions(Expression<Func<Persons_Suggestions.Projection, object>> fieldSelector, string term, int maxSuggestions = 8)
         {
             FieldSelector = fieldSelector;
             Term = term;
@@ -30,24 +30,35 @@ namespace CommonJobs.Infrastructure.Suggestions
                 .Select(FieldSelector)
                 .As<string>()
                 .Distinct()
-                .Take(MaxSuggestions);
+                .Take(MaxSuggestions * 2); //Padding porque no puedo filtrar los vacíos antes
 
-            var results = query.AsEnumerable().Where(x => !string.IsNullOrWhiteSpace(x)).ToList();
+            var results = query.AsEnumerable()
+                .Where(x => !string.IsNullOrWhiteSpace(x))
+                .OrderBy(x => x)
+                .Take(MaxSuggestions).ToList();
 
             if (results.Count < MaxSuggestions)
             {
-                var suggestionQueryResult = query.Suggest();
+                var suggestionTerms = query.Suggest().Suggestions.Where(x => x != Term).ToArray();
+                if (suggestionTerms.Length > 0)
+                {
+                    var extraQuery = RavenSession.Query<Persons_Suggestions.Projection, Persons_Suggestions>()
+                        .Search(FieldSelector, string.Join(" ", suggestionTerms))
+                        .Select(FieldSelector)
+                        .As<string>()
+                        .Distinct()
+                        .Take((MaxSuggestions - results.Count) * 2); //Padding porque no puedo filtrar los vacíos y duplicados antes
 
-                var extraQuery = RavenSession.Query<Persons_Suggestions.Projection, Persons_Suggestions>()
-                    .Search(FieldSelector, string.Join(" ", suggestionQueryResult.Suggestions))
-                    .Select(FieldSelector)
-                    .As<string>()
-                    .Distinct()
-                    .Take(MaxSuggestions - results.Count);
+                    var extraResults = extraQuery.ToList();
 
-                var extraResults = extraQuery.ToList();
+                    extraResults = extraResults
+                        .Where(x => !string.IsNullOrWhiteSpace(x))
+                        .Where(x => !results.Contains(x))
+                        .Take(MaxSuggestions - results.Count)
+                        .ToList();
 
-                results.AddRange(extraResults);
+                    results.AddRange(extraResults);
+                }
             }
 
             return results;
