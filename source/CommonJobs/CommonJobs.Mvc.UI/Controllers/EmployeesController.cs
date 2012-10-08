@@ -15,6 +15,7 @@ using CommonJobs.Infrastructure.EmployeeSearching;
 using NLog;
 using CommonJobs.Infrastructure.AttachmentSlots;
 using CommonJobs.Infrastructure;
+using Raven.Abstractions.Data;
 
 namespace CommonJobs.Mvc.UI.Controllers
 {
