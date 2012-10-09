@@ -24,7 +24,15 @@ namespace CommonJobs.JavaScript
             {
                 Context.ImportDependencies(dependencies);
             }
-            return Context.RunScript<TResult>(packageName, scriptName, GetParameters());
+            var resultWrapper = Context.RunScript<ScriptResultWrapper<TResult>>(packageName, scriptName, GetParameters());
+            if (resultWrapper.Successful)
+            {
+                return resultWrapper.Result;
+            }
+            else
+            {
+                throw new ScriptCommandException(resultWrapper);
+            }
         }
 
         protected ScriptCommand(string packageName, string scriptName, params string[] dependencies)
