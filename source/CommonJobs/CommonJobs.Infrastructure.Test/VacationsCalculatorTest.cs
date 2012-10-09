@@ -320,5 +320,28 @@ namespace CommonJobs.Infrastructure.Test
             Assert.AreEqual(expected, actual);
         }
 
+        [TestMethod()]
+        public void HiringDateUnset()
+        {
+            var target = new Employee();
+
+            var calculator = new CalculateVacations()
+            {
+                Context = new ScriptContext(),
+                Vacations = new List<Vacation>(),
+                Now = DateTime.Parse("2011-6-15")
+            };
+
+            try
+            {
+                var calculated = calculator.Execute();
+            }
+            catch (ScriptCommandException e)
+            {
+                return;
+            }
+            Assert.Fail("There should be a ScriptCommandException");
+        }
+
     }
 }
