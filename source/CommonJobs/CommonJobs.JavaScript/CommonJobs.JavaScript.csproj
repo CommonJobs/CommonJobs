@@ -64,7 +64,9 @@
     <Compile Include="JurassicJavascriptScriptEngine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScriptCommand.cs" />
+    <Compile Include="ScriptCommandException.cs" />
     <Compile Include="ScriptContext.cs" />
+    <Compile Include="ScriptResultWrapper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -171,7 +171,7 @@
         function (data, take, skip) {
             $table.dataTable().fnAddData(
                 _.map(data.Items, function (employee) {
-                    return { employee: employee, vacations: $.extend({}, CJLogic.CalculateVacations(employee.HiringDate, employee.Vacations, ViewData.now)) };
+                    return { employee: employee, vacations: $.extend({}, CJLogic.CalculateVacations(employee.HiringDate, employee.Vacations, ViewData.now).Result) };
                 }));
 
             var thereAreMore = skip + take < data.TotalResults;
