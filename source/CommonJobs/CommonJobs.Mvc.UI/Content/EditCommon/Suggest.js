@@ -3,6 +3,7 @@
     el = $el[0];
     var _previousXHR = null;
     $el.typeahead({
+        autoselect: false,
         source: function (query, process) {
             if (_previousXHR)
                 _previousXHR.abort();
@@ -22,6 +23,7 @@ function cjSuggestEmailDomain(el, key) {
     el = $el[0];
     var _previousXHR = null;
     $el.typeahead({
+        autoselect: false,
         source: function (query, process) {
             if (_previousXHR)
                 _previousXHR.abort();
@@ -52,6 +54,7 @@ function cjSuggestMultiple(el, key) {
     el = $el[0];
     var _previousXHR = null;
     $el.typeahead({
+        autoselect: false,
         source: function (query, process) {
             if (_previousXHR)
                 _previousXHR.abort();

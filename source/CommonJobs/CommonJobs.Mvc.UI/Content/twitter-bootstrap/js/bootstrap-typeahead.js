@@ -33,7 +33,7 @@
         this.sorter = this.options.sorter || this.sorter
         this.highlighter = this.options.highlighter || this.highlighter
         this.updater = this.options.updater || this.updater
-        
+
         //Modificado para compatibilidad con bootstrap-scope
         var scope = $("<div class='bootstrap-scope'></div>");
         scope.appendTo('body');
@@ -50,10 +50,12 @@
 
     , select: function () {
         var val = this.$menu.find('.active').attr('data-value')
-        this.$element
-          .val(this.updater(val))
-          .change()
-          .trigger("input") //Agregado para compatibilidad con nervoustissue
+        if (val) {
+            this.$element
+              .val(this.updater(val))
+              .change()
+              .trigger("input") //Agregado para compatibilidad con nervoustissue
+        }
         return this.hide()
     }
 
@@ -147,7 +149,10 @@
             return i[0]
         })
 
-        items.first().addClass('active')
+        if (this.options.autoselect) {
+            items.first().addClass('active')
+        }
+
         this.$menu.html(items)
         return this
     }
@@ -286,6 +291,7 @@
     , menu: '<ul class="typeahead dropdown-menu"></ul>'
     , item: '<li><a href="#"></a></li>'
     , minLength: 1
+    , autoselect: true
     }
 
     $.fn.typeahead.Constructor = Typeahead
