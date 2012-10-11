@@ -1,9 +1,8 @@
 ﻿@{
-  //RavenProfiler could be useful in PROD too, in the future it could be move only to DEV (inside the if)
-  @Raven.Client.MvcIntegration.RavenProfiler.CurrentRequestSessions()
   var environment = System.Configuration.ConfigurationManager.AppSettings["CommonJobs/Environment"];
   if (!"PROD".Equals(environment, StringComparison.InvariantCultureIgnoreCase))
   {
+    @Raven.Client.MvcIntegration.RavenProfiler.CurrentRequestSessions()
     <li class="environmentBanner">
       <span>ENTORNO DE PRUEBAS (@environment)</span>
     </li>
