@@ -1,0 +1,90 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>HTML Home Page</title>
+
+    <link href="Content/bootstrap.css" rel="stylesheet" type="text/css" />
+    <link href="Content/bootstrap-responsive.css" rel="stylesheet" type="text/css" />
+    <script src="Scripts/jquery-1.8.2.js" type="text/javascript"></script>
+    <script src="Scripts/bootstrap.js" type="text/javascript"></script>
+    <script src="Scripts/knockout-2.1.0.js" type="text/javascript"></script>
+    <script src="Scripts/underscore.js" type="text/javascript"></script>
+
+    <link href="Content/site.css" rel="stylesheet" type="text/css" />
+    <script src="Scripts/site.js" type="text/javascript"></script>
+    <script src="Scripts/admin.js" type="text/javascript"></script>
+</head>
+<body>
+    <div>
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <ul class="nav">
+                    <li><a href="./">Home</a></li>
+                    <li class="active"><a href="admin.html">Definir menues</a></li>
+                    <li><a href="mymenu.html">Mi menú</a></li>
+                </ul>
+            </div>
+        </div>
+        <header class="jumbotron subhead" id="overview" style="padding: 40px 0;">
+          <div class="container">
+            <h1 data-bind="text: title">Common Food</h1>
+          </div>
+        </header>
+        <div class="container">
+            <section id="main">
+                <div data-bind="foreach: $root.foods">
+                    <h4>Semana <span data-bind='text: $index() + 1'></span></h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <td></td>
+                                <!-- ko foreach: $root.days -->
+                                <td data-bind='text: text'></td>
+                                <!-- /ko -->
+                            </tr>
+                        </thead>
+                        <tbody data-bind="foreach: $root.options">
+                            <tr>
+                                <td data-bind='text: text'></td>
+                                <!-- ko foreach: $root.days -->
+                                <td>
+                                    <!-- todo: binding -->
+                                    <textarea data-bind='value: $root.getFood($parentContext.$parentContext.$index(), $index(), $parentContext.$index())'></textarea>
+                                </td>
+                                <!-- /ko -->
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <hr />
+                <h2>Configuración</h2>
+
+                <ul>
+                    <li><label>Título: <input data-bind="value: title" /></label></li>
+                    <li><label>Comienza: <input data-bind="value: startDate" /><!-- TODO: editor de fecha --></label></li>
+                    <li><label>Finaliza: <input data-bind="value: endDate" /><!-- TODO: editor de fecha --></label></li>
+                    <li><label>Primer semana: <input data-bind="value: firstWeek" /><!-- TODO: select --></label></li>
+                    <li><label>Primer día: <input data-bind="value: firstDay" /><!-- TODO: select o bien hacerlo automático por el día --></label></li>
+                </ul>
+
+                <h3>Opciones de menú</h3>
+                <ul data-bind="foreach: options">
+                    <li>
+                        <input data-bind='value: text' />
+                        <a href="#" data-bind="click: $root.removeOption">Remove</a>
+                    </li>
+                </ul>
+                <a href="#" data-bind="click: addOption">Add</a>
+                <a href="#" data-bind="click: removeOption">Remove</a>
+                <h3>Semanas</h3>
+                <span data-bind='text: weeks'></span> Semanas
+                <a href="#" data-bind="click: addWeek">Add</a>
+                <a href="#" data-bind="click: removeWeek">Remove</a>
+            </section>
+        </div>
+        <footer>
+        </footer>
+    </div>
+</body>
+</html>
