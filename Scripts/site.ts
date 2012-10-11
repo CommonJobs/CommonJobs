@@ -1,4 +1,6 @@
 ///<reference path='jquery.d.ts' />
+///<reference path='Knockout.d.ts' />
+///<reference path='underscore.browser.d.ts' />
 
 $(document).ready(function () {
 
