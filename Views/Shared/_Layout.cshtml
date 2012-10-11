@@ -12,27 +12,38 @@
     <script src="@Url.Content("~/Scripts/underscore.js")" type="text/javascript"></script>
 
     <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
-	<script src="@Url.Content("~/Scripts/Site.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/Site.js")" type="text/javascript"></script>
 </head>
 <body>
     <div>
-        <header>
-            <h1>My MVC Application</h1>
-            <nav>
-                <ul id="menu">
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <ul class="nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                 </ul>
-            </nav>
+            </div>
+        </div>
+
+        <header class="jumbotron subhead" id="overview" style="padding: 40px 0;">
+          <div class="container">
+            <h1>Common Food</h1>
+            <p class="lead">La forma más facil de administrar los menues!</p>
+          </div>
         </header>
-        <section id="main" class="container" style="display: none">
-            @RenderBody()
-        </section>
+
+        <div class="container">
+            <section id="main" style="display: none">
+                @RenderBody()
+            </section>
+            <section>
+                <a class='btn-slide' style='text-align: center; line-height: 2.8em; padding: 10px 20px;
+                    font-weight: bold; text-decoration: none; background-color: #e8eef4; color: #034af3;'>
+                    Details</a>
+            </section>
+        </div>
         <footer>
         </footer>
-		<section>
-            <a class='btn-slide' style='text-align: center; line-height: 2.8em;padding: 10px 20px; font-weight: bold; text-decoration: none;background-color: #e8eef4;color: #034af3;'>Details</a>
-        </section>
     </div>
 </body>
 </html>
