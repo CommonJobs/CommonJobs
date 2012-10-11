@@ -52,10 +52,11 @@
         var val = this.$menu.find('.active').attr('data-value')
         if (val) {
             this.$element
-              .val(this.updater(val))
-              .change()
-              .trigger("input") //Agregado para compatibilidad con nervoustissue
+                .val(this.updater(val))
         }
+        this.$element
+            .change()
+            .trigger("input") //Agregado para compatibilidad con nervoustissue
         return this.hide()
     }
 
