@@ -130,7 +130,7 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Content\Site.css" />
+    <Content Include="Content\site.css" />
     <Content Include="packages.config" />
     <None Include="Scripts\jquery.d.ts" />
     <TypeScriptCompile Include="Scripts\site.ts" />
