@@ -97,6 +97,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
+    <Content Include="Scripts\knockout-2.1.0.debug.js" />
+    <Content Include="Scripts\knockout-2.1.0.js" />
     <Content Include="Scripts\underscore.js" />
     <Content Include="Scripts\underscore.min.js">
       <DependentUpon>underscore.js</DependentUpon>
