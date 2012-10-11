@@ -2,10 +2,20 @@
 ///<reference path='Knockout.d.ts' />
 ///<reference path='underscore.browser.d.ts' />
 
-$(document).ready(function () {
-var ViewModel = function (model) {
-    var self = this;
-    var defaultModel = {
+interface IMenuModel {
+    title?: string;
+    firstWeek?: number;
+    firstDay?: number;
+    weeks?: number;
+    days?: string[];
+    options?: string[];
+    startDate?: Date;
+    endDate?: Date;
+    foods?: string[][][];
+}
+
+class MenuViewModel {
+    static defaultModel: IMenuModel = {
         title: "",
         firstWeek: 0,
         firstDay: 0,
@@ -16,136 +26,137 @@ var ViewModel = function (model) {
         endDate: null,
         foods: []
     };
+
+    title: knockout.koObservableString;
+    weeks: knockout.koObservableNumber;
+    days: knockout.koObservableArrayBase;
+    options: knockout.koObservableArrayBase;
+    startDate: knockout.koObservableString;
+    endDate: knockout.koObservableString;
+    firstWeek: knockout.koObservableNumber;
+    firstDay: knockout.koObservableNumber;
+    foods: knockout.koObservableArrayBase; //By week, by day, by option
     
-    var initialize = function(model) {
-        model = $.extend({}, defaultModel, model);
-        self.title = ko.observable(model.title);
-        self.weeks = ko.observable(0);
-        self.days = ko.observableArray();
-        self.options = ko.observableArray();
-        self.startDate = ko.observable(model.startDate);
-        self.endDate = ko.observable(model.endDate);
-        self.firstWeek = ko.observable(model.firstWeek);
-        self.firstDay = ko.observable(model.firstDay);
-        self.foods = ko.observableArray(); //By week, by day, by option
-        
+    constructor (model?: IMenuModel) {
+        model =  <IMenuModel>$.extend({}, MenuViewModel.defaultModel, model);
+        this.title = ko.observable(model.title);
+        this.weeks = ko.observable(0);
+        this.days = ko.observableArray([]);
+        this.options = ko.observableArray();
+        this.startDate = ko.observable(model.startDate);
+        this.endDate = ko.observable(model.endDate);
+        this.firstWeek = ko.observable(model.firstWeek);
+        this.firstDay = ko.observable(model.firstDay);
+        this.foods = ko.observableArray(); //By week, by day, by option
         
         for (var s in model.options) {
-            self.addOption(model.options[s]);
+            this.addOption(model.options[s]);
         }        
         for (var s in model.days) {
-            addDay(model.days[s]);
+            this.addDay(model.days[s]);
         }
         for (var i = 0; i < model.weeks; i++) {
-            self.addWeek();
+            this.addWeek();
         }
 
         //TODO: importar las comidas
     }
-        
-    self.exportModel = function() {
+
+    exportModel(): IMenuModel {
         //TODO: generar el modelo
         return null;
     }
 
-    self.getFood = function(weekIndex, dayIndex, optionIndex) {
-        return self.foods()[weekIndex][dayIndex][optionIndex];
+    getFood(weekIndex: number, dayIndex: number, optionIndex: number): knockout.koObservableString {
+        return this.foods()[weekIndex][dayIndex][optionIndex];
     }
-    
-    var createDayFood = function(week, option, day) {
-        //var defaultText = option.text() + " " + day.text() + " " + week.text();
-        var defaultText = null;
-        return {
-            day: day,
-            text: ko.observable(defaultText)
-        };
-    };
 
-    self.addWeek = function() {
-        var weekFoods = [];                    
+    addWeek() {
+        var self = this;
+        var weekFoods: knockout.koObservableString[][] = [];
         _.each(self.days(), function(day) {
-            var dayFoods = [];
+            var dayFoods: knockout.koObservableString[] = [];
             _.each(self.options(), function(option) {
                dayFoods.push(ko.observable(""));
             });
             weekFoods.push(dayFoods);
         });
-        self.foods.push(weekFoods);
-        self.weeks(self.weeks() + 1);
-    };
-    
-    self.removeWeek = function() {
-        var actual = self.weeks();
-        if (actual > 0) {
-            self.weeks(actual - 1);
-            self.foods.pop();
-        }            
-    };
-
-    var eachWeek = function(f) {
-        _.each(self.foods(), f);
+        this.foods.push(weekFoods);
+        this.weeks(self.weeks() + 1);
     }
 
-    var eachDay = function(f) {
-        eachWeek(function(weekFoods) {
+    removeWeek() {
+        var actual = this.weeks();
+        if (actual > 0) {
+            this.weeks(actual - 1);
+            this.foods.pop();
+        }            
+    };
+    
+    private eachWeek(f: (weekFoods: knockout.koObservableString[][]) => void ) {
+        _.each(this.foods(), f);
+    }
+
+    private eachDay(f: (dayFoods: knockout.koObservableString[], weekFoods: knockout.koObservableString[][]) => void ) {
+        this.eachWeek(function(weekFoods) {
             _.each(weekFoods, function(dayFoods) {
                 f(dayFoods, weekFoods);
             });
        });
     };
-    
-    self.addOption = function(text) {
-        text = _.isString(text) && text || "Menú " + (self.options().length + 1);
+
+    addOption(text?: string) {
+        text = _.isString(text) && text || "Menú " + (this.options().length + 1);
         var option = { text: ko.observable(text) };
         
-        eachDay(function(dayFoods) {
+        this.eachDay(function(dayFoods) {
            dayFoods.push(ko.observable(""));
         });
         
-        self.options.push(option);
-    };
+        this.options.push(option);
+    }
+
     
-    self.removeOption = function(option) {
-        if (self.options().length) {
+    removeOption(option?) {
+        if (this.options().length) {
             var index =
                 _.isNumber(option) ? option
-                : self.options.indexOf(option);
+                : this.options.indexOf(option);
             
-            eachDay(function(dayFoods) {
+            this.eachDay(function(dayFoods) {
                dayFoods.splice(index, 1);
             });
 
-            self.options.splice(index, 1);
+            this.options.splice(index, 1);
         }
     };
         
-    var addDay = function(text) {
-        text = _.isString(text) && text || "Día " + (self.option().length + 1);
+    
+    private addDay(text?: string) {
+        text = _.isString(text) && text || "Día " + (this.options().length + 1);
         var day = { text: ko.observable(text) };       
         
-        eachWeek(function(weekFoods) {
+        this.eachWeek(function(weekFoods) {
             var dayFoods = [];            
-            _.each(self.options(), function(option) {
+            _.each(this.options(), function(option) {
                dayFoods.push(ko.observable(""));
             });
             weekFoods.push(dayFoods);
         });
         
-        self.days.push(day);
-    };
-        
-    initialize(model);
-};
+        this.days.push(day);
+    }
+}
 
-ko.applyBindings(new ViewModel({
-    title: "Menú Primaveral"
-    , firstWeek: 1 //Empezamos por la segunda semana
-    , firstDay: 4 //El 21 de septiembre es viernes
-    , weeks: 4 
-    , options: [ "Común", "Light", "Vegetariano" ]
-    , startDate: "2012-09-21" //inclusive
-    , endDate: "2012-12-20" //inclusive
-    //TODO: , foods: []
-}));
-
+$(document).ready(function () {
+    ko.applyBindings(new MenuViewModel({
+        title: "Menú Primaveral"
+        , firstWeek: 1 //Empezamos por la segunda semana
+        , firstDay: 4 //El 21 de septiembre es viernes
+        , weeks: 4
+        , options: ["Común", "Light", "Vegetariano"]
+        , startDate: new Date("2012-09-21") //inclusive
+        , endDate: new Date("2012-12-20") //inclusive
+        //, foods: []
+    }));
 });

@@ -1,127 +1,120 @@
-$(document).ready(function () {
-    var ViewModel = function (model) {
+var MenuViewModel = (function () {
+    function MenuViewModel(model) {
+        model = $.extend({
+        }, MenuViewModel.defaultModel, model);
+        this.title = ko.observable(model.title);
+        this.weeks = ko.observable(0);
+        this.days = ko.observableArray([]);
+        this.options = ko.observableArray();
+        this.startDate = ko.observable(model.startDate);
+        this.endDate = ko.observable(model.endDate);
+        this.firstWeek = ko.observable(model.firstWeek);
+        this.firstDay = ko.observable(model.firstDay);
+        this.foods = ko.observableArray();
+        for(var s in model.options) {
+            this.addOption(model.options[s]);
+        }
+        for(var s in model.days) {
+            this.addDay(model.days[s]);
+        }
+        for(var i = 0; i < model.weeks; i++) {
+            this.addWeek();
+        }
+    }
+    MenuViewModel.defaultModel = {
+        title: "",
+        firstWeek: 0,
+        firstDay: 0,
+        weeks: 4,
+        days: [
+            "Lunes", 
+            "Martes", 
+            "Miercoles", 
+            "Jueves", 
+            "Viernes"
+        ],
+        options: [
+            "Común", 
+            "Light", 
+            "Vegetariano"
+        ],
+        startDate: null,
+        endDate: null,
+        foods: []
+    };
+    MenuViewModel.prototype.exportModel = function () {
+        return null;
+    };
+    MenuViewModel.prototype.getFood = function (weekIndex, dayIndex, optionIndex) {
+        return this.foods()[weekIndex][dayIndex][optionIndex];
+    };
+    MenuViewModel.prototype.addWeek = function () {
         var self = this;
-        var defaultModel = {
-            title: "",
-            firstWeek: 0,
-            firstDay: 0,
-            weeks: 4,
-            days: [
-                "Lunes", 
-                "Martes", 
-                "Miercoles", 
-                "Jueves", 
-                "Viernes"
-            ],
-            options: [
-                "Común", 
-                "Light", 
-                "Vegetariano"
-            ],
-            startDate: null,
-            endDate: null,
-            foods: []
-        };
-        var initialize = function (model) {
-            model = $.extend({
-            }, defaultModel, model);
-            self.title = ko.observable(model.title);
-            self.weeks = ko.observable(0);
-            self.days = ko.observableArray();
-            self.options = ko.observableArray();
-            self.startDate = ko.observable(model.startDate);
-            self.endDate = ko.observable(model.endDate);
-            self.firstWeek = ko.observable(model.firstWeek);
-            self.firstDay = ko.observable(model.firstDay);
-            self.foods = ko.observableArray();
-            for(var s in model.options) {
-                self.addOption(model.options[s]);
-            }
-            for(var s in model.days) {
-                addDay(model.days[s]);
-            }
-            for(var i = 0; i < model.weeks; i++) {
-                self.addWeek();
-            }
-        };
-        self.exportModel = function () {
-            return null;
-        };
-        self.getFood = function (weekIndex, dayIndex, optionIndex) {
-            return self.foods()[weekIndex][dayIndex][optionIndex];
-        };
-        var createDayFood = function (week, option, day) {
-            var defaultText = null;
-            return {
-                day: day,
-                text: ko.observable(defaultText)
-            };
-        };
-        self.addWeek = function () {
-            var weekFoods = [];
-            _.each(self.days(), function (day) {
-                var dayFoods = [];
-                _.each(self.options(), function (option) {
-                    dayFoods.push(ko.observable(""));
-                });
-                weekFoods.push(dayFoods);
-            });
-            self.foods.push(weekFoods);
-            self.weeks(self.weeks() + 1);
-        };
-        self.removeWeek = function () {
-            var actual = self.weeks();
-            if(actual > 0) {
-                self.weeks(actual - 1);
-                self.foods.pop();
-            }
-        };
-        var eachWeek = function (f) {
-            _.each(self.foods(), f);
-        };
-        var eachDay = function (f) {
-            eachWeek(function (weekFoods) {
-                _.each(weekFoods, function (dayFoods) {
-                    f(dayFoods, weekFoods);
-                });
-            });
-        };
-        self.addOption = function (text) {
-            text = _.isString(text) && text || "Menú " + (self.options().length + 1);
-            var option = {
-                text: ko.observable(text)
-            };
-            eachDay(function (dayFoods) {
+        var weekFoods = [];
+        _.each(self.days(), function (day) {
+            var dayFoods = [];
+            _.each(self.options(), function (option) {
                 dayFoods.push(ko.observable(""));
             });
-            self.options.push(option);
-        };
-        self.removeOption = function (option) {
-            if(self.options().length) {
-                var index = _.isNumber(option) ? option : self.options.indexOf(option);
-                eachDay(function (dayFoods) {
-                    dayFoods.splice(index, 1);
-                });
-                self.options.splice(index, 1);
-            }
-        };
-        var addDay = function (text) {
-            text = _.isString(text) && text || "Día " + (self.option().length + 1);
-            var day = {
-                text: ko.observable(text)
-            };
-            eachWeek(function (weekFoods) {
-                var dayFoods = [];
-                _.each(self.options(), function (option) {
-                    dayFoods.push(ko.observable(""));
-                });
-                weekFoods.push(dayFoods);
-            });
-            self.days.push(day);
-        };
-        initialize(model);
+            weekFoods.push(dayFoods);
+        });
+        this.foods.push(weekFoods);
+        this.weeks(self.weeks() + 1);
     };
-    ko.applyBindings(new ViewModel({
+    MenuViewModel.prototype.removeWeek = function () {
+        var actual = this.weeks();
+        if(actual > 0) {
+            this.weeks(actual - 1);
+            this.foods.pop();
+        }
+    };
+    MenuViewModel.prototype.eachWeek = function (f) {
+        _.each(this.foods(), f);
+    };
+    MenuViewModel.prototype.eachDay = function (f) {
+        this.eachWeek(function (weekFoods) {
+            _.each(weekFoods, function (dayFoods) {
+                f(dayFoods, weekFoods);
+            });
+        });
+    };
+    MenuViewModel.prototype.addOption = function (text) {
+        text = _.isString(text) && text || "Menú " + (this.options().length + 1);
+        var option = {
+            text: ko.observable(text)
+        };
+        this.eachDay(function (dayFoods) {
+            dayFoods.push(ko.observable(""));
+        });
+        this.options.push(option);
+    };
+    MenuViewModel.prototype.removeOption = function (option) {
+        if(this.options().length) {
+            var index = _.isNumber(option) ? option : this.options.indexOf(option);
+            this.eachDay(function (dayFoods) {
+                dayFoods.splice(index, 1);
+            });
+            this.options.splice(index, 1);
+        }
+    };
+    MenuViewModel.prototype.addDay = function (text) {
+        text = _.isString(text) && text || "Día " + (this.options().length + 1);
+        var day = {
+            text: ko.observable(text)
+        };
+        this.eachWeek(function (weekFoods) {
+            var dayFoods = [];
+            _.each(this.options(), function (option) {
+                dayFoods.push(ko.observable(""));
+            });
+            weekFoods.push(dayFoods);
+        });
+        this.days.push(day);
+    };
+    return MenuViewModel;
+})();
+$(document).ready(function () {
+    ko.applyBindings(new MenuViewModel({
         title: "Menú Primaveral",
         firstWeek: 1,
         firstDay: 4,
@@ -131,7 +124,7 @@ $(document).ready(function () {
             "Light", 
             "Vegetariano"
         ],
-        startDate: "2012-09-21",
-        endDate: "2012-12-20"
+        startDate: new Date("2012-09-21"),
+        endDate: new Date("2012-12-20")
     }));
 });
