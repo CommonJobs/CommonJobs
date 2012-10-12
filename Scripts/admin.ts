@@ -14,7 +14,29 @@ interface IMenuModel {
     foods?: string[][][];
 }
 
-class MenuViewModel {
+class HasCallbacks {
+	constructor() {
+		var _this = this, _constructor = (<any>this).constructor;
+		if (!_constructor.__cb__) {
+			_constructor.__cb__ = {};
+			for (var m in this) {
+				var fn = this[m];
+				if (typeof fn === 'function' && m.indexOf('__cb__') == -1) {
+					_constructor.__cb__[m] = fn;					
+				}
+			}
+		}
+		for (var m in _constructor.__cb__) {
+			(function (m, fn) {
+				_this[m] = function () {
+					return fn.apply(_this, Array.prototype.slice.call(arguments));						
+				};
+			})(m, _constructor.__cb__[m]);
+		}
+	}
+}
+
+class MenuViewModel extends HasCallbacks  {
     static defaultModel: IMenuModel = {
         title: "",
         firstWeek: 0,
@@ -38,6 +60,7 @@ class MenuViewModel {
     foods: knockout.koObservableArrayBase; //By week, by day, by option
     
     constructor (model?: IMenuModel) {
+        super();
         model =  <IMenuModel>$.extend({}, MenuViewModel.defaultModel, model);
         this.title = ko.observable(model.title);
         this.weeks = ko.observable(0);

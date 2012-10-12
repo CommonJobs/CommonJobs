@@ -1,5 +1,37 @@
-var MenuViewModel = (function () {
+var __extends = this.__extends || function (d, b) {
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+}
+var HasCallbacks = (function () {
+    function HasCallbacks() {
+        var _this = this;
+        var _constructor = (this).constructor;
+
+        if(!_constructor.__cb__) {
+            _constructor.__cb__ = {
+            };
+            for(var m in this) {
+                var fn = this[m];
+                if(typeof fn === 'function' && m.indexOf('__cb__') == -1) {
+                    _constructor.__cb__[m] = fn;
+                }
+            }
+        }
+        for(var m in _constructor.__cb__) {
+            (function (m, fn) {
+                _this[m] = function () {
+                    return fn.apply(_this, Array.prototype.slice.call(arguments));
+                };
+            })(m, _constructor.__cb__[m]);
+        }
+    }
+    return HasCallbacks;
+})();
+var MenuViewModel = (function (_super) {
+    __extends(MenuViewModel, _super);
     function MenuViewModel(model) {
+        _super.call(this);
         model = $.extend({
         }, MenuViewModel.defaultModel, model);
         this.title = ko.observable(model.title);
@@ -89,7 +121,6 @@ var MenuViewModel = (function () {
         this.options.push(option);
     };
     MenuViewModel.prototype.removeOption = function (option) {
-        console.debug(this);
         if(this.options().length) {
             var index = _.isNumber(option) ? option : this.options.indexOf(option);
             this.eachDay(function (dayFoods) {
@@ -114,7 +145,7 @@ var MenuViewModel = (function () {
         this.days.push(day);
     };
     return MenuViewModel;
-})();
+})(HasCallbacks);
 $(document).ready(function () {
     ko.applyBindings(new MenuViewModel({
         title: "Menú Primaveral",
