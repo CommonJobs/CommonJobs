@@ -9,7 +9,7 @@ $(document).ready(function () {
             "Light", 
             "Vegetariano"
         ],
-        startDate: new Date("2012-09-21"),
+        startDate: new Date(),
         endDate: new Date("2012-12-20")
     }));
 });

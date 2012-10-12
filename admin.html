@@ -10,6 +10,9 @@
     <script src="Scripts/bootstrap.js" type="text/javascript"></script>
     <script src="Scripts/knockout-2.1.0.js" type="text/javascript"></script>
     <script src="Scripts/underscore.js" type="text/javascript"></script>
+    <script src="Scripts/bootstrap-datepicker.js" type="text/javascript"></script>
+    <link href="Content/bootstrap-datepicker.css" rel="stylesheet" type="text/css" />
+    <script src="Scripts/bootstrap-datepicker-ko.js" type="text/javascript"></script>
 
     <link href="Content/site.css" rel="stylesheet" type="text/css" />
     <script src="Scripts/site.js" type="text/javascript"></script>
@@ -63,8 +66,8 @@
 
                 <ul>
                     <li><label>Título: <input data-bind="value: title" /></label></li>
-                    <li><label>Comienza: <input data-bind="value: startDate" /><!-- TODO: editor de fecha --></label></li>
-                    <li><label>Finaliza: <input data-bind="value: endDate" /><!-- TODO: editor de fecha --></label></li>
+                    <li><label>Comienza: <input data-bind="datepicker: startDate" /></label></li>
+                    <li><label>Finaliza: <input data-bind="datepicker: endDate" /></label></li>
                     <li><label>Primer semana: <input data-bind="value: firstWeek" /><!-- TODO: select --></label></li>
                     <li><label>Primer día: <input data-bind="value: firstDay" /><!-- TODO: select o bien hacerlo automático por el día --></label></li>
                 </ul>

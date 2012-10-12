@@ -123,6 +123,7 @@
     <Content Include="Scripts\CommonFood.js">
       <DependentUpon>CommonFood.ts</DependentUpon>
     </Content>
+    <Content Include="Scripts\bootstrap-datepicker-ko.js" />
     <Content Include="Scripts\underscore.browser.d.ts" />
     <Content Include="Scripts\Knockout.d.ts" />
     <Content Include="Scripts\jquery-1.8.2.js" />
