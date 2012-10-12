@@ -96,6 +96,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap-datepicker.css" />
     <Content Include="Content\bootstrap-responsive.css" />
     <Content Include="Content\bootstrap-responsive.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -110,6 +111,7 @@
     <Content Include="Scripts\admin.js">
       <DependentUpon>admin.ts</DependentUpon>
     </Content>
+    <Content Include="Scripts\bootstrap-datepicker.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js">
       <DependentUpon>bootstrap.js</DependentUpon>
