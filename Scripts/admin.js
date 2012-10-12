@@ -48,16 +48,14 @@ var MenuViewModel = (function () {
     MenuViewModel.prototype.getFood = function (weekIndex, dayIndex, optionIndex) {
         return this.foods()[weekIndex][dayIndex][optionIndex];
     };
-    MenuViewModel.prototype.eachDayy = function (f) {
-        _.each(this.days(), f, this);
-    };
     MenuViewModel.prototype.addWeek = function () {
+        var _this = this;
         var weekFoods = [];
-        this.eachDayy(function (day) {
+        _.each(this.days(), function (day) {
             var dayFoods = [];
-            _.each(this.options(), function (option) {
-                dayFoods.push(ko.observable(""));
-            }, this);
+            _.each(_this.options(), function (option) {
+                return dayFoods.push(ko.observable(""));
+            });
             weekFoods.push(dayFoods);
         });
         this.foods.push(weekFoods);
@@ -75,8 +73,8 @@ var MenuViewModel = (function () {
     };
     MenuViewModel.prototype.eachDay = function (f) {
         this.eachWeek(function (weekFoods) {
-            _.each(weekFoods, function (dayFoods) {
-                f(dayFoods, weekFoods);
+            return _.each(weekFoods, function (dayFoods) {
+                return f(dayFoods, weekFoods);
             });
         });
     };
@@ -86,28 +84,30 @@ var MenuViewModel = (function () {
             text: ko.observable(text)
         };
         this.eachDay(function (dayFoods) {
-            dayFoods.push(ko.observable(""));
+            return dayFoods.push(ko.observable(""));
         });
         this.options.push(option);
     };
     MenuViewModel.prototype.removeOption = function (option) {
+        console.debug(this);
         if(this.options().length) {
             var index = _.isNumber(option) ? option : this.options.indexOf(option);
             this.eachDay(function (dayFoods) {
-                dayFoods.splice(index, 1);
+                return dayFoods.splice(index, 1);
             });
             this.options.splice(index, 1);
         }
     };
     MenuViewModel.prototype.addDay = function (text) {
+        var _this = this;
         text = _.isString(text) && text || "Día " + (this.options().length + 1);
         var day = {
             text: ko.observable(text)
         };
         this.eachWeek(function (weekFoods) {
             var dayFoods = [];
-            _.each(this.options(), function (option) {
-                dayFoods.push(ko.observable(""));
+            _.each(_this.options(), function (option) {
+                return dayFoods.push(ko.observable(""));
             });
             weekFoods.push(dayFoods);
         });

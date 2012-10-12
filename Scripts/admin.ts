@@ -73,13 +73,12 @@ class MenuViewModel {
 
     addWeek() {
         var weekFoods: knockout.koObservableString[][] = [];
-        _.each(this.days(), function(day) {
+        _.each(this.days(), day => {
             var dayFoods: knockout.koObservableString[] = [];
-            _.each(this.options(), function(option) {
-               dayFoods.push(ko.observable(""));
-            }, this);
+            _.each(this.options(), option => 
+                dayFoods.push(ko.observable("")));
             weekFoods.push(dayFoods);
-        }, this);
+        });
         this.foods.push(weekFoods);
         this.weeks(this.weeks() + 1);
     }
@@ -93,25 +92,23 @@ class MenuViewModel {
     };
     
     private eachWeek(f: (weekFoods: knockout.koObservableString[][]) => void ) {
-        _.each(this.foods(), f, this);
+        _.each(this.foods(), f);
     }
 
     private eachDay(f: (dayFoods: knockout.koObservableString[], weekFoods: knockout.koObservableString[][]) => void ) {
-        this.eachWeek(function(weekFoods) {
-            _.each(weekFoods, function(dayFoods) {
-                f(dayFoods, weekFoods);
-            }, this);
-       });
+        this.eachWeek(weekFoods => 
+            _.each(weekFoods, dayFoods => 
+                f(dayFoods, weekFoods)));
     };
 
     addOption(text?: string) {
         text = _.isString(text) && text || "Menú " + (this.options().length + 1);
         var option = { text: ko.observable(text) };
         
-        this.eachDay(function(dayFoods) {
-           dayFoods.push(ko.observable(""));
-        });
-        
+        this.eachDay(dayFoods => 
+            dayFoods.push(ko.observable("")));
+
+        //No hay generics, de manera que this.options acepta cualquier cosa
         this.options.push(option);
     }
 
@@ -122,9 +119,8 @@ class MenuViewModel {
                 _.isNumber(option) ? option
                 : this.options.indexOf(option);
             
-            this.eachDay(function(dayFoods) {
-               dayFoods.splice(index, 1);
-            });
+            this.eachDay(dayFoods => 
+                dayFoods.splice(index, 1));
 
             this.options.splice(index, 1);
         }
@@ -135,19 +131,19 @@ class MenuViewModel {
         text = _.isString(text) && text || "Día " + (this.options().length + 1);
         var day = { text: ko.observable(text) };       
         
-        this.eachWeek(function(weekFoods) {
+        this.eachWeek(weekFoods => {
             var dayFoods = [];            
-            _.each(this.options(), function(option) {
-               dayFoods.push(ko.observable(""));
-            }, this);
+            _.each(this.options(), option => 
+                dayFoods.push(ko.observable("")));
             weekFoods.push(dayFoods);
         });
         
+        //No hay generics, de manera que this.days acepta cualquier cosa
         this.days.push(day);
     }
 }
 
-$(document).ready(function () {
+$(document).ready(() => {
     ko.applyBindings(new MenuViewModel({
         title: "Menú Primaveral"
         , firstWeek: 1 //Empezamos por la segunda semana
@@ -157,5 +153,5 @@ $(document).ready(function () {
         , startDate: new Date("2012-09-21") //inclusive
         , endDate: new Date("2012-12-20") //inclusive
         //, foods: []
-    }));
+    }))
 });
