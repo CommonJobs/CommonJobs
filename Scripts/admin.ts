@@ -4,6 +4,12 @@
 ///<reference path='CommonFood.ts' />
 
 $(document).ready(() => {
+    $.fn.datepicker.defaults = {
+        autoclose: true,
+        language: 'es',
+        format: 'dd/mm/yyyy'
+    };
+
     ko.applyBindings(new CommonFood.MenuViewModel({
         title: "Menú Primaveral"
         , firstWeek: 1 //Empezamos por la segunda semana

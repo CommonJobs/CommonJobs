@@ -1,4 +1,9 @@
 $(document).ready(function () {
+    $.fn.datepicker.defaults = {
+        autoclose: true,
+        language: 'es',
+        format: 'dd/mm/yyyy'
+    };
     ko.applyBindings(new CommonFood.MenuViewModel({
         title: "Menú Primaveral",
         firstWeek: 1,
@@ -9,7 +14,7 @@ $(document).ready(function () {
             "Light", 
             "Vegetariano"
         ],
-        startDate: new Date(),
+        startDate: new Date("2012-09-21"),
         endDate: new Date("2012-12-20")
     }));
 });
