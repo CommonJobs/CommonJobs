@@ -72,17 +72,16 @@ class MenuViewModel {
     }
 
     addWeek() {
-        var self = this;
         var weekFoods: knockout.koObservableString[][] = [];
-        _.each(self.days(), function(day) {
+        _.each(this.days(), function(day) {
             var dayFoods: knockout.koObservableString[] = [];
-            _.each(self.options(), function(option) {
+            _.each(this.options(), function(option) {
                dayFoods.push(ko.observable(""));
-            });
+            }, this);
             weekFoods.push(dayFoods);
-        });
+        }, this);
         this.foods.push(weekFoods);
-        this.weeks(self.weeks() + 1);
+        this.weeks(this.weeks() + 1);
     }
 
     removeWeek() {
@@ -94,14 +93,14 @@ class MenuViewModel {
     };
     
     private eachWeek(f: (weekFoods: knockout.koObservableString[][]) => void ) {
-        _.each(this.foods(), f);
+        _.each(this.foods(), f, this);
     }
 
     private eachDay(f: (dayFoods: knockout.koObservableString[], weekFoods: knockout.koObservableString[][]) => void ) {
         this.eachWeek(function(weekFoods) {
             _.each(weekFoods, function(dayFoods) {
                 f(dayFoods, weekFoods);
-            });
+            }, this);
        });
     };
 
@@ -140,7 +139,7 @@ class MenuViewModel {
             var dayFoods = [];            
             _.each(this.options(), function(option) {
                dayFoods.push(ko.observable(""));
-            });
+            }, this);
             weekFoods.push(dayFoods);
         });
         

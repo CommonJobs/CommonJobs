@@ -48,18 +48,20 @@ var MenuViewModel = (function () {
     MenuViewModel.prototype.getFood = function (weekIndex, dayIndex, optionIndex) {
         return this.foods()[weekIndex][dayIndex][optionIndex];
     };
+    MenuViewModel.prototype.eachDayy = function (f) {
+        _.each(this.days(), f, this);
+    };
     MenuViewModel.prototype.addWeek = function () {
-        var self = this;
         var weekFoods = [];
-        _.each(self.days(), function (day) {
+        this.eachDayy(function (day) {
             var dayFoods = [];
-            _.each(self.options(), function (option) {
+            _.each(this.options(), function (option) {
                 dayFoods.push(ko.observable(""));
-            });
+            }, this);
             weekFoods.push(dayFoods);
         });
         this.foods.push(weekFoods);
-        this.weeks(self.weeks() + 1);
+        this.weeks(this.weeks() + 1);
     };
     MenuViewModel.prototype.removeWeek = function () {
         var actual = this.weeks();
