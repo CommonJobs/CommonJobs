@@ -23,6 +23,19 @@
         return result;
     };
 
+    var getVacationsInAdvance = function (vacations, afterYear) {
+        var taken = 0;
+        if (vacations && vacations.ByYear) {
+            _.each(vacations.ByYear, function (v, k) {
+                if (k > afterYear) {
+                    taken += (+v.Taken || 0);
+                }
+            });
+        }
+        var result = { Taken: taken };
+        return result;
+    }
+
     var getOldVacations = function (vacations, fromYear) {
         var result = { Earned: 0, Taken: 0 };
         if (vacations && vacations.ByYear) {
@@ -66,6 +79,44 @@
             return DataTablesHelpers.column.vacationCell(
                 function (data) { return getOldVacations(data.vacations, fromYear) },
                 moreOptions);
+        },
+        numberNegativeInRed: function (getVal, moreOptions) {
+            return jQuery.extend({
+                "sType": "nulls-below-numeric",
+                "mData": function (data, type, val) {
+                    if (type === 'set') return; //TODO
+                    var val = getVal(data);
+                    switch (type) {
+                        case 'filter':
+                            return _.isUndefined(val) ? "<em>Sin datos</em>" : val;
+                        case 'display':
+                            return _.isUndefined(val) ? "<em>Sin datos</em>"
+                                : val < 0 ? "<span class='alert-error'>" + val + "</span>"
+                                : val;
+                        default:
+                            return _.isUndefined(val) ? null : val;
+                    }
+                }
+            }, moreOptions);
+        },
+        numberRedHideZeros: function (getVal, moreOptions) {
+            return jQuery.extend({
+                "sType": "nulls-below-numeric",
+                "mData": function (data, type, val) {
+                    if (type === 'set') return; //TODO
+                    var val = getVal(data);
+                    switch (type) {
+                        case 'filter':
+                            return _.isUndefined(val) ? "<em>Sin datos</em>" : val;
+                        case 'display':
+                            return _.isUndefined(val) ? "<em>Sin datos</em>"
+                                : !val ? " - " 
+                                : "<span class='alert-error'>" + val + "</span>";
+                        default:
+                            return _.isUndefined(val) ? null : val;
+                    }
+                }
+            }, moreOptions);
         }
     });
     
@@ -76,8 +127,9 @@
                     function (data) { return data.employee.FirstName; }),
                 function (data) { return urlGenerator.action("Edit", "Employees", data.employee.Id); }),
             DataTablesHelpers.column.month(function (data) { return data.employee.HiringDate; }),
-            DataTablesHelpers.column.number(function (data) { return data.vacations.TotalPending; }),
-            DataTablesHelpers.column.number(function (data) { return data.vacations.TotalTaken; })
+            DataTablesHelpers.column.numberNegativeInRed(function (data) { return data.vacations.TotalPending; }),
+            DataTablesHelpers.column.number(function (data) { return data.vacations.TotalTaken; }),
+            DataTablesHelpers.column.numberRedHideZeros(function (data) { return getVacationsInAdvance(data.vacations, currentYear).Taken; })
     ];
 
     _.each(years, function(y) {
@@ -117,14 +169,15 @@
             var cells = {
                 pending: $footer.find(".pending"),
                 taken: $footer.find(".taken"),
-                old: $footer.find(".old")
+                old: $footer.find(".old"),
+                inAdvance: $footer.find(".inadvance")
             };
 
             _.each(years, function (y) {
                 cells[y] = $footer.find(".year-" + y);
             });
 
-            var cleanReduce = { pending: 0, taken: 0, old: { Taken: 0, Earned: 0 } };
+            var cleanReduce = { pending: 0, taken: 0, old: { Taken: 0, Earned: 0 }, inAdvance: 0 };
             _.each(years, function (v) {
                 cleanReduce[v] = { Taken: 0, Earned: 0 };
             });
@@ -136,6 +189,9 @@
                     function (memo, data) {
                         memo.pending += +data.TotalPending || 0;
                         memo.taken += +data.TotalTaken || 0;
+
+                        var inAdvance = getVacationsInAdvance(data, currentYear);
+                        memo.inAdvance += inAdvance.Taken || 0;
 
                         var old = getOldVacations(data, currentYear - yearColumns);
                         memo.old.Taken += old.Taken;

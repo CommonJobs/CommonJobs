@@ -61,6 +61,16 @@ CJLogic.CalculateVacations = function (hiringDate, vacationList, now) {
                 result.TotalTaken += item.Taken;
                 result.TotalPending += item.Pending;
             }
+
+            for (var year in TakenVacationsByYear) {
+                if (year > currentYear) {
+                    var item = result.ByYear[year] = {};
+                    item.Taken = TakenVacationsByYear[year] || 0;
+                    result.TotalTaken += item.Taken;
+                    result.TotalPending -= item.Taken;
+                }
+            }
+
             resultWrapper.Successful = true;
         }
     } catch (ex) {
