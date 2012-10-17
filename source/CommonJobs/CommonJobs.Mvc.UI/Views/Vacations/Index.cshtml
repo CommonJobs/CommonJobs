@@ -22,6 +22,7 @@
             <th class="center">Ingreso</th>
             <th class="center">Adeudadas</th>
             <th class="center">Tomadas</th>
+            <th class="center">Adelantadas</th>
             @foreach (var y in ViewBag.years)
             {
                 <th class="center year-@y">@y</th>
@@ -37,6 +38,7 @@
             <th class="right">Totales</th>
             <th class="center pending"></th>
             <th class="center taken"></th>
+            <th class="center inadvance"></th>
             @foreach (var y in ViewBag.years)
             {
                 <th class="center year-@y"></th>
