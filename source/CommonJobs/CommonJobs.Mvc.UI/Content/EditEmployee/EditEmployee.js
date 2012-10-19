@@ -219,6 +219,27 @@
         }
     });
 
+    App.Absence = Backbone.Model.extend({
+        defaults: function () {
+            return {
+                RealDate: new Date().toJSON(),
+                //TODO: move RegisterDate to a better place
+                RegisterDate: new Date().toJSON(),
+                Note: "",
+                Attachment: null,
+                Reason: "",
+                To: null,
+                AbsenceType: 0,
+                HasCertificate: false
+            }
+        }
+    });
+
+    App.Absences = Backbone.Collection.extend({
+        model: App.Absence
+    });
+
+
     App.Employee = Backbone.Model.extend({
         defaults: function () {
             return {
@@ -246,6 +267,7 @@
 
             //TODO: move related logic to App.Vacation and App.Vacations models
             this.initCollectionField("Vacations", App.Vacations);
+            this.initCollectionField("Absences", App.Absences);
         }
     });
 
@@ -489,6 +511,32 @@
                 CurrentSalary: { controlLink: "ReadOnlyText", valueToContent: formatSalary },
                 InitialSalary: { controlLink: "ReadOnlyText", valueToContent: formatSalary },
                 Vacations: { controlLink: "CjVacationList" },
+                /*
+                HasCertificate: false
+                */
+                Absences:
+                {
+                    controlLink: "Collection",
+                    item:
+                    {
+                        controlLink: "Compound",
+                        template: _.template('<ul>' + 
+                            '<li><strong>Desde: </strong><span class="absence-date" data-bind="date"></span>&nbsp; <strong>Hasta: </strong><span class="absence-date" data-bind="dateTo"></span>&nbsp; <strong>Tipo: </strong><span class="absence-type" data-bind="type"></span>&nbsp; ' +
+                            '<strong>Razón: </strong><span class="absence-reason" data-bind="reason"></span></li>' +
+                            '<li><strong>Certificado: </strong><span class="absence-certificate" data-bind="hasCertificate"></span>&nbsp; <span data-bind="attachment"></span></li>' +
+                            '<li><strong>Nota: </strong><span class="absence-note"><div data-bind="text"></div></span></li></ul>'),
+                        items:
+                        [
+                            { controlLink: "Date", name: "date", field: "RealDate" },
+                            { controlLink: "Date", name: "dateTo", field: "To" },
+                            { controlLink: "Text", name: "reason", field: "Reason" },
+                            { controlLink: "Options", name: "type", field: "AbsenceType", options: [{ value: 0, text: "Todo el día" }, { value: 1, text: "Parte del día" }, { value: 2, text: "Trabajo remoto" }] },
+                            { controlLink: "Options", name: "hasCertificate", field: "HasCertificate", options: [{ value: false, text: "Sin certificado" }, { value: true, text: "Con certificado" }] },
+                            { controlLink: "CjEmployeeAttachment", name: "attachment", field: "Attachment" },
+                            { controlLink: "Markdown", name: "text", field: "Note" }
+                        ]
+                    }
+                },
                 Certifications:
                 {
                     controlLink: "Collection",
