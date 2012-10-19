@@ -115,5 +115,11 @@ namespace CommonJobs.Mvc.UI.Controllers
             var results = Query(new GetSuggestions(x => x.CompanyName, term, maxSuggestions));
             return Json(new { suggestions = results });
         }
+
+        public JsonNetResult AbsenceReason(string term, int maxSuggestions = 8)
+        {
+            var results = Query(new CommonJobs.Infrastructure.EmployeeAbsences.GetSuggestions(term, maxSuggestions));
+            return Json(new { suggestions = results });
+        }
     }
 }

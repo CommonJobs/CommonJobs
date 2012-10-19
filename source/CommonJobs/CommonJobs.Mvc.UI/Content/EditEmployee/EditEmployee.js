@@ -522,7 +522,7 @@
                         controlLink: "Compound",
                         template: _.template('<ul>' + 
                             '<li><strong>Desde: </strong><span class="absence-date" data-bind="date"></span>&nbsp; <strong>Hasta: </strong><span class="absence-date" data-bind="dateTo"></span>&nbsp; <strong>Tipo: </strong><span class="absence-type" data-bind="type"></span>&nbsp; ' +
-                            '<strong>Razón: </strong><span class="absence-reason" data-bind="reason"></span></li>' +
+                            '<strong>Razón: </strong><span class="absence-reason" data-cj-suggest="AbsenceReason" data-bind="reason"></span></li>' +
                             '<li><strong>Certificado: </strong><span class="absence-certificate" data-bind="hasCertificate"></span>&nbsp; <span data-bind="attachment"></span></li>' +
                             '<li><strong>Nota: </strong><span class="absence-note"><div data-bind="text"></div></span></li></ul>'),
                         items:
