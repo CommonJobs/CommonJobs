@@ -14,6 +14,7 @@ namespace CommonJobs.Domain
 
         public Employee()
         {
+            Absences = new List<Absence>();
             Vacations = new List<Vacation>();
             AttachmentsBySlot = new List<SlotWithAttachment>();
         }
@@ -112,6 +113,9 @@ namespace CommonJobs.Domain
 
         [Display(Name = "Convenio")]
         public string Agreement { get; set; }
+
+        [Display(Name = "Ausencias")]
+        public List<Absence> Absences { get; set; }
 
         [Display(Name = "Vacaciones")]
         public List<Vacation> Vacations { get; set; }

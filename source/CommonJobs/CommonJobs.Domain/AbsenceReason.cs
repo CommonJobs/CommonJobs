@@ -19,7 +19,6 @@ namespace CommonJobs.Domain
 
         public AbsenceReason(string text, string color)
         {
-            Id = text.GenerateSlug(20);
             Text = text;
             Color = color;
         }

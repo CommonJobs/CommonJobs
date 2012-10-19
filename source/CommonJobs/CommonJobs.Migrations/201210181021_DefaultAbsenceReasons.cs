@@ -21,10 +21,9 @@ namespace CommonJobs.Migrations
             new AbsenceReason("Paternidad", "#93C"), //Purple
             new AbsenceReason("Fallecimiento de familiar", "#102030"), //DarkGray
             new AbsenceReason("Casamiento", "#A0B0C0"), //LightGray
-            new AbsenceReason("Tramites", "#E09952"), //Orange
-            //TODO: 
-            //  dividir "Tramites" en "Tramites de la empresa" y "Tramites personales"
-            //  Agregar "Cuestiones personales" que creo que incluiria los viajes a recitales por ejemplo
+            new AbsenceReason("Trámites Personales", "#E09952"), //Orange
+            new AbsenceReason("Trámites de la empresa", "#34B27D"), //Green
+            new AbsenceReason("Cuestiones Personales", "#B27D34"), //Brown
         };
         
         public override void Up()
