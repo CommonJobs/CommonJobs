@@ -14,16 +14,27 @@ namespace CommonJobs.Migrations
     [Migration("201210181021", "Add default absence reasons configuration")]
     public class DefaultAbsenceReasons : Migration
     {
+        const string ColorRed = "#CB4D4D";
+        const string ColorYellow = "#DBDB57";
+        const string ColorBlue = "#4D77CB";
+        const string ColorPurple = "#93C";
+        const string ColorDarkGray = "#102030";
+        const string ColorLightGray = "#A0B0C0";
+        const string ColorOrange = "#E09952";
+        const string ColorGreen = "#34B27D";
+        const string ColorBrown = "#B27D34";
+        
+
         private AbsenceReason[] newAbsenceReasons = new[] {
-            new AbsenceReason("Enfermedad", "#CB4D4D"), //Red
-            new AbsenceReason("Examen", "#DBDB57"), //Yellow
-            new AbsenceReason("Maternidad", "#4D77CB"), //Blue
-            new AbsenceReason("Paternidad", "#93C"), //Purple
-            new AbsenceReason("Fallecimiento de familiar", "#102030"), //DarkGray
-            new AbsenceReason("Casamiento", "#A0B0C0"), //LightGray
-            new AbsenceReason("Trámites Personales", "#E09952"), //Orange
-            new AbsenceReason("Trámites de la empresa", "#34B27D"), //Green
-            new AbsenceReason("Cuestiones Personales", "#B27D34"), //Brown
+            new AbsenceReason("Enfermedad", ColorRed) { Id = "AbsenceReasons/enfermedad" },
+            new AbsenceReason("Examen",  ColorYellow) { Id = "AbsenceReasons/examen" }, 
+            new AbsenceReason("Maternidad", ColorBlue) { Id = "AbsenceReasons/maternidad" },
+            new AbsenceReason("Paternidad", ColorPurple) { Id = "AbsenceReasons/paternidad" },
+            new AbsenceReason("Fallecimiento de familiar", ColorDarkGray) { Id = "AbsenceReasons/fallecimiento-de-familiar" },
+            new AbsenceReason("Casamiento", ColorLightGray) { Id = "AbsenceReasons/casamiento" },
+            new AbsenceReason("Trámites Personales", ColorOrange) { Id = "AbsenceReasons/tramites-personales" },
+            new AbsenceReason("Trámites de la empresa", ColorGreen) { Id = "AbsenceReasons/tramites-de-la-empresa" },
+            new AbsenceReason("Cuestiones Personales", ColorBrown) { Id = "AbsenceReasons/cuestiones-personales" }
         };
         
         public override void Up()

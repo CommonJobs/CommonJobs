@@ -25,6 +25,7 @@ namespace CommonJobs.Infrastructure.EmployeeAbsences
         {
             var query = RavenSession.Query<EmployeeAbsences_Suggestions.Projection, EmployeeAbsences_Suggestions>()
                 .Search(x => x.Text, Term.TrimEnd('*', '?') + "*", escapeQueryOptions: EscapeQueryOptions.AllowPostfixWildcard)
+                .OrderByDescending(x => x.Predefined).ThenBy(x => x.Text)
                 .Select(x => x.Text)
                 .As<string>()
                 .Distinct()
@@ -32,7 +33,6 @@ namespace CommonJobs.Infrastructure.EmployeeAbsences
 
             var results = query.AsEnumerable()
                 .Where(x => !string.IsNullOrWhiteSpace(x))
-                .OrderBy(x => x)
                 .Take(MaxSuggestions).ToList();
 
             if (results.Count < MaxSuggestions)
@@ -42,6 +42,7 @@ namespace CommonJobs.Infrastructure.EmployeeAbsences
                 {
                     var extraQuery = RavenSession.Query<EmployeeAbsences_Suggestions.Projection, EmployeeAbsences_Suggestions>()
                         .Search(x => x.Text, string.Join(" ", suggestionTerms))
+                        .OrderByDescending(x => x.Predefined).ThenBy(x => x.Text)
                         .Select(x => x.Text)
                         .As<string>()
                         .Distinct()

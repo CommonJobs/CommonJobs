@@ -8,8 +8,8 @@ namespace CommonJobs.Domain
 {
     public class AbsenceReason
     {
-        public string Id { get; private set; }
-        public string Text { get; private set; }
+        public string Id { get; set; }
+        public string Text { get; set; }
         public string Color { get; set; }
 
         private AbsenceReason()

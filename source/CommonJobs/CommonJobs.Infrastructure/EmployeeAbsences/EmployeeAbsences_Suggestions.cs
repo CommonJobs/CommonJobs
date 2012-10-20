@@ -14,42 +14,43 @@ namespace CommonJobs.Infrastructure.EmployeeAbsences
         {
             public string Text { get; set; }
             public string Color { get; set; }
+            public bool Predefined { get; set; }
         }
 
         public EmployeeAbsences_Suggestions()
         {
-            //Main employees indexer
             AddMap<Employee>(employees =>
                 from entity in employees
                 from absence in entity.Absences
                 select new
                 {
-                    Text = absence.Reason ?? string.Empty,
-                    Color = string.Empty
+                    Text = (absence.Reason ?? string.Empty).Trim(),
+                    Color = (string)null,
+                    Predefined = false
                 });
 
-            //Secondary employees indexer (Corporative email and CurrentPosition)
             AddMap<AbsenceReason>(reasons =>
                 from entity in reasons
                 select new
                 {
-                    Text = entity.Text ?? string.Empty,
-                    Color = entity.Color ?? string.Empty
+                    Text = (entity.Text ?? string.Empty).Trim(),
+                    Color = entity.Color,
+                    Predefined = true
                 });
 
             Reduce = docs => from doc in docs
                              group doc by new 
                              { 
-                                 doc.Text,
-                                 doc.Color
+                                 doc.Text
                              } into g
                              select new
                              {
-                                 Text = g.OrderByDescending(x => x.Color).Select(x => x.Text.Trim()).FirstOrDefault(),
-                                 Color = g.OrderByDescending(x => x.Color).Select(x => x.Color.Trim()).FirstOrDefault()
+                                 Text = g.OrderByDescending(x => x.Predefined).Select(x => x.Text).FirstOrDefault(),
+                                 Color = g.OrderByDescending(x => x.Predefined).Select(x => x.Color).FirstOrDefault(),
+                                 Predefined = g.Any(x => x.Predefined)
                              };
 
-            Index(x => x.Text, FieldIndexing.NotAnalyzed);
+            Index(x => x.Text, FieldIndexing.Analyzed);
         }
     }
 }
