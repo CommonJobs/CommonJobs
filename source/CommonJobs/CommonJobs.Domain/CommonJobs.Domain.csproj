@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Absence.cs" />
     <Compile Include="Applicant.cs" />
     <Compile Include="ApplicantNote.cs" />
     <Compile Include="Attachment.cs" />
@@ -62,6 +63,8 @@
     <Compile Include="CalculatedVacations.cs" />
     <Compile Include="Certification.cs" />
     <Compile Include="CompanyHistory.cs" />
+    <Compile Include="AbsenceReason.cs" />
+    <Compile Include="AbsenceType.cs" />
     <Compile Include="JobSearch.cs" />
     <Compile Include="SlotWithAttachment.cs" />
     <Compile Include="TemporalFileReference.cs" />
