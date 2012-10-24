@@ -13,10 +13,48 @@
     var yearColumns = ViewData.years.length;
     var years = ViewData.years;
 
+    var createElementWithDetail = function (content, val) {
+        if (val.Detail && val.Detail.length) {
+            var contentArr = [];
+            contentArr.push('<ul>');
+            _.each(val.Detail, function (vacation) {
+                contentArr.push('<li>');
+                
+                var from = moment(vacation.From);
+                var to = moment(vacation.To);
+
+                var formatTo = vacation.Period == from.year() && vacation.Period == to.year()
+                    ? "D MMM"
+                    : "D MMM YYYY"
+
+                if (to.year() == from.year() && to.month() == from.month() && to.day() == from.day()) {
+                    contentArr.push("Periodo " + vacation.Period + ": " + to.format(formatTo));
+                } else {
+                    var formatFrom = from.year() && to.year()
+                        ? (from.month() == to.month() ? "D" : "D MMM")
+                        : "D MMM YYYY"
+
+                    contentArr.push("Periodo " + vacation.Period + ": " + from.format(formatFrom) + " - " + to.format(formatTo));
+                }
+                contentArr.push('</li>');
+            });
+            contentArr.push('</ul>');
+            var span = "<span class='vacation-list' data-content='" +
+                jQuery('<div />').text(contentArr.join("\n")).html().replace(/"/g, "&quot;").replace(/'/g, "&apos;")
+                + "'>" + content + "</span>";
+            return span;
+        } else {
+            return content;
+        }
+    };
+
     var formatVacation = function (val) {
-        return !val || (!val.Earned && !val.Taken)
-            ? ' - '
-            : "" + val.Taken + " / " + val.Earned;
+        if (!val || (!val.Earned && !val.Taken)) {
+            return " - ";
+        } else {
+            var content = "" + val.Taken + " / " + val.Earned;
+            return createElementWithDetail(content, val);
+        }
     };
 
     $.extend(DataTablesHelpers.column, {
@@ -28,7 +66,9 @@
                     var val = getVal(data);
                     switch (type) {
                         case 'filter':
-                        case 'display': return formatVacation(val);
+                        case 'display': if (val)
+
+                            return formatVacation(val);
                         default:
                             if (!val || _.isUndefined(val.Earned))
                                 return null;
@@ -73,19 +113,20 @@
                 }
             }, moreOptions);
         },
-        numberRedHideZeros: function (getVal, moreOptions) {
+        vacationsInAdvance: function (getVal, moreOptions) {
             return jQuery.extend({
                 "sType": "nulls-below-numeric",
                 "mData": function (data, type, val) {
                     if (type === 'set') return; //TODO
                     var val = getVal(data);
+                    var taken = val.Taken;
                     switch (type) {
                         case 'filter':
-                            return _.isUndefined(val) ? "" : val;
+                            return _.isUndefined(taken) ? "" : val;
                         case 'display':
-                            return _.isUndefined(val) ? ""
-                                : !val ? " - "
-                                : "<span class='alert-error'>" + val + "</span>";
+                            return _.isUndefined(taken) ? ""
+                                : !taken ? " - "
+                                : createElementWithDetail("<span class='alert-error'>" + taken + "</span>", val);
                         default:
                             return _.isUndefined(val) ? null : val;
                     }
@@ -103,7 +144,7 @@
             DataTablesHelpers.column.month(function (data) { return data.employee.HiringDate; }),
             DataTablesHelpers.column.numberNegativeInRed(function (data) { return data.vacations.TotalPending; }),
             DataTablesHelpers.column.number(function (data) { return data.vacations.TotalTaken; }),
-            DataTablesHelpers.column.numberRedHideZeros(function (data) { return data.vacations.InAdvance.Taken; })
+            DataTablesHelpers.column.vacationsInAdvance(function (data) { return data.vacations.InAdvance; })
     ];
 
     _.each(years, function (y) {
@@ -137,6 +178,10 @@
         },
         fnCreatedRow: function (nRow, aData, iDataIndex) {
             $(nRow).find("td").first().nextAll().addClass("center");
+            $(nRow).find(".vacation-list").popover({
+                title: 'Detalle',
+                placement: "top"
+            });
         },
         fnFooterCallback: function (nFoot, aaData, iStart, iEnd, aiDisplay) {
             var $footer = $(nFoot);
