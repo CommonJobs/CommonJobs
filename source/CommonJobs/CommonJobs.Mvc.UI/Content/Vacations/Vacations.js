@@ -9,48 +9,54 @@
     };
 
     var $table = $('#vacations-table');
-    var currentYear = _.first(ViewData.years);
+    var currentYear = ViewData.currentYear;
     var yearColumns = ViewData.years.length;
     var years = ViewData.years;
 
-    var getVacationByYear = function (vacations, year) {
-        var result = { Earned: 0, Taken: 0 };
-        if (vacations && vacations.ByYear && vacations.ByYear[year]) {
-            var v = vacations.ByYear[year];
-            result.Earned += (+v.Earned || 0);
-            result.Taken += (+v.Taken || 0);
+    var createElementWithDetail = function (content, val) {
+        if (val.Detail && val.Detail.length) {
+            var contentArr = [];
+            contentArr.push('<ul>');
+            _.each(val.Detail, function (vacation) {
+                contentArr.push('<li>');
+                
+                var from = moment(vacation.From);
+                var to = moment(vacation.To);
+
+                var formatTo = vacation.Period == from.year() && vacation.Period == to.year()
+                    ? "D MMM"
+                    : "D MMM YYYY"
+
+                if (to.year() == from.year() && to.month() == from.month() && to.day() == from.day()) {
+                    contentArr.push("Periodo " + vacation.Period + ": " + to.format(formatTo));
+                } else {
+                    var formatFrom = from.year() && to.year()
+                        ? (from.month() == to.month() ? "D" : "D MMM")
+                        : "D MMM YYYY"
+
+                    contentArr.push("Periodo " + vacation.Period + ": " + from.format(formatFrom) + " - " + to.format(formatTo));
+                }
+                contentArr.push('</li>');
+            });
+            contentArr.push('</ul>');
+            var span = "<span class='vacation-list' data-content='" +
+                jQuery('<div />').text(contentArr.join("\n")).html().replace(/"/g, "&quot;").replace(/'/g, "&apos;")
+                + "'>" + content + "</span>";
+            return span;
+        } else {
+            return content;
         }
-        return result;
     };
 
-    var getVacationsInAdvance = function (vacations, afterYear) {
-        var taken = 0;
-        if (vacations && vacations.ByYear) {
-            _.each(vacations.ByYear, function (v, k) {
-                if (k > afterYear) {
-                    taken += (+v.Taken || 0);
-                }
-            });
+    var formatVacation = function (val) {
+        if (!val) {
+            return null;
+        } else  if (!val.Earned && !val.Taken) {
+            return " - ";
+        } else {
+            var content = "" + val.Taken + " / " + val.Earned;
+            return createElementWithDetail(content, val);
         }
-        var result = { Taken: taken };
-        return result;
-    }
-
-    var getOldVacations = function (vacations, fromYear) {
-        var result = { Earned: 0, Taken: 0 };
-        if (vacations && vacations.ByYear) {
-            _.each(vacations.ByYear, function (v, k) {
-                if (k <= fromYear) {
-                    result.Earned += (+v.Earned || 0);
-                    result.Taken += (+v.Taken || 0);
-                }
-            });
-        }
-        return result;
-    };
-
-    var formatVacation = function(earned, taken) {
-        return !earned && !taken ? ' - ' : "" + taken + " / " + earned;
     };
 
     $.extend(DataTablesHelpers.column, {
@@ -60,24 +66,33 @@
                 "mData": function (data, type, val) {
                     if (type === 'set') return; //TODO
                     var val = getVal(data);
-                    var earned = val.Earned || 0;
-                    var taken = val.Taken || 0;
                     switch (type) {
-                        case 'filter': 
-                        case 'display': return formatVacation(earned, taken);
-                        default: return !earned && !taken ? null : taken;
+                        case 'filter':
+                        case 'display':
+                            return formatVacation(val);
+                        default:
+                            if (!val || !val.Earned)
+                                return null;
+                            else
+                                return val.Earned
+                                    ? val.Taken + 1 / val.Earned
+                                    : val.Taken;
                     }
                 }
             }, moreOptions);
         },
         vacationsByYear: function (year, moreOptions) {
             return DataTablesHelpers.column.vacationCell(
-                function (data) { return getVacationByYear(data.vacations, year); },
+                function (data) {
+                    return data.vacations && (data.vacations.TotalEarned || data.vacations.TotalTaken)
+                        ? data.vacations.ByYear[year] || { Earned: 0 }
+                        : null;
+                },
                 moreOptions);
         },
         vacationsOld: function (fromYear, moreOptions) {
             return DataTablesHelpers.column.vacationCell(
-                function (data) { return getOldVacations(data.vacations, fromYear) },
+                function (data) { return data.vacations.Older },
                 moreOptions);
         },
         numberNegativeInRed: function (getVal, moreOptions) {
@@ -99,7 +114,7 @@
                 }
             }, moreOptions);
         },
-        numberRedHideZeros: function (getVal, moreOptions) {
+        vacationsInAdvance: function (getVal, moreOptions) {
             return jQuery.extend({
                 "sType": "nulls-below-numeric",
                 "mData": function (data, type, val) {
@@ -107,19 +122,19 @@
                     var val = getVal(data);
                     switch (type) {
                         case 'filter':
-                            return _.isUndefined(val) ? "<em>Sin datos</em>" : val;
+                            return !val ? "" : val.Taken;
                         case 'display':
-                            return _.isUndefined(val) ? "<em>Sin datos</em>"
-                                : !val ? " - " 
-                                : "<span class='alert-error'>" + val + "</span>";
+                            return !val ? ""
+                                : !val.Taken ? " - "
+                                : createElementWithDetail("<span class='alert-error'>" + val.Taken + "</span>", val);
                         default:
-                            return _.isUndefined(val) ? null : val;
+                            return val && val.Taken ? val.Taken : null;
                     }
                 }
             }, moreOptions);
         }
     });
-    
+
     var columns = [
             DataTablesHelpers.column.link(
                 DataTablesHelpers.column.fullName(
@@ -129,10 +144,10 @@
             DataTablesHelpers.column.month(function (data) { return data.employee.HiringDate; }),
             DataTablesHelpers.column.numberNegativeInRed(function (data) { return data.vacations.TotalPending; }),
             DataTablesHelpers.column.number(function (data) { return data.vacations.TotalTaken; }),
-            DataTablesHelpers.column.numberRedHideZeros(function (data) { return getVacationsInAdvance(data.vacations, currentYear).Taken; })
+            DataTablesHelpers.column.vacationsInAdvance(function (data) { return data.vacations.InAdvance; })
     ];
 
-    _.each(years, function(y) {
+    _.each(years, function (y) {
         columns.push(DataTablesHelpers.column.vacationsByYear(y));
     });
 
@@ -155,14 +170,18 @@
                     sButtonText: "Imprimir"
                 },
                 {
-                	sExtends: "collection",
-                	sButtonText: "Exportar",
-                	aButtons: [ "csv", "xls", "pdf" ]
+                    sExtends: "collection",
+                    sButtonText: "Exportar",
+                    aButtons: ["csv", "xls", "pdf"]
                 }
 		    ]
         },
         fnCreatedRow: function (nRow, aData, iDataIndex) {
             $(nRow).find("td").first().nextAll().addClass("center");
+            $(nRow).find(".vacation-list").popover({
+                title: 'Detalle',
+                placement: "top"
+            });
         },
         fnFooterCallback: function (nFoot, aaData, iStart, iEnd, aiDisplay) {
             var $footer = $(nFoot);
@@ -189,28 +208,30 @@
                     function (memo, data) {
                         memo.pending += +data.TotalPending || 0;
                         memo.taken += +data.TotalTaken || 0;
+                        
+                        if (data.InAdvance && data.InAdvance.Taken)
+                            memo.inAdvance += data.InAdvance.Taken;
 
-                        var inAdvance = getVacationsInAdvance(data, currentYear);
-                        memo.inAdvance += inAdvance.Taken || 0;
-
-                        var old = getOldVacations(data, currentYear - yearColumns);
+                        var old = data.Older || { Taken: 0, Earned: 0 };
                         memo.old.Taken += old.Taken;
                         memo.old.Earned += old.Earned;
 
                         _.each(years, function (y) {
-                            var v = getVacationByYear(data, y);
-                            memo[y].Taken += v.Taken;
-                            memo[y].Earned += v.Earned;
+                            var v = data.ByYear[y];
+                            if (v) {
+                                memo[y].Taken += v.Taken || 0;
+                                memo[y].Earned += v.Earned || 0;
+                            }
                         });
                         return memo;
                     },
                     cleanReduce).value();
 
-            
-            _.each(years, function(y) {
-                totals[y] = formatVacation(totals[y].Earned, totals[y].Taken);
+
+            _.each(years, function (y) {
+                totals[y] = formatVacation(totals[y]);
             });
-            totals.old = formatVacation(totals.old.Earned, totals.old.Taken);
+            totals.old = formatVacation(totals.old);
 
             _.each(totals, function (v, k) {
                 cells[k].text(v);
@@ -227,7 +248,20 @@
         function (data, take, skip) {
             $table.dataTable().fnAddData(
                 _.map(data.Items, function (employee) {
-                    return { employee: employee, vacations: $.extend({}, CJLogic.CalculateVacations(employee.HiringDate, employee.Vacations, ViewData.now).Result) };
+                    var data = { HiringDate: employee.HiringDate, Vacations: employee.Vacations };
+                    var configuration = { CurrentYear: currentYear, DetailedYearsQuantity: yearColumns };
+                    var report = CJLogic.CalculateVacations(data, configuration);
+                    return {
+                        employee: employee,
+                        vacations: $.extend(
+                            {
+                                TotalEarned: null,
+                                TotalTaken: null,
+                                TotalPending: null,
+                                ByYear: {}
+                            },
+                            report.Result)
+                    };
                 }));
 
             var thereAreMore = skip + take < data.TotalResults;

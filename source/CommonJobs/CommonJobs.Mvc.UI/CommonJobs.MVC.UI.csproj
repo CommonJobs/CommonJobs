@@ -122,7 +122,19 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="CJLogic\CJLogic.CalculateVacations.js" />
+    <TypeScriptCompile Include="CJLogic\CalculateVacations.ts" />
+    <Content Include="CJLogic\CalculateVacations.js">
+      <DependentUpon>CalculateVacations.ts</DependentUpon>
+    </Content>
+    <TypeScriptCompile Include="CJLogic\CJLogic.ts" />
+    <Content Include="CJLogic\CJLogic.js">
+      <DependentUpon>CJLogic.ts</DependentUpon>
+    </Content>
+    <Content Include="CJLogic\Libs\twix.d.ts" />
+    <Content Include="CJLogic\Libs\jquery.d.ts" />
+    <Content Include="CJLogic\Libs\Knockout.d.ts" />
+    <Content Include="CJLogic\Libs\moment.d.ts" />
+    <Content Include="CJLogic\Libs\underscore.browser.d.ts" />
     <Content Include="Content\DataTables\css\demo_page.css" />
     <Content Include="Content\DataTables\css\demo_table.css" />
     <Content Include="Content\DataTables\css\demo_table_jui.css" />

@@ -93,8 +93,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\commonjobs.mvc.ui\cjlogic\CJLogic.CalculateVacations.js">
-      <Link>CJLogic\CJLogic.CalculateVacations.js</Link>
+    <Content Include="..\CommonJobs.MVC.UI\CJLogic\CalculateVacations.js">
+      <Link>CJLogic\CalculateVacations.js</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\CommonJobs.MVC.UI\CJLogic\CJLogic.js">
+      <Link>CJLogic\CJLogic.js</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="..\commonjobs.mvc.ui\scripts\json2.js">

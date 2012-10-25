@@ -17,11 +17,13 @@ namespace CommonJobs.Mvc.UI.Controllers
 
         public ActionResult Index(int yquantity = 6, int bsize = 20)
         {
-            var years = Enumerable.Range(DateTime.Now.Year + 1 - yquantity, yquantity).Reverse().ToArray();
+            var currentYear = DateTime.Now.Year;
+            var years = Enumerable.Range(currentYear + 1 - yquantity, yquantity).Reverse().ToArray();
 
             ScriptManager.RegisterGlobalJavascript(
                 "ViewData",
-                new { 
+                new {
+                    currentYear = currentYear,
                     years = years,
                     bsize = bsize
                 }, 500);

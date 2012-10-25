@@ -26,15 +26,22 @@ namespace CommonJobs.Infrastructure.Vacations
         {
             RavenQueryStatistics stats;
 
-            var query = RavenSession
-                .Query<Employee>()
+            var query1 = RavenSession
+                .Query<Employee>();
+
+            if (!string.IsNullOrWhiteSpace(Parameters.Term))
+            {
+                query1 = query1.Where(x => x.LastName.StartsWith(Parameters.Term) || x.FirstName.StartsWith(Parameters.Term));
+            }
+
+            var query2 = query1
                 .Statistics(out stats)
                 .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite())
                 .AsProjection<VacationsSearchResult>()
                 .OrderBy(x => x.LastName).ThenBy(x => x.FirstName)
                 .ApplyPagination(Parameters);
             
-            var result = query.ToArray();
+            var result = query2.ToArray();
             Stats = stats;
             return result;
         }

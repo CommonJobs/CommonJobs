@@ -11,18 +11,18 @@ namespace CommonJobs.JavaScript
     public class ScriptContext
     {
         readonly IJavascriptScriptEngine engine;
-        readonly string scriptsFolderName;
+        readonly string packageName;
         readonly string dependenciesFolderName;
         readonly string baseFolder;
         readonly HashSet<string> loadedDependencies = new HashSet<string>();
 
-        public ScriptContext(IJavascriptScriptEngine engine = null, string baseFolder = null, string scriptsFolderName = "CJLogic", string dependenciesFolderName = "Scripts")
+        public ScriptContext(IJavascriptScriptEngine engine = null, string baseFolder = null, string packageName = "CJLogic", string dependenciesFolderName = "Scripts")
         {
             this.engine = engine ?? new IronJavascriptScriptEngine();
             //this.engine = engine ?? new JurassicJavascriptScriptEngine();
-            this.scriptsFolderName = scriptsFolderName;
+            this.packageName = packageName;
             this.dependenciesFolderName = dependenciesFolderName;
-            this.baseFolder = baseFolder ?? GetDefaultBaseFolder(scriptsFolderName);
+            this.baseFolder = baseFolder ?? GetDefaultBaseFolder(packageName);
             ImportDependencies("json2.js");
         }
 
@@ -57,14 +57,47 @@ namespace CommonJobs.JavaScript
             {
                 loadedDependencies.Add(path);
                 var script = ReadScript(path);
+                script = RemoveDuplicatedDeclarationsOfCJLogicModule(script);
                 engine.Run(script);
             }
         }
 
-        void Import(string packageName, string scriptName)
+        bool moduleCJLogicAlreadyDeclared = false;
+        const string ModuleCJLogicDecaration = "var CJLogic;";
+        //TODO: find a more elegant way to fix it IronJS issue
+        //Ya que serializo y deserializo todo, lo mejor va a ser usar V8 
+        private string RemoveDuplicatedDeclarationsOfCJLogicModule(string script)
         {
-            var fileName = string.Format("{0}.{1}.js", packageName, scriptName);
-            ImportBase(scriptsFolderName, fileName);
+            //script = script.Replace("var CJLogic;", "if (!this.CJLogic) { var CJLogic; }");
+            script = script.Replace(
+@"var __extends = this.__extends || function (d, b) {
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+}", 
+@"if (!this.__extends) {
+var __extends = function (d, b) {
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+}}");
+            
+            if (script.Contains(ModuleCJLogicDecaration))
+            {
+                
+                if (!moduleCJLogicAlreadyDeclared)
+                    moduleCJLogicAlreadyDeclared = true;
+                else
+                    script = script.Replace(ModuleCJLogicDecaration, string.Empty);
+            }
+             
+            return script;
+        }
+
+        void Import(string scriptName)
+        {
+            var fileName = string.Format("{0}.js", scriptName);
+            ImportBase(packageName, fileName);
         }
 
         string ReadScript(string scriptPath)
@@ -90,9 +123,10 @@ namespace CommonJobs.JavaScript
             return parameters.Select(x => JsonConvert.SerializeObject(x, Formatting.None, jsonSettings)).ToArray();
         }
 
-        public TResult RunScript<TResult>(string packageName, string scriptName, params object[] parameters)
+        public TResult RunScript<TResult>(string scriptName, params object[] parameters)
         {
-            Import(packageName, scriptName);
+            Import(packageName);
+            Import(scriptName);
             var script = string.Format(
                 "JSON.stringify({0}.{1}({2}));",
                 packageName,
@@ -100,6 +134,19 @@ namespace CommonJobs.JavaScript
                 string.Join(",", GenerateScriptParameters(parameters)));
             var result = engine.Run(script);
             return JsonConvert.DeserializeObject<TResult>(result.ToString(), jsonSettings);
+        }
+
+        public TResult Eval<TResult>(string script)
+        {
+            Import(packageName);
+            var result = engine.Run("JSON.stringify(" + script + ");");
+            return JsonConvert.DeserializeObject<TResult>(result.ToString(), jsonSettings);
+        }
+
+        public void Run(string script)
+        {
+            Import(packageName);
+            engine.Run(script);
         }
     }
 }
