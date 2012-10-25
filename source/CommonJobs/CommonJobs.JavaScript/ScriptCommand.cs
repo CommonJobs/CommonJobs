@@ -8,7 +8,6 @@ namespace CommonJobs.JavaScript
     public abstract class ScriptCommand<TResult>
     {
         private string[] dependencies;
-        string packageName;
         string scriptName;
         private bool prepared = false;
         public Lazy<ScriptContext> LazyContext { get; set; }
@@ -24,7 +23,7 @@ namespace CommonJobs.JavaScript
             {
                 Context.ImportDependencies(dependencies);
             }
-            var resultWrapper = Context.RunScript<ScriptResultWrapper<TResult>>(packageName, scriptName, GetParameters());
+            var resultWrapper = Context.RunScript<ScriptResultWrapper<TResult>>(scriptName, GetParameters());
             if (resultWrapper.Successful)
             {
                 return resultWrapper.Result;
@@ -38,7 +37,6 @@ namespace CommonJobs.JavaScript
         protected ScriptCommand(string packageName, string scriptName, params string[] dependencies)
         {
             this.dependencies = dependencies;
-            this.packageName = packageName;
             this.scriptName = scriptName;
         }
         

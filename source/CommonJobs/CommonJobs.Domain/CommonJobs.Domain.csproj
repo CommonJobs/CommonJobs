@@ -60,7 +60,7 @@
     <Compile Include="AttachmentReference.cs" />
     <Compile Include="AttachmentSlot.cs" />
     <Compile Include="AttachmentSlotNecessity.cs" />
-    <Compile Include="CalculatedVacations.cs" />
+    <Compile Include="VacationsReport.cs" />
     <Compile Include="Certification.cs" />
     <Compile Include="CompanyHistory.cs" />
     <Compile Include="AbsenceReason.cs" />

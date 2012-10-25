@@ -8,27 +8,19 @@ using CommonJobs.JavaScript;
 
 namespace CommonJobs.Infrastructure.Vacations
 {
-    public class CalculateVacations : ScriptCommand<CalculatedVacations>
+    public class CalculateVacations : ScriptCommand<VacationsReport>
     {
-        public DateTime? HiringDate { get; set; }
-        public IEnumerable<Vacation> Vacations { get; set; }
-        public DateTime? Now { get; set; }
-        public Employee Employee
-        {
-            set
-            {
-                HiringDate = value.HiringDate;
-                Vacations = value.Vacations;
-            }
-        }
+        public VacationsReportConfiguration Configuration { get; set; }
+        public VacationsReportData Data { get; set; }
 
         protected override object[] GetParameters()
         {
-            return new object[] { HiringDate, Vacations, Now ?? DateTime.Now };
+            return new object[] { Data, Configuration};
         }
 
         public CalculateVacations()
-            : base("CJLogic", "CalculateVacations", "underscore.js", "moment.js", "twix.js")
+            : base("CJLogic", "CalculateVacations", 
+                "underscore.js", "moment.js", "twix.js")
         {
         }
     }
