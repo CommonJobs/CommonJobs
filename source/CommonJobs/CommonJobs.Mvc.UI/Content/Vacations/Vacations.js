@@ -49,7 +49,9 @@
     };
 
     var formatVacation = function (val) {
-        if (!val || (!val.Earned && !val.Taken)) {
+        if (!val) {
+            return null;
+        } else  if (!val.Earned && !val.Taken) {
             return " - ";
         } else {
             var content = "" + val.Taken + " / " + val.Earned;
@@ -66,11 +68,10 @@
                     var val = getVal(data);
                     switch (type) {
                         case 'filter':
-                        case 'display': if (val)
-
+                        case 'display':
                             return formatVacation(val);
                         default:
-                            if (!val || _.isUndefined(val.Earned))
+                            if (!val || !val.Earned)
                                 return null;
                             else
                                 return val.Earned
@@ -83,8 +84,8 @@
         vacationsByYear: function (year, moreOptions) {
             return DataTablesHelpers.column.vacationCell(
                 function (data) {
-                    return data.vacations && data.vacations.ByYear
-                        ? data.vacations.ByYear[year]
+                    return data.vacations && (data.vacations.TotalEarned || data.vacations.TotalTaken)
+                        ? data.vacations.ByYear[year] || { Earned: 0 }
                         : null;
                 },
                 moreOptions);
@@ -119,16 +120,15 @@
                 "mData": function (data, type, val) {
                     if (type === 'set') return; //TODO
                     var val = getVal(data);
-                    var taken = val.Taken;
                     switch (type) {
                         case 'filter':
-                            return _.isUndefined(taken) ? "" : val;
+                            return !val ? "" : val.Taken;
                         case 'display':
-                            return _.isUndefined(taken) ? ""
-                                : !taken ? " - "
-                                : createElementWithDetail("<span class='alert-error'>" + taken + "</span>", val);
+                            return !val ? ""
+                                : !val.Taken ? " - "
+                                : createElementWithDetail("<span class='alert-error'>" + val.Taken + "</span>", val);
                         default:
-                            return _.isUndefined(val) ? null : val;
+                            return val && val.Taken ? val.Taken : null;
                     }
                 }
             }, moreOptions);
@@ -208,11 +208,13 @@
                     function (memo, data) {
                         memo.pending += +data.TotalPending || 0;
                         memo.taken += +data.TotalTaken || 0;
+                        
+                        if (data.InAdvance && data.InAdvance.Taken)
+                            memo.inAdvance += data.InAdvance.Taken;
 
-                        memo.inAdvance += data.InAdvance.Taken || 0;
-                        var old = data.Older;
-                        memo.old.Taken += old.Taken || 0;
-                        memo.old.Earned += old.Earned || 0;
+                        var old = data.Older || { Taken: 0, Earned: 0 };
+                        memo.old.Taken += old.Taken;
+                        memo.old.Earned += old.Earned;
 
                         _.each(years, function (y) {
                             var v = data.ByYear[y];
@@ -256,9 +258,7 @@
                                 TotalEarned: null,
                                 TotalTaken: null,
                                 TotalPending: null,
-                                Older: {},
-                                ByYear: {},
-                                InAdvance: {}
+                                ByYear: {}
                             },
                             report.Result)
                     };
