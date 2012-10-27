@@ -3,6 +3,37 @@
 ///<reference path='underscore.browser.d.ts' />
 ///<reference path='CommonFood.ts' />
 
+module CommonFood {
+    export class AdminController {
+        json = ko.observable("");
+        menuViewModel = new CommonFood.MenuViewModel();
+
+        constructor (adminElement: HTMLElement, menuElement?: HTMLElement) {
+            
+            //#region Quick patch, please rewrite it
+            this.json($(adminElement).find(".json-field").text());
+            //#endregion
+            
+            ko.applyBindings(this.menuViewModel, menuElement);
+            ko.applyBindings(this, adminElement);
+        }
+
+        loadFromJSON() {
+            //TODO: change it by a jsonbinding
+            var model = eval("(" + this.json() + ")");
+            //support comments or not? var model = JSON.parse(this.json());
+
+            this.menuViewModel.reset(model);
+        }
+
+        saveToJSON() {
+            var model = this.menuViewModel.exportModel();
+            //TODO: change it by a jsonbinding
+            this.json(JSON.stringify(model));
+        }
+    }
+}
+
 $(document).ready(() => {
     $.fn.datepicker.defaults = {
         autoclose: true,
@@ -10,14 +41,5 @@ $(document).ready(() => {
         format: 'dd/mm/yyyy'
     };
 
-    ko.applyBindings(new CommonFood.MenuViewModel({
-        title: "Menú Primaveral"
-        , firstWeek: 1 //Empezamos por la segunda semana
-        , firstDay: 4 //El 21 de septiembre es viernes
-        , weeks: 4
-        , options: ["Común", "Light", "Vegetariano"]
-        , startDate: new Date("2012-09-21") //inclusive
-        , endDate: new Date("2012-12-20") //inclusive
-        //, foods: []
-    }))
+    var adminController = new CommonFood.AdminController($(".adminController")["0"]);  
 });

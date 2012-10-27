@@ -1,4 +1,4 @@
-///<reference path='jquery.d.ts' />
+ï»¿///<reference path='jquery.d.ts' />
 ///<reference path='Knockout.d.ts' />
 ///<reference path='underscore.browser.d.ts' />
 
@@ -39,14 +39,14 @@ module CommonFood {
 
     export class MenuViewModel extends HasCallbacks  {
         static defaultModel: IMenuModel = {
-            title: "",
+            title: "Nuevo MenÃº",
             firstWeek: 0,
             firstDay: 0,
             weeks: 4,
             days: [ "Lunes", "Martes", "Miercoles", "Jueves", "Viernes" ],
-            options: [ "Común", "Light", "Vegetariano" ],
-            startDate: null,
-            endDate: null,
+            options: [ "ComÃºn", "Light", "Vegetariano" ],
+            startDate: new Date(),
+            endDate: new Date(),
             foods: []
         };
 
@@ -62,6 +62,10 @@ module CommonFood {
     
         constructor (model?: IMenuModel) {
             super();
+            this.reset(model);
+        }
+
+        reset(model?: IMenuModel) {
             model =  <IMenuModel>$.extend({}, MenuViewModel.defaultModel, model);
             this.title = ko.observable(model.title);
             this.weeks = ko.observable(0);
@@ -88,7 +92,7 @@ module CommonFood {
 
         exportModel(): IMenuModel {
             //TODO: generar el modelo
-            return null;
+            return "//TODO";
         }
 
         getFood(weekIndex: number, dayIndex: number, optionIndex: number): knockout.koObservableString {
@@ -126,7 +130,7 @@ module CommonFood {
         };
 
         addOption(text?: string) {
-            text = _.isString(text) && text || "Menú " + (this.options().length + 1);
+            text = _.isString(text) && text || "MenÃº " + (this.options().length + 1);
             var option = { text: ko.observable(text) };
         
             this.eachDay(dayFoods => 
@@ -152,7 +156,7 @@ module CommonFood {
         
     
         private addDay(text?: string) {
-            text = _.isString(text) && text || "Día " + (this.options().length + 1);
+            text = _.isString(text) && text || "DÃ­a " + (this.options().length + 1);
             var day = { text: ko.observable(text) };       
         
             this.eachWeek(weekFoods => {

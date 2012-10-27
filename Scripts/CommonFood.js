@@ -3,6 +3,9 @@ var __extends = this.__extends || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 }
+///<reference path='jquery.d.ts' />
+///<reference path='Knockout.d.ts' />
+///<reference path='underscore.browser.d.ts' />
 var CommonFood;
 (function (CommonFood) {
     var HasCallbacks = (function () {
@@ -32,31 +35,13 @@ var CommonFood;
     })();    
     var MenuViewModel = (function (_super) {
         __extends(MenuViewModel, _super);
+        //By week, by day, by option
         function MenuViewModel(model) {
                 _super.call(this);
-            model = $.extend({
-            }, MenuViewModel.defaultModel, model);
-            this.title = ko.observable(model.title);
-            this.weeks = ko.observable(0);
-            this.days = ko.observableArray([]);
-            this.options = ko.observableArray();
-            this.startDate = ko.observable(model.startDate);
-            this.endDate = ko.observable(model.endDate);
-            this.firstWeek = ko.observable(model.firstWeek);
-            this.firstDay = ko.observable(model.firstDay);
-            this.foods = ko.observableArray();
-            for(var s in model.options) {
-                this.addOption(model.options[s]);
-            }
-            for(var s in model.days) {
-                this.addDay(model.days[s]);
-            }
-            for(var i = 0; i < model.weeks; i++) {
-                this.addWeek();
-            }
+            this.reset(model);
         }
         MenuViewModel.defaultModel = {
-            title: "",
+            title: "Nuevo MenÃº",
             firstWeek: 0,
             firstDay: 0,
             weeks: 4,
@@ -68,16 +53,41 @@ var CommonFood;
                 "Viernes"
             ],
             options: [
-                "Común", 
+                "ComÃºn", 
                 "Light", 
                 "Vegetariano"
             ],
-            startDate: null,
-            endDate: null,
+            startDate: new Date(),
+            endDate: new Date(),
             foods: []
         };
+        MenuViewModel.prototype.reset = function (model) {
+            model = $.extend({
+            }, MenuViewModel.defaultModel, model);
+            this.title = ko.observable(model.title);
+            this.weeks = ko.observable(0);
+            this.days = ko.observableArray([]);
+            this.options = ko.observableArray();
+            this.startDate = ko.observable(model.startDate);
+            this.endDate = ko.observable(model.endDate);
+            this.firstWeek = ko.observable(model.firstWeek);
+            this.firstDay = ko.observable(model.firstDay);
+            this.foods = ko.observableArray()//By week, by day, by option
+            ;
+            for(var s in model.options) {
+                this.addOption(model.options[s]);
+            }
+            for(var s in model.days) {
+                this.addDay(model.days[s]);
+            }
+            for(var i = 0; i < model.weeks; i++) {
+                this.addWeek();
+            }
+            //TODO: importar las comidas
+                    };
         MenuViewModel.prototype.exportModel = function () {
-            return null;
+            //TODO: generar el modelo
+            return "//TODO";
         };
         MenuViewModel.prototype.getFood = function (weekIndex, dayIndex, optionIndex) {
             return this.foods()[weekIndex][dayIndex][optionIndex];
@@ -113,13 +123,14 @@ var CommonFood;
             });
         };
         MenuViewModel.prototype.addOption = function (text) {
-            text = _.isString(text) && text || "Menú " + (this.options().length + 1);
+            text = _.isString(text) && text || "MenÃº " + (this.options().length + 1);
             var option = {
                 text: ko.observable(text)
             };
             this.eachDay(function (dayFoods) {
                 return dayFoods.push(ko.observable(""));
             });
+            //No hay generics, de manera que this.options acepta cualquier cosa
             this.options.push(option);
         };
         MenuViewModel.prototype.removeOption = function (option) {
@@ -133,7 +144,7 @@ var CommonFood;
         };
         MenuViewModel.prototype.addDay = function (text) {
             var _this = this;
-            text = _.isString(text) && text || "Día " + (this.options().length + 1);
+            text = _.isString(text) && text || "DÃ­a " + (this.options().length + 1);
             var day = {
                 text: ko.observable(text)
             };
@@ -144,6 +155,7 @@ var CommonFood;
                 });
                 weekFoods.push(dayFoods);
             });
+            //No hay generics, de manera que this.days acepta cualquier cosa
             this.days.push(day);
         };
         return MenuViewModel;
