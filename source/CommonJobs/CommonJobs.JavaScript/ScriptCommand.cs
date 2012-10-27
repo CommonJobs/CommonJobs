@@ -7,23 +7,27 @@ namespace CommonJobs.JavaScript
 {
     public abstract class ScriptCommand<TResult>
     {
-        private string[] dependencies;
-        string scriptName;
         private bool prepared = false;
-        public Lazy<ScriptContext> LazyContext { get; set; }
+
+        private ScriptContext context;
         public ScriptContext Context 
-        {
-            get { return LazyContext.Value; }
-            set { LazyContext = new Lazy<ScriptContext>(() => value); } 
+        { 
+            get { return context; }
+            set 
+            {
+                prepared = false;
+                context = value; 
+            }
         }
 
         public TResult Execute()
         {
             if (!prepared)
             {
-                Context.ImportDependencies(dependencies);
+                Context.Import(GetDependencies());
+                prepared = true;
             }
-            var resultWrapper = Context.RunScript<ScriptResultWrapper<TResult>>(scriptName, GetParameters());
+            var resultWrapper = Context.RunScript<ScriptResultWrapper<TResult>>(GetFunctionName(), GetParameters());
             if (resultWrapper.Successful)
             {
                 return resultWrapper.Result;
@@ -34,12 +38,10 @@ namespace CommonJobs.JavaScript
             }
         }
 
-        protected ScriptCommand(string packageName, string scriptName, params string[] dependencies)
-        {
-            this.dependencies = dependencies;
-            this.scriptName = scriptName;
-        }
-        
         protected abstract object[] GetParameters();
+
+        protected abstract string[] GetDependencies();
+
+        protected abstract string GetFunctionName();
     }
 }

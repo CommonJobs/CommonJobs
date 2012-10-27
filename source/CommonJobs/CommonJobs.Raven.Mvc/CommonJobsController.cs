@@ -16,7 +16,8 @@ namespace CommonJobs.Raven.Mvc
     public abstract class CommonJobsController : Controller
     {
         public IDocumentSession RavenSession { get; protected set; }
-        public readonly Lazy<ScriptContext> LazyScriptContext = new Lazy<ScriptContext>(() => new ScriptContext());
+
+        public readonly ScriptContext ScriptContext = new ScriptContext(CommonJobsApplication.BasePath);
 
         protected override void OnAuthorization(AuthorizationContext filterContext)
         {
@@ -65,7 +66,8 @@ namespace CommonJobs.Raven.Mvc
 
         public TResult ExecuteScript<TResult>(ScriptCommand<TResult> cmd)
         {
-            cmd.LazyContext = LazyScriptContext;
+            //TODO: only one by request
+            cmd.Context = ScriptContext;
             return cmd.Execute();
         }
 

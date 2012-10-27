@@ -8,6 +8,7 @@ using CommonJobs.Utilities;
 using Raven.Client.Document;
 using Raven.Client.Listeners;
 using NLog;
+using System.IO;
 
 namespace CommonJobs.Raven.Mvc
 {
@@ -112,6 +113,15 @@ namespace CommonJobs.Raven.Mvc
             ValueProviderFactories.Factories.Remove(ValueProviderFactories.Factories.OfType<JsonValueProviderFactory>().FirstOrDefault());
             ValueProviderFactories.Factories.Add(new JsonDotNetValueProviderFactory());
             ModelBinders.Binders.DefaultBinder = new JsonDotNetModelBinder();
+        }
+
+        private static string basePath = null;
+        public static string BasePath
+        {
+            get
+            {
+                return basePath ?? (basePath = new Uri(Path.GetDirectoryName(Path.GetDirectoryName(typeof(CommonJobsApplication).Assembly.CodeBase))).LocalPath);
+            }
         }
     }
 }
