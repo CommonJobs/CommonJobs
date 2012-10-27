@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using CommonJobs.Raven.Migrations;
+using CommonJobs.Infrastructure.Migrations;
 using CommonJobs.Raven.Mvc;
 using CommonJobs.Migrations;
 using Miscellaneous.Attributes.Controller;

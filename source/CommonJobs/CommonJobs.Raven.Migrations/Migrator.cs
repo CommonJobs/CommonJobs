@@ -6,7 +6,7 @@ using Raven.Client;
 using System.Reflection;
 using NLog;
 
-namespace CommonJobs.Raven.Migrations
+namespace CommonJobs.Infrastructure.Migrations
 {
     public class Migrator 
     {

@@ -993,9 +993,9 @@
       <Project>{7B4A0A21-0CDE-432A-A785-599D4339AD8E}</Project>
       <Name>CommonJobs.Infrastructure.RavenDb</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CommonJobs.Raven.Migrations\CommonJobs.Raven.Migrations.csproj">
+    <ProjectReference Include="..\CommonJobs.Raven.Migrations\CommonJobs.Infrastructure.Migrations.csproj">
       <Project>{B6D54592-07C8-4B5E-A607-DD7FE49A43B6}</Project>
-      <Name>CommonJobs.Raven.Migrations</Name>
+      <Name>CommonJobs.Infrastructure.Migrations</Name>
     </ProjectReference>
     <ProjectReference Include="..\CommonJobs.Raven.Mvc\CommonJobs.Raven.Mvc.csproj">
       <Project>{658EAF8E-02A2-4029-AC52-942261EE486C}</Project>

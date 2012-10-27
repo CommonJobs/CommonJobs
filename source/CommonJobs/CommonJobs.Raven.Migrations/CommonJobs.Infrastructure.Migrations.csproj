@@ -8,8 +8,8 @@
     <ProjectGuid>{B6D54592-07C8-4B5E-A607-DD7FE49A43B6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CommonJobs.Raven.Migrations</RootNamespace>
-    <AssemblyName>CommonJobs.Raven.Migrations</AssemblyName>
+    <RootNamespace>CommonJobs.Infrastructure.Migrations</RootNamespace>
+    <AssemblyName>CommonJobs.Infrastructure.Migrations</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>

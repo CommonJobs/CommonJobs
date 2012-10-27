@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using CommonJobs.Domain;
-using CommonJobs.Raven.Migrations;
+using CommonJobs.Infrastructure.Migrations;
 using Raven.Abstractions.Data;
 using Raven.Abstractions.Extensions;
 using Raven.Client;

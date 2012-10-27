@@ -7,9 +7,9 @@ using Raven.Abstractions.Data;
 using Raven.Json.Linq;
 using System.Linq.Expressions;
 
-namespace CommonJobs.Raven.Migrations
+namespace CommonJobs.Infrastructure.Migrations
 {
-    public abstract class Migration : CommonJobs.Raven.Migrations.IMigration
+    public abstract class Migration : CommonJobs.Infrastructure.Migrations.IMigration
     {
         public IDocumentStore DocumentStore { get; set; }
 
