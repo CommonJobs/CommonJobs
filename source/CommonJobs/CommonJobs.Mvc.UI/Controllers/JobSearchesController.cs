@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 using CommonJobs.Domain;
-using CommonJobs.Infrastructure.JobSearchSearching;
+using CommonJobs.Application.JobSearchSearching;
 using CommonJobs.Raven.Mvc;
 using CommonJobs.Raven.Infrastructure;
 using CommonJobs.Utilities;

@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using CommonJobs.Raven.Mvc;
-using CommonJobs.Infrastructure.Indexes;
+using CommonJobs.Application.Indexes;
 using CommonJobs.ContentExtraction;
 using CommonJobs.ContentExtraction.Extractors;
 using CommonJobs.Raven.Mvc.Authorize;

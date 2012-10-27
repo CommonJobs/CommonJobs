@@ -977,9 +977,9 @@
       <Project>{CC2939C6-A278-4789-B937-ADB693E69C89}</Project>
       <Name>CommonJobs.Domain</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CommonJobs.Infrastructure\CommonJobs.Infrastructure.csproj">
+    <ProjectReference Include="..\CommonJobs.Application\CommonJobs.Application.csproj">
       <Project>{4D58F500-CDC4-4697-8DA5-15568E804317}</Project>
-      <Name>CommonJobs.Infrastructure</Name>
+      <Name>CommonJobs.Application</Name>
     </ProjectReference>
     <ProjectReference Include="..\CommonJobs.JavaScript\CommonJobs.JavaScript.csproj">
       <Project>{60875F2E-5CBF-4E9C-941C-408C5482AA95}</Project>

@@ -4,8 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using CommonJobs.Domain;
-using CommonJobs.Infrastructure.Persons;
-using CommonJobs.Infrastructure.Suggestions;
+using CommonJobs.Application.Persons;
+using CommonJobs.Application.Suggestions;
 using CommonJobs.Raven.Mvc;
 using Raven.Abstractions.Data;
 using Raven.Client.Linq;
@@ -118,7 +118,7 @@ namespace CommonJobs.Mvc.UI.Controllers
 
         public JsonNetResult AbsenceReason(string term, int maxSuggestions = 8)
         {
-            var results = Query(new CommonJobs.Infrastructure.EmployeeAbsences.GetSuggestions(term, maxSuggestions));
+            var results = Query(new CommonJobs.Application.EmployeeAbsences.GetSuggestions(term, maxSuggestions));
             return Json(new { suggestions = results });
         }
     }

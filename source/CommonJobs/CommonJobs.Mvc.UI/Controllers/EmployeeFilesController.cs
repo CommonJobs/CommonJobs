@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using CommonJobs.Infrastructure;
-using CommonJobs.Infrastructure.EmployeeFiles;
+using CommonJobs.Application;
+using CommonJobs.Application.EmployeeFiles;
 using CommonJobs.Raven.Mvc;
 
 namespace CommonJobs.Mvc.UI.Controllers

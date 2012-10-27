@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using CommonJobs.Domain;
-using CommonJobs.Infrastructure.SharedLinks;
+using CommonJobs.Application.SharedLinks;
 using CommonJobs.Raven.Mvc;
 using CommonJobs.Raven.Mvc.Authorize;
 
