@@ -15,7 +15,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonJobs.Utilities", "Com
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonJobs.Mvc.UI", "CommonJobs.Mvc.UI\CommonJobs.Mvc.UI.csproj", "{8663EC74-0F8F-482D-9CFF-DCB4F5C12E0C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonJobs.Raven.Infrastructure", "CommonJobs.Raven.Infrastructure\CommonJobs.Raven.Infrastructure.csproj", "{7B4A0A21-0CDE-432A-A785-599D4339AD8E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonJobs.Infrastructure.RavenDb", "CommonJobs.Infrastructure.RavenDb\CommonJobs.Infrastructure.RavenDb.csproj", "{7B4A0A21-0CDE-432A-A785-599D4339AD8E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonJobs.ContentExtraction", "CommonJobs.ContentExtraction\CommonJobs.ContentExtraction.csproj", "{FCF0DC4A-8A75-499D-AE7D-25D2F5174E38}"
 EndProject

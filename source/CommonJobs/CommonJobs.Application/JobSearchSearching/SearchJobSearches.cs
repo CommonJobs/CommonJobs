@@ -4,7 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using CommonJobs.Domain;
-using CommonJobs.Raven.Infrastructure;
+using CommonJobs.Infrastructure.RavenDb;
 using Raven.Client.Linq;
 
 namespace CommonJobs.Application.JobSearchSearching

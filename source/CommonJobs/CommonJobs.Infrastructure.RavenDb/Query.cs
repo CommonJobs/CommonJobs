@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using Raven.Client;
 
-namespace CommonJobs.Raven.Infrastructure
+namespace CommonJobs.Infrastructure.RavenDb
 {
     public abstract class Query<TResult>
     {

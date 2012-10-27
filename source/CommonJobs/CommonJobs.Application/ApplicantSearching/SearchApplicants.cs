@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Raven.Client.Linq;
-using CommonJobs.Raven.Infrastructure;
+using CommonJobs.Infrastructure.RavenDb;
 using CommonJobs.Domain;
 using CommonJobs.ContentExtraction;
 using CommonJobs.Application.Indexes;

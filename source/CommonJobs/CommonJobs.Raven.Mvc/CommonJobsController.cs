@@ -8,7 +8,7 @@ using Raven.Client;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json.Converters;
-using CommonJobs.Raven.Infrastructure;
+using CommonJobs.Infrastructure.RavenDb;
 using CommonJobs.JavaScript;
 
 namespace CommonJobs.Raven.Mvc

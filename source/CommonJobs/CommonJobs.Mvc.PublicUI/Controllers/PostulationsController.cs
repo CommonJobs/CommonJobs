@@ -8,7 +8,7 @@ using CommonJobs.Domain;
 using CommonJobs.Application.AttachmentStorage;
 using CommonJobs.Application.SharedLinks;
 using CommonJobs.Raven.Mvc;
-using CommonJobs.Raven.Infrastructure;
+using CommonJobs.Infrastructure.RavenDb;
 using NLog;
 using CommonJobs.Utilities;
 

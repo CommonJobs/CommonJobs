@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using CommonJobs.Raven.Infrastructure;
+using CommonJobs.Infrastructure.RavenDb;
 using CommonJobs.ContentExtraction;
 using CommonJobs.Domain;
 using CommonJobs.Application.AttachmentStorage;

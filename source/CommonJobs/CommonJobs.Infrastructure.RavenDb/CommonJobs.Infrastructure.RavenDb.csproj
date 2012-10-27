@@ -8,8 +8,8 @@
     <ProjectGuid>{7B4A0A21-0CDE-432A-A785-599D4339AD8E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CommonJobs.Raven.Infrastructure</RootNamespace>
-    <AssemblyName>CommonJobs.Raven.Infrastructure</AssemblyName>
+    <RootNamespace>CommonJobs.Infrastructure.RavenDb</RootNamespace>
+    <AssemblyName>CommonJobs.Infrastructure.RavenDb</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\CommonJobs\</SolutionDir>

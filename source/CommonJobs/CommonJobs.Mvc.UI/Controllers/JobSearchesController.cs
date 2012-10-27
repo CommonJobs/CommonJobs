@@ -8,7 +8,7 @@ using System.Web.Mvc;
 using CommonJobs.Domain;
 using CommonJobs.Application.JobSearchSearching;
 using CommonJobs.Raven.Mvc;
-using CommonJobs.Raven.Infrastructure;
+using CommonJobs.Infrastructure.RavenDb;
 using CommonJobs.Utilities;
 
 namespace CommonJobs.Mvc.UI.Controllers

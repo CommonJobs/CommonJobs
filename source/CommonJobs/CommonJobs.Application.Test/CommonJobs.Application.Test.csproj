@@ -83,9 +83,9 @@
       <Project>{60875F2E-5CBF-4E9C-941C-408C5482AA95}</Project>
       <Name>CommonJobs.JavaScript</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CommonJobs.Raven.Infrastructure\CommonJobs.Raven.Infrastructure.csproj">
+    <ProjectReference Include="..\CommonJobs.Infrastructure.RavenDb\CommonJobs.Infrastructure.RavenDb.csproj">
       <Project>{7B4A0A21-0CDE-432A-A785-599D4339AD8E}</Project>
-      <Name>CommonJobs.Raven.Infrastructure</Name>
+      <Name>CommonJobs.Infrastructure.RavenDb</Name>
     </ProjectReference>
     <ProjectReference Include="..\CommonJobs.Utilities\CommonJobs.Utilities.csproj">
       <Project>{FABFCAFA-F6F2-47C2-B393-66E97203F107}</Project>

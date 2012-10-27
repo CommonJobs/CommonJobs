@@ -5,7 +5,7 @@ using System.Web;
 using CommonJobs.Domain;
 using System.IO;
 using System.Security.Cryptography;
-using CommonJobs.Raven.Infrastructure;
+using CommonJobs.Infrastructure.RavenDb;
 using CommonJobs.Application.AttachmentIndexing;
 
 namespace CommonJobs.Application.AttachmentStorage
