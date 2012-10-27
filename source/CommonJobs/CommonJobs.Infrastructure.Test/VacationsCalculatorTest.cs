@@ -4,6 +4,7 @@ using System;
 using CommonJobs.Domain;
 using CommonJobs.JavaScript;
 using System.Collections.Generic;
+using System.IO;
 
 namespace CommonJobs.Infrastructure.Test
 {
@@ -16,13 +17,19 @@ namespace CommonJobs.Infrastructure.Test
     [DeploymentItem("CJLogic\\CalculateVacations.js", "CJLogic")]
     public class VacationsCalculatorTest
     {
+        private ScriptContext CreateContext()
+        {
+            var path = new Uri(Path.GetDirectoryName(this.GetType().Assembly.CodeBase)).LocalPath;
+            return new ScriptContext(path);
+        }
+
         [TestMethod()]
         public void VacationScriptTest()
         {
             string r;
-            var context = new ScriptContext();
-            context.ImportDependencies("json2.js", "underscore.js", "moment.js", "twix.js");
-            context.Run(@"
+            var context = CreateContext();
+            context.Import("Scripts\\json2.js", "Scripts\\underscore.js", "Scripts\\moment.js", "Scripts\\twix.js");
+            context.Import(() => @"
 properties = function(obj) { 
     var result = '';
     for (var i in obj) {
@@ -30,7 +37,7 @@ properties = function(obj) {
     }
     return result;
 };");
-            r = context.Eval<string>("properties(CJLogic)");
+            r = context.RunScript<string>("properties", "CJLogic");
         }
 
 
@@ -39,7 +46,7 @@ properties = function(obj) {
         {
             var calculator = new CalculateVacations()
             {
-                Context = new ScriptContext(),
+                Context = CreateContext(),
                 Configuration = new VacationsReportConfiguration()
                 {
                     CurrentYear = 2012,
@@ -88,7 +95,7 @@ properties = function(obj) {
         {
             var calculator = new CalculateVacations()
             {
-                Context = new ScriptContext(),
+                Context = CreateContext(),
                 Configuration = new VacationsReportConfiguration()
                 {
                     CurrentYear = 2012,
@@ -137,7 +144,7 @@ properties = function(obj) {
         {
             var calculator = new CalculateVacations()
             {
-                Context = new ScriptContext(),
+                Context = CreateContext(),
                 Configuration = new VacationsReportConfiguration()
                 {
                     CurrentYear = 2012,
@@ -186,7 +193,7 @@ properties = function(obj) {
         {
             var calculator = new CalculateVacations()
             {
-                Context = new ScriptContext(),
+                Context = CreateContext(),
                 Configuration = new VacationsReportConfiguration()
                 {
                     CurrentYear = 2012,
@@ -236,7 +243,7 @@ properties = function(obj) {
         {
             var calculator = new CalculateVacations()
             {
-                Context = new ScriptContext(),
+                Context = CreateContext(),
                 Configuration = new VacationsReportConfiguration()
                 {
                     CurrentYear = 2012,
@@ -262,7 +269,7 @@ properties = function(obj) {
         {
             var calculator = new CalculateVacations()
             {
-                Context = new ScriptContext(),
+                Context = CreateContext(),
                 Configuration = new VacationsReportConfiguration()
                 {
                     CurrentYear = 2012,
@@ -288,7 +295,7 @@ properties = function(obj) {
         {
             var calculator = new CalculateVacations()
             {
-                Context = new ScriptContext(),
+                Context = CreateContext(),
                 Configuration = new VacationsReportConfiguration()
                 {
                     CurrentYear = 2012,
@@ -314,7 +321,7 @@ properties = function(obj) {
         {
             var calculator = new CalculateVacations()
             {
-                Context = new ScriptContext(),
+                Context = CreateContext(),
                 Configuration = new VacationsReportConfiguration()
                 {
                     CurrentYear = 2012,
@@ -340,7 +347,7 @@ properties = function(obj) {
         {
             var calculator = new CalculateVacations()
             {
-                Context = new ScriptContext(),
+                Context = CreateContext(),
                 Configuration = new VacationsReportConfiguration()
                 {
                     CurrentYear = 2011,
@@ -364,7 +371,7 @@ properties = function(obj) {
         {
             var calculator = new CalculateVacations()
             {
-                Context = new ScriptContext(),
+                Context = CreateContext(),
                 Configuration = new VacationsReportConfiguration()
                 {
                     CurrentYear = 2011,
@@ -388,7 +395,7 @@ properties = function(obj) {
         {
             var calculator = new CalculateVacations()
             {
-                Context = new ScriptContext(),
+                Context = CreateContext(),
                 Configuration = new VacationsReportConfiguration()
                 {
                     CurrentYear = 2011,
@@ -412,7 +419,7 @@ properties = function(obj) {
         {
             var calculator = new CalculateVacations()
             {
-                Context = new ScriptContext(),
+                Context = CreateContext(),
                 Configuration = new VacationsReportConfiguration()
                 {
                     CurrentYear = 2011,
@@ -436,7 +443,7 @@ properties = function(obj) {
         {
             var calculator = new CalculateVacations()
             {
-                Context = new ScriptContext(),
+                Context = CreateContext(),
                 Configuration = new VacationsReportConfiguration()
                 {
                     CurrentYear = 2011,
@@ -460,7 +467,7 @@ properties = function(obj) {
         {
             var calculator = new CalculateVacations()
             {
-                Context = new ScriptContext(),
+                Context = CreateContext(),
                 Configuration = new VacationsReportConfiguration()
                 {
                     CurrentYear = 2011,
@@ -484,7 +491,7 @@ properties = function(obj) {
         {
             var calculator = new CalculateVacations()
             {
-                Context = new ScriptContext(),
+                Context = CreateContext(),
                 Configuration = new VacationsReportConfiguration()
                 {
                     CurrentYear = 2011,
@@ -508,7 +515,7 @@ properties = function(obj) {
         {
             var calculator = new CalculateVacations()
             {
-                Context = new ScriptContext(),
+                Context = CreateContext(),
                 Configuration = new VacationsReportConfiguration()
                 {
                     CurrentYear = 2011,
@@ -534,7 +541,7 @@ properties = function(obj) {
 
             var calculator = new CalculateVacations()
             {
-                Context = new ScriptContext(),
+                Context = CreateContext(),
                 Configuration = new VacationsReportConfiguration()
                 {
                     CurrentYear = 2011,
@@ -560,7 +567,7 @@ properties = function(obj) {
 
             var calculator = new CalculateVacations()
             {
-                Context = new ScriptContext(),
+                Context = CreateContext(),
                 Configuration = new VacationsReportConfiguration()
                 {
                     CurrentYear = 2011,
@@ -586,7 +593,7 @@ properties = function(obj) {
 
             var calculator = new CalculateVacations()
             {
-                Context = new ScriptContext(),
+                Context = CreateContext(),
                 Configuration = new VacationsReportConfiguration()
                 {
                     CurrentYear = 2011,
@@ -610,7 +617,7 @@ properties = function(obj) {
         {
             var calculator = new CalculateVacations()
             {
-                Context = new ScriptContext(),
+                Context = CreateContext(),
                 Configuration = new VacationsReportConfiguration()
                 {
                     CurrentYear = 2011,
@@ -637,7 +644,7 @@ properties = function(obj) {
 
             var calculator = new CalculateVacations()
             {
-                Context = new ScriptContext(),
+                Context = CreateContext(),
                 Configuration = new VacationsReportConfiguration()
                 {
                     CurrentYear = 2011,
