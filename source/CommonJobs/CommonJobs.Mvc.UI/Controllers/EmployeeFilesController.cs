@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using CommonJobs.Application;
 using CommonJobs.Application.EmployeeFiles;
-using CommonJobs.Raven.Mvc;
+using CommonJobs.Infrastructure.Mvc;
 
 namespace CommonJobs.Mvc.UI.Controllers
 {

@@ -7,7 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using CommonJobs.Application.Indexes;
 using Raven.Client.Linq;
-using CommonJobs.Raven.Mvc;
+using CommonJobs.Infrastructure.Mvc;
 using CommonJobs.Domain;
 using CommonJobs.Utilities;
 using CommonJobs.Application.AttachmentStorage;

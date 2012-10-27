@@ -4,11 +4,11 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
-using CommonJobs.Raven.Mvc;
+using CommonJobs.Infrastructure.Mvc;
 using CommonJobs.Application.Indexes;
 using CommonJobs.ContentExtraction;
 using CommonJobs.ContentExtraction.Extractors;
-using CommonJobs.Raven.Mvc.Authorize;
+using CommonJobs.Infrastructure.Mvc.Authorize;
 using Raven.Client.Listeners;
 
 namespace CommonJobs.Mvc.UI

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using CommonJobs.Raven.Mvc;
+using CommonJobs.Infrastructure.Mvc;
 using CommonJobs.Application.Indexes;
 using CommonJobs.Domain;
 using Raven.Client.Linq;

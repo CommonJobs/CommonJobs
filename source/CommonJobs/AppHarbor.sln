@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonJobs.Domain", "Common
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonJobs.Application", "CommonJobs.Application\CommonJobs.Application.csproj", "{4D58F500-CDC4-4697-8DA5-15568E804317}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonJobs.Raven.Mvc", "CommonJobs.Raven.Mvc\CommonJobs.Raven.Mvc.csproj", "{658EAF8E-02A2-4029-AC52-942261EE486C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonJobs.Infrastructure.Mvc", "CommonJobs.Infrastructure.Mvc\CommonJobs.Infrastructure.Mvc.csproj", "{658EAF8E-02A2-4029-AC52-942261EE486C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonJobs.Utilities", "CommonJobs.Utilities\CommonJobs.Utilities.csproj", "{FABFCAFA-F6F2-47C2-B393-66E97203F107}"
 EndProject

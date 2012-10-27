@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using CommonJobs.Infrastructure.Migrations;
-using CommonJobs.Raven.Mvc;
+using CommonJobs.Infrastructure.Mvc;
 using CommonJobs.Migrations;
 using Miscellaneous.Attributes.Controller;
 

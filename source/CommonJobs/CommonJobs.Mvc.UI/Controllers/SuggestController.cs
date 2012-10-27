@@ -6,7 +6,7 @@ using System.Web.Mvc;
 using CommonJobs.Domain;
 using CommonJobs.Application.Persons;
 using CommonJobs.Application.Suggestions;
-using CommonJobs.Raven.Mvc;
+using CommonJobs.Infrastructure.Mvc;
 using Raven.Abstractions.Data;
 using Raven.Client.Linq;
 

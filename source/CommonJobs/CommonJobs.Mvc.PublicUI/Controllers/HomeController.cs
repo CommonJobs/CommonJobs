@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using CommonJobs.Application.AttachmentStorage;
-using CommonJobs.Raven.Mvc;
+using CommonJobs.Infrastructure.Mvc;
 
 namespace CommonJobs.Mvc.PublicUI.Controllers
 {

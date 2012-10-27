@@ -5,8 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using CommonJobs.Domain;
 using CommonJobs.Application.SharedLinks;
-using CommonJobs.Raven.Mvc;
-using CommonJobs.Raven.Mvc.Authorize;
+using CommonJobs.Infrastructure.Mvc;
+using CommonJobs.Infrastructure.Mvc.Authorize;
 
 namespace CommonJobs.Mvc.UI.Infrastructure
 {

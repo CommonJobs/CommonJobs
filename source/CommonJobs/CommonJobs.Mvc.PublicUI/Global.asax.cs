@@ -7,7 +7,7 @@ using System.Web.Routing;
 using CommonJobs.ContentExtraction;
 using CommonJobs.ContentExtraction.Extractors;
 using CommonJobs.Application.Indexes;
-using CommonJobs.Raven.Mvc;
+using CommonJobs.Infrastructure.Mvc;
 
 namespace CommonJobs.Mvc.PublicUI
 {

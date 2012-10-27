@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using CommonJobs.Application;
 using CommonJobs.Application.Vacations;
-using CommonJobs.Raven.Mvc;
+using CommonJobs.Infrastructure.Mvc;
 using NLog;
 
 namespace CommonJobs.Mvc.UI.Controllers
