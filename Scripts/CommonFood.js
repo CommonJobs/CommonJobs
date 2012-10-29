@@ -38,6 +38,15 @@ var CommonFood;
         //By week, by day, by option
         function MenuViewModel(model) {
                 _super.call(this);
+            this.title = ko.observable("");
+            this.weeks = ko.observable(0);
+            this.days = ko.observableArray();
+            this.options = ko.observableArray();
+            this.startDate = ko.observable(new Date());
+            this.endDate = ko.observable(new Date());
+            this.firstWeek = ko.observable(0);
+            this.firstDay = ko.observable(0);
+            this.foods = ko.observableArray();
             this.reset(model);
         }
         MenuViewModel.defaultModel = {
@@ -62,17 +71,18 @@ var CommonFood;
             foods: []
         };
         MenuViewModel.prototype.reset = function (model) {
+            alert("reset");
             model = $.extend({
             }, MenuViewModel.defaultModel, model);
-            this.title = ko.observable(model.title);
-            this.weeks = ko.observable(0);
-            this.days = ko.observableArray([]);
-            this.options = ko.observableArray();
-            this.startDate = ko.observable(model.startDate);
-            this.endDate = ko.observable(model.endDate);
-            this.firstWeek = ko.observable(model.firstWeek);
-            this.firstDay = ko.observable(model.firstDay);
-            this.foods = ko.observableArray()//By week, by day, by option
+            this.title(model.title);
+            this.weeks(0);
+            this.days([]);
+            this.options([]);
+            this.startDate(model.startDate);
+            this.endDate(model.endDate);
+            this.firstWeek(model.firstWeek);
+            this.firstDay(model.firstDay);
+            this.foods([])//By week, by day, by option
             ;
             for(var s in model.options) {
                 this.addOption(model.options[s]);

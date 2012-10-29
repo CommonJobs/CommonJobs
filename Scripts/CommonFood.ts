@@ -50,15 +50,15 @@ module CommonFood {
             foods: []
         };
 
-        title: knockout.koObservableString;
-        weeks: knockout.koObservableNumber;
-        days: knockout.koObservableArrayBase;
-        options: knockout.koObservableArrayBase;
-        startDate: knockout.koObservableString;
-        endDate: knockout.koObservableString;
-        firstWeek: knockout.koObservableNumber;
-        firstDay: knockout.koObservableNumber;
-        foods: knockout.koObservableArrayBase; //By week, by day, by option
+        title: knockout.koObservableString = ko.observable("");
+        weeks: knockout.koObservableNumber = ko.observable(0);
+        days: knockout.koObservableArrayBase = ko.observableArray();
+        options: knockout.koObservableArrayBase = ko.observableArray();
+        startDate: knockout.koObservableAny = ko.observable(new Date());
+        endDate: knockout.koObservableAny = ko.observable(new Date());
+        firstWeek: knockout.koObservableNumber = ko.observable(0);
+        firstDay: knockout.koObservableNumber = ko.observable(0);
+        foods: knockout.koObservableArrayBase = ko.observableArray(); //By week, by day, by option
     
         constructor (model?: IMenuModel) {
             super();
@@ -66,16 +66,17 @@ module CommonFood {
         }
 
         reset(model?: IMenuModel) {
+            alert("reset");
             model =  <IMenuModel>$.extend({}, MenuViewModel.defaultModel, model);
-            this.title = ko.observable(model.title);
-            this.weeks = ko.observable(0);
-            this.days = ko.observableArray([]);
-            this.options = ko.observableArray();
-            this.startDate = ko.observable(model.startDate);
-            this.endDate = ko.observable(model.endDate);
-            this.firstWeek = ko.observable(model.firstWeek);
-            this.firstDay = ko.observable(model.firstDay);
-            this.foods = ko.observableArray(); //By week, by day, by option
+            this.title(model.title);
+            this.weeks(0);
+            this.days([]);
+            this.options([]);
+            this.startDate(model.startDate);
+            this.endDate(model.endDate);
+            this.firstWeek(model.firstWeek);
+            this.firstDay(model.firstDay);
+            this.foods([]); //By week, by day, by option
         
             for (var s in model.options) {
                 this.addOption(model.options[s]);
