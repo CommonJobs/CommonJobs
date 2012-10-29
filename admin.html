@@ -37,9 +37,8 @@
           </div>
         </header>
         <div class="container">
-            <!-- ko stopBinding: true -->
-            <section class="adminController">
-                <textarea class="json-field" data-bind="value: json">
+            <section class="persistence">
+                <textarea class="json-field">
 {
     title: "Menú Primaveral"
     , firstWeek: 1 //Empezamos por la segunda semana
@@ -51,10 +50,9 @@
     //, foods: []
 }
                 </textarea>
-                <button class="btn" data-bind="click: loadFromJSON">Leer desde JSON</button>
-                <button class="btn" data-bind="click: saveToJSON">Escribir en JSON</button>
+                <button class="btn" data-bind="click: load">Leer desde JSON</button>
+                <button class="btn" data-bind="click: save">Escribir en JSON</button>
             </section>
-            <!-- /ko -->
             <section id="main">
                 <div data-bind="foreach: $root.foods">
                     <h4>Semana <span data-bind='text: $index() + 1'></span></h4>

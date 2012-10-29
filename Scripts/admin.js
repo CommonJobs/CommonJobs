@@ -1,40 +1,30 @@
-///<reference path='jquery.d.ts' />
-///<reference path='Knockout.d.ts' />
-///<reference path='underscore.browser.d.ts' />
-///<reference path='CommonFood.ts' />
+var __extends = this.__extends || function (d, b) {
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+}
 var CommonFood;
 (function (CommonFood) {
-    var AdminController = (function () {
-        function AdminController(adminElement, menuElement) {
-            this.json = ko.observable("");
-            this.menuViewModel = new CommonFood.MenuViewModel();
-            //#region Quick patch, please rewrite it
-            this.json($(adminElement).find(".json-field").text());
-            //#endregion
-            ko.applyBindings(this.menuViewModel, menuElement);
-            ko.applyBindings(this, adminElement);
+    var AdminController = (function (_super) {
+        __extends(AdminController, _super);
+        function AdminController() {
+                _super.call(this);
+            this.$json = $(".persistence .json-field");
+            ko.applyBindings(this);
         }
-        AdminController.prototype.loadFromJSON = function () {
-            //TODO: change it by a jsonbinding
-            var model = eval("(" + this.json() + ")");
-            //support comments or not? var model = JSON.parse(this.json());
-            this.menuViewModel.reset(model);
+        AdminController.prototype.load = function () {
+            var model = eval("(" + this.$json.val() + ")");
+            this.reset(model);
         };
-        AdminController.prototype.saveToJSON = function () {
-            var model = this.menuViewModel.exportModel();
-            //TODO: change it by a jsonbinding
-            this.json(JSON.stringify(model));
+        AdminController.prototype.save = function () {
+            var model = this.exportModel();
+            this.$json.val(JSON.stringify(model));
         };
         return AdminController;
-    })();
+    })(CommonFood.MenuViewModel);
     CommonFood.AdminController = AdminController;    
+    $(document).ready(function () {
+        var adminController = new AdminController();
+    });
 })(CommonFood || (CommonFood = {}));
 
-$(document).ready(function () {
-    $.fn.datepicker.defaults = {
-        autoclose: true,
-        language: 'es',
-        format: 'dd/mm/yyyy'
-    };
-    var adminController = new CommonFood.AdminController($(".adminController")["0"]);
-});

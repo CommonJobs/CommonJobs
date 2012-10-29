@@ -4,42 +4,33 @@
 ///<reference path='CommonFood.ts' />
 
 module CommonFood {
-    export class AdminController {
-        json = ko.observable("");
-        menuViewModel = new CommonFood.MenuViewModel();
-
-        constructor (adminElement: HTMLElement, menuElement?: HTMLElement) {
-            
-            //#region Quick patch, please rewrite it
-            this.json($(adminElement).find(".json-field").text());
-            //#endregion
-            
-            ko.applyBindings(this.menuViewModel, menuElement);
-            ko.applyBindings(this, adminElement);
+    export class AdminController extends MenuViewModel {
+        $json = $(".persistence .json-field");
+        
+        constructor () {
+            super();
+            ko.applyBindings(this);
         }
 
-        loadFromJSON() {
-            //TODO: change it by a jsonbinding
-            var model = eval("(" + this.json() + ")");
-            //support comments or not? var model = JSON.parse(this.json());
+        load() {
+            //TODO: reset from server
+            var model = eval("(" + this.$json.val() + ")");
+            //support comments or not? var model = JSON.parse(this.$json.text());
 
-            this.menuViewModel.reset(model);
+            this.reset(model);
         }
 
-        saveToJSON() {
-            var model = this.menuViewModel.exportModel();
-            //TODO: change it by a jsonbinding
-            this.json(JSON.stringify(model));
+        save() {
+            var model = this.exportModel();
+            
+            //TODO: save to server
+            this.$json.val(JSON.stringify(model));
         }
     }
+
+    $(document).ready(() => {
+        var adminController = new AdminController();     
+    });
 }
 
-$(document).ready(() => {
-    $.fn.datepicker.defaults = {
-        autoclose: true,
-        language: 'es',
-        format: 'dd/mm/yyyy'
-    };
 
-    var adminController = new CommonFood.AdminController($(".adminController")["0"]);  
-});

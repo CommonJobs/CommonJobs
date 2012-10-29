@@ -66,7 +66,6 @@ module CommonFood {
         }
 
         reset(model?: IMenuModel) {
-            alert("reset");
             model =  <IMenuModel>$.extend({}, MenuViewModel.defaultModel, model);
             this.title(model.title);
             this.weeks(0);
