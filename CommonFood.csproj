@@ -124,6 +124,8 @@
       <DependentUpon>CommonFood.ts</DependentUpon>
     </Content>
     <Content Include="Scripts\bootstrap-datepicker-ko.js" />
+    <Content Include="Scripts\knockout-2.2.0.debug.js" />
+    <Content Include="Scripts\knockout-2.2.0.js" />
     <Content Include="Scripts\locales\bootstrap-datepicker.cs.js" />
     <Content Include="Scripts\locales\bootstrap-datepicker.da.js" />
     <Content Include="Scripts\locales\bootstrap-datepicker.de.js" />
@@ -155,8 +157,6 @@
     <Content Include="Scripts\jquery-1.8.2.min.js">
       <DependentUpon>jquery-1.8.2.js</DependentUpon>
     </Content>
-    <Content Include="Scripts\knockout-2.1.0.debug.js" />
-    <Content Include="Scripts\knockout-2.1.0.js" />
     <Content Include="Scripts\underscore.js" />
     <Content Include="Scripts\underscore.min.js">
       <DependentUpon>underscore.js</DependentUpon>
