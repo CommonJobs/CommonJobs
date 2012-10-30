@@ -10,8 +10,8 @@ module CommonFood {
         weeks?: number;
         days?: string[];
         options?: string[];
-        startDate?: Date;
-        endDate?: Date;
+        startDate?: string;
+        endDate?: string;
         foods?: string[][][];
     }
 
@@ -45,8 +45,8 @@ module CommonFood {
             weeks: 4,
             days: [ "Lunes", "Martes", "Miercoles", "Jueves", "Viernes" ],
             options: [ "Común", "Light", "Vegetariano" ],
-            startDate: new Date(),
-            endDate: new Date(),
+            startDate: "",
+            endDate: "",
             foods: []
         };
 
@@ -54,8 +54,8 @@ module CommonFood {
         weeks: knockout.koObservableNumber = ko.observable(0);
         days: knockout.koObservableArrayBase = ko.observableArray();
         options: knockout.koObservableArrayBase = ko.observableArray();
-        startDate: knockout.koObservableAny = ko.observable(new Date());
-        endDate: knockout.koObservableAny = ko.observable(new Date());
+        startDate: knockout.koObservableAny = ko.observable("");
+        endDate: knockout.koObservableAny = ko.observable("");
         firstWeek: knockout.koObservableNumber = ko.observable(0);
         firstDay: knockout.koObservableNumber = ko.observable(0);
         foods: knockout.koObservableArrayBase = ko.observableArray(); //By week, by day, by option

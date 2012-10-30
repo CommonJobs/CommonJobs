@@ -42,8 +42,8 @@ var CommonFood;
             this.weeks = ko.observable(0);
             this.days = ko.observableArray();
             this.options = ko.observableArray();
-            this.startDate = ko.observable(new Date());
-            this.endDate = ko.observable(new Date());
+            this.startDate = ko.observable("");
+            this.endDate = ko.observable("");
             this.firstWeek = ko.observable(0);
             this.firstDay = ko.observable(0);
             this.foods = ko.observableArray();
@@ -66,8 +66,8 @@ var CommonFood;
                 "Light", 
                 "Vegetariano"
             ],
-            startDate: new Date(),
-            endDate: new Date(),
+            startDate: "",
+            endDate: "",
             foods: []
         };
         MenuViewModel.prototype.reset = function (model) {

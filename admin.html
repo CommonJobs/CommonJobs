@@ -45,8 +45,8 @@
     , firstDay: 4 //El 21 de septiembre es viernes
     , weeks: 4
     , options: ["Común", "Light", "Vegetariano"]
-    , startDate: new Date("2012-09-21") //inclusive
-    , endDate: new Date("2012-12-20") //inclusive
+    , startDate: "2012-09-21" //inclusive
+    , endDate: "2012-12-20" //inclusive
     //, foods: []
 }
                 </textarea>
@@ -83,8 +83,8 @@
 
                 <ul>
                     <li><label>Título: <input data-bind="value: title" /></label></li>
-                    <li><label>Comienza: <input data-bind="datepicker: startDate" /></label></li>
-                    <li><label>Finaliza: <input data-bind="datepicker: endDate" /></label></li>
+                    <li><label>Comienza: <input data-bind="cjdatepicker: startDate, datepickerOptions: { dataType: 'iso' }" /></label></li>
+                    <li><label>Finaliza: <input data-bind="cjdatepicker: endDate, datepickerOptions: { dataType: 'iso' }" /></label></li>
                     <li><label>Primer semana: <input data-bind="value: firstWeek" /><!-- TODO: select --></label></li>
                     <li><label>Primer día: <input data-bind="value: firstDay" /><!-- TODO: select o bien hacerlo automático por el día --></label></li>
                 </ul>
