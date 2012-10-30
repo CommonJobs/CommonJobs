@@ -3,6 +3,9 @@ var __extends = this.__extends || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 }
+///<reference path='jquery.d.ts' />
+///<reference path='Knockout.d.ts' />
+///<reference path='underscore.browser.d.ts' />
 var CommonFood;
 (function (CommonFood) {
     var HasCallbacks = (function () {
@@ -32,6 +35,7 @@ var CommonFood;
     })();    
     var MenuViewModel = (function (_super) {
         __extends(MenuViewModel, _super);
+        //By week, by day, by option
         function MenuViewModel(model) {
                 _super.call(this);
             this.title = ko.observable("");
@@ -77,7 +81,8 @@ var CommonFood;
             this.endDate(model.endDate);
             this.firstWeek(model.firstWeek);
             this.firstDay(model.firstDay);
-            this.foods([]);
+            this.foods([])//By week, by day, by option
+            ;
             for(var s in model.options) {
                 this.addOption(model.options[s]);
             }
@@ -87,8 +92,10 @@ var CommonFood;
             for(var i = 0; i < model.weeks; i++) {
                 this.addWeek();
             }
-        };
+            //TODO: importar las comidas
+                    };
         MenuViewModel.prototype.exportModel = function () {
+            //TODO: generar el modelo
             return "//TODO";
         };
         MenuViewModel.prototype.getFood = function (weekIndex, dayIndex, optionIndex) {
@@ -132,6 +139,7 @@ var CommonFood;
             this.eachDay(function (dayFoods) {
                 return dayFoods.push(ko.observable(""));
             });
+            //No hay generics, de manera que this.options acepta cualquier cosa
             this.options.push(option);
         };
         MenuViewModel.prototype.removeOption = function (option) {
@@ -156,6 +164,7 @@ var CommonFood;
                 });
                 weekFoods.push(dayFoods);
             });
+            //No hay generics, de manera que this.days acepta cualquier cosa
             this.days.push(day);
         };
         return MenuViewModel;

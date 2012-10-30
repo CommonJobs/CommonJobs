@@ -29,7 +29,8 @@ module CommonFood {
     }
 
     $(document).ready(() => {
-        var adminController = new AdminController();     
+        var adminController = new AdminController();    
+        (<any>$("#pruebadt")).datepicker();
     });
 }
 

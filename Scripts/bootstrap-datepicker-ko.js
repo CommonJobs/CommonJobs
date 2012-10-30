@@ -16,8 +16,8 @@ ko.bindingHandlers.datepicker = {
         var widget = $(element).data("datepicker");
         //when the view model is updated, update the widget
         if (widget) {
-            widget.date = ko.utils.unwrapObservable(valueAccessor());
-            widget.setValue();
+            var value = ko.utils.unwrapObservable(valueAccessor());
+            widget.setValue(value);
         }
     }
 };
