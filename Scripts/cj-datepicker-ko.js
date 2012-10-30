@@ -13,11 +13,7 @@ ko.bindingHandlers.cjdatepicker = {
         });
     },
     update: function (element, valueAccessor) {
-        var widget = $(element).data("datepicker");
-        //when the view model is updated, update the widget
-        if (widget) {
-            var value = ko.utils.unwrapObservable(valueAccessor());
-            widget.setValue(value);
-        }
+        var value = ko.utils.unwrapObservable(valueAccessor());
+        $(element).cjdatepicker('setValue', value);
     }
 };
