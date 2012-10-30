@@ -8,6 +8,12 @@ ko.bindingHandlers.cjdatepicker = {
         ko.utils.registerEventHandler(element, "changeDate", function (event) {
             var value = valueAccessor();
             if (ko.isObservable(value)) {
+                /*
+                console.debug(event.moment);
+                console.debug(event.date);
+                console.debug(event.dateFormated);
+                console.debug(event.dateIso);
+                */
                 value(event.date);
             }
         });

@@ -23,7 +23,7 @@
 
     var CjDatepicker = function (element, options) {
         this.element = $(element);
-        this.format = DPGlobal.parseFormat(options.format || this.element.data('date-format') || 'mm/dd/yyyy');
+        //this.format = DPGlobal.parseFormat(options.format || this.element.data('date-format') || 'mm/dd/yyyy');
         this.picker = $(DPGlobal.template)
 							.appendTo('body')
 							.on({
@@ -100,7 +100,10 @@
             }
             this.element.trigger({
                 type: 'show',
-                date: this.date
+                moment: this.moment,
+                date: this.moment ? this.moment.toDate() : null,
+                dateFormated: DPGlobal.formatDate(this.moment),
+                dateIso: this.moment ? this.moment.format() : null
             });
         },
 
@@ -115,12 +118,15 @@
             this.set();
             this.element.trigger({
                 type: 'hide',
-                date: this.date
+                moment: this.moment,
+                date: this.moment ? this.moment.toDate() : null,
+                dateFormated: DPGlobal.formatDate(this.moment),
+                dateIso: this.moment ? this.moment.format() : null
             });
         },
 
         set: function () {
-            var formated = DPGlobal.formatDate(this.date, this.format);
+            var formated = DPGlobal.formatDate(this.moment);
             if (!this.isInput) {
                 if (this.component) {
                     this.element.find('input').prop('value', formated);
@@ -132,13 +138,10 @@
         },
 
         setValue: function (newDate) {
-            if (typeof newDate === 'string') {
-                this.date = DPGlobal.parseDate(newDate, this.format);
-            } else {
-                this.date = new Date(newDate);
-            }
+            this.moment = DPGlobal.parseDate(newDate);
             this.set();
-            this.viewDate = new Date(this.date.getFullYear(), this.date.getMonth(), 1, 0, 0, 0, 0);
+            var mmnt = this.moment || moment();
+            this.viewDate = new Date(mmnt.year(), mmnt.month(), 1, 0, 0, 0, 0);
             this.fill();
         },
 
@@ -151,11 +154,11 @@
         },
 
         update: function (newDate) {
-            this.date = DPGlobal.parseDate(
-				typeof newDate === 'string' ? newDate : (this.isInput ? this.element.prop('value') : this.element.data('date')),
-				this.format
+            this.moment = DPGlobal.parseDate(
+				typeof newDate === 'string' ? newDate : (this.isInput ? this.element.prop('value') : this.element.data('date'))
 			);
-            this.viewDate = new Date(this.date.getFullYear(), this.date.getMonth(), 1, 0, 0, 0, 0);
+            var mmnt = this.moment || moment();
+            this.viewDate = new Date(mmnt.year(), mmnt.month(), 1, 0, 0, 0, 0);
             this.fill();
         },
 
@@ -179,10 +182,11 @@
         },
 
         fill: function () {
+            var mmnt = this.moment || moment();
             var d = new Date(this.viewDate),
 				year = d.getFullYear(),
 				month = d.getMonth(),
-				currentDate = this.date.valueOf();
+				currentDate = mmnt.valueOf();
             this.picker.find('.cj-datepicker-days th:eq(1)')
 						.text(DPGlobal.dates.months[month] + ' ' + year);
             var prevMonth = new Date(year, month - 1, 28, 0, 0, 0, 0),
@@ -214,7 +218,7 @@
                 prevMonth.setDate(prevMonth.getDate() + 1);
             }
             this.picker.find('.cj-datepicker-days tbody').empty().append(html.join(''));
-            var currentYear = this.date.getFullYear();
+            var currentYear = mmnt.year();
 
             var months = this.picker.find('.cj-datepicker-months')
 						.find('th:eq(1)')
@@ -222,7 +226,7 @@
 							.end()
 						.find('span').removeClass('active');
             if (currentYear === year) {
-                months.eq(this.date.getMonth()).addClass('active');
+                months.eq(mmnt.month()).addClass('active');
             }
 
             html = '';
@@ -272,11 +276,13 @@
                             this.viewDate.setFullYear(year);
                         }
                         if (this.viewMode !== 0) {
-                            this.date = new Date(this.viewDate);
+                            this.moment = moment(this.viewDate);
                             this.element.trigger({
                                 type: 'changeDate',
-                                date: this.date,
-                                viewMode: DPGlobal.modes[this.viewMode].clsName
+                                moment: this.moment,
+                                date: this.moment ? this.moment.toDate() : null,
+                                dateFormated: DPGlobal.formatDate(this.moment),
+                                dateIso: this.moment ? this.moment.format() : null
                             });
                         }
                         this.showMode(-1);
@@ -293,14 +299,16 @@
                                 month += 1;
                             }
                             var year = this.viewDate.getFullYear();
-                            this.date = new Date(year, month, day, 0, 0, 0, 0);
+                            this.moment = moment([year, month, day]);
                             this.viewDate = new Date(year, month, Math.min(28, day), 0, 0, 0, 0);
                             this.fill();
                             this.set();
                             this.element.trigger({
                                 type: 'changeDate',
-                                date: this.date,
-                                viewMode: DPGlobal.modes[this.viewMode].clsName
+                                moment: this.moment,
+                                date: this.moment ? this.moment.toDate() : null,
+                                dateFormated: DPGlobal.formatDate(this.moment),
+                                dateIso: this.moment ? this.moment.format() : null
                             });
                         }
                         break;
@@ -367,6 +375,7 @@
         getDaysInMonth: function (year, month) {
             return [31, (DPGlobal.isLeapYear(year) ? 29 : 28), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][month]
         },
+        /*
         parseFormat: function (format) {
             var separator = format.match(/[.\/\-\s].*?/),
 				parts = format.split(/\W+/);
@@ -375,51 +384,22 @@
             }
             return { separator: separator, parts: parts };
         },
-        parseDate: function (date, format) {
-            var parts = date.split(format.separator),
-				date = new Date(),
-				val;
-            date.setHours(0);
-            date.setMinutes(0);
-            date.setSeconds(0);
-            date.setMilliseconds(0);
-            if (parts.length === format.parts.length) {
-                for (var i = 0, cnt = format.parts.length; i < cnt; i++) {
-                    val = parseInt(parts[i], 10) || 1;
-                    switch (format.parts[i]) {
-                        case 'dd':
-                        case 'd':
-                            date.setDate(val);
-                            break;
-                        case 'mm':
-                        case 'm':
-                            date.setMonth(val - 1);
-                            break;
-                        case 'yy':
-                            date.setFullYear(2000 + val);
-                            break;
-                        case 'yyyy':
-                            date.setFullYear(val);
-                            break;
-                    }
-                }
+        */
+        parseDate: function (value) {
+            //TODO: dar prioridad al formato configurado
+            var mmnt = moment(value);
+            if (!mmnt || !mmnt.isValid()) {
+                //TODO: cuando la fecha no es válida que hacer?
+                return null;
+                mmnt = moment();
             }
-            return date;
+            return mmnt.hours(0).minutes(0).seconds(0).milliseconds(0);
         },
-        formatDate: function (date, format) {
-            var val = {
-                d: date.getDate(),
-                m: date.getMonth() + 1,
-                yy: date.getFullYear().toString().substring(2),
-                yyyy: date.getFullYear()
-            };
-            val.dd = (val.d < 10 ? '0' : '') + val.d;
-            val.mm = (val.m < 10 ? '0' : '') + val.m;
-            var date = [];
-            for (var i = 0, cnt = format.parts.length; i < cnt; i++) {
-                date.push(val[format.parts[i]]);
-            }
-            return date.join(format.separator);
+        formatDate: function (mmnt) {
+            //TODO: permitir cambiar el formato
+            return mmnt
+                ? mmnt.format("DD/MM/YYYY")
+                : "";
         },
         headTemplate: '<thead>' +
 							'<tr>' +
