@@ -126,6 +126,8 @@
     <Content Include="Scripts\cj-datepicker-ko.js" />
     <Content Include="Scripts\knockout-2.2.0.debug.js" />
     <Content Include="Scripts\knockout-2.2.0.js" />
+    <Content Include="Scripts\moment.js" />
+    <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\underscore.browser.d.ts" />
     <Content Include="Scripts\Knockout.d.ts" />
     <Content Include="Scripts\jquery-1.8.2.js" />
