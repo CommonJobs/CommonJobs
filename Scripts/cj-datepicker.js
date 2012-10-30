@@ -85,7 +85,27 @@
 
     CjDatepicker.prototype = {
         constructor: CjDatepicker,
-
+        getMoment: function () {
+            return this.moment;
+        },
+        getDate: function () {
+            return this.moment ? this.moment.toDate() : null;
+        },
+        getFormated: function () {
+            return DPGlobal.formatDate(this.moment);
+        },
+        getIso: function () {
+            return this.moment ? this.moment.format() : null;
+        },
+        _trigger: function (type) {
+            this.element.trigger({
+                type: type,
+                moment: this.getMoment(),
+                date: this.getDate(),
+                dateFormated: this.getFormated(),
+                dateIso: this.getIso()
+            });
+        },
         show: function (e) {
             this.picker.show();
             this.height = this.component ? this.component.outerHeight() : this.element.outerHeight();
@@ -98,13 +118,7 @@
             if (!this.isInput) {
                 $(document).on('mousedown', $.proxy(this.hide, this));
             }
-            this.element.trigger({
-                type: 'show',
-                moment: this.moment,
-                date: this.moment ? this.moment.toDate() : null,
-                dateFormated: DPGlobal.formatDate(this.moment),
-                dateIso: this.moment ? this.moment.format() : null
-            });
+            this._trigger('show');
         },
 
         hide: function () {
@@ -116,13 +130,7 @@
                 $(document).off('mousedown', this.hide);
             }
             this.set();
-            this.element.trigger({
-                type: 'hide',
-                moment: this.moment,
-                date: this.moment ? this.moment.toDate() : null,
-                dateFormated: DPGlobal.formatDate(this.moment),
-                dateIso: this.moment ? this.moment.format() : null
-            });
+            this._trigger('hide');
         },
 
         set: function () {
@@ -244,6 +252,7 @@
             yearCont.html(html);
         },
 
+
         click: function (e) {
             e.stopPropagation();
             e.preventDefault();
@@ -277,13 +286,7 @@
                         }
                         if (this.viewMode !== 0) {
                             this.moment = moment(this.viewDate);
-                            this.element.trigger({
-                                type: 'changeDate',
-                                moment: this.moment,
-                                date: this.moment ? this.moment.toDate() : null,
-                                dateFormated: DPGlobal.formatDate(this.moment),
-                                dateIso: this.moment ? this.moment.format() : null
-                            });
+                            this._trigger('changeDate');
                         }
                         this.showMode(-1);
                         this.fill();
@@ -303,13 +306,7 @@
                             this.viewDate = new Date(year, month, Math.min(28, day), 0, 0, 0, 0);
                             this.fill();
                             this.set();
-                            this.element.trigger({
-                                type: 'changeDate',
-                                moment: this.moment,
-                                date: this.moment ? this.moment.toDate() : null,
-                                dateFormated: DPGlobal.formatDate(this.moment),
-                                dateIso: this.moment ? this.moment.format() : null
-                            });
+                            this._trigger('changeDate');
                         }
                         break;
                 }
@@ -330,15 +327,24 @@
     };
 
     $.fn.cjdatepicker = function (option, val) {
-        return this.each(function () {
+        var results = [];
+        var chain = this.each(function () {
             var $this = $(this),
 				data = $this.data('datepicker'),
 				options = typeof option === 'object' && option;
-            if (!data) {
+            if (typeof option === 'string') {
+                if (data) {
+                    var result = data[option](val);
+                    if (typeof result !== 'undefined')
+                        results.push(result);
+                }
+            } else if (!data) {
                 $this.data('datepicker', (data = new CjDatepicker(this, $.extend({}, $.fn.cjdatepicker.defaults, options))));
             }
-            if (typeof option === 'string') data[option](val);
         });
+        return results.length == 1 ? results[0]
+            : results.length ? results
+            : chain;
     };
 
     $.fn.cjdatepicker.defaults = {

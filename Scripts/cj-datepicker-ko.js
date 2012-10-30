@@ -1,20 +1,31 @@
 ko.bindingHandlers.cjdatepicker = {
     init: function (element, valueAccessor, allBindingsAccessor) {
-        //initialize datepicker with some optional options
         var options = allBindingsAccessor().datepickerOptions || {};
-        $(element).cjdatepicker(options);
+        
+        function detectDataType() {
+            var initialValue = ko.utils.unwrapObservable(valueAccessor());
+            var type = typeof initialValue;
+            if (type === 'string') {
+                return 'iso';
+            } else if (type === 'object' && Object.prototype.toString.call(initialValue) === "[object Date]") {
+                return 'date'
+            } else if (type === 'object' && initialValue.daysInMonth && initialValue.year && initialValue.toDate) {
+                return 'moment';
+            }
+        }
+        var dataType = options.dataType || detectDataType();
+        var getMethod = dataType == 'iso' ? 'getIso'
+            : dataType == 'moment' ? 'getMoment'
+            : dataType == 'text' ? 'getFormated'
+            : 'getDate';
 
-        //when a user changes the date, update the view model
+        var $el = $(element).cjdatepicker(options);
+
         ko.utils.registerEventHandler(element, "changeDate", function (event) {
-            var value = valueAccessor();
-            if (ko.isObservable(value)) {
-                /*
-                console.debug(event.moment);
-                console.debug(event.date);
-                console.debug(event.dateFormated);
-                console.debug(event.dateIso);
-                */
-                value(event.date);
+            var accessor = valueAccessor();
+            if (ko.isObservable(accessor)) {
+                var value = $el.cjdatepicker(getMethod);
+                accessor(value);
             }
         });
     },
