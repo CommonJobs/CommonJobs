@@ -1,8 +1,8 @@
 /* =========================================================
- * bootstrap-datepicker.js 
- * http://www.eyecon.ro/bootstrap-datepicker
+ * cj-datepicker.js 
+ * Based on http://www.eyecon.ro/bootstrap-datepicker
  * =========================================================
- * Copyright 2012 Stefan Petre
+ * Copyright 2012 Andres Moschini 
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@
 
     // Picker object
 
-    var Datepicker = function (element, options) {
+    var CjDatepicker = function (element, options) {
         this.element = $(element);
         this.format = DPGlobal.parseFormat(options.format || this.element.data('date-format') || 'mm/dd/yyyy');
         this.picker = $(DPGlobal.template)
@@ -83,8 +83,8 @@
         this.showMode();
     };
 
-    Datepicker.prototype = {
-        constructor: Datepicker,
+    CjDatepicker.prototype = {
+        constructor: CjDatepicker,
 
         show: function (e) {
             this.picker.show();
@@ -166,7 +166,7 @@
                 html += '<th class="dow">' + DPGlobal.dates.daysMin[(dowCnt++) % 7] + '</th>';
             }
             html += '</tr>';
-            this.picker.find('.datepicker-days thead').append(html);
+            this.picker.find('.cj-datepicker-days thead').append(html);
         },
 
         fillMonths: function () {
@@ -175,7 +175,7 @@
             while (i < 12) {
                 html += '<span class="month">' + DPGlobal.dates.monthsShort[i++] + '</span>';
             }
-            this.picker.find('.datepicker-months td').append(html);
+            this.picker.find('.cj-datepicker-months td').append(html);
         },
 
         fill: function () {
@@ -183,7 +183,7 @@
 				year = d.getFullYear(),
 				month = d.getMonth(),
 				currentDate = this.date.valueOf();
-            this.picker.find('.datepicker-days th:eq(1)')
+            this.picker.find('.cj-datepicker-days th:eq(1)')
 						.text(DPGlobal.dates.months[month] + ' ' + year);
             var prevMonth = new Date(year, month - 1, 28, 0, 0, 0, 0),
 				day = DPGlobal.getDaysInMonth(prevMonth.getFullYear(), prevMonth.getMonth());
@@ -213,10 +213,10 @@
                 }
                 prevMonth.setDate(prevMonth.getDate() + 1);
             }
-            this.picker.find('.datepicker-days tbody').empty().append(html.join(''));
+            this.picker.find('.cj-datepicker-days tbody').empty().append(html.join(''));
             var currentYear = this.date.getFullYear();
 
-            var months = this.picker.find('.datepicker-months')
+            var months = this.picker.find('.cj-datepicker-months')
 						.find('th:eq(1)')
 							.text(year)
 							.end()
@@ -227,7 +227,7 @@
 
             html = '';
             year = parseInt(year / 10, 10) * 10;
-            var yearCont = this.picker.find('.datepicker-years')
+            var yearCont = this.picker.find('.cj-datepicker-years')
 								.find('th:eq(1)')
 									.text(year + '-' + (year + 9))
 									.end()
@@ -317,25 +317,25 @@
             if (dir) {
                 this.viewMode = Math.max(this.minViewMode, Math.min(2, this.viewMode + dir));
             }
-            this.picker.find('>div').hide().filter('.datepicker-' + DPGlobal.modes[this.viewMode].clsName).show();
+            this.picker.find('>div').hide().filter('.cj-datepicker-' + DPGlobal.modes[this.viewMode].clsName).show();
         }
     };
 
-    $.fn.datepicker = function (option, val) {
+    $.fn.cjdatepicker = function (option, val) {
         return this.each(function () {
             var $this = $(this),
 				data = $this.data('datepicker'),
 				options = typeof option === 'object' && option;
             if (!data) {
-                $this.data('datepicker', (data = new Datepicker(this, $.extend({}, $.fn.datepicker.defaults, options))));
+                $this.data('datepicker', (data = new CjDatepicker(this, $.extend({}, $.fn.cjdatepicker.defaults, options))));
             }
             if (typeof option === 'string') data[option](val);
         });
     };
 
-    $.fn.datepicker.defaults = {
+    $.fn.cjdatepicker.defaults = {
     };
-    $.fn.datepicker.Constructor = Datepicker;
+    $.fn.cjdatepicker.Constructor = CjDatepicker;
 
     var DPGlobal = {
         modes: [
@@ -430,20 +430,20 @@
 						'</thead>',
         contTemplate: '<tbody><tr><td colspan="7"></td></tr></tbody>'
     };
-    DPGlobal.template = '<div class="datepicker dropdown-menu">' +
-							'<div class="datepicker-days">' +
+    DPGlobal.template = '<div class="cj-datepicker dropdown-menu">' +
+							'<div class="cj-datepicker-days">' +
 								'<table class=" table-condensed">' +
 									DPGlobal.headTemplate +
 									'<tbody></tbody>' +
 								'</table>' +
 							'</div>' +
-							'<div class="datepicker-months">' +
+							'<div class="cj-datepicker-months">' +
 								'<table class="table-condensed">' +
 									DPGlobal.headTemplate +
 									DPGlobal.contTemplate +
 								'</table>' +
 							'</div>' +
-							'<div class="datepicker-years">' +
+							'<div class="cj-datepicker-years">' +
 								'<table class="table-condensed">' +
 									DPGlobal.headTemplate +
 									DPGlobal.contTemplate +

@@ -96,7 +96,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\bootstrap-datepicker.css" />
+    <Content Include="Content\cj-datepicker.css" />
     <Content Include="Content\bootstrap-responsive.css" />
     <Content Include="Content\bootstrap-responsive.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -111,7 +111,7 @@
     <Content Include="Scripts\admin.js">
       <DependentUpon>admin.ts</DependentUpon>
     </Content>
-    <Content Include="Scripts\bootstrap-datepicker.js" />
+    <Content Include="Scripts\cj-datepicker.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js">
       <DependentUpon>bootstrap.js</DependentUpon>
@@ -123,7 +123,7 @@
     <Content Include="Scripts\CommonFood.js">
       <DependentUpon>CommonFood.ts</DependentUpon>
     </Content>
-    <Content Include="Scripts\bootstrap-datepicker-ko.js" />
+    <Content Include="Scripts\cj-datepicker-ko.js" />
     <Content Include="Scripts\knockout-2.2.0.debug.js" />
     <Content Include="Scripts\knockout-2.2.0.js" />
     <Content Include="Scripts\underscore.browser.d.ts" />

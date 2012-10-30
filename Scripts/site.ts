@@ -3,12 +3,6 @@
 ///<reference path='underscore.browser.d.ts' />
 
 module Patches {
-     $.fn.datepicker.defaults = {
-        autoclose: true,
-        language: 'es',
-        format: 'dd/mm/yyyy'
-    };
-
     //http://www.knockmeout.net/2012/05/quick-tip-skip-binding.html
     var miKo = <any>ko;
     miKo.bindingHandlers.stopBinding = {

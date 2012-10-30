@@ -32,7 +32,7 @@ var CommonFood;
     CommonFood.AdminController = AdminController;    
     $(document).ready(function () {
         var adminController = new AdminController();
-        ($("#pruebadt")).datepicker();
+        ($("#pruebadt")).cjdatepicker();
     });
 })(CommonFood || (CommonFood = {}));
 

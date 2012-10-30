@@ -30,7 +30,7 @@ module CommonFood {
 
     $(document).ready(() => {
         var adminController = new AdminController();    
-        (<any>$("#pruebadt")).datepicker();
+        (<any>$("#pruebadt")).cjdatepicker();
     });
 }
 

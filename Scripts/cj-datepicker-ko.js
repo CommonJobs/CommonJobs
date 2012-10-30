@@ -1,8 +1,8 @@
-ko.bindingHandlers.datepicker = {
+ko.bindingHandlers.cjdatepicker = {
     init: function (element, valueAccessor, allBindingsAccessor) {
         //initialize datepicker with some optional options
         var options = allBindingsAccessor().datepickerOptions || {};
-        $(element).datepicker(options);
+        $(element).cjdatepicker(options);
 
         //when a user changes the date, update the view model
         ko.utils.registerEventHandler(element, "changeDate", function (event) {
