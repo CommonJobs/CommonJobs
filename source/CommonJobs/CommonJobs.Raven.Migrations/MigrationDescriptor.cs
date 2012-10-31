@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Raven.Client;
 
-namespace CommonJobs.Raven.Migrations
+namespace CommonJobs.Infrastructure.Migrations
 {
     public class MigrationDescriptor 
     {

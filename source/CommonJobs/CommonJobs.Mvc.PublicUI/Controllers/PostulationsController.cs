@@ -5,10 +5,10 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using CommonJobs.Domain;
-using CommonJobs.Infrastructure.AttachmentStorage;
-using CommonJobs.Infrastructure.SharedLinks;
-using CommonJobs.Raven.Mvc;
-using CommonJobs.Raven.Infrastructure;
+using CommonJobs.Application.AttachmentStorage;
+using CommonJobs.Application.SharedLinks;
+using CommonJobs.Infrastructure.Mvc;
+using CommonJobs.Infrastructure.RavenDb;
 using NLog;
 using CommonJobs.Utilities;
 

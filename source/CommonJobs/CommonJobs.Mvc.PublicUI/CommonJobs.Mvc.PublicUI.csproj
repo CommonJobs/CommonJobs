@@ -261,17 +261,17 @@
       <Project>{cc2939c6-a278-4789-b937-adb693e69c89}</Project>
       <Name>CommonJobs.Domain</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CommonJobs.Infrastructure\CommonJobs.Infrastructure.csproj">
+    <ProjectReference Include="..\CommonJobs.Application\CommonJobs.Application.csproj">
       <Project>{4d58f500-cdc4-4697-8da5-15568e804317}</Project>
-      <Name>CommonJobs.Infrastructure</Name>
+      <Name>CommonJobs.Application</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CommonJobs.Raven.Infrastructure\CommonJobs.Raven.Infrastructure.csproj">
+    <ProjectReference Include="..\CommonJobs.Infrastructure.RavenDb\CommonJobs.Infrastructure.RavenDb.csproj">
       <Project>{7b4a0a21-0cde-432a-a785-599d4339ad8e}</Project>
-      <Name>CommonJobs.Raven.Infrastructure</Name>
+      <Name>CommonJobs.Infrastructure.RavenDb</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CommonJobs.Raven.Mvc\CommonJobs.Raven.Mvc.csproj">
+    <ProjectReference Include="..\CommonJobs.Infrastructure.Mvc\CommonJobs.Infrastructure.Mvc.csproj">
       <Project>{658eaf8e-02a2-4029-ac52-942261ee486c}</Project>
-      <Name>CommonJobs.Raven.Mvc</Name>
+      <Name>CommonJobs.Infrastructure.Mvc</Name>
     </ProjectReference>
     <ProjectReference Include="..\CommonJobs.Utilities\CommonJobs.Utilities.csproj">
       <Project>{fabfcafa-f6f2-47c2-b393-66e97203f107}</Project>

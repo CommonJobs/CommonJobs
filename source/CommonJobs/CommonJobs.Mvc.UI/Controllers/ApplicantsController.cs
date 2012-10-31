@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using CommonJobs.Raven.Mvc;
-using CommonJobs.Infrastructure.Indexes;
+using CommonJobs.Infrastructure.Mvc;
+using CommonJobs.Application.Indexes;
 using CommonJobs.Domain;
 using Raven.Client.Linq;
-using CommonJobs.Infrastructure.AttachmentStorage;
-using CommonJobs.Infrastructure.ApplicantSearching;
+using CommonJobs.Application.AttachmentStorage;
+using CommonJobs.Application.ApplicantSearching;
 using CommonJobs.Mvc.UI.Infrastructure;
 
 namespace CommonJobs.Mvc.UI.Controllers

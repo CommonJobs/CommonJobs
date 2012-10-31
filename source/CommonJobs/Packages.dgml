@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <DirectedGraph GraphDirection="LeftToRight" xmlns="http://schemas.microsoft.com/vs/2009/dgml">
   <Nodes>
-    <Node Id="CommonJobs.Raven.Mvc" Label="CommonJobs.Raven.Mvc" Category="Project" />
+    <Node Id="CommonJobs.Infrastructure.Mvc" Label="CommonJobs.Infrastructure.Mvc" Category="Project" />
     <Node Id="Newtonsoft.Json 4.0.5" Label="Newtonsoft.Json 4.0.5" Category="Package" />
     <Node Id="NLog 2.0.0.2000" Label="NLog 2.0.0.2000" Category="Package" />
     <Node Id="RavenDB 1.0.638-Unstable" Label="RavenDB 1.0.638-Unstable" Category="Package" />
-    <Node Id="CommonJobs.Infrastructure" Label="CommonJobs.Infrastructure" Category="Project" />
+    <Node Id="CommonJobs.Application" Label="CommonJobs.Application" Category="Project" />
     <Node Id="Newtonsoft.Json 4.0.5" Label="Newtonsoft.Json 4.0.5" Category="Package" />
     <Node Id="NLog 2.0.0.2000" Label="NLog 2.0.0.2000" Category="Package" />
     <Node Id="RavenDB 1.0.638-Unstable" Label="RavenDB 1.0.638-Unstable" Category="Package" />
@@ -23,10 +23,10 @@
   <Links>
     <Link Source="RavenDB 1.0.638-Unstable" Target="NLog 2.0.0.2000" Category="Package Dependency" />
     <Link Source="RavenDB 1.0.638-Unstable" Target="Newtonsoft.Json 4.0.5" Category="Package Dependency" />
-    <Link Source="CommonJobs.Raven.Mvc" Target="RavenDB 1.0.638-Unstable" Category="Installed Package" />
+    <Link Source="CommonJobs.Infrastructure.Mvc" Target="RavenDB 1.0.638-Unstable" Category="Installed Package" />
     <Link Source="RavenDB 1.0.638-Unstable" Target="NLog 2.0.0.2000" Category="Package Dependency" />
     <Link Source="RavenDB 1.0.638-Unstable" Target="Newtonsoft.Json 4.0.5" Category="Package Dependency" />
-    <Link Source="CommonJobs.Infrastructure" Target="RavenDB 1.0.638-Unstable" Category="Installed Package" />
+    <Link Source="CommonJobs.Application" Target="RavenDB 1.0.638-Unstable" Category="Installed Package" />
     <Link Source="Backbone.js 0.9.0" Target="jQuery 1.7.1" Category="Package Dependency" />
     <Link Source="Backbone.js 0.9.0" Target="underscore.js 1.3.1" Category="Package Dependency" />
     <Link Source="jQuery.UI.Combined 1.8.17" Target="jQuery 1.7.1" Category="Package Dependency" />
