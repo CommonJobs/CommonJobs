@@ -18,10 +18,21 @@ namespace CommonJobs.Infrastructure.Vacations
             return new object[] { Data, Configuration};
         }
 
-        public CalculateVacations()
-            : base("CJLogic", "CalculateVacations", 
-                "underscore.js", "moment.js", "twix.js")
+        protected override string[] GetDependencies()
         {
+            return new[] { 
+                "scripts\\json2.js", 
+                "scripts\\underscore.js", 
+                "scripts\\moment.js", 
+                "scripts\\twix.js", 
+                "CJLogic\\CJLogic.js", 
+                "CJLogic\\CalculateVacations.js" 
+            };
+        }
+
+        protected override string GetFunctionName()
+        {
+            return "CJLogic.CalculateVacations";
         }
     }
 }
