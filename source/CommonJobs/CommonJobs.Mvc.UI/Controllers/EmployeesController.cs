@@ -5,16 +5,16 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using CommonJobs.Infrastructure.Indexes;
+using CommonJobs.Application.Indexes;
 using Raven.Client.Linq;
-using CommonJobs.Raven.Mvc;
+using CommonJobs.Infrastructure.Mvc;
 using CommonJobs.Domain;
 using CommonJobs.Utilities;
-using CommonJobs.Infrastructure.AttachmentStorage;
-using CommonJobs.Infrastructure.EmployeeSearching;
+using CommonJobs.Application.AttachmentStorage;
+using CommonJobs.Application.EmployeeSearching;
 using NLog;
-using CommonJobs.Infrastructure.AttachmentSlots;
-using CommonJobs.Infrastructure;
+using CommonJobs.Application.AttachmentSlots;
+using CommonJobs.Application;
 using Raven.Abstractions.Data;
 
 namespace CommonJobs.Mvc.UI.Controllers

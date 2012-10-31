@@ -6,9 +6,9 @@ using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 using CommonJobs.Domain;
-using CommonJobs.Infrastructure.JobSearchSearching;
-using CommonJobs.Raven.Mvc;
-using CommonJobs.Raven.Infrastructure;
+using CommonJobs.Application.JobSearchSearching;
+using CommonJobs.Infrastructure.Mvc;
+using CommonJobs.Infrastructure.RavenDb;
 using CommonJobs.Utilities;
 
 namespace CommonJobs.Mvc.UI.Controllers

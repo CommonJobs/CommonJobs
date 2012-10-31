@@ -977,9 +977,9 @@
       <Project>{CC2939C6-A278-4789-B937-ADB693E69C89}</Project>
       <Name>CommonJobs.Domain</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CommonJobs.Infrastructure\CommonJobs.Infrastructure.csproj">
+    <ProjectReference Include="..\CommonJobs.Application\CommonJobs.Application.csproj">
       <Project>{4D58F500-CDC4-4697-8DA5-15568E804317}</Project>
-      <Name>CommonJobs.Infrastructure</Name>
+      <Name>CommonJobs.Application</Name>
     </ProjectReference>
     <ProjectReference Include="..\CommonJobs.JavaScript\CommonJobs.JavaScript.csproj">
       <Project>{60875F2E-5CBF-4E9C-941C-408C5482AA95}</Project>
@@ -989,17 +989,17 @@
       <Project>{E01BBAFF-4FD7-4A4F-89A6-4FA54CC622BA}</Project>
       <Name>CommonJobs.Migrations</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CommonJobs.Raven.Infrastructure\CommonJobs.Raven.Infrastructure.csproj">
+    <ProjectReference Include="..\CommonJobs.Infrastructure.RavenDb\CommonJobs.Infrastructure.RavenDb.csproj">
       <Project>{7B4A0A21-0CDE-432A-A785-599D4339AD8E}</Project>
-      <Name>CommonJobs.Raven.Infrastructure</Name>
+      <Name>CommonJobs.Infrastructure.RavenDb</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CommonJobs.Raven.Migrations\CommonJobs.Raven.Migrations.csproj">
+    <ProjectReference Include="..\CommonJobs.Raven.Migrations\CommonJobs.Infrastructure.Migrations.csproj">
       <Project>{B6D54592-07C8-4B5E-A607-DD7FE49A43B6}</Project>
-      <Name>CommonJobs.Raven.Migrations</Name>
+      <Name>CommonJobs.Infrastructure.Migrations</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CommonJobs.Raven.Mvc\CommonJobs.Raven.Mvc.csproj">
+    <ProjectReference Include="..\CommonJobs.Infrastructure.Mvc\CommonJobs.Infrastructure.Mvc.csproj">
       <Project>{658EAF8E-02A2-4029-AC52-942261EE486C}</Project>
-      <Name>CommonJobs.Raven.Mvc</Name>
+      <Name>CommonJobs.Infrastructure.Mvc</Name>
     </ProjectReference>
     <ProjectReference Include="..\CommonJobs.Utilities\CommonJobs.Utilities.csproj">
       <Project>{FABFCAFA-F6F2-47C2-B393-66E97203F107}</Project>

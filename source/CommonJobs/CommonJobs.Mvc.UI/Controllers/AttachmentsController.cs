@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using CommonJobs.Raven.Mvc;
-using CommonJobs.Infrastructure.AttachmentStorage;
+using CommonJobs.Infrastructure.Mvc;
+using CommonJobs.Application.AttachmentStorage;
 using CommonJobs.Domain;
 using System.Diagnostics;
 using Raven.Client.Linq;
-using CommonJobs.Infrastructure.Indexes;
-using CommonJobs.Infrastructure.AttachmentIndexing;
+using CommonJobs.Application.Indexes;
+using CommonJobs.Application.AttachmentIndexing;
 using RavenData = Raven.Abstractions.Data;
 using Raven.Json.Linq;
 using System.Drawing;
 using System.IO;
-using CommonJobs.Infrastructure.AttachmentSearching;
+using CommonJobs.Application.AttachmentSearching;
 using System.Text.RegularExpressions;
 
 namespace CommonJobs.Mvc.UI.Controllers
