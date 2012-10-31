@@ -1,5 +1,6 @@
 ﻿///<reference path='jquery.d.ts' />
 ///<reference path='Knockout.d.ts' />
+///<reference path='cj-datepicker.d.ts' />
 ///<reference path='underscore.browser.d.ts' />
 ///<reference path='CommonFood.ts' />
 
@@ -30,7 +31,7 @@ module CommonFood {
 
     $(document).ready(() => {
         var adminController = new AdminController();    
-        (<any>$("#pruebadt")).cjdatepicker();
+        $("#pruebadt").cjdatepicker();
     });
 }
 

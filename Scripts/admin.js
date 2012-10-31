@@ -5,6 +5,7 @@ var __extends = this.__extends || function (d, b) {
 }
 ///<reference path='jquery.d.ts' />
 ///<reference path='Knockout.d.ts' />
+///<reference path='cj-datepicker.d.ts' />
 ///<reference path='underscore.browser.d.ts' />
 ///<reference path='CommonFood.ts' />
 var CommonFood;
@@ -32,7 +33,7 @@ var CommonFood;
     CommonFood.AdminController = AdminController;    
     $(document).ready(function () {
         var adminController = new AdminController();
-        ($("#pruebadt")).cjdatepicker();
+        $("#pruebadt").cjdatepicker();
     });
 })(CommonFood || (CommonFood = {}));
 
