@@ -63,15 +63,9 @@ Ampliar el valor agregado que tendrá el software con respecto a los otros produ
 *Nota del equipo:* Esta consideración es comprensible, pero creemos poder justificar estas razones. Ver notas arriba sobre valor agregado. Además, consideramos que deberíamos resaltar que una de las fortalezas indicadas en nuestra presentación de proyecto fueron la inclusión de A. Moschini y J. Raimondi como miembros de la empresa para poder detectar este tipo de situaciones, lo que efectivamente ocurrió.
 
 * Es muy probable que la cátedra revise el resultado del proyecto contrastándolo con la propuesta:
-	* JIRA no es efectiva para carga, actualización y búsqueda de candidatos.
-	* Se buscaba que la selección de candidatos no dependa de memoria y arte de empleados de RRHH.
-
-*Nota del equipo:* Consideramos estos objetivos cumplidos.
-
-	* No hay integración con bases externas como LinkedIn, ZonaJobs, etc.
-
-*Nota del equipo:* Consideramos estos objetivos cumplido, con notas a realizar. Esto dejó de ser una necesidad de RRHH y por tanto dejó de ser un problema a solucionar.
-
+	* JIRA no es efectiva para carga, actualización y búsqueda de candidatos. (*Nota del equipo:* Consideramos estos objetivos cumplidos.)
+	* Se buscaba que la selección de candidatos no dependa de memoria y arte de empleados de RRHH.  (*Nota del equipo:* Consideramos estos objetivos cumplidos.)
+	* No hay integración con bases externas como LinkedIn, ZonaJobs, etc. (*Nota del equipo:* Consideramos estos objetivos cumplido, con notas a realizar. Esto dejó de ser una necesidad de RRHH y por tanto dejó de ser un problema a solucionar.)
 	* Cree que es importante pensar en circuitos, para que haya un flujo natural de información entre pantallas.
 	* Lo de almuerzo podría verse como que no es para RRHH. Quizá se pueda plantear por el lado de Beneficios? No estoy seguro que encaje muy bien con el resto del producto. Tengan en cuenta que de acuerdo a la cátedra: "Cada cambio en lo comprometido en la propuesta original o cada acuerdo que se alcance en el transcurso del trabajo será documentado y firmado por las partes."
  
@@ -130,5 +124,3 @@ Consideren a documentar:
 - Están usando RabbitMQ para algo?
 - Log de errores?
 - Certificado de seguridad?
-
-*Nota del equipo:* No todas estas sugerencias concuerdan con el objetivo ni con la problemática a solucionar. Todas se consideraron y algunas de estas sugerencias serán incluídas porque realmente agregan utilidad sin impactar el real valor agregado del producto.
