@@ -68,8 +68,22 @@ namespace CommonJobs.Mvc.UI.Controllers
         
         public ActionResult Create()
         {
-            var newEmployee = CreateEmployee();
-            return RedirectToAction("Edit", new { id = newEmployee.Id });  
+            var newEmployee = new Employee();
+            var slots = Query(new AttachmentSlotsQuery<Employee>());
+
+            RegisterEmployeeEditViewData(newEmployee, slots);
+
+            return View("Edit");
+        }
+
+        private void RegisterEmployeeEditViewData(Employee newEmployee, AttachmentSlot[] attachmentSlots)
+        {
+            ScriptManager.RegisterGlobalJavascript("ViewData",
+                new
+                {
+                    employee = newEmployee,
+                    attachmentSlots = attachmentSlots
+                }, 500);
         }
 
         private Employee CreateEmployee()
@@ -164,13 +178,7 @@ namespace CommonJobs.Mvc.UI.Controllers
 
             AttachmentSlot[] slotsToShow = Query(new AttachmentSlotsQuery<Employee>());
 
-            ScriptManager.RegisterGlobalJavascript(
-                "ViewData", 
-                new { 
-                    employee = employee,
-                    attachmentSlots = slotsToShow 
-                }, 
-                500);
+            RegisterEmployeeEditViewData(employee, slotsToShow);
             return View();
         }
 
@@ -180,13 +188,10 @@ namespace CommonJobs.Mvc.UI.Controllers
             return Json(employee);
         }
 
-        public ActionResult Post(string id)
+        public ActionResult Post(Employee employee)
         {
-            var employee = RavenSession.Load<Employee>(id);
-            if (employee == null)
-                return HttpNotFound();
-            this.TryUpdateModel(employee);
-            return Json(employee);
+            RavenSession.Store(employee);
+            return Get(employee.Id);
         }
 
         public ActionResult Delete(string id)

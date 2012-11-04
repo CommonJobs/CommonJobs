@@ -50,8 +50,21 @@ namespace CommonJobs.Mvc.UI.Controllers
         public ActionResult Create()
         {
             var newApplicant = new Applicant();
-            RavenSession.Store(newApplicant);
-            return RedirectToAction("Edit", new { id = newApplicant.Id });
+
+            RegisterApplicantEditViewData(newApplicant);
+
+            return View("Edit");
+        }
+
+        private void RegisterApplicantEditViewData(Applicant newApplicant, bool forceReadOnly = false)
+        {
+            ScriptManager.RegisterGlobalJavascript(
+                "ViewData",
+                new
+                {
+                    applicant = newApplicant,
+                    forcedReadOnly = forceReadOnly
+                }, 500);
         }
 
         [HttpPost]
@@ -113,14 +126,9 @@ namespace CommonJobs.Mvc.UI.Controllers
             var applicant = RavenSession.Load<Applicant>(id);
             if (applicant == null)
                 return HttpNotFound();
-            ScriptManager.RegisterGlobalJavascript(
-                "ViewData",
-                new
-                {
-                    applicant = applicant,
-                    forceReadOnly = sharedCode != null
-                },
-                500);
+
+            RegisterApplicantEditViewData(applicant, sharedCode != null);
+
             return View();
         }
 
