@@ -50,8 +50,16 @@ namespace CommonJobs.Mvc.UI.Controllers
         public ActionResult Create()
         {
             var newApplicant = new Applicant();
-            RavenSession.Store(newApplicant);
-            return RedirectToAction("Edit", new { id = newApplicant.Id });
+
+            ScriptManager.RegisterGlobalJavascript(
+                "ViewData",
+                new
+                {
+                    applicant = newApplicant,
+                    forcedReadOnly = false
+                }, 500);
+
+            return View("Edit");
         }
 
         [HttpPost]
