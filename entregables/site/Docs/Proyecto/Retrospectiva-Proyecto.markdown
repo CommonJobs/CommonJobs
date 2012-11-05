@@ -1,50 +1,44 @@
 # Retrospectiva de Proyecto 
 
-*Este documento incluirá información acerca de los inconvenientes que hemos detectado y sobre las acciones correctivas que hemos tomado. También incluirá el resumen de la última entrevista con el director técnico sobre cuestiones relativas a la terminación del proyecto.*
+## El problema
 
-## Utilidad de las funcionalidades implementadas
+Alrededor del `sprint 9` (cerca de la mitad del proyecto) detectamos que el sistema no se estaba utilizando y que muchas de las funciones que estábamos implementando no iban a ser utilizadas, al menos no en el corto plazo. En un esquema ágil como el que intentamos seguir, esto es un problema grave, ya que es importante que en cada sprint agreguemos valor al sistema. De ese periodo anterior se rescata la construcción de la estructura, el aprendizaje, y por supuesto algo de funcionalidad.
 
-A pesar de seguir las recomendaciones del Director Funcional y acordar al comienzo del proyecto un conjunto de funcionalidades mínimas, el plan actual que él fue contemplando conforme pasara el tiempo fue alejándose del plan original. Intentando corregir esta situación que impedía planificar a largo plazo, se decidió enfocar las decisiones a corto plazo, con el nuevo sub-objetivo de hacer útil la plataforma, esperando que su uso generara necesidades y eventualmente se descubriera la funcionalidad real necesaria.
+El área de RRHH también estaba (y está) organizándose y modificando sus métodos internos. Ahora mismo, su principal necesidad está relacionada con la administración del legajo e información de los empleados. 
 
-Si bien esto ocurrió según lo deseado, se descubrió que el principal obstáculo a superar en la implantación del producto como plataforma no está relacionado a la funcionalidad que este pueda aportar, sino a la forma en la que define los procesos. Actualmente, el área de RRHH es altamente eficiente porque carece de procesos rigurosos a seguir. Si bien es deseable mejorar esto (desde un punto de vista organizacional), un sistema que impusiera procesos no existentes no sólo entorpecería la acción del cliente sino que eventualmente caería en el desuso por no adaptarse a sus necesidades.
+La propuesta de proyecto inicial estaba enfocada en la selección de postulantes, actualmente el area de RRHH maneja eso con una relativa informalidad, sin seguir procesos rigurosos, pero con gran flexibilidad y eficiencia. Si bien desde el punto de vista organizacional, es importante generar un proceso, no podemos forzar la definición del mismo, ni imponerlo nosotros ya que en el sistema cae en desuso.
 
-Muchas de las recomendaciones de la cátedra y del director técnico recaían en procesos y validaciones de datos, pero creemos con seguridad que estos serían impedimentos para el cumplimiento de los objetivos en lugar de ayuda a definir procesos. Nuestro plan es ofrecer una herramienta que pueda adaptarse a las actividades actuales pero que sea adaptable al momento de definir procesos más estructurados.
 
-Las primeras acciones correctivas fueron revisar completamente el Product Backlog y repriorizar las tareas. Esto probó ser útil en cuanto a la orientación del producto final al comienzo, pero por lo mencionado anteriormente, se volvió desafiante el continuar haciendo una planificación a largo plazo y entonces, aprovechando las ventajas de nuestro proceso ágil, decidimos enfocarnos en las tareas necesarias a un plazo más corto (uno o dos sprints).
+## Las acciones
 
-### Resumen
+Intentando adaptarnos a esta situación, se decidió enfocar las decisiones al corto plazo, con el nuevo sub-objetivo de hacer útil la plataforma, esperando que su uso generara necesidades y eventualmente se descubriera la funcionalidad real necesaria, sin chocar con los procesos informales realizados.
 
-   * Que?
-      * Descubrimos que estábamos realizando tareas que no se iban a utilizar.
-      * Se realizó una planificación con muchas tareas que no eran realmente útiles (pero nos sirvió para tener una estructura)
-      * Luego se empezó a planificar a muy corto plazo y se implementaba funcionalidad que parecía de suma urgencia y al final del sprint ya no eran tan importantes.
-      * Luego se descubrió que el principal problema con la implantación es que el área de RRHH es eficiente sin tener un proceso estructurado definido.
-   * Cuando lo detectamos?
-      * Esto empezó a suceder aproximadamente en el sprint 9. 
-   * Que decidimos hacer?
-      * Revisar el backlog completo
-      * Actualizar el backlog como tarea en los sprints (requerimientos y análisis)
-      * Incentivar el uso real cuando antes.
-      * No forzar restricciones innecesarias típicas de otros sistemas para mejor adaptación a los procesos que RRHH realmente requiere.
+Las primeras acciones correctivas fueron revisar completamente el Product Backlog y repriorizar las tareas. El mismo dinamismo que decidimos aceptar, nos impidió planificar a largo plazo ya que las prioridades cambiaban de sprint a sprint: la línea de fin de proyecto se perdió en un Backlog poco definido.
 
-## Preparación para el fin de proyecto
+Decidimos dedicar tiempo de los sprints a analizar y planificar las siguientes funciones a implementar en el corto plazo (~2 sprints).
 
-Dado que consideramos los principios principales del proyecto fueron cumplidos, y que nos estamos aproximando a los tiempos de proyecto pactados, procedimos a evaluar los distintos requerimientos necesarios para poder considerar el proyecto terminado. Tras considerarlo con el director técnico y con la cátedra, identificamos elementos que podrían mejorarse en el ámbito del proyecto:
+Esto nos alejó de la funcionalidad original propuesta, pero permitió que el sistema comience a ser útil y sea utilizado.
 
-   * Según la Cátedra: 
-      * Faltan procesos sobre los datos y generación de información más útil. 
-   * Según el Director Técnico: (ver Notas reunión director técnico)
-      * Aspectos de terminación que el director funcional no considera importantes, pero hacen a la calidad del producto (ej. Crear un empleado y no guardarlo genera un empleado vacío).
-      * Funcionalidad que el director funcional no considera importante, pero puede ser importante para la cátedra y para la empresa (ej. Flujo de postulantes)
-	  
-Por tanto, decidimos:
 
-  * Prefijar tareas técnicas o terminaciones de UI que tengan un espacio importante en los sprints.
-  * Buscar interesado que esté involucrado en cuanto a las funciones que son útiles para la empresa y no para el director funcional.
+## Como seguir
+
+Alcanzamos el `sprint 13` (~2/3 partes del proyecto) y vimos la necesidad de prepararnos para finalizar el proyecto. 
+
+Decidimos que debemos volver a definir una línea de fin de proyecto sólida, de manera de evitar sorpresas. Para ello evaluamos los distintos requerimientos necesarios para poder considerar el proyecto terminado y lo consideramos con el director técnico y con la cátedra.
+
+Muchas de las recomendaciones de la cátedra y del director técnico recaían en procesos y validaciones de datos. Pero creemos, con seguridad, que estos serían impedimentos para el cumplimiento de los objetivos en lugar de ayuda a definir procesos. Nuestro plan es ofrecer una herramienta que pueda adaptarse a las actividades actuales, pero que sea adaptable al momento de definir procesos más estructurados.
+
+**`//TODO: Consultar con la cátedra `**  Resolver como adaptarnos al cambio de rumbo que tomó el sistema respecto a la propuesta original.
+
+Debemos resolver varios aspectos de terminación que el director funcional no considera importantes, pero hacen a la calidad del producto (ej. Crear un empleado y no guardarlo genera un empleado vacío). Para esto, prefijaremos tareas técnicas o terminaciones de UI con un espacio importante en los sprints.
+
+Creemos que puede haber funcionalidad que el director funcional no considera importante para el día a día pero que puede ser valiosa para la cátedra y útil para la empresa (ej. Flujo de postulantes). Con asesoramiento de la cátedra y del director funcional seleccionaremos esa funcionalidad y la definiremos con ayuda de algún interesado que esté involucrado en cuanto a las funciones que son útiles para la empresa.
 
 ### Notas reunión director técnico:
 
-#### Observaciones de cátedra:
+**`//TODO: Cambiar redacción como minuta o extraer solo las conclusiones`**
+
+#### Sobre las observaciones de cátedra:
 
 Ampliar el valor agregado que tendrá el software con respecto a los otros productos de la competencia.
 
@@ -60,9 +54,9 @@ Ampliar el valor agregado que tendrá el software con respecto a los otros produ
 
 * Al haber planteado un proyecto de desarrollo se esperará más en funcionalidad (producto), que en soporte y capacitación (servicio). Creo que está reducido en funcionalidad y podría ser criticada la dimensión del sistema.
 
-*Nota del equipo:* Esta consideración es comprensible, pero creemos poder justificar estas razones. Ver notas arriba sobre valor agregado. Además, consideramos que deberíamos resaltar que una de las fortalezas indicadas en nuestra presentación de proyecto fueron la inclusión de A. Moschini y J. Raimondi como miembros de la empresa para poder detectar este tipo de situaciones, lo que efectivamente ocurrió.
+*Nota del equipo:* Esta consideración es comprensible, pero creemos poder justificar estas razones. Ver notas arriba sobre valor agregado. Además, consideramos que deberíamos resaltar que una de las fortalezas indicadas en nuestra presentación de proyecto fue la inclusión de A. Moschini y J. Raimondi como miembros de la empresa para poder detectar este tipo de situaciones, lo que efectivamente ocurrió.
 
-* Es muy probable que la cátedra revise el resultado del proyecto contrastándolo con la propuesta:
+* Al contrastar el estado actual del proyecto con la propuesta original se detectó:
 	* JIRA no es efectiva para carga, actualización y búsqueda de candidatos. (*Nota del equipo:* Consideramos estos objetivos cumplidos.)
 	* Se buscaba que la selección de candidatos no dependa de memoria y arte de empleados de RRHH.  (*Nota del equipo:* Consideramos estos objetivos cumplidos.)
 	* No hay integración con bases externas como LinkedIn, ZonaJobs, etc. (*Nota del equipo:* Consideramos estos objetivos cumplido, con notas a realizar. Esto dejó de ser una necesidad de RRHH y por tanto dejó de ser un problema a solucionar.)
@@ -71,7 +65,9 @@ Ampliar el valor agregado que tendrá el software con respecto a los otros produ
  
 *Nota del equipo:*	Consideramos que la funcionalidad de almuerzo no encaja con el plan de producto original (de acuerdo con las observaciones), pero encaja con el producto por las siguientes razones. Uno: Es una problemática actual del área de RRHH a solucionar (objetivo explícito a cumplir). Dos: Es una oportunidad de convertir al sistema en plataforma para la empresa y no un sistema localizado (objetivo explícito a cumplir). Tres: Estaban previstos que ocurrieran cambios y por eso se decidió este ciclo de vida de proyecto, el cual probó ser útil en repetidas ocasiones (ver arriba). Con el desarrollo ágil estamos dispuestos a adaptarnos a los cambios en lugar de ignorar este tipo de problemáticas a solucionar. Consideramos este cambio una buena oportunidad para el producto y para el cliente. No consideramos que se requieran cambios en la propuesta original.
 
-* En algún sentido la cátedra podría tener una visión superficial del producto y creo importante mejorar estética y experiencia de usuario para causar una buena impresión a primera vista. Antes de pedir fecha les recomiendo que asistan a ver otras presentaciones de proyecto, para estar más preparados. Pidan a otros compañeros documentación y memorias para contrastar con las propias.
+* Es importante mejorar la estética y experiencia de usuario para causar una buena impresión a primera vista. 
+
+* Antes de pedir fecha les recomiendo que asistan a ver otras presentaciones de proyecto, para estar más preparados. Pidan a otros compañeros documentación y memorias para contrastar con las propias.
 
 #### Dudas que le surgieron con el uso del sistema:
 
@@ -97,7 +93,7 @@ Ampliar el valor agregado que tendrá el software con respecto a los otros produ
 - Qué pasa con el personal sin estudios universitarios? no debería indicarse el nivel de estudios? 
 - Pedido de vacaciones va a hacerse en CommonJobs? o seguirá a través de JIRA? si es así, sería una buena integración.
 
-*Nota del equipo:* No todas estas sugerencias concuerdan con el objetivo ni con la problemática a solucionar. Todas se consideraron y algunas de estas sugerencias serán incluídas porque realmente agregan utilidad sin impactar el real valor agregado del producto.
+*Nota del equipo:* No todas estas sugerencias concuerdan con el objetivo ni con la problemática a solucionar. Todas se consideraron y algunas de estas sugerencias serán incluidas porque realmente agregan utilidad sin impactar el real valor agregado del producto.
 
 #### Problemas encontrados / oportunidades de mejora:
 
@@ -108,12 +104,12 @@ Ampliar el valor agregado que tendrá el software con respecto a los otros produ
 - BUG: Agrego Notas en un postulante sin llenar datos y grabo. Se graban aunque no tengan más datos que la fecha actual que se sugiere.
 - BUG: Agrego Link de acceso, edito el texto y hago clic en el link y sale mensaje:
 Sorry, an error occurred while processing your request. Si el link no existe hasta que se graba, todavía no debería verse como un link.
-- BUG: URL de búsqueda es localhost en lugar de URL pública. -- ???
+- BUG: URL de búsqueda es localhost en lugar de URL pública. (*Nota del equipo:* Eso solo ocurre en el sitio de demo en AppHarbor)
 - IMPROVEMENT: Publicación de búsquedas en redes sociales. Que el que siga el link caiga en página para registrar sus datos como postulante, quede automáticamente asociado a esa búsqueda y se envíe notificación por mail a RRHH. 
 
 *Nota del equipo:* No todas estas sugerencias concuerdan con el objetivo ni con la problemática a solucionar. Todas se consideraron y algunas de estas sugerencias serán incluídas porque realmente agregan utilidad sin impactar el real valor agregado del producto.
 
-#### Cuestiones Técnicas:
+#### Cuestiones Técnicas *(no se llegó a hablar de todo)*:
 
 Consideren a documentar:
 
