@@ -993,7 +993,7 @@
       <Project>{7B4A0A21-0CDE-432A-A785-599D4339AD8E}</Project>
       <Name>CommonJobs.Infrastructure.RavenDb</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CommonJobs.Raven.Migrations\CommonJobs.Infrastructure.Migrations.csproj">
+    <ProjectReference Include="..\CommonJobs.Infrastructure.Migrations\CommonJobs.Infrastructure.Migrations.csproj">
       <Project>{B6D54592-07C8-4B5E-A607-DD7FE49A43B6}</Project>
       <Name>CommonJobs.Infrastructure.Migrations</Name>
     </ProjectReference>
