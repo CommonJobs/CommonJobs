@@ -57,7 +57,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonJobs.ContentExtractio
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonJobs.ContentExtraction.IFilterExtraction", "CommonJobs.ContentExtraction.IFilterExtraction\CommonJobs.ContentExtraction.IFilterExtraction.csproj", "{3B252589-C00B-49F6-92A0-EE2C8E7C671F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonJobs.Infrastructure.Migrations", "CommonJobs.Raven.Migrations\CommonJobs.Infrastructure.Migrations.csproj", "{B6D54592-07C8-4B5E-A607-DD7FE49A43B6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonJobs.Infrastructure.Migrations", "CommonJobs.Infrastructure.Migrations\CommonJobs.Infrastructure.Migrations.csproj", "{B6D54592-07C8-4B5E-A607-DD7FE49A43B6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonJobs.Migrations", "CommonJobs.Migrations\CommonJobs.Migrations.csproj", "{E01BBAFF-4FD7-4A4F-89A6-4FA54CC622BA}"
 EndProject

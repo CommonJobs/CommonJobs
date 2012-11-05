@@ -88,7 +88,7 @@
       <Project>{CC2939C6-A278-4789-B937-ADB693E69C89}</Project>
       <Name>CommonJobs.Domain</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CommonJobs.Raven.Migrations\CommonJobs.Infrastructure.Migrations.csproj">
+    <ProjectReference Include="..\CommonJobs.Infrastructure.Migrations\CommonJobs.Infrastructure.Migrations.csproj">
       <Project>{B6D54592-07C8-4B5E-A607-DD7FE49A43B6}</Project>
       <Name>CommonJobs.Infrastructure.Migrations</Name>
     </ProjectReference>
