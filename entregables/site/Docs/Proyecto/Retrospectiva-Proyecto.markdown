@@ -24,99 +24,83 @@ Esto nos alejó de la funcionalidad original propuesta, pero permitió que el si
 
 Alcanzamos el `sprint 13` (~2/3 partes del proyecto) y vimos la necesidad de prepararnos para finalizar el proyecto. 
 
-Decidimos que debemos volver a definir una línea de fin de proyecto sólida, de manera de evitar sorpresas. Para ello evaluamos los distintos requerimientos necesarios para poder considerar el proyecto terminado y lo consideramos con el director técnico y con la cátedra.
+Decidimos que debemos volver a definir una línea de fin de proyecto sólida, de manera de evitar sorpresas. Para ello evaluamos los distintos requerimientos necesarios para poder considerar el proyecto terminado y lo consideramos con el director técnico y con la cátedra. 
 
-Muchas de las recomendaciones de la cátedra y del director técnico recaían en procesos y validaciones de datos. Pero creemos, con seguridad, que estos serían impedimentos para el cumplimiento de los objetivos en lugar de ayuda a definir procesos. Nuestro plan es ofrecer una herramienta que pueda adaptarse a las actividades actuales, pero que sea adaptable al momento de definir procesos más estructurados.
-
-**`//TODO: Consultar con la cátedra `**  Resolver como adaptarnos al cambio de rumbo que tomó el sistema respecto a la propuesta original.
+Documentaremos los cambios sobre la propuesta original en un documento que presentaremos a la cátedra un documento, con un resumen de la funcionalidad implementada hasta ahora y el Product Backlog que incluya los aspectos considerados en este documento.
 
 Debemos resolver varios aspectos de terminación que el director funcional no considera importantes, pero hacen a la calidad del producto (ej. Crear un empleado y no guardarlo genera un empleado vacío). Para esto, prefijaremos tareas técnicas o terminaciones de UI con un espacio importante en los sprints.
 
 Creemos que puede haber funcionalidad que el director funcional no considera importante para el día a día pero que puede ser valiosa para la cátedra y útil para la empresa (ej. Flujo de postulantes). Con asesoramiento de la cátedra y del director funcional seleccionaremos esa funcionalidad y la definiremos con ayuda de algún interesado que esté involucrado en cuanto a las funciones que son útiles para la empresa.
 
-### Notas reunión director técnico:
+## Tareas pendientes
 
-**`//TODO: Cambiar redacción como minuta o extraer solo las conclusiones`**
+### Postulantes
 
-#### Sobre las observaciones de cátedra:
+Se investigará si es importante para la empresa perfeccionar el flujo de postulantes, en caso contrario convenimos con la cátedra que se harán los siguientes cambios para darle un pequeño cierre:
 
-Ampliar el valor agregado que tendrá el software con respecto a los otros productos de la competencia.
+* Convertir postulante en empleado.
+* Asociar postulante a búsqueda.
+* Permitir marcar postulante como descartado.
+* Limitar las búsquedas en el tiempo.
 
-*Nota del equipo:* consideramos que la calidad de un producto y el valor agregado del mismo no se relaciona directamente con la cantidad de funcionalidad que tenga, sino con la forma en la que se adapte a los objetivos a cumplir y a las restricciones actuales.
+Otras funciones a considerar si la empresa lo considera útil:
 
-#### Evaluación de Propuesta:
+* Separar el rol de edición de postulantes del de empleados de manera de permitir a otros empleados editar los postulantes sin acceder a información confidencial de los empleados.
+* Indicar que tan reciente es la información de los postulantes.
+* Indicar que empleado realizó una entrevista.
+* Indicar las entrevistas de idioma
+* Sistematizar la carga de las entrevistas de manera que pueda ser útil para seleccionar postulantes.
+* Medir efectividad de las búsquedas.
+* Publicación de búsquedas en redes sociales. Que el que siga el link caiga en página para registrar sus datos como postulante, quede automáticamente asociado a esa búsqueda y se envíe notificación por mail a RRHH. 
 
-* Revisar las características deseadas y las mínimas, cree que algunas de las deseadas deberían incluirlas en las mínimas, por ej. Integración con JIRA.
-* Por otro lado, ¿Cuantos finales le quedan a Matías José? Creo que al menos extendería la fecha límite del proyecto a Junio/Julio. +/- 3 meses. 
-* La cátedra buscaba agregar condimentos interesantes al proyecto para que no sea un sistema de información simple. Se busca "valor agregado" en mejorar el proceso del cliente y ofrecer un producto más completo, no el mínimo necesario.
- 
-*Nota del equipo:* Según lo hablado con la Cátedra, la falta de finales podría extender la fecha de finalización del proyecto pero no requiere de desarrollo activo, sólo se suspendería hasta que esté todo listo para presentarlo. La funcionalidad a ser agregada está actualmente en discusión. (Ver arriba en sección de "Utilidad de las funciones implementadas")
+### Administración de los almuerzos diarios
 
-* Al haber planteado un proyecto de desarrollo se esperará más en funcionalidad (producto), que en soporte y capacitación (servicio). Creo que está reducido en funcionalidad y podría ser criticada la dimensión del sistema.
+Si bien no es una tarea puntual del area de RRHH, es una resposabilidad de esa area y ahora mismo no está funcionando bien. Considerando el tiempo invertido por cada empleado en mantener su menú actualizado y las confusiones que constantemente ocurren, creemos que sería bueno sistematizarlo. CommonJobs es la plataforma ideal para hacerlo. Eso además permitirá que el sistema sea utilizado más ampliamente en la empresa y que se proyecte como plataforma (uno de los objetivos originales).
 
-*Nota del equipo:* Esta consideración es comprensible, pero creemos poder justificar estas razones. Ver notas arriba sobre valor agregado. Además, consideramos que deberíamos resaltar que una de las fortalezas indicadas en nuestra presentación de proyecto fue la inclusión de A. Moschini y J. Raimondi como miembros de la empresa para poder detectar este tipo de situaciones, lo que efectivamente ocurrió.
+### Empleados
 
-* Al contrastar el estado actual del proyecto con la propuesta original se detectó:
-	* JIRA no es efectiva para carga, actualización y búsqueda de candidatos. (*Nota del equipo:* Consideramos estos objetivos cumplidos.)
-	* Se buscaba que la selección de candidatos no dependa de memoria y arte de empleados de RRHH.  (*Nota del equipo:* Consideramos estos objetivos cumplidos.)
-	* No hay integración con bases externas como LinkedIn, ZonaJobs, etc. (*Nota del equipo:* Consideramos estos objetivos cumplido, con notas a realizar. Esto dejó de ser una necesidad de RRHH y por tanto dejó de ser un problema a solucionar.)
-	* Cree que es importante pensar en circuitos, para que haya un flujo natural de información entre pantallas.
-	* Lo de almuerzo podría verse como que no es para RRHH. Quizá se pueda plantear por el lado de Beneficios? No estoy seguro que encaje muy bien con el resto del producto. Tengan en cuenta que de acuerdo a la cátedra: "Cada cambio en lo comprometido en la propuesta original o cada acuerdo que se alcance en el transcurso del trabajo será documentado y firmado por las partes."
- 
-*Nota del equipo:*	Consideramos que la funcionalidad de almuerzo no encaja con el plan de producto original (de acuerdo con las observaciones), pero encaja con el producto por las siguientes razones. Uno: Es una problemática actual del área de RRHH a solucionar (objetivo explícito a cumplir). Dos: Es una oportunidad de convertir al sistema en plataforma para la empresa y no un sistema localizado (objetivo explícito a cumplir). Tres: Estaban previstos que ocurrieran cambios y por eso se decidió este ciclo de vida de proyecto, el cual probó ser útil en repetidas ocasiones (ver arriba). Con el desarrollo ágil estamos dispuestos a adaptarnos a los cambios en lugar de ignorar este tipo de problemáticas a solucionar. Consideramos este cambio una buena oportunidad para el producto y para el cliente. No consideramos que se requieran cambios en la propuesta original.
+Se agregará la matricula a los datos del empleado y en la página de legajo.
 
-* Es importante mejorar la estética y experiencia de usuario para causar una buena impresión a primera vista. 
+Continuaremos con el informe gráfico de las ausencias solicitado por el cliente.
 
-* Antes de pedir fecha les recomiendo que asistan a ver otras presentaciones de proyecto, para estar más preparados. Pidan a otros compañeros documentación y memorias para contrastar con las propias.
+Otras funciones a considerar:
 
-#### Dudas que le surgieron con el uso del sistema:
+* Bajas
+* Períodos discontinuos de contratación
+* Promociones/cambios de puesto
+* Más de una universidad o varios títulos
+* Cursos
+* Nivel de estudios en personal sin estudios universitarios
+* Edición de algunos datos por el propio empleado
+* Pedido de vacaciones desde CommonJobs o integración con Jira
 
-- Estado civil y motivos de ausencias deberían ser los establecidos por ANSES? 
-- Cómo es el flujo de búsqueda de personal hoy día, que no se está usando JIRA?
-- Cómo se indica si un postulante califica para una búsqueda abierta?
-- Estadísticas?
-- Usuario Entrevistador?
-- Cómo indico que un candidato aplicó a una cierta búsqueda?
-- Cómo veo qué tan reciente es la informacion que tengo de un candidato?
-- Cómo indico que un candidato ha sido contratado?
-- Cómo indico el empleado que entrevistó a un empleado?
-- No debería tener una tipo de entrevista de idioma?
-- No debería registrar de alguna forma el output de la entrevista para que pueda procesarse y decidir el candidato?
-- Cómo se "cierra" una búsqueda laboral?
-- Cómo mido/analizo qué tan efectiva fue una búsqueda? 
-- Cómo indico la baja de un empleado?
-- Cómo indico el tipo/modalidad de contratación? 
-- Cómo indico períodos discontinuos de contratación? No debería soportar varias relaciones laborales en lugar de tener Altas y Bajas como adjuntos?
-- Cómo indico promociones/cambios de puesto?
-- Cómo indico más de una universidad o varios títulos?
-- Cómo indico cursos de un empleado?
-- Qué pasa con el personal sin estudios universitarios? no debería indicarse el nivel de estudios? 
-- Pedido de vacaciones va a hacerse en CommonJobs? o seguirá a través de JIRA? si es así, sería una buena integración.
+### Detalles de terminación
 
-*Nota del equipo:* No todas estas sugerencias concuerdan con el objetivo ni con la problemática a solucionar. Todas se consideraron y algunas de estas sugerencias serán incluidas porque realmente agregan utilidad sin impactar el real valor agregado del producto.
+Es importante mejorar la estética y experiencia de usuario para causar una buena impresión a primera vista por lo que se realizarán mejoras en detalles de la UI y de usabilidad.
 
-#### Problemas encontrados / oportunidades de mejora:
+Considerar:
 
-- BUG: Agregar nuevo postulante, no guardo pero queda grabado aunque no modifico ningún dato (dejo todo en blanco).
-- IMPROVEMENT: Calendario debería tener una forma fácil de navegar entre años, porque se usa para fechas no muy recientes también, como el caso de experiencia previa.
-- IMPROVEMENT: Creo que en experiencia previa debería estar separado el nombre del puesto del nombre de la empresa.
-- IMPROVEMENT: no alerta que hay cambios sin grabar cuando se hace clic en un link que se abre en la misma página (ejemplo: clic en link de acceso junto a la estrella)
-- BUG: Agrego Notas en un postulante sin llenar datos y grabo. Se graban aunque no tengan más datos que la fecha actual que se sugiere.
-- BUG: Agrego Link de acceso, edito el texto y hago clic en el link y sale mensaje:
-Sorry, an error occurred while processing your request. Si el link no existe hasta que se graba, todavía no debería verse como un link.
-- BUG: URL de búsqueda es localhost en lugar de URL pública. (*Nota del equipo:* Eso solo ocurre en el sitio de demo en AppHarbor)
-- IMPROVEMENT: Publicación de búsquedas en redes sociales. Que el que siga el link caiga en página para registrar sus datos como postulante, quede automáticamente asociado a esa búsqueda y se envíe notificación por mail a RRHH. 
+* Agregar nuevo postulante, no guardo pero queda grabado aunque no modifico ningún dato (dejo todo en blanco).
+* Calendario debería tener una forma fácil de navegar entre años, porque se usa para fechas no muy recientes también, como el caso de experiencia previa.
+* En experiencia previa el nombre del puesto del podría estar separado del nombre de la empresa.
+* No alerta que hay cambios sin grabar cuando se hace clic en un link que se abre en la misma página (ejemplo: clic en link de acceso junto a la estrella)
+* Agrego Notas en un postulante sin llenar datos y grabo. Se graban aunque no tengan más datos que la fecha actual que se sugiere.
+* Agrego Link de acceso, edito el texto y hago clic en el link y sale mensaje: "Sorry, an error occurred while processing your request." Si el link no existe hasta que se graba, todavía no debería verse como un link. 
 
-*Nota del equipo:* No todas estas sugerencias concuerdan con el objetivo ni con la problemática a solucionar. Todas se consideraron y algunas de estas sugerencias serán incluídas porque realmente agregan utilidad sin impactar el real valor agregado del producto.
+### Ayuda y documentación
 
-#### Cuestiones Técnicas *(no se llegó a hablar de todo)*:
+Al sitio de documentación se agregará el manual de usuario, con una sección para cada página del sitio y para algunos conceptos como ser los "Slots".
 
-Consideren a documentar:
+También se incluirá la siguiente información de sistema:
 
-- Cómo les está resultando RavenDB? valió la pena? En algún sentido entorpece el desarrollo o creen que avanzarían más rápido con SQL?
-- Los nombres que se muestran en pantalla están asociados en el mismo modelo, puede ser?
-- Pudieron identificar stories prioritarios en epics que no lo son? Eso de expandir la mayor cantidad de epics. Lo intentaron? Valió la pena?
-- Documenten Deployment y requerimientos de hardware y software como parte de un Plan de Implantación. También soporte y migración de datos.
-- Están usando RabbitMQ para algo?
-- Log de errores?
-- Certificado de seguridad?
+* Descripción del dominio
+* Descripción de la arquitectura
+* Descripción de la "estructura" de base de datos (por ejemplo indices)
+
+De ser posible se redactará un _Abstract_ describiendo las características del sistema y resaltando aquellas que no se aprecian fácilmente a simple vista.
+
+Considerar documentar:
+
+* Críticas a la metodología de trabajo utilizada
+* Pros y contras de RavenDB
+* Plan de Implantación (incluyendo deployment, requerimientos de hardware, soporte y migración de datos).
