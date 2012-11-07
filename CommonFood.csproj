@@ -96,7 +96,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\cj-datepicker.css" />
     <Content Include="Content\bootstrap-responsive.css" />
     <Content Include="Content\bootstrap-responsive.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -104,6 +103,7 @@
     <Content Include="Content\images\glyphicons-halflings-white.png" />
     <Content Include="Content\images\glyphicons-halflings.png" />
     <Content Include="admin.html" />
+    <Content Include="Content\moment-datepicker\datepicker.css" />
     <Content Include="mymenu.html" />
     <Content Include="Global.asax" />
     <Content Include="index.html" />
@@ -111,7 +111,6 @@
     <Content Include="Scripts\admin.js">
       <DependentUpon>admin.ts</DependentUpon>
     </Content>
-    <Content Include="Scripts\cj-datepicker.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js">
       <DependentUpon>bootstrap.js</DependentUpon>
@@ -123,10 +122,12 @@
     <Content Include="Scripts\CommonFood.js">
       <DependentUpon>CommonFood.ts</DependentUpon>
     </Content>
-    <Content Include="Scripts\cj-datepicker-ko.js" />
-    <Content Include="Scripts\cj-datepicker.d.ts" />
     <Content Include="Scripts\knockout-2.2.0.debug.js" />
     <Content Include="Scripts\knockout-2.2.0.js" />
+    <Content Include="Scripts\moment-datepicker-ko.js" />
+    <Content Include="Scripts\moment-datepicker.d.ts" />
+    <Content Include="Scripts\moment-datepicker.js" />
+    <Content Include="Scripts\moment-datepicker.min.js" />
     <Content Include="Scripts\moment.i18n\es.js" />
     <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\moment.min.js" />

@@ -1,5 +1,5 @@
 /* =========================================================
- * cj-datepicker.css
+ * MomentDatepicker 
  * Based on http://www.eyecon.ro/bootstrap-datepicker
  * =========================================================
  * Copyright 2012 Andres Moschini 
@@ -16,8 +16,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * ========================================================= */
-
-.cj-datepicker {
+.datepicker {
     top: 0;
     left: 0;
     padding: 4px;
@@ -27,7 +26,7 @@
     border-radius: 4px; /*.dow { border-top: 1px solid #ddd !important; }*/
 }
 
-    .cj-datepicker:before {
+    .datepicker:before {
         content: '';
         display: inline-block;
         border-left: 7px solid transparent;
@@ -39,7 +38,7 @@
         left: 6px;
     }
 
-    .cj-datepicker:after {
+    .datepicker:after {
         content: '';
         display: inline-block;
         border-left: 6px solid transparent;
@@ -50,16 +49,16 @@
         left: 7px;
     }
 
-    .cj-datepicker > div {
+    .datepicker > div {
         display: none;
     }
 
-    .cj-datepicker table {
+    .datepicker table {
         width: 100%;
         margin: 0;
     }
 
-    .cj-datepicker td, .cj-datepicker th {
+    .datepicker td, .datepicker th {
         text-align: center;
         width: 20px;
         height: 20px;
@@ -68,16 +67,16 @@
         border-radius: 4px;
     }
 
-        .cj-datepicker td.day:hover {
+        .datepicker td.day:hover {
             background: #eeeeee;
             cursor: pointer;
         }
 
-        .cj-datepicker td.old, .cj-datepicker td.new {
+        .datepicker td.old, .datepicker td.new {
             color: #999999;
         }
 
-        .cj-datepicker td.active, .cj-datepicker td.active:hover {
+        .datepicker td.active, .datepicker td.active:hover {
             background-color: #006dcc;
             background-image: -moz-linear-gradient(top, #0088cc, #0044cc);
             background-image: -ms-linear-gradient(top, #0088cc, #0044cc);
@@ -94,15 +93,15 @@
             text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
         }
 
-            .cj-datepicker td.active:hover, .cj-datepicker td.active:hover:hover, .cj-datepicker td.active:active, .cj-datepicker td.active:hover:active, .cj-datepicker td.active.active, .cj-datepicker td.active:hover.active, .cj-datepicker td.active.disabled, .cj-datepicker td.active:hover.disabled, .cj-datepicker td.active[disabled], .cj-datepicker td.active:hover[disabled] {
+            .datepicker td.active:hover, .datepicker td.active:hover:hover, .datepicker td.active:active, .datepicker td.active:hover:active, .datepicker td.active.active, .datepicker td.active:hover.active, .datepicker td.active.disabled, .datepicker td.active:hover.disabled, .datepicker td.active[disabled], .datepicker td.active:hover[disabled] {
                 background-color: #0044cc;
             }
 
-                .cj-datepicker td.active:active, .cj-datepicker td.active:hover:active, .cj-datepicker td.active.active, .cj-datepicker td.active:hover.active {
+                .datepicker td.active:active, .datepicker td.active:hover:active, .datepicker td.active.active, .datepicker td.active:hover.active {
                     background-color: #003399 \9;
                 }
 
-        .cj-datepicker td span {
+        .datepicker td span {
             display: block;
             width: 47px;
             height: 54px;
@@ -115,11 +114,11 @@
             border-radius: 4px;
         }
 
-            .cj-datepicker td span:hover {
+            .datepicker td span:hover {
                 background: #eeeeee;
             }
 
-            .cj-datepicker td span.active {
+            .datepicker td span.active {
                 background-color: #006dcc;
                 background-image: -moz-linear-gradient(top, #0088cc, #0044cc);
                 background-image: -ms-linear-gradient(top, #0088cc, #0044cc);
@@ -136,31 +135,31 @@
                 text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
             }
 
-                .cj-datepicker td span.active:hover, .cj-datepicker td span.active:active, .cj-datepicker td span.active.active, .cj-datepicker td span.active.disabled, .cj-datepicker td span.active[disabled] {
+                .datepicker td span.active:hover, .datepicker td span.active:active, .datepicker td span.active.active, .datepicker td span.active.disabled, .datepicker td span.active[disabled] {
                     background-color: #0044cc;
                 }
 
-                .cj-datepicker td span.active:active, .cj-datepicker td span.active.active {
+                .datepicker td span.active:active, .datepicker td span.active.active {
                     background-color: #003399 \9;
                 }
 
-            .cj-datepicker td span.old {
+            .datepicker td span.old {
                 color: #999999;
             }
 
-        .cj-datepicker th.switch {
+        .datepicker th.switch {
             width: 145px;
         }
 
-        .cj-datepicker th.next, .cj-datepicker th.prev {
+        .datepicker th.next, .datepicker th.prev {
             font-size: 19.5px;
         }
 
-    .cj-datepicker thead tr:first-child th {
+    .datepicker thead tr:first-child th {
         cursor: pointer;
     }
 
-        .cj-datepicker thead tr:first-child th:hover {
+        .datepicker thead tr:first-child th:hover {
             background: #eeeeee;
         }
 

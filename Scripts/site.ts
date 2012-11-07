@@ -13,8 +13,11 @@ module Patches {
     miKo.virtualElements.allowedBindings.stopBinding = true;
 }
 
+declare var moment: any;
+
 //From default example
 $(document).ready(function () {
+    moment.lang('es');
 
     $(".btn-slide").click(function () {
         $("#main").slideToggle("slow");
