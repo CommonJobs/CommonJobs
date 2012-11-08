@@ -165,6 +165,7 @@
     <Content Include="Scripts\moment.i18n\zh-tw.js" />
     <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\moment.min.js" />
+    <Content Include="Scripts\time-ko.js" />
     <Content Include="Scripts\underscore.browser.d.ts" />
     <Content Include="Scripts\Knockout.d.ts" />
     <Content Include="Scripts\jquery-1.8.2.js" />
