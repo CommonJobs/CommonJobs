@@ -41,6 +41,7 @@ var CommonFood;
             this.places = ko.observableArray();
             this.startDate = ko.observable("");
             this.endDate = ko.observable("");
+            this.deadlineTime = ko.observable("");
             this.firstWeek = ko.observable(0);
             this.firstDay = ko.observable(0);
             this.foods = ko.observableArray();
@@ -69,6 +70,7 @@ var CommonFood;
             ],
             startDate: "",
             endDate: "",
+            deadlineTime: "09:30",
             foods: []
         };
         MenuViewModel.prototype.reset = function (model) {
@@ -83,6 +85,7 @@ var CommonFood;
             this.endDate(model.endDate);
             this.firstWeek(model.firstWeek);
             this.firstDay(model.firstDay);
+            this.deadlineTime(model.deadlineTime);
             this.foods([]);
             for(var s in model.options) {
                 this.addOption(model.options[s]);
@@ -95,6 +98,25 @@ var CommonFood;
             }
             for(var i = 0; i < model.weeks; i++) {
                 this.addWeek();
+            }
+            if(model.foods) {
+                var iMax = Math.min(this.weeks(), model.foods.length);
+                for(var i = 0; i < iMax; i++) {
+                    if(model.foods[i]) {
+                        var jMax = Math.min(this.days().length, model.foods[i].length);
+                        for(var j = 0; j < jMax; j++) {
+                            if(model.foods[i][j]) {
+                                var kMax = Math.min(this.options().length, model.foods[i][j].length);
+                                for(var k = 0; k < kMax; k++) {
+                                    var text = model.foods[i][j][k];
+                                    if(text) {
+                                        this.foods()[i][j][k](text);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
         };
         MenuViewModel.prototype.exportModel = function () {
@@ -122,9 +144,12 @@ var CommonFood;
                     return item.text();
                 });
             });
+            var foods = model.foods = [];
             this.eachDay(function (dayFoods, weekIndex, dayIndex) {
+                var weekFoods = foods[weekIndex] || (foods[weekIndex] = []);
+                weekFoods[dayIndex] = [];
                 _.each(dayFoods, function (option, optionIndex) {
-                    console.log("(week: " + weekIndex + ", day: " + dayIndex + ", option: " + optionIndex + "): " + option());
+                    weekFoods[dayIndex][optionIndex] = option();
                 });
             });
             return model;

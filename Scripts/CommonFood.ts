@@ -14,6 +14,7 @@ module CommonFood {
         places?: string[];
         startDate?: string;
         endDate?: string;
+        deadlineTime?: string;
         foods?: string[][][]; //week, day, option
     }
 
@@ -50,6 +51,7 @@ module CommonFood {
             places: [ "La Rioja", "Garay" ],
             startDate: "",
             endDate: "",
+            deadlineTime: "09:30",
             foods: []
         };
 
@@ -60,6 +62,7 @@ module CommonFood {
         places: knockout.koObservableArrayBase = ko.observableArray();
         startDate: knockout.koObservableAny = ko.observable("");
         endDate: knockout.koObservableAny = ko.observable("");
+        deadlineTime: knockout.koObservableString = ko.observable("");
         firstWeek: knockout.koObservableNumber = ko.observable(0);
         firstDay: knockout.koObservableNumber = ko.observable(0);
         foods: knockout.koObservableArrayBase = ko.observableArray(); //By week, by day, by option
@@ -80,7 +83,8 @@ module CommonFood {
             this.endDate(model.endDate);
             this.firstWeek(model.firstWeek);
             this.firstDay(model.firstDay);
-            this.foods([]); //By week, by day, by option
+            this.deadlineTime(model.deadlineTime);
+            this.foods([]); //By week / day / option
         
             for (var s in model.options) {
                 this.addOption(model.options[s]);
@@ -95,11 +99,30 @@ module CommonFood {
                 this.addWeek();
             }
 
-            //TODO: importar las comidas
+            if (model.foods) {
+                var iMax = Math.min(this.weeks(), model.foods.length);
+                for (var i = 0; i < iMax; i++) {
+                    if (model.foods[i]) {
+                        var jMax = Math.min(this.days().length, model.foods[i].length);
+                        for (var j = 0; j < jMax; j++) {
+                            if (model.foods[i][j]) {
+                                var kMax = Math.min(this.options().length, model.foods[i][j].length);
+                                for (var k = 0; k < kMax; k++) {
+                                    var text = model.foods[i][j][k];
+                                    if (text) {
+                                        this.foods()[i][j][k](text);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
-
+        
         exportModel(): IMenuModel {
-            var model = {};
+            var model: IMenuModel = { };
+
             var simpleProperties = ["title", "firstWeek", "firstDay", "weeks", "startDate", "endDate"];
             _.each(simpleProperties, (prop) => {
                 model[prop] = this[prop]();
@@ -109,13 +132,15 @@ module CommonFood {
                 model[prop] = _.map(this[prop](), (item) => item.text());
             });
 
+            var foods = model.foods = [];
             this.eachDay((dayFoods, weekIndex, dayIndex) => {
+                var weekFoods = foods[weekIndex] || (foods[weekIndex] = []);
+                weekFoods[dayIndex] = [];
                 _.each(dayFoods, (option, optionIndex) => { 
-                    console.log("(week: " + weekIndex + ", day: " + dayIndex + ", option: " +  optionIndex + "): " + option());
+                    weekFoods[dayIndex][optionIndex] = option();
                 });
             });
 
-            //TODO: exportar las comidas
             return model;
         }
 
