@@ -99,8 +99,17 @@ module CommonFood {
         }
 
         exportModel(): IMenuModel {
-            //TODO: generar el modelo
-            return "//TODO";
+            var model = {};
+            var simpleProperties = ["title", "firstWeek", "firstDay", "weeks", "startDate", "endDate"];
+            _.each(simpleProperties, (prop) => {
+                model[prop] = this[prop]();
+            });
+            var textArrProperties = ["days", "options", "places"];
+            _.each(textArrProperties, (prop) => {
+                model[prop] = _.map(this[prop](), (item) => item.text());
+            });
+            //TODO: exportar las comidas
+            return model;
         }
 
         getFood(weekIndex: number, dayIndex: number, optionIndex: number): knockout.koObservableString {

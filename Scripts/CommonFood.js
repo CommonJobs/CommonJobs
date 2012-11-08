@@ -98,7 +98,31 @@ var CommonFood;
             }
         };
         MenuViewModel.prototype.exportModel = function () {
-            return "//TODO";
+            var _this = this;
+            var model = {
+            };
+            var simpleProperties = [
+                "title", 
+                "firstWeek", 
+                "firstDay", 
+                "weeks", 
+                "startDate", 
+                "endDate"
+            ];
+            _.each(simpleProperties, function (prop) {
+                model[prop] = _this[prop]();
+            });
+            var textArrProperties = [
+                "days", 
+                "options", 
+                "places"
+            ];
+            _.each(textArrProperties, function (prop) {
+                model[prop] = _.map(_this[prop](), function (item) {
+                    return item.text();
+                });
+            });
+            return model;
         };
         MenuViewModel.prototype.getFood = function (weekIndex, dayIndex, optionIndex) {
             return this.foods()[weekIndex][dayIndex][optionIndex];
