@@ -1,6 +1,7 @@
 ﻿///<reference path='jquery.d.ts' />
 ///<reference path='Knockout.d.ts' />
 ///<reference path='underscore.browser.d.ts' />
+///<reference path="moment.d.ts" />
 
 module CommonFood {
     export interface IMenuModel {
