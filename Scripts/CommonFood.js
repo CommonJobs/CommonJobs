@@ -122,6 +122,11 @@ var CommonFood;
                     return item.text();
                 });
             });
+            this.eachDay(function (dayFoods, weekIndex, dayIndex) {
+                _.each(dayFoods, function (option, optionIndex) {
+                    console.log("(week: " + weekIndex + ", day: " + dayIndex + ", option: " + optionIndex + "): " + option());
+                });
+            });
             return model;
         };
         MenuViewModel.prototype.getFood = function (weekIndex, dayIndex, optionIndex) {
@@ -148,12 +153,14 @@ var CommonFood;
             }
         };
         MenuViewModel.prototype.eachWeek = function (f) {
-            _.each(this.foods(), f);
+            _.each(this.foods(), function (weekFoods, weekIndex) {
+                return f(weekFoods, weekIndex);
+            });
         };
         MenuViewModel.prototype.eachDay = function (f) {
-            this.eachWeek(function (weekFoods) {
-                return _.each(weekFoods, function (dayFoods) {
-                    return f(dayFoods, weekFoods);
+            this.eachWeek(function (weekFoods, weekIndex) {
+                return _.each(weekFoods, function (dayFoods, dayIndex) {
+                    return f(dayFoods, weekIndex, dayIndex);
                 });
             });
         };

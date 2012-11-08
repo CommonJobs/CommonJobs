@@ -14,7 +14,7 @@ module CommonFood {
         places?: string[];
         startDate?: string;
         endDate?: string;
-        foods?: string[][][];
+        foods?: string[][][]; //week, day, option
     }
 
     class HasCallbacks {
@@ -108,6 +108,13 @@ module CommonFood {
             _.each(textArrProperties, (prop) => {
                 model[prop] = _.map(this[prop](), (item) => item.text());
             });
+
+            this.eachDay((dayFoods, weekIndex, dayIndex) => {
+                _.each(dayFoods, (option, optionIndex) => { 
+                    console.log("(week: " + weekIndex + ", day: " + dayIndex + ", option: " +  optionIndex + "): " + option());
+                });
+            });
+
             //TODO: exportar las comidas
             return model;
         }
@@ -136,14 +143,14 @@ module CommonFood {
             }            
         };
     
-        private eachWeek(f: (weekFoods: knockout.koObservableString[][]) => void ) {
-            _.each(this.foods(), f);
+        private eachWeek(f: (weekFoods: knockout.koObservableString[][], weekIndex: number) => void ) {
+            _.each(this.foods(), (weekFoods, weekIndex) => f(weekFoods, weekIndex));
         }
 
-        private eachDay(f: (dayFoods: knockout.koObservableString[], weekFoods: knockout.koObservableString[][]) => void ) {
-            this.eachWeek(weekFoods => 
-                _.each(weekFoods, dayFoods => 
-                    f(dayFoods, weekFoods)));
+        private eachDay(f: (dayFoods: knockout.koObservableString[], dayIndex: number, weekIndex: number) => void ) {
+            this.eachWeek((weekFoods, weekIndex) => 
+                _.each(weekFoods, (dayFoods, dayIndex) => 
+                    f(dayFoods, weekIndex, dayIndex)));
         };
 
         private generateText(baseName: string, collection: knockout.koObservableArrayBase, name?: string): string {
