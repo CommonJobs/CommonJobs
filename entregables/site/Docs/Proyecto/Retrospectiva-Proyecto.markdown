@@ -2,11 +2,11 @@
 
 ## El problema
 
-Alrededor del `sprint 9` (cerca de la mitad del proyecto) detectamos que el sistema no se estaba utilizando y que muchas de las funciones que estábamos implementando no iban a ser utilizadas, al menos no en el corto plazo. En un esquema ágil como el que intentamos seguir, esto es un problema grave, ya que es importante que en cada sprint agreguemos valor al sistema. De ese periodo anterior se rescata la construcción de la estructura, el aprendizaje, y por supuesto algo de funcionalidad.
+Alrededor del `sprint 9` (cerca de la mitad del proyecto) detectamos que el sistema no se estaba utilizando y que muchas de las funciones que estábamos implementando no iban a ser utilizadas, al menos no en el corto plazo. En un enfoque ágil como el que intentamos seguir, esto es un problema grave, ya que es importante que en cada sprint agreguemos valor al sistema. De ese periodo anterior se rescata la construcción de la estructura, el aprendizaje, y por supuesto algo de funcionalidad.
 
 El área de RRHH también estaba (y está) organizándose y modificando sus métodos internos. Ahora mismo, su principal necesidad está relacionada con la administración del legajo e información de los empleados. 
 
-La propuesta de proyecto inicial estaba enfocada en la selección de postulantes, actualmente el area de RRHH maneja eso con una relativa informalidad, sin seguir procesos rigurosos, pero con gran flexibilidad y eficiencia. Si bien desde el punto de vista organizacional, es importante generar un proceso, no podemos forzar la definición del mismo, ni imponerlo nosotros ya que en el sistema cae en desuso.
+La propuesta de proyecto inicial estaba enfocada en la selección de postulantes, actualmente el área de RRHH maneja eso con una relativa informalidad, sin seguir procesos rigurosos, pero con gran flexibilidad y eficiencia. Si bien desde el punto de vista organizacional, es importante generar un proceso, no podemos forzar la definición del mismo, ni imponerlo nosotros ya que en el sistema cae en desuso.
 
 
 ## Las acciones
@@ -20,17 +20,17 @@ Decidimos dedicar tiempo de los sprints a analizar y planificar las siguientes f
 Esto nos alejó de la funcionalidad original propuesta, pero permitió que el sistema comience a ser útil y sea utilizado.
 
 
-## Como seguir
+## Cómo seguir
 
 Alcanzamos el `sprint 13` (~2/3 partes del proyecto) y vimos la necesidad de prepararnos para finalizar el proyecto. 
 
 Decidimos que debemos volver a definir una línea de fin de proyecto sólida, de manera de evitar sorpresas. Para ello evaluamos los distintos requerimientos necesarios para poder considerar el proyecto terminado y lo consideramos con el director técnico y con la cátedra. 
 
-Documentaremos los cambios sobre la propuesta original en un documento que presentaremos a la cátedra un documento, con un resumen de la funcionalidad implementada hasta ahora y el Product Backlog que incluya los aspectos considerados en este documento.
+Documentaremos los cambios sobre la propuesta original en un documento que presentaremos a la cátedra un resumen de la funcionalidad implementada hasta ahora y el Product Backlog que incluya los aspectos considerados en este documento.
 
 Debemos resolver varios aspectos de terminación que el director funcional no considera importantes, pero hacen a la calidad del producto (ej. Crear un empleado y no guardarlo genera un empleado vacío). Para esto, prefijaremos tareas técnicas o terminaciones de UI con un espacio importante en los sprints.
 
-Creemos que puede haber funcionalidad que el director funcional no considera importante para el día a día pero que puede ser valiosa para la cátedra y útil para la empresa (ej. Flujo de postulantes). Con asesoramiento de la cátedra y del director funcional seleccionaremos esa funcionalidad y la definiremos con ayuda de algún interesado que esté involucrado en cuanto a las funciones que son útiles para la empresa.
+Creemos que puede haber funcionalidad que el director funcional no considera importante para el día a día pero que puede ser valiosa para un producto mejor acabado y completo a ojos de la cátedra, y útil para la empresa (ej. Flujo de postulantes). Con asesoramiento de la cátedra y del director funcional seleccionaremos esa funcionalidad y la definiremos con ayuda de algún interesado que esté involucrado en cuanto a las funciones que son útiles para la empresa.
 
 ## Tareas pendientes
 
@@ -47,7 +47,7 @@ Otras funciones a considerar si la empresa lo considera útil:
 
 * Separar el rol de edición de postulantes del de empleados de manera de permitir a otros empleados editar los postulantes sin acceder a información confidencial de los empleados.
 * Indicar que tan reciente es la información de los postulantes.
-* Indicar que empleado realizó una entrevista.
+* Indicar qué empleado realizó una entrevista.
 * Indicar las entrevistas de idioma
 * Sistematizar la carga de las entrevistas de manera que pueda ser útil para seleccionar postulantes.
 * Medir efectividad de las búsquedas.
@@ -55,7 +55,7 @@ Otras funciones a considerar si la empresa lo considera útil:
 
 ### Administración de los almuerzos diarios
 
-Si bien no es una tarea puntual del area de RRHH, es una resposabilidad de esa area y ahora mismo no está funcionando bien. Considerando el tiempo invertido por cada empleado en mantener su menú actualizado y las confusiones que constantemente ocurren, creemos que sería bueno sistematizarlo. CommonJobs es la plataforma ideal para hacerlo. Eso además permitirá que el sistema sea utilizado más ampliamente en la empresa y que se proyecte como plataforma (uno de los objetivos originales).
+Si bien no es una tarea puntual del área de RRHH, es una resposabilidad de esa area y ahora mismo no está funcionando bien. Considerando el tiempo invertido por cada empleado en mantener su menú actualizado y las confusiones que constantemente ocurren, creemos que sería bueno sistematizarlo. CommonJobs es la plataforma ideal para hacerlo. Eso además permitirá que el sistema sea utilizado más ampliamente en la empresa y que se proyecte como plataforma (uno de los objetivos originales).
 
 ### Empleados
 
@@ -82,7 +82,7 @@ Considerar:
 
 * Agregar nuevo postulante, no guardo pero queda grabado aunque no modifico ningún dato (dejo todo en blanco).
 * Calendario debería tener una forma fácil de navegar entre años, porque se usa para fechas no muy recientes también, como el caso de experiencia previa.
-* En experiencia previa el nombre del puesto del podría estar separado del nombre de la empresa.
+* En experiencia previa el nombre del puesto del postulante podría estar separado del nombre de la empresa.
 * No alerta que hay cambios sin grabar cuando se hace clic en un link que se abre en la misma página (ejemplo: clic en link de acceso junto a la estrella)
 * Agrego Notas en un postulante sin llenar datos y grabo. Se graban aunque no tengan más datos que la fecha actual que se sugiere.
 * Agrego Link de acceso, edito el texto y hago clic en el link y sale mensaje: "Sorry, an error occurred while processing your request." Si el link no existe hasta que se graba, todavía no debería verse como un link. 
@@ -95,7 +95,7 @@ También se incluirá la siguiente información de sistema:
 
 * Descripción del dominio
 * Descripción de la arquitectura
-* Descripción de la "estructura" de base de datos (por ejemplo indices)
+* Descripción de la "estructura" de base de datos (por ejemplo índices)
 
 De ser posible se redactará un _Abstract_ describiendo las características del sistema y resaltando aquellas que no se aprecian fácilmente a simple vista.
 
