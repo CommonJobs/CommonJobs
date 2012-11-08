@@ -2,7 +2,9 @@
 
 ## El problema
 
-Alrededor del `sprint 9` (cerca de la mitad del proyecto) detectamos que el sistema no se estaba utilizando y que muchas de las funciones que estábamos implementando no iban a ser utilizadas, al menos no en el corto plazo. En un enfoque ágil como el que intentamos seguir, esto es un problema grave, ya que es importante que en cada sprint agreguemos valor al sistema. De ese periodo anterior se rescata la construcción de la estructura, el aprendizaje, y por supuesto algo de funcionalidad.
+Alrededor del `sprint 9` (cerca de la mitad del proyecto) detectamos que el sistema no se estaba utilizando y que muchas de las funciones que estábamos implementando no iban a ser utilizadas, al menos no en el corto plazo. En un enfoque ágil como el que intentamos seguir, esto es un problema grave desde el punto de vista del producto como utilidad para la empresa, ya que es importante que en cada sprint agreguemos valor al sistema. Por otro lado, el método ágil nos permite cambiar ese rumbo y corregir esos problemas, incluso en una fase tan avanzada del proyecto. Proveer la funcionalidad apropiada mejorará el uso del sistema, generando más interacción que a su vez alimentará el uso (actualmente planificado) de esas funcionalidades no utilizadas.
+
+De este periodo anterior se rescata la construcción de la estructura, el aprendizaje, y por supuesto algo de funcionalidad.
 
 El área de RRHH también estaba (y está) organizándose y modificando sus métodos internos. Ahora mismo, su principal necesidad está relacionada con la administración del legajo e información de los empleados. 
 
