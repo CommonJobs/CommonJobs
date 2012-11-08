@@ -38,6 +38,7 @@ var CommonFood;
             this.weeks = ko.observable(0);
             this.days = ko.observableArray();
             this.options = ko.observableArray();
+            this.places = ko.observableArray();
             this.startDate = ko.observable("");
             this.endDate = ko.observable("");
             this.firstWeek = ko.observable(0);
@@ -62,6 +63,10 @@ var CommonFood;
                 "Light", 
                 "Vegetariano"
             ],
+            places: [
+                "La Rioja", 
+                "Garay"
+            ],
             startDate: "",
             endDate: "",
             foods: []
@@ -73,6 +78,7 @@ var CommonFood;
             this.weeks(0);
             this.days([]);
             this.options([]);
+            this.places([]);
             this.startDate(model.startDate);
             this.endDate(model.endDate);
             this.firstWeek(model.firstWeek);
@@ -80,6 +86,9 @@ var CommonFood;
             this.foods([]);
             for(var s in model.options) {
                 this.addOption(model.options[s]);
+            }
+            for(var s in model.places) {
+                this.addPlace(model.places[s]);
             }
             for(var s in model.days) {
                 this.addDay(model.days[s]);
@@ -124,8 +133,28 @@ var CommonFood;
                 });
             });
         };
+        MenuViewModel.prototype.generateText = function (baseName, collection, name) {
+            var texts = _.map(ko.toJS(collection), function (item) {
+                return item.text;
+            });
+            var n = texts.length + 1;
+            if(_.isString(name) && name) {
+                if(texts.indexOf(name) == -1) {
+                    return name;
+                } else {
+                    baseName = name;
+                    n = 2;
+                }
+            }
+            while(true) {
+                var name = baseName + n++;
+                if(texts.indexOf(name) == -1) {
+                    return name;
+                }
+            }
+        };
         MenuViewModel.prototype.addOption = function (text) {
-            text = _.isString(text) && text || "Menú " + (this.options().length + 1);
+            text = this.generateText("Menú ", this.options, text);
             var option = {
                 text: ko.observable(text)
             };
@@ -143,9 +172,22 @@ var CommonFood;
                 this.options.splice(index, 1);
             }
         };
+        MenuViewModel.prototype.addPlace = function (text) {
+            text = this.generateText("Lugar ", this.places, text);
+            var place = {
+                text: ko.observable(text)
+            };
+            this.places.push(place);
+        };
+        MenuViewModel.prototype.removePlace = function (place) {
+            if(this.places().length) {
+                var index = _.isNumber(place) ? place : this.places.indexOf(place);
+                this.places.splice(index, 1);
+            }
+        };
         MenuViewModel.prototype.addDay = function (text) {
             var _this = this;
-            text = _.isString(text) && text || "Día " + (this.options().length + 1);
+            text = this.generateText("Día ", this.days, text);
             var day = {
                 text: ko.observable(text)
             };

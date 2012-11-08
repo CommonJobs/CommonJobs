@@ -11,6 +11,7 @@ module CommonFood {
         weeks?: number;
         days?: string[];
         options?: string[];
+        places?: string[];
         startDate?: string;
         endDate?: string;
         foods?: string[][][];
@@ -46,6 +47,7 @@ module CommonFood {
             weeks: 4,
             days: [ "Lunes", "Martes", "Miercoles", "Jueves", "Viernes" ],
             options: [ "Común", "Light", "Vegetariano" ],
+            places: [ "La Rioja", "Garay" ],
             startDate: "",
             endDate: "",
             foods: []
@@ -55,6 +57,7 @@ module CommonFood {
         weeks: knockout.koObservableNumber = ko.observable(0);
         days: knockout.koObservableArrayBase = ko.observableArray();
         options: knockout.koObservableArrayBase = ko.observableArray();
+        places: knockout.koObservableArrayBase = ko.observableArray();
         startDate: knockout.koObservableAny = ko.observable("");
         endDate: knockout.koObservableAny = ko.observable("");
         firstWeek: knockout.koObservableNumber = ko.observable(0);
@@ -72,6 +75,7 @@ module CommonFood {
             this.weeks(0);
             this.days([]);
             this.options([]);
+            this.places([]);
             this.startDate(model.startDate);
             this.endDate(model.endDate);
             this.firstWeek(model.firstWeek);
@@ -80,6 +84,9 @@ module CommonFood {
         
             for (var s in model.options) {
                 this.addOption(model.options[s]);
+            }        
+            for (var s in model.places) {
+                this.addPlace(model.places[s]);
             }        
             for (var s in model.days) {
                 this.addDay(model.days[s]);
@@ -130,8 +137,26 @@ module CommonFood {
                     f(dayFoods, weekFoods)));
         };
 
+        private generateText(baseName: string, collection: knockout.koObservableArrayBase, name?: string): string {
+            var texts = _.map(ko.toJS(collection), (item) => item.text);
+            var n = texts.length + 1;
+            if (_.isString(name) && name) {
+                if (texts.indexOf(name) == -1) {
+                    return name;
+                } else {
+                    baseName = name;
+                    n = 2;
+                }
+            } 
+            while (true) {
+                var name = baseName + n++;
+                if (texts.indexOf(name) == -1) 
+                    return name;
+            }
+        }
+
         addOption(text?: string) {
-            text = _.isString(text) && text || "Menú " + (this.options().length + 1);
+            text = this.generateText("Menú ", this.options, text);
             var option = { text: ko.observable(text) };
         
             this.eachDay(dayFoods => 
@@ -140,8 +165,7 @@ module CommonFood {
             //No hay generics, de manera que this.options acepta cualquier cosa
             this.options.push(option);
         }
-
-    
+  
         removeOption(option?) {
             if (this.options().length) {
                 var index =
@@ -154,10 +178,27 @@ module CommonFood {
                 this.options.splice(index, 1);
             }
         };
+
+        addPlace(text?: string) {
+            text = this.generateText("Lugar ", this.places, text);
+            var place = { text: ko.observable(text) };
         
+            //No hay generics, de manera que this.options acepta cualquier cosa
+            this.places.push(place);
+        }
+        
+        removePlace(place?) {
+            if (this.places().length) {
+                var index =
+                    _.isNumber(place) ? place
+                    : this.places.indexOf(place);
+            
+                this.places.splice(index, 1);
+            }
+        };
     
         private addDay(text?: string) {
-            text = _.isString(text) && text || "Día " + (this.options().length + 1);
+            text = this.generateText("Día ", this.days, text);
             var day = { text: ko.observable(text) };       
         
             this.eachWeek(weekFoods => {

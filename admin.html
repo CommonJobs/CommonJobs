@@ -46,6 +46,7 @@
     , firstDay: 4 //El 21 de septiembre es viernes
     , weeks: 4
     , options: ["Común", "Light", "Vegetariano"]
+    , places: ["La Rioja", "Garay"]
     , startDate: "2012-09-21" //inclusive
     , endDate: "2012-12-20" //inclusive
     //, foods: []
@@ -99,6 +100,15 @@
                 </ul>
                 <a href="#" data-bind="click: addOption">Add</a>
                 <a href="#" data-bind="click: removeOption">Remove</a>
+                <h3>Lugares</h3>
+                <ul data-bind="foreach: places">
+                    <li>
+                        <input data-bind='value: text' />
+                        <a href="#" data-bind="click: $root.removePlace">Remove</a>
+                    </li>
+                </ul>
+                <a href="#" data-bind="click: addPlace">Add</a>
+                <a href="#" data-bind="click: removePlace">Remove</a>
                 <h3>Semanas</h3>
                 <span data-bind='text: weeks'></span> Semanas
                 <a href="#" data-bind="click: addWeek">Add</a>
