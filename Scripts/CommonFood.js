@@ -33,10 +33,12 @@ var CommonFood;
     var MenuViewModel = (function (_super) {
         __extends(MenuViewModel, _super);
         function MenuViewModel(model) {
+            var _this = this;
                 _super.call(this);
             this.title = ko.observable("");
             this.weeks = ko.observable(0);
-            this.days = ko.observableArray();
+            this.weekFirstDay = ko.observable(1);
+            this.weekLastDay = ko.observable(5);
             this.options = ko.observableArray();
             this.places = ko.observableArray();
             this.startDate = ko.observable("");
@@ -46,19 +48,25 @@ var CommonFood;
             this.firstDay = ko.observable(0);
             this.foods = ko.observableArray();
             this.reset(model);
+            this.days = ko.computed(function () {
+                var mmnt = moment();
+                var result = [];
+                for(var i = _this.weekFirstDay(); i <= _this.weekLastDay(); i++) {
+                    result.push({
+                        day: i,
+                        name: mmnt.day(i).format("dddd")
+                    });
+                }
+                return result;
+            });
         }
         MenuViewModel.defaultModel = {
             title: "Nuevo Menú",
             firstWeek: 0,
             firstDay: 0,
             weeks: 4,
-            days: [
-                "Lunes", 
-                "Martes", 
-                "Miercoles", 
-                "Jueves", 
-                "Viernes"
-            ],
+            weekFirstDay: 1,
+            weekLastDay: 5,
             options: [
                 "Común", 
                 "Light", 
@@ -78,7 +86,8 @@ var CommonFood;
             }, MenuViewModel.defaultModel, model);
             this.title(model.title);
             this.weeks(0);
-            this.days([]);
+            this.weekFirstDay(model.weekFirstDay);
+            this.weekLastDay(model.weekLastDay);
             this.options([]);
             this.places([]);
             this.startDate(model.startDate);
@@ -93,19 +102,17 @@ var CommonFood;
             for(var s in model.places) {
                 this.addPlace(model.places[s]);
             }
-            for(var s in model.days) {
-                this.addDay(model.days[s]);
-            }
             for(var i = 0; i < model.weeks; i++) {
                 this.addWeek();
             }
-            var daysLength = this.days().length;
+            var weekFirstDay = this.weekFirstDay();
+            var weekLastDay = this.weekLastDay();
             var weeksLength = this.weeks();
             var optionsLength = this.options().length;
             var foods = this.foods();
             if(model.foods) {
                 _.each(model.foods, function (item) {
-                    if(item.day < daysLength && item.week < weeksLength && item.option < optionsLength) {
+                    if(item.day >= weekFirstDay && item.day <= weekLastDay && item.week < weeksLength && item.option < optionsLength) {
                         foods[item.week][item.day][item.option](item.food);
                     }
                 });
@@ -120,6 +127,8 @@ var CommonFood;
                 "firstWeek", 
                 "firstDay", 
                 "weeks", 
+                "weekFirstDay", 
+                "weekLastDay", 
                 "startDate", 
                 "endDate"
             ];
@@ -127,7 +136,6 @@ var CommonFood;
                 model[prop] = _this[prop]();
             });
             var textArrProperties = [
-                "days", 
                 "options", 
                 "places"
             ];
@@ -156,15 +164,14 @@ var CommonFood;
             return this.foods()[weekIndex][dayIndex][optionIndex];
         };
         MenuViewModel.prototype.addWeek = function () {
-            var _this = this;
             var weekFoods = [];
-            _.each(this.days(), function (day) {
+            for(var i = 0; i < 7; i++) {
                 var dayFoods = [];
-                _.each(_this.options(), function (option) {
+                _.each(this.options(), function (option) {
                     return dayFoods.push(ko.observable(""));
                 });
                 weekFoods.push(dayFoods);
-            });
+            }
             this.foods.push(weekFoods);
             this.weeks(this.weeks() + 1);
         };
@@ -238,21 +245,6 @@ var CommonFood;
                 var index = _.isNumber(place) ? place : this.places.indexOf(place);
                 this.places.splice(index, 1);
             }
-        };
-        MenuViewModel.prototype.addDay = function (text) {
-            var _this = this;
-            text = this.generateText("Día ", this.days, text);
-            var day = {
-                text: ko.observable(text)
-            };
-            this.eachWeek(function (weekFoods) {
-                var dayFoods = [];
-                _.each(_this.options(), function (option) {
-                    return dayFoods.push(ko.observable(""));
-                });
-                weekFoods.push(dayFoods);
-            });
-            this.days.push(day);
         };
         return MenuViewModel;
     })(HasCallbacks);

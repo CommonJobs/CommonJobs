@@ -27,7 +27,8 @@ module CommonFood {
         firstWeek?: number;
         firstDay?: number;
         weeks?: number;
-        days?: string[];
+        weekFirstDay?: number;
+        weekLastDay?: number;
         options?: string[];
         places?: string[];
         startDate?: string;
@@ -64,7 +65,8 @@ module CommonFood {
             firstWeek: 0,
             firstDay: 0,
             weeks: 4,
-            days: [ "Lunes", "Martes", "Miercoles", "Jueves", "Viernes" ],
+            weekFirstDay: 1, //Monday
+            weekLastDay: 5, //Friday
             options: [ "Común", "Light", "Vegetariano" ],
             places: [ "La Rioja", "Garay" ],
             startDate: "",
@@ -75,7 +77,8 @@ module CommonFood {
 
         title: knockout.koObservableString = ko.observable("");
         weeks: knockout.koObservableNumber = ko.observable(0);
-        days: knockout.koObservableArrayBase = ko.observableArray();
+        weekFirstDay: knockout.koObservableNumber = ko.observable(1);
+        weekLastDay: knockout.koObservableNumber = ko.observable(5);
         options: knockout.koObservableArrayBase = ko.observableArray();
         places: knockout.koObservableArrayBase = ko.observableArray();
         startDate: knockout.koObservableAny = ko.observable("");
@@ -84,17 +87,28 @@ module CommonFood {
         firstWeek: knockout.koObservableNumber = ko.observable(0);
         firstDay: knockout.koObservableNumber = ko.observable(0);
         foods: knockout.koObservableArrayBase = ko.observableArray(); //By week, by day, by option
-    
+        days: knockout.koExtend;
+
         constructor (model?: IMenu) {
             super();
             this.reset(model);
+            this.days = ko.computed(() => { 
+                var mmnt = moment();
+                var result = [];
+                for (var i = this.weekFirstDay(); i <= this.weekLastDay(); i++) {
+                    result.push({ 
+                        day: i,
+                        name: mmnt.day(i).format("dddd")});
+                }
+                return result;
+            });
         }
-
         reset(model?: IMenu) {
             model =  <IMenu>$.extend({}, MenuViewModel.defaultModel, model);
             this.title(model.title);
             this.weeks(0);
-            this.days([]);
+            this.weekFirstDay(model.weekFirstDay);
+            this.weekLastDay(model.weekLastDay);
             this.options([]);
             this.places([]);
             this.startDate(model.startDate);
@@ -110,20 +124,18 @@ module CommonFood {
             for (var s in model.places) {
                 this.addPlace(model.places[s]);
             }        
-            for (var s in model.days) {
-                this.addDay(model.days[s]);
-            }
             for (var i = 0; i < model.weeks; i++) {
                 this.addWeek();
             }
 
-            var daysLength = this.days().length;
+            var weekFirstDay = this.weekFirstDay();
+            var weekLastDay = this.weekLastDay();
             var weeksLength = this.weeks();
             var optionsLength = this.options().length;
             var foods = this.foods();
             if (model.foods) {
                 _.each(model.foods, item => {
-                    if (item.day < daysLength && item.week < weeksLength && item.option < optionsLength) {
+                    if (item.day >= weekFirstDay && item.day <= weekLastDay && item.week < weeksLength && item.option < optionsLength) {
                         foods[item.week][item.day][item.option](item.food);
                     }
                 });
@@ -133,11 +145,11 @@ module CommonFood {
         exportModel(): IMenu {
             var model: IMenu = { };
 
-            var simpleProperties = ["title", "firstWeek", "firstDay", "weeks", "startDate", "endDate"];
+            var simpleProperties = ["title", "firstWeek", "firstDay", "weeks", "weekFirstDay", "weekLastDay", "startDate", "endDate"];
             _.each(simpleProperties, (prop) => {
                 model[prop] = this[prop]();
             });
-            var textArrProperties = ["days", "options", "places"];
+            var textArrProperties = ["options", "places"];
             _.each(textArrProperties, (prop) => {
                 model[prop] = _.map(this[prop](), (item) => item.text());
             });
@@ -167,12 +179,13 @@ module CommonFood {
 
         addWeek() {
             var weekFoods: knockout.koObservableString[][] = [];
-            _.each(this.days(), day => {
+
+            for (var i = 0; i < 7; i++) {
                 var dayFoods: knockout.koObservableString[] = [];
                 _.each(this.options(), option => 
                     dayFoods.push(ko.observable("")));
                 weekFoods.push(dayFoods);
-            });
+            }
             this.foods.push(weekFoods);
             this.weeks(this.weeks() + 1);
         }
@@ -255,6 +268,7 @@ module CommonFood {
             }
         };
     
+        /*
         private addDay(text?: string) {
             text = this.generateText("Día ", this.days, text);
             var day = { text: ko.observable(text) };       
@@ -269,5 +283,6 @@ module CommonFood {
             //No hay generics, de manera que this.days acepta cualquier cosa
             this.days.push(day);
         }
+        */
     }
 }

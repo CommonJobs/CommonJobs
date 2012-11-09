@@ -64,7 +64,7 @@
                             <tr>
                                 <td></td>
                                 <!-- ko foreach: $root.days -->
-                                <td data-bind='text: text'></td>
+                                <td data-bind='text: name'></td>
                                 <!-- /ko -->
                             </tr>
                         </thead>
@@ -74,7 +74,7 @@
                                 <!-- ko foreach: $root.days -->
                                 <td>
                                     <!-- todo: binding -->
-                                    <textarea data-bind='value: $root.getFood($parentContext.$parentContext.$index(), $index(), $parentContext.$index())'></textarea>
+                                    <textarea data-bind='value: $root.getFood($parentContext.$parentContext.$index(), day, $parentContext.$index())'></textarea>
                                 </td>
                                 <!-- /ko -->
                             </tr>
