@@ -67,7 +67,7 @@ declare module moment {
 		daysInMonth(): number;
 		isDST(): bool;
 
-		format(format?: string): number;
+		format(format?: string): string;
 
 		//duration(): Duration;
 		calendar(): string;
