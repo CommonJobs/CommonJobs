@@ -3,8 +3,26 @@
 ///<reference path='underscore.browser.d.ts' />
 ///<reference path="moment.d.ts" />
 
+
+//#region Underscore personalizations
+declare interface UnderscoreVoidIMenuItemListIterator {
+    (element : CommonFood.IMenuItem, index : number, list : CommonFood.IMenuItem[]) : void;
+}
+
+declare interface UnderscoreStatic extends Function {
+    each(list: CommonFood.IMenuItem[], iterator: UnderscoreVoidIMenuItemListIterator, context?: any): void;
+}
+//#endregion
+
 module CommonFood {
-    export interface IMenuModel {
+    export interface IMenuItem {
+        week: number;
+        day: number;
+        option: number;
+        food: string;
+    }
+
+    export interface IMenu {
         title?: string;
         firstWeek?: number;
         firstDay?: number;
@@ -15,7 +33,7 @@ module CommonFood {
         startDate?: string;
         endDate?: string;
         deadlineTime?: string;
-        foods?: string[][][]; //week, day, option
+        foods?: IMenuItem[]; 
     }
 
     class HasCallbacks {
@@ -41,7 +59,7 @@ module CommonFood {
     }
 
     export class MenuViewModel extends HasCallbacks  {
-        static defaultModel: IMenuModel = {
+        static defaultModel: IMenu = {
             title: "Nuevo Menú",
             firstWeek: 0,
             firstDay: 0,
@@ -67,13 +85,13 @@ module CommonFood {
         firstDay: knockout.koObservableNumber = ko.observable(0);
         foods: knockout.koObservableArrayBase = ko.observableArray(); //By week, by day, by option
     
-        constructor (model?: IMenuModel) {
+        constructor (model?: IMenu) {
             super();
             this.reset(model);
         }
 
-        reset(model?: IMenuModel) {
-            model =  <IMenuModel>$.extend({}, MenuViewModel.defaultModel, model);
+        reset(model?: IMenu) {
+            model =  <IMenu>$.extend({}, MenuViewModel.defaultModel, model);
             this.title(model.title);
             this.weeks(0);
             this.days([]);
@@ -99,29 +117,21 @@ module CommonFood {
                 this.addWeek();
             }
 
+            var daysLength = this.days().length;
+            var weeksLength = this.weeks();
+            var optionsLength = this.options().length;
+            var foods = this.foods();
             if (model.foods) {
-                var iMax = Math.min(this.weeks(), model.foods.length);
-                for (var i = 0; i < iMax; i++) {
-                    if (model.foods[i]) {
-                        var jMax = Math.min(this.days().length, model.foods[i].length);
-                        for (var j = 0; j < jMax; j++) {
-                            if (model.foods[i][j]) {
-                                var kMax = Math.min(this.options().length, model.foods[i][j].length);
-                                for (var k = 0; k < kMax; k++) {
-                                    var text = model.foods[i][j][k];
-                                    if (text) {
-                                        this.foods()[i][j][k](text);
-                                    }
-                                }
-                            }
-                        }
+                _.each(model.foods, item => {
+                    if (item.day < daysLength && item.week < weeksLength && item.option < optionsLength) {
+                        foods[item.week][item.day][item.option](item.food);
                     }
-                }
+                });
             }
         }
         
-        exportModel(): IMenuModel {
-            var model: IMenuModel = { };
+        exportModel(): IMenu {
+            var model: IMenu = { };
 
             var simpleProperties = ["title", "firstWeek", "firstDay", "weeks", "startDate", "endDate"];
             _.each(simpleProperties, (prop) => {
@@ -133,11 +143,18 @@ module CommonFood {
             });
 
             var foods = model.foods = [];
+
             this.eachDay((dayFoods, weekIndex, dayIndex) => {
-                var weekFoods = foods[weekIndex] || (foods[weekIndex] = []);
-                weekFoods[dayIndex] = [];
-                _.each(dayFoods, (option, optionIndex) => { 
-                    weekFoods[dayIndex][optionIndex] = option();
+                _.each(dayFoods, (option, optionIndex) => {
+                    var food = option();
+                    if (food) {
+                        foods.push({
+                            week: weekIndex,
+                            day: dayIndex,
+                            option: optionIndex,
+                            food: food
+                        });
+                    }
                 });
             });
 

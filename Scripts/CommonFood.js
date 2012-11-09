@@ -99,24 +99,16 @@ var CommonFood;
             for(var i = 0; i < model.weeks; i++) {
                 this.addWeek();
             }
+            var daysLength = this.days().length;
+            var weeksLength = this.weeks();
+            var optionsLength = this.options().length;
+            var foods = this.foods();
             if(model.foods) {
-                var iMax = Math.min(this.weeks(), model.foods.length);
-                for(var i = 0; i < iMax; i++) {
-                    if(model.foods[i]) {
-                        var jMax = Math.min(this.days().length, model.foods[i].length);
-                        for(var j = 0; j < jMax; j++) {
-                            if(model.foods[i][j]) {
-                                var kMax = Math.min(this.options().length, model.foods[i][j].length);
-                                for(var k = 0; k < kMax; k++) {
-                                    var text = model.foods[i][j][k];
-                                    if(text) {
-                                        this.foods()[i][j][k](text);
-                                    }
-                                }
-                            }
-                        }
+                _.each(model.foods, function (item) {
+                    if(item.day < daysLength && item.week < weeksLength && item.option < optionsLength) {
+                        foods[item.week][item.day][item.option](item.food);
                     }
-                }
+                });
             }
         };
         MenuViewModel.prototype.exportModel = function () {
@@ -146,10 +138,16 @@ var CommonFood;
             });
             var foods = model.foods = [];
             this.eachDay(function (dayFoods, weekIndex, dayIndex) {
-                var weekFoods = foods[weekIndex] || (foods[weekIndex] = []);
-                weekFoods[dayIndex] = [];
                 _.each(dayFoods, function (option, optionIndex) {
-                    weekFoods[dayIndex][optionIndex] = option();
+                    var food = option();
+                    if(food) {
+                        foods.push({
+                            week: weekIndex,
+                            day: dayIndex,
+                            option: optionIndex,
+                            food: food
+                        });
+                    }
                 });
             });
             return model;
