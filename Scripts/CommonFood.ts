@@ -65,11 +65,22 @@ module CommonFood {
         firstDay?: number;
         weeks?: number;
         options?: IKeyText[];
+        options?: string[];
         places?: IKeyText[];
         startDate?: string;
         endDate?: string;
         deadlineTime?: string;
         foods?: IMenuItem[]; 
+    }
+
+    export class IdGenerator {
+        constructor (public chars = "abcdefghijklmnopqrstuvwxyz1234567890", public length = 8) {
+        }
+        public generate(prefix = "") {
+            var chars = this.chars;
+            var charsL = chars.length;
+            return prefix + _.map(_.range(this.length), () => chars[_.random(0, charsL)]).join("");
+        };
     }
 
     class HasCallbacks {
@@ -100,8 +111,8 @@ module CommonFood {
             firstWeek: 0,
             firstDay: 0,
             weeks: 4,
-            options: [{ key: "default_comun", text: "Común" }, { key: "default_light", text: "Light" }, { key: "default_vegetariano", text: "Vegetariano" }],
-            places: [{ key: "default_larioja", text: "La Rioja" }, { key: "default_garay", text: "Garay" }],
+            options: [{ key: "dcomun", text: "Común" }, { key: "dlight", text: "Light" }, { key: "dvegetariano", text: "Vegetariano" }],
+            places: [{ key: "dlarioja", text: "La Rioja" }, { key: "dgaray", text: "Garay" }],
             startDate: "",
             endDate: "",
             deadlineTime: "09:30",
@@ -118,6 +129,7 @@ module CommonFood {
         firstWeek: knockout.koObservableNumber = ko.observable(0);
         firstDay: knockout.koObservableNumber = ko.observable(0);
         foods: knockout.koObservableArrayBase = ko.observableArray(); //By week, by day, by option
+        private idGenerator = new IdGenerator();
 
         constructor (model?: IMenu) {
             super();
@@ -265,21 +277,20 @@ module CommonFood {
             }
         }
 
-        private addKeyObservableText(collection: knockout.koObservableArrayBase, baseName: string, value?: any): IKeyObservabletext {
+        private addKeyObservableText(collection: knockout.koObservableArrayBase, baseName: string, idPrefix: string, value?: any): IKeyObservabletext {
             var item: IKeyObservabletext;
             if (!value || !value.key) {
                 var text = this.generateText(baseName, collection, value);
-                //TODO: generate an unique id
-                item = { key: text, text: ko.observable(text) };
+                item = { key: this.idGenerator.generate(idPrefix), text: ko.observable(text) };
             } else {
-                item = { key: value.text, text: ko.observable(value.text) };
+                item = { key: value.key, text: ko.observable(value.text) };
             }
             collection.push(item);
             return item;
         }
 
         addOption(option?: any) {
-            var op = this.addKeyObservableText(this.options, "Menú ", option);
+            var op = this.addKeyObservableText(this.options, "Menú ", "option_", option);
             this.eachDay(dayFoods => {
                 dayFoods[op.key] = ko.observable("")
             })
@@ -293,7 +304,7 @@ module CommonFood {
         };
 
         addPlace(place?: any) {
-            this.addKeyObservableText(this.places, "Lugar ", place);
+            this.addKeyObservableText(this.places, "Lugar ", "place_", place);
         }
 
         private removeItem(collection: knockout.koObservableArrayBase, item: any) : IKeyObservabletext {
