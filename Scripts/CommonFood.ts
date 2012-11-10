@@ -103,16 +103,16 @@ module CommonFood {
     export interface DayFoods {
         [s: string]: knockout.koObservableString;
     }
-    
-    export class MenuViewModel extends Utilities.HasCallbacks  {
+
+    export class MenuDefinition extends Utilities.HasCallbacks  {
         static defaultModel: MenuData = {
             title: "Nuevo Menú",
             firstWeek: 0,
             weeks: 0,
             options: [],
             places: [],
-            startDate: "",
-            endDate: "",
+            startDate: "2000-01-01",
+            endDate: "2100-01-01",
             deadlineTime: "09:30",
             foods: []
         };
@@ -143,7 +143,7 @@ module CommonFood {
         }
 
         reset(data?: MenuData) {
-            data =  <MenuData>$.extend({}, MenuViewModel.defaultModel, data);
+            data =  <MenuData>$.extend({}, MenuDefinition.defaultModel, data);
             var i: any;
             this.title(data.title);
             this.weeks(0);
@@ -255,7 +255,7 @@ module CommonFood {
             var item: KeyObservableText;
             if (!value || !value.key) {
                 var text = this.generateText(baseName, collection, value);
-                item = { key: MenuViewModel.idGenerator.generate(idPrefix), text: ko.observable(text) };
+                item = { key: MenuDefinition.idGenerator.generate(idPrefix), text: ko.observable(text) };
             } else {
                 item = { key: value.key, text: ko.observable(value.text) };
             }

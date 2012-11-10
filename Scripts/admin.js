@@ -21,7 +21,7 @@ var CommonFood;
             this.$json.val(JSON.stringify(model));
         };
         return AdminController;
-    })(CommonFood.MenuViewModel);
+    })(CommonFood.MenuDefinition);
     CommonFood.AdminController = AdminController;    
     $(document).ready(function () {
         var adminController = new AdminController();

@@ -5,7 +5,7 @@
 ///<reference path='CommonFood.ts' />
 
 module CommonFood {
-    export class AdminController extends MenuViewModel {
+    export class AdminController extends MenuDefinition {
         $json = $(".persistence .json-field");
         
         constructor () {

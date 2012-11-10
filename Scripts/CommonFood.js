@@ -72,9 +72,9 @@ var CommonFood;
         };
         return def;
     })();
-    var MenuViewModel = (function (_super) {
-        __extends(MenuViewModel, _super);
-        function MenuViewModel(model) {
+    var MenuDefinition = (function (_super) {
+        __extends(MenuDefinition, _super);
+        function MenuDefinition(model) {
                 _super.call(this);
             this.title = ko.observable("");
             this.weeks = ko.observable(0);
@@ -87,19 +87,19 @@ var CommonFood;
             this.foods = ko.observableArray();
             this.reset(model);
         }
-        MenuViewModel.defaultModel = {
+        MenuDefinition.defaultModel = {
             title: "Nuevo Menú",
             firstWeek: 0,
             weeks: 0,
             options: [],
             places: [],
-            startDate: "",
-            endDate: "",
+            startDate: "2000-01-01",
+            endDate: "2100-01-01",
             deadlineTime: "09:30",
             foods: []
         };
-        MenuViewModel.idGenerator = new Utilities.IdGenerator();
-        MenuViewModel.prototype.createKeyTextObservableArray = function (items) {
+        MenuDefinition.idGenerator = new Utilities.IdGenerator();
+        MenuDefinition.prototype.createKeyTextObservableArray = function (items) {
             return ko.observableArray(_.map(items, function (item) {
                 return {
                     key: item.key,
@@ -107,9 +107,9 @@ var CommonFood;
                 };
             }));
         };
-        MenuViewModel.prototype.reset = function (data) {
+        MenuDefinition.prototype.reset = function (data) {
             data = $.extend({
-            }, MenuViewModel.defaultModel, data);
+            }, MenuDefinition.defaultModel, data);
             var i;
             this.title(data.title);
             this.weeks(0);
@@ -144,7 +144,7 @@ var CommonFood;
                 });
             }
         };
-        MenuViewModel.prototype.exportModel = function () {
+        MenuDefinition.prototype.exportModel = function () {
             var model = {
                 title: this.title(),
                 firstWeek: this.firstWeek(),
@@ -170,22 +170,22 @@ var CommonFood;
             });
             return model;
         };
-        MenuViewModel.prototype.getFood = function (weekIndex, dayIndex, opt) {
+        MenuDefinition.prototype.getFood = function (weekIndex, dayIndex, opt) {
             return this.foods()[weekIndex][dayIndex][opt];
         };
-        MenuViewModel.prototype.eachWeek = function (f) {
+        MenuDefinition.prototype.eachWeek = function (f) {
             _.each(this.foods(), function (weekFoods, weekIndex) {
                 return f(weekFoods, weekIndex);
             });
         };
-        MenuViewModel.prototype.eachDay = function (f) {
+        MenuDefinition.prototype.eachDay = function (f) {
             this.eachWeek(function (weekFoods, weekIndex) {
                 return _.each(weekFoods, function (dayFoods, dayIndex) {
                     return f(dayFoods, weekIndex, dayIndex);
                 });
             });
         };
-        MenuViewModel.prototype.generateText = function (baseName, collection, name) {
+        MenuDefinition.prototype.generateText = function (baseName, collection, name) {
             var texts = _.map(ko.toJS(collection), function (item) {
                 return item.text;
             });
@@ -210,12 +210,12 @@ var CommonFood;
                 }
             }
         };
-        MenuViewModel.prototype.addKeyObservableText = function (collection, baseName, idPrefix, value) {
+        MenuDefinition.prototype.addKeyObservableText = function (collection, baseName, idPrefix, value) {
             var item;
             if(!value || !value.key) {
                 var text = this.generateText(baseName, collection, value);
                 item = {
-                    key: MenuViewModel.idGenerator.generate(idPrefix),
+                    key: MenuDefinition.idGenerator.generate(idPrefix),
                     text: ko.observable(text)
                 };
             } else {
@@ -227,7 +227,7 @@ var CommonFood;
             collection.push(item);
             return item;
         };
-        MenuViewModel.prototype.removeItem = function (collection, item) {
+        MenuDefinition.prototype.removeItem = function (collection, item) {
             if(!collection().length) {
                 return null;
             }
@@ -239,7 +239,7 @@ var CommonFood;
             var index = _.isNumber(item) ? item : collection.indexOf(item);
             return collection.splice(index, 1)[0];
         };
-        MenuViewModel.prototype.addWeek = function () {
+        MenuDefinition.prototype.addWeek = function () {
             var weekFoods = [];
             for(var i = 0; i < 7; i++) {
                 var dayFoods = {
@@ -252,20 +252,20 @@ var CommonFood;
             this.foods.push(weekFoods);
             this.weeks(this.weeks() + 1);
         };
-        MenuViewModel.prototype.removeWeek = function () {
+        MenuDefinition.prototype.removeWeek = function () {
             var actual = this.weeks();
             if(actual > 0) {
                 this.weeks(actual - 1);
                 this.foods.pop();
             }
         };
-        MenuViewModel.prototype.addOption = function (option) {
+        MenuDefinition.prototype.addOption = function (option) {
             var op = this.addKeyObservableText(this.options, "Menú ", "menu_", option);
             this.eachDay(function (dayFoods) {
                 dayFoods[op.key] = ko.observable("");
             });
         };
-        MenuViewModel.prototype.removeOption = function (option) {
+        MenuDefinition.prototype.removeOption = function (option) {
             var removed = this.removeItem(this.options, option);
             if(removed) {
                 this.eachDay(function (dayFoods) {
@@ -273,14 +273,14 @@ var CommonFood;
                 });
             }
         };
-        MenuViewModel.prototype.addPlace = function (place) {
+        MenuDefinition.prototype.addPlace = function (place) {
             this.addKeyObservableText(this.places, "Lugar ", "place_", place);
         };
-        MenuViewModel.prototype.removePlace = function (place) {
+        MenuDefinition.prototype.removePlace = function (place) {
             this.removeItem(this.places, place);
         };
-        return MenuViewModel;
+        return MenuDefinition;
     })(Utilities.HasCallbacks);
-    CommonFood.MenuViewModel = MenuViewModel;    
+    CommonFood.MenuDefinition = MenuDefinition;    
 })(CommonFood || (CommonFood = {}));
 
