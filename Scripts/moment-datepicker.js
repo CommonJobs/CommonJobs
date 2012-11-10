@@ -383,8 +383,10 @@
 			}],
         parseDate: function (value, format) {
             var mmnt = null;
+            //var msdate = /^\/Date(.*)\/$/;
+            //var isodate = /^\/Date(.*)\/$/;
             if (typeof value === "string") {
-                mmnt = moment(value, format);
+                mmnt = moment(value, [ "YYYY-MM-DD", format ]);
             }
             if (!mmnt || !mmnt.isValid()) {
                 mmnt = moment(value);
