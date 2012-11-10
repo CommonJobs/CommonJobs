@@ -79,7 +79,6 @@ var CommonFood;
             this.endDate = ko.observable("");
             this.deadlineTime = ko.observable("");
             this.firstWeek = ko.observable(0);
-            this.firstDay = ko.observable(0);
             this.foods = ko.observableArray();
             this.idGenerator = new IdGenerator();
             this.reset(model);
@@ -87,7 +86,6 @@ var CommonFood;
         MenuViewModel.defaultModel = {
             title: "Nuevo Menú",
             firstWeek: 0,
-            firstDay: 0,
             weeks: 4,
             options: [
                 {
@@ -137,7 +135,6 @@ var CommonFood;
             this.startDate(model.startDate);
             this.endDate(model.endDate);
             this.firstWeek(model.firstWeek);
-            this.firstDay(model.firstDay);
             this.deadlineTime(model.deadlineTime);
             this.foods.removeAll();
             for(i in model.options) {
@@ -158,38 +155,31 @@ var CommonFood;
             var foods = this.foods();
             if(model.foods) {
                 _.each(model.foods, function (item) {
-                    if(CommonFood.days.isValid(item.day) && item.week < weeksLength && opts[item.opt]) {
-                        foods[item.week][item.day][item.opt](item.food);
+                    if(CommonFood.days.isValid(item.day) && item.week < weeksLength && opts[item.option]) {
+                        foods[item.week][item.day][item.option](item.food);
                     }
                 });
             }
         };
         MenuViewModel.prototype.exportModel = function () {
-            var _this = this;
             var model = {
+                title: this.title(),
+                firstWeek: this.firstWeek(),
+                weeks: this.weeks(),
+                startDate: this.startDate(),
+                endDate: this.endDate(),
+                places: ko.toJS(this.places),
+                options: ko.toJS(this.options),
+                foods: []
             };
-            var simpleProperties = [
-                "title", 
-                "firstWeek", 
-                "firstDay", 
-                "weeks", 
-                "startDate", 
-                "endDate"
-            ];
-            _.each(simpleProperties, function (prop) {
-                model[prop] = _this[prop]();
-            });
-            model.places = ko.toJS(this.places);
-            model.options = ko.toJS(this.options);
-            var foods = model.foods = [];
             this.eachDay(function (dayFoods, weekIndex, dayIndex) {
+                var food;
                 for(var opt in dayFoods) {
-                    var food = dayFoods[opt]();
-                    if(food) {
-                        foods.push({
+                    if(food = dayFoods[opt]()) {
+                        model.foods.push({
                             week: weekIndex,
                             day: dayIndex,
-                            opt: opt,
+                            option: opt,
                             food: food
                         });
                     }
@@ -275,7 +265,7 @@ var CommonFood;
             return item;
         };
         MenuViewModel.prototype.addOption = function (option) {
-            var op = this.addKeyObservableText(this.options, "Menú ", "option_", option);
+            var op = this.addKeyObservableText(this.options, "Menú ", "menu_", option);
             this.eachDay(function (dayFoods) {
                 dayFoods[op.key] = ko.observable("");
             });

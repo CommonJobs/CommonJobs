@@ -39,7 +39,7 @@ module CommonFood {
     export interface IMenuItem {
         week: number;
         day: number;
-        opt: string;
+        option: string;
         food: string;
     }
 
@@ -62,10 +62,8 @@ module CommonFood {
     export interface IMenu {
         title?: string;
         firstWeek?: number;
-        firstDay?: number;
         weeks?: number;
         options?: IKeyText[];
-        options?: string[];
         places?: IKeyText[];
         startDate?: string;
         endDate?: string;
@@ -109,7 +107,6 @@ module CommonFood {
         static defaultModel: IMenu = {
             title: "Nuevo Menú",
             firstWeek: 0,
-            firstDay: 0,
             weeks: 4,
             options: [{ key: "dcomun", text: "Común" }, { key: "dlight", text: "Light" }, { key: "dvegetariano", text: "Vegetariano" }],
             places: [{ key: "dlarioja", text: "La Rioja" }, { key: "dgaray", text: "Garay" }],
@@ -127,7 +124,6 @@ module CommonFood {
         endDate: knockout.koObservableAny = ko.observable("");
         deadlineTime: knockout.koObservableString = ko.observable("");
         firstWeek: knockout.koObservableNumber = ko.observable(0);
-        firstDay: knockout.koObservableNumber = ko.observable(0);
         foods: knockout.koObservableArrayBase = ko.observableArray(); //By week, by day, by option
         private idGenerator = new IdGenerator();
 
@@ -155,7 +151,6 @@ module CommonFood {
             this.startDate(model.startDate);
             this.endDate(model.endDate);
             this.firstWeek(model.firstWeek);
-            this.firstDay(model.firstDay);
             this.deadlineTime(model.deadlineTime);
             //this.foods([]); //By week / day / option
             this.foods.removeAll();
@@ -180,34 +175,33 @@ module CommonFood {
             var foods = <IDayFoods[][]>this.foods();
             if (model.foods) {
                 _.each(model.foods, item => {
-                    if (days.isValid(item.day) && item.week < weeksLength && opts[item.opt]) {
-                        foods[item.week][item.day][item.opt](item.food);
+                    if (days.isValid(item.day) && item.week < weeksLength && opts[item.option]) {
+                        foods[item.week][item.day][item.option](item.food);
                     }
                 });
             }
         }
         
         exportModel(): IMenu {
-            var model: IMenu = { };
-
-            var simpleProperties = ["title", "firstWeek", "firstDay", "weeks", "startDate", "endDate"];
-            _.each(simpleProperties, (prop) => {
-                model[prop] = this[prop]();
-            });
-
-            model.places = ko.toJS(this.places);
-            model.options = ko.toJS(this.options);
-
-            var foods = model.foods = [];
+            var model: IMenu = { 
+                title: this.title(),
+                firstWeek: this.firstWeek(),
+                weeks: this.weeks(),
+                startDate: this.startDate(),
+                endDate: this.endDate(),
+                places: ko.toJS(this.places),
+                options: ko.toJS(this.options),
+                foods: [] 
+            };
 
             this.eachDay((dayFoods, weekIndex, dayIndex) => {
+                var food;
                 for (var opt in dayFoods) {
-                    var food = dayFoods[opt]();
-                    if (food) {
-                        foods.push({
+                    if (food = dayFoods[opt]()) {
+                        model.foods.push({
                             week: weekIndex,
                             day: dayIndex,
-                            opt: opt,
+                            option: opt,
                             food: food
                         });
                     }
@@ -290,7 +284,7 @@ module CommonFood {
         }
 
         addOption(option?: any) {
-            var op = this.addKeyObservableText(this.options, "Menú ", "option_", option);
+            var op = this.addKeyObservableText(this.options, "Menú ", "menu_", option);
             this.eachDay(dayFoods => {
                 dayFoods[op.key] = ko.observable("")
             })
