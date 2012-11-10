@@ -5,25 +5,25 @@ var __extends = this.__extends || function (d, b) {
 }
 var CommonFood;
 (function (CommonFood) {
-    (function (Days) {
-        Days.values = [
+    CommonFood.days = (function () {
+        var values = [
             1, 
             2, 
             3, 
             4, 
             5
         ];
-        function getName(day) {
+        var def = function () {
+            return values;
+        };
+        def["getName"] = function (day) {
             return moment().day(day).format("dddd");
-        }
-        Days.getName = getName;
-        function isValid(day) {
-            return Days.values.indexOf(day) >= 0;
-        }
-        Days.isValid = isValid;
-    })(CommonFood.Days || (CommonFood.Days = {}));
-    var Days = CommonFood.Days;
-
+        };
+        def["isValid"] = function (day) {
+            return values.indexOf(day) >= 0;
+        };
+        return def;
+    })();
     var HasCallbacks = (function () {
         function HasCallbacks() {
             var _this = this;
@@ -71,22 +71,46 @@ var CommonFood;
             firstDay: 0,
             weeks: 4,
             options: [
-                "Común", 
-                "Light", 
-                "Vegetariano"
+                {
+                    key: "default_comun",
+                    text: "Común"
+                }, 
+                {
+                    key: "default_light",
+                    text: "Light"
+                }, 
+                {
+                    key: "default_vegetariano",
+                    text: "Vegetariano"
+                }
             ],
             places: [
-                "La Rioja", 
-                "Garay"
+                {
+                    key: "default_larioja",
+                    text: "La Rioja"
+                }, 
+                {
+                    key: "default_garay",
+                    text: "Garay"
+                }
             ],
             startDate: "",
             endDate: "",
             deadlineTime: "09:30",
             foods: []
         };
+        MenuViewModel.prototype.createKeyTextObservableArray = function (items) {
+            return ko.observableArray(_.map(items, function (item) {
+                return {
+                    key: item.key,
+                    text: ko.observable(item.text)
+                };
+            }));
+        };
         MenuViewModel.prototype.reset = function (model) {
             model = $.extend({
             }, MenuViewModel.defaultModel, model);
+            var i;
             this.title(model.title);
             this.weeks(0);
             this.options([]);
@@ -96,23 +120,27 @@ var CommonFood;
             this.firstWeek(model.firstWeek);
             this.firstDay(model.firstDay);
             this.deadlineTime(model.deadlineTime);
-            this.foods([]);
-            for(var s in model.options) {
-                this.addOption(model.options[s]);
+            this.foods.removeAll();
+            for(i in model.options) {
+                this.addOption(model.options[i]);
             }
-            for(var s in model.places) {
-                this.addPlace(model.places[s]);
+            for(i in model.places) {
+                this.addPlace(model.places[i]);
             }
-            for(var i = 0; i < model.weeks; i++) {
+            for(i = 0; i < model.weeks; i++) {
                 this.addWeek();
             }
             var weeksLength = this.weeks();
-            var optionsLength = this.options().length;
+            var opts = {
+            };
+            _.each(this.options(), function (x) {
+                opts[x.key] = true;
+            });
             var foods = this.foods();
             if(model.foods) {
                 _.each(model.foods, function (item) {
-                    if(Days.isValid(item.day) && item.week < weeksLength && item.option < optionsLength) {
-                        foods[item.week][item.day][item.option](item.food);
+                    if(CommonFood.days.isValid(item.day) && item.week < weeksLength && opts[item.opt]) {
+                        foods[item.week][item.day][item.opt](item.food);
                     }
                 });
             }
@@ -132,40 +160,34 @@ var CommonFood;
             _.each(simpleProperties, function (prop) {
                 model[prop] = _this[prop]();
             });
-            var textArrProperties = [
-                "options", 
-                "places"
-            ];
-            _.each(textArrProperties, function (prop) {
-                model[prop] = _.map(_this[prop](), function (item) {
-                    return item.text();
-                });
-            });
+            model.places = ko.toJS(this.places);
+            model.options = ko.toJS(this.options);
             var foods = model.foods = [];
             this.eachDay(function (dayFoods, weekIndex, dayIndex) {
-                _.each(dayFoods, function (option, optionIndex) {
-                    var food = option();
+                for(var opt in dayFoods) {
+                    var food = dayFoods[opt]();
                     if(food) {
                         foods.push({
                             week: weekIndex,
                             day: dayIndex,
-                            option: optionIndex,
+                            opt: opt,
                             food: food
                         });
                     }
-                });
+                }
             });
             return model;
         };
-        MenuViewModel.prototype.getFood = function (weekIndex, dayIndex, optionIndex) {
-            return this.foods()[weekIndex][dayIndex][optionIndex];
+        MenuViewModel.prototype.getFood = function (weekIndex, dayIndex, opt) {
+            return this.foods()[weekIndex][dayIndex][opt];
         };
         MenuViewModel.prototype.addWeek = function () {
             var weekFoods = [];
             for(var i = 0; i < 7; i++) {
-                var dayFoods = [];
+                var dayFoods = {
+                };
                 _.each(this.options(), function (option) {
-                    return dayFoods.push(ko.observable(""));
+                    return dayFoods[option.key] = ko.observable("");
                 });
                 weekFoods.push(dayFoods);
             }
@@ -196,12 +218,17 @@ var CommonFood;
                 return item.text;
             });
             var n = texts.length + 1;
-            if(_.isString(name) && name) {
-                if(texts.indexOf(name) == -1) {
-                    return name;
-                } else {
-                    baseName = name;
-                    n = 2;
+            if(name) {
+                if((name).text) {
+                    name = (name).text;
+                }
+                if(_.isString(name)) {
+                    if(texts.indexOf(name) == -1) {
+                        return name;
+                    } else {
+                        baseName = name;
+                        n = 2;
+                    }
                 }
             }
             while(true) {
@@ -211,37 +238,54 @@ var CommonFood;
                 }
             }
         };
-        MenuViewModel.prototype.addOption = function (text) {
-            text = this.generateText("Menú ", this.options, text);
-            var option = {
-                text: ko.observable(text)
-            };
+        MenuViewModel.prototype.addKeyObservableText = function (collection, baseName, value) {
+            var item;
+            if(!value || !value.key) {
+                var text = this.generateText(baseName, collection, value);
+                item = {
+                    key: text,
+                    text: ko.observable(text)
+                };
+            } else {
+                item = {
+                    key: value.text,
+                    text: ko.observable(value.text)
+                };
+            }
+            collection.push(item);
+            return item;
+        };
+        MenuViewModel.prototype.addOption = function (option) {
+            var op = this.addKeyObservableText(this.options, "Menú ", option);
             this.eachDay(function (dayFoods) {
-                return dayFoods.push(ko.observable(""));
+                dayFoods[op.key] = ko.observable("");
             });
-            this.options.push(option);
         };
         MenuViewModel.prototype.removeOption = function (option) {
-            if(this.options().length) {
-                var index = _.isNumber(option) ? option : this.options.indexOf(option);
+            var removed = this.removeItem(this.options, option);
+            if(removed) {
                 this.eachDay(function (dayFoods) {
-                    return dayFoods.splice(index, 1);
+                    return delete dayFoods[removed.key];
                 });
-                this.options.splice(index, 1);
             }
         };
-        MenuViewModel.prototype.addPlace = function (text) {
-            text = this.generateText("Lugar ", this.places, text);
-            var place = {
-                text: ko.observable(text)
-            };
-            this.places.push(place);
+        MenuViewModel.prototype.addPlace = function (place) {
+            this.addKeyObservableText(this.places, "Lugar ", place);
+        };
+        MenuViewModel.prototype.removeItem = function (collection, item) {
+            if(!collection().length) {
+                return null;
+            }
+            if(_.isString(item)) {
+                return collection.remove(function (x) {
+                    return x.key == item;
+                });
+            }
+            var index = _.isNumber(item) ? item : collection.indexOf(item);
+            return collection.splice(index, 1)[0];
         };
         MenuViewModel.prototype.removePlace = function (place) {
-            if(this.places().length) {
-                var index = _.isNumber(place) ? place : this.places.indexOf(place);
-                this.places.splice(index, 1);
-            }
+            this.removeItem(this.places, place);
         };
         return MenuViewModel;
     })(HasCallbacks);

@@ -63,18 +63,18 @@
                         <thead>
                             <tr>
                                 <td></td>
-                                <!-- ko foreach: CommonFood.Days.values -->
-                                <td data-bind="text: CommonFood.Days.getName($data)"></td>
+                                <!-- ko foreach: CommonFood.days() -->
+                                <td data-bind="text: CommonFood.days.getName($data)"></td>
                                 <!-- /ko -->
                             </tr>
                         </thead>
                         <tbody data-bind="foreach: $root.options">
                             <tr>
                                 <td data-bind='text: text'></td>
-                                <!-- ko foreach: CommonFood.Days.values -->
+                                <!-- ko foreach: CommonFood.days() -->
                                 <td>
                                     <!-- todo: binding -->
-                                    <textarea data-bind='value: $root.getFood($parentContext.$parentContext.$index(), $data, $parentContext.$index())'></textarea>
+                                    <textarea data-bind='value: $root.getFood($parentContext.$parentContext.$index(), $data, $parent.key)'></textarea>
                                 </td>
                                 <!-- /ko -->
                             </tr>
