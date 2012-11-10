@@ -23,7 +23,7 @@
 
     var Datepicker = function (element, options) {
         this.element = $(element);
-        this.format = options.format || this.element.data('date-format') || 'MM/DD/YYYY';
+        this.format = options.format || this.element.data('date-format') || moment.longDateFormat.L;
         this.picker = $(DPGlobal.template)
 							.appendTo('body')
 							.on({
