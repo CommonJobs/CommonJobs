@@ -104,6 +104,17 @@ module CommonFood {
         [s: string]: knockout.koObservableString;
     }
 
+    export interface EmployeeMenuDataItem {
+        week: number;
+        day: number;
+        option: string;
+        place: string;
+    }
+
+    export interface EmployeeMenuData {
+        choices: EmployeeMenuDataItem[];
+    }
+
     export class MenuDefinition extends Utilities.HasCallbacks  {
         static defaultModel: MenuData = {
             title: "Nuevo Menú",
