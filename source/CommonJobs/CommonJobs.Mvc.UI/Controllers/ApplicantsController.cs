@@ -47,9 +47,9 @@ namespace CommonJobs.Mvc.UI.Controllers
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult Create()
+        public ActionResult Create(string name)
         {
-            var newApplicant = new Applicant();
+            var newApplicant = new Applicant(name);
             RavenSession.Store(newApplicant);
             return RedirectToAction("Edit", new { id = newApplicant.Id });
         }
@@ -58,11 +58,12 @@ namespace CommonJobs.Mvc.UI.Controllers
         public ActionResult QuickAttachment()
         {
             Applicant applicant;
-            //No me anda el binding normal
+            //The normal binding does not work
             var id = RouteData.Values["id"] as string;
+            var name = Request.Form["name"] as string;
             if (id == null)
             {
-                applicant = new Applicant();
+                applicant = new Applicant(name);
                 RavenSession.Store(applicant);
             }
             else

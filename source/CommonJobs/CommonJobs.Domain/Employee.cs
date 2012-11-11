@@ -14,6 +14,16 @@ namespace CommonJobs.Domain
 
         public Employee()
         {
+            InitializeLists();
+        }
+
+        public Employee(string name): base(name)
+        {
+            InitializeLists();
+        }
+
+        private void InitializeLists()
+        {
             Absences = new List<Absence>();
             Vacations = new List<Vacation>();
             AttachmentsBySlot = new List<SlotWithAttachment>();

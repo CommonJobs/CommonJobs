@@ -10,9 +10,11 @@
 }
 <script type="text/template" id="add-new-card-template">
     <div class="card column clickable add-new-card file-dropzone fade well">
-        <img class="cardPicture" src="@Url.Content("~/Content/Images/AddEmployee.png")" alt="Agregar nuevo..."  />
+        <img class="cardPicture" src="@Url.Content("~/Content/Images/AddApplicant.png")" alt="Agregar nuevo..."  />
         <input type="file" data-url="@Url.Action("QuickAttachment")" multiple>
         <div class="cardDescription">
+            <input type="text" placeholder="Nombre" class="adding-new new-card-name" />
+            <button class="adding-new" disabled="disabled">Crear</button>
             <p>@Html.ActionLink("Agregar nuevo...", "Create", null, new { @class = "clickable-link" })</p>
         </div>
     </div>
@@ -77,17 +79,23 @@
     <div class="modal fade" id="generic-modal">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal">×</button>
-            <h3 class="person-name"></h3>
-            <h6 class="title"></h6>
+            <h3 class="title"></h3>
+            <h6 class="subtitle"></h6>
         </div>
         <div class="modal-body">
-            <ul class="file-list">
-            </ul>
+            <div class="new-applicant">
+                <label for="person-name">Nombre:</label>
+                <input type="text" id="person-name" class="person-name" />
+                <p class="person-name-validation">Debe ingresar un nombre para el nuevo postulante.</p>
+            </div>
+            <ul class="file-list"></ul>
             <br />
             <a class="detail-link" href="#" target="_blank">Ver postulante</a>
         </div>
         <div class="modal-footer">
-            <a href="#" class="btn" data-dismiss="modal">Cerrar</a>
+            <a href="#" class="btn btn-primary" id="create-applicant-attachment">Crear</a>
+            <a href="#" class="btn btn-secondary" data-dismiss="modal">Cerrar</a>
         </div>
     </div>
 </div>
+

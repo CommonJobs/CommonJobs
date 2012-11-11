@@ -10,6 +10,10 @@ namespace CommonJobs.Domain
     //TODO could this and Employee be refactored into a Person base class? How will be RavenDB affected?
     public class Applicant : Person, IShareableEntity
     {
+        public Applicant(): base() { }
+
+        public Applicant(string name) : base(name) { }
+
         [Display(Name = "Compañías")]
         public List<CompanyHistory> CompanyHistory { get; set; }
 

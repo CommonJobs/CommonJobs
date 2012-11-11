@@ -317,16 +317,16 @@
                         });
                     });
                     new UploadModal($('#generic-modal'))
-                        .text(".person-name", me.$("h1.fullName .view-editable").text())
-                        .title("Archivos subidos (agregados a las notas)")
+                        .text(".title", me.$("h1.fullName .view-editable").text())
+                        .subtitle("Archivos subidos (agregados a las notas)")
                         .files(data)
                         .modal();
                 },
                 fail: function (e, data, $el) {
                     new UploadModal($('#generic-modal'))
                         .error()
-                        .text(".person-name", me.$("h1.fullName .view-editable").text())
-                        .title("Error adjuntando archivos")
+                        .text(".title", me.$("h1.fullName .view-editable").text())
+                        .subtitle("Error adjuntando archivos")
                         .files(data)
                         .modal();
                 }

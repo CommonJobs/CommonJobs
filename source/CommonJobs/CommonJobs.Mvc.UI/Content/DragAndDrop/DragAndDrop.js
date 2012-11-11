@@ -83,6 +83,7 @@ var UploadModal = function ($modal) {
 };
 
 UploadModal.prototype = {
+    validations: [],
     _init: function ($modal) {
         $modal.removeClass("error");
         $modal.off("hide");
@@ -111,13 +112,17 @@ UploadModal.prototype = {
         return this
             .$("img.cardPicture", function () { this.remove(); })
             .$(".modal-header", function () { this.prepend($card.find("img.cardPicture").clone()) })
-            .text(".person-name", $card.find(".name").text())
+            .text(".title", $card.find(".name").text())
             .$(".detail-link", function () {
                 this.attr("href", $card.find(".clickable-link").attr("href"));
             });
     },
-    title: function (title) {
-        return this.text(".title", title);
+    subtitle: function (subtitle) {
+        return this.text(".subtitle", subtitle);
+    },
+    visibility: function (selector, isVisible) {
+        this.$(selector).toggle(isVisible);
+        return this;
     },
     error: function () {
         this.$modal.addClass("error");
@@ -152,6 +157,36 @@ UploadModal.prototype = {
     },
     attr: function (selector, attr, value) {
         return this.$(selector, function () { this.attr(attr, value); });
+    },
+    closeButtonText: function (text) {
+        return this.text(".close-button", text);
+    },
+    //selector: a selector on which validationFunc and validationAction will receive a jQuery object based on
+    //validationFunc: a validation function to run on the selected element. Returning true means that the validation
+    //                succeeded, returning false means otherwise
+    //validationAction: a validation action to be performed on the selected element. It received the element and the
+    //                  result of the preivously ran validation. Returning true means that the whole validation system
+    //                  can continue, returning false means that the validation was required to pass and was not optional.
+    addValidation: function (selector, validationFunc, validationAction) {
+        this.validations.push(function () {
+            var element = this.$(selector);
+            var result = validationFunc(element);
+            var validationPassed = validationAction(element, result);
+            return validationPassed;
+        });
+
+        return this;
+    },
+    runValidations: function () {
+        var i = this.validations.length;
+        var result = true;
+
+        while (i--) {
+            var func = this.validations[i];
+            result &= func();
+        }
+
+        return result;
     }
 };
 
