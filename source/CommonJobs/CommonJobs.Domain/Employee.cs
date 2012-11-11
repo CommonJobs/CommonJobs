@@ -42,6 +42,10 @@ namespace CommonJobs.Domain
                     LastName = parts[1].Trim();
                     FirstName = parts[0].Trim();
                 }
+                else
+                {
+                    FirstName = name.Trim();
+                }
             }
         }
 

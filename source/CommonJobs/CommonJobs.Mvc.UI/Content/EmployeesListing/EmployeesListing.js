@@ -155,6 +155,20 @@ $(function () {
                         .modal();
                 }
             });
+
+            $card.on("click", function (evt) {
+                evt.preventDefault();
+                evt.stopPropagation();
+                $card.find(".clickable-link").hide();
+                $card.find(".adding-new").show();
+                $card.find(".new-card-name").focus().on("keypress", function (evt) {
+                    if (evt.charCode == 13)
+                        $card.find("button.adding-new").click();
+                });
+            });
+            $card.find("button.adding-new").on("click", function () {
+                window.location = urlGenerator.action("Create", "Employees", null, { name: $card.find(".new-card-name").val() });
+            });
         },
         prepareResultCard: function ($card, item) {
             markEmployeesThatNeedsAttachments($card, item);
