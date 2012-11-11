@@ -14,39 +14,19 @@ namespace CommonJobs.Domain
 
         public Employee()
         {
+            InitializeLists();
+        }
+
+        public Employee(string name): base(name)
+        {
+            InitializeLists();
+        }
+
+        private void InitializeLists()
+        {
             Absences = new List<Absence>();
             Vacations = new List<Vacation>();
             AttachmentsBySlot = new List<SlotWithAttachment>();
-        }
-
-        public Employee(string name): this()
-        {
-            if (!string.IsNullOrWhiteSpace(name))
-                SetName(name);
-        }
-
-        private void SetName(string name)
-        {
-            //TODO unify this with the javascript logic
-            var parts = name.Split(new[] { ',' }, 2);
-            if (parts.Length > 1)
-            {
-                LastName = parts[0].Trim();
-                FirstName = parts[1].Trim();
-            }
-            else
-            {
-                parts = name.Split(new[] { ' ' }, 2);
-                if (parts.Length > 1)
-                {
-                    LastName = parts[1].Trim();
-                    FirstName = parts[0].Trim();
-                }
-                else
-                {
-                    FirstName = name.Trim();
-                }
-            }
         }
 
         [Display(Name = "Usuario")]
