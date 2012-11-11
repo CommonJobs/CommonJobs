@@ -83,12 +83,7 @@
 
         return this;
     };
-    UploadModal.prototype.closeButtonText = function (text) {
-        this.$(".close-button", function () {
-            this.text(text);
-        });
-        return this;
-    }
+
     UploadModal.prototype.personDetail = function (employee, $el) {
         //employee: backbone model object
         var result = this

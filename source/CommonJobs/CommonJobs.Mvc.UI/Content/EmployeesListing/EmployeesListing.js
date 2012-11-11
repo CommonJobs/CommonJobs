@@ -77,13 +77,6 @@ $(function () {
         
         return this;
     };
-    UploadModal.prototype.closeButtonText = function (text) {
-        this.$(".close-button", function () {
-            this.text(text);
-        });
-        return this;
-    }
-
 
     var needAttachmentsMarkTemplate = _.template($("#need-attachments-mark-template").text());
     var markEmployeesThatNeedsAttachments = function ($card, employee) {

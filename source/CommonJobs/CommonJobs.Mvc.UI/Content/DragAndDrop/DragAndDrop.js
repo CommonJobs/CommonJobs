@@ -156,6 +156,9 @@ UploadModal.prototype = {
     },
     attr: function (selector, attr, value) {
         return this.$(selector, function () { this.attr(attr, value); });
+    },
+    closeButtonText: function (text) {
+        return this.text(".close-button", text);
     }
 };
 
