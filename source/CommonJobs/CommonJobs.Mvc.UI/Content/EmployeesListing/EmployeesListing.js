@@ -47,8 +47,9 @@ $(function () {
                 } else {
                     $btn = $(slotBtnTemplate({ model: { caption: slot.Name } }));
                     $btn.on("click", function () {
-                        me.data.formData = { slot: slot.Id };
-                        me.data.submit();
+                        me.data.formData = { slot: slot.Id, name: me.$(".person-name").val() };
+                        if (me.runValidations())
+                            me.data.submit();
                     });
                 }
                 
@@ -70,7 +71,9 @@ $(function () {
         }
 
         $slots.find(".slot-general").on("click", function () {
-            me.data.submit();
+            me.data.formData = { name: me.$(".person-name").val() };
+            if (me.runValidations())
+                me.data.submit();
         });
 
         this.$(".slots").html($slots);
@@ -126,6 +129,13 @@ $(function () {
                         .subtitle("Adjuntar Archivos")
                         .text(".title", "Crear empleado con adjuntos")
                         .visibility(".new-employee", true)
+                        .visibility(".person-name-validation", false)
+                        .addValidation(".new-employee", function (element) {
+                            return $(element).find(".person-name").val().length > 0;
+                        }, function (element, result) {
+                            $(element).find(".person-name-validation").toggle(!result);
+                            return result;
+                        })
                         .files(data)
                         .drawSlots($el, null)
                         .closeButtonText("Cancelar")

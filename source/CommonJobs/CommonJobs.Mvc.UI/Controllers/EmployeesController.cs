@@ -66,15 +66,15 @@ namespace CommonJobs.Mvc.UI.Controllers
             return Json(list, JsonRequestBehavior.AllowGet);
         }
         
-        public ActionResult Create()
+        public ActionResult Create(string name)
         {
-            var newEmployee = CreateEmployee();
+            var newEmployee = CreateEmployee(name);
             return RedirectToAction("Edit", new { id = newEmployee.Id });  
         }
 
-        private Employee CreateEmployee()
+        private Employee CreateEmployee(string name)
         {
-            var newEmployee = new Employee();
+            var newEmployee = new Employee(name);
             RavenSession.Store(newEmployee);
             return newEmployee;
         }
@@ -85,12 +85,13 @@ namespace CommonJobs.Mvc.UI.Controllers
             //No me anda el binding normal
             var id = RouteData.Values["id"] as string;
             var slotId = Request.Form["slot"] as string;
+            var name = Request.Form["name"] as string;
             var uploadToNotes = string.IsNullOrEmpty(slotId);
 
             Employee employee;
             if (id == null)
             {
-                employee = CreateEmployee();
+                employee = CreateEmployee(name);
             }
             else
             {
