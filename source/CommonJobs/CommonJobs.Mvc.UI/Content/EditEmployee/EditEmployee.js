@@ -97,7 +97,7 @@
 
         var photo = employee.get('Photo');
 
-        if (photo && photo.photo.Thumbnail && photo.Thumbnail.Id) {
+        if (photo && photo.Thumbnail && photo.Thumbnail.Id) {
             result = result.$(".modal-header", function () {
                 this.prepend($('<img />')
                     .attr("src", urlGenerator.action("Get", "Attachments", photo.Thumbnail.Id, { returnName: false }))
@@ -106,7 +106,7 @@
             });
         }
 
-        return result.text(".person-name", employee.get('LastName') + ", " + employee.get('FirstName'))
+        return result.text(".title", employee.get('LastName') + ", " + employee.get('FirstName'))
     };
 
     var prepareAttachmentZone = function (dropZone, model) {

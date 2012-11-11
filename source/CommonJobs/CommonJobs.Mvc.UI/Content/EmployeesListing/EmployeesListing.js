@@ -131,7 +131,7 @@ $(function () {
                     new UploadModal($('#generic-modal'))
                         .person($el)
                         .subtitle("Adjuntar Archivos")
-                        .text(".person-name", "Crear empleado con adjuntos")
+                        .text(".title", "Crear empleado con adjuntos")
                         .files(data)
                         .drawSlots($el, null)
                         .closeButtonText("Cancelar")
@@ -143,7 +143,7 @@ $(function () {
                 fail: function (e, data, $el) {
                     new UploadModal($('#generic-modal'))
                         .person($el)
-                        .text(".person-name", "Crear empleado con adjuntos")
+                        .text(".title", "Crear empleado con adjuntos")
                         .subtitle("Error subiendo archivos")
                         .error()
                         .files(data)

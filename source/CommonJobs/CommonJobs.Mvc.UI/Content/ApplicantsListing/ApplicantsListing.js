@@ -29,7 +29,7 @@ $(function () {
                     new UploadModal($('#generic-modal'))
                         .error()
                         .person($el)
-                        .text(".person-name", "Crear postulante con adjuntos")
+                        .text(".title", "Crear postulante con adjuntos")
                         .subtitle("Error subiendo archivos")
                         .files(data)
                         .modal();

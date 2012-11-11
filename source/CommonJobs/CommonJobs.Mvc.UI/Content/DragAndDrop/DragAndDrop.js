@@ -111,7 +111,7 @@ UploadModal.prototype = {
         return this
             .$("img.cardPicture", function () { this.remove(); })
             .$(".modal-header", function () { this.prepend($card.find("img.cardPicture").clone()) })
-            .text(".person-name", $card.find(".name").text())
+            .text(".title", $card.find(".name").text())
             .$(".detail-link", function () {
                 this.attr("href", $card.find(".clickable-link").attr("href"));
             });
