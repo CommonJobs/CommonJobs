@@ -42,8 +42,8 @@ $(function () {
                         .person($el)
                         .subtitle("Adjuntar archivos")
                         .text(".title", "Crear postulante con adjuntos")
-                        .visibility("new-applicant", true)
-                        .visibility("new-applicant-validation", false)
+                        .visibility(".new-applicant", true)
+                        .visibility(".person-name-validation", false)
                         .addValidation(".new-applicant", function (element) {
                             return $(element).find(".person-name").val().length > 0;
                         }, function (element, result) {
