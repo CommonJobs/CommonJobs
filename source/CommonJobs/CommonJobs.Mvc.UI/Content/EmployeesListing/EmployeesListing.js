@@ -156,17 +156,24 @@ $(function () {
                 }
             });
 
+            var $cardButton = $card.find("button.adding-new");
             $card.on("click", function (evt) {
                 evt.preventDefault();
                 evt.stopPropagation();
                 $card.find(".clickable-link").hide();
                 $card.find(".adding-new").show();
-                $card.find(".new-card-name").focus().on("keypress", function (evt) {
-                    if (evt.charCode == 13)
-                        $card.find("button.adding-new").click();
+                $card.find(".new-card-name").focus().on("keyup", function (evt) {
+                    var valid = $(".new-card-name").val().length > 0;
+                    if (evt.which == 13 && valid)
+                        $cardButton.click();
+                    if (evt.which == 27) {
+                        $card.find(".clickable-link").show();
+                        $card.find(".adding-new").hide();
+                    }
+                    $cardButton.attr("disabled", valid ? null : "disabled");
                 });
             });
-            $card.find("button.adding-new").on("click", function () {
+            $cardButton.on("click", function () {
                 window.location = urlGenerator.action("Create", "Employees", null, { name: $card.find(".new-card-name").val() });
             });
         },
