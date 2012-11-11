@@ -318,7 +318,7 @@
                     });
                     new UploadModal($('#generic-modal'))
                         .text(".person-name", me.$("h1.fullName .view-editable").text())
-                        .title("Archivos subidos (agregados a las notas)")
+                        .subtitle("Archivos subidos (agregados a las notas)")
                         .files(data)
                         .modal();
                 },
@@ -326,7 +326,7 @@
                     new UploadModal($('#generic-modal'))
                         .error()
                         .text(".person-name", me.$("h1.fullName .view-editable").text())
-                        .title("Error adjuntando archivos")
+                        .subtitle("Error adjuntando archivos")
                         .files(data)
                         .modal();
                 }

@@ -116,8 +116,8 @@ UploadModal.prototype = {
                 this.attr("href", $card.find(".clickable-link").attr("href"));
             });
     },
-    title: function (title) {
-        return this.text(".title", title);
+    subtitle: function (subtitle) {
+        return this.text(".subtitle", subtitle);
     },
     error: function () {
         this.$modal.addClass("error");

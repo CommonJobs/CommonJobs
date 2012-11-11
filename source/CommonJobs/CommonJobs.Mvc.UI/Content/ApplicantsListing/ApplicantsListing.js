@@ -30,7 +30,7 @@ $(function () {
                         .error()
                         .person($el)
                         .text(".person-name", "Crear postulante con adjuntos")
-                        .title("Error subiendo archivos")
+                        .subtitle("Error subiendo archivos")
                         .files(data)
                         .modal();
                 }
@@ -41,7 +41,7 @@ $(function () {
                 done: function (e, data, $el) {
                     new UploadModal($('#generic-modal'))
                         .person($el)
-                        .title("Archivos subidos")
+                        .subtitle("Archivos subidos")
                         .files(data)
                         .show(".detail-link")
                         .modal();
@@ -50,7 +50,7 @@ $(function () {
                     new UploadModal($('#generic-modal'))
                         .error()
                         .person($el)
-                        .title("Error adjuntando archivos")
+                        .subtitle("Error adjuntando archivos")
                         .files(data)
                         .show(".detail-link")
                         .modal();

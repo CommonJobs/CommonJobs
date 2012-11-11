@@ -130,7 +130,7 @@ $(function () {
                 add: function (e, data, $el) {
                     new UploadModal($('#generic-modal'))
                         .person($el)
-                        .title("Adjuntar Archivos")
+                        .subtitle("Adjuntar Archivos")
                         .text(".person-name", "Crear empleado con adjuntos")
                         .files(data)
                         .drawSlots($el, null)
@@ -144,7 +144,7 @@ $(function () {
                     new UploadModal($('#generic-modal'))
                         .person($el)
                         .text(".person-name", "Crear empleado con adjuntos")
-                        .title("Error subiendo archivos")
+                        .subtitle("Error subiendo archivos")
                         .error()
                         .files(data)
                         .modal();
@@ -158,7 +158,7 @@ $(function () {
                     if ($el.hasClass("item-card")) {
                         new UploadModal($('#generic-modal'))
                             .person($el)
-                            .title("Adjuntar Archivos")
+                            .subtitle("Adjuntar Archivos")
                             .files(data)
                             .drawSlots($el, item)
                             .show(".detail-link")
@@ -175,7 +175,7 @@ $(function () {
                     markEmployeesThatNeedsAttachments($card, item);
                     new UploadModal($('#generic-modal'))
                         .person($el)
-                        .title("Archivos subidos")
+                        .subtitle("Archivos subidos")
                         .files(data)
                         .show(".detail-link")
                         .modal();
@@ -183,7 +183,7 @@ $(function () {
                 fail: function (e, data, $el) {
                     new UploadModal($('#generic-modal'))
                         .person($el)
-                        .title("Error subiendo archivos")
+                        .subtitle("Error subiendo archivos")
                         .error()
                         .files(data)
                         .show(".detail-link")
