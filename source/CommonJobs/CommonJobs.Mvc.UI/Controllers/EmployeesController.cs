@@ -82,7 +82,7 @@ namespace CommonJobs.Mvc.UI.Controllers
         [HttpPost]
         public ActionResult QuickAttachment()
         {
-            //No me anda el binding normal
+            //The normal binding does not work
             var id = RouteData.Values["id"] as string;
             var slotId = Request.Form["slot"] as string;
             var name = Request.Form["name"] as string;

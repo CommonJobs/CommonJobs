@@ -1,5 +1,20 @@
 ﻿/// <reference path="../DragAndDrop/DragAndDrop.js" />
 $(function () {
+
+    var previousInit = UploadModal.prototype._init;
+    UploadModal.prototype._init = function ($modal) {
+        _.bind(previousInit, this)($modal);
+        var me = this;
+        this.$("#create-applicant-attachment").on("click", function (evt) {
+            if (me.runValidations()) {
+                me.data.formData = { name: me.$(".person-name").val() };
+                me.data.submit();
+            } else {
+                evt.preventDefault();
+            }
+        });
+    };
+
     var dragAndDrop = new DragAndDrop();
 
     var qs = new QuickSearchPage({
@@ -22,6 +37,23 @@ $(function () {
         },
         prepareNewCard: function ($card) {
             dragAndDrop.prepareFileDropzone($card, {
+                add: function (e, data, $el) {
+                    new UploadModal($('#generic-modal'))
+                        .person($el)
+                        .subtitle("Adjuntar archivos")
+                        .text(".title", "Crear postulante con adjuntos")
+                        .visibility("new-applicant", true)
+                        .visibility("new-applicant-validation", false)
+                        .addValidation(".new-applicant", function (element) {
+                            return $(element).find(".person-name").val().length > 0;
+                        }, function (element, result) {
+                            $(element).find(".person-name-validation").toggle(!result);
+                            return result;
+                        })
+                        .files(data)
+                        .closeButtonText("Cancelar")
+                        .modal();
+                },
                 done: function (e, data) {
                     window.location = data.result.editUrl;
                 },
