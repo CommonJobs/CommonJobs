@@ -10,7 +10,7 @@
 }
 <script type="text/template" id="add-new-card-template">
     <div class="card column clickable add-new-card file-dropzone fade well">
-        <img class="cardPicture" src="@Url.Content("~/Content/Images/AddEmployee.png")" alt="Agregar nuevo..."  />
+        <img class="cardPicture" src="@Url.Content("~/Content/Images/AddApplicant.png")" alt="Agregar nuevo..."  />
         <input type="file" data-url="@Url.Action("QuickAttachment")" multiple>
         <div class="cardDescription">
             <p>@Html.ActionLink("Agregar nuevo...", "Create", null, new { @class = "clickable-link" })</p>
