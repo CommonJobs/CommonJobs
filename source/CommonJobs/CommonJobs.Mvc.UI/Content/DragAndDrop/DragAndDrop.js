@@ -119,6 +119,10 @@ UploadModal.prototype = {
     subtitle: function (subtitle) {
         return this.text(".subtitle", subtitle);
     },
+    visibility: function (selector, isVisible) {
+        this.$(selector).toggle(isVisible);
+        return this;
+    },
     error: function () {
         this.$modal.addClass("error");
         return this;

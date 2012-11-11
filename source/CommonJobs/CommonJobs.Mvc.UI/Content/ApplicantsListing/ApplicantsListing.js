@@ -29,6 +29,7 @@ $(function () {
                     new UploadModal($('#generic-modal'))
                         .error()
                         .person($el)
+                        .visibility(".new-applicant", false)
                         .text(".title", "Crear postulante con adjuntos")
                         .subtitle("Error subiendo archivos")
                         .files(data)
@@ -42,6 +43,7 @@ $(function () {
                     new UploadModal($('#generic-modal'))
                         .person($el)
                         .subtitle("Archivos subidos")
+                        .visibility(".new-applicant", false)
                         .files(data)
                         .show(".detail-link")
                         .modal();
@@ -51,6 +53,7 @@ $(function () {
                         .error()
                         .person($el)
                         .subtitle("Error adjuntando archivos")
+                        .visibility(".new-applicant", false)
                         .files(data)
                         .show(".detail-link")
                         .modal();
