@@ -123,23 +123,55 @@ module CommonFood {
         employeeId: string;
         name: string;
         defaultPlace: string;
-        choices?: EmployeeMenuDataItem[];
-        overrides?: EmployeeMenuDataOverrideItem[];
+        choices: EmployeeMenuDataItem[];
+        overrides: EmployeeMenuDataOverrideItem[];
     }
 
     export class EmployeeMenuDefinition extends Utilities.HasCallbacks {
-        constructor (public menu:MenuDefinition, data: EmployeeMenuData) {
+        menu: MenuDefinition;
+        name: string;
+        employeeId: string;
+        defaultPlace: knockout.koObservableString;
+
+
+        constructor (menu: MenuDefinition, data: EmployeeMenuData) {
             super();
+            this.prepareMenu(menu);
             this.reset(data);
         }
 
-        reset(data: EmployeeMenuData) {
+        private prepareMenu(menu: MenuDefinition) {
+            this.menu = menu;
             //TODO
         }
 
+        reset(data: EmployeeMenuData) {
+            this.employeeId = data.employeeId;
+            this.name = data.name;
+            this.defaultPlace = ko.observable(data.defaultPlace);
+
+            _.each(data.choices, choice => { 
+                //TODO
+            });
+
+            _.each(data.overrides, override => { 
+                //TODO
+            });
+
+        }
+
         exportData(): EmployeeMenuData {
-            //TODO
-            return null;
+            var data: EmployeeMenuData = {
+                employeeId: this.employeeId,
+                name: this.name,
+                defaultPlace: this.defaultPlace(),
+                choices: [],
+                overrides: []
+            };
+
+            //TODO: choices
+            //TODO: overrides
+            return data;
         }
     }
     

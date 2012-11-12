@@ -76,13 +76,30 @@ var CommonFood;
         __extends(EmployeeMenuDefinition, _super);
         function EmployeeMenuDefinition(menu, data) {
                 _super.call(this);
-            this.menu = menu;
+            this.prepareMenu(menu);
             this.reset(data);
         }
+        EmployeeMenuDefinition.prototype.prepareMenu = function (menu) {
+            this.menu = menu;
+        };
         EmployeeMenuDefinition.prototype.reset = function (data) {
+            this.employeeId = data.employeeId;
+            this.name = data.name;
+            this.defaultPlace = ko.observable(data.defaultPlace);
+            _.each(data.choices, function (choice) {
+            });
+            _.each(data.overrides, function (override) {
+            });
         };
         EmployeeMenuDefinition.prototype.exportData = function () {
-            return null;
+            var data = {
+                employeeId: this.employeeId,
+                name: this.name,
+                defaultPlace: this.defaultPlace(),
+                choices: [],
+                overrides: []
+            };
+            return data;
         };
         return EmployeeMenuDefinition;
     })(Utilities.HasCallbacks);
