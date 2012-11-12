@@ -40,7 +40,15 @@
         </header>
         <div class="container">
             <section class="persistence">
-                <textarea class="json-field">
+                <div>
+                    <button class="btn" data-bind="click: load">Leer desde JSON</button>
+                    <button class="btn" data-bind="click: save">Escribir en JSON</button>
+                    <div class="btn-group" data-toggle="buttons-checkbox">
+                        <a class="btn" data-toggle="collapse" href="#collapseData">Mostrar JSON</a>
+                    </div>
+                </div>
+                <div id="collapseData" class="collapse">
+                    <textarea class="json-field">
 {
   "title":"Menú primaveral",
   "firstWeek":0,
@@ -134,10 +142,49 @@
     { "week":4, "day":5, "option":"menu_vegetariano", "food":"Lasagna de ricota,vegetales,espinacas y salsa mixta gratinada" }
   ]
 }
-                </textarea>
-                <button class="btn" data-bind="click: load">Leer desde JSON</button>
-                <button class="btn" data-bind="click: save">Escribir en JSON</button>
+                    </textarea>
+                </div>
             </section>
+            <hr />
+            <section class="configuration">
+                <div class="btn-group" data-toggle="buttons-checkbox">
+                    <a class="btn" data-toggle="collapse" href="#collapseCfg">Mostrar Configuración</a>
+                </div>
+                <div id="collapseCfg" class="collapse">
+                    <h3>General</h3>
+                    <ul>
+                        <li><label>Título: <input data-bind="value: title" /></label></li>
+                        <li><label>Comienza: <input data-bind="datepicker: startDate, datepickerOptions: { dataType: 'iso' }" /></label></li>
+                        <li><label>Finaliza: <input data-bind="datepicker: endDate, datepickerOptions: { dataType: 'iso' }" /></label></li>
+                        <li><label>Editable hasta: <input id="tp" data-bind="time: deadlineTime" /></label></li>
+                        <li><label>Primer semana: <input data-bind="value: firstWeek" /><!-- TODO: select --></label></li>
+                    </ul>
+
+                    <h3>Opciones de menú</h3>
+                    <ul data-bind="foreach: options">
+                        <li>
+                            <input data-bind='value: text' />
+                            <a href="#" data-bind="click: $root.removeOption">Remove</a>
+                        </li>
+                    </ul>
+                    <a href="#" data-bind="click: addOption">Add</a>
+                    <a href="#" data-bind="click: removeOption">Remove</a>
+                    <h3>Lugares</h3>
+                    <ul data-bind="foreach: places">
+                        <li>
+                            <input data-bind='value: text' />
+                            <a href="#" data-bind="click: $root.removePlace">Remove</a>
+                        </li>
+                    </ul>
+                    <a href="#" data-bind="click: addPlace">Add</a>
+                    <a href="#" data-bind="click: removePlace">Remove</a>
+                    <h3>Semanas</h3>
+                    <span data-bind='text: weeks'></span> Semanas
+                    <a href="#" data-bind="click: addWeek">Add</a>
+                    <a href="#" data-bind="click: removeWeek">Remove</a>
+                </div>
+            </section>
+            <hr />
             <section id="main">
                 <div data-bind="foreach: $root.foods">
                     <h4>Semana <span data-bind='text: $index() + 1'></span></h4>
@@ -163,39 +210,6 @@
                         </tbody>
                     </table>
                 </div>
-                <hr />
-                <h2>Configuración</h2>
-
-                <ul>
-                    <li><label>Título: <input data-bind="value: title" /></label></li>
-                    <li><label>Comienza: <input data-bind="datepicker: startDate, datepickerOptions: { dataType: 'iso' }" /></label></li>
-                    <li><label>Finaliza: <input data-bind="datepicker: endDate, datepickerOptions: { dataType: 'iso' }" /></label></li>
-                    <li><label>Editable hasta: <input id="tp" data-bind="time: deadlineTime" /></label></li>
-                    <li><label>Primer semana: <input data-bind="value: firstWeek" /><!-- TODO: select --></label></li>
-                </ul>
-
-                <h3>Opciones de menú</h3>
-                <ul data-bind="foreach: options">
-                    <li>
-                        <input data-bind='value: text' />
-                        <a href="#" data-bind="click: $root.removeOption">Remove</a>
-                    </li>
-                </ul>
-                <a href="#" data-bind="click: addOption">Add</a>
-                <a href="#" data-bind="click: removeOption">Remove</a>
-                <h3>Lugares</h3>
-                <ul data-bind="foreach: places">
-                    <li>
-                        <input data-bind='value: text' />
-                        <a href="#" data-bind="click: $root.removePlace">Remove</a>
-                    </li>
-                </ul>
-                <a href="#" data-bind="click: addPlace">Add</a>
-                <a href="#" data-bind="click: removePlace">Remove</a>
-                <h3>Semanas</h3>
-                <span data-bind='text: weeks'></span> Semanas
-                <a href="#" data-bind="click: addWeek">Add</a>
-                <a href="#" data-bind="click: removeWeek">Remove</a>
             </section>
         </div>
         <footer>
