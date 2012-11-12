@@ -28,18 +28,19 @@
             <div class="navbar-inner">
                 <ul class="nav">
                     <li><a href="./">Home</a></li>
-                    <li class="active"><a href="admin.html">Definir menues</a></li>
+                    <li class="active"><a href="admin.html">Definir menú</a></li>
                     <li><a href="mymenu.html">Mi menú</a></li>
                 </ul>
             </div>
         </div>
         <header class="jumbotron subhead" id="overview" style="padding: 40px 0;">
           <div class="container">
-            <h1 data-bind="text: title">Common Food</h1>
+            <h1>Definir menú</h1>
           </div>
         </header>
         <div class="container">
             <section class="persistence">
+                <h2>Persistencia</h2>
                 <div>
                     <button class="btn" data-bind="click: load">Leer desde JSON</button>
                     <button class="btn" data-bind="click: save">Escribir en JSON</button>
@@ -147,6 +148,7 @@
             </section>
             <hr />
             <section class="configuration">
+                <h2>Configuración</h2>
                 <div class="btn-group" data-toggle="buttons-checkbox">
                     <a class="btn" data-toggle="collapse" href="#collapseCfg">Mostrar Configuración</a>
                 </div>
@@ -154,8 +156,8 @@
                     <h3>General</h3>
                     <ul>
                         <li><label>Título: <input data-bind="value: title" /></label></li>
-                        <li><label>Comienza: <input data-bind="datepicker: startDate, datepickerOptions: { dataType: 'iso' }" /></label></li>
-                        <li><label>Finaliza: <input data-bind="datepicker: endDate, datepickerOptions: { dataType: 'iso' }" /></label></li>
+                        <li><label>Comienza: <input readonly="readonly" data-bind="datepicker: startDate, datepickerOptions: { dataType: 'iso' }" /></label></li>
+                        <li><label>Finaliza: <input readonly="readonly" data-bind="datepicker: endDate, datepickerOptions: { dataType: 'iso' }" /></label></li>
                         <li><label>Editable hasta: <input id="tp" data-bind="time: deadlineTime" /></label></li>
                         <li><label>Primer semana: <input data-bind="value: firstWeek" /><!-- TODO: select --></label></li>
                     </ul>
@@ -186,6 +188,7 @@
             </section>
             <hr />
             <section id="main">
+                <h2 data-bind="text: title">Common Food</h2>
                 <div data-bind="foreach: $root.foods">
                     <h4>Semana <span data-bind='text: $index() + 1'></span></h4>
                     <table>
