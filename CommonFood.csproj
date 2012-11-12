@@ -122,6 +122,10 @@
     <Content Include="Scripts\CommonFood.js">
       <DependentUpon>CommonFood.ts</DependentUpon>
     </Content>
+    <TypeScriptCompile Include="Scripts\mymenu.ts" />
+    <Content Include="Scripts\Copy of admin.js">
+      <DependentUpon>mymenu.ts</DependentUpon>
+    </Content>
     <Content Include="Scripts\knockout-2.2.0.debug.js" />
     <Content Include="Scripts\knockout-2.2.0.js" />
     <Content Include="Scripts\moment-datepicker-ko.js" />
@@ -165,6 +169,9 @@
     <Content Include="Scripts\moment.i18n\zh-tw.js" />
     <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\moment.min.js" />
+    <Content Include="Scripts\mymenu.js">
+      <DependentUpon>mymenu.ts</DependentUpon>
+    </Content>
     <Content Include="Scripts\time-ko.js" />
     <Content Include="Scripts\underscore.browser.d.ts" />
     <Content Include="Scripts\Knockout.d.ts" />

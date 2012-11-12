@@ -108,15 +108,43 @@ module CommonFood {
         week: number;
         day: number;
         option: string;
-        place: string;
+        place?: string;
+    }
+
+    export interface EmployeeMenuDataOverrideItem {
+        date: string;
+        cancel?: bool;
+        option?: string; 
+        place?: string;
+        comment?: string;
     }
 
     export interface EmployeeMenuData {
-        choices: EmployeeMenuDataItem[];
+        employeeId: string;
+        name: string;
+        defaultPlace: string;
+        choices?: EmployeeMenuDataItem[];
+        overrides?: EmployeeMenuDataOverrideItem[];
     }
 
+    export class EmployeeMenuDefinition extends Utilities.HasCallbacks {
+        constructor (public menu:MenuDefinition, data: EmployeeMenuData) {
+            super();
+            this.reset(data);
+        }
+
+        reset(data: EmployeeMenuData) {
+            //TODO
+        }
+
+        exportData(): EmployeeMenuData {
+            //TODO
+            return null;
+        }
+    }
+    
     export class MenuDefinition extends Utilities.HasCallbacks  {
-        static defaultModel: MenuData = {
+        static defaultData: MenuData = {
             title: "Nuevo Menú",
             firstWeek: 0,
             weeks: 0,
@@ -139,9 +167,9 @@ module CommonFood {
         foods: knockout.koObservableArrayBase = ko.observableArray();
         static idGenerator = new Utilities.IdGenerator();
 
-        constructor (model?: MenuData) {
+        constructor (data?: MenuData) {
             super();
-            this.reset(model);
+            this.reset(data);
         }
 
         private createKeyTextObservableArray(items: KeyText[]) {
@@ -154,7 +182,7 @@ module CommonFood {
         }
 
         reset(data?: MenuData) {
-            data =  <MenuData>$.extend({}, MenuDefinition.defaultModel, data);
+            data =  <MenuData>$.extend({}, MenuDefinition.defaultData, data);
             var i: any;
             this.title(data.title);
             this.weeks(0);
@@ -192,8 +220,8 @@ module CommonFood {
             }
         }
         
-        exportModel(): MenuData {
-            var model: MenuData = { 
+        exportData(): MenuData {
+            var data: MenuData = { 
                 title: this.title(),
                 firstWeek: this.firstWeek(),
                 weeks: this.weeks(),
@@ -208,7 +236,7 @@ module CommonFood {
                 var food;
                 for (var opt in dayFoods) {
                     if (food = dayFoods[opt]()) {
-                        model.foods.push({
+                        data.foods.push({
                             week: weekIndex,
                             day: dayIndex,
                             option: opt,
@@ -218,7 +246,7 @@ module CommonFood {
                 }
             });
 
-            return model;
+            return data;
         }
 
         getFood(weekIndex: number, dayIndex: number, opt: string): knockout.koObservableString {

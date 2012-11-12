@@ -15,17 +15,17 @@ module CommonFood {
 
         load() {
             //TODO: reset from server
-            var model = eval("(" + this.$json.val() + ")");
+            var data = eval("(" + this.$json.val() + ")");
             //support comments or not? var model = JSON.parse(this.$json.text());
 
-            this.reset(model);
+            this.reset(data);
         }
 
         save() {
-            var model = this.exportModel();
+            var data = this.exportData();
             
             //TODO: save to server
-            this.$json.val(JSON.stringify(model));
+            this.$json.val(JSON.stringify(data));
         }
     }
 

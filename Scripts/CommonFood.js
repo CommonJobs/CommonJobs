@@ -72,9 +72,24 @@ var CommonFood;
         };
         return def;
     })();
+    var EmployeeMenuDefinition = (function (_super) {
+        __extends(EmployeeMenuDefinition, _super);
+        function EmployeeMenuDefinition(menu, data) {
+                _super.call(this);
+            this.menu = menu;
+            this.reset(data);
+        }
+        EmployeeMenuDefinition.prototype.reset = function (data) {
+        };
+        EmployeeMenuDefinition.prototype.exportData = function () {
+            return null;
+        };
+        return EmployeeMenuDefinition;
+    })(Utilities.HasCallbacks);
+    CommonFood.EmployeeMenuDefinition = EmployeeMenuDefinition;    
     var MenuDefinition = (function (_super) {
         __extends(MenuDefinition, _super);
-        function MenuDefinition(model) {
+        function MenuDefinition(data) {
                 _super.call(this);
             this.title = ko.observable("");
             this.weeks = ko.observable(0);
@@ -85,9 +100,9 @@ var CommonFood;
             this.deadlineTime = ko.observable("");
             this.firstWeek = ko.observable(0);
             this.foods = ko.observableArray();
-            this.reset(model);
+            this.reset(data);
         }
-        MenuDefinition.defaultModel = {
+        MenuDefinition.defaultData = {
             title: "Nuevo Menú",
             firstWeek: 0,
             weeks: 0,
@@ -109,7 +124,7 @@ var CommonFood;
         };
         MenuDefinition.prototype.reset = function (data) {
             data = $.extend({
-            }, MenuDefinition.defaultModel, data);
+            }, MenuDefinition.defaultData, data);
             var i;
             this.title(data.title);
             this.weeks(0);
@@ -144,8 +159,8 @@ var CommonFood;
                 });
             }
         };
-        MenuDefinition.prototype.exportModel = function () {
-            var model = {
+        MenuDefinition.prototype.exportData = function () {
+            var data = {
                 title: this.title(),
                 firstWeek: this.firstWeek(),
                 weeks: this.weeks(),
@@ -159,7 +174,7 @@ var CommonFood;
                 var food;
                 for(var opt in dayFoods) {
                     if(food = dayFoods[opt]()) {
-                        model.foods.push({
+                        data.foods.push({
                             week: weekIndex,
                             day: dayIndex,
                             option: opt,
@@ -168,7 +183,7 @@ var CommonFood;
                     }
                 }
             });
-            return model;
+            return data;
         };
         MenuDefinition.prototype.getFood = function (weekIndex, dayIndex, opt) {
             return this.foods()[weekIndex][dayIndex][opt];
