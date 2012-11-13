@@ -1,8 +1,8 @@
 var CommonFood;
 (function (CommonFood) {
     (function (MyMenu) {
-        var $menuJson = $(".persistence .json-field.menu");
-        var $employeeMenuJson = $(".persistence .json-field.employee-menu");
+        var $menuJson;
+        var $employeeMenuJson;
         var employeeMenu = null;
         MyMenu.load = function () {
             var menuData = eval("(" + $menuJson.val() + ")");
@@ -16,6 +16,8 @@ var CommonFood;
             $employeeMenuJson.val(JSON.stringify(data));
         };
         $(document).ready(function () {
+            $menuJson = $(".persistence .json-field.menu");
+            $employeeMenuJson = $(".persistence .json-field.employee-menu");
             MyMenu.load();
         });
     })(CommonFood.MyMenu || (CommonFood.MyMenu = {}));

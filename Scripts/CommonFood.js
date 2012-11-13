@@ -72,21 +72,111 @@ var CommonFood;
         };
         return def;
     })();
+    var WeekStorage = (function (_super) {
+        __extends(WeekStorage, _super);
+        function WeekStorage(weeksQuantity) {
+            var _this = this;
+                _super.call(this);
+            this.weeksQuantity = ko.observable(0);
+            this.weeks = ko.computed(function () {
+                return _.map(_.range(_this.weeksQuantity()), function (x) {
+                    return {
+                        key: x.toString(),
+                        text: "Semana " + (x + 1)
+                    };
+                });
+            });
+            this.WeekStorageReset(weeksQuantity);
+        }
+        WeekStorage.prototype.setWeeksQuantity = function (n) {
+            (this.weeksQuantity)(n);
+        };
+        WeekStorage.prototype.reset = function (weeksQuantity) {
+            this.WeekStorageReset(weeksQuantity);
+        };
+        WeekStorage.prototype.WeekStorageReset = function (weeksQuantity) {
+            var i;
+            this.setWeeksQuantity(0);
+            this.items = [];
+            if(weeksQuantity) {
+                for(i = 0; i < weeksQuantity; i++) {
+                    this.addWeek();
+                }
+            }
+        };
+        WeekStorage.prototype.addWeek = function () {
+            var weekItems = [];
+            for(var i = 0; i < 7; i++) {
+                var dayItem = this.createNewItem();
+                weekItems.push(dayItem);
+            }
+            this.items.push(weekItems);
+            this.setWeeksQuantity(this.weeksQuantity() + 1);
+        };
+        WeekStorage.prototype.removeWeek = function () {
+            var actual = this.weeksQuantity();
+            if(actual > 0) {
+                this.setWeeksQuantity(actual - 1);
+                this.items.pop();
+            }
+        };
+        WeekStorage.prototype.createNewItem = function () {
+            return null;
+        };
+        WeekStorage.prototype.getItem = function (week, day) {
+            return CommonFood.days.isValid(day) && week < this.weeksQuantity() ? this.items[week][day] : null;
+        };
+        WeekStorage.prototype.eachWeek = function (f) {
+            _.each(this.items, function (weekItems, weekIndex) {
+                return f(weekItems, weekIndex);
+            });
+        };
+        WeekStorage.prototype.eachDay = function (f) {
+            this.eachWeek(function (weekItems, weekIndex) {
+                return _.each(weekItems, function (dayItem, dayIndex) {
+                    return f(dayItem, weekIndex, dayIndex);
+                });
+            });
+        };
+        return WeekStorage;
+    })(Utilities.HasCallbacks);    
+    var DayChoice = (function () {
+        function DayChoice(option, place) {
+            if (typeof option === "undefined") { option = null; }
+            if (typeof place === "undefined") { place = null; }
+            this.option = ko.observable(option);
+            this.place = ko.observable(place);
+        }
+        return DayChoice;
+    })();    
     var EmployeeMenuDefinition = (function (_super) {
         __extends(EmployeeMenuDefinition, _super);
         function EmployeeMenuDefinition(menu, data) {
-                _super.call(this);
-            this.prepareMenu(menu);
-            this.reset(data);
-        }
-        EmployeeMenuDefinition.prototype.prepareMenu = function (menu) {
+                _super.call(this, menu.weeksQuantity());
             this.menu = menu;
-        };
+            this.EmployeeMenuDefinitionReset(data);
+        }
         EmployeeMenuDefinition.prototype.reset = function (data) {
+            _super.prototype.reset.call(this, this.menu.weeksQuantity());
+            this.EmployeeMenuDefinitionReset(data);
+        };
+        EmployeeMenuDefinition.prototype.createNewItem = function () {
+            return new DayChoice();
+        };
+        EmployeeMenuDefinition.prototype.getItem = function (week, day) {
+            return _super.prototype.getItem.call(this, week, day);
+        };
+        EmployeeMenuDefinition.prototype.EmployeeMenuDefinitionReset = function (data) {
+            var _this = this;
             this.employeeId = data.employeeId;
             this.name = data.name;
             this.defaultPlace = ko.observable(data.defaultPlace);
-            _.each(data.choices, function (choice) {
+            _.each(data.choices, function (x) {
+                var choice = _this.getItem(x.week, x.day);
+                if(choice) {
+                    choice.option(x.option);
+                    choice.place(x.place);
+                }
             });
             _.each(data.overrides, function (override) {
             });
@@ -102,103 +192,12 @@ var CommonFood;
             return data;
         };
         return EmployeeMenuDefinition;
-    })(Utilities.HasCallbacks);
+    })(WeekStorage);
     CommonFood.EmployeeMenuDefinition = EmployeeMenuDefinition;    
-    var ByDayCollection = (function (_super) {
-        __extends(ByDayCollection, _super);
-        function ByDayCollection(data) {
-                _super.call(this);
-            this.weeks = ko.observable(0);
-            this.items = ko.observableArray();
-            this.reset(data);
-        }
-        ByDayCollection.prototype.reset = function (data) {
-            var i;
-            data = _.extend({
-                weeks: 0,
-                items: []
-            }, data);
-            this.weeks(0);
-            this.items.removeAll();
-            for(i = 0; i < data.weeks; i++) {
-                this.addWeek();
-            }
-        };
-        ByDayCollection.prototype.addWeek = function () {
-            var weekItems = [];
-            for(var i = 0; i < 7; i++) {
-                var dayItem = this.createNewItem();
-                weekItems.push(dayItem);
-            }
-            this.items.push(weekItems);
-            this.weeks(this.weeks() + 1);
-        };
-        ByDayCollection.prototype.removeWeek = function () {
-            var actual = this.weeks();
-            if(actual > 0) {
-                this.weeks(actual - 1);
-                this.items.pop();
-            }
-        };
-        ByDayCollection.prototype.createNewItem = function () {
-            return null;
-        };
-        ByDayCollection.prototype.getItem = function (week, day) {
-            return CommonFood.days.isValid(day) && week < this.weeks() ? this.items()[week][day] : null;
-        };
-        ByDayCollection.prototype.eachWeek = function (f) {
-            _.each(this.items(), function (weekFoods, weekIndex) {
-                return f(weekFoods, weekIndex);
-            });
-        };
-        ByDayCollection.prototype.eachDay = function (f) {
-            this.eachWeek(function (weekFoods, weekIndex) {
-                return _.each(weekFoods, function (dayFoods, dayIndex) {
-                    return f(dayFoods, weekIndex, dayIndex);
-                });
-            });
-        };
-        return ByDayCollection;
-    })(Utilities.HasCallbacks);    
-    var MenuDefinitionByDayCollection = (function (_super) {
-        __extends(MenuDefinitionByDayCollection, _super);
-        function MenuDefinitionByDayCollection(menu, data) {
-                _super.call(this, data);
-            this.menu = menu;
-        }
-        MenuDefinitionByDayCollection.prototype.reset = function (data) {
-            var _this = this;
-            _super.prototype.reset.call(this, data);
-            if(data && data.foods) {
-                _.each(data.foods, function (x) {
-                    var option = _this.getFood(x.week, x.day, x.option);
-                    if(option) {
-                        option(x.food);
-                    }
-                });
-            }
-        };
-        MenuDefinitionByDayCollection.prototype.createNewItem = function () {
-            var item = {
-            };
-            _.each(this.menu.options(), function (option) {
-                return item[option.key] = ko.observable("");
-            });
-            return item;
-        };
-        MenuDefinitionByDayCollection.prototype.getItem = function (week, day) {
-            return _super.prototype.getItem.call(this, week, day);
-        };
-        MenuDefinitionByDayCollection.prototype.getFood = function (week, day, option) {
-            var dayFoods = this.getItem(week, day);
-            return dayFoods && dayFoods[option];
-        };
-        return MenuDefinitionByDayCollection;
-    })(ByDayCollection);    
     var MenuDefinition = (function (_super) {
         __extends(MenuDefinition, _super);
         function MenuDefinition(data) {
-                _super.call(this);
+                _super.call(this, data && data.weeksQuantity);
             this.title = ko.observable("");
             this.options = ko.observableArray();
             this.places = ko.observableArray();
@@ -206,15 +205,12 @@ var CommonFood;
             this.endDate = ko.observable("");
             this.deadlineTime = ko.observable("");
             this.firstWeek = ko.observable(0);
-            this.items = new MenuDefinitionByDayCollection(this);
-            this.weeks = this.items.weeks;
-            this.foods = this.items.items;
-            this.reset(data);
+            this.MenuDefinitionReset(data);
         }
         MenuDefinition.defaultData = {
             title: "Nuevo Menú",
             firstWeek: 0,
-            weeks: 0,
+            weeksQuantity: 0,
             options: [],
             places: [],
             startDate: "2000-01-01",
@@ -223,6 +219,31 @@ var CommonFood;
             foods: []
         };
         MenuDefinition.idGenerator = new Utilities.IdGenerator();
+        MenuDefinition.prototype.createNewItem = function () {
+            var item = {
+            };
+            if(this.options) {
+                _.each(this.options(), function (option) {
+                    return item[option.key] = ko.observable("");
+                });
+            }
+            return item;
+        };
+        MenuDefinition.prototype.getItem = function (week, day) {
+            return _super.prototype.getItem.call(this, week, day);
+        };
+        MenuDefinition.prototype.getFood = function (week, day, option) {
+            this.weeksQuantity();
+            this.options();
+            var dayFoods = this.getItem(week, day);
+            return dayFoods && dayFoods[option];
+        };
+        MenuDefinition.prototype.eachWeek = function (f) {
+            _super.prototype.eachWeek.call(this, f);
+        };
+        MenuDefinition.prototype.eachDay = function (f) {
+            _super.prototype.eachDay.call(this, f);
+        };
         MenuDefinition.prototype.createKeyTextObservableArray = function (items) {
             return ko.observableArray(_.map(items, function (item) {
                 return {
@@ -231,7 +252,8 @@ var CommonFood;
                 };
             }));
         };
-        MenuDefinition.prototype.reset = function (data) {
+        MenuDefinition.prototype.MenuDefinitionReset = function (data) {
+            var _this = this;
             data = $.extend({
             }, MenuDefinition.defaultData, data);
             var i;
@@ -248,20 +270,31 @@ var CommonFood;
             for(i in data.options) {
                 this.addOption(data.options[i]);
             }
-            this.items.reset(data);
+            if(data && data.foods) {
+                _.each(data.foods, function (x) {
+                    var option = _this.getFood(x.week, x.day, x.option);
+                    if(option) {
+                        option(x.food);
+                    }
+                });
+            }
+        };
+        MenuDefinition.prototype.reset = function (data) {
+            _super.prototype.reset.call(this, data && data.weeksQuantity);
+            this.MenuDefinitionReset(data);
         };
         MenuDefinition.prototype.exportData = function () {
             var data = {
                 title: this.title(),
                 firstWeek: this.firstWeek(),
-                weeks: this.weeks(),
+                weeksQuantity: this.weeksQuantity(),
                 startDate: this.startDate(),
                 endDate: this.endDate(),
                 places: ko.toJS(this.places),
                 options: ko.toJS(this.options),
                 foods: []
             };
-            this.items.eachDay(function (dayFoods, weekIndex, dayIndex) {
+            this.eachDay(function (dayFoods, weekIndex, dayIndex) {
                 var food;
                 for(var opt in dayFoods) {
                     if(food = dayFoods[opt]()) {
@@ -275,9 +308,6 @@ var CommonFood;
                 }
             });
             return data;
-        };
-        MenuDefinition.prototype.getFood = function (weekIndex, dayIndex, opt) {
-            return this.items.getFood(weekIndex, dayIndex, opt);
         };
         MenuDefinition.prototype.generateText = function (baseName, collection, name) {
             var texts = _.map(ko.toJS(collection), function (item) {
@@ -333,22 +363,17 @@ var CommonFood;
             var index = _.isNumber(item) ? item : collection.indexOf(item);
             return collection.splice(index, 1)[0];
         };
-        MenuDefinition.prototype.addWeek = function () {
-            this.items.addWeek();
-        };
-        MenuDefinition.prototype.removeWeek = function () {
-            this.items.removeWeek();
-        };
         MenuDefinition.prototype.addOption = function (option) {
             var op = this.addKeyObservableText(this.options, "Menú ", "menu_", option);
-            this.items.eachDay(function (dayFoods) {
+            this.eachDay(function (dayFoods) {
                 dayFoods[op.key] = ko.observable("");
             });
+            this.options.valueHasMutated();
         };
         MenuDefinition.prototype.removeOption = function (option) {
             var removed = this.removeItem(this.options, option);
             if(removed) {
-                this.items.eachDay(function (dayFoods) {
+                this.eachDay(function (dayFoods) {
                     return delete dayFoods[removed.key];
                 });
             }
@@ -360,7 +385,7 @@ var CommonFood;
             this.removeItem(this.places, place);
         };
         return MenuDefinition;
-    })(Utilities.HasCallbacks);
+    })(WeekStorage);
     CommonFood.MenuDefinition = MenuDefinition;    
 })(CommonFood || (CommonFood = {}));
 

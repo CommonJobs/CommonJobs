@@ -86,7 +86,7 @@ module CommonFood {
     export interface MenuData {
         title?: string;
         firstWeek?: number;
-        weeks?: number;
+        weeksQuantity?: number;
         options?: KeyText[];
         places?: KeyText[];
         startDate?: string;
@@ -127,30 +127,136 @@ module CommonFood {
         overrides: EmployeeMenuDataOverrideItem[];
     }
 
-    export class EmployeeMenuDefinition extends Utilities.HasCallbacks {
-        menu: MenuDefinition;
+    interface DayData {
+        week: number;
+        day: number;
+        value: any;
+    }
+
+    class WeekStorage extends Utilities.HasCallbacks {
+        weeksQuantity: { (): number; };
+        weeks: { (): KeyText[]; };
+        private items: any[][];
+
+        constructor (weeksQuantity?: number) {
+            super();
+            this.weeksQuantity = ko.observable(0);
+            this.weeks = ko.computed(() => _.map(_.range(this.weeksQuantity()), (x: number): KeyText => {
+                return { key: x.toString(), text: "Semana " + (x + 1) };
+            }));
+            this.WeekStorageReset(weeksQuantity);
+            //(<knockout.koComputed>this.weeks).subscribe((x) => console.log(x));
+        }
+
+        private setWeeksQuantity(n: number) {
+            //console.log(n);
+            (<knockout.koObservableNumber>this.weeksQuantity)(n);
+        }
+
+        reset(weeksQuantity?: number) {
+            this.WeekStorageReset(weeksQuantity);
+        }
+
+        private WeekStorageReset(weeksQuantity?: number) {
+            var i: any;
+            this.setWeeksQuantity(0);
+            this.items = [];
+
+            if (weeksQuantity) {
+                for (i = 0; i < weeksQuantity; i++) {
+                    this.addWeek();
+                }
+            }
+        }
+
+        addWeek() {
+            var weekItems = [];
+
+            for (var i = 0; i < 7; i++) {
+                var dayItem = this.createNewItem();
+                weekItems.push(dayItem);
+            }
+            this.items.push(weekItems);
+            this.setWeeksQuantity(this.weeksQuantity() + 1);
+        }
+
+        removeWeek() {
+            var actual = this.weeksQuantity();
+            if (actual > 0) {
+                this.setWeeksQuantity(actual - 1);
+                this.items.pop();
+            }    
+        }
+
+        ///To override
+        createNewItem() {
+            return null;
+        }
+
+        getItem(week: number, day: number): any {
+            return days.isValid(day) && week < this.weeksQuantity()
+                ? this.items[week][day] 
+                : null;
+        }
+
+        eachWeek(f: (weekItems: any[], weekIndex: number) => void ) {
+            _.each(this.items, (weekItems, weekIndex) => f(weekItems, weekIndex));
+        }
+
+        eachDay(f: (dayItem: any, dayIndex: number, weekIndex: number) => void ) {
+            this.eachWeek((weekItems, weekIndex) => 
+                _.each(weekItems, (dayItem, dayIndex) => 
+                    f(dayItem, weekIndex, dayIndex)));
+        };
+    }
+
+    class DayChoice {
+        option: knockout.koObservableString;
+        place: knockout.koObservableString;
+
+        constructor (option?: string = null, place?: string = null) {
+            this.option = ko.observable(option);
+            this.place = ko.observable(place);
+        }
+    }
+
+    export class EmployeeMenuDefinition extends WeekStorage {
         name: string;
         employeeId: string;
         defaultPlace: knockout.koObservableString;
 
 
-        constructor (menu: MenuDefinition, data: EmployeeMenuData) {
-            super();
-            this.prepareMenu(menu);
-            this.reset(data);
+        constructor (public menu: MenuDefinition, data: EmployeeMenuData) {
+            super(menu.weeksQuantity());
+            this.EmployeeMenuDefinitionReset(data);
         }
 
-        private prepareMenu(menu: MenuDefinition) {
-            this.menu = menu;
-            //TODO
+        reset(data?: EmployeeMenuData) {
+            super.reset(this.menu.weeksQuantity());
+            this.EmployeeMenuDefinitionReset(data);
         }
 
-        reset(data: EmployeeMenuData) {
+        createNewItem() {
+            return new DayChoice();
+        }
+
+        
+        getItem(week: number, day: number): DayChoice {
+            return super.getItem(week, day);
+        }
+
+        EmployeeMenuDefinitionReset(data: EmployeeMenuData) {
             this.employeeId = data.employeeId;
             this.name = data.name;
             this.defaultPlace = ko.observable(data.defaultPlace);
 
-            _.each(data.choices, choice => { 
+            _.each(data.choices, (x: EmployeeMenuDataItem) => { 
+                var choice = this.getItem(x.week, x.day);
+                //
+                if (choice /*&& TODO: comprobar validez*/) {
+                    choice.option(x.option);
+                    choice.place(x.place);
+                }
                 //TODO
             });
 
@@ -175,119 +281,13 @@ module CommonFood {
         }
     }
     
-    interface ByDayCollectionDataItem {
-        week: number;
-        day: number;
-        value: any;
-    }
 
-    interface ByDayCollectionData {
-        weeks?: number;
-        items?: ByDayCollectionDataItem[];
-    }
 
-    class ByDayCollection extends Utilities.HasCallbacks {
-        weeks: knockout.koObservableNumber = ko.observable(0);
-        items: knockout.koObservableArrayBase = ko.observableArray();
-        //TODO:
-        //items: ByDayCollectionDataItem[][];
-
-        constructor (data?: ByDayCollectionData) {
-            super();
-            this.reset(data);
-        }
-
-        reset(data?: ByDayCollectionData) {
-            var i: any;
-            data = _.extend({ weeks: 0, items: [] }, data);
-            this.weeks(0);
-            this.items.removeAll();
-
-            for (i = 0; i < data.weeks; i++) {
-                this.addWeek();
-            }
-        }
-
-        addWeek() {
-            var weekItems = [];
-
-            for (var i = 0; i < 7; i++) {
-                var dayItem = this.createNewItem();
-                weekItems.push(dayItem);
-            }
-            this.items.push(weekItems);
-            this.weeks(this.weeks() + 1);
-        }
-
-        removeWeek() {
-            var actual = this.weeks();
-            if (actual > 0) {
-                this.weeks(actual - 1);
-                this.items.pop();
-            }    
-        }
-
-        createNewItem() {
-            return null;
-        }
-
-        getItem(week: number, day: number) {
-            return days.isValid(day) && week < this.weeks() 
-                ? this.items()[week][day] 
-                : null;
-        }
-
-        eachWeek(f: (weekFoods: DayFoods[], weekIndex: number) => void ) {
-            _.each(this.items(), (weekFoods, weekIndex) => f(weekFoods, weekIndex));
-        }
-
-        eachDay(f: (dayFoods: DayFoods, dayIndex: number, weekIndex: number) => void ) {
-            this.eachWeek((weekFoods, weekIndex) => 
-                _.each(weekFoods, (dayFoods, dayIndex) => 
-                    f(dayFoods, weekIndex, dayIndex)));
-        };
-    }
-
-    class MenuDefinitionByDayCollection extends ByDayCollection {
-        constructor (private menu: MenuDefinition, data?: MenuData) {
-            super(data);
-        }
-
-        reset(data?: MenuData) {
-            super.reset(data);
-
-            if (data && data.foods) {
-                _.each(data.foods, x => {
-                    var option = this.getFood(x.week, x.day, x.option);
-                    if (option) {
-                        option(x.food)
-                    }
-                });
-            }
-        }
-
-        createNewItem() {
-            var item: DayFoods = {};
-            _.each(this.menu.options(), option => 
-                item[option.key] = ko.observable(""));
-            return item;
-        }
-
-        getItem(week: number, day: number): DayFoods {
-            return super.getItem(week, day);
-        }
-
-        getFood(week: number, day: number, option: string): knockout.koObservableString {
-            var dayFoods = this.getItem(week, day);
-            return dayFoods && dayFoods[option];
-        }
-    }
-    
-    export class MenuDefinition extends Utilities.HasCallbacks  {
+    export class MenuDefinition extends WeekStorage  {
         static defaultData: MenuData = {
             title: "Nuevo Menú",
             firstWeek: 0,
-            weeks: 0,
+            weeksQuantity: 0,
             options: [],
             places: [],
             startDate: "2000-01-01",
@@ -296,24 +296,53 @@ module CommonFood {
             foods: []
         };
 
-        items: MenuDefinitionByDayCollection;
         title: knockout.koObservableString = ko.observable("");
-        weeks: knockout.koObservableNumber;
+        weeksQuantity: { (): number; };
         options: knockout.koObservableArrayBase = ko.observableArray();
         places: knockout.koObservableArrayBase = ko.observableArray();
         startDate: knockout.koObservableAny = ko.observable("");
         endDate: knockout.koObservableAny = ko.observable("");
         deadlineTime: knockout.koObservableString = ko.observable("");
         firstWeek: knockout.koObservableNumber = ko.observable(0);
-        foods: knockout.koObservableArrayBase;
         static idGenerator = new Utilities.IdGenerator();
 
+        //#region Extend WeekStorage
+
+        createNewItem(): DayFoods {
+            var item: DayFoods = {};
+            if (this.options) {
+                _.each(this.options(), option =>
+                    item[option.key] = ko.observable(""));
+            }
+            return item;
+        }
+
+        getItem(week: number, day: number): DayFoods {
+            return super.getItem(week, day);
+        }
+
+        getFood(week: number, day: number, option: string): knockout.koObservableString {
+            //Dependencies
+            this.weeksQuantity();
+            this.options();
+
+            var dayFoods = this.getItem(week, day);
+            return dayFoods && dayFoods[option];
+        }
+
+        eachWeek(f: (weekItems: DayFoods[], weekIndex: number) => void ) {
+            super.eachWeek(f);
+        }
+
+        eachDay(f: (dayItem: DayFoods, dayIndex: number, weekIndex: number) => void ) {
+            super.eachDay(f);
+        };
+
+        //#endregion
+
         constructor (data?: MenuData) {
-            super();
-            this.items = new MenuDefinitionByDayCollection(this);
-            this.weeks = this.items.weeks;
-            this.foods = this.items.items;
-            this.reset(data);
+            super(data && data.weeksQuantity);
+            this.MenuDefinitionReset(data);
         }
 
         private createKeyTextObservableArray(items: KeyText[]) {
@@ -325,8 +354,8 @@ module CommonFood {
             }));
         }
 
-        reset(data?: MenuData) {
-            data =  <MenuData>$.extend({}, MenuDefinition.defaultData, data);
+        private MenuDefinitionReset(data?: MenuData) {
+            data = <MenuData>$.extend({}, MenuDefinition.defaultData, data);
             var i: any;
             this.title(data.title);
             this.startDate(data.startDate);
@@ -338,34 +367,32 @@ module CommonFood {
             for (i in data.places) {
                 this.addPlace(data.places[i]);
             } 
-
+            
             this.options.removeAll();
             for (i in data.options) {
                 this.addOption(data.options[i]);
             }
-
-            this.items.reset(data);
-        
-        /*
-            var opts = {};
-            _.each(this.options(), x => { opts[x.key] = true; });
-
-            if (data.foods) {
+            
+            if (data && data.foods) {
                 _.each(data.foods, x => {
-                    var item = this.items.getItem(x.week, x.day);
-                    if (item && opts[x.option]) {
-                        item[x.option](x.food);
+                    var option = this.getFood(x.week, x.day, x.option);
+                    if (option) {
+                        option(x.food)
                     }
                 });
             }
-*/
+        };
+
+        reset(data?: MenuData) {
+            super.reset(data && data.weeksQuantity);
+            this.MenuDefinitionReset(data);
         }
         
         exportData(): MenuData {
             var data: MenuData = { 
                 title: this.title(),
                 firstWeek: this.firstWeek(),
-                weeks: this.weeks(),
+                weeksQuantity: this.weeksQuantity(),
                 startDate: this.startDate(),
                 endDate: this.endDate(),
                 places: ko.toJS(this.places),
@@ -373,7 +400,7 @@ module CommonFood {
                 foods: [] 
             };
 
-            this.items.eachDay((dayFoods, weekIndex, dayIndex) => {
+            this.eachDay((dayFoods, weekIndex, dayIndex) => {
                 var food;
                 for (var opt in dayFoods) {
                     if (food = dayFoods[opt]()) {
@@ -388,10 +415,6 @@ module CommonFood {
             });
 
             return data;
-        }
-
-        getFood(weekIndex: number, dayIndex: number, opt: string): knockout.koObservableString {
-            return this.items.getFood(weekIndex, dayIndex, opt);
         }
 
         //#region KeyObservableText collection helpers
@@ -446,25 +469,21 @@ module CommonFood {
 
         //#endregion
 
-        addWeek() {
-            this.items.addWeek();
-        }
-
-        removeWeek() {
-            this.items.removeWeek();
-        };
-    
         addOption(option?: any) {
             var op = this.addKeyObservableText(this.options, "Menú ", "menu_", option);
-            this.items.eachDay(dayFoods => {
+            
+            this.eachDay(dayFoods => {
                 dayFoods[op.key] = ko.observable("")
             })
+
+            //In order to update content observables
+            this.options.valueHasMutated();
         }
   
         removeOption(option?) {
             var removed = this.removeItem(this.options, option);
             if (removed) { 
-                this.items.eachDay(dayFoods =>  delete dayFoods[removed.key]);
+                this.eachDay(dayFoods =>  delete dayFoods[removed.key]);
             }
         };
 

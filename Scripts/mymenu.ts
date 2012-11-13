@@ -5,8 +5,8 @@
 ///<reference path='CommonFood.ts' />
 
 module CommonFood.MyMenu {
-    var $menuJson = $(".persistence .json-field.menu");
-    var $employeeMenuJson = $(".persistence .json-field.employee-menu");
+    var $menuJson: JQuery; 
+    var $employeeMenuJson: JQuery; 
     var employeeMenu: EmployeeMenuDefinition = null;
 
     export var load = function () {
@@ -29,6 +29,8 @@ module CommonFood.MyMenu {
     }
 
     $(document).ready(() => {
+        $menuJson = $(".persistence .json-field.menu");
+        $employeeMenuJson = $(".persistence .json-field.employee-menu");
         load();
     });
 }

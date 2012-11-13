@@ -53,7 +53,7 @@
 {
   "title":"Menú primaveral",
   "firstWeek":0,
-  "weeks":5,
+  "weeksQuantity":5,
   "startDate":"2012-09-21T00:00:00",
   "endDate":"2020-01-01T00:00:00",
   "places":[
@@ -181,7 +181,7 @@
                     <a href="#" data-bind="click: addPlace">Add</a>
                     <a href="#" data-bind="click: removePlace">Remove</a>
                     <h3>Semanas</h3>
-                    <span data-bind='text: weeks'></span> Semanas
+                    <span data-bind='text: weeksQuantity'></span> Semanas
                     <a href="#" data-bind="click: addWeek">Add</a>
                     <a href="#" data-bind="click: removeWeek">Remove</a>
                 </div>
@@ -189,8 +189,8 @@
             <hr />
             <section id="main">
                 <h2 data-bind="text: title">Common Food</h2>
-                <div data-bind="foreach: $root.foods">
-                    <h4>Semana <span data-bind='text: $index() + 1'></span></h4>
+                <div data-bind="foreach: $root.weeks">
+                    <h4 data-bind='text: text'></h4>
                     <table>
                         <thead>
                             <tr>
@@ -205,8 +205,7 @@
                                 <td data-bind='text: text'></td>
                                 <!-- ko foreach: CommonFood.days() -->
                                 <td>
-                                    <!-- todo: binding -->
-                                    <textarea data-bind='value: $root.getFood($parentContext.$parentContext.$index(), $data, $parent.key)'></textarea>
+                                    <textarea data-bind='value: $root.getFood($parentContext.$parent.key, $data, $parent.key)'></textarea>
                                 </td>
                                 <!-- /ko -->
                             </tr>
