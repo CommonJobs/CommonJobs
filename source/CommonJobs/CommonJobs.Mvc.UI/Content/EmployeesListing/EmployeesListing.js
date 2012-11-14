@@ -47,8 +47,9 @@ $(function () {
                 } else {
                     $btn = $(slotBtnTemplate({ model: { caption: slot.Name } }));
                     $btn.on("click", function () {
-                        me.data.formData = { slot: slot.Id };
-                        me.data.submit();
+                        me.data.formData = { slot: slot.Id, name: me.$(".person-name").val() };
+                        if (me.runValidations())
+                            me.data.submit();
                     });
                 }
                 
@@ -70,20 +71,15 @@ $(function () {
         }
 
         $slots.find(".slot-general").on("click", function () {
-            me.data.submit();
+            me.data.formData = { name: me.$(".person-name").val() };
+            if (me.runValidations())
+                me.data.submit();
         });
 
         this.$(".slots").html($slots);
         
         return this;
     };
-    UploadModal.prototype.closeButtonText = function (text) {
-        this.$(".close-button", function () {
-            this.text(text);
-        });
-        return this;
-    }
-
 
     var needAttachmentsMarkTemplate = _.template($("#need-attachments-mark-template").text());
     var markEmployeesThatNeedsAttachments = function ($card, employee) {
@@ -130,8 +126,16 @@ $(function () {
                 add: function (e, data, $el) {
                     new UploadModal($('#generic-modal'))
                         .person($el)
-                        .title("Adjuntar Archivos")
-                        .text(".person-name", "Crear empleado con adjuntos")
+                        .subtitle("Adjuntar Archivos")
+                        .text(".title", "Crear empleado con adjuntos")
+                        .visibility(".new-employee", true)
+                        .visibility(".person-name-validation", false)
+                        .addValidation(".new-employee", function (element) {
+                            return $(element).find(".person-name").val().length > 0;
+                        }, function (element, result) {
+                            $(element).find(".person-name-validation").toggle(!result);
+                            return result;
+                        })
                         .files(data)
                         .drawSlots($el, null)
                         .closeButtonText("Cancelar")
@@ -143,12 +147,34 @@ $(function () {
                 fail: function (e, data, $el) {
                     new UploadModal($('#generic-modal'))
                         .person($el)
-                        .text(".person-name", "Crear empleado con adjuntos")
-                        .title("Error subiendo archivos")
+                        .text(".title", "Crear empleado con adjuntos")
+                        .visibility(".new-employee", false)
+                        .subtitle("Error subiendo archivos")
                         .error()
                         .files(data)
                         .modal();
                 }
+            });
+
+            var $cardButton = $card.find("button.adding-new");
+            $card.on("click", function (evt) {
+                evt.preventDefault();
+                evt.stopPropagation();
+                $card.find(".clickable-link").hide();
+                $card.find(".adding-new").show();
+                $card.find(".new-card-name").focus().on("keyup", function (evt) {
+                    var valid = $(".new-card-name").val().length > 0;
+                    if (evt.which == 13 && valid)
+                        $cardButton.click();
+                    if (evt.which == 27) {
+                        $card.find(".clickable-link").show();
+                        $card.find(".adding-new").hide();
+                    }
+                    $cardButton.attr("disabled", valid ? null : "disabled");
+                });
+            });
+            $cardButton.on("click", function () {
+                window.location = urlGenerator.action("Create", "Employees", null, { name: $card.find(".new-card-name").val() });
             });
         },
         prepareResultCard: function ($card, item) {
@@ -158,7 +184,8 @@ $(function () {
                     if ($el.hasClass("item-card")) {
                         new UploadModal($('#generic-modal'))
                             .person($el)
-                            .title("Adjuntar Archivos")
+                            .subtitle("Adjuntar Archivos")
+                            .visibility(".new-employee", false)
                             .files(data)
                             .drawSlots($el, item)
                             .show(".detail-link")
@@ -175,7 +202,8 @@ $(function () {
                     markEmployeesThatNeedsAttachments($card, item);
                     new UploadModal($('#generic-modal'))
                         .person($el)
-                        .title("Archivos subidos")
+                        .subtitle("Archivos subidos")
+                        .visibility(".new-employee", false)
                         .files(data)
                         .show(".detail-link")
                         .modal();
@@ -183,7 +211,8 @@ $(function () {
                 fail: function (e, data, $el) {
                     new UploadModal($('#generic-modal'))
                         .person($el)
-                        .title("Error subiendo archivos")
+                        .subtitle("Error subiendo archivos")
+                        .visibility(".new-employee", false)
                         .error()
                         .files(data)
                         .show(".detail-link")

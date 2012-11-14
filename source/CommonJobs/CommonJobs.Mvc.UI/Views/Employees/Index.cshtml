@@ -13,6 +13,8 @@
         <input type="file" data-url="@Url.Action("QuickAttachment")" multiple>
         <img class="cardPicture" src="@Url.Content("~/Content/Images/AddEmployee.png")" alt="Agregar nuevo..."  />
         <div class="cardDescription">
+            <input type="text" placeholder="Nombre" class="adding-new new-card-name" />
+            <button class="adding-new" disabled="disabled">Crear</button>
             <p>@Html.ActionLink("Agregar nuevo...", "Create", null, new { @class = "clickable-link" })</p>
         </div>
     </div>
@@ -112,12 +114,16 @@
     <div class="modal fade" id="generic-modal">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal">×</button>
-            <h3 class="person-name"></h3>
-            <h6 class="title"></h6>
+            <h3 class="title"></h3>
+            <h6 class="subtitle"></h6>
         </div>
         <div class="modal-body">
-            <div class="file-list">
+            <div class="new-employee">
+                <label for="person-name">Nombre:</label>
+                <input type="text" id="person-name" class="person-name" />
+                <p class="person-name-validation">Debe ingresar un nombre para el nuevo empleado.</p>
             </div>
+            <div class="file-list"></div>
             <br />
             <div class="slots"></div>
             <a class="detail-link" href="#" target="_blank">Ver empleado</a>

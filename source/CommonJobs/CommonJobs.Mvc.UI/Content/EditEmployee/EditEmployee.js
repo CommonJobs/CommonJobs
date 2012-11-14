@@ -83,12 +83,7 @@
 
         return this;
     };
-    UploadModal.prototype.closeButtonText = function (text) {
-        this.$(".close-button", function () {
-            this.text(text);
-        });
-        return this;
-    }
+
     UploadModal.prototype.personDetail = function (employee, $el) {
         //employee: backbone model object
         var result = this
@@ -97,7 +92,7 @@
 
         var photo = employee.get('Photo');
 
-        if (photo && photo.photo.Thumbnail && photo.Thumbnail.Id) {
+        if (photo && photo.Thumbnail && photo.Thumbnail.Id) {
             result = result.$(".modal-header", function () {
                 this.prepend($('<img />')
                     .attr("src", urlGenerator.action("Get", "Attachments", photo.Thumbnail.Id, { returnName: false }))
@@ -106,7 +101,7 @@
             });
         }
 
-        return result.text(".person-name", employee.get('LastName') + ", " + employee.get('FirstName'))
+        return result.text(".title", employee.get('LastName') + ", " + employee.get('FirstName'))
     };
 
     var prepareAttachmentZone = function (dropZone, model) {
@@ -118,7 +113,7 @@
                     || (data.files && data.files.length)) {
                         new UploadModal($('#generic-modal'))
                         .personDetail(model, $el)
-                        .title("Adjuntar Archivos")
+                        .subtitle("Adjuntar Archivos")
                         .files(data)
                         .drawSlots($el, model)
                         .closeButtonText("Cancelar")
@@ -131,7 +126,7 @@
                     .files(data);
 
                 if (data.formData.slot) {
-                    modal.title("Archivos subidos (agregados a slot)")
+                    modal.subtitle("Archivos subidos (agregados a slot)")
                     var slots = model.get("AttachmentsBySlot");
                     var filtered = slots.filter(function (slot) { return slot.get("SlotId") == data.formData.slot; })
                     if (filtered.length > 0) {
@@ -144,7 +139,7 @@
                         });
                     }
                 } else {
-                    modal.title("Archivos subidos (agregados a las notas)")
+                    modal.subtitle("Archivos subidos (agregados a las notas)")
                     var notes = model.get("Notes");
                     _.each(data.result.attachments, function (attachment) {
                         notes.add({
@@ -159,7 +154,7 @@
             fail: function (e, data, $el) {
                 new UploadModal($('#generic-modal'))
                     .personDetail(model, $el)
-                    .title("Error subiendo archivos")
+                    .subtitle("Error subiendo archivos")
                     .error()
                     .files(data)
                     .modal();

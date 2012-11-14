@@ -111,7 +111,8 @@ QuickSearchPage.prototype = {
             self._config.prepareNewCard(newCardElement);
         }
         
-        self.$results.html(newCardElement);
+        self.$results.html(null);
+        self.$results.append(newCardElement);
     },
     _startLoading: function () {
         $(this._config.getMoreCardsSelector).removeClass(this._config.readyClass).addClass(this._config.loadingClass);
