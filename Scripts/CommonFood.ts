@@ -1,4 +1,5 @@
-﻿///<reference path='jquery.d.ts' />
+﻿
+///<reference path='jquery.d.ts' />
 ///<reference path='Knockout.d.ts' />
 ///<reference path='underscore.browser.d.ts' />
 ///<reference path="moment.d.ts" />
@@ -14,6 +15,11 @@ declare interface UnderscoreStatic extends Function {
 }
 //#endregion
 
+interface KeyObservableText { 
+    key: string; 
+    text: knockout.koObservableString; 
+}
+
 module Utilities {
     export class IdGenerator {
         constructor (public chars = "abcdefghijklmnopqrstuvwxyz1234567890", public length = 8) {
@@ -24,6 +30,8 @@ module Utilities {
             return prefix + _.map(_.range(this.length), () => chars[_.random(0, charsL)]).join("");
         };
     }
+
+    export var idGenerator = new IdGenerator();
 
     export class HasCallbacks {
 	    constructor() {
@@ -47,10 +55,60 @@ module Utilities {
 	    }
     }
 
+    export module ObservableArrays {
+        function generateText(baseName: string, collection: knockout.koObservableArrayBase, name?: string): string {
+            var texts = _.map(ko.toJS(collection), (item) => item.text);
+            var n = texts.length + 1;
+
+            if (name) {
+                if ((<any>name).text) {
+                    name = (<any>name).text;
+                }
+                if (_.isString(name)) {
+                    if (texts.indexOf(name) == -1) {
+                        return name;
+                    } else {
+                        baseName = name;
+                        n = 2;
+                    }
+                }
+            }
+
+            while (true) {
+                var name = baseName + n++;
+                if (texts.indexOf(name) == -1)
+                    return name;
+            }
+        }
+
+        export function addKeyObservableText(collection: knockout.koObservableArrayBase, baseName: string, idPrefix: string, value?: any): KeyObservableText {
+            var item: KeyObservableText;
+            if (!value || !value.key) {
+                var text = generateText(baseName, collection, value);
+                item = { key: idGenerator.generate(idPrefix), text: ko.observable(text) };
+            } else {
+                item = { key: value.key, text: ko.observable(value.text) };
+            }
+            collection.push(item);
+            return item;
+        }
+
+        export function removeItem(collection: knockout.koObservableArrayBase, item: any, keyField = "key"): any {
+            if (!collection().length)
+                return null;
+
+            if (_.isString(item))
+                return collection.remove(x => x[keyField] == item);
+
+            var index: number = _.isNumber(item) ? item : collection.indexOf(item);
+            return collection.splice(index, 1)[0];
+        }
+    }
 }
 
 module CommonFood {
 
+    //Move days selection inside WeekStorage
     export interface Days {
         (): number[];
         getName(day: number): string;
@@ -93,11 +151,6 @@ module CommonFood {
         endDate?: string;
         deadlineTime?: string;
         foods?: MenuDataItem[]; 
-    }
-
-    interface KeyObservableText { 
-        key: string; 
-        text: knockout.koObservableString; 
     }
 
     export interface DayFoods {
@@ -211,12 +264,24 @@ module CommonFood {
     }
 
     class DayChoice {
-        option: knockout.koObservableString;
-        place: knockout.koObservableString;
+        option: knockout.koObservableString = ko.observable("");
+        place: knockout.koObservableString = ko.observable("");
+    }
 
-        constructor (option?: string = null, place?: string = null) {
-            this.option = ko.observable(option);
-            this.place = ko.observable(place);
+    class Override extends DayChoice {
+        date: knockout.koObservableString = ko.observable("");
+        cancel: knockout.koObservableBool = ko.observable(false);
+        comment: knockout.koObservableString = ko.observable("");
+
+        constructor (data?: EmployeeMenuDataOverrideItem) {
+            super();
+            if (data) {
+                this.option(data.option);
+                this.place(data.place);
+                this.date(data.date);
+                this.cancel(data.cancel);
+                this.comment(data.comment);
+            }
         }
     }
 
@@ -224,7 +289,7 @@ module CommonFood {
         name: string;
         employeeId: string;
         defaultPlace: knockout.koObservableString = ko.observable("");
-
+        overrides: knockout.koObservableArrayBase = ko.observableArray([]);
 
         constructor (public menu: MenuDefinition, data?: EmployeeMenuData) {
             super(menu.weeksQuantity());
@@ -282,10 +347,9 @@ module CommonFood {
                 });
             }
 
+            this.overrides.removeAll();
             if (data.overrides) {
-                _.each(data.overrides, override => { 
-                    //TODO
-                });
+                _.each(data.overrides, x => this.overrides.push(new Override(x)));
             }
         }
 
@@ -302,6 +366,15 @@ module CommonFood {
             //TODO: overrides
             return data;
         }
+
+        
+        addOverride() {
+            this.overrides.push(new Override());
+        }
+        
+        removeOverride(override?) {
+            Utilities.ObservableArrays.removeItem(this.overrides, override, 'date');
+        };
     }
     
 
@@ -440,60 +513,8 @@ module CommonFood {
             return data;
         }
 
-        //#region KeyObservableText collection helpers
-
-        private generateText(baseName: string, collection: knockout.koObservableArrayBase, name?: string): string {
-            var texts = _.map(ko.toJS(collection), (item) => item.text);
-            var n = texts.length + 1;
-            
-            if (name) {
-                if ((<any>name).text) {
-                    name = (<any>name).text;
-                }
-                if (_.isString(name)) {
-                    if (texts.indexOf(name) == -1) {
-                        return name;
-                    } else {
-                        baseName = name;
-                        n = 2;
-                    }
-                }
-            }
-
-            while (true) {
-                var name = baseName + n++;
-                if (texts.indexOf(name) == -1) 
-                    return name;
-            }
-        }
-
-        private addKeyObservableText(collection: knockout.koObservableArrayBase, baseName: string, idPrefix: string, value?: any): KeyObservableText {
-            var item: KeyObservableText;
-            if (!value || !value.key) {
-                var text = this.generateText(baseName, collection, value);
-                item = { key: MenuDefinition.idGenerator.generate(idPrefix), text: ko.observable(text) };
-            } else {
-                item = { key: value.key, text: ko.observable(value.text) };
-            }
-            collection.push(item);
-            return item;
-        }
-
-        private removeItem(collection: knockout.koObservableArrayBase, item: any) : KeyObservableText {
-            if (!collection().length)
-                return null;
-
-            if (_.isString(item)) 
-                return collection.remove(x => x.key == item);
-            
-            var index: number = _.isNumber(item) ? item : collection.indexOf(item); 
-            return collection.splice(index, 1)[0];
-        }
-
-        //#endregion
-
         addOption(option?: any) {
-            var op = this.addKeyObservableText(this.options, "Menú ", "menu_", option);
+            var op = Utilities.ObservableArrays.addKeyObservableText(this.options, "Menú ", "menu_", option);
             
             this.eachDay(dayFoods => {
                 dayFoods[op.key] = ko.observable("")
@@ -504,18 +525,18 @@ module CommonFood {
         }
   
         removeOption(option?) {
-            var removed = this.removeItem(this.options, option);
+            var removed = Utilities.ObservableArrays.removeItem(this.options, option);
             if (removed) { 
                 this.eachDay(dayFoods =>  delete dayFoods[removed.key]);
             }
         };
 
         addPlace(place?: any) {
-            this.addKeyObservableText(this.places, "Lugar ", "place_", place);
+            Utilities.ObservableArrays.addKeyObservableText(this.places, "Lugar ", "place_", place);
         }
         
         removePlace(place?) {
-            this.removeItem(this.places, place);
+            Utilities.ObservableArrays.removeItem(this.places, place);
         };
     }
 }

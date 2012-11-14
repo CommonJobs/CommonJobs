@@ -23,6 +23,7 @@ var Utilities;
         return IdGenerator;
     })();
     Utilities.IdGenerator = IdGenerator;    
+    Utilities.idGenerator = new IdGenerator();
     var HasCallbacks = (function () {
         function HasCallbacks() {
             var _this = this;
@@ -49,6 +50,67 @@ var Utilities;
         return HasCallbacks;
     })();
     Utilities.HasCallbacks = HasCallbacks;    
+    (function (ObservableArrays) {
+        function generateText(baseName, collection, name) {
+            var texts = _.map(ko.toJS(collection), function (item) {
+                return item.text;
+            });
+            var n = texts.length + 1;
+            if(name) {
+                if((name).text) {
+                    name = (name).text;
+                }
+                if(_.isString(name)) {
+                    if(texts.indexOf(name) == -1) {
+                        return name;
+                    } else {
+                        baseName = name;
+                        n = 2;
+                    }
+                }
+            }
+            while(true) {
+                var name = baseName + n++;
+                if(texts.indexOf(name) == -1) {
+                    return name;
+                }
+            }
+        }
+        function addKeyObservableText(collection, baseName, idPrefix, value) {
+            var item;
+            if(!value || !value.key) {
+                var text = generateText(baseName, collection, value);
+                item = {
+                    key: Utilities.idGenerator.generate(idPrefix),
+                    text: ko.observable(text)
+                };
+            } else {
+                item = {
+                    key: value.key,
+                    text: ko.observable(value.text)
+                };
+            }
+            collection.push(item);
+            return item;
+        }
+        ObservableArrays.addKeyObservableText = addKeyObservableText;
+        function removeItem(collection, item, keyField) {
+            if (typeof keyField === "undefined") { keyField = "key"; }
+            if(!collection().length) {
+                return null;
+            }
+            if(_.isString(item)) {
+                return collection.remove(function (x) {
+                    return x[keyField] == item;
+                });
+            }
+            var index = _.isNumber(item) ? item : collection.indexOf(item);
+            return collection.splice(index, 1)[0];
+        }
+        ObservableArrays.removeItem = removeItem;
+    })(Utilities.ObservableArrays || (Utilities.ObservableArrays = {}));
+    var ObservableArrays = Utilities.ObservableArrays;
+
 })(Utilities || (Utilities = {}));
 
 var CommonFood;
@@ -141,20 +203,36 @@ var CommonFood;
         return WeekStorage;
     })(Utilities.HasCallbacks);    
     var DayChoice = (function () {
-        function DayChoice(option, place) {
-            if (typeof option === "undefined") { option = null; }
-            if (typeof place === "undefined") { place = null; }
-            this.option = ko.observable(option);
-            this.place = ko.observable(place);
+        function DayChoice() {
+            this.option = ko.observable("");
+            this.place = ko.observable("");
         }
         return DayChoice;
     })();    
+    var Override = (function (_super) {
+        __extends(Override, _super);
+        function Override(data) {
+                _super.call(this);
+            this.date = ko.observable("");
+            this.cancel = ko.observable(false);
+            this.comment = ko.observable("");
+            if(data) {
+                this.option(data.option);
+                this.place(data.place);
+                this.date(data.date);
+                this.cancel(data.cancel);
+                this.comment(data.comment);
+            }
+        }
+        return Override;
+    })(DayChoice);    
     var EmployeeMenuDefinition = (function (_super) {
         __extends(EmployeeMenuDefinition, _super);
         function EmployeeMenuDefinition(menu, data) {
                 _super.call(this, menu.weeksQuantity());
             this.menu = menu;
             this.defaultPlace = ko.observable("");
+            this.overrides = ko.observableArray([]);
             this.EmployeeMenuDefinitionReset(data);
         }
         EmployeeMenuDefinition.prototype.reset = function (data) {
@@ -204,8 +282,10 @@ var CommonFood;
                     }
                 });
             }
+            this.overrides.removeAll();
             if(data.overrides) {
-                _.each(data.overrides, function (override) {
+                _.each(data.overrides, function (x) {
+                    return _this.overrides.push(new Override(x));
                 });
             }
         };
@@ -218,6 +298,12 @@ var CommonFood;
                 overrides: []
             };
             return data;
+        };
+        EmployeeMenuDefinition.prototype.addOverride = function () {
+            this.overrides.push(new Override());
+        };
+        EmployeeMenuDefinition.prototype.removeOverride = function (override) {
+            Utilities.ObservableArrays.removeItem(this.overrides, override, 'date');
         };
         return EmployeeMenuDefinition;
     })(WeekStorage);
@@ -337,69 +423,15 @@ var CommonFood;
             });
             return data;
         };
-        MenuDefinition.prototype.generateText = function (baseName, collection, name) {
-            var texts = _.map(ko.toJS(collection), function (item) {
-                return item.text;
-            });
-            var n = texts.length + 1;
-            if(name) {
-                if((name).text) {
-                    name = (name).text;
-                }
-                if(_.isString(name)) {
-                    if(texts.indexOf(name) == -1) {
-                        return name;
-                    } else {
-                        baseName = name;
-                        n = 2;
-                    }
-                }
-            }
-            while(true) {
-                var name = baseName + n++;
-                if(texts.indexOf(name) == -1) {
-                    return name;
-                }
-            }
-        };
-        MenuDefinition.prototype.addKeyObservableText = function (collection, baseName, idPrefix, value) {
-            var item;
-            if(!value || !value.key) {
-                var text = this.generateText(baseName, collection, value);
-                item = {
-                    key: MenuDefinition.idGenerator.generate(idPrefix),
-                    text: ko.observable(text)
-                };
-            } else {
-                item = {
-                    key: value.key,
-                    text: ko.observable(value.text)
-                };
-            }
-            collection.push(item);
-            return item;
-        };
-        MenuDefinition.prototype.removeItem = function (collection, item) {
-            if(!collection().length) {
-                return null;
-            }
-            if(_.isString(item)) {
-                return collection.remove(function (x) {
-                    return x.key == item;
-                });
-            }
-            var index = _.isNumber(item) ? item : collection.indexOf(item);
-            return collection.splice(index, 1)[0];
-        };
         MenuDefinition.prototype.addOption = function (option) {
-            var op = this.addKeyObservableText(this.options, "Menú ", "menu_", option);
+            var op = Utilities.ObservableArrays.addKeyObservableText(this.options, "Menú ", "menu_", option);
             this.eachDay(function (dayFoods) {
                 dayFoods[op.key] = ko.observable("");
             });
             this.options.valueHasMutated();
         };
         MenuDefinition.prototype.removeOption = function (option) {
-            var removed = this.removeItem(this.options, option);
+            var removed = Utilities.ObservableArrays.removeItem(this.options, option);
             if(removed) {
                 this.eachDay(function (dayFoods) {
                     return delete dayFoods[removed.key];
@@ -407,10 +439,10 @@ var CommonFood;
             }
         };
         MenuDefinition.prototype.addPlace = function (place) {
-            this.addKeyObservableText(this.places, "Lugar ", "place_", place);
+            Utilities.ObservableArrays.addKeyObservableText(this.places, "Lugar ", "place_", place);
         };
         MenuDefinition.prototype.removePlace = function (place) {
-            this.removeItem(this.places, place);
+            Utilities.ObservableArrays.removeItem(this.places, place);
         };
         return MenuDefinition;
     })(WeekStorage);

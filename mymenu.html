@@ -224,8 +224,58 @@
 	                    </tr>
                     </tbody>
                 </table>
-                <h3>Modificaciones por fecha</h3>
+                <h3>Modificaciones por fecha <button class="btn" type="button" data-bind="click: addOverride"><i class="icon-plus"></i> Agregar</button></h3>
+                <!-- ko foreach: overrides -->
+                    <form class="well form-horizontal">
+                        <div class="control-group">
+                            <label class="control-label">Fecha:</label>
+                            <div class="controls">
+                                <input type="text" class="span2 uneditable-input" readonly="readonly" data-bind="datepicker: date, datepickerOptions: { dataType: 'iso' }" />
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">Comentario:</label>
+                            <div class="controls">
+                                <input type="text" class="span5" data-bind="value: comment" />
+                            </div>
+                        </div>
 
+                        <div class="control-group">
+                            <div class="controls">
+                                <label class="checkbox">
+                                    <input type="checkbox" data-bind="checked: cancel">Cancelar comida del día
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- ko if: !cancel() -->
+
+                        <div class="control-group">
+                            <label class="control-label">Menú</label>
+                            <div class="controls">
+                                <select data-bind="options: $root.menu.options, 
+                                    optionsText: 'text', optionsValue: 'key', 
+                                    value: option, 
+                                    optionsCaption: 'Menú por defecto del día'">
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">Lugar</label>
+                            <div class="controls">
+                                <select data-bind="options: $root.menu.places, 
+                                    optionsText: 'text', optionsValue: 'key', 
+                                    value: place, 
+                                    optionsCaption: 'Lugar por defecto del día'">
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- /ko -->
+
+                    </form>
+                <!-- /ko -->
             </section>
         </div>
         <footer>
