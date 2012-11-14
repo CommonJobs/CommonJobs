@@ -86,6 +86,7 @@ module knockout {
     }
 
     export function applyBindings(viewModel? , rootNode?: HTMLElement);
+    export function removeNode(rootNode: HTMLElement);
     export function toJSON(viewModel, replacer? , space? ): string;
     export function toJS(viewModel): any;
 

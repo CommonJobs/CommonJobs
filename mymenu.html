@@ -179,6 +179,49 @@
                     </textarea>
                 </div>
             </section>
+            <section id="main">
+                <h2 data-bind="text: name">Mi Menu</h2>
+                <h3>General</h3>
+                <ul>
+                    <li><label>Lugar por defecto: <select data-bind="options: menu.places, 
+                                    optionsText: 'text', optionsValue: 'key', 
+                                    value: defaultPlace, 
+                                    optionsCaption: 'Seleccione...'">
+                    </select></label></li>
+                </ul>
+                <h3>Menu semanal</h3>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <td></td>
+                            <!-- ko foreach: CommonFood.days() -->
+                            <td data-bind="text: CommonFood.days.getName($data)"></td>
+                            <!-- /ko -->
+                        </tr>
+                    </thead>
+                    <tbody data-bind="foreach: weeks">
+	                    <tr>
+		                    <td><span data-bind='text: text'></span></td>
+		                    <!-- ko foreach: CommonFood.days() -->
+		                    <td>
+                                <select data-bind="options: $root.menu.options, 
+                                    optionsText: 'text', optionsValue: 'key', 
+                                    value: $root.getMenuChoice($parent.key, $data), 
+                                    optionsCaption: 'No come'">
+                                </select>
+                                <select data-bind="options: $root.menu.places, 
+                                    optionsText: 'text', optionsValue: 'key', 
+                                    value: $root.getPlaceChoice($parent.key, $data), 
+                                    optionsCaption: $root.getDefaultPlaceLabel()">
+                                </select>
+		                    </td>
+		                    <!-- /ko -->
+	                    </tr>
+                    </tbody>
+                </table>
+                <h3>Modificaciones por fecha</h3>
+
+            </section>
         </div>
         <footer>
         </footer>

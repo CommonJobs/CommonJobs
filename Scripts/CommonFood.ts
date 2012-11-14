@@ -223,10 +223,10 @@ module CommonFood {
     export class EmployeeMenuDefinition extends WeekStorage {
         name: string;
         employeeId: string;
-        defaultPlace: knockout.koObservableString;
+        defaultPlace: knockout.koObservableString = ko.observable("");
 
 
-        constructor (public menu: MenuDefinition, data: EmployeeMenuData) {
+        constructor (public menu: MenuDefinition, data?: EmployeeMenuData) {
             super(menu.weeksQuantity());
             this.EmployeeMenuDefinitionReset(data);
         }
@@ -245,25 +245,48 @@ module CommonFood {
             return super.getItem(week, day);
         }
 
-        EmployeeMenuDefinitionReset(data: EmployeeMenuData) {
+        getMenuChoice(week: number, day: number): knockout.koObservableString {
+            //return ko.observable("choice " + week + " " + day);
+            return this.getItem(week, day).option;
+        }
+
+        getPlaceChoice(week: number, day: number): knockout.koObservableString {
+            //return ko.observable("place " + week + " " + day);
+            return this.getItem(week, day).place;
+        }
+
+        getDefaultPlaceLabel() {
+            var key = this.defaultPlace();
+            var places = this.menu.places();
+            var option: KeyObservableText  = _.find(places, (x: KeyObservableText) => x.key == key);
+            if (option) {
+                return "Lugar por defecto (" + option.text() + ")";
+            } else {
+                return "Seleccione un lugar (no se definió el lugar por defecto)";
+            }
+        }
+
+        EmployeeMenuDefinitionReset(data?: EmployeeMenuData) {
+            data = _.extend({ employeeId: "", name: "", defaultPlace: "" }, data);
             this.employeeId = data.employeeId;
             this.name = data.name;
-            this.defaultPlace = ko.observable(data.defaultPlace);
+            this.defaultPlace(data.defaultPlace);
+            
+            if (data.choices) {
+                _.each(data.choices, (x: EmployeeMenuDataItem) => {
+                    var choice = this.getItem(x.week, x.day);
+                    if (choice /*&& TODO: comprobar validez*/) {
+                        choice.option(x.option);
+                        choice.place(x.place);
+                    }
+                });
+            }
 
-            _.each(data.choices, (x: EmployeeMenuDataItem) => { 
-                var choice = this.getItem(x.week, x.day);
-                //
-                if (choice /*&& TODO: comprobar validez*/) {
-                    choice.option(x.option);
-                    choice.place(x.place);
-                }
-                //TODO
-            });
-
-            _.each(data.overrides, override => { 
-                //TODO
-            });
-
+            if (data.overrides) {
+                _.each(data.overrides, override => { 
+                    //TODO
+                });
+            }
         }
 
         exportData(): EmployeeMenuData {

@@ -3,13 +3,13 @@ var CommonFood;
     (function (MyMenu) {
         var $menuJson;
         var $employeeMenuJson;
-        var employeeMenu = null;
+        var menuDefinition = new CommonFood.MenuDefinition();
+        var employeeMenu = new CommonFood.EmployeeMenuDefinition(menuDefinition);
         MyMenu.load = function () {
             var menuData = eval("(" + $menuJson.val() + ")");
-            var menuDefinition = new CommonFood.MenuDefinition(menuData);
+            menuDefinition.reset(menuData);
             var employeeMenuData = eval("(" + $employeeMenuJson.val() + ")");
-            employeeMenu = new CommonFood.EmployeeMenuDefinition(menuDefinition, employeeMenuData);
-            ko.applyBindings(employeeMenu);
+            employeeMenu.reset(employeeMenuData);
         };
         MyMenu.save = function () {
             var data = employeeMenu.exportData();
@@ -18,7 +18,7 @@ var CommonFood;
         $(document).ready(function () {
             $menuJson = $(".persistence .json-field.menu");
             $employeeMenuJson = $(".persistence .json-field.employee-menu");
-            MyMenu.load();
+            ko.applyBindings(employeeMenu);
         });
     })(CommonFood.MyMenu || (CommonFood.MyMenu = {}));
     var MyMenu = CommonFood.MyMenu;

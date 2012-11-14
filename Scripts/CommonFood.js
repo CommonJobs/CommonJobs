@@ -154,6 +154,7 @@ var CommonFood;
         function EmployeeMenuDefinition(menu, data) {
                 _super.call(this, menu.weeksQuantity());
             this.menu = menu;
+            this.defaultPlace = ko.observable("");
             this.EmployeeMenuDefinitionReset(data);
         }
         EmployeeMenuDefinition.prototype.reset = function (data) {
@@ -166,20 +167,47 @@ var CommonFood;
         EmployeeMenuDefinition.prototype.getItem = function (week, day) {
             return _super.prototype.getItem.call(this, week, day);
         };
+        EmployeeMenuDefinition.prototype.getMenuChoice = function (week, day) {
+            return this.getItem(week, day).option;
+        };
+        EmployeeMenuDefinition.prototype.getPlaceChoice = function (week, day) {
+            return this.getItem(week, day).place;
+        };
+        EmployeeMenuDefinition.prototype.getDefaultPlaceLabel = function () {
+            var key = this.defaultPlace();
+            var places = this.menu.places();
+            var option = _.find(places, function (x) {
+                return x.key == key;
+            });
+            if(option) {
+                return "Lugar por defecto (" + option.text() + ")";
+            } else {
+                return "Seleccione un lugar (no se definió el lugar por defecto)";
+            }
+        };
         EmployeeMenuDefinition.prototype.EmployeeMenuDefinitionReset = function (data) {
             var _this = this;
+            data = _.extend({
+                employeeId: "",
+                name: "",
+                defaultPlace: ""
+            }, data);
             this.employeeId = data.employeeId;
             this.name = data.name;
-            this.defaultPlace = ko.observable(data.defaultPlace);
-            _.each(data.choices, function (x) {
-                var choice = _this.getItem(x.week, x.day);
-                if(choice) {
-                    choice.option(x.option);
-                    choice.place(x.place);
-                }
-            });
-            _.each(data.overrides, function (override) {
-            });
+            this.defaultPlace(data.defaultPlace);
+            if(data.choices) {
+                _.each(data.choices, function (x) {
+                    var choice = _this.getItem(x.week, x.day);
+                    if(choice) {
+                        choice.option(x.option);
+                        choice.place(x.place);
+                    }
+                });
+            }
+            if(data.overrides) {
+                _.each(data.overrides, function (override) {
+                });
+            }
         };
         EmployeeMenuDefinition.prototype.exportData = function () {
             var data = {

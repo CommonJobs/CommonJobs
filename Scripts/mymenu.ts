@@ -7,18 +7,17 @@
 module CommonFood.MyMenu {
     var $menuJson: JQuery; 
     var $employeeMenuJson: JQuery; 
-    var employeeMenu: EmployeeMenuDefinition = null;
+    var menuDefinition = new MenuDefinition();
+    var employeeMenu: EmployeeMenuDefinition = new EmployeeMenuDefinition(menuDefinition);
 
     export var load = function () {
         //alert("load");
         //TODO: reset from server
         var menuData = eval("(" + $menuJson.val() + ")");
-        var menuDefinition = new MenuDefinition(menuData);
+        menuDefinition.reset(menuData);
 
         var employeeMenuData = eval("(" + $employeeMenuJson.val() + ")");
-        employeeMenu = new EmployeeMenuDefinition(menuDefinition, employeeMenuData);
-            
-        ko.applyBindings(employeeMenu);
+        employeeMenu.reset(employeeMenuData);
     }
 
     export var save = function () {
@@ -31,7 +30,7 @@ module CommonFood.MyMenu {
     $(document).ready(() => {
         $menuJson = $(".persistence .json-field.menu");
         $employeeMenuJson = $(".persistence .json-field.employee-menu");
-        load();
+        ko.applyBindings(employeeMenu);
     });
 }
 
