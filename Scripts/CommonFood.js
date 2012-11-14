@@ -242,6 +242,12 @@ var CommonFood;
         EmployeeMenuDefinition.prototype.createNewItem = function () {
             return new DayChoice();
         };
+        EmployeeMenuDefinition.prototype.eachWeek = function (f) {
+            _super.prototype.eachWeek.call(this, f);
+        };
+        EmployeeMenuDefinition.prototype.eachDay = function (f) {
+            _super.prototype.eachDay.call(this, f);
+        };
         EmployeeMenuDefinition.prototype.getItem = function (week, day) {
             return _super.prototype.getItem.call(this, week, day);
         };
@@ -297,6 +303,23 @@ var CommonFood;
                 choices: [],
                 overrides: []
             };
+            var choices = data.choices;
+            this.eachDay(function (dayChoices, weekIndex, dayIndex) {
+                var option = dayChoices.option();
+                if(option) {
+                    var item = {
+                        week: weekIndex,
+                        day: dayIndex,
+                        option: option
+                    };
+                    var place = dayChoices.place();
+                    if(place) {
+                        item.place = place;
+                    }
+                    choices.push(item);
+                }
+            });
+            data.overrides = ko.toJS(this.overrides);
             return data;
         };
         EmployeeMenuDefinition.prototype.addOverride = function () {

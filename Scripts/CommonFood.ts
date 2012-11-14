@@ -305,6 +305,14 @@ module CommonFood {
             return new DayChoice();
         }
 
+        eachWeek(f: (weekItems: DayChoice[], weekIndex: number) => void ) {
+            super.eachWeek(f);
+        }
+
+        eachDay(f: (dayItem: DayChoice, dayIndex: number, weekIndex: number) => void ) {
+            super.eachDay(f);
+        };
+
         
         getItem(week: number, day: number): DayChoice {
             return super.getItem(week, day);
@@ -362,8 +370,25 @@ module CommonFood {
                 overrides: []
             };
 
-            //TODO: choices
-            //TODO: overrides
+            var choices = data.choices;
+            this.eachDay((dayChoices, weekIndex, dayIndex) => {
+                var option = dayChoices.option();
+                if (option) {
+                    var item: EmployeeMenuDataItem = {
+                        week: weekIndex,
+                        day: dayIndex,  
+                        option: option
+                    };
+                    var place = dayChoices.place();
+                    if (place) {
+                        item.place = place;
+                    }
+                    choices.push(item);
+                }
+            });
+
+            data.overrides = ko.toJS(this.overrides);
+
             return data;
         }
 
