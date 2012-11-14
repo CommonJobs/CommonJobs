@@ -214,11 +214,17 @@
                                     value: $root.getMenuChoice($parent.key, $data), 
                                     optionsCaption: 'No come'">
                                 </select>
+
+                                <!-- ko if: $root.getMenuChoice($parent.key, $data)() -->
+
                                 <select data-bind="options: $root.menu.places, 
                                     optionsText: 'text', optionsValue: 'key', 
                                     value: $root.getPlaceChoice($parent.key, $data), 
                                     optionsCaption: $root.getDefaultPlaceLabel()">
                                 </select>
+
+                                <!-- /ko -->
+
 		                    </td>
 		                    <!-- /ko -->
 	                    </tr>
