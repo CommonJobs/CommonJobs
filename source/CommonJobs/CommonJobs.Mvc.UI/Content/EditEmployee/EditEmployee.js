@@ -536,7 +536,14 @@
                 {
                     controlLink: "Collection",
                     item: { controlLink: "Text", name: "description", field: "Description" }
-                }
+                },
+                HasArgentinianPassport: { controlLink: "Options", options: [{ value: false, text: "No" }, { value: true, text: "Si" }] },
+                ArgentinianPassportExpiration: { controlLink: "Date" },
+                HasUsaVisa: { controlLink: "Options", options: [{ value: false, text: "No" }, { value: true, text: "Si" }] },
+                UsaVisaExpiration: { controlLink: "Date" },
+                HasEuropeanCitizenship: { controlLink: "Options", options: [{ value: false, text: "No" }, { value: true, text: "Si" }] },
+                HasEuropeanPassport: { controlLink: "Options", options: [{ value: false, text: "No" }, { value: true, text: "Si" }] },
+                EuropeanPassportExpiration: { controlLink: "Date" }
             }
     });
 

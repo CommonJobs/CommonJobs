@@ -136,6 +136,30 @@ namespace CommonJobs.Domain
         [Display(Name = "Historial de sueldos")]
         public List<SalaryChange> SalaryChanges { get; set; }
 
+        [Display(Name = "Posee pasaporte argentino")]
+        public bool HasArgentinianPassport { get; set; }
+
+        [Display(Name = "Vencimiento del pasaporte argentino")]
+        [DataType(DataType.Date)]
+        public DateTime? ArgentinianPassportExpiration { get; set; }
+
+        [Display(Name = "Posee visa de EEUU")]
+        public bool HasUsaVisa { get; set; }
+
+        [Display(Name = "Vencimiento de la visa de EEUU")]
+        [DataType(DataType.Date)]
+        public DateTime? UsaVisaExpiration { get; set; }
+
+        [Display(Name = "Posee ciudadanía europea")]
+        public bool HasEuropeanCitizenship { get; set; }
+
+        [Display(Name = "Posee pasaporte europeo")]
+        public bool HasEuropeanPassport { get; set; }
+
+        [Display(Name = "Vencimiento del pasaporte europeo")]
+        [DataType(DataType.Date)]
+        public DateTime? EuropeanPassportExpiration { get; set; }
+        
         public override IEnumerable<SlotWithAttachment> AllAttachmentReferences
         {
             get 
