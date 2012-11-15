@@ -13,7 +13,7 @@ using CommonJobs.Mvc.UI.Infrastructure;
 
 namespace CommonJobs.Mvc.UI.Controllers
 {
-    [CommonJobsAuthorize(Roles="Users")]
+    [CommonJobsAuthorize(Roles="Users,ApplicantManagers")]
     public class ApplicantsController : CommonJobsController
     {
         //

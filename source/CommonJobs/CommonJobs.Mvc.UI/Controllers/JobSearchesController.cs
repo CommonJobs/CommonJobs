@@ -13,7 +13,7 @@ using CommonJobs.Utilities;
 
 namespace CommonJobs.Mvc.UI.Controllers
 {
-    [CommonJobsAuthorize(Roles = "Users")]
+    [CommonJobsAuthorize(Roles = "Users,JobSearchManagers")]
     public class JobSearchesController : CommonJobsController
     {
         private string GetJobSearchPublicUrl(JobSearch j, bool includePublicCode = true)

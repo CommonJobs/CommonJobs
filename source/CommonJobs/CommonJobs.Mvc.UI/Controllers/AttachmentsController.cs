@@ -39,7 +39,7 @@ namespace CommonJobs.Mvc.UI.Controllers
                 return File(stream, attachment.ContentType);                
         }
 
-        [CommonJobsAuthorize(Roles = "Users")]
+        [CommonJobsAuthorize(Roles = "Users,ApplicantManagers,EmployeeManagers")]
         public ActionResult CropImageAttachment(string id, int x, int y, int width, int height)
         {
             // get image
@@ -74,7 +74,7 @@ namespace CommonJobs.Mvc.UI.Controllers
         }
 
         [HttpPost]
-        [CommonJobsAuthorize(Roles = "Users")]
+        [CommonJobsAuthorize(Roles = "Users,ApplicantManagers,EmployeeManagers")]
         public ActionResult Post(string id)
         {
             var entity = RavenSession.Load<object>(id);
