@@ -10,7 +10,7 @@ using NLog;
 
 namespace CommonJobs.Mvc.UI.Controllers
 {
-    [CommonJobsAuthorize(Roles = "Users")]
+    [CommonJobsAuthorize(Roles = "Users,EmployeeManagers")]
     public class VacationsController : CommonJobsController
     {
         private static Logger log = LogManager.GetCurrentClassLogger();

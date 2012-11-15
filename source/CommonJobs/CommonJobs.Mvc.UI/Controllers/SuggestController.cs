@@ -32,7 +32,7 @@ namespace CommonJobs.Mvc.UI.Controllers
             return Json(new { suggestions = results });
         }
 
-        [CommonJobsAuthorize(Roles = "Users")]
+        [CommonJobsAuthorize(Roles = "Users,EmployeeManagers")]
         public JsonNetResult Email(string term, int maxSuggestions = 8)
         {
             var results = Query(new GetSuggestions(x => x.Email, term, maxSuggestions));
@@ -84,14 +84,14 @@ namespace CommonJobs.Mvc.UI.Controllers
             return Json(new { suggestions = results });
         }
 
-        [CommonJobsAuthorize(Roles = "Users")]
+        [CommonJobsAuthorize(Roles = "Users,EmployeeManagers")]
         public JsonNetResult Project(string term, int maxSuggestions = 8)
         {
             var results = Query(new GetSuggestions(x => x.Project, term, maxSuggestions));
             return Json(new { suggestions = results });
         }
 
-        [CommonJobsAuthorize(Roles = "Users")]
+        [CommonJobsAuthorize(Roles = "Users,EmployeeManagers")]
         public JsonNetResult Agreement(string term, int maxSuggestions = 8)
         {
             var results = Query(new GetSuggestions(x => x.Agreement, term, maxSuggestions));
