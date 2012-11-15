@@ -9,6 +9,7 @@ using CommonJobs.ContentExtraction;
 using CommonJobs.Application.Indexes;
 using System.Linq.Expressions;
 using CommonJobs.Utilities;
+using CommonJobs.Application.EmployeeSearching;
 
 namespace CommonJobs.Application.Vacations
 {
@@ -27,23 +28,36 @@ namespace CommonJobs.Application.Vacations
             RavenQueryStatistics stats;
 
             var query1 = RavenSession
-                .Query<Employee>();
+                .Query<Employee_QuickSearch.Projection, Employee_QuickSearch>()
+                .Where(x => x.IsActive);
 
             if (!string.IsNullOrWhiteSpace(Parameters.Term))
             {
-                query1 = query1.Where(x => x.LastName.StartsWith(Parameters.Term) || x.FirstName.StartsWith(Parameters.Term));
+                query1 = query1.Where(x => x.FullName1.StartsWith(Parameters.Term)
+                    || x.FullName2.StartsWith(Parameters.Term));
             }
 
-            var query2 = query1
+            var ids = query1
                 .Statistics(out stats)
                 .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite())
-                .AsProjection<VacationsSearchResult>()
                 .OrderBy(x => x.LastName).ThenBy(x => x.FirstName)
-                .ApplyPagination(Parameters);
-            
-            var result = query2.ToArray();
+                .ApplyPagination(Parameters)
+                .Select(x => x.Id)
+                .ToArray();
+
+            var employees = RavenSession.Load<Employee>(ids);
+            var results = employees.Select(x => new VacationsSearchResult()
+            {
+                FirstName = x.FirstName,
+                HiringDate = x.HiringDate,
+                Id = x.Id,
+                LastName = x.LastName,
+                Vacations = x.Vacations
+            }).ToArray();
+
             Stats = stats;
-            return result;
+
+            return results;
         }
     }
 }
