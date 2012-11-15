@@ -19,7 +19,7 @@ using Raven.Abstractions.Data;
 
 namespace CommonJobs.Mvc.UI.Controllers
 {
-    [CommonJobsAuthorize(Roles="Users,EmployeesManagers")]
+    [CommonJobsAuthorize(Roles="Users,EmployeeManagers")]
     public class EmployeesController : CommonJobsController
     {
         private static Logger log = LogManager.GetCurrentClassLogger();
