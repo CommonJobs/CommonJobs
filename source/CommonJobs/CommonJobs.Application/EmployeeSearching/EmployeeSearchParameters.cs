@@ -9,5 +9,6 @@ namespace CommonJobs.Application.EmployeeSearching
     {
         public bool SearchInNotes { get; set; }
         public bool SearchInAttachments { get; set; }
+        public bool SearchNonActive { get; set; }
     }
 }
