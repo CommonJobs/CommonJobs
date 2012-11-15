@@ -20,7 +20,7 @@
     PageData["query"] = originalQuery;
 
     // append site:docs.nuget.org to the query
-    string query = originalQuery + " site:docs.commonjobs.getcs.com";
+    string query = originalQuery + " site:commonjobs.makingsense.com/documentation";
 
     // result offset
     string page = Request.QueryString["p"];
@@ -42,7 +42,8 @@
 
     dynamic jsonResult = null;
     using (var client = new WebClient()) {
-        var content = client.DownloadString(searchUrl);
+      client.Encoding = System.Text.Encoding.UTF8;
+      var content = client.DownloadString(searchUrl);
         jsonResult = Json.Decode(content);
     }
 
