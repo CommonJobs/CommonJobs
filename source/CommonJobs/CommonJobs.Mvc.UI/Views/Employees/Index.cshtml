@@ -98,8 +98,9 @@
                     <input type="submit" id="quickSearchSubmit" value=">>" />
                 </div>
                 <div class="secondarySearch">
-                    <label>¿Buscar en notas?</label><input type="checkbox" id="SearchInNotesCheck" name="SearchInNotes" @(Model.SearchInNotes ? "checked='checked'" : string.Empty) />
-                    <label>¿Buscar en adjuntos?</label><input type="checkbox" id="SearchInAttachmentsCheck" name="SearchInAttachments" @(Model.SearchInAttachments ? "checked='checked'" : string.Empty) />
+                    <label for="SearchInNotesCheck">¿Buscar en notas?</label><input type="checkbox" id="SearchInNotesCheck" name="SearchInNotes" @(Model.SearchInNotes ? "checked='checked'" : string.Empty) />
+                    <label for="SearchInAttachmentsCheck">¿Buscar en adjuntos?</label><input type="checkbox" id="SearchInAttachmentsCheck" name="SearchInAttachments" @(Model.SearchInAttachments ? "checked='checked'" : string.Empty) />
+                    <label for="SearchNonActiveCheck">¿Incluir dados de baja?</label><input type="checkbox" id="SearchNonActiveCheck" name="SearchNonActive" @(Model.SearchNonActive ? "checked='checked'" : string.Empty) />
                 </div>
             </form>
             <p id="resultCountNotice">Hay <span id="resultCount">0</span> resultado(s).</p>

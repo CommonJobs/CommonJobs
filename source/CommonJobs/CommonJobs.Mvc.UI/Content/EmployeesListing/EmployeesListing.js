@@ -120,6 +120,8 @@ $(function () {
                 searchParameters.searchInAttachments = true;
             if ($("#SearchInNotesCheck").prop("checked"))
                 searchParameters.searchInNotes = true;
+            if ($("#SearchNonActiveCheck").prop("checked"))
+                searchParameters.searchNonActive = true;
         },
         prepareNewCard: function ($card) {
             dragAndDrop.prepareFileDropzone($card, {
@@ -222,7 +224,7 @@ $(function () {
         }
     });
 
-    $("#SearchInAttachmentsCheck, #SearchInNotesCheck").change(function () {
+    $("#SearchInAttachmentsCheck, #SearchInNotesCheck, #SearchNonActiveCheck").change(function () {
         qs.search();
     });
 

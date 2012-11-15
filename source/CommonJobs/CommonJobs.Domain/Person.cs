@@ -38,11 +38,14 @@ namespace CommonJobs.Domain
                     FirstName = name.Trim();
                 }
             }
-        }
-
+		}
+		
         public string Id { get; set; }
 
         public ImageAttachment Photo { get; set; }
+
+        [Display(Name = "Dado de baja")]
+        public DateTime? TerminationDate { get; set; }
 
         [Display(Name = "Nombre")]
         public string FirstName { get; set; }

@@ -43,6 +43,7 @@ namespace CommonJobs.Application.EmployeeSearching
             public SlotWithAttachment[] AttachmentsBySlot { get; set; }
 
             public bool IsEmployee { get; set; }
+            public bool IsActive { get; set; }
             public OrphanAttachment[] OrphanAttachments { get; set; }
         }
         
@@ -53,6 +54,7 @@ namespace CommonJobs.Application.EmployeeSearching
                 select new 
                 {
                     Id = employee.Id,
+                    IsActive = employee.TerminationDate == null,
                     FirstName = employee.FirstName,
                     LastName = employee.LastName,
                     Skills = employee.Skills,
@@ -95,6 +97,7 @@ namespace CommonJobs.Application.EmployeeSearching
                 select new
                 {
                     Id = attachment.RelatedEntityId,
+                    IsActive = false,
                     FirstName = (string)null,
                     LastName = (string)null,
                     Skills = (string)null,
@@ -121,6 +124,7 @@ namespace CommonJobs.Application.EmployeeSearching
                 select new
                 {
                     Id = g.Key,
+                    IsActive = g.Any(x => x.IsActive),
                     FirstName = g.Where(x => x.FirstName != null).Select(x => x.FirstName).FirstOrDefault(),
                     LastName = g.Where(x => x.LastName != null).Select(x => x.LastName).FirstOrDefault(),
                     Skills = g.Where(x => x.Skills != null).Select(x => x.Skills).FirstOrDefault(),

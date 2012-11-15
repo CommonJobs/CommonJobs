@@ -473,7 +473,7 @@
                 MaritalStatus: { controlLink: "Options", options: [{ value: 0, text: "Soltero" }, { value: 1, text: "Casado" }, { value: 2, text: "Divorciado"}] },
                 HiringDate: { controlLink: "Date", valueToContent: formatLongDateWithYears },
                 WorkingHours: { controlLink: "Int" },
-                Lunch: { controlLink: "Options", options: [{ value: false, text: "No" }, { value: true, text: "Si"}] },
+                Lunch: { controlLink: "Options", options: [{ value: false, text: "No" }, { value: true, text: "Sí" }] },
                 Notes:
                 {
                     controlLink: "Collection",
@@ -543,7 +543,8 @@
                 UsaVisaExpiration: { controlLink: "Date" },
                 HasEuropeanCitizenship: { controlLink: "Options", options: [{ value: false, text: "No" }, { value: true, text: "Si" }] },
                 HasEuropeanPassport: { controlLink: "Options", options: [{ value: false, text: "No" }, { value: true, text: "Si" }] },
-                EuropeanPassportExpiration: { controlLink: "Date" }
+                EuropeanPassportExpiration: { controlLink: "Date" },
+                TerminationDate: { controlLink: "Date" }
             }
     });
 

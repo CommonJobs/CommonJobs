@@ -49,6 +49,9 @@ namespace CommonJobs.Application.EmployeeSearching
             if (Parameters.SearchInAttachments)
                 predicate = predicate.Or(x => x.AttachmentContent.Any(y => y.StartsWith(Parameters.Term)));
 
+            if (!Parameters.SearchNonActive)
+                predicate = predicate.And(x => x.IsActive);
+
             query = query.Where(predicate).OrderBy(x => x.LastName).ThenBy(x => x.FirstName);
 
             if (Parameters.Skip > 0)
