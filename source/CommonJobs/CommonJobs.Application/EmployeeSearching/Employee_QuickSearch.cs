@@ -54,7 +54,7 @@ namespace CommonJobs.Application.EmployeeSearching
                 select new 
                 {
                     Id = employee.Id,
-                    IsActive = employee.IsActive,
+                    IsActive = employee.TerminationDate == null,
                     FirstName = employee.FirstName,
                     LastName = employee.LastName,
                     Skills = employee.Skills,
@@ -97,7 +97,7 @@ namespace CommonJobs.Application.EmployeeSearching
                 select new
                 {
                     Id = attachment.RelatedEntityId,
-                    IsActive = true,
+                    IsActive = false,
                     FirstName = (string)null,
                     LastName = (string)null,
                     Skills = (string)null,
@@ -124,7 +124,7 @@ namespace CommonJobs.Application.EmployeeSearching
                 select new
                 {
                     Id = g.Key,
-                    IsActive = g.Select(x => x.IsActive).FirstOrDefault(),
+                    IsActive = g.Any(x => x.IsActive),
                     FirstName = g.Where(x => x.FirstName != null).Select(x => x.FirstName).FirstOrDefault(),
                     LastName = g.Where(x => x.LastName != null).Select(x => x.LastName).FirstOrDefault(),
                     Skills = g.Where(x => x.Skills != null).Select(x => x.Skills).FirstOrDefault(),

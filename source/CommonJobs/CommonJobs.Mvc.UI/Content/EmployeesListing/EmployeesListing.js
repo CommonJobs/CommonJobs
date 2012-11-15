@@ -120,7 +120,7 @@ $(function () {
                 searchParameters.searchInAttachments = true;
             if ($("#SearchInNotesCheck").prop("checked"))
                 searchParameters.searchInNotes = true;
-            if ($("#SearchInNonActiveCheck").prop("checked"))
+            if ($("#SearchNonActiveCheck").prop("checked"))
                 searchParameters.searchNonActive = true;
         },
         prepareNewCard: function ($card) {
@@ -224,7 +224,7 @@ $(function () {
         }
     });
 
-    $("#SearchInAttachmentsCheck, #SearchInNotesCheck").change(function () {
+    $("#SearchInAttachmentsCheck, #SearchInNotesCheck, #SearchNonActiveCheck").change(function () {
         qs.search();
     });
 

@@ -44,8 +44,8 @@ namespace CommonJobs.Domain
 
         public ImageAttachment Photo { get; set; }
 
-        [Display(Name = "Activo")]
-        public bool IsActive { get; set; }
+        [Display(Name = "Dado de baja")]
+        public DateTime? TerminationDate { get; set; }
 
         [Display(Name = "Nombre")]
         public string FirstName { get; set; }

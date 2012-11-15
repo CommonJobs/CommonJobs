@@ -544,7 +544,7 @@
                 HasEuropeanCitizenship: { controlLink: "Options", options: [{ value: false, text: "No" }, { value: true, text: "Si" }] },
                 HasEuropeanPassport: { controlLink: "Options", options: [{ value: false, text: "No" }, { value: true, text: "Si" }] },
                 EuropeanPassportExpiration: { controlLink: "Date" }
-                IsActive: { controlLink: "Options", options: [{ value: true, text: "No" }, { value: false, text: "Sí" }] } // The values are inverted on purpose! The field is displayed on screen as "dado the baja", which is opposed as active.
+                TerminationDate: { controlLink: "Date" }
             }
     });
 
