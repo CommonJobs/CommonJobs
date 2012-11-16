@@ -233,6 +233,8 @@
                 <h3>Modificaciones por fecha <button class="btn" type="button" data-bind="click: addOverride"><i class="icon-plus"></i> Agregar</button></h3>
                 <!-- ko foreach: overrides -->
                     <form class="well form-horizontal">
+                        <button class="btn" type="button" data-bind="click: $root.removeOverride"><i class="icon-remove"></i> Quitar</button>
+
                         <div class="control-group">
                             <label class="control-label">Fecha:</label>
                             <div class="controls">
