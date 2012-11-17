@@ -3,23 +3,23 @@
     ViewBag.Title = "Mi Menú";
     ScriptManager.RegisterJs(Url.Content("~/Scripts/my-menu-page.js"));
 }
-        <header class="jumbotron subhead" id="Header1" style="padding: 40px 0;">
-            <div class="container">
-                <h1>@ViewBag.Title</h1>
+<header class="jumbotron subhead" id="Header1" style="padding: 40px 0;">
+    <div class="container">
+        <h1>@ViewBag.Title</h1>
+    </div>
+</header>
+<div class="container">
+    <section class="persistence well">
+        <h2>Persistencia</h2>
+        <div>
+            <button class="btn" data-bind="click: MyMenu.MyMenuPage.load">Leer desde JSON</button>
+            <button class="btn" data-bind="click: MyMenu.MyMenuPage.save">Escribir en JSON</button>
+            <div class="btn-group" data-toggle="buttons-checkbox">
+                <a class="btn collapse-data-btn" data-toggle="collapse" href="#collapseData">Mostrar JSON</a>
             </div>
-        </header>
-        <div class="container">
-            <section class="persistence well">
-                <h2>Persistencia</h2>
-                <div>
-                    <button class="btn" data-bind="click: MyMenu.MyMenuPage.load">Leer desde JSON</button>
-                    <button class="btn" data-bind="click: MyMenu.MyMenuPage.save">Escribir en JSON</button>
-                    <div class="btn-group" data-toggle="buttons-checkbox">
-                        <a class="btn collapse-data-btn" data-toggle="collapse" href="#collapseData">Mostrar JSON</a>
-                    </div>
-                </div>
-                <div id="collapseData" class="collapse">
-                    <textarea class="json-field menu">
+        </div>
+        <div id="collapseData" class="collapse">
+            <textarea class="json-field menu">
     {
       "title":"Menú primaveral",
       "firstWeek":0,
@@ -114,7 +114,7 @@
       ]
     }
                     </textarea>
-                    <textarea class="json-field employee-menu">
+            <textarea class="json-field employee-menu">
     {
       "employeeId": "employees/228",
       "name": "Moschini, Andrés",
@@ -148,112 +148,113 @@
       ]
     }
                     </textarea>
-                </div>
-            </section>
-            <section id="main">
-                <h2 data-bind="text: name">Mi Menu</h2>
-                <h3>Opciones Generales</h3>
-                <form class="form-horizontal">
-                    <div class="control-group">
-                        <label class="control-label" for="defaultPlace">Lugar por defecto:</label>
-                        <div class="controls">
-                            <select id="defaultPlace" data-bind="options: menu.places, 
+        </div>
+    </section>
+    <section id="main">
+        <h2 data-bind="text: name">Mi Menu</h2>
+        <h3>Opciones Generales</h3>
+        <form class="form-horizontal">
+            <div class="control-group">
+                <label class="control-label" for="defaultPlace">Lugar por defecto:</label>
+                <div class="controls">
+                    <select id="defaultPlace" data-bind="options: menu.places, 
                                     optionsText: 'text', optionsValue: 'key', 
                                     value: defaultPlace, 
                                     optionsCaption: 'Seleccione...'">
-                            </select>
-                        </div>
-                    </div>
-                </form>
-                <h3>Menú semanal</h3>
-                <table class="table table-striped table-bordered">
-                    <thead>
-                        <tr>
-                            <td></td>
-                            <!-- ko foreach: MyMenu.days() -->
-                            <td data-bind="text: MyMenu.days.getName($data)"></td>
-                            <!-- /ko -->
-                        </tr>
-                    </thead>
-                    <tbody data-bind="foreach: weeks">
-	                    <tr>
-		                    <td><span data-bind='text: text'></span></td>
-		                    <!-- ko foreach: MyMenu.days() -->
-		                    <td>
-                                <select data-bind="options: $root.menu.options, 
+                    </select>
+                </div>
+            </div>
+        </form>
+        <h3>Menú semanal</h3>
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <td></td>
+                    <!-- ko foreach: MyMenu.days() -->
+                    <td data-bind="text: MyMenu.days.getName($data)"></td>
+                    <!-- /ko -->
+                </tr>
+            </thead>
+            <tbody data-bind="foreach: weeks">
+                <tr>
+                    <td><span data-bind='text: text'></span></td>
+                    <!-- ko foreach: MyMenu.days() -->
+                    <td>
+                        <select data-bind="options: $root.menu.options, 
                                     optionsText: 'text', optionsValue: 'key', 
                                     value: $root.getMenuChoice($parent.key, $data), 
                                     optionsCaption: 'No come'">
-                                </select>
+                        </select>
 
-                                <!-- ko if: $root.getMenuChoice($parent.key, $data)() -->
+                        <!-- ko if: $root.getMenuChoice($parent.key, $data)() -->
 
-                                <select data-bind="options: $root.menu.places, 
+                        <select data-bind="options: $root.menu.places, 
                                     optionsText: 'text', optionsValue: 'key', 
                                     value: $root.getPlaceChoice($parent.key, $data), 
                                     optionsCaption: $root.getDefaultPlaceLabel()">
-                                </select>
-
-                                <!-- /ko -->
-
-		                    </td>
-		                    <!-- /ko -->
-	                    </tr>
-                    </tbody>
-                </table>
-                <h3>Modificaciones por fecha <button class="btn" type="button" data-bind="click: addOverride"><i class="icon-plus"></i> Agregar</button></h3>
-                <!-- ko foreach: overrides -->
-                    <form class="well form-horizontal">
-                        <button class="btn" type="button" data-bind="click: $root.removeOverride"><i class="icon-remove"></i> Quitar</button>
-
-                        <div class="control-group">
-                            <label class="control-label">Fecha:</label>
-                            <div class="controls">
-                                <input type="text" class="span2" data-bind="datepicker: date, datepickerOptions: { dataType: 'iso' }" />
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label">Comentario:</label>
-                            <div class="controls">
-                                <input type="text" class="span5" data-bind="value: comment" />
-                            </div>
-                        </div>
-
-                        <div class="control-group">
-                            <div class="controls">
-                                <label class="checkbox">
-                                    <input type="checkbox" data-bind="checked: cancel">Cancelar comida del día
-                                </label>
-                            </div>
-                        </div>
-
-                        <!-- ko if: !cancel() -->
-
-                        <div class="control-group">
-                            <label class="control-label">Menú</label>
-                            <div class="controls">
-                                <select data-bind="options: $root.menu.options, 
-                                    optionsText: 'text', optionsValue: 'key', 
-                                    value: option, 
-                                    optionsCaption: 'Menú por defecto del día'">
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="control-group">
-                            <label class="control-label">Lugar</label>
-                            <div class="controls">
-                                <select data-bind="options: $root.menu.places, 
-                                    optionsText: 'text', optionsValue: 'key', 
-                                    value: place, 
-                                    optionsCaption: 'Lugar por defecto del día'">
-                                </select>
-                            </div>
-                        </div>
+                        </select>
 
                         <!-- /ko -->
 
-                    </form>
-                <!-- /ko -->
-            </section>
-        </div>
+                    </td>
+                    <!-- /ko -->
+                </tr>
+            </tbody>
+        </table>
+        <h3>Modificaciones por fecha
+            <button class="btn" type="button" data-bind="click: addOverride"><i class="icon-plus"></i>Agregar</button></h3>
+        <!-- ko foreach: overrides -->
+        <form class="well form-horizontal">
+            <button class="btn" type="button" data-bind="click: $root.removeOverride"><i class="icon-remove"></i>Quitar</button>
+
+            <div class="control-group">
+                <label class="control-label">Fecha:</label>
+                <div class="controls">
+                    <input type="text" class="span2" data-bind="datepicker: date, datepickerOptions: { dataType: 'iso' }" />
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Comentario:</label>
+                <div class="controls">
+                    <input type="text" class="span5" data-bind="value: comment" />
+                </div>
+            </div>
+
+            <div class="control-group">
+                <div class="controls">
+                    <label class="checkbox">
+                        <input type="checkbox" data-bind="checked: cancel">Cancelar comida del día
+                    </label>
+                </div>
+            </div>
+
+            <!-- ko if: !cancel() -->
+
+            <div class="control-group">
+                <label class="control-label">Menú</label>
+                <div class="controls">
+                    <select data-bind="options: $root.menu.options, 
+                                    optionsText: 'text', optionsValue: 'key', 
+                                    value: option, 
+                                    optionsCaption: 'Menú por defecto del día'">
+                    </select>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label">Lugar</label>
+                <div class="controls">
+                    <select data-bind="options: $root.menu.places, 
+                                    optionsText: 'text', optionsValue: 'key', 
+                                    value: place, 
+                                    optionsCaption: 'Lugar por defecto del día'">
+                    </select>
+                </div>
+            </div>
+
+            <!-- /ko -->
+
+        </form>
+        <!-- /ko -->
+    </section>
+</div>
