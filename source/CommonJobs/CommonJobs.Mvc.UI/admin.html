@@ -232,15 +232,15 @@
                         <thead>
                             <tr>
                                 <td></td>
-                                <!-- ko foreach: CommonFood.days() -->
-                                <td data-bind="text: CommonFood.days.getName($data)"></td>
+                                <!-- ko foreach: MyMenu.days() -->
+                                <td data-bind="text: MyMenu.days.getName($data)"></td>
                                 <!-- /ko -->
                             </tr>
                         </thead>
                         <tbody data-bind="foreach: $root.options">
                             <tr>
                                 <td data-bind='text: text'></td>
-                                <!-- ko foreach: CommonFood.days() -->
+                                <!-- ko foreach: MyMenu.days() -->
                                 <td>
                                     <textarea rows="3" data-bind='value: $root.getFood($parentContext.$parent.key, $data, $parent.key)'></textarea>
                                 </td>

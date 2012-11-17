@@ -4,8 +4,8 @@
 ///<reference path='underscore.browser.d.ts' />
 ///<reference path='my-menu.ts' />
 
-module CommonFood {
-    export class AdminController extends MenuDefinition {
+module MyMenu {
+    export class AdminPage extends MenuDefinition {
         $json = $(".persistence .json-field");
         
         constructor () {
@@ -30,7 +30,7 @@ module CommonFood {
     }
 
     $(document).ready(() => {
-        var adminController = new AdminController();    
+        var adminController = new AdminPage();    
         $("#pruebadt").datepicker();
     });
 }

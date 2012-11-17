@@ -3,29 +3,29 @@ var __extends = this.__extends || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 }
-var CommonFood;
-(function (CommonFood) {
-    var AdminController = (function (_super) {
-        __extends(AdminController, _super);
-        function AdminController() {
+var MyMenu;
+(function (MyMenu) {
+    var AdminPage = (function (_super) {
+        __extends(AdminPage, _super);
+        function AdminPage() {
                 _super.call(this);
             this.$json = $(".persistence .json-field");
             ko.applyBindings(this);
         }
-        AdminController.prototype.load = function () {
+        AdminPage.prototype.load = function () {
             var data = eval("(" + this.$json.val() + ")");
             this.reset(data);
         };
-        AdminController.prototype.save = function () {
+        AdminPage.prototype.save = function () {
             var data = this.exportData();
             this.$json.val(JSON.stringify(data));
         };
-        return AdminController;
-    })(CommonFood.MenuDefinition);
-    CommonFood.AdminController = AdminController;    
+        return AdminPage;
+    })(MyMenu.MenuDefinition);
+    MyMenu.AdminPage = AdminPage;    
     $(document).ready(function () {
-        var adminController = new AdminController();
+        var adminController = new AdminPage();
         $("#pruebadt").datepicker();
     });
-})(CommonFood || (CommonFood = {}));
+})(MyMenu || (MyMenu = {}));
 

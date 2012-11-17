@@ -113,9 +113,9 @@ var Utilities;
 
 })(Utilities || (Utilities = {}));
 
-var CommonFood;
-(function (CommonFood) {
-    CommonFood.days = (function () {
+var MyMenu;
+(function (MyMenu) {
+    MyMenu.days = (function () {
         var DAYS = [
             1, 
             2, 
@@ -186,7 +186,7 @@ var CommonFood;
             return null;
         };
         WeekStorage.prototype.getItem = function (week, day) {
-            return CommonFood.days.isValid(day) && week < this.weeksQuantity() ? this.items[week][day] : null;
+            return MyMenu.days.isValid(day) && week < this.weeksQuantity() ? this.items[week][day] : null;
         };
         WeekStorage.prototype.eachWeek = function (f) {
             _.each(this.items, function (weekItems, weekIndex) {
@@ -330,7 +330,7 @@ var CommonFood;
         };
         return EmployeeMenuDefinition;
     })(WeekStorage);
-    CommonFood.EmployeeMenuDefinition = EmployeeMenuDefinition;    
+    MyMenu.EmployeeMenuDefinition = EmployeeMenuDefinition;    
     var MenuDefinition = (function (_super) {
         __extends(MenuDefinition, _super);
         function MenuDefinition(data) {
@@ -469,6 +469,6 @@ var CommonFood;
         };
         return MenuDefinition;
     })(WeekStorage);
-    CommonFood.MenuDefinition = MenuDefinition;    
-})(CommonFood || (CommonFood = {}));
+    MyMenu.MenuDefinition = MenuDefinition;    
+})(MyMenu || (MyMenu = {}));
 

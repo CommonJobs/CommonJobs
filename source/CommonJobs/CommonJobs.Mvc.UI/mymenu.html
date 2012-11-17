@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html>
+<html class="bootstrap-scope">
 <head>
     <meta charset="utf-8" />
     <title>HTML Home Page</title>
@@ -20,7 +20,7 @@
     <script src="Scripts/my-menu.js" type="text/javascript"></script>
     <script src="Scripts/my-menu-page.js" type="text/javascript"></script>
 </head>
-<body class="bootstrap-scope">
+<body>
     <div>
         <div class="navbar navbar-fixed-top">
             <div class="navbar-inner">
@@ -40,8 +40,8 @@
             <section class="persistence well">
                 <h2>Persistencia</h2>
                 <div>
-                    <button class="btn" data-bind="click: CommonFood.MyMenu.load">Leer desde JSON</button>
-                    <button class="btn" data-bind="click: CommonFood.MyMenu.save">Escribir en JSON</button>
+                    <button class="btn" data-bind="click: MyMenu.MyMenuPage.load">Leer desde JSON</button>
+                    <button class="btn" data-bind="click: MyMenu.MyMenuPage.save">Escribir en JSON</button>
                     <div class="btn-group" data-toggle="buttons-checkbox">
                         <a class="btn collapse-data-btn" data-toggle="collapse" href="#collapseData">Mostrar JSON</a>
                     </div>
@@ -198,15 +198,15 @@
                     <thead>
                         <tr>
                             <td></td>
-                            <!-- ko foreach: CommonFood.days() -->
-                            <td data-bind="text: CommonFood.days.getName($data)"></td>
+                            <!-- ko foreach: MyMenu.days() -->
+                            <td data-bind="text: MyMenu.days.getName($data)"></td>
                             <!-- /ko -->
                         </tr>
                     </thead>
                     <tbody data-bind="foreach: weeks">
 	                    <tr>
 		                    <td><span data-bind='text: text'></span></td>
-		                    <!-- ko foreach: CommonFood.days() -->
+		                    <!-- ko foreach: MyMenu.days() -->
 		                    <td>
                                 <select data-bind="options: $root.menu.options, 
                                     optionsText: 'text', optionsValue: 'key', 

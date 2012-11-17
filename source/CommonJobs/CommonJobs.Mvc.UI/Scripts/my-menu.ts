@@ -6,11 +6,11 @@
  
 //#region Underscore personalizations
 declare interface UnderscoreVoidIMenuItemListIterator {
-    (element : CommonFood.MenuDataItem, index : number, list : CommonFood.MenuDataItem[]) : void;
+    (element : MyMenu.MenuDataItem, index : number, list : MyMenu.MenuDataItem[]) : void;
 }
 
 declare interface UnderscoreStatic extends Function {
-    each(list: CommonFood.MenuDataItem[], iterator: UnderscoreVoidIMenuItemListIterator, context?: any): void;
+    each(list: MyMenu.MenuDataItem[], iterator: UnderscoreVoidIMenuItemListIterator, context?: any): void;
 }
 //#endregion
 
@@ -105,7 +105,7 @@ module Utilities {
     }
 }
 
-module CommonFood {
+module MyMenu {
 
     //Move days selection inside WeekStorage
     export interface Days {

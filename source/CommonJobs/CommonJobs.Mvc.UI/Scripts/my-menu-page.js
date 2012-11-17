@@ -1,17 +1,17 @@
-var CommonFood;
-(function (CommonFood) {
-    (function (MyMenu) {
+var MyMenu;
+(function (MyMenu) {
+    (function (MyMenuPage) {
         var $menuJson;
         var $employeeMenuJson;
-        var menuDefinition = new CommonFood.MenuDefinition();
-        var employeeMenu = new CommonFood.EmployeeMenuDefinition(menuDefinition);
-        MyMenu.load = function () {
+        var menuDefinition = new MyMenu.MenuDefinition();
+        var employeeMenu = new MyMenu.EmployeeMenuDefinition(menuDefinition);
+        MyMenuPage.load = function () {
             var menuData = eval("(" + $menuJson.val() + ")");
             menuDefinition.reset(menuData);
             var employeeMenuData = eval("(" + $employeeMenuJson.val() + ")");
             employeeMenu.reset(employeeMenuData);
         };
-        MyMenu.save = function () {
+        MyMenuPage.save = function () {
             var data = employeeMenu.exportData();
             $employeeMenuJson.val(JSON.stringify(data));
         };
@@ -20,8 +20,8 @@ var CommonFood;
             $employeeMenuJson = $(".persistence .json-field.employee-menu");
             ko.applyBindings(employeeMenu);
         });
-    })(CommonFood.MyMenu || (CommonFood.MyMenu = {}));
-    var MyMenu = CommonFood.MyMenu;
+    })(MyMenu.MyMenuPage || (MyMenu.MyMenuPage = {}));
+    var MyMenuPage = MyMenu.MyMenuPage;
 
-})(CommonFood || (CommonFood = {}));
+})(MyMenu || (MyMenu = {}));
 

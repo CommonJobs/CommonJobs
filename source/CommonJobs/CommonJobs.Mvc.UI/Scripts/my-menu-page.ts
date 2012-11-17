@@ -4,7 +4,7 @@
 ///<reference path='underscore.browser.d.ts' />
 ///<reference path='my-menu.ts' />
 
-module CommonFood.MyMenu {
+module MyMenu.MyMenuPage {
     var $menuJson: JQuery; 
     var $employeeMenuJson: JQuery; 
     var menuDefinition = new MenuDefinition();
