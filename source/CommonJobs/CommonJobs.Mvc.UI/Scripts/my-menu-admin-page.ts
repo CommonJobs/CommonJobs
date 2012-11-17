@@ -4,6 +4,8 @@
 ///<reference path='underscore.browser.d.ts' />
 ///<reference path='my-menu.ts' />
 
+declare var urlGenerator: any;
+
 module MyMenu {
     export class AdminPage extends MenuDefinition {
         $json = $(".persistence .json-field");
@@ -14,18 +16,30 @@ module MyMenu {
         }
 
         load() {
-            //TODO: reset from server
-            var data = eval("(" + this.$json.val() + ")");
-            //support comments or not? var model = JSON.parse(this.$json.text());
-
-            this.reset(data);
+            $.ajax(
+                urlGenerator.action("MenuDefinition", "MyMenu"),
+                {
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    success: (data) => {
+                        this.reset(data);
+                    }
+                });
         }
 
         save() {
             var data = this.exportData();
-            
-            //TODO: save to server
-            this.$json.val(JSON.stringify(data));
+            $.ajax(
+                urlGenerator.action("MenuDefinition", "MyMenu"),
+                {
+                    type: "POST",
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(data),
+                    success: (data) => {
+                        this.reset(data);
+                    }
+                });
         }
     }
 

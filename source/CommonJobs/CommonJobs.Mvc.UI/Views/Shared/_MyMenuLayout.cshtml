@@ -11,6 +11,9 @@
     ScriptManager.RegisterCss(Url.Content("~/Content/moment-datepicker/datepicker.css"), priority: 900);
     ScriptManager.RegisterJs(Url.Content("~/Scripts/moment-datepicker-ko.js"), priority: 900);
 
+    ScriptManager.RegisterGlobalJavascript("baseUrl", Url.Content("~"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/url-generator.js"), priority: 900);
+
     ScriptManager.RegisterJs(Url.Content("~/Scripts/my-menu-pages.js"), priority: 900);
     ScriptManager.RegisterJs(Url.Content("~/Scripts/my-menu.js"), priority: 900);
 }

@@ -13,12 +13,27 @@ var MyMenu;
             ko.applyBindings(this);
         }
         AdminPage.prototype.load = function () {
-            var data = eval("(" + this.$json.val() + ")");
-            this.reset(data);
+            var _this = this;
+            $.ajax(urlGenerator.action("MenuDefinition", "MyMenu"), {
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    _this.reset(data);
+                }
+            });
         };
         AdminPage.prototype.save = function () {
+            var _this = this;
             var data = this.exportData();
-            this.$json.val(JSON.stringify(data));
+            $.ajax(urlGenerator.action("MenuDefinition", "MyMenu"), {
+                type: "POST",
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(data),
+                success: function (data) {
+                    _this.reset(data);
+                }
+            });
         };
         return AdminPage;
     })(MyMenu.MenuDefinition);

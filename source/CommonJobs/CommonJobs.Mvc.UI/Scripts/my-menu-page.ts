@@ -4,6 +4,9 @@
 ///<reference path='underscore.browser.d.ts' />
 ///<reference path='my-menu.ts' />
 
+declare var urlGenerator: any;
+declare var ViewData: any;
+
 module MyMenu.MyMenuPage {
     var $menuJson: JQuery; 
     var $employeeMenuJson: JQuery; 
@@ -11,20 +14,39 @@ module MyMenu.MyMenuPage {
     var employeeMenu: EmployeeMenuDefinition = new EmployeeMenuDefinition(menuDefinition);
 
     export var load = function () {
-        //alert("load");
-        //TODO: reset from server
-        var menuData = eval("(" + $menuJson.val() + ")");
-        menuDefinition.reset(menuData);
-
-        var employeeMenuData = eval("(" + $employeeMenuJson.val() + ")");
-        employeeMenu.reset(employeeMenuData);
+        $.ajax(
+            urlGenerator.action("MenuDefinition", "MyMenu"),
+            {
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                success: (menuData) => {
+                    $.ajax(
+                        ViewData.menuUrl,
+                        {
+                            dataType: 'json',
+                            contentType: 'application/json; charset=utf-8',
+                            success: (employeeMenuData) => {
+                                employeeMenu.reset(employeeMenuData);
+                            }
+                        });
+                    menuDefinition.reset(menuData);
+                }
+            });
     }
 
     export var save = function () {
-        //alert("save");
         var data = employeeMenu.exportData();
-        //TODO: save to server
-        $employeeMenuJson.val(JSON.stringify(data))
+        $.ajax(
+            ViewData.menuUrl,
+            {
+                type: "POST",
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(data),
+                success: (employeeMenuData) => {
+                    employeeMenu.reset(employeeMenuData);
+                }
+            });
     }
 
     $(document).ready(() => {

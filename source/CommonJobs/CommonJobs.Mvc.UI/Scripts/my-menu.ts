@@ -510,6 +510,7 @@ module MyMenu {
         
         exportData(): MenuData {
             var data: MenuData = { 
+                deadlineTime: this.deadlineTime(),
                 title: this.title(),
                 firstWeek: this.firstWeek(),
                 weeksQuantity: this.weeksQuantity(),

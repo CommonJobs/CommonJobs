@@ -422,6 +422,7 @@ var MyMenu;
         };
         MenuDefinition.prototype.exportData = function () {
             var data = {
+                deadlineTime: this.deadlineTime(),
                 title: this.title(),
                 firstWeek: this.firstWeek(),
                 weeksQuantity: this.weeksQuantity(),

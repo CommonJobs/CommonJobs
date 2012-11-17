@@ -6,14 +6,32 @@ var MyMenu;
         var menuDefinition = new MyMenu.MenuDefinition();
         var employeeMenu = new MyMenu.EmployeeMenuDefinition(menuDefinition);
         MyMenuPage.load = function () {
-            var menuData = eval("(" + $menuJson.val() + ")");
-            menuDefinition.reset(menuData);
-            var employeeMenuData = eval("(" + $employeeMenuJson.val() + ")");
-            employeeMenu.reset(employeeMenuData);
+            $.ajax(urlGenerator.action("MenuDefinition", "MyMenu"), {
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                success: function (menuData) {
+                    $.ajax(ViewData.menuUrl, {
+                        dataType: 'json',
+                        contentType: 'application/json; charset=utf-8',
+                        success: function (employeeMenuData) {
+                            employeeMenu.reset(employeeMenuData);
+                        }
+                    });
+                    menuDefinition.reset(menuData);
+                }
+            });
         };
         MyMenuPage.save = function () {
             var data = employeeMenu.exportData();
-            $employeeMenuJson.val(JSON.stringify(data));
+            $.ajax(ViewData.menuUrl, {
+                type: "POST",
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(data),
+                success: function (employeeMenuData) {
+                    employeeMenu.reset(employeeMenuData);
+                }
+            });
         };
         $(document).ready(function () {
             $menuJson = $(".persistence .json-field.menu");
