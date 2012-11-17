@@ -1,14 +1,9 @@
-var __extends = this.__extends || function (d, b) {
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-}
 var CommonFood;
 (function (CommonFood) {
     var AdminController = (function (_super) {
         __extends(AdminController, _super);
         function AdminController() {
-                _super.call(this);
+            _super.prototype();
             this.$json = $(".persistence .json-field");
             ko.applyBindings(this);
         }
@@ -21,7 +16,7 @@ var CommonFood;
             this.$json.val(JSON.stringify(data));
         };
         return AdminController;
-    })(CommonFood.MenuDefinition);
+    })(MenuDefinition);
     CommonFood.AdminController = AdminController;    
     $(document).ready(function () {
         var adminController = new AdminController();
