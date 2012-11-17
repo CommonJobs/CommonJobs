@@ -123,7 +123,6 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="CJLogic\CalculateVacations.ts" />
-    <Content Include="admin.html" />
     <Content Include="CJLogic\CalculateVacations.js">
       <DependentUpon>CalculateVacations.ts</DependentUpon>
     </Content>
@@ -165,6 +164,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\JobSearchesController.cs" />
     <Compile Include="Controllers\MigrationsController.cs" />
+    <Compile Include="Controllers\MyMenuController.cs" />
     <Compile Include="Controllers\SuggestController.cs" />
     <Compile Include="Controllers\VacationsController.cs" />
     <Compile Include="Global.asax.cs">
@@ -199,7 +199,6 @@
     <Content Include="Content\TableTools-2.1.4\media\swf\copy_csv_xls.swf" />
     <Content Include="Content\TableTools-2.1.4\media\swf\copy_csv_xls_pdf.swf" />
     <Content Include="Content\Vacations\Vacations.js" />
-    <Content Include="mymenu.html" />
     <Content Include="Scripts\my-menu-admin-page.js">
       <DependentUpon>my-menu-admin-page.ts</DependentUpon>
     </Content>
@@ -242,6 +241,8 @@
     <Content Include="Content\TableTools-2.1.4\media\js\TableTools.min.js.gz" />
     <Content Include="Views\EmployeeFiles\Index.cshtml" />
     <Content Include="Content\EmployeeFilesBase.less" />
+    <Content Include="Views\MyMenu\MyMenu.cshtml" />
+    <Content Include="Views\MyMenu\Admin.cshtml" />
     <None Include="_bin_deployableAssemblies\FSharp.Core.dll" />
   </ItemGroup>
   <ItemGroup>
