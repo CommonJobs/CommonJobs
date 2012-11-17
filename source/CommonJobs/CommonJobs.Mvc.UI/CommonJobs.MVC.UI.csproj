@@ -228,7 +228,10 @@
       <DependentUpon>site.ts</DependentUpon>
     </Content>
     <Content Include="Scripts\site.ts" />
+    <Content Include="Scripts\time-ko.js" />
     <Content Include="Scripts\underscore.browser.d.ts" />
+    <Content Include="Scripts\underscore.js" />
+    <Content Include="Scripts\underscore.min.js" />
     <Content Include="Views\Vacations\Index.cshtml" />
     <Content Include="Content\DataTables\images\Sorting icons.psd" />
     <Content Include="Content\TableTools-2.1.4\media\as3\lib\AlivePDF.swc" />
@@ -956,8 +959,6 @@
     <Content Include="Scripts\json2.min.js" />
     <Content Include="Scripts\modernizr-1.7.js" />
     <Content Include="Scripts\modernizr-1.7.min.js" />
-    <Content Include="Scripts\underscore.js" />
-    <Content Include="Scripts\underscore.min.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
       <TransformOnBuild>true</TransformOnBuild>
