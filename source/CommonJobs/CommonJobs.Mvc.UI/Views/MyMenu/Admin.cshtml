@@ -1,43 +1,20 @@
 ﻿@{
-    Layout = null;
-    ScriptManager.RegisterCss(Url.Content("~/Content/twitter-bootstrap/less/bootstrap.less"), priority: 900);
-    ScriptManager.RegisterJs(Url.Content("~/Scripts/jquery-1.7.2.min.js"), priority: 900);
-    ScriptManager.RegisterJs(Url.Content("~/Scripts/moment.js"), priority: 900);
-    ScriptManager.RegisterJs(Url.Content("~/Scripts/moment.i18n/es.js"), priority: 900);
-    ScriptManager.RegisterJs(Url.Content("~/Content/twitter-bootstrap/js/bootstrap-collapse.js"), priority: 900);
-
-    ScriptManager.RegisterJs(Url.Content("~/Scripts/knockout-2.2.0.js"), priority: 900);
-    ScriptManager.RegisterJs(Url.Content("~/Scripts/underscore.js"), priority: 900);
-    ScriptManager.RegisterJs(Url.Content("~/Scripts/moment-datepicker.js"), priority: 900);
-    ScriptManager.RegisterCss(Url.Content("~/Content/moment-datepicker/datepicker.css"), priority: 900);
-    ScriptManager.RegisterJs(Url.Content("~/Scripts/moment-datepicker-ko.js"), priority: 900);
-
-    ScriptManager.RegisterJs(Url.Content("~/Scripts/my-menu-pages.js"), priority: 900);
-    ScriptManager.RegisterJs(Url.Content("~/Scripts/my-menu.js"), priority: 900);
-    ScriptManager.RegisterJs(Url.Content("~/Scripts/my-menu-admin-page.js"), priority: 900);
+    Layout = "~/Views/Shared/_MyMenuLayout.cshtml";
+    ViewBag.Title = "Definición de los menues";
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/my-menu-admin-page.js"));
 }
 <!DOCTYPE html>
-<html class="bootstrap-scope">
-<head>
-    <meta charset="utf-8" />
-    <title>Definición del Menú</title>
-    @Html.RenderScriptManagerEntries(ScriptManager)
-    <link rel="shortcut icon" href="@Url.Content("~/Content/Images/favicon.ico")" />
-</head>
-<body>
-    <div>
         <div class="navbar navbar-fixed-top">
             <div class="navbar-inner">
                 <ul class="nav">
-                    <li><a href="./">Home</a></li>
-                    <li class="active"><a href="admin.html">Definir menú</a></li>
-                    <li><a href="mymenu.html">Mi menú</a></li>
+                    <li class="active">@Html.ActionLink("Definición de los menues", "Admin")</li>
+                    <li>@Html.ActionLink("Mi Menú", "Index")</li>
                 </ul>
             </div>
         </div>
         <header class="jumbotron subhead" id="overview" style="padding: 40px 0;">
           <div class="container">
-            <h1>Definir menú</h1>
+            <h1>@ViewBag.Title</h1>
           </div>
         </header>
         <div class="container">
@@ -255,8 +232,3 @@
                 </div>
             </section>
         </div>
-        <footer>
-        </footer>
-    </div>
-</body>
-</html>

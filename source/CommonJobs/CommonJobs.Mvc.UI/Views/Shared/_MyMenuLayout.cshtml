@@ -1,0 +1,31 @@
+﻿@{
+    ScriptManager.RegisterCss(Url.Content("~/Content/twitter-bootstrap/less/bootstrap.less"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/jquery-1.7.2.min.js"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/moment.js"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/moment.i18n/es.js"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Content/twitter-bootstrap/js/bootstrap-collapse.js"), priority: 900);
+
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/knockout-2.2.0.js"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/underscore.js"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/moment-datepicker.js"), priority: 900);
+    ScriptManager.RegisterCss(Url.Content("~/Content/moment-datepicker/datepicker.css"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/moment-datepicker-ko.js"), priority: 900);
+
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/my-menu-pages.js"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/my-menu.js"), priority: 900);
+}
+
+<!DOCTYPE html>
+<html class="bootstrap-scope">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title</title>
+    @Html.RenderScriptManagerEntries(ScriptManager)
+    <link rel="shortcut icon" href="@Url.Content("~/Content/Images/favicon.ico")" />
+</head>
+<body>
+	<div>
+		@RenderBody()  
+	 </div>     
+</body>
+</html>
