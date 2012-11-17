@@ -1,27 +1,28 @@
 ﻿@{
     Layout = null;
+    ScriptManager.RegisterCss(Url.Content("~/Content/twitter-bootstrap/less/bootstrap.less"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/jquery-1.7.2.min.js"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/moment.js"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/moment.i18n/es.js"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Content/twitter-bootstrap/js/bootstrap-collapse.js"), priority: 900);
+
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/knockout-2.2.0.js"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/underscore.js"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/moment-datepicker.js"), priority: 900);
+    ScriptManager.RegisterCss(Url.Content("~/Content/moment-datepicker/datepicker.css"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/moment-datepicker-ko.js"), priority: 900);
+
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/my-menu-pages.js"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/my-menu.js"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/my-menu-admin-page.js"), priority: 900);
 }
 <!DOCTYPE html>
 <html class="bootstrap-scope">
 <head>
     <meta charset="utf-8" />
-    <title>HTML Home Page</title>
-
-    <link href="Content/twitter-bootstrap/less/bootstrap.less" rel="stylesheet" type="text/css" />
-    <script src="Scripts/jquery-1.7.2.min.js" type="text/javascript"></script>
-    <script src="Scripts/moment.js" type="text/javascript"></script>
-    <script src="Scripts/moment.i18n/es.js" type="text/javascript"></script>
-    <script src="Content/twitter-bootstrap/js/bootstrap-collapse.js" type="text/javascript"></script>
-
-    <script src="Scripts/knockout-2.2.0.js" type="text/javascript"></script>
-    <script src="Scripts/underscore.js" type="text/javascript"></script>
-    <script src="Scripts/moment-datepicker.js" type="text/javascript"></script>
-    <link href="Content/moment-datepicker/datepicker.css" rel="stylesheet" type="text/css" />
-    <script src="Scripts/moment-datepicker-ko.js" type="text/javascript"></script>
-    
-    <script src="Scripts/my-menu-pages.js" type="text/javascript"></script>
-    <script src="Scripts/my-menu.js" type="text/javascript"></script>
-    <script src="Scripts/my-menu-admin-page.js" type="text/javascript"></script>
+    <title>Definición del Menú</title>
+    @Html.RenderScriptManagerEntries(ScriptManager)
+    <link rel="shortcut icon" href="@Url.Content("~/Content/Images/favicon.ico")" />
 </head>
 <body>
     <div>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CommonJobs.Infrastructure.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -6,7 +7,7 @@ using System.Web.Mvc;
 
 namespace CommonJobs.Mvc.UI.Controllers
 {
-    public class MyMenuController : Controller
+    public class MyMenuController : CommonJobsController
     {
         //El propio menu
         public ActionResult Index()
