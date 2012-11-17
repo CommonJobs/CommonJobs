@@ -14,7 +14,7 @@ var MyMenu;
         }
         AdminPage.prototype.load = function () {
             var _this = this;
-            $.ajax(urlGenerator.action("MenuDefinition", "MyMenu"), {
+            $.ajax(urlGenerator.action("MenuDefinition", "MyMenu", ViewData.menuId), {
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
                 success: function (data) {
@@ -31,7 +31,7 @@ var MyMenu;
                 contentType: 'application/json; charset=utf-8',
                 data: JSON.stringify(data),
                 success: function (data) {
-                    _this.reset(data);
+                    _this.load();
                 }
             });
         };
@@ -40,7 +40,7 @@ var MyMenu;
     MyMenu.AdminPage = AdminPage;    
     $(document).ready(function () {
         var adminController = new AdminPage();
-        $("#pruebadt").datepicker();
+        adminController.load();
     });
 })(MyMenu || (MyMenu = {}));
 

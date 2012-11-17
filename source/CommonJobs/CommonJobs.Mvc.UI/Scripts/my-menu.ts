@@ -141,6 +141,7 @@ module MyMenu {
     }
 
     export interface MenuData {
+        id: string;
         title?: string;
         firstWeek?: number;
         weeksQuantity?: number;
@@ -172,6 +173,7 @@ module MyMenu {
     }
 
     export interface EmployeeMenuData {
+        menuId: string;
         employeeId: string;
         name: string;
         defaultPlace: string;
@@ -285,6 +287,7 @@ module MyMenu {
     }
 
     export class EmployeeMenuDefinition extends WeekStorage {
+        menuId: knockout.koObservableString = ko.observable("");
         name: string;
         employeeId: string;
         defaultPlace: knockout.koObservableString = ko.observable("");
@@ -340,6 +343,7 @@ module MyMenu {
 
         EmployeeMenuDefinitionReset(data?: EmployeeMenuData) {
             data = _.extend({ employeeId: "", name: "", defaultPlace: "" }, data);
+            this.menuId(data.menuId);
             this.employeeId = data.employeeId;
             this.name = data.name;
             this.defaultPlace(data.defaultPlace);
@@ -362,6 +366,7 @@ module MyMenu {
 
         exportData(): EmployeeMenuData {
             var data: EmployeeMenuData = {
+                menuId: this.menuId(),
                 employeeId: this.employeeId,
                 name: this.name,
                 defaultPlace: this.defaultPlace(),
@@ -405,6 +410,7 @@ module MyMenu {
 
     export class MenuDefinition extends WeekStorage  {
         static defaultData: MenuData = {
+            id: "Menu/DefaultMenu",
             title: "Nuevo Menú",
             firstWeek: 0,
             weeksQuantity: 0,
@@ -416,6 +422,7 @@ module MyMenu {
             foods: []
         };
 
+        id: knockout.koObservableString = ko.observable("");
         title: knockout.koObservableString = ko.observable("");
         weeksQuantity: { (): number; };
         options: knockout.koObservableArrayBase = ko.observableArray();
@@ -477,6 +484,7 @@ module MyMenu {
         private MenuDefinitionReset(data?: MenuData) {
             data = <MenuData>$.extend({}, MenuDefinition.defaultData, data);
             var i: any;
+            this.id(data.id);
             this.title(data.title);
             this.startDate(data.startDate);
             this.endDate(data.endDate);
@@ -510,6 +518,7 @@ module MyMenu {
         
         exportData(): MenuData {
             var data: MenuData = { 
+                id: this.id(),
                 deadlineTime: this.deadlineTime(),
                 title: this.title(),
                 firstWeek: this.firstWeek(),

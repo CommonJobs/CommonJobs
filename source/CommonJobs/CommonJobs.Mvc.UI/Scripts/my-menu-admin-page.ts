@@ -5,6 +5,7 @@
 ///<reference path='my-menu.ts' />
 
 declare var urlGenerator: any;
+declare var ViewData: any;
 
 module MyMenu {
     export class AdminPage extends MenuDefinition {
@@ -17,7 +18,7 @@ module MyMenu {
 
         load() {
             $.ajax(
-                urlGenerator.action("MenuDefinition", "MyMenu"),
+                urlGenerator.action("MenuDefinition", "MyMenu", ViewData.menuId),
                 {
                     dataType: 'json',
                     contentType: 'application/json; charset=utf-8',
@@ -37,7 +38,7 @@ module MyMenu {
                     contentType: 'application/json; charset=utf-8',
                     data: JSON.stringify(data),
                     success: (data) => {
-                        this.reset(data);
+                        this.load();
                     }
                 });
         }
@@ -45,7 +46,7 @@ module MyMenu {
 
     $(document).ready(() => {
         var adminController = new AdminPage();    
-        $("#pruebadt").datepicker();
+        adminController.load()
     });
 }
 

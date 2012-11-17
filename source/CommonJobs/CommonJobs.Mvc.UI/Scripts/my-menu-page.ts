@@ -15,21 +15,24 @@ module MyMenu.MyMenuPage {
 
     export var load = function () {
         $.ajax(
-            urlGenerator.action("MenuDefinition", "MyMenu"),
+            ViewData.menuUrl,
             {
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
-                success: (menuData) => {
+                success: (employeeMenuData) => {
                     $.ajax(
-                        ViewData.menuUrl,
+                        urlGenerator.action("MenuDefinition", "MyMenu", employeeMenuData.menuId),
                         {
                             dataType: 'json',
                             contentType: 'application/json; charset=utf-8',
-                            success: (employeeMenuData) => {
+                            success: (menuData) => {
+                                menuDefinition.reset(menuData);
                                 employeeMenu.reset(employeeMenuData);
                             }
                         });
-                    menuDefinition.reset(menuData);
+
+
+                    employeeMenu.reset(employeeMenuData);
                 }
             });
     }
@@ -44,7 +47,7 @@ module MyMenu.MyMenuPage {
                 contentType: 'application/json; charset=utf-8',
                 data: JSON.stringify(data),
                 success: (employeeMenuData) => {
-                    employeeMenu.reset(employeeMenuData);
+                    load();
                 }
             });
     }
@@ -53,6 +56,7 @@ module MyMenu.MyMenuPage {
         $menuJson = $(".persistence .json-field.menu");
         $employeeMenuJson = $(".persistence .json-field.employee-menu");
         ko.applyBindings(employeeMenu);
+        load();
     });
 }
 
