@@ -1,5 +1,7 @@
-﻿using CommonJobs.Domain.MyMenu;
+﻿using CommonJobs.Domain;
+using CommonJobs.Domain.MyMenu;
 using CommonJobs.Infrastructure.Mvc;
+using Raven.Client.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -65,10 +67,10 @@ namespace CommonJobs.Mvc.UI.Controllers
         [ActionName("EmployeeMenu")]
         public JsonNetResult PostEmployeeMenu(string id, EmployeeMenu employeeMenu)
         {
-            if (string.IsNullOrWhiteSpace(id) || employeeMenu.employeeId != id)
-                throw new ArgumentException(string.Format("No se permite modificar el menú del usuario o los ids no coinciden ({0}, {1})", id, employeeMenu.employeeId));
+            if (string.IsNullOrWhiteSpace(id) || employeeMenu.userName != id)
+                throw new ArgumentException(string.Format("No se permite modificar el menú del usuario o los ids no coinciden ({0}, {1})", id, employeeMenu.userName));
 
-            //TODO: guardar el menú del empleado
+            RavenSession.Store(employeeMenu);
 
             return Json(new { ok = true });
         }
@@ -78,13 +80,40 @@ namespace CommonJobs.Mvc.UI.Controllers
         [ActionName("EmployeeMenu")]
         public JsonNetResult GetEmployeeMenu(string id)
         {
-            //TODO: cargar el menú del empleado
-            EmployeeMenu employeeMenu = null;
+            RavenQueryStatistics stats;
+
+            EmployeeMenu employeeMenu = RavenSession
+                .Query<EmployeeMenu>()
+                .Statistics(out stats)
+                .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite())
+                .Where(x => x.userName == id)
+                .FirstOrDefault();
+
+            if (stats.TotalResults > 1)
+                throw new ApplicationException(string.Format("Error: Hay más de un menú para el username {0}.", id));
 
             if (employeeMenu == null)
             {
                 employeeMenu = CreateDefaultEmployeeMenu(id, DefaultMenuId);
             }
+
+            //TODO: verificar que no haya más de uno
+            //TODO: tener en cuenta TerminationDate y si come o no
+            var employee = RavenSession
+                .Query<Employee>()
+                .Statistics(out stats)
+                .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite())
+                .Where(x => x.UserName == id)
+                .Select(x => new { x.LastName, x.FirstName })
+                .FirstOrDefault();
+
+            if (stats.TotalResults > 1)
+                throw new ApplicationException(string.Format("Error: Hay más de un empleado para el username {0}.", id));
+
+            if (employee == null)
+                throw new ApplicationException(string.Format("El empleado con el username {0} no existe en la base de datos de CommonJobs", id));
+
+            employeeMenu.name = string.Format("{0}, {1}", employee.LastName, employee.FirstName);
 
             return Json(employeeMenu);
         }
@@ -94,8 +123,8 @@ namespace CommonJobs.Mvc.UI.Controllers
             return new EmployeeMenu()
             {
                 menuId = menuId,
-                employeeId = id,
-                name = "hola",
+                userName = id,
+                name = "",
                 defaultPlace = "",
                 choices = new List<EmployeeMenuItem>(),
                 overrides = new List<EmployeeMenuOverrideItem>()
@@ -121,6 +150,7 @@ namespace CommonJobs.Mvc.UI.Controllers
         [CommonJobsAuthorize(Roles = "Users,MenuManagers")]
         public JsonNetResult PostMenuDefinition(Menu menuDefinition)
         {
+            RavenSession.Store(menuDefinition);
             return Json(new { ok = true });
         }
 
@@ -130,12 +160,12 @@ namespace CommonJobs.Mvc.UI.Controllers
             {
                 return new Menu()
                 {
-                    id = id,
+                    Id = id,
                     title = "Menú primaveral",
                     firstWeek = 0,
                     weeksQuantity = 5,
                     deadlineTime = "9:30",
-                    startDate = new DateTime(2012, 9, 21),
+                    startDate = new DateTime(2012, 9, 12),
                     endDate = new DateTime(2020, 1, 1),
                     places = new List<Place>() 
                     {
@@ -232,7 +262,7 @@ namespace CommonJobs.Mvc.UI.Controllers
             {
                 return new Menu()
                 {
-                    id = id,
+                    Id = id,
                     title = string.Format("Nuevo menú ({0})", id),
                     firstWeek = 0,
                     weeksQuantity = 2,
@@ -255,8 +285,7 @@ namespace CommonJobs.Mvc.UI.Controllers
         [ActionName("MenuDefinition")]
         public JsonNetResult GetMenuDefinition(string id)
         {
-            //TODO: cargar de la db
-            Menu menu = null;
+            Menu menu = RavenSession.Load<Menu>(id);
 
             if (menu == null)
                 menu = CreateDefaultMenu(id);

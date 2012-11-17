@@ -7,7 +7,8 @@ namespace CommonJobs.Domain.MyMenu
 {
     public class EmployeeMenu
     {
-        public string employeeId { get; set; }
+        public string Id { get; set; }
+        public string userName { get; set; }
         public string menuId { get; set; }
         public string name { get; set; }
         public string defaultPlace { get; set; }

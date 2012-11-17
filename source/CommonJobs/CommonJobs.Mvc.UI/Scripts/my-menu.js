@@ -273,12 +273,14 @@ var MyMenu;
         EmployeeMenuDefinition.prototype.EmployeeMenuDefinitionReset = function (data) {
             var _this = this;
             data = _.extend({
-                employeeId: "",
+                userName: "",
+                Id: "",
                 name: "",
                 defaultPlace: ""
             }, data);
             this.menuId(data.menuId);
-            this.employeeId = data.employeeId;
+            this.Id = data.Id;
+            this.userName = data.userName;
             this.name = data.name;
             this.defaultPlace(data.defaultPlace);
             if(data.choices) {
@@ -300,7 +302,8 @@ var MyMenu;
         EmployeeMenuDefinition.prototype.exportData = function () {
             var data = {
                 menuId: this.menuId(),
-                employeeId: this.employeeId,
+                Id: this.Id,
+                userName: this.userName,
                 name: this.name,
                 defaultPlace: this.defaultPlace(),
                 choices: [],
@@ -338,7 +341,7 @@ var MyMenu;
         __extends(MenuDefinition, _super);
         function MenuDefinition(data) {
                 _super.call(this, data && data.weeksQuantity);
-            this.id = ko.observable("");
+            this.Id = ko.observable("");
             this.title = ko.observable("");
             this.options = ko.observableArray();
             this.places = ko.observableArray();
@@ -349,7 +352,7 @@ var MyMenu;
             this.MenuDefinitionReset(data);
         }
         MenuDefinition.defaultData = {
-            id: "Menu/DefaultMenu",
+            Id: "Menu/DefaultMenu",
             title: "Nuevo Menú",
             firstWeek: 0,
             weeksQuantity: 0,
@@ -399,7 +402,7 @@ var MyMenu;
             data = $.extend({
             }, MenuDefinition.defaultData, data);
             var i;
-            this.id(data.id);
+            this.Id(data.Id);
             this.title(data.title);
             this.startDate(data.startDate);
             this.endDate(data.endDate);
@@ -428,7 +431,7 @@ var MyMenu;
         };
         MenuDefinition.prototype.exportData = function () {
             var data = {
-                id: this.id(),
+                Id: this.Id(),
                 deadlineTime: this.deadlineTime(),
                 title: this.title(),
                 firstWeek: this.firstWeek(),

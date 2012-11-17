@@ -14,7 +14,7 @@ namespace CommonJobs.Domain.MyMenu
             foods = new List<MenuItem>();
         }
 
-        public string id { get; set; }
+        public string Id { get; set; }
         public string title { get; set; }
         public int firstWeek { get; set; }
         public int weeksQuantity { get; set; }

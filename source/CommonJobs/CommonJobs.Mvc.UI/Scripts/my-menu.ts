@@ -141,7 +141,7 @@ module MyMenu {
     }
 
     export interface MenuData {
-        id: string;
+        Id: string;
         title?: string;
         firstWeek?: number;
         weeksQuantity?: number;
@@ -173,8 +173,9 @@ module MyMenu {
     }
 
     export interface EmployeeMenuData {
+        Id: string;
         menuId: string;
-        employeeId: string;
+        userName: string;
         name: string;
         defaultPlace: string;
         choices: EmployeeMenuDataItem[];
@@ -289,7 +290,8 @@ module MyMenu {
     export class EmployeeMenuDefinition extends WeekStorage {
         menuId: knockout.koObservableString = ko.observable("");
         name: string;
-        employeeId: string;
+        Id: string;
+        userName: string;
         defaultPlace: knockout.koObservableString = ko.observable("");
         overrides: knockout.koObservableArrayBase = ko.observableArray([]);
 
@@ -342,9 +344,10 @@ module MyMenu {
         }
 
         EmployeeMenuDefinitionReset(data?: EmployeeMenuData) {
-            data = _.extend({ employeeId: "", name: "", defaultPlace: "" }, data);
+            data = _.extend({ userName: "", Id: "", name: "", defaultPlace: "" }, data);
             this.menuId(data.menuId);
-            this.employeeId = data.employeeId;
+            this.Id = data.Id;
+            this.userName = data.userName;
             this.name = data.name;
             this.defaultPlace(data.defaultPlace);
             
@@ -367,7 +370,8 @@ module MyMenu {
         exportData(): EmployeeMenuData {
             var data: EmployeeMenuData = {
                 menuId: this.menuId(),
-                employeeId: this.employeeId,
+                Id: this.Id,
+                userName: this.userName,
                 name: this.name,
                 defaultPlace: this.defaultPlace(),
                 choices: [],
@@ -410,7 +414,7 @@ module MyMenu {
 
     export class MenuDefinition extends WeekStorage  {
         static defaultData: MenuData = {
-            id: "Menu/DefaultMenu",
+            Id: "Menu/DefaultMenu",
             title: "Nuevo Menú",
             firstWeek: 0,
             weeksQuantity: 0,
@@ -422,7 +426,7 @@ module MyMenu {
             foods: []
         };
 
-        id: knockout.koObservableString = ko.observable("");
+        Id: knockout.koObservableString = ko.observable("");
         title: knockout.koObservableString = ko.observable("");
         weeksQuantity: { (): number; };
         options: knockout.koObservableArrayBase = ko.observableArray();
@@ -484,7 +488,7 @@ module MyMenu {
         private MenuDefinitionReset(data?: MenuData) {
             data = <MenuData>$.extend({}, MenuDefinition.defaultData, data);
             var i: any;
-            this.id(data.id);
+            this.Id(data.Id);
             this.title(data.title);
             this.startDate(data.startDate);
             this.endDate(data.endDate);
@@ -518,7 +522,7 @@ module MyMenu {
         
         exportData(): MenuData {
             var data: MenuData = { 
-                id: this.id(),
+                Id: this.Id(),
                 deadlineTime: this.deadlineTime(),
                 title: this.title(),
                 firstWeek: this.firstWeek(),
