@@ -32,41 +32,42 @@
             </div>
         </form>
         <h3>Menú semanal</h3>
-        <table class="table table-striped table-bordered">
-            <thead>
-                <tr>
-                    <td></td>
-                    <!-- ko foreach: MyMenu.days() -->
-                    <td data-bind="text: MyMenu.days.getName($data)"></td>
-                    <!-- /ko -->
-                </tr>
-            </thead>
-            <tbody data-bind="foreach: weeks">
-                <tr>
-                    <td><span data-bind='text: text'></span></td>
-                    <!-- ko foreach: MyMenu.days() -->
-                    <td>
-                        <select data-bind="options: $root.menu.options, 
-                                    optionsText: 'text', optionsValue: 'key', 
-                                    value: $root.getMenuChoice($parent.key, $data), 
-                                    optionsCaption: 'No come'">
-                        </select>
 
-                        <!-- ko if: $root.getMenuChoice($parent.key, $data)() -->
+        <!-- ko foreach: weeks -->
+        <!-- ko foreach: MyMenu.days() -->
+        <div class="row">
+            <h4 class="span6"><!--ko text: MyMenu.days.getName($data)--><!--/ko--> (<!--ko text: $parent.text--><!--/ko-->) </h4>
+        </div>
+        <div class="row">
+            <div class="span1" style="width: 80px;">
+                <label>
+                    <input type="radio" data-bind="attr: { name: 'option_' + $parent.key + '_' + $data }, value: '', checked:$root.getMenuChoice($parent.key, $data)"/>
+                    <strong>No come</strong>
+                </label>
+            </div>
+            <!-- ko foreach: $root.menu.options -->
+            <div class="span3">
+                <label>
+                    <input type="radio" data-bind="attr: { name: 'option_' + $parentContext.$parent.key + '_' + $parent }, value: key, checked:$root.getMenuChoice($parentContext.$parent.key, $parent)"/>
+                    <strong><!--ko text: text--><!--/ko-->: </strong>
+                    <em><!--ko text: $root.menu.getFood($parentContext.$parent.key, $parent, key)--><!--/ko--></em>
+                </label>
+            </div>
+            <!-- /ko -->
+            <!-- ko if: $root.getMenuChoice($parent.key, $data)() -->
+            <div class="span1">
+                <select data-bind="options: $root.menu.places, 
+                    optionsText: 'text', optionsValue: 'key', 
+                    value: $root.getPlaceChoice($parent.key, $data), 
+                    optionsCaption: $root.getDefaultPlaceLabel()">
+                </select>
+            </div>
+            <!-- /ko -->
+        </div>
 
-                        <select data-bind="options: $root.menu.places, 
-                                    optionsText: 'text', optionsValue: 'key', 
-                                    value: $root.getPlaceChoice($parent.key, $data), 
-                                    optionsCaption: $root.getDefaultPlaceLabel()">
-                        </select>
-
-                        <!-- /ko -->
-
-                    </td>
-                    <!-- /ko -->
-                </tr>
-            </tbody>
-        </table>
+        <!-- /ko -->
+        <!-- /ko -->
+        
         <h3>Modificaciones por fecha
             <button class="btn" type="button" data-bind="click: addOverride"><i class="icon-plus"></i>Agregar</button></h3>
         <!-- ko foreach: overrides -->
