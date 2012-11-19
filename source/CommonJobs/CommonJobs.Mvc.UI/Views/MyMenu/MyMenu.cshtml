@@ -31,45 +31,45 @@
                 </div>
             </div>
         </form>
+        <hr />
         <h3>Menú semanal</h3>
-
-        <!-- ko foreach: weeks -->
-        <!-- ko foreach: MyMenu.days() -->
-        <div class="row">
-            <h4 class="span6"><!--ko text: MyMenu.days.getName($data)--><!--/ko--> (<!--ko text: $parent.text--><!--/ko-->) </h4>
-        </div>
-        <div class="row">
-            <div class="span1" style="width: 80px;">
-                <label>
-                    <input type="radio" data-bind="attr: { name: 'option_' + $parent.key + '_' + $data }, value: '', checked:$root.getMenuChoice($parent.key, $data)"/>
-                    <strong>No come</strong>
-                </label>
-            </div>
-            <!-- ko foreach: $root.menu.options -->
-            <div class="span3">
-                <label>
-                    <input type="radio" data-bind="attr: { name: 'option_' + $parentContext.$parent.key + '_' + $parent }, value: key, checked:$root.getMenuChoice($parentContext.$parent.key, $parent)"/>
-                    <strong><!--ko text: text--><!--/ko-->: </strong>
-                    <em><!--ko text: $root.menu.getFood($parentContext.$parent.key, $parent, key)--><!--/ko--></em>
-                </label>
+        <div>
+            <!-- ko foreach: weeks -->
+            <!-- ko foreach: MyMenu.days() -->
+            <div class="well">
+                <div class="row">
+                    <h4 class="span6"><!--ko text: MyMenu.days.getName($data)--><!--/ko--> (<!--ko text: $parent.text--><!--/ko-->)</h4>
+                </div>
+                <div class="row">
+                    <div class="offset1 span7">
+                        <label>
+                            <input type="radio" data-bind="attr: { name: 'option_' + $parent.key + '_' + $data }, value: '', checked:$root.getMenuChoice($parent.key, $data)" />
+                            No como aquí
+                        </label>
+                        <!-- ko foreach: $root.menu.options -->
+                        <label>
+                            <input type="radio" data-bind="attr: { name: 'option_' + $parentContext.$parent.key + '_' + $parent }, value: key, checked:$root.getMenuChoice($parentContext.$parent.key, $parent)" />
+                            <!--ko text: text--><!--/ko-->: <em><!--ko text: $root.menu.getFood($parentContext.$parent.key, $parent, key)--><!--/ko--></em>
+                        </label>
+                        <!-- /ko -->
+                    </div>
+                    <!-- ko if: $root.getMenuChoice($parent.key, $data)() -->
+                    <div class="span3">
+                        <select data-bind="options: $root.menu.places, 
+                            optionsText: 'text', optionsValue: 'key', 
+                            value: $root.getPlaceChoice($parent.key, $data), 
+                            optionsCaption: $root.getDefaultPlaceLabel()">
+                        </select>
+                    </div>
+                    <!-- /ko -->
+                </div>
             </div>
             <!-- /ko -->
-            <!-- ko if: $root.getMenuChoice($parent.key, $data)() -->
-            <div class="span1">
-                <select data-bind="options: $root.menu.places, 
-                    optionsText: 'text', optionsValue: 'key', 
-                    value: $root.getPlaceChoice($parent.key, $data), 
-                    optionsCaption: $root.getDefaultPlaceLabel()">
-                </select>
-            </div>
+            <hr />
             <!-- /ko -->
         </div>
 
-        <!-- /ko -->
-        <!-- /ko -->
-        
-        <h3>Modificaciones por fecha
-            <button class="btn" type="button" data-bind="click: addOverride"><i class="icon-plus"></i>Agregar</button></h3>
+        <h3>Modificaciones por fecha <button class="btn" type="button" data-bind="click: addOverride"><i class="icon-plus"></i>Agregar</button></h3>
         <!-- ko foreach: overrides -->
         <form class="well form-horizontal">
             <button class="btn" type="button" data-bind="click: $root.removeOverride"><i class="icon-remove"></i>Quitar</button>
