@@ -37,8 +37,9 @@
             <!-- ko foreach: weeks -->
             <!-- ko foreach: MyMenu.days() -->
             <div class="well">
-                <div class="row">
-                    <h4 class="span6"><!--ko text: MyMenu.days.getName($data)--><!--/ko--> (<!--ko text: $parent.text--><!--/ko-->)</h4>
+                <div>
+                    <h4><!--ko text: MyMenu.days.getName($data)--><!--/ko--> - <!--ko text: $parent.text--><!--/ko--></h4>
+                    <!-- ko text: $root.nearFormated($parent.key, $data) -->TODO: REMOVE<!-- /ko -->
                 </div>
                 <div class="row">
                     <div class="offset1 span7">

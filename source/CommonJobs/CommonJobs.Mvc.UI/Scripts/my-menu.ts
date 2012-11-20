@@ -105,8 +105,119 @@ module Utilities {
     }
 }
 
-module MyMenu {
 
+
+//module MenuCalculator {
+    /*
+    export interface CalendarDefinition {
+       
+    }
+
+    export var week = (def: CalendarDefinition, date? ) => {
+        var sundayZeroWeek = moment(def.startDate).day(0).add('weeks', -1 * def.firstWeek);
+        var sundayDate = moment(date).day(0);
+        var diff = sundayDate.diff(sundayZeroWeek, 'weeks');
+
+        return diff < 0 ?
+            def.weeksQuantity + diff % def.weeksQuantity
+            : diff % def.weeksQuantity;
+    };
+    
+    export var day = date => moment(date).day();
+
+    */
+
+module MyMenu {
+    
+    class CalendarHelper {
+        startDate: () => moment.Moment;
+        weeksQuantity: () => number;
+        firstWeek: () => number; 
+        zeroWeekZeroDay: () => moment.Moment;
+
+        private calculateZeroWeekZeroDay() {
+            return this.startDate().day(0).add('weeks', -1 * this.firstWeek());
+        }
+
+        constructor (startDate: any, weeksQuantity: any, firstWeek: any) {
+            var startDateIsFunc = _.isFunction(startDate);
+            var weeksQuantityIsFunc = _.isFunction(weeksQuantity);
+            var firstWeekIsFunc = _.isFunction(firstWeek);
+
+            if (startDateIsFunc) {
+                this.startDate = () => moment(startDate());
+            } else {
+                this.startDate = () => moment(startDate);
+            }
+
+            this.weeksQuantity = weeksQuantityIsFunc ? weeksQuantity : () => weeksQuantity;
+
+            if (firstWeekIsFunc) {
+                this.firstWeek = () => firstWeek() || 0;
+            } else {
+                firstWeek = firstWeek || 0;
+                this.firstWeek = () => firstWeek;
+            }
+
+            if (startDateIsFunc || weeksQuantityIsFunc || firstWeekIsFunc) {
+                this.zeroWeekZeroDay = () => this.calculateZeroWeekZeroDay();
+            } else {
+                var zeroWeekZeroDay = this.calculateZeroWeekZeroDay();
+                this.zeroWeekZeroDay = () => zeroWeekZeroDay;
+            }
+        }
+
+        week(date?: any) {
+            var weeksQuantity = this.weeksQuantity();
+            var sundayDate = moment(date).day(0);
+            var diff = sundayDate.diff(this.zeroWeekZeroDay(), 'weeks');
+
+            return diff < 0 ?
+                weeksQuantity + diff % weeksQuantity
+                : diff % weeksQuantity;
+        }
+
+        day(date?: any) {
+            return moment(date).day();
+        }
+
+        weekDay(date?: any) : WeekDay {
+            return {
+                day: this.day(date),
+                week: this.week(date)
+            }
+        }
+
+        weekDayEquals(a: WeekDay, b: WeekDay) {
+            return a.day == b.day && a.week == b.week;
+        }
+
+        match(weekDay: WeekDay, date?: any) {
+            return this.weekDayEquals(
+                weekDay,
+                this.weekDay(date));
+        }
+
+        near(weekDay: WeekDay, date?: any) : moment.Moment {
+            //TODO: optimize
+            var mmnt = moment(date);
+            if (!mmnt.isValid) {
+                return null;
+            }
+            while (!this.match(weekDay, mmnt)) {
+                mmnt.add('days', 1);
+            }
+            return mmnt;
+        }
+    }
+
+
+    export interface WeekDay {
+        week: number;
+        day: number;
+    }
+
+ 
     //Move days selection inside WeekStorage
     export interface Days {
         (): number[];
@@ -294,10 +405,14 @@ module MyMenu {
         userName: string;
         defaultPlace: knockout.koObservableString = ko.observable("");
         overrides: knockout.koObservableArrayBase = ko.observableArray([]);
+        calendarHelper: CalendarHelper;
+        now: knockout.koObservableAny = ko.observable();
 
-        constructor (public menu: MenuDefinition, data?: EmployeeMenuData) {
+        constructor (public menu: MenuDefinition, data?: EmployeeMenuData, now?: any) {
             super(menu.weeksQuantity());
             this.EmployeeMenuDefinitionReset(data);
+            this.calendarHelper = new CalendarHelper(menu.startDate, menu.weeksQuantity, menu.firstWeek);
+            this.now(now);
         }
 
         reset(data?: EmployeeMenuData) {
@@ -305,6 +420,21 @@ module MyMenu {
             this.EmployeeMenuDefinitionReset(data);
         }
 
+        nearFormated(week: string, day: number) {
+            //TODO: remove
+            var now = moment(this.now());
+            var date = this.calendarHelper.near({ day: day, week: parseInt(week) }, now);
+            var days = date.diff(now, 'days', true);
+
+            var str = date.format("D [de] MMMM [de] YYYY");
+
+            return days == 0 ? "Hoy (" + str + ")"
+                : days == 1 ? "Mañana (" + str + ")"
+                : days == 2 ? "Pasado mañana (" + str + ")"
+                : days < 7 ? "En " + days + " días (" + str + ")"
+                : str;
+        }
+        
         createNewItem() {
             return new DayChoice();
         }
@@ -436,6 +566,7 @@ module MyMenu {
         deadlineTime: knockout.koObservableString = ko.observable("");
         firstWeek: knockout.koObservableNumber = ko.observable(0);
         static idGenerator = new Utilities.IdGenerator();
+
 
         //#region Extend WeekStorage
 

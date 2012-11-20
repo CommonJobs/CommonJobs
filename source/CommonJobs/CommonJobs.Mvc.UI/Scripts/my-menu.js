@@ -115,6 +115,81 @@ var Utilities;
 
 var MyMenu;
 (function (MyMenu) {
+    var CalendarHelper = (function () {
+        function CalendarHelper(startDate, weeksQuantity, firstWeek) {
+            var _this = this;
+            var startDateIsFunc = _.isFunction(startDate);
+            var weeksQuantityIsFunc = _.isFunction(weeksQuantity);
+            var firstWeekIsFunc = _.isFunction(firstWeek);
+            if(startDateIsFunc) {
+                this.startDate = function () {
+                    return moment(startDate());
+                };
+            } else {
+                this.startDate = function () {
+                    return moment(startDate);
+                };
+            }
+            this.weeksQuantity = weeksQuantityIsFunc ? weeksQuantity : function () {
+                return weeksQuantity;
+            };
+            if(firstWeekIsFunc) {
+                this.firstWeek = function () {
+                    return firstWeek() || 0;
+                };
+            } else {
+                firstWeek = firstWeek || 0;
+                this.firstWeek = function () {
+                    return firstWeek;
+                };
+            }
+            if(startDateIsFunc || weeksQuantityIsFunc || firstWeekIsFunc) {
+                this.zeroWeekZeroDay = function () {
+                    return _this.calculateZeroWeekZeroDay();
+                };
+            } else {
+                var zeroWeekZeroDay = this.calculateZeroWeekZeroDay();
+                this.zeroWeekZeroDay = function () {
+                    return zeroWeekZeroDay;
+                };
+            }
+        }
+        CalendarHelper.prototype.calculateZeroWeekZeroDay = function () {
+            return this.startDate().day(0).add('weeks', -1 * this.firstWeek());
+        };
+        CalendarHelper.prototype.week = function (date) {
+            var weeksQuantity = this.weeksQuantity();
+            var sundayDate = moment(date).day(0);
+            var diff = sundayDate.diff(this.zeroWeekZeroDay(), 'weeks');
+            return diff < 0 ? weeksQuantity + diff % weeksQuantity : diff % weeksQuantity;
+        };
+        CalendarHelper.prototype.day = function (date) {
+            return moment(date).day();
+        };
+        CalendarHelper.prototype.weekDay = function (date) {
+            return {
+                day: this.day(date),
+                week: this.week(date)
+            };
+        };
+        CalendarHelper.prototype.weekDayEquals = function (a, b) {
+            return a.day == b.day && a.week == b.week;
+        };
+        CalendarHelper.prototype.match = function (weekDay, date) {
+            return this.weekDayEquals(weekDay, this.weekDay(date));
+        };
+        CalendarHelper.prototype.near = function (weekDay, date) {
+            var mmnt = moment(date);
+            if(!mmnt.isValid) {
+                return null;
+            }
+            while(!this.match(weekDay, mmnt)) {
+                mmnt.add('days', 1);
+            }
+            return mmnt;
+        };
+        return CalendarHelper;
+    })();    
     MyMenu.days = (function () {
         var DAYS = [
             1, 
@@ -228,17 +303,30 @@ var MyMenu;
     })(DayChoice);    
     var EmployeeMenuDefinition = (function (_super) {
         __extends(EmployeeMenuDefinition, _super);
-        function EmployeeMenuDefinition(menu, data) {
+        function EmployeeMenuDefinition(menu, data, now) {
                 _super.call(this, menu.weeksQuantity());
             this.menu = menu;
             this.menuId = ko.observable("");
             this.defaultPlace = ko.observable("");
             this.overrides = ko.observableArray([]);
+            this.now = ko.observable();
             this.EmployeeMenuDefinitionReset(data);
+            this.calendarHelper = new CalendarHelper(menu.startDate, menu.weeksQuantity, menu.firstWeek);
+            this.now(now);
         }
         EmployeeMenuDefinition.prototype.reset = function (data) {
             _super.prototype.reset.call(this, this.menu.weeksQuantity());
             this.EmployeeMenuDefinitionReset(data);
+        };
+        EmployeeMenuDefinition.prototype.nearFormated = function (week, day) {
+            var now = moment(this.now());
+            var date = this.calendarHelper.near({
+                day: day,
+                week: parseInt(week)
+            }, now);
+            var days = date.diff(now, 'days', true);
+            var str = date.format("D [de] MMMM [de] YYYY");
+            return days == 0 ? "Hoy (" + str + ")" : days == 1 ? "Mañana (" + str + ")" : days == 2 ? "Pasado mañana (" + str + ")" : days < 7 ? "En " + days + " días (" + str + ")" : str;
         };
         EmployeeMenuDefinition.prototype.createNewItem = function () {
             return new DayChoice();

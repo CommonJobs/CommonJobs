@@ -51,7 +51,7 @@ module knockout {
         (value: number): koObservableNumber;
         (value: string): koObservableString;
         (value: bool): koObservableBool;
-        (value: any): koObservableAny;
+        (value?: any): koObservableAny;
     }
     interface koObservableArrayBase extends koObservableBase {
         (newValue: any[]): void;

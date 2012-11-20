@@ -4,7 +4,7 @@ var MyMenu;
         var $menuJson;
         var $employeeMenuJson;
         var menuDefinition = new MyMenu.MenuDefinition();
-        var employeeMenu = new MyMenu.EmployeeMenuDefinition(menuDefinition);
+        var employeeMenu = new MyMenu.EmployeeMenuDefinition(menuDefinition, null, ViewData.now);
         MyMenuPage.load = function () {
             $.ajax(ViewData.menuUrl, {
                 dataType: 'json',
@@ -18,7 +18,6 @@ var MyMenu;
                             employeeMenu.reset(employeeMenuData);
                         }
                     });
-                    employeeMenu.reset(employeeMenuData);
                 }
             });
         };
@@ -29,9 +28,7 @@ var MyMenu;
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
                 data: JSON.stringify(data),
-                success: function (employeeMenuData) {
-                    MyMenuPage.load();
-                }
+                success: MyMenuPage.load
             });
         };
         $(document).ready(function () {
