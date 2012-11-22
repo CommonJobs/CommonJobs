@@ -9,7 +9,8 @@
     ScriptManager.RegisterJs(Url.Content("~/Scripts/nervoustissue.js"));
     ScriptManager.RegisterJs(Url.Content("~/Scripts/nervoustissue-uploader.js"));
     ScriptManager.RegisterJs(Url.Content("~/Content/EditEmployee/EditEmployee.js"));
-
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/jquery.collapsable-sections.js"));
+    
     ScriptManager.RegisterJs(Url.Content("~/Scripts/FileUtilities.js"));
 }
 @if (false)
@@ -66,97 +67,103 @@
     </div>
 
     <div class="info-section">
-        <h2>Datos Personales</h2>
-        <div class="personal-data">
-            <h3>Información personal</h3>
-            <ul>
-                <li><span class="field-name">Fecha de nacimiento:</span><span class="editable-field" data-bind="BirthDate"><span class="view-editable view-editable-prototype">5 de Octubre de 1984 (28 años)</span></span></li>
-                <li><span class="field-name">Estado Civil:</span><span class="editable-field" data-bind="MaritalStatus"><span class="view-editable view-editable-prototype">Soltero</span></span></li>
-                <li><span class="field-name">Dirección:</span><span class="editable-field" data-bind="Address"></span></li>
-                <li><span class="field-name">Teléfonos:</span><span class="editable-field" data-bind="Telephones"></span></li>
-                <li><span class="field-name">Email Personal:</span><span class="editable-field" data-bind="Email" data-cj-suggest-emaildomain="EmailDomain"></span></li>
-                <li><span class="field-name">Plataforma:</span><span class="editable-field" data-bind="Platform" data-cj-suggest="Platform"></span></li>
-                <li><span class="field-name">CUIL:</span><span class="editable-field" data-bind="Cuil"></span></li>
-            </ul>
-            <h3>Información de viajero</h3>
-            <ul>
-                <li><span class="field-name">Posee pasaporte argentino:</span><span class="editable-field" data-bind="HasArgentinianPassport"></span></li>
-                <li><span class="field-name">Vencimiento del pasaporte argentino:</span><span class="editable-field" data-bind="ArgentinianPassportExpiration"></span></li>
-                <li><span class="field-name">Posee visa de EEUU:</span><span class="editable-field" data-bind="HasUsaVisa"></span></li>
-                <li><span class="field-name">Vencimiento de la visa de EEUU:</span><span class="editable-field" data-bind="UsaVisaExpiration"></span></li>
-                <li><span class="field-name">Posee ciudadanía europea:</span><span class="editable-field" data-bind="HasEuropeanCitizenship"></span></li>
-                <li><span class="field-name">Posee pasaporte europeo:</span><span class="editable-field" data-bind="HasEuropeanPassport"></span></li>
-                <li><span class="field-name">Vencimiento del pasaporte europeo:</span><span class="editable-field" data-bind="EuropeanPassportExpiration"></span></li>
-            </ul>
+        <h2>Datos Personales <span class="collapsable-section-title">Ocultar</span></h2>
+        <div class="collapsable-section-data info-section-content">
+            <div class="personal-data">
+                <h3>Información personal</h3>
+                <ul>
+                    <li><span class="field-name">Fecha de nacimiento:</span><span class="editable-field" data-bind="BirthDate"><span class="view-editable view-editable-prototype">5 de Octubre de 1984 (28 años)</span></span></li>
+                    <li><span class="field-name">Estado Civil:</span><span class="editable-field" data-bind="MaritalStatus"><span class="view-editable view-editable-prototype">Soltero</span></span></li>
+                    <li><span class="field-name">Dirección:</span><span class="editable-field" data-bind="Address"></span></li>
+                    <li><span class="field-name">Teléfonos:</span><span class="editable-field" data-bind="Telephones"></span></li>
+                    <li><span class="field-name">Email Personal:</span><span class="editable-field" data-bind="Email" data-cj-suggest-emaildomain="EmailDomain"></span></li>
+                    <li><span class="field-name">Plataforma:</span><span class="editable-field" data-bind="Platform" data-cj-suggest="Platform"></span></li>
+                    <li><span class="field-name">CUIL:</span><span class="editable-field" data-bind="Cuil"></span></li>
+                </ul>
+                <h3>Información de viajero</h3>
+                <ul>
+                    <li><span class="field-name">Posee pasaporte argentino:</span><span class="editable-field" data-bind="HasArgentinianPassport"></span></li>
+                    <li><span class="field-name">Vencimiento del pasaporte argentino:</span><span class="editable-field" data-bind="ArgentinianPassportExpiration"></span></li>
+                    <li><span class="field-name">Posee visa de EEUU:</span><span class="editable-field" data-bind="HasUsaVisa"></span></li>
+                    <li><span class="field-name">Vencimiento de la visa de EEUU:</span><span class="editable-field" data-bind="UsaVisaExpiration"></span></li>
+                    <li><span class="field-name">Posee ciudadanía europea:</span><span class="editable-field" data-bind="HasEuropeanCitizenship"></span></li>
+                    <li><span class="field-name">Posee pasaporte europeo:</span><span class="editable-field" data-bind="HasEuropeanPassport"></span></li>
+                    <li><span class="field-name">Vencimiento del pasaporte europeo:</span><span class="editable-field" data-bind="EuropeanPassportExpiration"></span></li>
+                </ul>
+            </div>
+            <div class="aptitude-data additional-info-section">
+                <h3>Aptitudes</h3>
+                <ul>
+                    <li><span class="field-name">Seniority:</span><span class="editable-field" data-bind="Seniority" data-cj-suggest="Seniority"></span></li>
+                    <li><span class="field-name">Nivel de Inglés:</span><span class="editable-field" data-bind="EnglishLevel" data-cj-suggest="EnglishLevel"></span></li>
+                    <li><span class="field-name">Título:</span><span class="editable-field" data-bind="Degree" data-cj-suggest="Degree"></span> (<span class="editable-field" data-bind="IsGraduated"><span class="view-editable view-editable-prototype">No graduado</span></span>)</li>
+                    <li><span class="field-name">Universidad:</span><span class="editable-field" data-bind="College" data-cj-suggest="College"></span></li>
+                    <li><span class="field-name">Skills:</span><span class="editable-field" data-bind="Skills" data-cj-suggest-multiple="Skill"></span></li>
+                    <li>
+                      <span class="field-name">Certificaciones:</span>
+                      <div class="editable-field" data-bind="Certifications"></div>
+                    </li>
+                </ul>
+            </div>
         </div>
-        <div class="aptitude-data additional-info-section">
-            <h3>Aptitudes</h3>
-            <ul>
-                <li><span class="field-name">Seniority:</span><span class="editable-field" data-bind="Seniority" data-cj-suggest="Seniority"></span></li>
-                <li><span class="field-name">Nivel de Inglés:</span><span class="editable-field" data-bind="EnglishLevel" data-cj-suggest="EnglishLevel"></span></li>
-                <li><span class="field-name">Título:</span><span class="editable-field" data-bind="Degree" data-cj-suggest="Degree"></span> (<span class="editable-field" data-bind="IsGraduated"><span class="view-editable view-editable-prototype">No graduado</span></span>)</li>
-                <li><span class="field-name">Universidad:</span><span class="editable-field" data-bind="College" data-cj-suggest="College"></span></li>
-                <li><span class="field-name">Skills:</span><span class="editable-field" data-bind="Skills" data-cj-suggest-multiple="Skill"></span></li>
-                <li>
-                  <span class="field-name">Certificaciones:</span>
-                  <div class="editable-field" data-bind="Certifications"></div>
-                </li>
-            </ul>
-        </div>   
     </div>
     <div class="info-section">
-        <h2>Datos Laborales</h2>
-        <div class="Employment-data">
-            <h3>Relación con la empresa</h3>
-            <ul>
-                <li><span class="field-name">Dado de baja:</span><span class="editable-field" data-bind="TerminationDate"></span></li>
-                <li><span class="field-name">Legajo:</span><span class="editable-field" data-bind="FileId"></span></li>
-                <li><span class="field-name">Fecha de ingreso:</span><span class="editable-field" data-bind="HiringDate"><span class="view-editable view-editable-prototype">15 de Octubre de 2009 (3 años)</span></span></li>
-                <li><span class="field-name">Carga Horaria:</span><span class="editable-field" data-bind="WorkingHours"><span class="view-editable view-editable-prototype">41 horas</span></span></li>
-                <li><span class="field-name">Horario:</span><span class="editable-field" data-bind="Schedule"></span></li>
-                <li><span class="field-name">Acuerdo:</span><span class="editable-field" data-bind="Agreement" data-cj-suggest="Agreement"></span></li>
-            </ul>
-            <h3>Remuneración <span class="confidential-info-title">Mostrar/Ocultar</span></h3>
-            <div class="salary-data confidential-info-data">
-                <span class="field-name">Remuneración actual:</span> <span class="view-field" data-bind="CurrentSalary"></span> <br />
-                <span class="field-name">Remuneración inicial:</span> <span class="view-field" data-bind="InitialSalary"></span> <br />
-                <span class="field-name">Cambios salariales:</span>
-                <div class="editable-field" data-bind="SalaryChanges"></div> 
+        <h2>Datos Laborales <span class="collapsable-section-title">Ocultar</span></h2>
+        <div class="info-section-content collapsable-section-data">
+            <div class="Employment-data">
+                <h3>Relación con la empresa</h3>
+                <ul>
+                    <li><span class="field-name">Dado de baja:</span><span class="editable-field" data-bind="TerminationDate"></span></li>
+                    <li><span class="field-name">Legajo:</span><span class="editable-field" data-bind="FileId"></span></li>
+                    <li><span class="field-name">Fecha de ingreso:</span><span class="editable-field" data-bind="HiringDate"><span class="view-editable view-editable-prototype">15 de Octubre de 2009 (3 años)</span></span></li>
+                    <li><span class="field-name">Carga Horaria:</span><span class="editable-field" data-bind="WorkingHours"><span class="view-editable view-editable-prototype">41 horas</span></span></li>
+                    <li><span class="field-name">Horario:</span><span class="editable-field" data-bind="Schedule"></span></li>
+                    <li><span class="field-name">Acuerdo:</span><span class="editable-field" data-bind="Agreement" data-cj-suggest="Agreement"></span></li>
+                </ul>
+                <h3>Remuneración <span class="collapsable-section-title">Mostrar</span></h3>
+                <div class="salary-data collapsable-section-data hidden">
+                    <span class="field-name">Remuneración actual:</span> <span class="view-field" data-bind="CurrentSalary"></span> <br />
+                    <span class="field-name">Remuneración inicial:</span> <span class="view-field" data-bind="InitialSalary"></span> <br />
+                    <span class="field-name">Cambios salariales:</span>
+                    <div class="editable-field" data-bind="SalaryChanges"></div> 
+                </div>
             </div>
-        </div>
-        <div class="misc-data additional-info-section">
-            <h3>Datos bancarios</h3>
-            <ul>
-                <li><span class="field-name">Banco:</span><span class="editable-field" data-bind="BankName" data-cj-suggest="BankName"></span></li>
-                <li><span class="field-name">Sucursal:</span><span class="editable-field" data-bind="BankBranch" data-cj-suggest="BankBranch"></span></li>
-                <li><span class="field-name">CBU:</span><span class="editable-field" data-bind="UniqueBankCode"></span></li>
-                <li><span class="field-name">Número de cuenta:</span><span class="editable-field" data-bind="BankAccount"></span></li>
-            </ul>
-            <h3>Otros datos</h3>
-            <ul>
-                <li><span class="field-name">Obra Social:</span><span class="editable-field" data-bind="HealthInsurance" data-cj-suggest="HealthInsurance"></span></li>
-                <li><span class="field-name">Almuerzo:</span><span class="editable-field" data-bind="Lunch"><span class="view-editable view-editable-prototype">Si</span></span></li>
-            </ul>
-        </div>
-        <div class="info-section">
-            <h2>Vacaciones <span class="confidential-info-title">Mostrar/Ocultar</span></h2>
-            <div class="confidential-info-data">
-                <div class="vacation-items editable-field" data-bind="Vacations"></div>
+            <div class="misc-data additional-info-section">
+                <h3>Datos bancarios</h3>
+                <ul>
+                    <li><span class="field-name">Banco:</span><span class="editable-field" data-bind="BankName" data-cj-suggest="BankName"></span></li>
+                    <li><span class="field-name">Sucursal:</span><span class="editable-field" data-bind="BankBranch" data-cj-suggest="BankBranch"></span></li>
+                    <li><span class="field-name">CBU:</span><span class="editable-field" data-bind="UniqueBankCode"></span></li>
+                    <li><span class="field-name">Número de cuenta:</span><span class="editable-field" data-bind="BankAccount"></span></li>
+                </ul>
+                <h3>Otros datos</h3>
+                <ul>
+                    <li><span class="field-name">Obra Social:</span><span class="editable-field" data-bind="HealthInsurance" data-cj-suggest="HealthInsurance"></span></li>
+                    <li><span class="field-name">Almuerzo:</span><span class="editable-field" data-bind="Lunch"><span class="view-editable view-editable-prototype">Si</span></span></li>
+                </ul>
             </div>
-            <h2>Ausencias <span class="confidential-info-title">Mostrar/Ocultar</span></h2>
-            <div class="confidential-info-data">
-                <div class="absences-items editable-field" data-bind="Absences"></div>
+            <div class="info-section">
+                <h2>Vacaciones <span class="collapsable-section-title">Mostrar</span></h2>
+                <div class="collapsable-section-data hidden">
+                    <div class="vacation-items editable-field" data-bind="Vacations"></div>
+                </div>
+                <h2>Ausencias <span class="collapsable-section-title">Mostrar</span></h2>
+                <div class="collapsable-section-data hidden">
+                    <div class="absences-items editable-field" data-bind="Absences"></div>
+                </div>
             </div>
         </div>
     </div>    
     <div class="info-section files-data file-dropzone">
-        <h2>Archivos adjuntos</h2>
-        <div class="attachment-container"></div>
-        <p class="uiInstruction clearFloats">Arrastre un archivo aquí para adjuntarlo a este empleado.</p>
+        <h2>Archivos adjuntos <span class="collapsable-section-title">Ocultar</span></h2>
+        <div class="collapsable-section-data">
+            <div class="attachment-container"></div>
+            <p class="uiInstruction clearFloats">Arrastre un archivo aquí para adjuntarlo a este empleado.</p>
+        </div>
     </div>
     <div class="info-section">
-        <h2>Notas <span class="confidential-info-title">Mostrar/Ocultar</span></h2>
-        <div class="editable-field confidential-info-data notes-data" data-bind="Notes"></div> 
+        <h2>Notas <span class="collapsable-section-title">Mostrar</span></h2>
+        <div class="editable-field collapsable-section-data hidden notes-data" data-bind="Notes"></div> 
     </div>
 </div>
 
