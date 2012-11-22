@@ -634,7 +634,7 @@
             "click .editionReadonly": "editionReadonly",
             "click .editionFullEdit": "editionFullEdit",
             "click .deleteEmployee": "deleteEmployee",
-            "click .confidential-info-title": "toggleConfidentialVisibility"
+            "click .collapsable-section-title": "toggleConfidentialVisibility"
         },
         saveEmployee: function () {
             var me = this;
@@ -685,7 +685,12 @@
             this.$el.addClass("edition-full-edit");
         },
         toggleConfidentialVisibility: function (event) {
-            $(event.target).parent().next(".confidential-info-data").toggle();
+            var $clickedLink = $(event.target);
+            var $dataContainer = $clickedLink.parent().next(".collapsable-section-data");
+            var isVisible = $dataContainer.is(":visible");
+
+            $dataContainer.toggleClass("hidden", isVisible);
+            $clickedLink.text(isVisible ? "Mostrar" : "Ocultar");
         }
     });
 
