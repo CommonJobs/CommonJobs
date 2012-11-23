@@ -81,6 +81,9 @@ namespace CommonJobs.Mvc.UI
         private System.Threading.Timer timer;
         private void StartTimer()
         {
+            // Es cierto que iniciar recurrentes aquí puede no ser una buena idea (http://haacked.com/archive/2011/10/16/the-dangers-of-implementing-recurring-background-tasks-in-asp-net.aspx)
+            // Pero es la mejor forma de lograr un deploy simple, y a la vez soporar AppHarbor.
+            // Los problemas indicados por Phil Haack no deberían causar inconvenientes en esta aplicación
             bool working = false;
             timer = new System.Threading.Timer((state) =>
             {
