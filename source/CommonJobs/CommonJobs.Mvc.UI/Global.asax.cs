@@ -10,11 +10,15 @@ using CommonJobs.ContentExtraction;
 using CommonJobs.ContentExtraction.Extractors;
 using CommonJobs.Infrastructure.Mvc.Authorize;
 using Raven.Client.Listeners;
+using CommonJobs.Infrastructure.RavenDb.Schedule;
+using NLog;
 
 namespace CommonJobs.Mvc.UI
 {
     public class MvcApplication : CommonJobsApplication
     {
+        private static Logger log = LogManager.GetCurrentClassLogger();
+
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
@@ -70,6 +74,38 @@ namespace CommonJobs.Mvc.UI
 #else
             CommonJobsAuthorizeAttribute.AuthorizationBehavior = new PrefixFromSettingsAuthorizationBehavior("CommonJobs/ADGroupsPrefix");
 #endif
+
+            StartTimer();
+        }
+
+        private System.Threading.Timer timer;
+        private void StartTimer()
+        {
+            bool working = false;
+            timer = new System.Threading.Timer((state) =>
+            {
+                //Block is not necessary because it is called periodically
+                if (!working)
+                {
+                    working = true;
+                    try
+                    {
+                        using (var session = RavenSessionManager.DocumentStore.OpenSession())
+                        {
+                            (new ExecuteScheduledTasks() { RavenSession = session }).Execute();
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        log.ErrorException("Error on global.asax timer", e);
+                    }
+                    working = false;
+                }
+            }, 
+            null, 
+            TimeSpan.FromMinutes(2),
+            //TODO: make period configurable
+            TimeSpan.FromMinutes(4));
         }
     }
 }

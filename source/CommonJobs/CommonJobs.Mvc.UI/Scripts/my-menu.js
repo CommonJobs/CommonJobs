@@ -436,6 +436,7 @@ var MyMenu;
             this.startDate = ko.observable("");
             this.endDate = ko.observable("");
             this.deadlineTime = ko.observable("");
+            this.lastSentDate = ko.observable("");
             this.firstWeek = ko.observable(0);
             this.MenuDefinitionReset(data);
         }
@@ -448,6 +449,7 @@ var MyMenu;
             places: [],
             startDate: "2000-01-01",
             endDate: "2100-01-01",
+            lastSentDate: "2000-01-01",
             deadlineTime: "09:30",
             foods: []
         };
@@ -496,6 +498,7 @@ var MyMenu;
             this.endDate(data.endDate);
             this.firstWeek(data.firstWeek);
             this.deadlineTime(data.deadlineTime);
+            this.lastSentDate(data.lastSentDate);
             this.places.removeAll();
             for(i in data.places) {
                 this.addPlace(data.places[i]);
@@ -521,6 +524,7 @@ var MyMenu;
             var data = {
                 Id: this.Id(),
                 deadlineTime: this.deadlineTime(),
+                lastSentDate: this.lastSentDate(),
                 title: this.title(),
                 firstWeek: this.firstWeek(),
                 weeksQuantity: this.weeksQuantity(),

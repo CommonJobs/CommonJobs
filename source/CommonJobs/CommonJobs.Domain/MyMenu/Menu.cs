@@ -22,7 +22,28 @@ namespace CommonJobs.Domain.MyMenu
         public List<Place> places { get; set; }
         public DateTime startDate { get; set; }
         public DateTime endDate { get; set; }
+        public DateTime lastSentDate { get; set; }
         public string deadlineTime { get; set; }
         public List<MenuItem> foods { get; set; }
+
+        public DateTime CalculateNextExecutionTime(DateTime now)
+        {
+            if (endDate < now)
+                return DateTime.MaxValue;
+
+            //TODO: It will fail if the deadlineTime is near to 00:00
+            var date = startDate > now.Date ? startDate : now.Date;
+            if (lastSentDate.Date >= date)
+                date = date.AddDays(1);
+
+            var deadlineTS = TimeSpan.Zero;
+            TimeSpan.TryParse(deadlineTime, out deadlineTS);
+            return date.Add(deadlineTS);
+        }
+
+        public string GetTaskId()
+        {
+            return string.Format("{0}/Task", Id);
+        }
     }
 }

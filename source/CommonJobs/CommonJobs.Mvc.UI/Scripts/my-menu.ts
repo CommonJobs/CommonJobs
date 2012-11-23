@@ -260,6 +260,7 @@ module MyMenu {
         places?: KeyText[];
         startDate?: string;
         endDate?: string;
+        lastSentDate?: string;
         deadlineTime?: string;
         foods?: MenuDataItem[]; 
     }
@@ -552,6 +553,7 @@ module MyMenu {
             places: [],
             startDate: "2000-01-01",
             endDate: "2100-01-01",
+            lastSentDate: "2000-01-01",
             deadlineTime: "09:30",
             foods: []
         };
@@ -564,6 +566,7 @@ module MyMenu {
         startDate: knockout.koObservableAny = ko.observable("");
         endDate: knockout.koObservableAny = ko.observable("");
         deadlineTime: knockout.koObservableString = ko.observable("");
+        lastSentDate: knockout.koObservableString = ko.observable("");
         firstWeek: knockout.koObservableNumber = ko.observable(0);
         static idGenerator = new Utilities.IdGenerator();
 
@@ -625,6 +628,7 @@ module MyMenu {
             this.endDate(data.endDate);
             this.firstWeek(data.firstWeek);
             this.deadlineTime(data.deadlineTime);
+            this.lastSentDate(data.lastSentDate);
 
             this.places.removeAll();
             for (i in data.places) {
@@ -655,6 +659,7 @@ module MyMenu {
             var data: MenuData = { 
                 Id: this.Id(),
                 deadlineTime: this.deadlineTime(),
+                lastSentDate: this.lastSentDate(),
                 title: this.title(),
                 firstWeek: this.firstWeek(),
                 weeksQuantity: this.weeksQuantity(),

@@ -1,4 +1,5 @@
-﻿using CommonJobs.Domain;
+﻿using CommonJobs.Application.MyMenu;
+using CommonJobs.Domain;
 using CommonJobs.Domain.MyMenu;
 using CommonJobs.Infrastructure.Mvc;
 using Raven.Client.Linq;
@@ -150,7 +151,7 @@ namespace CommonJobs.Mvc.UI.Controllers
         [CommonJobsAuthorize(Roles = "Users,MenuManagers")]
         public JsonNetResult PostMenuDefinition(Menu menuDefinition)
         {
-            RavenSession.Store(menuDefinition);
+            ExecuteCommand(new UpdateMenuDefinitionCommand(menuDefinition, DateTime.Now));
             return Json(new { ok = true });
         }
 
@@ -165,6 +166,7 @@ namespace CommonJobs.Mvc.UI.Controllers
                     firstWeek = 0,
                     weeksQuantity = 5,
                     deadlineTime = "9:30",
+                    lastSentDate = new DateTime(2000, 1, 1),
                     startDate = new DateTime(2012, 9, 12),
                     endDate = new DateTime(2020, 1, 1),
                     places = new List<Place>() 
