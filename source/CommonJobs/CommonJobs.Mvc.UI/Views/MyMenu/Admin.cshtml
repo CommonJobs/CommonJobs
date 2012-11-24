@@ -3,18 +3,24 @@
     ViewBag.Title = "Definición de los menues";
     ScriptManager.RegisterJs(Url.Content("~/Scripts/my-menu-admin-page.js"));
 }
-<header class="jumbotron subhead" id="overview">
-    <div class="container">
-        <h1>@ViewBag.Title</h1>
-    </div>
-</header>
-<div class="container">
-    <section class="configuration well">
-        <h2>Configuración</h2>
-        <div class="btn-group" data-toggle="buttons-checkbox">
-            <a class="btn" data-toggle="collapse" href="#collapseCfg">Mostrar Configuración</a>
+
+<div class="container-fluid">
+    <h1 data-bind="text: title">@ViewBag.Title</h1>
+
+    <ul class="nav nav-tabs" id="myTab">
+        <li class="active"><a href="#todayTab" data-toggle="tab">Hoy</a></li>
+        <li><a href="#configTab" data-toggle="tab">Configuración</a></li>
+        <li><a href="#weeksTab" data-toggle="tab">Menú Semanal</a></li>
+    </ul>
+
+    <div class="tab-content" style="overflow: inherit">
+        <div class="tab-pane active" id="todayTab">
+            <div class="alert">
+                <h4>Coming soon!</h4>
+                <p>Acá va a estar el pedido realizado o por realizar hoy</p>
+            </div>
         </div>
-        <div id="collapseCfg" class="collapse">
+        <div class="tab-pane" id="configTab">
             <form class="form-horizontal">
                 <div class="control-group">
                     <label class="control-label" for="title">Título:</label>
@@ -94,31 +100,32 @@
                 </div>
             </form>
         </div>
-    </section>
-    <section id="main">
-        <h2 data-bind="text: title">Common Food</h2>
-        <div data-bind="foreach: $root.weeks">
-            <h4 data-bind='text: text'></h4>
-            <table class="table table-striped table-bordered">
-                <thead>
-                    <tr>
-                        <td></td>
-                        <!-- ko foreach: MyMenu.days() -->
-                        <td data-bind="text: MyMenu.days.getName($data)"></td>
-                        <!-- /ko -->
-                    </tr>
-                </thead>
-                <tbody data-bind="foreach: $root.options">
-                    <tr>
-                        <td data-bind='text: text'></td>
-                        <!-- ko foreach: MyMenu.days() -->
-                        <td>
-                            <textarea rows="3" data-bind='value: $root.getFood($parentContext.$parent.key, $data, $parent.key)'></textarea>
-                        </td>
-                        <!-- /ko -->
-                    </tr>
-                </tbody>
-            </table>
+        <div class="tab-pane" id="weeksTab">
+            <h2 data-bind="text: title">Common Food</h2>
+            <div data-bind="foreach: $root.weeks">
+                <h4 data-bind='text: text'></h4>
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <td></td>
+                            <!-- ko foreach: MyMenu.days() -->
+                            <td data-bind="text: MyMenu.days.getName($data)"></td>
+                            <!-- /ko -->
+                        </tr>
+                    </thead>
+                    <tbody data-bind="foreach: $root.options">
+                        <tr>
+                            <td data-bind='text: text'></td>
+                            <!-- ko foreach: MyMenu.days() -->
+                            <td>
+                                <textarea rows="3" data-bind='value: $root.getFood($parentContext.$parent.key, $data, $parent.key)'></textarea>
+                            </td>
+                            <!-- /ko -->
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </section>
+    </div>
 </div>
+<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
