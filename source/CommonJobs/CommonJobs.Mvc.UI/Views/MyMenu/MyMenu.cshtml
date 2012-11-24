@@ -3,19 +3,12 @@
     ViewBag.Title = "Mi Menú";
     ScriptManager.RegisterJs(Url.Content("~/Scripts/my-menu-page.js"));
 }
-<header class="jumbotron subhead" id="Header1" style="padding: 40px 0;">
+<header class="jumbotron subhead" id="Header1">
     <div class="container">
         <h1>@ViewBag.Title</h1>
     </div>
 </header>
 <div class="container">
-    <section class="persistence well">
-        <h2>Persistencia</h2>
-        <div>
-            <button class="btn" data-bind="click: MyMenu.MyMenuPage.load">Load</button>
-            <button class="btn" data-bind="click: MyMenu.MyMenuPage.save">Save</button>
-        </div>
-    </section>
     <section id="main">
         <h2 data-bind="text: name">Mi Menu</h2>
         <h3>Opciones Generales</h3>

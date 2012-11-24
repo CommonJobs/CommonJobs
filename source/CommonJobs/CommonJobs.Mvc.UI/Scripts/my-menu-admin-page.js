@@ -590,7 +590,6 @@ var MyMenu;
         __extends(AdminPage, _super);
         function AdminPage() {
                 _super.call(this);
-            this.$json = $(".persistence .json-field");
             ko.applyBindings(this);
         }
         AdminPage.prototype.load = function () {

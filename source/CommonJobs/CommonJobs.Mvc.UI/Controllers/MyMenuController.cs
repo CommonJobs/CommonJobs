@@ -38,6 +38,11 @@ namespace CommonJobs.Mvc.UI.Controllers
         [CommonJobsAuthorize(Roles = "Users,MenuManagers")]
         public ActionResult Edit(string id /*username*/, bool ownMenu = false)
         {
+            ViewBag.ActiveAnotherMenu = !ownMenu;
+            ViewBag.ShowNavigation = !ownMenu;
+            ViewBag.ActiveMyMenu = ownMenu;
+            ViewBag.AnotherMenuUser = ownMenu ? "" : id;
+
             ScriptManager.RegisterGlobalJavascript(
                 "ViewData",
                 new
@@ -89,6 +94,9 @@ namespace CommonJobs.Mvc.UI.Controllers
         [CommonJobsAuthorize(Roles = "Users,MenuManagers")]
         public ActionResult Admin(string id /*menuid*/ = null)
         {
+            ViewBag.ActiveMenuDefinition = true;
+            ViewBag.ShowNavigation = true;
+
             ScriptManager.RegisterGlobalJavascript(
                 "ViewData",
                 new

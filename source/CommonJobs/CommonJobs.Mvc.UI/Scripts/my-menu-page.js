@@ -586,18 +586,24 @@ var MyMenu;
 
 var MyMenu;
 (function (MyMenu) {
-    (function (MyMenuPage) {
-        var $menuJson;
-        var $employeeMenuJson;
-        var menuDefinition = new MyMenu.MenuDefinition();
-        var employeeMenu = new MyMenu.EmployeeMenuDefinition(menuDefinition, null, ViewData.now);
-        MyMenuPage.load = function () {
+    $(document).ready(function () {
+        var myMenuPage = new MyMenuPage();
+        myMenuPage.load();
+    });
+    var MyMenuPage = (function (_super) {
+        __extends(MyMenuPage, _super);
+        function MyMenuPage() {
+                _super.call(this, new MyMenu.MenuDefinition(), null, ViewData.now);
+            ko.applyBindings(this);
+        }
+        MyMenuPage.prototype.load = function () {
+            var _this = this;
             $.ajax(ViewData.menuUrl, {
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
                 success: function (employeeMenuDTO) {
-                    menuDefinition.reset(employeeMenuDTO.MenuDefinition);
-                    employeeMenu.reset(employeeMenuDTO.EmployeeMenu);
+                    _this.menu.reset(employeeMenuDTO.MenuDefinition);
+                    _this.reset(employeeMenuDTO.EmployeeMenu);
                 },
                 error: function (jqXHR) {
                     alert("Error getting EmployeeMenu");
@@ -605,28 +611,22 @@ var MyMenu;
                 }
             });
         };
-        MyMenuPage.save = function () {
-            var data = employeeMenu.exportData();
+        MyMenuPage.prototype.save = function () {
+            var data = this.exportData();
             $.ajax(ViewData.menuUrl, {
                 type: "POST",
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
                 data: JSON.stringify(data),
-                success: MyMenuPage.load,
+                success: this.load,
                 error: function (jqXHR) {
                     alert("Error saving EmployeeMenu");
                     $("html").html(jqXHR.responseText);
                 }
             });
         };
-        $(document).ready(function () {
-            $menuJson = $(".persistence .json-field.menu");
-            $employeeMenuJson = $(".persistence .json-field.employee-menu");
-            ko.applyBindings(employeeMenu);
-            MyMenuPage.load();
-        });
-    })(MyMenu.MyMenuPage || (MyMenu.MyMenuPage = {}));
-    var MyMenuPage = MyMenu.MyMenuPage;
-
+        return MyMenuPage;
+    })(MyMenu.EmployeeMenuDefinition);
+    MyMenu.MyMenuPage = MyMenuPage;    
 })(MyMenu || (MyMenu = {}));
 

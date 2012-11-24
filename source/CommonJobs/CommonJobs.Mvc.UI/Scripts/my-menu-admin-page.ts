@@ -9,8 +9,6 @@ declare var ViewData: any;
 
 module MyMenu {
     export class AdminPage extends MenuDefinition {
-        $json = $(".persistence .json-field");
-        
         constructor () {
             super();
             ko.applyBindings(this);

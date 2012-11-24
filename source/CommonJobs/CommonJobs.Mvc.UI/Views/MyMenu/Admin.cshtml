@@ -3,28 +3,12 @@
     ViewBag.Title = "Definición de los menues";
     ScriptManager.RegisterJs(Url.Content("~/Scripts/my-menu-admin-page.js"));
 }
-<!DOCTYPE html>
-<div class="navbar navbar-fixed-top">
-    <div class="navbar-inner">
-        <ul class="nav">
-            <li class="active">@Html.ActionLink("Definición de los menues", "Admin")</li>
-            <li>@Html.ActionLink("Mi Menú", "Index")</li>
-        </ul>
-    </div>
-</div>
-<header class="jumbotron subhead" id="overview" style="padding: 40px 0;">
+<header class="jumbotron subhead" id="overview">
     <div class="container">
         <h1>@ViewBag.Title</h1>
     </div>
 </header>
 <div class="container">
-    <section class="persistence well">
-        <h2>Persistencia</h2>
-        <div>
-            <button class="btn" data-bind="click: load">Load</button>
-            <button class="btn" data-bind="click: save">Save</button>
-        </div>
-    </section>
     <section class="configuration well">
         <h2>Configuración</h2>
         <div class="btn-group" data-toggle="buttons-checkbox">
