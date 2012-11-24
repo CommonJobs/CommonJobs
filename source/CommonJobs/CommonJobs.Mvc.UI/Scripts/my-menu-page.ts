@@ -19,17 +19,13 @@ module MyMenu.MyMenuPage {
             {
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
-                success: (employeeMenuData) => {
-                    $.ajax(
-                        urlGenerator.action("MenuDefinition", "MyMenu", employeeMenuData.menuId),
-                        {
-                            dataType: 'json',
-                            contentType: 'application/json; charset=utf-8',
-                            success: (menuData) => {
-                                menuDefinition.reset(menuData);
-                                employeeMenu.reset(employeeMenuData);
-                            }
-                        });
+                success: (employeeMenuDTO) => {
+                    menuDefinition.reset(employeeMenuDTO.MenuDefinition);
+                    employeeMenu.reset(employeeMenuDTO.EmployeeMenu);
+                },
+                error: (jqXHR) => {
+                    alert("Error getting EmployeeMenu");
+                    $("html").html(jqXHR.responseText);
                 }
             });
     }
@@ -43,7 +39,11 @@ module MyMenu.MyMenuPage {
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
                 data: JSON.stringify(data),
-                success: load
+                success: load,
+                error: (jqXHR) => {
+                    alert("Error saving EmployeeMenu");
+                    $("html").html(jqXHR.responseText);
+                }
             });
     }
 

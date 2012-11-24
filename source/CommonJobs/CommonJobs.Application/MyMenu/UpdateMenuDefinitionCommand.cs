@@ -16,6 +16,10 @@ namespace CommonJobs.Application.MyMenu
         public UpdateMenuDefinitionCommand(Menu menuDefinition, DateTime now)
         {
             MenuDefinition = menuDefinition;
+            if (String.IsNullOrWhiteSpace(menuDefinition.Id))
+            {
+                menuDefinition.Id = Common.DefaultMenuId;
+            }
             Now = now;
         }
 

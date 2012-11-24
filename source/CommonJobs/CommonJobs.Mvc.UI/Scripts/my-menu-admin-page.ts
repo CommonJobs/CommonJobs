@@ -24,6 +24,10 @@ module MyMenu {
                     contentType: 'application/json; charset=utf-8',
                     success: (data) => {
                         this.reset(data);
+                    },
+                    error: (jqXHR) => {
+                        alert("Error getting MenuDefinition");
+                        $("html").html(jqXHR.responseText);
                     }
                 });
         }
@@ -39,6 +43,10 @@ module MyMenu {
                     data: JSON.stringify(data),
                     success: (data) => {
                         this.load();
+                    },
+                    error: (jqXHR) => {
+                        alert("Error saving MenuDefinition");
+                        $("html").html(jqXHR.responseText);
                     }
                 });
         }
