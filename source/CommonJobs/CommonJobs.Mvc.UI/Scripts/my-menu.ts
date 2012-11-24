@@ -172,13 +172,15 @@ module MyMenu {
             var sundayDate = moment(date).day(0);
             var diff = sundayDate.diff(this.zeroWeekZeroDay(), 'weeks');
 
-            return diff < 0 ?
+            var result = diff < 0 ?
                 weeksQuantity + diff % weeksQuantity
                 : diff % weeksQuantity;
+            return result;
         }
 
         day(date?: any) {
-            return moment(date).day();
+            var result = moment(date).day();
+            return result;
         }
 
         weekDay(date?: any) : WeekDay {
@@ -199,6 +201,10 @@ module MyMenu {
         }
 
         near(weekDay: WeekDay, date?: any) : moment.Moment {
+            var weeksQuantity = this.weeksQuantity();
+            if (weeksQuantity <= weekDay.week)
+                return null;
+
             //TODO: optimize
             var mmnt = moment(date);
             if (!mmnt.isValid) {
@@ -425,6 +431,10 @@ module MyMenu {
             //TODO: remove
             var now = moment(this.now());
             var date = this.calendarHelper.near({ day: day, week: parseInt(week) }, now);
+
+            if (date == null)
+                return null;
+
             var days = date.diff(now, 'days', true);
 
             var str = date.format("D [de] MMMM [de] YYYY");

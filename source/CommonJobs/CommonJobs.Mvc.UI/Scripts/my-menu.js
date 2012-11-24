@@ -161,10 +161,12 @@ var MyMenu;
             var weeksQuantity = this.weeksQuantity();
             var sundayDate = moment(date).day(0);
             var diff = sundayDate.diff(this.zeroWeekZeroDay(), 'weeks');
-            return diff < 0 ? weeksQuantity + diff % weeksQuantity : diff % weeksQuantity;
+            var result = diff < 0 ? weeksQuantity + diff % weeksQuantity : diff % weeksQuantity;
+            return result;
         };
         CalendarHelper.prototype.day = function (date) {
-            return moment(date).day();
+            var result = moment(date).day();
+            return result;
         };
         CalendarHelper.prototype.weekDay = function (date) {
             return {
@@ -179,6 +181,10 @@ var MyMenu;
             return this.weekDayEquals(weekDay, this.weekDay(date));
         };
         CalendarHelper.prototype.near = function (weekDay, date) {
+            var weeksQuantity = this.weeksQuantity();
+            if(weeksQuantity <= weekDay.week) {
+                return null;
+            }
             var mmnt = moment(date);
             if(!mmnt.isValid) {
                 return null;
@@ -324,6 +330,9 @@ var MyMenu;
                 day: day,
                 week: parseInt(week)
             }, now);
+            if(date == null) {
+                return null;
+            }
             var days = date.diff(now, 'days', true);
             var str = date.format("D [de] MMMM [de] YYYY");
             return days == 0 ? "Hoy (" + str + ")" : days == 1 ? "Mañana (" + str + ")" : days == 2 ? "Pasado mañana (" + str + ")" : days < 7 ? "En " + days + " días (" + str + ")" : str;
