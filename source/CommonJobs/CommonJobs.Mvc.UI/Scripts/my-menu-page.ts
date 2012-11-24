@@ -10,7 +10,7 @@ declare var ViewData: any;
 module MyMenu {
     
     $(document).ready(() => {
-        var myMenuPage = new MyMenuPage();    
+        var myMenuPage = new MyMenuPage();
         myMenuPage.load()
     });
 

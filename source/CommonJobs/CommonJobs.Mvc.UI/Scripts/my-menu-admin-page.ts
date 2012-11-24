@@ -51,8 +51,8 @@ module MyMenu {
     }
 
     $(document).ready(() => {
-        var adminController = new AdminPage();    
-        adminController.load()
+		var adminController = new AdminPage();    
+		adminController.load()
     });
 }
 
