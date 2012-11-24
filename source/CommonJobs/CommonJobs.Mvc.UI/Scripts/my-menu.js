@@ -5,6 +5,19 @@ var __extends = this.__extends || function (d, b) {
 }
 var Utilities;
 (function (Utilities) {
+    function dirtyFlag() {
+        var observable = ko.observable(false);
+        observable.register = function (anotherObservable) {
+            anotherObservable.subscribe(function () {
+                observable(true);
+            });
+        };
+        observable.reset = function () {
+            return observable(false);
+        };
+        return observable;
+    }
+    Utilities.dirtyFlag = dirtyFlag;
     var IdGenerator = (function () {
         function IdGenerator(chars, length) {
             if (typeof chars === "undefined") { chars = "abcdefghijklmnopqrstuvwxyz1234567890"; }
@@ -349,6 +362,16 @@ var MyMenu;
             this.endDate = ko.observable("");
             this.deadlineTime = ko.observable("");
             this.firstWeek = ko.observable(0);
+            this.isDirty = Utilities.dirtyFlag();
+            this.isDirty.register(this.Id);
+            this.isDirty.register(this.title);
+            this.isDirty.register(this.weeksQuantity);
+            this.isDirty.register(this.options);
+            this.isDirty.register(this.places);
+            this.isDirty.register(this.startDate);
+            this.isDirty.register(this.endDate);
+            this.isDirty.register(this.deadlineTime);
+            this.isDirty.register(this.firstWeek);
             this.MenuDefinitionReset(data);
         }
         MenuDefinition.defaultData = {
@@ -424,6 +447,7 @@ var MyMenu;
                     }
                 });
             }
+            this.isDirty.reset();
         };
         MenuDefinition.prototype.reset = function (data) {
             _super.prototype.reset.call(this, data && data.weeksQuantity);

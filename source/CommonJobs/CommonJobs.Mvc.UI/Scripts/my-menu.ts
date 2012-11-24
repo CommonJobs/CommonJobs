@@ -20,6 +20,21 @@ interface KeyObservableText {
 }
 
 module Utilities {
+    export function dirtyFlag() : any {
+		var observable : any = ko.observable(false);
+
+		observable.register = (anotherObservable : any) => {
+			anotherObservable.subscribe(() => {
+				observable(true);
+			});
+		}
+
+		//TODO: observable.deregister?
+
+		observable.reset = () => observable(false);
+		return observable;
+	}
+
     export class IdGenerator {
         constructor (public chars = "abcdefghijklmnopqrstuvwxyz1234567890", public length = 8) {
         }
@@ -436,6 +451,8 @@ module MyMenu {
         deadlineTime: knockout.koObservableString = ko.observable("");
         firstWeek: knockout.koObservableNumber = ko.observable(0);
         static idGenerator = new Utilities.IdGenerator();
+		//TODO: use a type
+		isDirty: any = Utilities.dirtyFlag();
 
         //#region Extend WeekStorage
 
@@ -473,7 +490,19 @@ module MyMenu {
 
         constructor (data?: MenuData) {
             super(data && data.weeksQuantity);
+			this.isDirty.register(this.Id);
+			this.isDirty.register(this.title);
+			this.isDirty.register(this.weeksQuantity);
+			this.isDirty.register(this.options);
+			this.isDirty.register(this.places);
+			this.isDirty.register(this.startDate);
+			this.isDirty.register(this.endDate);
+			this.isDirty.register(this.deadlineTime);
+			this.isDirty.register(this.firstWeek);
+			//TODO: register food changes
+			//TODO: register other fields
             this.MenuDefinitionReset(data);
+			
         }
 
         private createKeyTextObservableArray(items: KeyText[]) {
@@ -513,6 +542,8 @@ module MyMenu {
                     }
                 });
             }
+
+			this.isDirty.reset();
         };
 
         reset(data?: MenuData) {
