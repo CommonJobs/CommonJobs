@@ -9,12 +9,14 @@ declare var ViewData: any;
 
 module MyMenu {
     export class AdminPage extends MenuDefinition {
+		onAjaxCall: knockout.koObservableBool = ko.observable(false);
         constructor () {
             super();
             ko.applyBindings(this);
         }
 
         load() {
+			this.onAjaxCall(true);
             $.ajax(
                 urlGenerator.action("MenuDefinition", "MyMenu", ViewData.menuId),
                 {
@@ -26,11 +28,13 @@ module MyMenu {
                     error: (jqXHR) => {
                         alert("Error getting MenuDefinition");
                         $("html").html(jqXHR.responseText);
-                    }
+                    },
+					complete: () => this.onAjaxCall(false)
                 });
         }
 
         save() {
+			this.onAjaxCall(true);
             var data = this.exportData();
             $.ajax(
                 urlGenerator.action("MenuDefinition", "MyMenu"),
@@ -39,13 +43,12 @@ module MyMenu {
                     dataType: 'json',
                     contentType: 'application/json; charset=utf-8',
                     data: JSON.stringify(data),
-                    success: (data) => {
-                        this.load();
-                    },
                     error: (jqXHR) => {
                         alert("Error saving MenuDefinition");
                         $("html").html(jqXHR.responseText);
-                    }
+                    },
+					success: () => this.isDirty.reset(),
+					complete: () => this.onAjaxCall(false)
                 });
         }
     }

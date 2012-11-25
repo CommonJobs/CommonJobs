@@ -42,8 +42,8 @@
         <div class="navbar-inner">
             <div style="float:right;">
                 <form class="form-inline">
-                    <button class="btn btn-inverse" data-bind="click: load">Descartar</button>
-                    <button class="btn btn-primary" data-bind="click: save">Guardar</button>
+                    <button class="btn btn-inverse" data-bind="click: load, enable: isDirty() && !onAjaxCall()">Descartar</button>
+                    <button class="btn btn-primary" data-bind="click: save, enable: isDirty() && !onAjaxCall()">Guardar</button>
                 </form>
             </div>
             <div class="nav-collapse collapse">

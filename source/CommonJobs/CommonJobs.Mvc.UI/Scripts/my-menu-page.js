@@ -13,6 +13,7 @@ var MyMenu;
         __extends(MyMenuPage, _super);
         function MyMenuPage() {
                 _super.call(this, new MyMenu.MenuDefinition(), null, ViewData.now);
+            this.onAjaxCall = ko.observable(false);
             ko.applyBindings(this);
         }
         MyMenuPage.prototype.load = function () {
@@ -27,20 +28,29 @@ var MyMenu;
                 error: function (jqXHR) {
                     alert("Error getting EmployeeMenu");
                     $("html").html(jqXHR.responseText);
+                },
+                complete: function () {
+                    return _this.onAjaxCall(false);
                 }
             });
         };
         MyMenuPage.prototype.save = function () {
+            var _this = this;
             var data = this.exportData();
             $.ajax(ViewData.menuUrl, {
                 type: "POST",
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
                 data: JSON.stringify(data),
-                success: this.load,
                 error: function (jqXHR) {
                     alert("Error saving EmployeeMenu");
                     $("html").html(jqXHR.responseText);
+                },
+                success: function () {
+                    return _this.isDirty.reset();
+                },
+                complete: function () {
+                    return _this.onAjaxCall(false);
                 }
             });
         };

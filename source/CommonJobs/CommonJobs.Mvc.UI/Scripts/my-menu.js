@@ -233,7 +233,9 @@ var MyMenu;
         function WeekStorage(weeksQuantity) {
             var _this = this;
                 _super.call(this);
+            this.isDirty = Utilities.dirtyFlag();
             this.weeksQuantity = ko.observable(0);
+            this.isDirty.register(this.weeksQuantity);
             this.weeks = ko.computed(function () {
                 return _.map(_.range(_this.weeksQuantity()), function (x) {
                     return {
@@ -329,6 +331,9 @@ var MyMenu;
             this.defaultPlace = ko.observable("");
             this.overrides = ko.observableArray([]);
             this.now = ko.observable();
+            this.isDirty.register(this.menuId);
+            this.isDirty.register(this.defaultPlace);
+            this.isDirty.register(this.overrides);
             this.EmployeeMenuDefinitionReset(data);
             this.calendarHelper = new CalendarHelper(menu.startDate, menu.weeksQuantity, menu.firstWeek);
             this.now(now);
@@ -336,6 +341,7 @@ var MyMenu;
         EmployeeMenuDefinition.prototype.reset = function (data) {
             _super.prototype.reset.call(this, this.menu.weeksQuantity());
             this.EmployeeMenuDefinitionReset(data);
+            this.isDirty(false);
         };
         EmployeeMenuDefinition.prototype.nearFormated = function (week, day) {
             var now = moment(this.now());
@@ -351,7 +357,10 @@ var MyMenu;
             return days == 0 ? "Hoy (" + str + ")" : days == 1 ? "Mañana (" + str + ")" : days == 2 ? "Pasado mañana (" + str + ")" : days < 7 ? "En " + days + " días (" + str + ")" : str;
         };
         EmployeeMenuDefinition.prototype.createNewItem = function () {
-            return new DayChoice();
+            var dayChoice = new DayChoice();
+            this.isDirty.register(dayChoice.option);
+            this.isDirty.register(dayChoice.place);
+            return dayChoice;
         };
         EmployeeMenuDefinition.prototype.eachWeek = function (f) {
             _super.prototype.eachWeek.call(this, f);
@@ -405,7 +414,13 @@ var MyMenu;
             this.overrides.removeAll();
             if(data.overrides) {
                 _.each(data.overrides, function (x) {
-                    return _this.overrides.push(new Override(x));
+                    var ov = new Override(x);
+                    _this.overrides.push(ov);
+                    _this.isDirty.register(ov.option);
+                    _this.isDirty.register(ov.place);
+                    _this.isDirty.register(ov.date);
+                    _this.isDirty.register(ov.cancel);
+                    _this.isDirty.register(ov.comment);
                 });
             }
         };
@@ -439,7 +454,13 @@ var MyMenu;
             return data;
         };
         EmployeeMenuDefinition.prototype.addOverride = function () {
-            this.overrides.push(new Override());
+            var override = new Override();
+            this.overrides.push(override);
+            this.isDirty.register(override.option);
+            this.isDirty.register(override.place);
+            this.isDirty.register(override.date);
+            this.isDirty.register(override.cancel);
+            this.isDirty.register(override.comment);
         };
         EmployeeMenuDefinition.prototype.removeOverride = function (override) {
             Utilities.ObservableArrays.removeItem(this.overrides, override, 'date');
@@ -460,10 +481,8 @@ var MyMenu;
             this.deadlineTime = ko.observable("");
             this.lastSentDate = ko.observable("");
             this.firstWeek = ko.observable(0);
-            this.isDirty = Utilities.dirtyFlag();
             this.isDirty.register(this.Id);
             this.isDirty.register(this.title);
-            this.isDirty.register(this.weeksQuantity);
             this.isDirty.register(this.options);
             this.isDirty.register(this.places);
             this.isDirty.register(this.startDate);
@@ -487,11 +506,14 @@ var MyMenu;
         };
         MenuDefinition.idGenerator = new Utilities.IdGenerator();
         MenuDefinition.prototype.createNewItem = function () {
+            var _this = this;
             var item = {
             };
             if(this.options) {
                 _.each(this.options(), function (option) {
-                    return item[option.key] = ko.observable("");
+                    var obs = ko.observable("");
+                    item[option.key] = obs;
+                    _this.isDirty.register(obs);
                 });
             }
             return item;
@@ -510,14 +532,6 @@ var MyMenu;
         };
         MenuDefinition.prototype.eachDay = function (f) {
             _super.prototype.eachDay.call(this, f);
-        };
-        MenuDefinition.prototype.createKeyTextObservableArray = function (items) {
-            return ko.observableArray(_.map(items, function (item) {
-                return {
-                    key: item.key,
-                    text: ko.observable(item.text)
-                };
-            }));
         };
         MenuDefinition.prototype.MenuDefinitionReset = function (data) {
             var _this = this;
@@ -583,9 +597,13 @@ var MyMenu;
             return data;
         };
         MenuDefinition.prototype.addOption = function (option) {
+            var _this = this;
             var op = Utilities.ObservableArrays.addKeyObservableText(this.options, "Menú ", "menu_", option);
+            this.isDirty.register(op.text);
             this.eachDay(function (dayFoods) {
-                dayFoods[op.key] = ko.observable("");
+                var dayOpt = ko.observable("");
+                dayFoods[op.key] = dayOpt;
+                _this.isDirty.register(dayOpt);
             });
             this.options.valueHasMutated();
         };
@@ -598,7 +616,8 @@ var MyMenu;
             }
         };
         MenuDefinition.prototype.addPlace = function (place) {
-            Utilities.ObservableArrays.addKeyObservableText(this.places, "Lugar ", "place_", place);
+            var place = Utilities.ObservableArrays.addKeyObservableText(this.places, "Lugar ", "place_", place);
+            this.isDirty.register(place.text);
         };
         MenuDefinition.prototype.removePlace = function (place) {
             Utilities.ObservableArrays.removeItem(this.places, place);

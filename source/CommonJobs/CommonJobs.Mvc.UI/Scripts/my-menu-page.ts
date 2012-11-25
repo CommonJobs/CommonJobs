@@ -15,6 +15,7 @@ module MyMenu {
     });
 
     export class MyMenuPage extends EmployeeMenuDefinition {
+		onAjaxCall: knockout.koObservableBool = ko.observable(false);
         constructor () {
             super(new MenuDefinition(), null, ViewData.now);
             ko.applyBindings(this);
@@ -33,7 +34,8 @@ module MyMenu {
                 error: (jqXHR) => {
                     alert("Error getting EmployeeMenu");
                     $("html").html(jqXHR.responseText);
-                }
+                },
+				complete: () => this.onAjaxCall(false)
             });
         }
 
@@ -46,11 +48,12 @@ module MyMenu {
                     dataType: 'json',
                     contentType: 'application/json; charset=utf-8',
                     data: JSON.stringify(data),
-                    success: this.load,
                     error: (jqXHR) => {
                         alert("Error saving EmployeeMenu");
                         $("html").html(jqXHR.responseText);
-                    }
+                    },
+					success: () => this.isDirty.reset(),
+					complete: () => this.onAjaxCall(false)
                 });
         }
     }

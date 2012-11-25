@@ -20,6 +20,7 @@ interface KeyObservableText {
 }
 
 module Utilities {
+	//TODO export an interface too
     export function dirtyFlag() : any {
 		var observable : any = ko.observable(false);
 
@@ -325,19 +326,20 @@ module MyMenu {
         weeksQuantity: { (): number; };
         weeks: { (): KeyText[]; };
         private items: any[][];
+		//TODO: use a type
+		isDirty: any = Utilities.dirtyFlag();
 
         constructor (weeksQuantity?: number) {
             super();
             this.weeksQuantity = ko.observable(0);
+			this.isDirty.register(this.weeksQuantity);
             this.weeks = ko.computed(() => _.map(_.range(this.weeksQuantity()), (x: number): KeyText => {
                 return { key: x.toString(), text: "Semana " + (x + 1) };
             }));
             this.WeekStorageReset(weeksQuantity);
-            //(<knockout.koComputed>this.weeks).subscribe((x) => console.log(x));
         }
 
         private setWeeksQuantity(n: number) {
-            //console.log(n);
             (<knockout.koObservableNumber>this.weeksQuantity)(n);
         }
 
@@ -432,6 +434,10 @@ module MyMenu {
 
         constructor (public menu: MenuDefinition, data?: EmployeeMenuData, now?: any) {
             super(menu.weeksQuantity());
+			this.isDirty.register(this.menuId);
+			this.isDirty.register(this.defaultPlace);
+			this.isDirty.register(this.overrides);
+
             this.EmployeeMenuDefinitionReset(data);
             this.calendarHelper = new CalendarHelper(menu.startDate, menu.weeksQuantity, menu.firstWeek);
             this.now(now);
@@ -440,6 +446,7 @@ module MyMenu {
         reset(data?: EmployeeMenuData) {
             super.reset(this.menu.weeksQuantity());
             this.EmployeeMenuDefinitionReset(data);
+			this.isDirty(false);
         }
 
         nearFormated(week: string, day: number) {
@@ -462,7 +469,10 @@ module MyMenu {
         }
         
         createNewItem() {
-            return new DayChoice();
+			var dayChoice = new DayChoice();
+			this.isDirty.register(dayChoice.option); //TODO: potential memory leak
+			this.isDirty.register(dayChoice.place); //TODO: potential memory leak
+            return dayChoice;
         }
 
         eachWeek(f: (weekItems: DayChoice[], weekIndex: number) => void ) {
@@ -519,7 +529,15 @@ module MyMenu {
 
             this.overrides.removeAll();
             if (data.overrides) {
-                _.each(data.overrides, x => this.overrides.push(new Override(x)));
+                _.each(data.overrides, x => { 
+					var ov = new Override(x);
+					this.overrides.push(ov);
+					this.isDirty.register(ov.option);
+					this.isDirty.register(ov.place);
+					this.isDirty.register(ov.date);
+					this.isDirty.register(ov.cancel);
+					this.isDirty.register(ov.comment);
+				});
             }
         }
 
@@ -558,7 +576,13 @@ module MyMenu {
 
         
         addOverride() {
-            this.overrides.push(new Override());
+			var override = new Override();
+            this.overrides.push(override);
+			this.isDirty.register(override.option); //TODO: potential memory leak
+			this.isDirty.register(override.place); //TODO: potential memory leak
+			this.isDirty.register(override.date); //TODO: potential memory leak
+			this.isDirty.register(override.cancel); //TODO: potential memory leak
+			this.isDirty.register(override.comment); //TODO: potential memory leak
         }
         
         removeOverride(override?) {
@@ -585,7 +609,7 @@ module MyMenu {
 
         Id: knockout.koObservableString = ko.observable("");
         title: knockout.koObservableString = ko.observable("");
-        weeksQuantity: { (): number; };
+        //weeksQuantity: { (): number; };
         options: knockout.koObservableArrayBase = ko.observableArray();
         places: knockout.koObservableArrayBase = ko.observableArray();
         startDate: knockout.koObservableAny = ko.observable("");
@@ -594,17 +618,17 @@ module MyMenu {
         lastSentDate: knockout.koObservableString = ko.observable("");
         firstWeek: knockout.koObservableNumber = ko.observable(0);
         static idGenerator = new Utilities.IdGenerator();
-		//TODO: use a type
-		isDirty: any = Utilities.dirtyFlag();
-
 
         //#region Extend WeekStorage
 
         createNewItem(): DayFoods {
             var item: DayFoods = {};
             if (this.options) {
-                _.each(this.options(), option =>
-                    item[option.key] = ko.observable(""));
+                _.each(this.options(), option => {
+					var obs = ko.observable("");
+                    item[option.key] = obs;
+					this.isDirty.register(obs); //TODO: potential memory leak 
+				});
             }
             return item;
         }
@@ -636,28 +660,15 @@ module MyMenu {
             super(data && data.weeksQuantity);
 			this.isDirty.register(this.Id);
 			this.isDirty.register(this.title);
-			this.isDirty.register(this.weeksQuantity);
 			this.isDirty.register(this.options);
 			this.isDirty.register(this.places);
 			this.isDirty.register(this.startDate);
 			this.isDirty.register(this.endDate);
 			this.isDirty.register(this.deadlineTime);
 			this.isDirty.register(this.firstWeek);
-			//TODO: register food changes
-			//TODO: register other fields
             this.MenuDefinitionReset(data);
-			
         }
-
-        private createKeyTextObservableArray(items: KeyText[]) {
-            return ko.observableArray(_.map(items, (item) => { 
-                return {
-                    key: item.key,
-                    text: ko.observable(item.text)
-                };
-            }));
-        }
-
+		
         private MenuDefinitionReset(data?: MenuData) {
             data = <MenuData>$.extend({}, MenuDefinition.defaultData, data);
             var i: any;
@@ -730,9 +741,12 @@ module MyMenu {
 
         addOption(option?: any) {
             var op = Utilities.ObservableArrays.addKeyObservableText(this.options, "Menú ", "menu_", option);
+			this.isDirty.register(op.text); //TODO: potential memory leak
             
             this.eachDay(dayFoods => {
-                dayFoods[op.key] = ko.observable("")
+				var dayOpt = ko.observable("");
+                dayFoods[op.key] = dayOpt;
+				this.isDirty.register(dayOpt); //TODO: potential memory leak
             })
 
             //In order to update content observables
@@ -747,7 +761,8 @@ module MyMenu {
         };
 
         addPlace(place?: any) {
-            Utilities.ObservableArrays.addKeyObservableText(this.places, "Lugar ", "place_", place);
+            var place = Utilities.ObservableArrays.addKeyObservableText(this.places, "Lugar ", "place_", place);
+			this.isDirty.register(place.text); //TODO: potential memory leak
         }
         
         removePlace(place?) {
