@@ -124,7 +124,7 @@
                         </label>
                         <!-- ko foreach: $root.menu.Options -->
                         <label>
-                            <input type="radio" data-bind="attr: { name: 'option_' + $parentContext.$parent.Key + '_' + $parent }, value: Key, checked:$root.getMenuChoice($parentContext.$parent.Key, $parent)" />
+                            <input type="radio" data-bind="attr: { name: 'option_' + $parentContext.$parent.Key + '_' + $parent }, enable: $root.menu.getFood($parentContext.$parent.Key, $parent, Key), value: Key, checked:$root.getMenuChoice($parentContext.$parent.Key, $parent)" />
                             <!--ko text: Text--><!--/ko-->: <em><!--ko text: $root.menu.getFood($parentContext.$parent.Key, $parent, Key)--><!--/ko--></em>
                         </label>
                         <!-- /ko -->
