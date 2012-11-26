@@ -181,15 +181,8 @@ var MyMenu;
             var result = moment(date).day();
             return result;
         };
-        CalendarHelper.prototype.weekDay = function (date) {
-            return {
-                DayIdx: this.day(date),
-                WeekIdx: this.week(date)
-            };
-        };
         CalendarHelper.prototype.match = function (weekIdx, dayIdx, date) {
-            var dateAsWeekDay = this.weekDay(date);
-            return weekIdx == dateAsWeekDay.WeekIdx && dayIdx == dateAsWeekDay.DayIdx;
+            return weekIdx == this.week(date) && dayIdx == this.day(date);
         };
         CalendarHelper.prototype.near = function (weekIdx, dayIdx, date) {
             var weeksQuantity = this.WeeksQuantity();
@@ -383,6 +376,39 @@ var MyMenu;
             } else {
                 return "Seleccione un lugar (no se definió el lugar por defecto)";
             }
+        };
+        EmployeeMenuDefinition.prototype.getDayWeekLabel = function (date) {
+            var mmnt = moment(ko.utils.unwrapObservable(date));
+            if(!mmnt || !mmnt.isValid) {
+                return "Seleccione un día válido";
+            }
+            return mmnt.format("dddd") + ' de ' + 'Semana ' + (this.calendarHelper.week(mmnt) + 1);
+        };
+        EmployeeMenuDefinition.prototype.getDayWeekOptionOverrideInfo = function (date, option) {
+            var mmnt = moment(ko.utils.unwrapObservable(date));
+            if(!mmnt || !mmnt.isValid) {
+                return "Atención! Seleccione un día válido";
+            }
+            var week = this.calendarHelper.week(mmnt);
+            var day = this.calendarHelper.day(mmnt);
+            var optionKey = ko.utils.unwrapObservable(option) || ko.utils.unwrapObservable(this.getMenuChoice(week, day));
+            var food = ko.utils.unwrapObservable(this.menu.getFood(week, day, optionKey));
+            return food || "Atención! no hay comida seleccionada para este día";
+        };
+        EmployeeMenuDefinition.prototype.getDayWeekPlaceOverrideInfo = function (date, place) {
+            var mmnt = moment(ko.utils.unwrapObservable(date));
+            if(!mmnt || !mmnt.isValid) {
+                return "Atención! Seleccione un día válido";
+            }
+            var week = this.calendarHelper.week(mmnt);
+            var day = this.calendarHelper.day(mmnt);
+            var placeKey = ko.utils.unwrapObservable(place) || ko.utils.unwrapObservable(this.getPlaceChoice(week, day)) || ko.utils.unwrapObservable(this.DefaultPlaceKey);
+            var places = this.menu.Places();
+            var finded = _.find(places, function (x) {
+                return x.Key == placeKey;
+            });
+            var text = finded && finded.Text;
+            return text || "Atención! no hay lugar seleccionado para este día";
         };
         EmployeeMenuDefinition.prototype.EmployeeMenuDefinitionReset = function (data) {
             var _this = this;

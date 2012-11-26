@@ -61,12 +61,13 @@
                     <label class="control-label">Fecha:</label>
                     <div class="controls">
                         <input type="text" class="span2" data-bind="datepicker: Date, datepickerOptions: { dataType: 'iso' }" />
+                        <input class="span6" type="text" readonly="readonly" data-bind="value: $root.getDayWeekLabel(Date)"/>
                     </div>
                 </div>
                 <div class="control-group">
                     <label class="control-label">Comentario:</label>
                     <div class="controls">
-                        <input type="text" class="span5" data-bind="value: Comment" />
+                        <input type="text" class="span6" data-bind="value: Comment" />
                     </div>
                 </div>
 
@@ -83,22 +84,25 @@
                 <div class="control-group">
                     <label class="control-label">Menú</label>
                     <div class="controls">
-                        <select data-bind="options: $root.menu.Options, 
+                        <select class="span2" data-bind="options: $root.menu.Options, 
                                         optionsText: 'Text', optionsValue: 'Key', 
                                         value: OptionKey, 
-                                        optionsCaption: 'Menú por defecto del día'">
+                                        optionsCaption: 'El menú de siempre'">
                         </select>
+                        <input class="span6" type="text" readonly="readonly" data-bind="value: $root.getDayWeekOptionOverrideInfo(Date, OptionKey)" />
                     </div>
+                    
                 </div>
 
                 <div class="control-group">
                     <label class="control-label">Lugar</label>
                     <div class="controls">
-                        <select data-bind="options: $root.menu.Places, 
+                        <select class="span2" data-bind="options: $root.menu.Places, 
                                         optionsText: 'Text', optionsValue: 'Key', 
                                         value: PlaceKey, 
-                                        optionsCaption: 'Lugar por defecto del día'">
+                                        optionsCaption: 'El lugar de siempre'">
                         </select>
+                        <input class="span6" type="text" readonly="readonly" data-bind="value: $root.getDayWeekPlaceOverrideInfo(Date, PlaceKey)" />
                     </div>
                 </div>
 

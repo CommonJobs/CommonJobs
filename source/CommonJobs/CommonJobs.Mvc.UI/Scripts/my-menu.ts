@@ -177,17 +177,9 @@ module MyMenu {
             var result = moment(date).day();
             return result;
         }
-
-        weekDay(date?: any) : WeekDay {
-            return {
-                DayIdx: this.day(date),
-                WeekIdx: this.week(date)
-            }
-        }
-
+        
         match(weekIdx: number, dayIdx: number, date?: any) {
-            var dateAsWeekDay = this.weekDay(date);
-            return weekIdx == dateAsWeekDay.WeekIdx && dayIdx == dateAsWeekDay.DayIdx;
+            return weekIdx == this.week(date) && dayIdx == this.day(date);
         }
 
         near(weekIdx: number, dayIdx: number, date?: any) : moment.Moment {
@@ -475,6 +467,44 @@ module MyMenu {
             } else {
                 return "Seleccione un lugar (no se definió el lugar por defecto)";
             }
+        }
+
+        getDayWeekLabel(date) {
+            var mmnt = moment(ko.utils.unwrapObservable(date));
+            if (!mmnt || !mmnt.isValid)
+                return "Seleccione un día válido";
+
+            return mmnt.format("dddd") + ' de ' + 'Semana ' + (this.calendarHelper.week(mmnt) + 1);
+        }
+
+        getDayWeekOptionOverrideInfo(date, option) {
+            var mmnt = moment(ko.utils.unwrapObservable(date));
+            if (!mmnt || !mmnt.isValid)
+                return "Atención! Seleccione un día válido";
+
+            var week = this.calendarHelper.week(mmnt);
+            var day = this.calendarHelper.day(mmnt);
+            var optionKey = ko.utils.unwrapObservable(option) || ko.utils.unwrapObservable(this.getMenuChoice(week, day));
+            var food = ko.utils.unwrapObservable(this.menu.getFood(week, day, optionKey));
+            return food || "Atención! no hay comida seleccionada para este día";
+        }
+
+        getDayWeekPlaceOverrideInfo(date, place) {
+            var mmnt = moment(ko.utils.unwrapObservable(date));
+            if (!mmnt || !mmnt.isValid)
+                return "Atención! Seleccione un día válido";
+
+            var week = this.calendarHelper.week(mmnt);
+            var day = this.calendarHelper.day(mmnt);
+            var placeKey = 
+                ko.utils.unwrapObservable(place) 
+                || ko.utils.unwrapObservable(this.getPlaceChoice(week, day))
+                || ko.utils.unwrapObservable(this.DefaultPlaceKey);
+                
+            var places = this.menu.Places();
+            var finded = _.find(places, (x: KeyObservableText) => x.Key == placeKey);
+            var text = finded && finded.Text;
+            return text || "Atención! no hay lugar seleccionado para este día";
         }
 
         EmployeeMenuDefinitionReset(data?: EmployeeMenuData) {
