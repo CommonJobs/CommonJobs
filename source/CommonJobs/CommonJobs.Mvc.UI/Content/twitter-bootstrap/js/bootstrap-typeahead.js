@@ -1,5 +1,5 @@
 /* =============================================================
- * bootstrap-typeahead.js v2.2.1
+ * bootstrap-typeahead.js v2.1.1
  * http://twitter.github.com/bootstrap/javascript.html#typeahead
  * =============================================================
  * Copyright 2012 Twitter, Inc.
@@ -18,293 +18,296 @@
  * ============================================================ */
 
 
-!function($){
+!function ($) {
 
-  "use strict"; // jshint ;_;
+    "use strict"; // jshint ;_;
 
 
- /* TYPEAHEAD PUBLIC CLASS DEFINITION
-  * ================================= */
+    /* TYPEAHEAD PUBLIC CLASS DEFINITION
+     * ================================= */
 
-  var Typeahead = function (element, options) {
-    this.$element = $(element)
-    this.options = $.extend({}, $.fn.typeahead.defaults, options)
-    this.matcher = this.options.matcher || this.matcher
-    this.sorter = this.options.sorter || this.sorter
-    this.highlighter = this.options.highlighter || this.highlighter
-    this.updater = this.options.updater || this.updater
-    this.$menu = $(this.options.menu).appendTo('body')
-    this.source = this.options.source
-    this.shown = false
-    this.listen()
-  }
+    var Typeahead = function (element, options) {
+        this.$element = $(element)
+        this.options = $.extend({}, $.fn.typeahead.defaults, options)
+        this.matcher = this.options.matcher || this.matcher
+        this.sorter = this.options.sorter || this.sorter
+        this.highlighter = this.options.highlighter || this.highlighter
+        this.updater = this.options.updater || this.updater
 
-  Typeahead.prototype = {
+        //Modificado para compatibilidad con bootstrap-scope
+        var scope = $("<div class='bootstrap-scope'></div>");
+        scope.appendTo('body');
+        this.$menu = $(this.options.menu).appendTo(scope)
 
-    constructor: Typeahead
-
-  , select: function () {
-      var val = this.$menu.find('.active').attr('data-value')
-      this.$element
-        .val(this.updater(val))
-        .change()
-      return this.hide()
+        this.source = this.options.source
+        this.shown = false
+        this.listen()
     }
 
-  , updater: function (item) {
-      return item
+    Typeahead.prototype = {
+
+        constructor: Typeahead
+
+    , select: function () {
+        var val = this.$menu.find('.active').attr('data-value')
+        if (val) {
+            this.$element
+                .val(this.updater(val))
+        }
+        this.$element
+            .change()
+            .trigger("input") //Agregado para compatibilidad con nervoustissue
+        return this.hide()
     }
 
-  , show: function () {
-      var pos = $.extend({}, this.$element.offset(), {
-        height: this.$element[0].offsetHeight
-      })
-
-      this.$menu.css({
-        top: pos.top + pos.height
-      , left: pos.left
-      })
-
-      this.$menu.show()
-      this.shown = true
-      return this
+    , updater: function (item) {
+        return item
     }
 
-  , hide: function () {
-      this.$menu.hide()
-      this.shown = false
-      return this
+    , show: function () {
+        var pos = $.extend({}, this.$element.offset(), {
+            height: this.$element[0].offsetHeight
+        })
+
+        this.$menu.css({
+            top: pos.top + pos.height
+        , left: pos.left
+        })
+
+        this.$menu.show()
+        this.shown = true
+        return this
     }
 
-  , lookup: function (event) {
-      var items
-
-      this.query = this.$element.val()
-
-      if (!this.query || this.query.length < this.options.minLength) {
-        return this.shown ? this.hide() : this
-      }
-
-      items = $.isFunction(this.source) ? this.source(this.query, $.proxy(this.process, this)) : this.source
-
-      return items ? this.process(items) : this
+    , hide: function () {
+        this.$menu.hide()
+        this.shown = false
+        return this
     }
 
-  , process: function (items) {
-      var that = this
+    , lookup: function (event) {
+        var items
 
-      items = $.grep(items, function (item) {
-        return that.matcher(item)
-      })
+        this.query = this.$element.val()
 
-      items = this.sorter(items)
+        if (!this.query || this.query.length < this.options.minLength) {
+            return this.shown ? this.hide() : this
+        }
 
-      if (!items.length) {
-        return this.shown ? this.hide() : this
-      }
+        items = $.isFunction(this.source) ? this.source(this.query, $.proxy(this.process, this)) : this.source
 
-      return this.render(items.slice(0, this.options.items)).show()
+        return items ? this.process(items) : this
     }
 
-  , matcher: function (item) {
-      return ~item.toLowerCase().indexOf(this.query.toLowerCase())
+    , process: function (items) {
+        var that = this
+
+        items = $.grep(items, function (item) {
+            return that.matcher(item)
+        })
+
+        items = this.sorter(items)
+
+        if (!items.length) {
+            return this.shown ? this.hide() : this
+        }
+
+        return this.render(items.slice(0, this.options.items)).show()
     }
 
-  , sorter: function (items) {
-      var beginswith = []
-        , caseSensitive = []
-        , caseInsensitive = []
-        , item
-
-      while (item = items.shift()) {
-        if (!item.toLowerCase().indexOf(this.query.toLowerCase())) beginswith.push(item)
-        else if (~item.indexOf(this.query)) caseSensitive.push(item)
-        else caseInsensitive.push(item)
-      }
-
-      return beginswith.concat(caseSensitive, caseInsensitive)
+    , matcher: function (item) {
+        return ~item.toLowerCase().indexOf(this.query.toLowerCase())
     }
 
-  , highlighter: function (item) {
-      var query = this.query.replace(/[\-\[\]{}()*+?.,\\\^$|#\s]/g, '\\$&')
-      return item.replace(new RegExp('(' + query + ')', 'ig'), function ($1, match) {
-        return '<strong>' + match + '</strong>'
-      })
+    , sorter: function (items) {
+        var beginswith = []
+          , caseSensitive = []
+          , caseInsensitive = []
+          , item
+
+        while (item = items.shift()) {
+            if (!item.toLowerCase().indexOf(this.query.toLowerCase())) beginswith.push(item)
+            else if (~item.indexOf(this.query)) caseSensitive.push(item)
+            else caseInsensitive.push(item)
+        }
+
+        return beginswith.concat(caseSensitive, caseInsensitive)
     }
 
-  , render: function (items) {
-      var that = this
-
-      items = $(items).map(function (i, item) {
-        i = $(that.options.item).attr('data-value', item)
-        i.find('a').html(that.highlighter(item))
-        return i[0]
-      })
-
-      items.first().addClass('active')
-      this.$menu.html(items)
-      return this
+    , highlighter: function (item) {
+        var query = this.query.replace(/[\-\[\]{}()*+?.,\\\^$|#\s]/g, '\\$&')
+        return item.replace(new RegExp('(' + query + ')', 'ig'), function ($1, match) {
+            return '<strong>' + match + '</strong>'
+        })
     }
 
-  , next: function (event) {
-      var active = this.$menu.find('.active').removeClass('active')
-        , next = active.next()
+    , render: function (items) {
+        var that = this
 
-      if (!next.length) {
-        next = $(this.$menu.find('li')[0])
-      }
+        items = $(items).map(function (i, item) {
+            i = $(that.options.item).attr('data-value', item)
+            i.find('a').html(that.highlighter(item))
+            return i[0]
+        })
 
-      next.addClass('active')
+        if (this.options.autoselect) {
+            items.first().addClass('active')
+        }
+
+        this.$menu.html(items)
+        return this
     }
 
-  , prev: function (event) {
-      var active = this.$menu.find('.active').removeClass('active')
-        , prev = active.prev()
+    , next: function (event) {
+        var active = this.$menu.find('.active').removeClass('active')
+          , next = active.next()
 
-      if (!prev.length) {
-        prev = this.$menu.find('li').last()
-      }
+        if (!next.length) {
+            next = $(this.$menu.find('li')[0])
+        }
 
-      prev.addClass('active')
+        next.addClass('active')
     }
 
-  , listen: function () {
-      this.$element
-        .on('blur',     $.proxy(this.blur, this))
-        .on('keypress', $.proxy(this.keypress, this))
-        .on('keyup',    $.proxy(this.keyup, this))
+    , prev: function (event) {
+        var active = this.$menu.find('.active').removeClass('active')
+          , prev = active.prev()
 
-      if (this.eventSupported('keydown')) {
-        this.$element.on('keydown', $.proxy(this.keydown, this))
-      }
+        if (!prev.length) {
+            prev = this.$menu.find('li').last()
+        }
 
-      this.$menu
-        .on('click', $.proxy(this.click, this))
-        .on('mouseenter', 'li', $.proxy(this.mouseenter, this))
+        prev.addClass('active')
     }
 
-  , eventSupported: function(eventName) {
-      var isSupported = eventName in this.$element
-      if (!isSupported) {
-        this.$element.setAttribute(eventName, 'return;')
-        isSupported = typeof this.$element[eventName] === 'function'
-      }
-      return isSupported
+    , listen: function () {
+        this.$element
+          .on('blur', $.proxy(this.blur, this))
+          .on('keypress', $.proxy(this.keypress, this))
+          .on('keyup', $.proxy(this.keyup, this))
+
+        if ($.browser.chrome || $.browser.webkit || $.browser.msie) {
+            this.$element.on('keydown', $.proxy(this.keydown, this))
+        }
+
+        this.$menu
+          .on('click', $.proxy(this.click, this))
+          .on('mouseenter', 'li', $.proxy(this.mouseenter, this))
     }
 
-  , move: function (e) {
-      if (!this.shown) return
+    , move: function (e) {
+        if (!this.shown) return
 
-      switch(e.keyCode) {
-        case 9: // tab
-        case 13: // enter
-        case 27: // escape
-          e.preventDefault()
-          break
+        switch (e.keyCode) {
+            case 9: // tab
+            case 13: // enter
+            case 27: // escape
+                e.preventDefault()
+                break
 
-        case 38: // up arrow
-          e.preventDefault()
-          this.prev()
-          break
+            case 38: // up arrow
+                e.preventDefault()
+                this.prev()
+                break
 
-        case 40: // down arrow
-          e.preventDefault()
-          this.next()
-          break
-      }
+            case 40: // down arrow
+                e.preventDefault()
+                this.next()
+                break
+        }
 
-      e.stopPropagation()
+        e.stopPropagation()
     }
 
-  , keydown: function (e) {
-      this.suppressKeyPressRepeat = !~$.inArray(e.keyCode, [40,38,9,13,27])
-      this.move(e)
+    , keydown: function (e) {
+        this.suppressKeyPressRepeat = !~$.inArray(e.keyCode, [40, 38, 9, 13, 27])
+        this.move(e)
     }
 
-  , keypress: function (e) {
-      if (this.suppressKeyPressRepeat) return
-      this.move(e)
+    , keypress: function (e) {
+        if (this.suppressKeyPressRepeat) return
+        this.move(e)
     }
 
-  , keyup: function (e) {
-      switch(e.keyCode) {
-        case 40: // down arrow
-        case 38: // up arrow
-        case 16: // shift
-        case 17: // ctrl
-        case 18: // alt
-          break
+    , keyup: function (e) {
+        switch (e.keyCode) {
+            case 40: // down arrow
+            case 38: // up arrow
+                break
 
-        case 9: // tab
-        case 13: // enter
-          if (!this.shown) return
-          this.select()
-          break
+            case 9: // tab
+            case 13: // enter
+                if (!this.shown) return
+                this.select()
+                break
 
-        case 27: // escape
-          if (!this.shown) return
-          this.hide()
-          break
+            case 27: // escape
+                if (!this.shown) return
+                this.hide()
+                break
 
-        default:
-          this.lookup()
-      }
+            default:
+                this.lookup()
+        }
 
-      e.stopPropagation()
-      e.preventDefault()
-  }
-
-  , blur: function (e) {
-      var that = this
-      setTimeout(function () { that.hide() }, 150)
+        e.stopPropagation()
+        e.preventDefault()
     }
 
-  , click: function (e) {
-      e.stopPropagation()
-      e.preventDefault()
-      this.select()
+    , blur: function (e) {
+        var that = this
+        setTimeout(function () { that.hide() }, 150)
     }
 
-  , mouseenter: function (e) {
-      this.$menu.find('.active').removeClass('active')
-      $(e.currentTarget).addClass('active')
+    , click: function (e) {
+        e.stopPropagation()
+        e.preventDefault()
+        this.select()
     }
 
-  }
+    , mouseenter: function (e) {
+        this.$menu.find('.active').removeClass('active')
+        $(e.currentTarget).addClass('active')
+    }
+
+    }
 
 
-  /* TYPEAHEAD PLUGIN DEFINITION
-   * =========================== */
+    /* TYPEAHEAD PLUGIN DEFINITION
+     * =========================== */
 
-  $.fn.typeahead = function (option) {
-    return this.each(function () {
-      var $this = $(this)
-        , data = $this.data('typeahead')
-        , options = typeof option == 'object' && option
-      if (!data) $this.data('typeahead', (data = new Typeahead(this, options)))
-      if (typeof option == 'string') data[option]()
+    $.fn.typeahead = function (option) {
+        return this.each(function () {
+            var $this = $(this)
+              , data = $this.data('typeahead')
+              , options = typeof option == 'object' && option
+            if (!data) $this.data('typeahead', (data = new Typeahead(this, options)))
+            if (typeof option == 'string') data[option]()
+        })
+    }
+
+    $.fn.typeahead.defaults = {
+        source: []
+    , items: 8
+    , menu: '<ul class="typeahead dropdown-menu"></ul>'
+    , item: '<li><a href="#"></a></li>'
+    , minLength: 1
+    , autoselect: true
+    }
+
+    $.fn.typeahead.Constructor = Typeahead
+
+
+    /*   TYPEAHEAD DATA-API
+     * ================== */
+
+    $(function () {
+        $('body').on('focus.typeahead.data-api', '[data-provide="typeahead"]', function (e) {
+            var $this = $(this)
+            if ($this.data('typeahead')) return
+            e.preventDefault()
+            $this.typeahead($this.data())
+        })
     })
-  }
-
-  $.fn.typeahead.defaults = {
-    source: []
-  , items: 8
-  , menu: '<ul class="typeahead dropdown-menu"></ul>'
-  , item: '<li><a href="#"></a></li>'
-  , minLength: 1
-  }
-
-  $.fn.typeahead.Constructor = Typeahead
-
-
- /*   TYPEAHEAD DATA-API
-  * ================== */
-
-  $(document).on('focus.typeahead.data-api', '[data-provide="typeahead"]', function (e) {
-    var $this = $(this)
-    if ($this.data('typeahead')) return
-    e.preventDefault()
-    $this.typeahead($this.data())
-  })
 
 }(window.jQuery);

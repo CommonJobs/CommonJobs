@@ -36,28 +36,53 @@
     <title>@ViewBag.Title</title>
     @Html.RenderScriptManagerEntries(ScriptManager)
     <link rel="shortcut icon" href="@Url.Content("~/Content/Images/favicon.ico")" />
+    <style>
+        #persistenceForm {
+            margin: 0;
+        }
+        #employeeMenuForm {
+            margin: 0;
+            padding: 8px 15px 10px;
+        }
+        .active #employeeMenuForm label {
+            color: white;
+        }
+        #employeeMenuForm input[type="text"] {
+            height: 18px;
+            padding-top: 2px;
+            width: 100px;
+        }
+        #employeeMenuForm input.btn {
+            padding-top: 3px;
+            height: 26px;
+        }
+    </style>
 </head>
 <body>
-    <div class="navbar navbar-fixed-top">
+    <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="navbar-inner">
+            
             <div style="float:right;">
-                <form class="form-inline">
+                <form class="form-inline" id="persistenceForm">
                     <button class="btn btn-inverse" data-bind="click: load, enable: isDirty() && !onAjaxCall()">Descartar</button>
                     <button class="btn btn-primary" data-bind="click: save, enable: isDirty() && !onAjaxCall()">Guardar</button>
                 </form>
             </div>
+            
             <div class="nav-collapse collapse">
                 <ul class="nav">
                     @if (showNavigation) {
                         <li class="@(activeMenuDefinition ? "active" : "")">@Html.ActionLink("Definición de los menues", "Admin")</li>
                     }
                     <li class="@(activeMyMenu ? "active" : "")">@Html.ActionLink("Mi Menú", "Index")</li>
+                    
                     @if (showNavigation) {
                         <li class="@(activeAnotherMenu ? "active" : "")">
-                            @using(Html.BeginForm("Edit", "MyMenu", new { id = "" }, FormMethod.Get, new { @class="form-inline" })) {
+                            @using (Html.BeginForm("Edit", "MyMenu", new { id = "" }, FormMethod.Get, new { @class = "form-inline", id = "employeeMenuForm" }))
+                            {
+                                <label for="openUserMenu">Menú de</label>
                                 <div class="input-append">
-                                    <span class="add-on"><i class="icon-user"></i></span>
-                                    <input class="span2" id="openUserMenu" name="id" type="text" placeholder="username" value="@anotherMenuUser" />
+                                    <input id="openUserMenu" name="id" type="text" placeholder="username" value="@anotherMenuUser" />
                                     <input class="btn" type="submit" value="Ir" />
                                 </div>
                             }

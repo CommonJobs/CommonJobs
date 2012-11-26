@@ -59,7 +59,7 @@
 </script>
 
 <script type="text/template" id="card-template">
-    <div class="card column clickable item-card file-dropzone fade well">
+    <div class="card column clickable item-card file-dropzone drop-fade">
         <input type="file" data-url="@Url.Action("QuickAttachment")<%= item.Id %>" multiple>
         <img class="cardPicture" 
             src="<%= item.Photo ? urlGenerator.action("Get", "Attachments", item.Photo.Thumbnail.Id) : urlGenerator.content("Images/NoPicture.png")  %>" 
