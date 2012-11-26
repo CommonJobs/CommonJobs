@@ -20,7 +20,7 @@ namespace CommonJobs.Application.MyMenu
         {
             var menuDefinition = RavenSession.Load<Menu>(MenuDefinitionId);
             //TODO: send
-            menuDefinition.lastSentDate = Now();
+            menuDefinition.LastSentDate = Now();
         }
 
         protected override DateTime CalculateNextExecutionTime(DateTime start, DateTime scheduled)

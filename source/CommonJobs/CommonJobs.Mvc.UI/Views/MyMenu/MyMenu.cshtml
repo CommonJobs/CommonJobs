@@ -1,5 +1,5 @@
 ﻿@{
-    Layout = "~/Views/Shared/_MyMenuLayout.cshtml";
+    Layout = "_MyMenuLayout.cshtml";
     ViewBag.Title = "Mi Menú";
     ScriptManager.RegisterJs(Url.Content("~/Scripts/my-menu-page.js"));
 }
@@ -10,8 +10,8 @@
         <li class="active"><a href="#todayTab" data-toggle="tab">Hoy</a></li>
         <li><a href="#configTab" data-toggle="tab">Configuración</a></li>
         <li><a href="#overridesTab" data-toggle="tab">Días específicos</a></li>
-        <!-- ko foreach: weeks -->
-        <li><a data-toggle="tab" data-bind="attr: { href: '#week' + key + 'Tab' }, text: text"></a></li>
+        <!-- ko foreach: Weeks -->
+        <li><a data-toggle="tab" data-bind="attr: { href: '#week' + Key + 'Tab' }, text: Text"></a></li>
         <!-- /ko -->
     </ul>
 
@@ -30,9 +30,9 @@
                 <div class="control-group">
                     <label class="control-label" for="defaultPlace">Lugar por defecto:</label>
                     <div class="controls">
-                        <select id="defaultPlace" data-bind="options: menu.places, 
-                                        optionsText: 'text', optionsValue: 'key', 
-                                        value: defaultPlace, 
+                        <select id="defaultPlace" data-bind="options: menu.Places, 
+                                        optionsText: 'Text', optionsValue: 'Key', 
+                                        value: DefaultPlaceKey, 
                                         optionsCaption: 'Seleccione...'">
                         </select>
                     </div>
@@ -53,39 +53,39 @@
 
             <button class="btn" type="button" data-bind="click: addOverride"><i class="icon-plus"></i>Agregar</button>
             <br /><br />
-            <!-- ko foreach: overrides -->
+            <!-- ko foreach: Overrides -->
             <form class="well form-horizontal">
                 <button class="btn" type="button" data-bind="click: $root.removeOverride"><i class="icon-remove"></i>Quitar</button>
 
                 <div class="control-group">
                     <label class="control-label">Fecha:</label>
                     <div class="controls">
-                        <input type="text" class="span2" data-bind="datepicker: date, datepickerOptions: { dataType: 'iso' }" />
+                        <input type="text" class="span2" data-bind="datepicker: Date, datepickerOptions: { dataType: 'iso' }" />
                     </div>
                 </div>
                 <div class="control-group">
                     <label class="control-label">Comentario:</label>
                     <div class="controls">
-                        <input type="text" class="span5" data-bind="value: comment" />
+                        <input type="text" class="span5" data-bind="value: Comment" />
                     </div>
                 </div>
 
                 <div class="control-group">
                     <div class="controls">
                         <label class="checkbox">
-                            <input type="checkbox" data-bind="checked: cancel">Cancelar comida del día
+                            <input type="checkbox" data-bind="checked: Cancel">Cancelar comida del día
                         </label>
                     </div>
                 </div>
 
-                <!-- ko if: !cancel() -->
+                <!-- ko if: !Cancel() -->
 
                 <div class="control-group">
                     <label class="control-label">Menú</label>
                     <div class="controls">
-                        <select data-bind="options: $root.menu.options, 
-                                        optionsText: 'text', optionsValue: 'key', 
-                                        value: option, 
+                        <select data-bind="options: $root.menu.Options, 
+                                        optionsText: 'Text', optionsValue: 'Key', 
+                                        value: OptionKey, 
                                         optionsCaption: 'Menú por defecto del día'">
                         </select>
                     </div>
@@ -94,9 +94,9 @@
                 <div class="control-group">
                     <label class="control-label">Lugar</label>
                     <div class="controls">
-                        <select data-bind="options: $root.menu.places, 
-                                        optionsText: 'text', optionsValue: 'key', 
-                                        value: place, 
+                        <select data-bind="options: $root.menu.Places, 
+                                        optionsText: 'Text', optionsValue: 'Key', 
+                                        value: PlaceKey, 
                                         optionsCaption: 'Lugar por defecto del día'">
                         </select>
                     </div>
@@ -108,32 +108,32 @@
             <!-- /ko -->
         </div>
 
-        <!-- ko foreach: weeks -->
-        <div class="tab-pane" data-bind="attr: { id: 'week' + key + 'Tab' }">
+        <!-- ko foreach: Weeks -->
+        <div class="tab-pane" data-bind="attr: { id: 'week' + Key + 'Tab' }">
             <!-- ko foreach: MyMenu.days() -->
             <div class="well">
                 <div>
                     <h4><!--ko text: MyMenu.days.getName($data)--><!--/ko--></h4>
-                    <small>Próximo día: <!-- ko text: $root.nearFormated($parent.key, $data) -->TODO: REMOVE<!-- /ko --></small>
+                    <small>Próximo día: <!-- ko text: $root.nearFormated($parent.Key, $data) -->TODO: REMOVE<!-- /ko --></small>
                 </div>
                 <div class="row">
                     <div class="offset1 span7">
                         <label>
-                            <input type="radio" data-bind="attr: { name: 'option_' + $parent.key + '_' + $data }, value: '', checked:$root.getMenuChoice($parent.key, $data)" />
+                            <input type="radio" data-bind="attr: { name: 'option_' + $parent.Key + '_' + $data }, value: '', checked:$root.getMenuChoice($parent.Key, $data)" />
                             No como aquí
                         </label>
-                        <!-- ko foreach: $root.menu.options -->
+                        <!-- ko foreach: $root.menu.Options -->
                         <label>
-                            <input type="radio" data-bind="attr: { name: 'option_' + $parentContext.$parent.key + '_' + $parent }, value: key, checked:$root.getMenuChoice($parentContext.$parent.key, $parent)" />
-                            <!--ko text: text--><!--/ko-->: <em><!--ko text: $root.menu.getFood($parentContext.$parent.key, $parent, key)--><!--/ko--></em>
+                            <input type="radio" data-bind="attr: { name: 'option_' + $parentContext.$parent.Key + '_' + $parent }, value: Key, checked:$root.getMenuChoice($parentContext.$parent.Key, $parent)" />
+                            <!--ko text: Text--><!--/ko-->: <em><!--ko text: $root.menu.getFood($parentContext.$parent.Key, $parent, Key)--><!--/ko--></em>
                         </label>
                         <!-- /ko -->
                     </div>
-                    <!-- ko if: $root.getMenuChoice($parent.key, $data)() -->
+                    <!-- ko if: $root.getMenuChoice($parent.Key, $data)() -->
                     <div class="span3">
-                        <select data-bind="options: $root.menu.places, 
-                            optionsText: 'text', optionsValue: 'key', 
-                            value: $root.getPlaceChoice($parent.key, $data), 
+                        <select data-bind="options: $root.menu.Places, 
+                            optionsText: 'Text', optionsValue: 'Key', 
+                            value: $root.getPlaceChoice($parent.Key, $data), 
                             optionsCaption: $root.getDefaultPlaceLabel()">
                         </select>
                     </div>

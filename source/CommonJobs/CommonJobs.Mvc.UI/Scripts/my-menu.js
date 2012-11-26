@@ -66,12 +66,12 @@ var Utilities;
     (function (ObservableArrays) {
         function generateText(baseName, collection, name) {
             var texts = _.map(ko.toJS(collection), function (item) {
-                return item.text;
+                return item.Text;
             });
             var n = texts.length + 1;
             if(name) {
-                if((name).text) {
-                    name = (name).text;
+                if((name).Text) {
+                    name = (name).Text;
                 }
                 if(_.isString(name)) {
                     if(texts.indexOf(name) == -1) {
@@ -91,16 +91,16 @@ var Utilities;
         }
         function addKeyObservableText(collection, baseName, idPrefix, value) {
             var item;
-            if(!value || !value.key) {
+            if(!value || !value.Key) {
                 var text = generateText(baseName, collection, value);
                 item = {
-                    key: Utilities.idGenerator.generate(idPrefix),
-                    text: ko.observable(text)
+                    Key: Utilities.idGenerator.generate(idPrefix),
+                    Text: ko.observable(text)
                 };
             } else {
                 item = {
-                    key: value.key,
-                    text: ko.observable(value.text)
+                    Key: value.Key,
+                    Text: ko.observable(value.Text)
                 };
             }
             collection.push(item);
@@ -108,7 +108,7 @@ var Utilities;
         }
         ObservableArrays.addKeyObservableText = addKeyObservableText;
         function removeItem(collection, item, keyField) {
-            if (typeof keyField === "undefined") { keyField = "key"; }
+            if (typeof keyField === "undefined") { keyField = "Key"; }
             if(!collection().length) {
                 return null;
             }
@@ -135,45 +135,45 @@ var MyMenu;
             var weeksQuantityIsFunc = _.isFunction(weeksQuantity);
             var firstWeekIsFunc = _.isFunction(firstWeek);
             if(startDateIsFunc) {
-                this.startDate = function () {
+                this.StartDate = function () {
                     return moment(startDate());
                 };
             } else {
-                this.startDate = function () {
+                this.StartDate = function () {
                     return moment(startDate);
                 };
             }
-            this.weeksQuantity = weeksQuantityIsFunc ? weeksQuantity : function () {
+            this.WeeksQuantity = weeksQuantityIsFunc ? weeksQuantity : function () {
                 return weeksQuantity;
             };
             if(firstWeekIsFunc) {
-                this.firstWeek = function () {
+                this.FirstWeekIdx = function () {
                     return firstWeek() || 0;
                 };
             } else {
                 firstWeek = firstWeek || 0;
-                this.firstWeek = function () {
+                this.FirstWeekIdx = function () {
                     return firstWeek;
                 };
             }
             if(startDateIsFunc || weeksQuantityIsFunc || firstWeekIsFunc) {
-                this.zeroWeekZeroDay = function () {
+                this.ZeroWeekZeroDay = function () {
                     return _this.calculateZeroWeekZeroDay();
                 };
             } else {
                 var zeroWeekZeroDay = this.calculateZeroWeekZeroDay();
-                this.zeroWeekZeroDay = function () {
+                this.ZeroWeekZeroDay = function () {
                     return zeroWeekZeroDay;
                 };
             }
         }
         CalendarHelper.prototype.calculateZeroWeekZeroDay = function () {
-            return this.startDate().day(0).add('weeks', -1 * this.firstWeek());
+            return this.StartDate().day(0).add('weeks', -1 * this.FirstWeekIdx());
         };
         CalendarHelper.prototype.week = function (date) {
-            var weeksQuantity = this.weeksQuantity();
+            var weeksQuantity = this.WeeksQuantity();
             var sundayDate = moment(date).day(0);
-            var diff = sundayDate.diff(this.zeroWeekZeroDay(), 'weeks');
+            var diff = sundayDate.diff(this.ZeroWeekZeroDay(), 'weeks');
             var result = diff < 0 ? weeksQuantity + diff % weeksQuantity : diff % weeksQuantity;
             return result;
         };
@@ -183,26 +183,24 @@ var MyMenu;
         };
         CalendarHelper.prototype.weekDay = function (date) {
             return {
-                day: this.day(date),
-                week: this.week(date)
+                DayIdx: this.day(date),
+                WeekIdx: this.week(date)
             };
         };
-        CalendarHelper.prototype.weekDayEquals = function (a, b) {
-            return a.day == b.day && a.week == b.week;
+        CalendarHelper.prototype.match = function (weekIdx, dayIdx, date) {
+            var dateAsWeekDay = this.weekDay(date);
+            return weekIdx == dateAsWeekDay.WeekIdx && dayIdx == dateAsWeekDay.DayIdx;
         };
-        CalendarHelper.prototype.match = function (weekDay, date) {
-            return this.weekDayEquals(weekDay, this.weekDay(date));
-        };
-        CalendarHelper.prototype.near = function (weekDay, date) {
-            var weeksQuantity = this.weeksQuantity();
-            if(weeksQuantity <= weekDay.week) {
+        CalendarHelper.prototype.near = function (weekIdx, dayIdx, date) {
+            var weeksQuantity = this.WeeksQuantity();
+            if(weeksQuantity <= weekIdx) {
                 return null;
             }
             var mmnt = moment(date);
             if(!mmnt.isValid) {
                 return null;
             }
-            while(!this.match(weekDay, mmnt)) {
+            while(!this.match(weekIdx, dayIdx, mmnt)) {
                 mmnt.add('days', 1);
             }
             return mmnt;
@@ -234,20 +232,20 @@ var MyMenu;
             var _this = this;
                 _super.call(this);
             this.isDirty = Utilities.dirtyFlag();
-            this.weeksQuantity = ko.observable(0);
-            this.isDirty.register(this.weeksQuantity);
-            this.weeks = ko.computed(function () {
-                return _.map(_.range(_this.weeksQuantity()), function (x) {
+            this.WeeksQuantity = ko.observable(0);
+            this.isDirty.register(this.WeeksQuantity);
+            this.Weeks = ko.computed(function () {
+                return _.map(_.range(_this.WeeksQuantity()), function (x) {
                     return {
-                        key: x.toString(),
-                        text: "Semana " + (x + 1)
+                        Key: x.toString(),
+                        Text: "Semana " + (x + 1)
                     };
                 });
             });
             this.WeekStorageReset(weeksQuantity);
         }
         WeekStorage.prototype.setWeeksQuantity = function (n) {
-            (this.weeksQuantity)(n);
+            (this.WeeksQuantity)(n);
         };
         WeekStorage.prototype.reset = function (weeksQuantity) {
             this.WeekStorageReset(weeksQuantity);
@@ -269,10 +267,10 @@ var MyMenu;
                 weekItems.push(dayItem);
             }
             this.items.push(weekItems);
-            this.setWeeksQuantity(this.weeksQuantity() + 1);
+            this.setWeeksQuantity(this.WeeksQuantity() + 1);
         };
         WeekStorage.prototype.removeWeek = function () {
-            var actual = this.weeksQuantity();
+            var actual = this.WeeksQuantity();
             if(actual > 0) {
                 this.setWeeksQuantity(actual - 1);
                 this.items.pop();
@@ -282,17 +280,17 @@ var MyMenu;
             return null;
         };
         WeekStorage.prototype.getItem = function (week, day) {
-            return MyMenu.days.isValid(day) && week < this.weeksQuantity() ? this.items[week][day] : null;
+            return MyMenu.days.isValid(day) && week < this.WeeksQuantity() ? this.items[week][day] : null;
         };
         WeekStorage.prototype.eachWeek = function (f) {
-            _.each(this.items, function (weekItems, weekIndex) {
-                return f(weekItems, weekIndex);
+            _.each(this.items, function (weekItems, weekIdx) {
+                return f(weekItems, weekIdx);
             });
         };
         WeekStorage.prototype.eachDay = function (f) {
-            this.eachWeek(function (weekItems, weekIndex) {
-                return _.each(weekItems, function (dayItem, dayIndex) {
-                    return f(dayItem, weekIndex, dayIndex);
+            this.eachWeek(function (weekItems, weekIdx) {
+                return _.each(weekItems, function (dayItem, dayIdx) {
+                    return f(dayItem, weekIdx, dayIdx);
                 });
             });
         };
@@ -300,8 +298,8 @@ var MyMenu;
     })(Utilities.HasCallbacks);    
     var DayChoice = (function () {
         function DayChoice() {
-            this.option = ko.observable("");
-            this.place = ko.observable("");
+            this.OptionKey = ko.observable("");
+            this.PlaceKey = ko.observable("");
         }
         return DayChoice;
     })();    
@@ -309,15 +307,15 @@ var MyMenu;
         __extends(Override, _super);
         function Override(data) {
                 _super.call(this);
-            this.date = ko.observable("");
-            this.cancel = ko.observable(false);
-            this.comment = ko.observable("");
+            this.Date = ko.observable("");
+            this.Cancel = ko.observable(false);
+            this.Comment = ko.observable("");
             if(data) {
-                this.option(data.option);
-                this.place(data.place);
-                this.date(data.date);
-                this.cancel(data.cancel);
-                this.comment(data.comment);
+                this.OptionKey(data.OptionKey);
+                this.PlaceKey(data.PlaceKey);
+                this.Date(data.Date);
+                this.Cancel(data.Cancel);
+                this.Comment(data.Comment);
             }
         }
         return Override;
@@ -325,30 +323,27 @@ var MyMenu;
     var EmployeeMenuDefinition = (function (_super) {
         __extends(EmployeeMenuDefinition, _super);
         function EmployeeMenuDefinition(menu, data, now) {
-                _super.call(this, menu.weeksQuantity());
+                _super.call(this, menu.WeeksQuantity());
             this.menu = menu;
-            this.menuId = ko.observable("");
-            this.defaultPlace = ko.observable("");
-            this.overrides = ko.observableArray([]);
+            this.MenuId = ko.observable("");
+            this.DefaultPlaceKey = ko.observable("");
+            this.Overrides = ko.observableArray([]);
             this.now = ko.observable();
-            this.isDirty.register(this.menuId);
-            this.isDirty.register(this.defaultPlace);
-            this.isDirty.register(this.overrides);
+            this.isDirty.register(this.MenuId);
+            this.isDirty.register(this.DefaultPlaceKey);
+            this.isDirty.register(this.Overrides);
             this.EmployeeMenuDefinitionReset(data);
-            this.calendarHelper = new CalendarHelper(menu.startDate, menu.weeksQuantity, menu.firstWeek);
+            this.calendarHelper = new CalendarHelper(menu.StartDate, menu.WeeksQuantity, menu.FirstWeekIdx);
             this.now(now);
         }
         EmployeeMenuDefinition.prototype.reset = function (data) {
-            _super.prototype.reset.call(this, this.menu.weeksQuantity());
+            _super.prototype.reset.call(this, this.menu.WeeksQuantity());
             this.EmployeeMenuDefinitionReset(data);
             this.isDirty(false);
         };
-        EmployeeMenuDefinition.prototype.nearFormated = function (week, day) {
+        EmployeeMenuDefinition.prototype.nearFormated = function (weekIdx, dayIdx) {
             var now = moment(this.now());
-            var date = this.calendarHelper.near({
-                day: day,
-                week: parseInt(week)
-            }, now);
+            var date = this.calendarHelper.near(+weekIdx, dayIdx, now);
             if(date == null) {
                 return null;
             }
@@ -358,8 +353,8 @@ var MyMenu;
         };
         EmployeeMenuDefinition.prototype.createNewItem = function () {
             var dayChoice = new DayChoice();
-            this.isDirty.register(dayChoice.option);
-            this.isDirty.register(dayChoice.place);
+            this.isDirty.register(dayChoice.OptionKey);
+            this.isDirty.register(dayChoice.PlaceKey);
             return dayChoice;
         };
         EmployeeMenuDefinition.prototype.eachWeek = function (f) {
@@ -372,19 +367,19 @@ var MyMenu;
             return _super.prototype.getItem.call(this, week, day);
         };
         EmployeeMenuDefinition.prototype.getMenuChoice = function (week, day) {
-            return this.getItem(week, day).option;
+            return this.getItem(week, day).OptionKey;
         };
         EmployeeMenuDefinition.prototype.getPlaceChoice = function (week, day) {
-            return this.getItem(week, day).place;
+            return this.getItem(week, day).PlaceKey;
         };
         EmployeeMenuDefinition.prototype.getDefaultPlaceLabel = function () {
-            var key = this.defaultPlace();
-            var places = this.menu.places();
+            var key = this.DefaultPlaceKey();
+            var places = this.menu.Places();
             var option = _.find(places, function (x) {
-                return x.key == key;
+                return x.Key == key;
             });
             if(option) {
-                return "Lugar por defecto (" + option.text() + ")";
+                return "Lugar por defecto (" + option.Text() + ")";
             } else {
                 return "Seleccione un lugar (no se definió el lugar por defecto)";
             }
@@ -392,78 +387,78 @@ var MyMenu;
         EmployeeMenuDefinition.prototype.EmployeeMenuDefinitionReset = function (data) {
             var _this = this;
             data = _.extend({
-                userName: "",
+                UserName: "",
                 Id: "",
-                name: "",
-                defaultPlace: ""
+                EmployeeName: "",
+                DefaultPlaceKey: ""
             }, data);
-            this.menuId(data.menuId);
+            this.MenuId(data.MenuId);
             this.Id = data.Id;
-            this.userName = data.userName;
-            this.name = data.name;
-            this.defaultPlace(data.defaultPlace);
-            if(data.choices) {
-                _.each(data.choices, function (x) {
-                    var choice = _this.getItem(x.week, x.day);
+            this.UserName = data.UserName;
+            this.EmployeeName = data.EmployeeName;
+            this.DefaultPlaceKey(data.DefaultPlaceKey);
+            if(data.WeeklyChoices) {
+                _.each(data.WeeklyChoices, function (x) {
+                    var choice = _this.getItem(x.WeekIdx, x.DayIdx);
                     if(choice) {
-                        choice.option(x.option);
-                        choice.place(x.place);
+                        choice.OptionKey(x.OptionKey);
+                        choice.PlaceKey(x.PlaceKey);
                     }
                 });
             }
-            this.overrides.removeAll();
-            if(data.overrides) {
-                _.each(data.overrides, function (x) {
+            this.Overrides.removeAll();
+            if(data.Overrides) {
+                _.each(data.Overrides, function (x) {
                     var ov = new Override(x);
-                    _this.overrides.push(ov);
-                    _this.isDirty.register(ov.option);
-                    _this.isDirty.register(ov.place);
-                    _this.isDirty.register(ov.date);
-                    _this.isDirty.register(ov.cancel);
-                    _this.isDirty.register(ov.comment);
+                    _this.Overrides.push(ov);
+                    _this.isDirty.register(ov.OptionKey);
+                    _this.isDirty.register(ov.PlaceKey);
+                    _this.isDirty.register(ov.Date);
+                    _this.isDirty.register(ov.Cancel);
+                    _this.isDirty.register(ov.Comment);
                 });
             }
         };
         EmployeeMenuDefinition.prototype.exportData = function () {
             var data = {
-                menuId: this.menuId(),
+                MenuId: this.MenuId(),
                 Id: this.Id,
-                userName: this.userName,
-                name: this.name,
-                defaultPlace: this.defaultPlace(),
-                choices: [],
-                overrides: []
+                UserName: this.UserName,
+                EmployeeName: this.EmployeeName,
+                DefaultPlaceKey: this.DefaultPlaceKey(),
+                WeeklyChoices: [],
+                Overrides: []
             };
-            var choices = data.choices;
-            this.eachDay(function (dayChoices, weekIndex, dayIndex) {
-                var option = dayChoices.option();
-                if(option) {
+            var choices = data.WeeklyChoices;
+            this.eachDay(function (dayChoices, weekIdx, dayIdx) {
+                var optionKey = dayChoices.OptionKey();
+                if(optionKey) {
                     var item = {
-                        week: weekIndex,
-                        day: dayIndex,
-                        option: option
+                        WeekIdx: weekIdx,
+                        DayIdx: dayIdx,
+                        OptionKey: optionKey
                     };
-                    var place = dayChoices.place();
+                    var place = dayChoices.PlaceKey();
                     if(place) {
-                        item.place = place;
+                        item.PlaceKey = place;
                     }
                     choices.push(item);
                 }
             });
-            data.overrides = ko.toJS(this.overrides);
+            data.Overrides = ko.toJS(this.Overrides);
             return data;
         };
         EmployeeMenuDefinition.prototype.addOverride = function () {
             var override = new Override();
-            this.overrides.push(override);
-            this.isDirty.register(override.option);
-            this.isDirty.register(override.place);
-            this.isDirty.register(override.date);
-            this.isDirty.register(override.cancel);
-            this.isDirty.register(override.comment);
+            this.Overrides.push(override);
+            this.isDirty.register(override.OptionKey);
+            this.isDirty.register(override.PlaceKey);
+            this.isDirty.register(override.Date);
+            this.isDirty.register(override.Cancel);
+            this.isDirty.register(override.Comment);
         };
         EmployeeMenuDefinition.prototype.removeOverride = function (override) {
-            Utilities.ObservableArrays.removeItem(this.overrides, override, 'date');
+            Utilities.ObservableArrays.removeItem(this.Overrides, override, 'date');
         };
         return EmployeeMenuDefinition;
     })(WeekStorage);
@@ -471,48 +466,48 @@ var MyMenu;
     var MenuDefinition = (function (_super) {
         __extends(MenuDefinition, _super);
         function MenuDefinition(data) {
-                _super.call(this, data && data.weeksQuantity);
+                _super.call(this, data && data.WeeksQuantity);
             this.Id = ko.observable("");
-            this.title = ko.observable("");
-            this.options = ko.observableArray();
-            this.places = ko.observableArray();
-            this.startDate = ko.observable("");
-            this.endDate = ko.observable("");
-            this.deadlineTime = ko.observable("");
-            this.lastSentDate = ko.observable("");
-            this.firstWeek = ko.observable(0);
+            this.Title = ko.observable("");
+            this.Options = ko.observableArray();
+            this.Places = ko.observableArray();
+            this.StartDate = ko.observable("");
+            this.EndDate = ko.observable("");
+            this.DeadlineTime = ko.observable("");
+            this.LastSentDate = ko.observable("");
+            this.FirstWeekIdx = ko.observable(0);
             this.isDirty.register(this.Id);
-            this.isDirty.register(this.title);
-            this.isDirty.register(this.options);
-            this.isDirty.register(this.places);
-            this.isDirty.register(this.startDate);
-            this.isDirty.register(this.endDate);
-            this.isDirty.register(this.deadlineTime);
-            this.isDirty.register(this.firstWeek);
+            this.isDirty.register(this.Title);
+            this.isDirty.register(this.Options);
+            this.isDirty.register(this.Places);
+            this.isDirty.register(this.StartDate);
+            this.isDirty.register(this.EndDate);
+            this.isDirty.register(this.DeadlineTime);
+            this.isDirty.register(this.FirstWeekIdx);
             this.MenuDefinitionReset(data);
         }
         MenuDefinition.defaultData = {
             Id: "Menu/DefaultMenu",
-            title: "Nuevo Menú",
-            firstWeek: 0,
-            weeksQuantity: 0,
-            options: [],
-            places: [],
-            startDate: "2000-01-01",
-            endDate: "2100-01-01",
-            lastSentDate: "2000-01-01",
-            deadlineTime: "09:30",
-            foods: []
+            Title: "Nuevo Menú",
+            FirstWeekIdx: 0,
+            WeeksQuantity: 0,
+            Options: [],
+            Places: [],
+            StartDate: "2000-01-01",
+            EndDate: "2100-01-01",
+            LastSentDate: "2000-01-01",
+            DeadlineTime: "09:30",
+            Foods: []
         };
         MenuDefinition.idGenerator = new Utilities.IdGenerator();
         MenuDefinition.prototype.createNewItem = function () {
             var _this = this;
             var item = {
             };
-            if(this.options) {
-                _.each(this.options(), function (option) {
+            if(this.Options) {
+                _.each(this.Options(), function (option) {
                     var obs = ko.observable("");
-                    item[option.key] = obs;
+                    item[option.Key] = obs;
                     _this.isDirty.register(obs);
                 });
             }
@@ -522,8 +517,8 @@ var MyMenu;
             return _super.prototype.getItem.call(this, week, day);
         };
         MenuDefinition.prototype.getFood = function (week, day, option) {
-            this.weeksQuantity();
-            this.options();
+            this.WeeksQuantity();
+            this.Options();
             var dayFoods = this.getItem(week, day);
             return dayFoods && dayFoods[option];
         };
@@ -539,57 +534,57 @@ var MyMenu;
             }, MenuDefinition.defaultData, data);
             var i;
             this.Id(data.Id);
-            this.title(data.title);
-            this.startDate(data.startDate);
-            this.endDate(data.endDate);
-            this.firstWeek(data.firstWeek);
-            this.deadlineTime(data.deadlineTime);
-            this.lastSentDate(data.lastSentDate);
-            this.places.removeAll();
-            for(i in data.places) {
-                this.addPlace(data.places[i]);
+            this.Title(data.Title);
+            this.StartDate(data.StartDate);
+            this.EndDate(data.EndDate);
+            this.FirstWeekIdx(data.FirstWeekIdx);
+            this.DeadlineTime(data.DeadlineTime);
+            this.LastSentDate(data.LastSentDate);
+            this.Places.removeAll();
+            for(i in data.Places) {
+                this.addPlace(data.Places[i]);
             }
-            this.options.removeAll();
-            for(i in data.options) {
-                this.addOption(data.options[i]);
+            this.Options.removeAll();
+            for(i in data.Options) {
+                this.addOption(data.Options[i]);
             }
-            if(data && data.foods) {
-                _.each(data.foods, function (x) {
-                    var option = _this.getFood(x.week, x.day, x.option);
+            if(data && data.Foods) {
+                _.each(data.Foods, function (x) {
+                    var option = _this.getFood(x.WeekIdx, x.DayIdx, x.OptionKey);
                     if(option) {
-                        option(x.food);
+                        option(x.Food);
                     }
                 });
             }
             this.isDirty.reset();
         };
         MenuDefinition.prototype.reset = function (data) {
-            _super.prototype.reset.call(this, data && data.weeksQuantity);
+            _super.prototype.reset.call(this, data && data.WeeksQuantity);
             this.MenuDefinitionReset(data);
         };
         MenuDefinition.prototype.exportData = function () {
             var data = {
                 Id: this.Id(),
-                deadlineTime: this.deadlineTime(),
-                lastSentDate: this.lastSentDate(),
-                title: this.title(),
-                firstWeek: this.firstWeek(),
-                weeksQuantity: this.weeksQuantity(),
-                startDate: this.startDate(),
-                endDate: this.endDate(),
-                places: ko.toJS(this.places),
-                options: ko.toJS(this.options),
-                foods: []
+                DeadlineTime: this.DeadlineTime(),
+                LastSentDate: this.LastSentDate(),
+                Title: this.Title(),
+                FirstWeekIdx: this.FirstWeekIdx(),
+                WeeksQuantity: this.WeeksQuantity(),
+                StartDate: this.StartDate(),
+                EndDate: this.EndDate(),
+                Places: ko.toJS(this.Places),
+                Options: ko.toJS(this.Options),
+                Foods: []
             };
-            this.eachDay(function (dayFoods, weekIndex, dayIndex) {
+            this.eachDay(function (dayFoods, weekIdx, dayIdx) {
                 var food;
                 for(var opt in dayFoods) {
                     if(food = dayFoods[opt]()) {
-                        data.foods.push({
-                            week: weekIndex,
-                            day: dayIndex,
-                            option: opt,
-                            food: food
+                        data.Foods.push({
+                            WeekIdx: weekIdx,
+                            DayIdx: dayIdx,
+                            OptionKey: opt,
+                            Food: food
                         });
                     }
                 }
@@ -598,29 +593,29 @@ var MyMenu;
         };
         MenuDefinition.prototype.addOption = function (option) {
             var _this = this;
-            var op = Utilities.ObservableArrays.addKeyObservableText(this.options, "Menú ", "menu_", option);
-            this.isDirty.register(op.text);
+            var op = Utilities.ObservableArrays.addKeyObservableText(this.Options, "Menú ", "menu_", option);
+            this.isDirty.register(op.Text);
             this.eachDay(function (dayFoods) {
                 var dayOpt = ko.observable("");
-                dayFoods[op.key] = dayOpt;
+                dayFoods[op.Key] = dayOpt;
                 _this.isDirty.register(dayOpt);
             });
-            this.options.valueHasMutated();
+            this.Options.valueHasMutated();
         };
         MenuDefinition.prototype.removeOption = function (option) {
-            var removed = Utilities.ObservableArrays.removeItem(this.options, option);
+            var removed = Utilities.ObservableArrays.removeItem(this.Options, option);
             if(removed) {
                 this.eachDay(function (dayFoods) {
-                    return delete dayFoods[removed.key];
+                    return delete dayFoods[removed.Key];
                 });
             }
         };
         MenuDefinition.prototype.addPlace = function (place) {
-            var place = Utilities.ObservableArrays.addKeyObservableText(this.places, "Lugar ", "place_", place);
-            this.isDirty.register(place.text);
+            var place = Utilities.ObservableArrays.addKeyObservableText(this.Places, "Lugar ", "place_", place);
+            this.isDirty.register(place.Text);
         };
         MenuDefinition.prototype.removePlace = function (place) {
-            Utilities.ObservableArrays.removeItem(this.places, place);
+            Utilities.ObservableArrays.removeItem(this.Places, place);
         };
         return MenuDefinition;
     })(WeekStorage);

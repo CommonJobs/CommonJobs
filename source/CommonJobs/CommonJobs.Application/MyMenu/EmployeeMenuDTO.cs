@@ -14,7 +14,7 @@ namespace CommonJobs.Application.MyMenu
 
         public static EmployeeMenuDTO Create(Employee employee, Menu menuDefinition, EmployeeMenu employeeMenu)
         {
-            employeeMenu.name = string.Format("{0}, {1}", employee.LastName, employee.FirstName);
+            employeeMenu.EmployeeName = string.Format("{0}, {1}", employee.LastName, employee.FirstName);
             return new EmployeeMenuDTO
             {
                 EmployeeMenu = employeeMenu,

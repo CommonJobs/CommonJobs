@@ -15,8 +15,8 @@ declare interface UnderscoreStatic extends Function {
 //#endregion
 
 interface KeyObservableText { 
-    key: string; 
-    text: knockout.koObservableString; 
+    Key: string; 
+    Text: knockout.koObservableString; 
 }
 
 module Utilities {
@@ -72,12 +72,12 @@ module Utilities {
 
     export module ObservableArrays {
         function generateText(baseName: string, collection: knockout.koObservableArrayBase, name?: string): string {
-            var texts = _.map(ko.toJS(collection), (item) => item.text);
+            var texts = _.map(ko.toJS(collection), (item) => item.Text);
             var n = texts.length + 1;
 
             if (name) {
-                if ((<any>name).text) {
-                    name = (<any>name).text;
+                if ((<any>name).Text) {
+                    name = (<any>name).Text;
                 }
                 if (_.isString(name)) {
                     if (texts.indexOf(name) == -1) {
@@ -98,17 +98,17 @@ module Utilities {
 
         export function addKeyObservableText(collection: knockout.koObservableArrayBase, baseName: string, idPrefix: string, value?: any): KeyObservableText {
             var item: KeyObservableText;
-            if (!value || !value.key) {
+            if (!value || !value.Key) {
                 var text = generateText(baseName, collection, value);
-                item = { key: idGenerator.generate(idPrefix), text: ko.observable(text) };
+                item = { Key: idGenerator.generate(idPrefix), Text: ko.observable(text) };
             } else {
-                item = { key: value.key, text: ko.observable(value.text) };
+                item = { Key: value.Key, Text: ko.observable(value.Text) };
             }
             collection.push(item);
             return item;
         }
 
-        export function removeItem(collection: knockout.koObservableArrayBase, item: any, keyField = "key"): any {
+        export function removeItem(collection: knockout.koObservableArrayBase, item: any, keyField = "Key"): any {
             if (!collection().length)
                 return null;
 
@@ -122,37 +122,16 @@ module Utilities {
 }
 
 
-
-//module MenuCalculator {
-    /*
-    export interface CalendarDefinition {
-       
-    }
-
-    export var week = (def: CalendarDefinition, date? ) => {
-        var sundayZeroWeek = moment(def.startDate).day(0).add('weeks', -1 * def.firstWeek);
-        var sundayDate = moment(date).day(0);
-        var diff = sundayDate.diff(sundayZeroWeek, 'weeks');
-
-        return diff < 0 ?
-            def.weeksQuantity + diff % def.weeksQuantity
-            : diff % def.weeksQuantity;
-    };
-    
-    export var day = date => moment(date).day();
-
-    */
-
 module MyMenu {
     
     class CalendarHelper {
-        startDate: () => moment.Moment;
-        weeksQuantity: () => number;
-        firstWeek: () => number; 
-        zeroWeekZeroDay: () => moment.Moment;
+        StartDate: () => moment.Moment;
+        WeeksQuantity: () => number;
+        FirstWeekIdx: () => number; 
+        ZeroWeekZeroDay: () => moment.Moment;
 
         private calculateZeroWeekZeroDay() {
-            return this.startDate().day(0).add('weeks', -1 * this.firstWeek());
+            return this.StartDate().day(0).add('weeks', -1 * this.FirstWeekIdx());
         }
 
         constructor (startDate: any, weeksQuantity: any, firstWeek: any) {
@@ -161,32 +140,32 @@ module MyMenu {
             var firstWeekIsFunc = _.isFunction(firstWeek);
 
             if (startDateIsFunc) {
-                this.startDate = () => moment(startDate());
+                this.StartDate = () => moment(startDate());
             } else {
-                this.startDate = () => moment(startDate);
+                this.StartDate = () => moment(startDate);
             }
 
-            this.weeksQuantity = weeksQuantityIsFunc ? weeksQuantity : () => weeksQuantity;
+            this.WeeksQuantity = weeksQuantityIsFunc ? weeksQuantity : () => weeksQuantity;
 
             if (firstWeekIsFunc) {
-                this.firstWeek = () => firstWeek() || 0;
+                this.FirstWeekIdx = () => firstWeek() || 0;
             } else {
                 firstWeek = firstWeek || 0;
-                this.firstWeek = () => firstWeek;
+                this.FirstWeekIdx = () => firstWeek;
             }
 
             if (startDateIsFunc || weeksQuantityIsFunc || firstWeekIsFunc) {
-                this.zeroWeekZeroDay = () => this.calculateZeroWeekZeroDay();
+                this.ZeroWeekZeroDay = () => this.calculateZeroWeekZeroDay();
             } else {
                 var zeroWeekZeroDay = this.calculateZeroWeekZeroDay();
-                this.zeroWeekZeroDay = () => zeroWeekZeroDay;
+                this.ZeroWeekZeroDay = () => zeroWeekZeroDay;
             }
         }
 
         week(date?: any) {
-            var weeksQuantity = this.weeksQuantity();
+            var weeksQuantity = this.WeeksQuantity();
             var sundayDate = moment(date).day(0);
-            var diff = sundayDate.diff(this.zeroWeekZeroDay(), 'weeks');
+            var diff = sundayDate.diff(this.ZeroWeekZeroDay(), 'weeks');
 
             var result = diff < 0 ?
                 weeksQuantity + diff % weeksQuantity
@@ -201,24 +180,19 @@ module MyMenu {
 
         weekDay(date?: any) : WeekDay {
             return {
-                day: this.day(date),
-                week: this.week(date)
+                DayIdx: this.day(date),
+                WeekIdx: this.week(date)
             }
         }
 
-        weekDayEquals(a: WeekDay, b: WeekDay) {
-            return a.day == b.day && a.week == b.week;
+        match(weekIdx: number, dayIdx: number, date?: any) {
+            var dateAsWeekDay = this.weekDay(date);
+            return weekIdx == dateAsWeekDay.WeekIdx && dayIdx == dateAsWeekDay.DayIdx;
         }
 
-        match(weekDay: WeekDay, date?: any) {
-            return this.weekDayEquals(
-                weekDay,
-                this.weekDay(date));
-        }
-
-        near(weekDay: WeekDay, date?: any) : moment.Moment {
-            var weeksQuantity = this.weeksQuantity();
-            if (weeksQuantity <= weekDay.week)
+        near(weekIdx: number, dayIdx: number, date?: any) : moment.Moment {
+            var weeksQuantity = this.WeeksQuantity();
+            if (weeksQuantity <= weekIdx)
                 return null;
 
             //TODO: optimize
@@ -226,7 +200,7 @@ module MyMenu {
             if (!mmnt.isValid) {
                 return null;
             }
-            while (!this.match(weekDay, mmnt)) {
+            while (!this.match(weekIdx, dayIdx, mmnt)) {
                 mmnt.add('days', 1);
             }
             return mmnt;
@@ -235,8 +209,8 @@ module MyMenu {
 
 
     export interface WeekDay {
-        week: number;
-        day: number;
+        WeekIdx: number;
+        DayIdx: number;
     }
 
  
@@ -261,86 +235,80 @@ module MyMenu {
         return def; 
     })();
 
-    export interface MenuDataItem {
-        week: number;
-        day: number;
-        option: string;
-        food: string;
+    export interface MenuDataItem extends WeekDay {
+        OptionKey: string;
+        Food: string;
     }
 
     export interface KeyText {
-        key: string;
-        text: string;
+        Key: string;
+        Text: string;
     }
 
     export interface MenuData {
         Id: string;
-        title?: string;
-        firstWeek?: number;
-        weeksQuantity?: number;
-        options?: KeyText[];
-        places?: KeyText[];
-        startDate?: string;
-        endDate?: string;
-        lastSentDate?: string;
-        deadlineTime?: string;
-        foods?: MenuDataItem[]; 
+        Title?: string;
+        FirstWeekIdx?: number;
+        WeeksQuantity?: number;
+        Options?: KeyText[];
+        Places?: KeyText[];
+        StartDate?: string;
+        EndDate?: string;
+        LastSentDate?: string;
+        DeadlineTime?: string;
+        Foods?: MenuDataItem[]; 
     }
 
     export interface DayFoods {
         [s: string]: knockout.koObservableString;
     }
 
-    export interface EmployeeMenuDataItem {
-        week: number;
-        day: number;
-        option: string;
-        place?: string;
+    export interface EmployeeMenuDataItem extends WeekDay {
+        OptionKey: string;
+        PlaceKey?: string;
     }
 
     export interface EmployeeMenuDataOverrideItem {
-        date: string;
-        cancel?: bool;
-        option?: string; 
-        place?: string;
-        comment?: string;
+        Date: string;
+        Cancel?: bool;
+        OptionKey?: string; 
+        PlaceKey?: string;
+        Comment?: string;
     }
 
     export interface EmployeeMenuData {
         Id: string;
-        menuId: string;
-        userName: string;
-        name: string;
-        defaultPlace: string;
-        choices: EmployeeMenuDataItem[];
-        overrides: EmployeeMenuDataOverrideItem[];
+        MenuId: string;
+        UserName: string;
+        EmployeeName: string;
+        DefaultPlaceKey: string;
+        WeeklyChoices: EmployeeMenuDataItem[];
+        Overrides: EmployeeMenuDataOverrideItem[];
     }
 
-    interface DayData {
-        week: number;
-        day: number;
-        value: any;
+    interface DayData extends WeekDay {
+        Value: any;
     }
 
     class WeekStorage extends Utilities.HasCallbacks {
-        weeksQuantity: { (): number; };
-        weeks: { (): KeyText[]; };
+        WeeksQuantity: { (): number; };
+        Weeks: { (): KeyText[]; };
         private items: any[][];
 		//TODO: use a type
 		isDirty: any = Utilities.dirtyFlag();
 
         constructor (weeksQuantity?: number) {
             super();
-            this.weeksQuantity = ko.observable(0);
-			this.isDirty.register(this.weeksQuantity);
-            this.weeks = ko.computed(() => _.map(_.range(this.weeksQuantity()), (x: number): KeyText => {
-                return { key: x.toString(), text: "Semana " + (x + 1) };
+            this.WeeksQuantity = ko.observable(0);
+			this.isDirty.register(this.WeeksQuantity);
+            this.Weeks = ko.computed(() => _.map(_.range(this.WeeksQuantity()), (x: number): KeyText => {
+                return { Key: x.toString(), Text: "Semana " + (x + 1) };
             }));
             this.WeekStorageReset(weeksQuantity);
         }
 
         private setWeeksQuantity(n: number) {
-            (<knockout.koObservableNumber>this.weeksQuantity)(n);
+            (<knockout.koObservableNumber>this.WeeksQuantity)(n);
         }
 
         reset(weeksQuantity?: number) {
@@ -367,11 +335,11 @@ module MyMenu {
                 weekItems.push(dayItem);
             }
             this.items.push(weekItems);
-            this.setWeeksQuantity(this.weeksQuantity() + 1);
+            this.setWeeksQuantity(this.WeeksQuantity() + 1);
         }
 
         removeWeek() {
-            var actual = this.weeksQuantity();
+            var actual = this.WeeksQuantity();
             if (actual > 0) {
                 this.setWeeksQuantity(actual - 1);
                 this.items.pop();
@@ -384,75 +352,75 @@ module MyMenu {
         }
 
         getItem(week: number, day: number): any {
-            return days.isValid(day) && week < this.weeksQuantity()
+            return days.isValid(day) && week < this.WeeksQuantity()
                 ? this.items[week][day] 
                 : null;
         }
 
-        eachWeek(f: (weekItems: any[], weekIndex: number) => void ) {
-            _.each(this.items, (weekItems, weekIndex) => f(weekItems, weekIndex));
+        eachWeek(f: (weekItems: any[], weekIdx: number) => void ) {
+            _.each(this.items, (weekItems, weekIdx) => f(weekItems, weekIdx));
         }
 
-        eachDay(f: (dayItem: any, dayIndex: number, weekIndex: number) => void ) {
-            this.eachWeek((weekItems, weekIndex) => 
-                _.each(weekItems, (dayItem, dayIndex) => 
-                    f(dayItem, weekIndex, dayIndex)));
+        eachDay(f: (dayItem: any, dayIdx: number, weekIdx: number) => void ) {
+            this.eachWeek((weekItems, weekIdx) => 
+                _.each(weekItems, (dayItem, dayIdx) => 
+                    f(dayItem, weekIdx, dayIdx)));
         };
     }
 
     class DayChoice {
-        option: knockout.koObservableString = ko.observable("");
-        place: knockout.koObservableString = ko.observable("");
+        OptionKey: knockout.koObservableString = ko.observable("");
+        PlaceKey: knockout.koObservableString = ko.observable("");
     }
 
     class Override extends DayChoice {
-        date: knockout.koObservableString = ko.observable("");
-        cancel: knockout.koObservableBool = ko.observable(false);
-        comment: knockout.koObservableString = ko.observable("");
+        Date: knockout.koObservableString = ko.observable("");
+        Cancel: knockout.koObservableBool = ko.observable(false);
+        Comment: knockout.koObservableString = ko.observable("");
 
         constructor (data?: EmployeeMenuDataOverrideItem) {
             super();
             if (data) {
-                this.option(data.option);
-                this.place(data.place);
-                this.date(data.date);
-                this.cancel(data.cancel);
-                this.comment(data.comment);
+                this.OptionKey(data.OptionKey);
+                this.PlaceKey(data.PlaceKey);
+                this.Date(data.Date);
+                this.Cancel(data.Cancel);
+                this.Comment(data.Comment);
             }
         }
     }
 
     export class EmployeeMenuDefinition extends WeekStorage {
-        menuId: knockout.koObservableString = ko.observable("");
-        name: string;
+        MenuId: knockout.koObservableString = ko.observable("");
+        EmployeeName: string;
         Id: string;
-        userName: string;
-        defaultPlace: knockout.koObservableString = ko.observable("");
-        overrides: knockout.koObservableArrayBase = ko.observableArray([]);
+        UserName: string;
+        DefaultPlaceKey: knockout.koObservableString = ko.observable("");
+        Overrides: knockout.koObservableArrayBase = ko.observableArray([]);
         calendarHelper: CalendarHelper;
         now: knockout.koObservableAny = ko.observable();
 
         constructor (public menu: MenuDefinition, data?: EmployeeMenuData, now?: any) {
-            super(menu.weeksQuantity());
-			this.isDirty.register(this.menuId);
-			this.isDirty.register(this.defaultPlace);
-			this.isDirty.register(this.overrides);
+            super(menu.WeeksQuantity());
+			this.isDirty.register(this.MenuId);
+			this.isDirty.register(this.DefaultPlaceKey);
+			this.isDirty.register(this.Overrides);
 
             this.EmployeeMenuDefinitionReset(data);
-            this.calendarHelper = new CalendarHelper(menu.startDate, menu.weeksQuantity, menu.firstWeek);
+            this.calendarHelper = new CalendarHelper(menu.StartDate, menu.WeeksQuantity, menu.FirstWeekIdx);
             this.now(now);
         }
 
         reset(data?: EmployeeMenuData) {
-            super.reset(this.menu.weeksQuantity());
+            super.reset(this.menu.WeeksQuantity());
             this.EmployeeMenuDefinitionReset(data);
 			this.isDirty(false);
         }
 
-        nearFormated(week: string, day: number) {
+        nearFormated(weekIdx: any, dayIdx: number) {
             //TODO: remove
             var now = moment(this.now());
-            var date = this.calendarHelper.near({ day: day, week: parseInt(week) }, now);
+            var date = this.calendarHelper.near(+weekIdx, dayIdx, now);
 
             if (date == null)
                 return null;
@@ -470,16 +438,16 @@ module MyMenu {
         
         createNewItem() {
 			var dayChoice = new DayChoice();
-			this.isDirty.register(dayChoice.option); //TODO: potential memory leak
-			this.isDirty.register(dayChoice.place); //TODO: potential memory leak
+			this.isDirty.register(dayChoice.OptionKey); //TODO: potential memory leak
+			this.isDirty.register(dayChoice.PlaceKey); //TODO: potential memory leak
             return dayChoice;
         }
 
-        eachWeek(f: (weekItems: DayChoice[], weekIndex: number) => void ) {
+        eachWeek(f: (weekItems: DayChoice[], weekIdx: number) => void ) {
             super.eachWeek(f);
         }
 
-        eachDay(f: (dayItem: DayChoice, dayIndex: number, weekIndex: number) => void ) {
+        eachDay(f: (dayItem: DayChoice, dayIdx: number, weekIdx: number) => void ) {
             super.eachDay(f);
         };
 
@@ -490,86 +458,86 @@ module MyMenu {
 
         getMenuChoice(week: number, day: number): knockout.koObservableString {
             //return ko.observable("choice " + week + " " + day);
-            return this.getItem(week, day).option;
+            return this.getItem(week, day).OptionKey;
         }
 
         getPlaceChoice(week: number, day: number): knockout.koObservableString {
             //return ko.observable("place " + week + " " + day);
-            return this.getItem(week, day).place;
+            return this.getItem(week, day).PlaceKey;
         }
 
         getDefaultPlaceLabel() {
-            var key = this.defaultPlace();
-            var places = this.menu.places();
-            var option: KeyObservableText  = _.find(places, (x: KeyObservableText) => x.key == key);
+            var key = this.DefaultPlaceKey();
+            var places = this.menu.Places();
+            var option: KeyObservableText  = _.find(places, (x: KeyObservableText) => x.Key == key);
             if (option) {
-                return "Lugar por defecto (" + option.text() + ")";
+                return "Lugar por defecto (" + option.Text() + ")";
             } else {
                 return "Seleccione un lugar (no se definió el lugar por defecto)";
             }
         }
 
         EmployeeMenuDefinitionReset(data?: EmployeeMenuData) {
-            data = _.extend({ userName: "", Id: "", name: "", defaultPlace: "" }, data);
-            this.menuId(data.menuId);
+            data = _.extend({ UserName: "", Id: "", EmployeeName: "", DefaultPlaceKey: "" }, data);
+            this.MenuId(data.MenuId);
             this.Id = data.Id;
-            this.userName = data.userName;
-            this.name = data.name;
-            this.defaultPlace(data.defaultPlace);
+            this.UserName = data.UserName;
+            this.EmployeeName = data.EmployeeName;
+            this.DefaultPlaceKey(data.DefaultPlaceKey);
             
-            if (data.choices) {
-                _.each(data.choices, (x: EmployeeMenuDataItem) => {
-                    var choice = this.getItem(x.week, x.day);
+            if (data.WeeklyChoices) {
+                _.each(data.WeeklyChoices, (x: EmployeeMenuDataItem) => {
+                    var choice = this.getItem(x.WeekIdx, x.DayIdx);
                     if (choice /*&& TODO: comprobar validez*/) {
-                        choice.option(x.option);
-                        choice.place(x.place);
+                        choice.OptionKey(x.OptionKey);
+                        choice.PlaceKey(x.PlaceKey);
                     }
                 });
             }
 
-            this.overrides.removeAll();
-            if (data.overrides) {
-                _.each(data.overrides, x => { 
+            this.Overrides.removeAll();
+            if (data.Overrides) {
+                _.each(data.Overrides, x => { 
 					var ov = new Override(x);
-					this.overrides.push(ov);
-					this.isDirty.register(ov.option);
-					this.isDirty.register(ov.place);
-					this.isDirty.register(ov.date);
-					this.isDirty.register(ov.cancel);
-					this.isDirty.register(ov.comment);
+					this.Overrides.push(ov);
+					this.isDirty.register(ov.OptionKey);
+					this.isDirty.register(ov.PlaceKey);
+					this.isDirty.register(ov.Date);
+					this.isDirty.register(ov.Cancel);
+					this.isDirty.register(ov.Comment);
 				});
             }
         }
 
         exportData(): EmployeeMenuData {
             var data: EmployeeMenuData = {
-                menuId: this.menuId(),
+                MenuId: this.MenuId(),
                 Id: this.Id,
-                userName: this.userName,
-                name: this.name,
-                defaultPlace: this.defaultPlace(),
-                choices: [],
-                overrides: []
+                UserName: this.UserName,
+                EmployeeName: this.EmployeeName,
+                DefaultPlaceKey: this.DefaultPlaceKey(),
+                WeeklyChoices: [],
+                Overrides: []
             };
 
-            var choices = data.choices;
-            this.eachDay((dayChoices, weekIndex, dayIndex) => {
-                var option = dayChoices.option();
-                if (option) {
+            var choices = data.WeeklyChoices;
+            this.eachDay((dayChoices, weekIdx, dayIdx) => {
+                var optionKey = dayChoices.OptionKey();
+                if (optionKey) {
                     var item: EmployeeMenuDataItem = {
-                        week: weekIndex,
-                        day: dayIndex,  
-                        option: option
+                        WeekIdx: weekIdx,
+                        DayIdx: dayIdx,  
+                        OptionKey: optionKey
                     };
-                    var place = dayChoices.place();
+                    var place = dayChoices.PlaceKey();
                     if (place) {
-                        item.place = place;
+                        item.PlaceKey = place;
                     }
                     choices.push(item);
                 }
             });
 
-            data.overrides = ko.toJS(this.overrides);
+            data.Overrides = ko.toJS(this.Overrides);
 
             return data;
         }
@@ -577,16 +545,16 @@ module MyMenu {
         
         addOverride() {
 			var override = new Override();
-            this.overrides.push(override);
-			this.isDirty.register(override.option); //TODO: potential memory leak
-			this.isDirty.register(override.place); //TODO: potential memory leak
-			this.isDirty.register(override.date); //TODO: potential memory leak
-			this.isDirty.register(override.cancel); //TODO: potential memory leak
-			this.isDirty.register(override.comment); //TODO: potential memory leak
+            this.Overrides.push(override);
+			this.isDirty.register(override.OptionKey); //TODO: potential memory leak
+			this.isDirty.register(override.PlaceKey); //TODO: potential memory leak
+			this.isDirty.register(override.Date); //TODO: potential memory leak
+			this.isDirty.register(override.Cancel); //TODO: potential memory leak
+			this.isDirty.register(override.Comment); //TODO: potential memory leak
         }
         
         removeOverride(override?) {
-            Utilities.ObservableArrays.removeItem(this.overrides, override, 'date');
+            Utilities.ObservableArrays.removeItem(this.Overrides, override, 'date');
         };
     }
     
@@ -595,38 +563,38 @@ module MyMenu {
     export class MenuDefinition extends WeekStorage  {
         static defaultData: MenuData = {
             Id: "Menu/DefaultMenu",
-            title: "Nuevo Menú",
-            firstWeek: 0,
-            weeksQuantity: 0,
-            options: [],
-            places: [],
-            startDate: "2000-01-01",
-            endDate: "2100-01-01",
-            lastSentDate: "2000-01-01",
-            deadlineTime: "09:30",
-            foods: []
+            Title: "Nuevo Menú",
+            FirstWeekIdx: 0,
+            WeeksQuantity: 0,
+            Options: [],
+            Places: [],
+            StartDate: "2000-01-01",
+            EndDate: "2100-01-01",
+            LastSentDate: "2000-01-01",
+            DeadlineTime: "09:30",
+            Foods: []
         };
 
         Id: knockout.koObservableString = ko.observable("");
-        title: knockout.koObservableString = ko.observable("");
+        Title: knockout.koObservableString = ko.observable("");
         //weeksQuantity: { (): number; };
-        options: knockout.koObservableArrayBase = ko.observableArray();
-        places: knockout.koObservableArrayBase = ko.observableArray();
-        startDate: knockout.koObservableAny = ko.observable("");
-        endDate: knockout.koObservableAny = ko.observable("");
-        deadlineTime: knockout.koObservableString = ko.observable("");
-        lastSentDate: knockout.koObservableString = ko.observable("");
-        firstWeek: knockout.koObservableNumber = ko.observable(0);
+        Options: knockout.koObservableArrayBase = ko.observableArray();
+        Places: knockout.koObservableArrayBase = ko.observableArray();
+        StartDate: knockout.koObservableAny = ko.observable("");
+        EndDate: knockout.koObservableAny = ko.observable("");
+        DeadlineTime: knockout.koObservableString = ko.observable("");
+        LastSentDate: knockout.koObservableString = ko.observable("");
+        FirstWeekIdx: knockout.koObservableNumber = ko.observable(0);
         static idGenerator = new Utilities.IdGenerator();
 
         //#region Extend WeekStorage
 
         createNewItem(): DayFoods {
             var item: DayFoods = {};
-            if (this.options) {
-                _.each(this.options(), option => {
+            if (this.Options) {
+                _.each(this.Options(), option => {
 					var obs = ko.observable("");
-                    item[option.key] = obs;
+                    item[option.Key] = obs;
 					this.isDirty.register(obs); //TODO: potential memory leak 
 				});
             }
@@ -639,33 +607,33 @@ module MyMenu {
 
         getFood(week: number, day: number, option: string): knockout.koObservableString {
             //Dependencies
-            this.weeksQuantity();
-            this.options();
+            this.WeeksQuantity();
+            this.Options();
 
             var dayFoods = this.getItem(week, day);
             return dayFoods && dayFoods[option];
         }
 
-        eachWeek(f: (weekItems: DayFoods[], weekIndex: number) => void ) {
+        eachWeek(f: (weekItems: DayFoods[], weekIdx: number) => void ) {
             super.eachWeek(f);
         }
 
-        eachDay(f: (dayItem: DayFoods, dayIndex: number, weekIndex: number) => void ) {
+        eachDay(f: (dayItem: DayFoods, dayIdx: number, weekIdx: number) => void ) {
             super.eachDay(f);
         };
 
         //#endregion
 
         constructor (data?: MenuData) {
-            super(data && data.weeksQuantity);
+            super(data && data.WeeksQuantity);
 			this.isDirty.register(this.Id);
-			this.isDirty.register(this.title);
-			this.isDirty.register(this.options);
-			this.isDirty.register(this.places);
-			this.isDirty.register(this.startDate);
-			this.isDirty.register(this.endDate);
-			this.isDirty.register(this.deadlineTime);
-			this.isDirty.register(this.firstWeek);
+			this.isDirty.register(this.Title);
+			this.isDirty.register(this.Options);
+			this.isDirty.register(this.Places);
+			this.isDirty.register(this.StartDate);
+			this.isDirty.register(this.EndDate);
+			this.isDirty.register(this.DeadlineTime);
+			this.isDirty.register(this.FirstWeekIdx);
             this.MenuDefinitionReset(data);
         }
 		
@@ -673,28 +641,28 @@ module MyMenu {
             data = <MenuData>$.extend({}, MenuDefinition.defaultData, data);
             var i: any;
             this.Id(data.Id);
-            this.title(data.title);
-            this.startDate(data.startDate);
-            this.endDate(data.endDate);
-            this.firstWeek(data.firstWeek);
-            this.deadlineTime(data.deadlineTime);
-            this.lastSentDate(data.lastSentDate);
+            this.Title(data.Title);
+            this.StartDate(data.StartDate);
+            this.EndDate(data.EndDate);
+            this.FirstWeekIdx(data.FirstWeekIdx);
+            this.DeadlineTime(data.DeadlineTime);
+            this.LastSentDate(data.LastSentDate);
 
-            this.places.removeAll();
-            for (i in data.places) {
-                this.addPlace(data.places[i]);
+            this.Places.removeAll();
+            for (i in data.Places) {
+                this.addPlace(data.Places[i]);
             } 
             
-            this.options.removeAll();
-            for (i in data.options) {
-                this.addOption(data.options[i]);
+            this.Options.removeAll();
+            for (i in data.Options) {
+                this.addOption(data.Options[i]);
             }
             
-            if (data && data.foods) {
-                _.each(data.foods, x => {
-                    var option = this.getFood(x.week, x.day, x.option);
+            if (data && data.Foods) {
+                _.each(data.Foods, x => {
+                    var option = this.getFood(x.WeekIdx, x.DayIdx, x.OptionKey);
                     if (option) {
-                        option(x.food)
+                        option(x.Food)
                     }
                 });
             }
@@ -703,34 +671,34 @@ module MyMenu {
         };
 
         reset(data?: MenuData) {
-            super.reset(data && data.weeksQuantity);
+            super.reset(data && data.WeeksQuantity);
             this.MenuDefinitionReset(data);
         }
         
         exportData(): MenuData {
             var data: MenuData = { 
                 Id: this.Id(),
-                deadlineTime: this.deadlineTime(),
-                lastSentDate: this.lastSentDate(),
-                title: this.title(),
-                firstWeek: this.firstWeek(),
-                weeksQuantity: this.weeksQuantity(),
-                startDate: this.startDate(),
-                endDate: this.endDate(),
-                places: ko.toJS(this.places),
-                options: ko.toJS(this.options),
-                foods: [] 
+                DeadlineTime: this.DeadlineTime(),
+                LastSentDate: this.LastSentDate(),
+                Title: this.Title(),
+                FirstWeekIdx: this.FirstWeekIdx(),
+                WeeksQuantity: this.WeeksQuantity(),
+                StartDate: this.StartDate(),
+                EndDate: this.EndDate(),
+                Places: ko.toJS(this.Places),
+                Options: ko.toJS(this.Options),
+                Foods: [] 
             };
 
-            this.eachDay((dayFoods, weekIndex, dayIndex) => {
+            this.eachDay((dayFoods, weekIdx, dayIdx) => {
                 var food;
                 for (var opt in dayFoods) {
                     if (food = dayFoods[opt]()) {
-                        data.foods.push({
-                            week: weekIndex,
-                            day: dayIndex,
-                            option: opt,
-                            food: food
+                        data.Foods.push({
+                            WeekIdx: weekIdx,
+                            DayIdx: dayIdx,
+                            OptionKey: opt,
+                            Food: food
                         });
                     }
                 }
@@ -740,33 +708,33 @@ module MyMenu {
         }
 
         addOption(option?: any) {
-            var op = Utilities.ObservableArrays.addKeyObservableText(this.options, "Menú ", "menu_", option);
-			this.isDirty.register(op.text); //TODO: potential memory leak
+            var op: KeyObservableText = Utilities.ObservableArrays.addKeyObservableText(this.Options, "Menú ", "menu_", option);
+			this.isDirty.register(op.Text); //TODO: potential memory leak
             
             this.eachDay(dayFoods => {
 				var dayOpt = ko.observable("");
-                dayFoods[op.key] = dayOpt;
+                dayFoods[op.Key] = dayOpt;
 				this.isDirty.register(dayOpt); //TODO: potential memory leak
             })
 
             //In order to update content observables
-            this.options.valueHasMutated();
+            this.Options.valueHasMutated();
         }
   
         removeOption(option?) {
-            var removed = Utilities.ObservableArrays.removeItem(this.options, option);
+            var removed = Utilities.ObservableArrays.removeItem(this.Options, option);
             if (removed) { 
-                this.eachDay(dayFoods =>  delete dayFoods[removed.key]);
+                this.eachDay(dayFoods =>  delete dayFoods[removed.Key]);
             }
         };
 
         addPlace(place?: any) {
-            var place = Utilities.ObservableArrays.addKeyObservableText(this.places, "Lugar ", "place_", place);
-			this.isDirty.register(place.text); //TODO: potential memory leak
+            var place: KeyObservableText = Utilities.ObservableArrays.addKeyObservableText(this.Places, "Lugar ", "place_", place);
+			this.isDirty.register(place.Text); //TODO: potential memory leak
         }
         
         removePlace(place?) {
-            Utilities.ObservableArrays.removeItem(this.places, place);
+            Utilities.ObservableArrays.removeItem(this.Places, place);
         };
     }
 }

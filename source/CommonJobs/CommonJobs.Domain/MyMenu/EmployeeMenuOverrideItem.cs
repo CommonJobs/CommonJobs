@@ -7,10 +7,10 @@ namespace CommonJobs.Domain.MyMenu
 {
     public class EmployeeMenuOverrideItem
     {
-        public DateTime date { get; set; }
-        public bool cancel { get; set; }
-        public string option { get; set; }
-        public string place { get; set; }
-        public string comment { get; set; }
+        public DateTime Date { get; set; }
+        public bool Cancel { get; set; }
+        public string OptionKey { get; set; }
+        public string PlaceKey { get; set; }
+        public string Comment { get; set; }
     }
 }

@@ -246,7 +246,7 @@
     <Content Include="Content\EmployeeFilesBase.less" />
     <Content Include="Views\MyMenu\MyMenu.cshtml" />
     <Content Include="Views\MyMenu\Admin.cshtml" />
-    <Content Include="Views\Shared\_MyMenuLayout.cshtml" />
+    <Content Include="Views\MyMenu\_MyMenuLayout.cshtml" />
     <None Include="_bin_deployableAssemblies\FSharp.Core.dll" />
   </ItemGroup>
   <ItemGroup>

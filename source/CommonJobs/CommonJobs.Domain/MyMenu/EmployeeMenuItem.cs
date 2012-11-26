@@ -7,9 +7,9 @@ namespace CommonJobs.Domain.MyMenu
 {
     public class EmployeeMenuItem
     {
-        public int week { get; set; }
-        public int day { get; set; }
-        public string option { get; set; }
-        public string place { get; set; }
+        public int WeekIdx { get; set; }
+        public int DayIdx { get; set; }
+        public string OptionKey { get; set; }
+        public string PlaceKey { get; set; }
     }
 }

@@ -7,7 +7,7 @@ namespace CommonJobs.Domain.MyMenu
 {
     public class Option
     {
-        public string key { get; set; }
-        public string text { get; set; }
+        public string Key { get; set; }
+        public string Text { get; set; }
     }
 }

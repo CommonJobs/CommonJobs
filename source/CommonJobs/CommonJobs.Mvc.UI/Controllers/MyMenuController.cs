@@ -74,8 +74,8 @@ namespace CommonJobs.Mvc.UI.Controllers
         [ActionName("EmployeeMenu")]
         public JsonNetResult PostEmployeeMenu(string id /*username*/, EmployeeMenu employeeMenu)
         {
-            if (string.IsNullOrWhiteSpace(id) || employeeMenu.userName != id)
-                throw new ArgumentException(string.Format("No se permite modificar el menú del usuario o los ids no coinciden ({0}, {1})", id, employeeMenu.userName));
+            if (string.IsNullOrWhiteSpace(id) || employeeMenu.UserName != id)
+                throw new ArgumentException(string.Format("No se permite modificar el menú del usuario o los ids no coinciden ({0}, {1})", id, employeeMenu.UserName));
 
             ExecuteCommand(new UpdateEmployeeMenuCommand(employeeMenu));
 

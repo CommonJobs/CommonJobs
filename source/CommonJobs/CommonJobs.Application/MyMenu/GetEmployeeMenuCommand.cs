@@ -39,14 +39,14 @@ namespace CommonJobs.Application.MyMenu
             if (employee == null)
                 throw new ApplicationException(string.Format("El empleado con el username {0} no existe en la base de datos de CommonJobs", UserName));
 
-            var employeeMenu = RavenSession.Include<EmployeeMenu>(x => x.menuId).Load<EmployeeMenu>(Common.GenerateEmployeeMenuId(UserName));
+            var employeeMenu = RavenSession.Include<EmployeeMenu>(x => x.MenuId).Load<EmployeeMenu>(Common.GenerateEmployeeMenuId(UserName));
             if (employeeMenu == null)
             {
                 employeeMenu = CreateDefaultEmployeeMenu(UserName, Common.DefaultMenuId);
                 RavenSession.Store(employeeMenu);
             }
 
-            var menuDefinition = ExecuteCommand(new GetMenuDefinitionCommand(employeeMenu.menuId));
+            var menuDefinition = ExecuteCommand(new GetMenuDefinitionCommand(employeeMenu.MenuId));
 
             return EmployeeMenuDTO.Create(employee, menuDefinition, employeeMenu);
         }
@@ -56,12 +56,12 @@ namespace CommonJobs.Application.MyMenu
             return new EmployeeMenu()
             {
                 Id = Common.GenerateEmployeeMenuId(username),
-                menuId = menuId,
-                userName = username,
-                name = "",
-                defaultPlace = "",
-                choices = new List<EmployeeMenuItem>(),
-                overrides = new List<EmployeeMenuOverrideItem>()
+                MenuId = menuId,
+                UserName = username,
+                EmployeeName = "",
+                DefaultPlaceKey = "",
+                WeeklyChoices = new List<EmployeeMenuItem>(),
+                Overrides = new List<EmployeeMenuOverrideItem>()
             };
         }
     }

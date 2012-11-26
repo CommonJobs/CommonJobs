@@ -19,7 +19,7 @@ namespace CommonJobs.Application.MyMenu
 
         public override void Execute()
         {
-            EmployeeMenu.Id = Common.GenerateEmployeeMenuId(EmployeeMenu.userName);
+            EmployeeMenu.Id = Common.GenerateEmployeeMenuId(EmployeeMenu.UserName);
             RavenSession.Store(EmployeeMenu);
         }
     }

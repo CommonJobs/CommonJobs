@@ -9,35 +9,35 @@ namespace CommonJobs.Domain.MyMenu
     {
         public Menu()
         {
-            options = new List<Option>();
-            places = new List<Place>();
-            foods = new List<MenuItem>();
+            Options = new List<Option>();
+            Places = new List<Place>();
+            Foods = new List<MenuItem>();
         }
 
         public string Id { get; set; }
-        public string title { get; set; }
-        public int firstWeek { get; set; }
-        public int weeksQuantity { get; set; }
-        public List<Option> options { get; set; }
-        public List<Place> places { get; set; }
-        public DateTime startDate { get; set; }
-        public DateTime endDate { get; set; }
-        public DateTime lastSentDate { get; set; }
-        public string deadlineTime { get; set; }
-        public List<MenuItem> foods { get; set; }
+        public string Title { get; set; }
+        public int FirstWeekIdx { get; set; }
+        public int WeeksQuantity { get; set; }
+        public List<Option> Options { get; set; }
+        public List<Place> Places { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+        public DateTime LastSentDate { get; set; }
+        public string DeadlineTime { get; set; }
+        public List<MenuItem> Foods { get; set; }
 
         public DateTime CalculateNextExecutionTime(DateTime now)
         {
-            if (endDate < now)
+            if (EndDate < now)
                 return DateTime.MaxValue;
 
             //TODO: It will fail if the deadlineTime is near to 00:00
-            var date = startDate > now.Date ? startDate : now.Date;
-            if (lastSentDate.Date >= date)
+            var date = StartDate > now.Date ? StartDate : now.Date;
+            if (LastSentDate.Date >= date)
                 date = date.AddDays(1);
 
             var deadlineTS = TimeSpan.Zero;
-            TimeSpan.TryParse(deadlineTime, out deadlineTS);
+            TimeSpan.TryParse(DeadlineTime, out deadlineTS);
             return date.Add(deadlineTS);
         }
 
