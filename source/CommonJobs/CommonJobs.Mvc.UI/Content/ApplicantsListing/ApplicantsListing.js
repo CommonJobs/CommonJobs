@@ -44,6 +44,7 @@ $(function () {
                         .text(".title", "Crear postulante con adjuntos")
                         .visibility(".new-applicant", true)
                         .visibility(".person-name-validation", false)
+                        .show("#create-applicant-attachment")
                         .addValidation(".new-applicant", function (element) {
                             return $(element).find(".person-name").val().length > 0;
                         }, function (element, result) {
@@ -63,6 +64,7 @@ $(function () {
                         .person($el)
                         .visibility(".new-applicant", false)
                         .text(".title", "Crear postulante con adjuntos")
+                        .hide("#create-applicant-attachment")
                         .subtitle("Error subiendo archivos")
                         .files(data)
                         .modal();
@@ -98,6 +100,7 @@ $(function () {
                         .subtitle("Archivos subidos")
                         .visibility(".new-applicant", false)
                         .files(data)
+                        .hide("#create-applicant-attachment")
                         .show(".detail-link")
                         .modal();
                 },
@@ -107,6 +110,7 @@ $(function () {
                         .person($el)
                         .subtitle("Error adjuntando archivos")
                         .visibility(".new-applicant", false)
+                        .hide("#create-applicant-attachment")
                         .files(data)
                         .show(".detail-link")
                         .modal();
