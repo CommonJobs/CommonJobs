@@ -1,0 +1,132 @@
+﻿@{
+    Layout = "_MyMenuLayout.cshtml";
+    ViewBag.Title = "Definición de los menues";
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/my-menu-admin-page.js"));
+}
+
+<div class="container-fluid">
+    <h1 data-bind="text: Title">@ViewBag.Title</h1>
+    
+    <ul class="nav nav-tabs" id="myTab">
+        <li class="active"><a href="#todayTab" data-toggle="tab">Hoy</a></li>
+        <li><a href="#configTab" data-toggle="tab">Configuración</a></li>
+        <li><a href="#weeksTab" data-toggle="tab">Menú Semanal</a></li>
+    </ul>
+
+    <div class="tab-content" style="overflow: inherit">
+        <div class="tab-pane active" id="todayTab">
+            <div class="alert alert-info">
+                <h4>Coming soon!</h4>
+                <p>Aquí se mostrará el pedido del día (ya realizado o a realizarse).</p>
+                <p>Se mostrará el resumen de cantidades por menú y por oficina y un detalle de lo seleccionado por cada empleado con un link a la página de edición de su menú.</p>
+            </div>
+        </div>
+        <div class="tab-pane" id="configTab">
+            <form class="form-horizontal">
+                <div class="control-group">
+                    <label class="control-label" for="title">Título:</label>
+                    <div class="controls">
+                        <input type="text" class="span4" data-bind="value: Title" id="title" placeholder="Título" />
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="startDate">Comienza:</label>
+                    <div class="controls">
+                        <input type="text" class="span2" data-bind="datepicker: StartDate, datepickerOptions: { dataType: 'iso' }" id="startDate" />
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="endDate">Finaliza:</label>
+                    <div class="controls">
+                        <input type="text" class="span2" data-bind="datepicker: EndDate, datepickerOptions: { dataType: 'iso' }" id="endDate" />
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="lastSentDate">Último envío:</label>
+                    <div class="controls">
+                        <input type="text" class="span2" data-bind="datepicker: LastSentDate, datepickerOptions: { dataType: 'iso' }" id="lastSentDate" />
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="deadlineTime">Editable hasta:</label>
+                    <div class="controls">
+                        <div class="input-append">
+                            <input type="text" class="span1" id="deadlineTime" data-bind="time: DeadlineTime" />
+                            <span class="add-on"><i class="icon-time"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="firstWeek">Primer semana:</label>
+                    <div class="controls">
+                        <select data-bind="options: Weeks, 
+                                    optionsText: 'Text', optionsValue: 'Key', 
+                                    value: FirstWeekIdx">
+                        </select>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="weeksQuantity">Semanas:</label>
+                    <div class="controls">
+                        <div class="input-append">
+                            <input type="text" class="span1 uneditable-input" readonly="readonly" id="weeksQuantity" data-bind='value: WeeksQuantity' />
+                            <button class="btn" type="button" data-bind="click: removeWeek"><i class="icon-minus"></i></button>
+                            <button class="btn" type="button" data-bind="click: addWeek"><i class="icon-plus"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">Opciones:</label>
+                    <div class="controls">
+                        <!-- ko foreach: Options -->
+                        <div class="input-append">
+                            <input type="text" class="span2" data-bind='value: Text' />
+                            <button class="btn" type="button" data-bind="click: $root.removeOption"><i class="icon-remove"></i></button>
+                        </div>
+                        <!-- /ko -->
+                        <button class="btn" type="button" data-bind="click: addOption"><i class="icon-plus"></i></button>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">Lugares:</label>
+                    <div class="controls">
+                        <!-- ko foreach: Places -->
+                        <div class="input-append">
+                            <input type="text" class="span2" data-bind='value: Text' />
+                            <button class="btn" type="button" data-bind="click: $root.removePlace"><i class="icon-remove"></i></button>
+                        </div>
+                        <!-- /ko -->
+                        <button class="btn" type="button" data-bind="click: addPlace"><i class="icon-plus"></i></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="tab-pane" id="weeksTab">
+            <h2 data-bind="text: Title">Common Food</h2>
+            <div data-bind="foreach: $root.Weeks">
+                <h4 data-bind='text: Text'></h4>
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <td></td>
+                            <!-- ko foreach: MyMenu.days() -->
+                            <td data-bind="text: MyMenu.days.getName($data)"></td>
+                            <!-- /ko -->
+                        </tr>
+                    </thead>
+                    <tbody data-bind="foreach: $root.Options">
+                        <tr>
+                            <td data-bind='text: Text'></td>
+                            <!-- ko foreach: MyMenu.days() -->
+                            <td>
+                                <textarea rows="3" data-bind='value: $root.getFood($parentContext.$parent.Key, $data, $parent.Key)'></textarea>
+                            </td>
+                            <!-- /ko -->
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />

@@ -1,0 +1,100 @@
+﻿@{
+    ScriptManager.RegisterCss(Url.Content("~/Content/twitter-bootstrap/less/bootstrap.less"), priority: 900);
+    ScriptManager.RegisterCss(Url.Content("~/Content/twitter-bootstrap/less/responsive.less"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/jquery-1.7.2.min.js"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/moment.js"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/moment.i18n/es.js"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Content/twitter-bootstrap/js/bootstrap-collapse.js"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Content/twitter-bootstrap/js/bootstrap-tab.js"), priority: 900);
+
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/knockout-2.2.0.js"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/underscore.js"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/moment-datepicker.js"), priority: 900);
+    ScriptManager.RegisterCss(Url.Content("~/Content/moment-datepicker/datepicker.css"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/moment-datepicker-ko.js"), priority: 900);
+
+    ScriptManager.RegisterGlobalJavascript("baseUrl", Url.Content("~"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/url-generator.js"), priority: 900);
+
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/my-menu-pages.js"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/my-menu.js"), priority: 900);
+
+    Func<dynamic, bool> getBool = v => v == null ? false : (bool)v;
+    Func<dynamic, string> getString = v => v == null ? "" : (string)v;
+
+    bool showNavigation = getBool(ViewBag.ShowNavigation);
+    bool activeMenuDefinition = getBool(ViewBag.ActiveMenuDefinition);
+    bool activeMyMenu = getBool(ViewBag.ActiveMyMenu);
+    bool activeAnotherMenu = getBool(ViewBag.ActiveAnotherMenu);
+    string anotherMenuUser = getString(ViewBag.AnotherMenuUser);
+}
+
+<!DOCTYPE html>
+<html class="bootstrap-scope">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title</title>
+    @Html.RenderScriptManagerEntries(ScriptManager)
+    <link rel="shortcut icon" href="@Url.Content("~/Content/Images/favicon.ico")" />
+    <style>
+        #persistenceForm {
+            margin: 0;
+        }
+        #employeeMenuForm {
+            margin: 0;
+            padding: 8px 15px 10px;
+        }
+        .active #employeeMenuForm label {
+            color: white;
+        }
+        #employeeMenuForm input[type="text"] {
+            height: 18px;
+            padding-top: 2px;
+            width: 100px;
+        }
+        #employeeMenuForm input.btn {
+            padding-top: 3px;
+            height: 26px;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar-inner">
+            
+            <div style="float:right;">
+                <form class="form-inline" id="persistenceForm">
+                    <button class="btn btn-inverse" data-bind="click: load, enable: isDirty() && !onAjaxCall()">Descartar</button>
+                    <button class="btn btn-primary" data-bind="click: save, enable: isDirty() && !onAjaxCall()">Guardar</button>
+                </form>
+            </div>
+            
+            <div class="nav-collapse collapse">
+                <ul class="nav">
+                    @if (showNavigation) {
+                        <li class="@(activeMenuDefinition ? "active" : "")">@Html.ActionLink("Definición de los menues", "Admin")</li>
+                    }
+                    <li class="@(activeMyMenu ? "active" : "")">@Html.ActionLink("Mi Menú", "Index")</li>
+                    
+                    @if (showNavigation) {
+                        <li class="@(activeAnotherMenu ? "active" : "")">
+                            @using (Html.BeginForm("Edit", "MyMenu", new { id = "" }, FormMethod.Get, new { @class = "form-inline", id = "employeeMenuForm" }))
+                            {
+                                <label for="openUserMenu">Menú de</label>
+                                <div class="input-append">
+                                    <input id="openUserMenu" name="id" type="text" placeholder="username" value="@anotherMenuUser" />
+                                    <input class="btn" type="submit" value="Ir" />
+                                </div>
+                            }
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+    <br /><br /><br />
+    <div>
+        @RenderBody()
+    </div>
+</body>
+</html>

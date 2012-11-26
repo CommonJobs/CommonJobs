@@ -164,6 +164,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\JobSearchesController.cs" />
     <Compile Include="Controllers\MigrationsController.cs" />
+    <Compile Include="Controllers\MyMenuController.cs" />
     <Compile Include="Controllers\SuggestController.cs" />
     <Compile Include="Controllers\VacationsController.cs" />
     <Compile Include="Global.asax.cs">
@@ -174,6 +175,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="Content\DataTablesHelpers\DataTablesHelpers.js" />
     <Content Include="Content\Images\AddApplicant.png" />
+    <Content Include="Content\moment-datepicker\datepicker.css" />
     <Content Include="Content\TableTools-2.1.4\media\css\TableTools.css" />
     <Content Include="Content\TableTools-2.1.4\media\css\TableTools_JUI.css" />
     <Content Include="Content\TableTools-2.1.4\media\images\background.png" />
@@ -197,9 +199,40 @@
     <Content Include="Content\TableTools-2.1.4\media\swf\copy_csv_xls.swf" />
     <Content Include="Content\TableTools-2.1.4\media\swf\copy_csv_xls_pdf.swf" />
     <Content Include="Content\Vacations\Vacations.js" />
+    <Content Include="Scripts\knockout.activity.js" />
+    <Content Include="Scripts\knockout.asyncCommand.js" />
+    <Content Include="Scripts\knockout.dirtyFlag.js" />
+    <Content Include="Scripts\my-menu-admin-page.js">
+      <DependentUpon>my-menu-admin-page.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\my-menu-admin-page.ts" />
+    <Content Include="Scripts\my-menu-page.js">
+      <DependentUpon>my-menu-page.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\my-menu-pages.js">
+      <DependentUpon>my-menu-pages.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\my-menu.js">
+      <DependentUpon>my-menu.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\my-menu.ts" />
     <Content Include="Scripts\DataTables\jquery.dataTables.js" />
+    <Content Include="Scripts\jquery.d.ts" />
+    <Content Include="Scripts\knockout-2.2.0.debug.js" />
+    <Content Include="Scripts\knockout-2.2.0.js" />
+    <Content Include="Scripts\Knockout.d.ts" />
+    <Content Include="Scripts\moment-datepicker-ko.js" />
+    <Content Include="Scripts\moment-datepicker.d.ts" />
+    <Content Include="Scripts\moment-datepicker.js" />
+    <Content Include="Scripts\moment-datepicker.min.js" />
+    <Content Include="Scripts\moment.d.ts" />
     <Content Include="Scripts\jquery.collapsable-sections.js" />
     <Content Include="Scripts\moment.i18n\es.js" />
+    <Content Include="Scripts\my-menu-page.ts" />
+    <Content Include="Scripts\my-menu-pages.ts" />
+    <Content Include="Scripts\underscore.browser.d.ts" />
+    <Content Include="Scripts\underscore.js" />
+    <Content Include="Scripts\underscore.min.js" />
     <Content Include="Views\Vacations\Index.cshtml" />
     <Content Include="Content\DataTables\images\Sorting icons.psd" />
     <Content Include="Content\TableTools-2.1.4\media\as3\lib\AlivePDF.swc" />
@@ -212,7 +245,11 @@
     <Content Include="Content\TableTools-2.1.4\media\js\TableTools.min.js.gz" />
     <Content Include="Views\EmployeeFiles\Index.cshtml" />
     <Content Include="Content\EmployeeFilesBase.less" />
+    <Content Include="Views\MyMenu\MyMenu.cshtml" />
+    <Content Include="Views\MyMenu\Admin.cshtml" />
+    <Content Include="Views\MyMenu\_MyMenuLayout.cshtml" />
     <Content Include="Content\collapsable-sections.less" />
+    <Content Include="Content\twitter-bootstrap\less\media.less" />
     <None Include="_bin_deployableAssemblies\FSharp.Core.dll" />
   </ItemGroup>
   <ItemGroup>
@@ -928,8 +965,6 @@
     <Content Include="Scripts\json2.min.js" />
     <Content Include="Scripts\modernizr-1.7.js" />
     <Content Include="Scripts\modernizr-1.7.min.js" />
-    <Content Include="Scripts\underscore.js" />
-    <Content Include="Scripts\underscore.min.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
       <TransformOnBuild>true</TransformOnBuild>

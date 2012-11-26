@@ -10,11 +10,15 @@ using CommonJobs.ContentExtraction;
 using CommonJobs.ContentExtraction.Extractors;
 using CommonJobs.Infrastructure.Mvc.Authorize;
 using Raven.Client.Listeners;
+using CommonJobs.Infrastructure.RavenDb.Schedule;
+using NLog;
 
 namespace CommonJobs.Mvc.UI
 {
     public class MvcApplication : CommonJobsApplication
     {
+        private static Logger log = LogManager.GetCurrentClassLogger();
+
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
@@ -70,6 +74,13 @@ namespace CommonJobs.Mvc.UI
 #else
             CommonJobsAuthorizeAttribute.AuthorizationBehavior = new PrefixFromSettingsAuthorizationBehavior("CommonJobs/ADGroupsPrefix");
 #endif
+
+            // Es cierto que iniciar recurrentes aquí puede no ser una buena idea (http://haacked.com/archive/2011/10/16/the-dangers-of-implementing-recurring-background-tasks-in-asp-net.aspx)
+            // Pero es la mejor forma de lograr un deploy simple, y a la vez soporar AppHarbor.
+            // Los problemas indicados por Phil Haack no deberían causar inconvenientes en esta aplicación
+            // Hay un problema: la aplicación no se inicia sola
+            //TODO: make period configurable
+            ExecuteScheduledTasks.StartPeriodicTasks(RavenSessionManager.DocumentStore);
         }
     }
 }

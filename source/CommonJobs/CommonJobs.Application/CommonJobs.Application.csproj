@@ -40,6 +40,10 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=4.0.8.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libs\RavenDB\Client\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="NLog">
       <HintPath>..\packages\NLog.2.0.0.2000\lib\net40\NLog.dll</HintPath>
     </Reference>
@@ -85,6 +89,13 @@
     <Compile Include="EmployeeSearching\EmployeeSearchParameters.cs" />
     <Compile Include="JobSearchSearching\JobSearchSearchParameters.cs" />
     <Compile Include="JobSearchSearching\SearchJobSearches.cs" />
+    <Compile Include="MyMenu\Common.cs" />
+    <Compile Include="MyMenu\UpdateEmployeeMenuCommand.cs" />
+    <Compile Include="MyMenu\GetMenuDefinitionCommand.cs" />
+    <Compile Include="MyMenu\EmployeeMenuDTO.cs" />
+    <Compile Include="MyMenu\GetEmployeeMenuCommand.cs" />
+    <Compile Include="MyMenu\ProcessMenuCommand.cs" />
+    <Compile Include="MyMenu\UpdateMenuDefinitionCommand.cs" />
     <Compile Include="Suggest\Persons_Suggestions.cs" />
     <Compile Include="Suggest\GetSuggestions.cs" />
     <Compile Include="Vacations\CalculateVacations.cs" />

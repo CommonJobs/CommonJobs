@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Raven.Client;
+using Newtonsoft.Json;
 
 namespace CommonJobs.Infrastructure.RavenDb
 {
     public abstract class Command
     {
+        [JsonIgnore]
         public IDocumentSession RavenSession { get; set; }
         public abstract void Execute();
 

@@ -548,7 +548,7 @@
 
         _transition: function (node) {
             var dfd = $.Deferred();
-            if ($.support.transition && node.hasClass('fade')) {
+            if ($.support.transition && node.hasClass('drop-fade')) {
                 node.bind(
                     $.support.transition.end,
                     function (e) {
