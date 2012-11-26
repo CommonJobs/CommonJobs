@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -226,6 +226,7 @@
     <Content Include="Scripts\moment-datepicker.js" />
     <Content Include="Scripts\moment-datepicker.min.js" />
     <Content Include="Scripts\moment.d.ts" />
+    <Content Include="Scripts\jquery.collapsable-sections.js" />
     <Content Include="Scripts\moment.i18n\es.js" />
     <Content Include="Scripts\my-menu-page.ts" />
     <Content Include="Scripts\my-menu-pages.ts" />
@@ -247,6 +248,7 @@
     <Content Include="Views\MyMenu\MyMenu.cshtml" />
     <Content Include="Views\MyMenu\Admin.cshtml" />
     <Content Include="Views\MyMenu\_MyMenuLayout.cshtml" />
+    <Content Include="Content\collapsable-sections.less" />
     <None Include="_bin_deployableAssemblies\FSharp.Core.dll" />
   </ItemGroup>
   <ItemGroup>
