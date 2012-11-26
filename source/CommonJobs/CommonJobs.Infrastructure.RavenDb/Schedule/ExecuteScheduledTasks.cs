@@ -41,5 +41,37 @@ namespace CommonJobs.Infrastructure.RavenDb.Schedule
                 }
             }
         }
+
+        private static System.Threading.Timer timer;
+        public static void StartPeriodicTasks(IDocumentStore documentStore, int dueMinutes = 1, int periodMinutes = 4) 
+        {
+            if (timer == null)
+            {
+                bool working = false;
+                timer = new System.Threading.Timer((state) =>
+                {
+                    //Block is not necessary because it is called periodically
+                    if (!working)
+                    {
+                        working = true;
+                        try
+                        {
+                            using (var session = documentStore.OpenSession())
+                            {
+                                (new ExecuteScheduledTasks() { RavenSession = session }).Execute();
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            log.ErrorException("Error on global.asax timer", e);
+                        }
+                        working = false;
+                    }
+                },
+                null,
+                TimeSpan.FromMinutes(dueMinutes),
+                TimeSpan.FromMinutes(periodMinutes));
+            }
+        }
     }
 }

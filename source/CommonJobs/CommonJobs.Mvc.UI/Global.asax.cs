@@ -75,40 +75,12 @@ namespace CommonJobs.Mvc.UI
             CommonJobsAuthorizeAttribute.AuthorizationBehavior = new PrefixFromSettingsAuthorizationBehavior("CommonJobs/ADGroupsPrefix");
 #endif
 
-            StartTimer();
-        }
-
-        private System.Threading.Timer timer;
-        private void StartTimer()
-        {
             // Es cierto que iniciar recurrentes aquí puede no ser una buena idea (http://haacked.com/archive/2011/10/16/the-dangers-of-implementing-recurring-background-tasks-in-asp-net.aspx)
             // Pero es la mejor forma de lograr un deploy simple, y a la vez soporar AppHarbor.
             // Los problemas indicados por Phil Haack no deberían causar inconvenientes en esta aplicación
-            bool working = false;
-            timer = new System.Threading.Timer((state) =>
-            {
-                //Block is not necessary because it is called periodically
-                if (!working)
-                {
-                    working = true;
-                    try
-                    {
-                        using (var session = RavenSessionManager.DocumentStore.OpenSession())
-                        {
-                            (new ExecuteScheduledTasks() { RavenSession = session }).Execute();
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        log.ErrorException("Error on global.asax timer", e);
-                    }
-                    working = false;
-                }
-            }, 
-            null, 
-            TimeSpan.FromMinutes(2),
+            // Hay un problema: la aplicación no se inicia sola
             //TODO: make period configurable
-            TimeSpan.FromMinutes(4));
+            ExecuteScheduledTasks.StartPeriodicTasks(RavenSessionManager.DocumentStore);
         }
     }
 }
