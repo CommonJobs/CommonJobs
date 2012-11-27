@@ -43,11 +43,11 @@ namespace CommonJobs.Application.MyMenu
             {
                 Id = id,
                 Title = "Menú primaveral",
-                FirstWeekIdx = 0,
+                FirstWeekIdx = 2,
                 WeeksQuantity = 5,
                 DeadlineTime = "9:30",
                 LastSentDate = new DateTime(2000, 1, 1),
-                StartDate = new DateTime(2012, 9, 12),
+                StartDate = new DateTime(2012, 9, 21),
                 EndDate = new DateTime(2020, 1, 1),
                 Places = new List<Place>() 
                 {
