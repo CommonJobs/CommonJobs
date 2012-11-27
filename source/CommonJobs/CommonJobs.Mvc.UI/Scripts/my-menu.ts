@@ -664,6 +664,7 @@ module MyMenu {
 			this.isDirty.register(this.EndDate);
 			this.isDirty.register(this.DeadlineTime);
 			this.isDirty.register(this.FirstWeekIdx);
+			this.isDirty.register(this.LastSentDate);
             this.MenuDefinitionReset(data);
         }
 		
