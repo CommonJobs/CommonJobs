@@ -18,6 +18,11 @@ namespace CommonJobs.Domain.MyMenu
         public Dictionary<string, Dictionary<string, int>> QuantityByOptionByPlace { get; set; }
         public Dictionary<string, DailyMenuRequestDetailItem> DetailByUserName { get; set; }
 
+        public static string GenerateId(string menuId, DateTime date)
+        {
+            return string.Format("{0}/{1:yyyy-MM-dd}", menuId, date.Date);
+        }
+
         private DailyMenuRequest()
         {
             //RavenDB use
@@ -31,7 +36,7 @@ namespace CommonJobs.Domain.MyMenu
         public DailyMenuRequest(Menu menu, DateTime date, IEnumerable<EmployeeMenu> employeeMenues)
         {
             Date = date.Date;
-            Id = string.Format("{0}/{1:yyyy-MM-dd}", menu.Id, Date);
+            Id = GenerateId(menu.Id, date);
             MenuId = menu.Id;
 
             DetailByUserName = new Dictionary<string, DailyMenuRequestDetailItem>();
