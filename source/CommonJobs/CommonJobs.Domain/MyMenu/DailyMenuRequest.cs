@@ -12,19 +12,19 @@ namespace CommonJobs.Domain.MyMenu
         public string MenuId { get; set; }
         public int WeekIdx { get; set; }
         public int DayIdx { get; set; }
-        public StringKeyedCollection<Place> Places { get; set; }
-        public StringKeyedCollection<Option> Options { get; set; }
+        public Dictionary<string, string> PlacesByKey { get; set; }
+        public Dictionary<string, string> OptionsByKey { get; set; }
         public Dictionary<string, string> FoodsByOption { get; set; }
-        public List<DailyMenuRequestSummaryItem> Summary { get; set; }
-        public List<DailyMenuRequestDetailItem> Detail { get; set; }
+        public Dictionary<string, Dictionary<string, int>> QuantityByOptionByPlace { get; set; }
+        public Dictionary<string, DailyMenuRequestDetailItem> DetailByUserName { get; set; }
 
         private DailyMenuRequest()
         {
             //RavenDB use
-            Detail = new List<DailyMenuRequestDetailItem>();
-            Summary = new List<DailyMenuRequestSummaryItem>();
-            Places = new StringKeyedCollection<Place>();
-            Options = new StringKeyedCollection<Option>();
+            DetailByUserName = new Dictionary<string, DailyMenuRequestDetailItem>();
+            QuantityByOptionByPlace = new Dictionary<string, Dictionary<string, int>>();
+            PlacesByKey = new Dictionary<string, string>();
+            OptionsByKey = new Dictionary<string, string>();
             FoodsByOption = new Dictionary<string, string>();
         }
 
@@ -34,16 +34,15 @@ namespace CommonJobs.Domain.MyMenu
             Id = string.Format("{0}/{1:yyyy-MM-dd}", menu.Id, Date);
             MenuId = menu.Id;
 
-            Detail = new List<DailyMenuRequestDetailItem>();
-            Summary = new List<DailyMenuRequestSummaryItem>();
-            Places = menu.Places;
-            Options = menu.Options;
+            DetailByUserName = new Dictionary<string, DailyMenuRequestDetailItem>();
+            PlacesByKey = menu.Places.ToDictionary(x => x.Key, x => x.Text);
+            OptionsByKey = menu.Options.ToDictionary(x => x.Key, x => x.Text);
 
             var dayWeek = menu.GetWeekDay(Date);
             DayIdx = dayWeek.DayIdx;
             WeekIdx = dayWeek.WeekIdx;
 
-            FoodsByOption = Options
+            FoodsByOption = OptionsByKey
                 .Select(x => menu.Foods.GetItemSecurely(new WeekDayOptionKey() { WeekIdx = WeekIdx, DayIdx = DayIdx, OptionKey = x.Key }))
                 .Where(x => !string.IsNullOrWhiteSpace(x.Food))
                 .ToDictionary(x => x.OptionKey, x => x.Food);
@@ -52,14 +51,15 @@ namespace CommonJobs.Domain.MyMenu
 
             foreach (var employeeMenu in employeeMenues)
             {
-                Detail.Add(CreateDetailItem(employeeMenu));
+                DetailByUserName[employeeMenu.UserName] = CreateDetailItem(employeeMenu);
             }
 
-            Summary = Detail
+            QuantityByOptionByPlace = DetailByUserName.Values
                 .Where(x => IsNotEmpty(x.PlaceKey) && IsNotEmpty(x.OptionKey))
-                .GroupBy(x => new { x.OptionKey, x.PlaceKey })
-                .Select(x => new DailyMenuRequestSummaryItem() { OptionKey = x.Key.OptionKey, PlaceKey = x.Key.PlaceKey, Quantity = x.Count() })
-                .ToList();
+                .GroupBy(x => x.PlaceKey)
+                .ToDictionary(
+                    x => x.Key, 
+                    x => x.GroupBy(y => y.OptionKey).ToDictionary(y => y.Key, y => y.Count()));
         }
 
         #region private helper methods
@@ -70,7 +70,7 @@ namespace CommonJobs.Domain.MyMenu
 
         private bool IsValidPlace(string placeKey)
         {
-            return Places.Contains(placeKey);
+            return PlacesByKey.ContainsKey(placeKey);
         }
 
         private bool IsNotEmptyValidPlace(string placeKey)
@@ -85,7 +85,7 @@ namespace CommonJobs.Domain.MyMenu
 
         private bool IsValidOption(string optionKey)
         {
-            return Options.Contains(optionKey) && FoodsByOption.ContainsKey(optionKey) && !string.IsNullOrWhiteSpace(FoodsByOption[optionKey]);
+            return OptionsByKey.ContainsKey(optionKey) && FoodsByOption.ContainsKey(optionKey) && !string.IsNullOrWhiteSpace(FoodsByOption[optionKey]);
         }
 
         private bool IsNotEmptyValidOption(string optionKey)
@@ -131,7 +131,6 @@ namespace CommonJobs.Domain.MyMenu
 
             return new DailyMenuRequestDetailItem()
             {
-                EmployeeUserName = employeeMenu.UserName,
                 EmployeeName = employeeMenu.EmployeeName,
                 PlaceKey = placeKey,
                 OptionKey = optionKey,

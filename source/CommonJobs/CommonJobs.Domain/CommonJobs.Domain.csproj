@@ -66,9 +66,6 @@
     <Compile Include="MyMenu\DailyMenuRequestDetailItem.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MyMenu\DailyMenuRequestSummaryItem.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="MyMenu\KeyedCollectionHelper.cs" />
     <Compile Include="MyMenu\WeekDayKeyed.cs" />
     <Compile Include="MyMenu\WeekDayOptionKeyed.cs" />
