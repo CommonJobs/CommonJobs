@@ -6,7 +6,7 @@ $(function () {
     //Attachments utilities
     var getEmployeeAttachmentsBySlot = function (employee) {
         var filledById = {};
-        if (employee) {
+        if (employee && employee.AttachmentsBySlot) {
             _.chain(employee.AttachmentsBySlot)
             .filter(function (filledItem) {
                 return !!filledItem.Attachment;
@@ -31,9 +31,9 @@ $(function () {
         var me = this;
 
         var filledById = getEmployeeAttachmentsBySlot(employee);
-        
+
         var singleFile = this._files.length == 1;
-        var $slots = $(slotsTemplate({ model: { singleFile: singleFile } }));
+        var $slots = $(slotsTemplate({ model: { singleFile: singleFile} }));
 
         if (singleFile) {
             var btns = {};
@@ -42,17 +42,17 @@ $(function () {
                 var filled = filledById[slot.Id];
                 var $btn;
                 if (filled && filled.Attachment) {
-                    $btn = $(slotBtnTemplate({ model: { caption: slot.Name + ": " + filled.Attachment.FileName } }));
+                    $btn = $(slotBtnTemplate({ model: { caption: slot.Name + ": " + filled.Attachment.FileName} }));
                     $btn.prop("disabled", true);
                 } else {
-                    $btn = $(slotBtnTemplate({ model: { caption: slot.Name } }));
+                    $btn = $(slotBtnTemplate({ model: { caption: slot.Name} }));
                     $btn.on("click", function () {
                         me.data.formData = { slot: slot.Id, name: me.$(".person-name").val() };
                         if (me.runValidations())
                             me.data.submit();
                     });
                 }
-                
+
                 var key = ".slots-necessity-" + slot.Necessity;
                 if (!btns[key])
                     btns[key] = [];
@@ -64,7 +64,7 @@ $(function () {
                 group.show();
                 var title = group.find("h5");
                 var $btn;
-                while($btn = btns[key].shift()) { 
+                while ($btn = btns[key].shift()) {
                     title.after($btn);
                 }
             }
@@ -77,7 +77,7 @@ $(function () {
         });
 
         this.$(".slots").html($slots);
-        
+
         return this;
     };
 
@@ -182,7 +182,7 @@ $(function () {
         prepareResultCard: function ($card, item) {
             markEmployeesThatNeedsAttachments($card, item);
             dragAndDrop.prepareFileDropzone($card, {
-                add: function (e, data, $el) {               
+                add: function (e, data, $el) {
                     if ($el.hasClass("item-card")) {
                         new UploadModal($('#generic-modal'))
                             .person($el)

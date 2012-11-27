@@ -9,7 +9,7 @@
     ScriptManager.RegisterJs(Url.Content("~/Content/ApplicantsListing/ApplicantsListing.js"));
 }
 <script type="text/template" id="add-new-card-template">
-    <div class="card column clickable add-new-card file-dropzone fade well">
+    <div class="card column clickable add-new-card file-dropzone drop-fade">
         <img class="cardPicture" src="@Url.Content("~/Content/Images/AddApplicant.png")" alt="Agregar nuevo..."  />
         <input type="file" data-url="@Url.Action("QuickAttachment")" multiple>
         <div class="cardDescription">
@@ -27,7 +27,7 @@
 </script>
 
 <script type="text/template" id="card-template">
-    <div class="card column clickable item-card <%= item.IsHighlighted ? "highlighted" : "" %> file-dropzone fade well">
+    <div class="card column clickable item-card <%= item.IsHighlighted ? "highlighted" : "" %> file-dropzone drop-fade">
         <input type="file" data-url="@Url.Action("QuickAttachment")<%= item.Id %>" multiple>
         <div class="cardDescription">
             <p class="name"><a class="clickable-link" href="<%= urlGenerator.action("Edit", "Applicants", item.Id) %>">

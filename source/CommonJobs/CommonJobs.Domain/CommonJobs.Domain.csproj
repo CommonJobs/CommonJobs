@@ -60,6 +60,13 @@
     <Compile Include="AttachmentReference.cs" />
     <Compile Include="AttachmentSlot.cs" />
     <Compile Include="AttachmentSlotNecessity.cs" />
+    <Compile Include="MyMenu\EmployeeMenuOverrideItem.cs" />
+    <Compile Include="MyMenu\EmployeeMenuItem.cs" />
+    <Compile Include="MyMenu\EmployeeMenu.cs" />
+    <Compile Include="MyMenu\Place.cs" />
+    <Compile Include="MyMenu\Option.cs" />
+    <Compile Include="MyMenu\MenuItem.cs" />
+    <Compile Include="MyMenu\Menu.cs" />
     <Compile Include="VacationsReport.cs" />
     <Compile Include="Certification.cs" />
     <Compile Include="CompanyHistory.cs" />

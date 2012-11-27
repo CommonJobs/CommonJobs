@@ -17,9 +17,13 @@ namespace CommonJobs.Infrastructure.Mvc
         /// <summary>
         /// Render references and scripts entries in header
         /// </summary>
-        public static MvcHtmlString RenderScriptManagerEntries<T>(this HtmlHelper<T> htmlHelper)
+        public static MvcHtmlString RenderScriptManagerEntries<T>(this HtmlHelper<T> htmlHelper, ScriptManager scriptManager = null)
         {
-            var scriptManager = ScriptManager.GetFromViewData(htmlHelper.ViewData);
+            if (scriptManager == null)
+            {
+                scriptManager = ScriptManager.GetFromViewData(htmlHelper.ViewData);
+            }
+
             var entries = scriptManager.GetEntries();
 
             var sb = new StringBuilder().AppendLine();
