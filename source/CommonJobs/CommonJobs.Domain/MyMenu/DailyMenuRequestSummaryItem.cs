@@ -5,11 +5,10 @@ using System.Text;
 
 namespace CommonJobs.Domain.MyMenu
 {
-    public struct EmployeeMenuItem : IWeekDayKeyed
+    public struct DailyMenuRequestSummaryItem
     {
-        public int WeekIdx { get; set; }
-        public int DayIdx { get; set; }
-        public string OptionKey { get; set; }
         public string PlaceKey { get; set; }
+        public string OptionKey { get; set; }
+        public int Quantity { get; set; }
     }
 }

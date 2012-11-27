@@ -49,18 +49,18 @@ namespace CommonJobs.Application.MyMenu
                 LastSentDate = new DateTime(2000, 1, 1),
                 StartDate = new DateTime(2012, 9, 21),
                 EndDate = new DateTime(2020, 1, 1),
-                Places = new List<Place>() 
+                Places = new StringKeyedCollection<Place>() 
                 {
                     new Place() { Key = "place_larioja", Text = "La Rioja" },
                     new Place() { Key = "place_garay", Text = "Garay" }
                 },
-                Options = new List<Option>() 
+                Options = new StringKeyedCollection<Option>() 
                 {
                     new Option() { Key = "menu_comun", Text = "Común" },
                     new Option() { Key = "menu_light", Text = "Light" },
                     new Option() { Key = "menu_vegetariano", Text = "Vegetariano" }
                 },
-                Foods = new List<MenuItem>() 
+                Foods = new WeekDayOptionKeyedCollection<MenuItem>() 
                 {
                     new MenuItem() { WeekIdx = 0, DayIdx = 1, OptionKey = "menu_comun", Food = "Cuarto de pollo deshuesado al champignonge c/papas" },
                     new MenuItem() { WeekIdx = 0, DayIdx = 1, OptionKey = "menu_light", Food = "Wok de vegetales y atun al natural" },
@@ -152,14 +152,14 @@ namespace CommonJobs.Application.MyMenu
                 DeadlineTime = "9:30",
                 StartDate = DateTime.Now.Date.AddDays(7),
                 EndDate = DateTime.Now.Date.AddYears(1),
-                Places = new List<Place>(),
-                Options = new List<Option>() 
+                Places = new StringKeyedCollection<Place>(),
+                Options = new StringKeyedCollection<Option>() 
                 {
                     new Option() { Key = "menu_comun", Text = "Común" },
                     new Option() { Key = "menu_light", Text = "Light" },
                     new Option() { Key = "menu_vegetariano", Text = "Vegetariano" }
                 },
-                Foods = new List<MenuItem>()
+                Foods = new WeekDayOptionKeyedCollection<MenuItem>()
             };
         }
     }

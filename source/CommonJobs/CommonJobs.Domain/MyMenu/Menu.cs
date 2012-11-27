@@ -9,22 +9,22 @@ namespace CommonJobs.Domain.MyMenu
     {
         public Menu()
         {
-            Options = new List<Option>();
-            Places = new List<Place>();
-            Foods = new List<MenuItem>();
+            Options = new StringKeyedCollection<Option>();
+            Places = new StringKeyedCollection<Place>();
+            Foods = new WeekDayOptionKeyedCollection<MenuItem>();
         }
 
         public string Id { get; set; }
         public string Title { get; set; }
         public int FirstWeekIdx { get; set; }
         public int WeeksQuantity { get; set; }
-        public List<Option> Options { get; set; }
-        public List<Place> Places { get; set; }
+        public StringKeyedCollection<Option> Options { get; set; }
+        public StringKeyedCollection<Place> Places { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public DateTime LastSentDate { get; set; }
         public string DeadlineTime { get; set; }
-        public List<MenuItem> Foods { get; set; }
+        public WeekDayOptionKeyedCollection<MenuItem> Foods { get; set; }
 
         public DateTime CalculateNextExecutionTime(DateTime now)
         {
@@ -45,5 +45,7 @@ namespace CommonJobs.Domain.MyMenu
         {
             return string.Format("{0}/Task", Id);
         }
+
+        //public GetOptions(DateTime date)
     }
 }
