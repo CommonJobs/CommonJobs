@@ -17,6 +17,14 @@ var MyMenu;
             this.LastRequest = ko.observable();
             ko.applyBindings(this);
         }
+        MyMenuPage.prototype.todayToRequest = function () {
+            var lastRequest = this.LastRequest();
+            var now = this.now();
+            if(lastRequest && Utilities.daysDiff(now, lastRequest.Date) === 0) {
+                return null;
+            }
+            return this.getChoicesByDate(now);
+        };
         MyMenuPage.prototype.todayRequest = function () {
             var lastRequest = this.LastRequest();
             var now = this.now();

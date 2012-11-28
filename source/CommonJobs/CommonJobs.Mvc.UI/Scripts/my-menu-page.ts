@@ -33,6 +33,17 @@ module MyMenu {
             ko.applyBindings(this);
         }
 
+        todayToRequest() {
+            var lastRequest = <LastRequestData>this.LastRequest();
+            var now = this.now();
+
+            if (lastRequest && Utilities.daysDiff(now, lastRequest.Date) === 0) {
+                return null;
+            }
+
+            return this.getChoicesByDate(now);
+        }
+
         todayRequest() : LastRequestData {
             var lastRequest = <LastRequestData>this.LastRequest();
             var now = this.now();
