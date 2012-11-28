@@ -455,13 +455,13 @@ module MyMenu {
         }
 
         getMenuChoice(week: number, day: number): knockout.koObservableString {
-            //return ko.observable("choice " + week + " " + day);
-            return this.getItem(week, day).OptionKey;
+            var item = this.getItem(week, day);
+            return item && item.OptionKey;
         }
 
         getPlaceChoice(week: number, day: number): knockout.koObservableString {
-            //return ko.observable("place " + week + " " + day);
-            return this.getItem(week, day).PlaceKey;
+            var item = this.getItem(week, day);
+            return item && item.PlaceKey;
         }
 
         getDefaultPlaceLabel() {
