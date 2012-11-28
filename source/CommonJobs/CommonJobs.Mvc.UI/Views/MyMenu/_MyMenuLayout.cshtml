@@ -64,8 +64,8 @@
             
             <div style="float:right;">
                 <form class="form-inline" id="persistenceForm">
-                    <button class="btn btn-inverse" data-bind="click: load, enable: isDirty() && !onAjaxCall()">Descartar</button>
-                    <button class="btn btn-primary" data-bind="click: save, enable: isDirty() && !onAjaxCall()">Guardar</button>
+                    <button class="btn btn-inverse" disabled="disabled" data-bind="click: load, enable: isDirty() && !onAjaxCall()">Descartar</button>
+                    <button class="btn btn-primary" disabled="disabled" data-bind="click: save, enable: isDirty() && !onAjaxCall()">Guardar</button>
                 </form>
             </div>
             
@@ -93,8 +93,13 @@
         </div>
     </div>
     <br /><br /><br />
-    <div>
+    <div style="min-height: 500px">
         @RenderBody()
     </div>
+    <footer style="margin-top: 100px; padding-top: 25px; border-top: 1px solid #e5e5e5; background-color: #f5f5f5; ">
+        <div class="container">
+            <p><strong>MyMenu</strong> es un desarrollo <em>OpenSource</em> realizado en ratos libres. Cualquier mejora es bienvenida, descargá el <a href="https://github.com/CommonJobs/CommonJobs">código fuente de GitHub</a> y hacé tu <em>Pull Request</em>.</p>
+        </div>
+    </footer>
 </body>
 </html>

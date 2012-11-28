@@ -19,7 +19,6 @@ var MyMenu;
         }
         MyMenuPage.prototype.todayRequest = function () {
             var lastRequest = this.LastRequest();
-            console.log(lastRequest);
             var now = this.now();
             return lastRequest && Utilities.daysDiff(now, lastRequest.Date) === 0 ? lastRequest : null;
         };
@@ -30,6 +29,7 @@ var MyMenu;
         };
         MyMenuPage.prototype.load = function () {
             var _this = this;
+            this.onAjaxCall(true);
             $.ajax(ViewData.menuUrl, {
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
@@ -49,6 +49,7 @@ var MyMenu;
         };
         MyMenuPage.prototype.save = function () {
             var _this = this;
+            this.onAjaxCall(true);
             var data = this.exportData();
             $.ajax(ViewData.menuUrl, {
                 type: "POST",

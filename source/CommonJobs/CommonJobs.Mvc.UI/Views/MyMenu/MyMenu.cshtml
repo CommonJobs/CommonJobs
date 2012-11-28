@@ -21,7 +21,8 @@
                 <h4>
                     <span data-bind="text: moment(Date).format('dddd, D [de] MMMM YYYY')"></span> (Semana <span data-bind="text: WeekIdx + 1"></span>)
                 </h4>
-                <span class="label label-warning">
+
+                <span class="badge badge-warning">
                     El pedido ya fue realizado y no puede ser modificado. Si no fue de su agrado, recuerde actualizar el menú semanal (<em>Semana <span data-bind="text: WeekIdx + 1"></span> / <span data-bind="text: moment(Date).format('dddd')"></span></em>)
                 </span>
 
@@ -70,7 +71,7 @@
             <button class="btn" type="button" data-bind="click: addOverride"><i class="icon-plus"></i>Agregar</button>
             <br /><br />
             <!-- ko foreach: Overrides -->
-            <form class="well form-horizontal">
+            <form class="well well-small form-horizontal">
                 <button class="btn" type="button" data-bind="click: $root.removeOverride"><i class="icon-remove"></i>Quitar</button>
 
                 <div class="control-group">
@@ -131,7 +132,7 @@
         <!-- ko foreach: Weeks -->
         <div class="tab-pane" data-bind="attr: { id: 'week' + Key + 'Tab' }">
             <!-- ko foreach: MyMenu.days() -->
-            <div class="well">
+            <div class="well well-small">
                 <div>
                     <h4><!--ko text: MyMenu.days.getName($data)--><!--/ko--></h4>
                     <small>Próximo día: <!-- ko text: $root.nearFormated($parent.Key, $data) -->TODO: REMOVE<!-- /ko --></small>
