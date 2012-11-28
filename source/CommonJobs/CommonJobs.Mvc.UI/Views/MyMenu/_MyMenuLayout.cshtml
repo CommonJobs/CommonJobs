@@ -64,7 +64,7 @@
             
             <div style="float:right;">
                 <form class="form-inline" id="persistenceForm">
-                    <button class="btn btn-inverse" disabled="disabled" data-bind="click: load, enable: isDirty() && !onAjaxCall()">Descartar</button>
+                    <button class="btn btn-inverse" disabled="disabled" data-bind="click: load, enable: !onAjaxCall(), text: isDirty() ? 'Descartar' : 'Recargar'">Recargar</button>
                     <button class="btn btn-primary" disabled="disabled" data-bind="click: save, enable: isDirty() && !onAjaxCall()">Guardar</button>
                 </form>
             </div>
