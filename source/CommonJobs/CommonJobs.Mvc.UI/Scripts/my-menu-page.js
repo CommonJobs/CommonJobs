@@ -14,8 +14,20 @@ var MyMenu;
         function MyMenuPage() {
                 _super.call(this, new MyMenu.MenuDefinition(), null, ViewData.now);
             this.onAjaxCall = ko.observable(false);
+            this.LastRequest = ko.observable();
             ko.applyBindings(this);
         }
+        MyMenuPage.prototype.todayRequest = function () {
+            var lastRequest = this.LastRequest();
+            console.log(lastRequest);
+            var now = this.now();
+            return lastRequest && Utilities.daysDiff(now, lastRequest.Date) === 0 ? lastRequest : null;
+        };
+        MyMenuPage.prototype.previousRequest = function () {
+            var lastRequest = this.LastRequest();
+            var now = this.now();
+            return lastRequest && Utilities.daysDiff(now, lastRequest.Date) > 0 ? lastRequest : null;
+        };
         MyMenuPage.prototype.load = function () {
             var _this = this;
             $.ajax(ViewData.menuUrl, {
@@ -24,6 +36,7 @@ var MyMenu;
                 success: function (employeeMenuDTO) {
                     _this.menu.reset(employeeMenuDTO.MenuDefinition);
                     _this.reset(employeeMenuDTO.EmployeeMenu);
+                    _this.LastRequest(employeeMenuDTO.LastRequest);
                 },
                 error: function (jqXHR) {
                     alert("Error getting EmployeeMenu");

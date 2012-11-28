@@ -205,14 +205,26 @@
     <Content Include="Scripts\my-menu-admin-page.js">
       <DependentUpon>my-menu-admin-page.ts</DependentUpon>
     </Content>
+    <Content Include="Scripts\my-menu-admin-page.min.js">
+      <DependentUpon>my-menu-admin-page.ts</DependentUpon>
+    </Content>
     <Content Include="Scripts\my-menu-admin-page.ts" />
     <Content Include="Scripts\my-menu-page.js">
+      <DependentUpon>my-menu-page.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\my-menu-page.min.js">
       <DependentUpon>my-menu-page.ts</DependentUpon>
     </Content>
     <Content Include="Scripts\my-menu-pages.js">
       <DependentUpon>my-menu-pages.ts</DependentUpon>
     </Content>
+    <Content Include="Scripts\my-menu-pages.min.js">
+      <DependentUpon>my-menu-pages.ts</DependentUpon>
+    </Content>
     <Content Include="Scripts\my-menu.js">
+      <DependentUpon>my-menu.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\my-menu.min.js">
       <DependentUpon>my-menu.ts</DependentUpon>
     </Content>
     <Content Include="Scripts\my-menu.ts" />

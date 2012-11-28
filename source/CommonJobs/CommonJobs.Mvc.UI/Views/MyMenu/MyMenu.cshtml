@@ -17,12 +17,28 @@
 
     <div class="tab-content">
         <div class="tab-pane active" id="todayTab">
-            <div class="alert alert-info">
-                <h4>Coming soon!</h4>
-                <p>Aquí se mostrará el pedido del día (ya realizado o a realizarse)</p>
-            </div>
-            <div class="alert">
-                <strong>MyMenu</strong> es un desarrollo <em>OpenSource</em> realizado en ratos libres. Cualquier mejora es bienvenida, descargá el <a href="https://github.com/CommonJobs/CommonJobs">código fuente de GitHub</a> y hacé tu <em>Pull Request</em>.
+            <div data-bind="with: todayRequest()">
+                <h4>
+                    <span data-bind="text: moment(Date).format('dddd, D [de] MMMM YYYY')"></span> (Semana <span data-bind="text: WeekIdx + 1"></span>)
+                </h4>
+                <span class="label label-warning">
+                    El pedido ya fue realizado y no puede ser modificado. Si no fue de su agrado, recuerde actualizar el menú semanal (<em>Semana <span data-bind="text: WeekIdx + 1"></span> / <span data-bind="text: moment(Date).format('dddd')"></span></em>)
+                </span>
+
+                <dl class="dl-horizontal">
+                  <dt>Lugar</dt>
+                  <dd data-bind="text: Place"></dd>
+                  <dt>Opción</dt>
+                  <dd data-bind="text: Option"></dd>
+                  <dt>Comida</dt>
+                  <dd data-bind="text: Food"></dd>
+                  <!-- ko with: Comment -->
+                  <dt>Comentario</dt>
+                  <dd data-bind="text: $data"></dd>
+                  <!-- /ko -->
+                </dl>
+
+                <hr />
             </div>
         </div>
         <div class="tab-pane" id="configTab">

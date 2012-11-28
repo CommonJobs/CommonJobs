@@ -20,6 +20,12 @@ interface KeyObservableText {
 }
 
 module Utilities {
+    export function daysDiff(date1: any, date2: any) : number {
+        var mmnt1 = moment(date1);
+        var mmnt2 = moment(date2);
+        return mmnt1.isValid() && mmnt2.isValid() ? mmnt1.diff(mmnt2, 'days') : NaN;
+    }
+
 	//TODO export an interface too
     export function dirtyFlag() : any {
 		var observable : any = ko.observable(false);
@@ -381,7 +387,7 @@ module MyMenu {
             }
         }
     }
-
+    
     export class EmployeeMenuDefinition extends WeekStorage {
         MenuId: knockout.koObservableString = ko.observable("");
         EmployeeName: string;

@@ -30,10 +30,12 @@ namespace CommonJobs.Application.MyMenu
                 result.LastRequest = new LastRequestEmployeeMenuDTO()
                 {
                     Date = menuDefinition.LastSentDate,
-                    OptionKey = detail.OptionKey,
-                    PlaceKey = detail.PlaceKey,
+                    Option = lastRequest.OptionsByKey[detail.OptionKey],
+                    Place = lastRequest.PlacesByKey[detail.PlaceKey],
                     Comment = detail.Comment,
                     Food = lastRequest.FoodsByOption[detail.OptionKey],
+                    WeekIdx = lastRequest.WeekIdx,
+                    DayIdx = lastRequest.DayIdx
                 };
             }
 
@@ -44,8 +46,10 @@ namespace CommonJobs.Application.MyMenu
     public class LastRequestEmployeeMenuDTO
     {
         public DateTime Date { get; set; }
-        public string OptionKey { get; set; }
-        public string PlaceKey { get; set; }
+        public int WeekIdx { get; set; }
+        public int DayIdx { get; set; }
+        public string Option { get; set; }
+        public string Place { get; set; }
         public string Comment { get; set; }
         public string Food { get; set; }
     }

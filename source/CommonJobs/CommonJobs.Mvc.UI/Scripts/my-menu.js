@@ -5,6 +5,12 @@ var __extends = this.__extends || function (d, b) {
 }
 var Utilities;
 (function (Utilities) {
+    function daysDiff(date1, date2) {
+        var mmnt1 = moment(date1);
+        var mmnt2 = moment(date2);
+        return mmnt1.isValid() && mmnt2.isValid() ? mmnt1.diff(mmnt2, 'days') : NaN;
+    }
+    Utilities.daysDiff = daysDiff;
     function dirtyFlag() {
         var observable = ko.observable(false);
         observable.register = function (anotherObservable) {
