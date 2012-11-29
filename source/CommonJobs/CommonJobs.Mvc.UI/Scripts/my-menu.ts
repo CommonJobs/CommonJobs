@@ -432,23 +432,48 @@ module MyMenu {
 			this.isDirty(false);
         }
 
-        nearFormated(weekIdx: any, dayIdx: number) {
-            //TODO: remove
-            var now = moment(this.now());
-            var date = this.calendarHelper.near(+weekIdx, dayIdx, now);
-
-            if (date == null)
+        dateFormated(date: any) {
+            var now = moment(this.now()).hours(0).minutes(0).seconds(0).milliseconds(0);
+            date = moment(date)
+            if (!date)
                 return null;
+            date.hours(0).minutes(0).seconds(0).milliseconds(0);
 
             var days = date.diff(now, 'days', true);
 
-            var str = date.format("D [de] MMMM [de] YYYY");
+            var text = date.format("D [de] MMMM [de] YYYY");
+            var near = false;
+            var today = false;
+            var old = days < 0;
 
-            return days == 0 ? "Hoy (" + str + ")"
-                : days == 1 ? "Mañana (" + str + ")"
-                : days == 2 ? "Pasado mañana (" + str + ")"
-                : days < 7 ? "En " + days + " días (" + str + ")"
-                : str;
+            if (old) {
+                text = "¡Ya pasó! (" + text + ")";
+            } else {
+                if (days == 0) {
+                    today = true;
+                    near = true;
+                    text = "Hoy";
+                } else if (days == 1) {
+                    near = true;
+                    text = "Mañana (" + text + ")";
+                } else if (days == 2) {
+                    near = true;
+                    text = "Pasado mañana (" + text + ")";
+                } else if (now.day() >= 4 && days < 5 && date.day() == 1) {
+                    near = true;
+                    text = "Próximo Lunes (" + text + ")";
+                } else if (days < 7) {
+                    text = text + " (en " + days + " días)";
+                }
+            }
+
+            return { old: old, today: today, near: near, text: text };
+        }
+
+        nearFormated(weekIdx: any, dayIdx: number) {
+            var now = moment(this.now());
+            var date = this.calendarHelper.near(+weekIdx, dayIdx, now);
+            return this.dateFormated(date);
         }
         
         createNewItem() {
