@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CommonJobs.Domain.MyMenu
 {
-    public class EmployeeMenuOverrideItem
+    public struct EmployeeMenuOverrideItem
     {
         public DateTime Date { get; set; }
         public bool Cancel { get; set; }

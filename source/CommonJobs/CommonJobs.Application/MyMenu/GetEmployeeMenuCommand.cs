@@ -48,7 +48,10 @@ namespace CommonJobs.Application.MyMenu
 
             var menuDefinition = ExecuteCommand(new GetMenuDefinitionCommand(employeeMenu.MenuId));
 
-            return EmployeeMenuDTO.Create(employee, menuDefinition, employeeMenu);
+            //if (menuDefinition.LastSentDate == 
+            var lastRequest = RavenSession.Load<DailyMenuRequest>(DailyMenuRequest.GenerateId(employeeMenu.MenuId, menuDefinition.LastSentDate));
+            
+            return EmployeeMenuDTO.Create(employee, menuDefinition, employeeMenu, lastRequest);
         }
 
         private static EmployeeMenu CreateDefaultEmployeeMenu(string username, string menuId)
@@ -60,7 +63,7 @@ namespace CommonJobs.Application.MyMenu
                 UserName = username,
                 EmployeeName = "",
                 DefaultPlaceKey = "",
-                WeeklyChoices = new List<EmployeeMenuItem>(),
+                WeeklyChoices = new WeekDayKeyedCollection<EmployeeMenuItem>(),
                 Overrides = new List<EmployeeMenuOverrideItem>()
             };
         }

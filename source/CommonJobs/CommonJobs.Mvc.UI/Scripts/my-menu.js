@@ -5,6 +5,17 @@ var __extends = this.__extends || function (d, b) {
 }
 var Utilities;
 (function (Utilities) {
+    function daysDiff(date1, date2) {
+        var mmnt1 = moment(date1);
+        var mmnt2 = moment(date2);
+        if(!date1 || !date2 || !mmnt1 || !mmnt2) {
+            return NaN;
+        }
+        mmnt1.hours(0).minutes(0).seconds(0).milliseconds(0);
+        mmnt2.hours(0).minutes(0).seconds(0).milliseconds(0);
+        return mmnt1.diff(mmnt2, 'days');
+    }
+    Utilities.daysDiff = daysDiff;
     function dirtyFlag() {
         var observable = ko.observable(false);
         observable.register = function (anotherObservable) {
@@ -360,10 +371,63 @@ var MyMenu;
             return _super.prototype.getItem.call(this, week, day);
         };
         EmployeeMenuDefinition.prototype.getMenuChoice = function (week, day) {
-            return this.getItem(week, day).OptionKey;
+            var item = this.getItem(week, day);
+            return item && item.OptionKey;
         };
         EmployeeMenuDefinition.prototype.getPlaceChoice = function (week, day) {
-            return this.getItem(week, day).PlaceKey;
+            var item = this.getItem(week, day);
+            return item && item.PlaceKey;
+        };
+        EmployeeMenuDefinition.prototype.getChoicesByDate = function (date) {
+            var weekIdx = this.calendarHelper.week(date);
+            var dayIdx = this.calendarHelper.day(date);
+            var placeKey = this.DefaultPlaceKey();
+            var optionKey = null;
+            var comment = null;
+            var food = null;
+            var option = null;
+            var place = null;
+            var item = this.getItem(weekIdx, dayIdx);
+            if(item) {
+                placeKey = item.PlaceKey() || placeKey;
+                optionKey = item.OptionKey() || optionKey;
+            }
+            var override = _.last(_.filter(this.Overrides(), function (x) {
+                return Utilities.daysDiff(x.Date(), date) === 0;
+            }));
+            if(override) {
+                comment = override.Comment();
+                if(override.Cancel()) {
+                    placeKey = null;
+                    optionKey = null;
+                } else {
+                    placeKey = override.PlaceKey() || placeKey;
+                    optionKey = override.OptionKey() || optionKey;
+                }
+            }
+            food = optionKey && this.menu.getFood(weekIdx, dayIdx, optionKey)();
+            var auxPlace = placeKey && _.find(this.menu.Places(), function (x) {
+                return x.Key == placeKey;
+            });
+            place = auxPlace ? auxPlace.Text() : null;
+            var auxOption = optionKey && _.find(this.menu.Options(), function (x) {
+                return x.Key == optionKey;
+            });
+            option = auxOption ? auxOption.Text() : null;
+            if(!food || !placeKey) {
+                place = null;
+                option = null;
+                food = null;
+            }
+            return {
+                Date: date,
+                Place: place,
+                Option: option,
+                Food: food,
+                Comment: comment,
+                WeekIdx: weekIdx,
+                DayIdx: dayIdx
+            };
         };
         EmployeeMenuDefinition.prototype.getDefaultPlaceLabel = function () {
             var key = this.DefaultPlaceKey();
@@ -510,6 +574,7 @@ var MyMenu;
             this.isDirty.register(this.EndDate);
             this.isDirty.register(this.DeadlineTime);
             this.isDirty.register(this.FirstWeekIdx);
+            this.isDirty.register(this.LastSentDate);
             this.MenuDefinitionReset(data);
         }
         MenuDefinition.defaultData = {

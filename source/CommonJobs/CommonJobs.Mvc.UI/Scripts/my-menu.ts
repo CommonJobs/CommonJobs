@@ -20,6 +20,18 @@ interface KeyObservableText {
 }
 
 module Utilities {
+    export function daysDiff(date1: any, date2: any) : number {
+        var mmnt1 = moment(date1);
+        var mmnt2 = moment(date2);
+
+        if (!date1 || !date2 || !mmnt1 || !mmnt2)
+            return NaN;
+
+        mmnt1.hours(0).minutes(0).seconds(0).milliseconds(0);
+        mmnt2.hours(0).minutes(0).seconds(0).milliseconds(0);
+        return mmnt1.diff(mmnt2, 'days');
+    }
+
 	//TODO export an interface too
     export function dirtyFlag() : any {
 		var observable : any = ko.observable(false);
@@ -381,7 +393,7 @@ module MyMenu {
             }
         }
     }
-
+    
     export class EmployeeMenuDefinition extends WeekStorage {
         MenuId: knockout.koObservableString = ko.observable("");
         EmployeeName: string;
@@ -449,13 +461,69 @@ module MyMenu {
         }
 
         getMenuChoice(week: number, day: number): knockout.koObservableString {
-            //return ko.observable("choice " + week + " " + day);
-            return this.getItem(week, day).OptionKey;
+            var item = this.getItem(week, day);
+            return item && item.OptionKey;
         }
 
         getPlaceChoice(week: number, day: number): knockout.koObservableString {
-            //return ko.observable("place " + week + " " + day);
-            return this.getItem(week, day).PlaceKey;
+            var item = this.getItem(week, day);
+            return item && item.PlaceKey;
+        }
+
+        getChoicesByDate(date: any) {
+            //TODO: resuse the same logic in c#
+
+            var weekIdx = this.calendarHelper.week(date);
+            var dayIdx = this.calendarHelper.day(date);
+            var placeKey = this.DefaultPlaceKey();
+            var optionKey: string = null;
+            var comment: string = null;
+            var food: string = null;
+            var option: string = null;
+            var place: string = null;
+
+            var item = this.getItem(weekIdx, dayIdx);
+
+            if (item) {
+                placeKey = item.PlaceKey() || placeKey;
+                optionKey = item.OptionKey() || optionKey;
+            }
+
+            var override = _.last(_.filter(this.Overrides(), x => Utilities.daysDiff(x.Date(), date) === 0));
+
+            if (override) {
+                comment = override.Comment();
+                if (override.Cancel()) {
+                    placeKey = null;
+                    optionKey = null;
+                } else {
+                    placeKey = override.PlaceKey() || placeKey;
+                    optionKey = override.OptionKey() || optionKey;
+                }
+            }
+
+            food = optionKey && this.menu.getFood(weekIdx, dayIdx, optionKey)();
+            var auxPlace = placeKey && _.find(this.menu.Places(), x => x.Key == placeKey);
+            place = auxPlace ? auxPlace.Text() : null;
+            var auxOption = optionKey && _.find(this.menu.Options(), x => x.Key == optionKey);
+            option = auxOption ? auxOption.Text() : null;
+            
+
+            if (!food || !placeKey) {
+                place = null;
+                option = null;
+                food = null;
+            } 
+
+            return {
+                Date: date,
+                Place: place,
+                Option: option,
+                Food: food,
+                Comment: comment,
+                WeekIdx: weekIdx,
+                DayIdx: dayIdx
+            }
         }
 
         getDefaultPlaceLabel() {
@@ -664,6 +732,7 @@ module MyMenu {
 			this.isDirty.register(this.EndDate);
 			this.isDirty.register(this.DeadlineTime);
 			this.isDirty.register(this.FirstWeekIdx);
+			this.isDirty.register(this.LastSentDate);
             this.MenuDefinitionReset(data);
         }
 		
