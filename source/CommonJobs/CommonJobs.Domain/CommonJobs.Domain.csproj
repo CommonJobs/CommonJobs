@@ -60,10 +60,10 @@
     <Compile Include="AttachmentReference.cs" />
     <Compile Include="AttachmentSlot.cs" />
     <Compile Include="AttachmentSlotNecessity.cs" />
-    <Compile Include="MyMenu\DailyMenuRequest.cs">
+    <Compile Include="MyMenu\MenuOrder.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MyMenu\DailyMenuRequestDetailItem.cs">
+    <Compile Include="MyMenu\MenuOrderDetailItem.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="MyMenu\KeyedCollectionHelper.cs" />

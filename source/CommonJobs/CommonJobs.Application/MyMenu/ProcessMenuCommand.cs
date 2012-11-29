@@ -43,9 +43,9 @@ namespace CommonJobs.Application.MyMenu
         {
             var menuDefinition = RavenSession.Load<Menu>(MenuDefinitionId);
             var employeeMenus = GetEmployeeMenus();
-            var request = new DailyMenuRequest(menuDefinition, Now(), employeeMenus);
-            RavenSession.Store(request);
-            menuDefinition.LastSentDate = Now();
+            var order = new MenuOrder(menuDefinition, Now(), employeeMenus);
+            RavenSession.Store(order);
+            menuDefinition.LastOrderDate = Now();
         }
 
         protected override DateTime CalculateNextExecutionTime(DateTime start, DateTime scheduled)
