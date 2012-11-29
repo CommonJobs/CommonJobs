@@ -345,15 +345,57 @@ var MyMenu;
             this.EmployeeMenuDefinitionReset(data);
             this.isDirty(false);
         };
+        EmployeeMenuDefinition.prototype.dateFormated = function (date) {
+            var now = moment(this.now()).hours(0).minutes(0).seconds(0).milliseconds(0);
+            date = moment(date);
+            if(!date) {
+                return null;
+            }
+            date.hours(0).minutes(0).seconds(0).milliseconds(0);
+            var days = date.diff(now, 'days', true);
+            var text = date.format("D [de] MMMM [de] YYYY");
+            var near = false;
+            var today = false;
+            var old = days < 0;
+            if(old) {
+                text = "¡Ya pasó! (" + text + ")";
+            } else {
+                if(days == 0) {
+                    today = true;
+                    near = true;
+                    text = "Hoy";
+                } else {
+                    if(days == 1) {
+                        near = true;
+                        text = "Mañana (" + text + ")";
+                    } else {
+                        if(days == 2) {
+                            near = true;
+                            text = "Pasado mañana (" + text + ")";
+                        } else {
+                            if(now.day() >= 4 && days < 5 && date.day() == 1) {
+                                near = true;
+                                text = "Próximo Lunes (" + text + ")";
+                            } else {
+                                if(days < 7) {
+                                    text = text + " (en " + days + " días)";
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return {
+                old: old,
+                today: today,
+                near: near,
+                text: text
+            };
+        };
         EmployeeMenuDefinition.prototype.nearFormated = function (weekIdx, dayIdx) {
             var now = moment(this.now());
             var date = this.calendarHelper.near(+weekIdx, dayIdx, now);
-            if(date == null) {
-                return null;
-            }
-            var days = date.diff(now, 'days', true);
-            var str = date.format("D [de] MMMM [de] YYYY");
-            return days == 0 ? "Hoy (" + str + ")" : days == 1 ? "Mañana (" + str + ")" : days == 2 ? "Pasado mañana (" + str + ")" : days < 7 ? "En " + days + " días (" + str + ")" : str;
+            return this.dateFormated(date);
         };
         EmployeeMenuDefinition.prototype.createNewItem = function () {
             var dayChoice = new DayChoice();
@@ -426,7 +468,8 @@ var MyMenu;
                 Food: food,
                 Comment: comment,
                 WeekIdx: weekIdx,
-                DayIdx: dayIdx
+                DayIdx: dayIdx,
+                IsOrdered: false
             };
         };
         EmployeeMenuDefinition.prototype.getDefaultPlaceLabel = function () {
@@ -564,7 +607,7 @@ var MyMenu;
             this.StartDate = ko.observable("");
             this.EndDate = ko.observable("");
             this.DeadlineTime = ko.observable("");
-            this.LastSentDate = ko.observable("");
+            this.LastOrderDate = ko.observable("");
             this.FirstWeekIdx = ko.observable(0);
             this.isDirty.register(this.Id);
             this.isDirty.register(this.Title);
@@ -574,7 +617,7 @@ var MyMenu;
             this.isDirty.register(this.EndDate);
             this.isDirty.register(this.DeadlineTime);
             this.isDirty.register(this.FirstWeekIdx);
-            this.isDirty.register(this.LastSentDate);
+            this.isDirty.register(this.LastOrderDate);
             this.MenuDefinitionReset(data);
         }
         MenuDefinition.defaultData = {
@@ -586,7 +629,7 @@ var MyMenu;
             Places: [],
             StartDate: "2000-01-01",
             EndDate: "2100-01-01",
-            LastSentDate: "2000-01-01",
+            LastOrderDate: "2000-01-01",
             DeadlineTime: "09:30",
             Foods: []
         };
@@ -630,7 +673,7 @@ var MyMenu;
             this.EndDate(data.EndDate);
             this.FirstWeekIdx(data.FirstWeekIdx);
             this.DeadlineTime(data.DeadlineTime);
-            this.LastSentDate(data.LastSentDate);
+            this.LastOrderDate(data.LastOrderDate);
             this.Places.removeAll();
             for(i in data.Places) {
                 this.addPlace(data.Places[i]);
@@ -657,7 +700,7 @@ var MyMenu;
             var data = {
                 Id: this.Id(),
                 DeadlineTime: this.DeadlineTime(),
-                LastSentDate: this.LastSentDate(),
+                LastOrderDate: this.LastOrderDate(),
                 Title: this.Title(),
                 FirstWeekIdx: this.FirstWeekIdx(),
                 WeeksQuantity: this.WeeksQuantity(),
