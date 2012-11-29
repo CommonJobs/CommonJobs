@@ -60,9 +60,19 @@
     <Compile Include="AttachmentReference.cs" />
     <Compile Include="AttachmentSlot.cs" />
     <Compile Include="AttachmentSlotNecessity.cs" />
+    <Compile Include="MyMenu\DailyMenuRequest.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MyMenu\DailyMenuRequestDetailItem.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MyMenu\KeyedCollectionHelper.cs" />
+    <Compile Include="MyMenu\WeekDayKeyed.cs" />
+    <Compile Include="MyMenu\WeekDayOptionKeyed.cs" />
     <Compile Include="MyMenu\EmployeeMenuOverrideItem.cs" />
     <Compile Include="MyMenu\EmployeeMenuItem.cs" />
     <Compile Include="MyMenu\EmployeeMenu.cs" />
+    <Compile Include="MyMenu\StringKeyed.cs" />
     <Compile Include="MyMenu\Place.cs" />
     <Compile Include="MyMenu\Option.cs" />
     <Compile Include="MyMenu\MenuItem.cs" />

@@ -8,6 +8,16 @@ declare var urlGenerator: any;
 declare var ViewData: any;
 
 module MyMenu {
+    export interface LastRequestData {
+        Date: string;
+        Option: string;
+        Place: string;
+        Comment: string;
+        Food: string;
+        WeekIdx: number;
+        DayIdx: number;
+    }
+
     
     $(document).ready(() => {
         var myMenuPage = new MyMenuPage();
@@ -16,12 +26,38 @@ module MyMenu {
 
     export class MyMenuPage extends EmployeeMenuDefinition {
 		onAjaxCall: knockout.koObservableBool = ko.observable(false);
+		LastRequest: knockout.koObservableAny = ko.observable();
+        
         constructor () {
             super(new MenuDefinition(), null, ViewData.now);
             ko.applyBindings(this);
         }
 
+        todayToRequest() {
+            var lastRequest = <LastRequestData>this.LastRequest();
+            var now = this.now();
+
+            if (lastRequest && Utilities.daysDiff(now, lastRequest.Date) === 0) {
+                return null;
+            }
+
+            return this.getChoicesByDate(now);
+        }
+
+        todayRequest() : LastRequestData {
+            var lastRequest = <LastRequestData>this.LastRequest();
+            var now = this.now();
+            return lastRequest && Utilities.daysDiff(now, lastRequest.Date) === 0 ? lastRequest : null;
+        }
+
+        previousRequest() : LastRequestData {
+            var lastRequest = <LastRequestData>this.LastRequest();
+            var now = this.now();
+            return lastRequest && Utilities.daysDiff(now, lastRequest.Date) > 0 ? lastRequest : null;
+        }
+
         load() {
+            this.onAjaxCall(true);
             $.ajax(
             ViewData.menuUrl,
             {
@@ -30,6 +66,7 @@ module MyMenu {
                 success: (employeeMenuDTO) => {
                     this.menu.reset(employeeMenuDTO.MenuDefinition);
                     this.reset(employeeMenuDTO.EmployeeMenu);
+                    this.LastRequest(employeeMenuDTO.LastRequest);
                 },
                 error: (jqXHR) => {
                     alert("Error getting EmployeeMenu");
@@ -40,6 +77,7 @@ module MyMenu {
         }
 
         save() {
+            this.onAjaxCall(true);
             var data = this.exportData();
             $.ajax(
                 ViewData.menuUrl,
