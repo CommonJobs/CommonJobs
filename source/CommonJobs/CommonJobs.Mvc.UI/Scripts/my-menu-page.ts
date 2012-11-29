@@ -8,17 +8,7 @@ declare var urlGenerator: any;
 declare var ViewData: any;
 
 module MyMenu {
-    export interface LastRequestData {
-        Date: string;
-        Option: string;
-        Place: string;
-        Comment: string;
-        Food: string;
-        WeekIdx: number;
-        DayIdx: number;
-    }
 
-    
     $(document).ready(() => {
         var myMenuPage = new MyMenuPage();
         myMenuPage.load()
@@ -26,35 +16,38 @@ module MyMenu {
 
     export class MyMenuPage extends EmployeeMenuDefinition {
 		onAjaxCall: knockout.koObservableBool = ko.observable(false);
-		LastRequest: knockout.koObservableAny = ko.observable();
+		LastOrder: knockout.koObservableAny = ko.observable();
         
         constructor () {
             super(new MenuDefinition(), null, ViewData.now);
             ko.applyBindings(this);
         }
 
-        todayToRequest() {
-            var lastRequest = <LastRequestData>this.LastRequest();
+        todayOrder() : EmployeeOrderData {
+            var lastOrder = <EmployeeOrderData>this.LastOrder();
             var now = this.now();
-
-            if (lastRequest && Utilities.daysDiff(now, lastRequest.Date) === 0) {
-                return null;
+            if (lastOrder && Utilities.daysDiff(now, lastOrder.Date) === 0) {
+                return lastOrder;
+            } else {
+                return this.getChoicesByDate(now);
             }
-
-            return this.getChoicesByDate(now);
         }
 
-        todayRequest() : LastRequestData {
-            var lastRequest = <LastRequestData>this.LastRequest();
+        /*
+        TODO, complete it and add to UI
+
+        previousOrder() : EmployeeOrderData {
+            var lastOrder = <EmployeeOrderData>this.LastOrder();
             var now = this.now();
-            return lastRequest && Utilities.daysDiff(now, lastRequest.Date) === 0 ? lastRequest : null;
+            return lastOrder && Utilities.daysDiff(now, lastOrder.Date) > 0 ? lastOrder : null;
         }
 
-        previousRequest() : LastRequestData {
-            var lastRequest = <LastRequestData>this.LastRequest();
-            var now = this.now();
-            return lastRequest && Utilities.daysDiff(now, lastRequest.Date) > 0 ? lastRequest : null;
+        nextOrder() : EmployeeOrderData {
+            //TODO: calculate tomorrow (or next monday) order based on menu and current data
         }
+
+        */
+
 
         load() {
             this.onAjaxCall(true);
@@ -66,7 +59,7 @@ module MyMenu {
                 success: (employeeMenuDTO) => {
                     this.menu.reset(employeeMenuDTO.MenuDefinition);
                     this.reset(employeeMenuDTO.EmployeeMenu);
-                    this.LastRequest(employeeMenuDTO.LastRequest);
+                    this.LastOrder(employeeMenuDTO.LastOrder);
                 },
                 error: (jqXHR) => {
                     alert("Error getting EmployeeMenu");

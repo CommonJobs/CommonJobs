@@ -14,26 +14,17 @@ var MyMenu;
         function MyMenuPage() {
                 _super.call(this, new MyMenu.MenuDefinition(), null, ViewData.now);
             this.onAjaxCall = ko.observable(false);
-            this.LastRequest = ko.observable();
+            this.LastOrder = ko.observable();
             ko.applyBindings(this);
         }
-        MyMenuPage.prototype.todayToRequest = function () {
-            var lastRequest = this.LastRequest();
+        MyMenuPage.prototype.todayOrder = function () {
+            var lastOrder = this.LastOrder();
             var now = this.now();
-            if(lastRequest && Utilities.daysDiff(now, lastRequest.Date) === 0) {
-                return null;
+            if(lastOrder && Utilities.daysDiff(now, lastOrder.Date) === 0) {
+                return lastOrder;
+            } else {
+                return this.getChoicesByDate(now);
             }
-            return this.getChoicesByDate(now);
-        };
-        MyMenuPage.prototype.todayRequest = function () {
-            var lastRequest = this.LastRequest();
-            var now = this.now();
-            return lastRequest && Utilities.daysDiff(now, lastRequest.Date) === 0 ? lastRequest : null;
-        };
-        MyMenuPage.prototype.previousRequest = function () {
-            var lastRequest = this.LastRequest();
-            var now = this.now();
-            return lastRequest && Utilities.daysDiff(now, lastRequest.Date) > 0 ? lastRequest : null;
         };
         MyMenuPage.prototype.load = function () {
             var _this = this;
@@ -44,7 +35,7 @@ var MyMenu;
                 success: function (employeeMenuDTO) {
                     _this.menu.reset(employeeMenuDTO.MenuDefinition);
                     _this.reset(employeeMenuDTO.EmployeeMenu);
-                    _this.LastRequest(employeeMenuDTO.LastRequest);
+                    _this.LastOrder(employeeMenuDTO.LastOrder);
                 },
                 error: function (jqXHR) {
                     alert("Error getting EmployeeMenu");

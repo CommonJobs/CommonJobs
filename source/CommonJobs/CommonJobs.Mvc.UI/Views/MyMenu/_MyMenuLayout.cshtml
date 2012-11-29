@@ -23,7 +23,9 @@
     Func<dynamic, string> getString = v => v == null ? "" : (string)v;
 
     bool showNavigation = getBool(ViewBag.ShowNavigation);
+    bool hidePersistenceButtons = getBool(ViewBag.HidePersistenceButtons);
     bool activeMenuDefinition = getBool(ViewBag.ActiveMenuDefinition);
+    bool activeMenuOrder = getBool(ViewBag.ActiveMenuOrder);
     bool activeMyMenu = getBool(ViewBag.ActiveMyMenu);
     bool activeAnotherMenu = getBool(ViewBag.ActiveAnotherMenu);
     string anotherMenuUser = getString(ViewBag.AnotherMenuUser);
@@ -62,16 +64,19 @@
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="navbar-inner">
             
+            @if (!hidePersistenceButtons) {
             <div style="float:right;">
                 <form class="form-inline" id="persistenceForm">
                     <button class="btn btn-inverse" disabled="disabled" data-bind="click: load, enable: !onAjaxCall(), text: isDirty() ? 'Descartar' : 'Recargar'">Recargar</button>
                     <button class="btn btn-primary" disabled="disabled" data-bind="click: save, enable: isDirty() && !onAjaxCall()">Guardar</button>
                 </form>
             </div>
+            }
             
             <div class="nav-collapse collapse">
                 <ul class="nav">
                     @if (showNavigation) {
+                        <li class="@(activeMenuOrder ? "active" : "")">@Html.ActionLink("Pedido del día", "Order")</li>
                         <li class="@(activeMenuDefinition ? "active" : "")">@Html.ActionLink("Definición de los menues", "Admin")</li>
                     }
                     <li class="@(activeMyMenu ? "active" : "")">@Html.ActionLink("Mi Menú", "Index")</li>

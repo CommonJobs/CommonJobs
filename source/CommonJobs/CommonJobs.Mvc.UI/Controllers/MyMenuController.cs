@@ -116,8 +116,7 @@ namespace CommonJobs.Mvc.UI.Controllers
             ExecuteCommand(new UpdateMenuDefinitionCommand(menuDefinition, DateTime.Now));
             return Json(new { ok = true });
         }
-
-        
+                
         [AcceptVerbs(HttpVerbs.Get)]
         [ActionName("MenuDefinition")]
         public JsonNetResult GetMenuDefinition(string id /*menuid*/)
@@ -126,5 +125,27 @@ namespace CommonJobs.Mvc.UI.Controllers
             
             return Json(menu);
         }
+
+        [CommonJobsAuthorize(Roles = "Users,MenuManagers")]
+        public ActionResult Order(string id /*menuid*/ = null)
+        {
+            ViewBag.ActiveMenuOrder = true;
+            ViewBag.ShowNavigation = true;
+            ViewBag.HidePersistenceButtons = true;
+
+            var order = ExecuteCommand(new GetOrderCommand() { Date = DateTime.Now, MenuDefinitionId = id });
+
+            ScriptManager.RegisterGlobalJavascript(
+                "ViewData",
+                new
+                {
+                    menuId = id,
+                    now = DateTime.Now,
+                    order = order
+                },
+                500);
+            return View();
+        }
+
     }
 }

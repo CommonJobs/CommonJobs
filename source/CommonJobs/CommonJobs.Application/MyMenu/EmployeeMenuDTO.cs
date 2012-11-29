@@ -11,10 +11,10 @@ namespace CommonJobs.Application.MyMenu
     {
         public EmployeeMenu EmployeeMenu { get; set; }
         public Menu MenuDefinition { get; set; }
-        public LastRequestEmployeeMenuDTO LastRequest { get; set; }
+        public EmployeeMenuOrderDTO LastOrder { get; set; }
         
 
-        public static EmployeeMenuDTO Create(Employee employee, Menu menuDefinition, EmployeeMenu employeeMenu, DailyMenuRequest lastRequest)
+        public static EmployeeMenuDTO Create(Employee employee, Menu menuDefinition, EmployeeMenu employeeMenu, MenuOrder lastOrder)
         {
             employeeMenu.EmployeeName = string.Format("{0}, {1}", employee.LastName, employee.FirstName);
             
@@ -24,18 +24,19 @@ namespace CommonJobs.Application.MyMenu
                 MenuDefinition = menuDefinition
             };
 
-            if (lastRequest != null && lastRequest.DetailByUserName.ContainsKey(employee.UserName))
+            if (lastOrder != null && lastOrder.DetailByUserName.ContainsKey(employee.UserName))
             {
-                var detail = lastRequest.DetailByUserName[employee.UserName];
-                result.LastRequest = new LastRequestEmployeeMenuDTO()
+                var detail = lastOrder.DetailByUserName[employee.UserName];
+                result.LastOrder = new EmployeeMenuOrderDTO()
                 {
-                    Date = menuDefinition.LastSentDate,
-                    Option = lastRequest.OptionsByKey[detail.OptionKey],
-                    Place = lastRequest.PlacesByKey[detail.PlaceKey],
+                    Date = menuDefinition.LastOrderDate,
+                    Option = lastOrder.OptionsByKey[detail.OptionKey],
+                    Place = lastOrder.PlacesByKey[detail.PlaceKey],
                     Comment = detail.Comment,
-                    Food = lastRequest.FoodsByOption[detail.OptionKey],
-                    WeekIdx = lastRequest.WeekIdx,
-                    DayIdx = lastRequest.DayIdx
+                    Food = lastOrder.FoodsByOption[detail.OptionKey],
+                    WeekIdx = lastOrder.WeekIdx,
+                    DayIdx = lastOrder.DayIdx,
+                    IsOrdered = true
                 };
             }
 
@@ -43,7 +44,7 @@ namespace CommonJobs.Application.MyMenu
         }
     }
 
-    public class LastRequestEmployeeMenuDTO
+    public class EmployeeMenuOrderDTO
     {
         public DateTime Date { get; set; }
         public int WeekIdx { get; set; }
@@ -52,5 +53,6 @@ namespace CommonJobs.Application.MyMenu
         public string Place { get; set; }
         public string Comment { get; set; }
         public string Food { get; set; }
+        public bool IsOrdered { get; set; }
     }
 }

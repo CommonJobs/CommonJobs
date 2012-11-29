@@ -6,9 +6,53 @@
 
 <div class="container">
 
+    <div data-bind="with: todayOrder()">
+        <h4>
+            <span data-bind="text: moment(Date).format('dddd, D [de] MMMM YYYY')"></span> (Semana <span data-bind="text: WeekIdx + 1"></span>)
+        </h4>
+                
+        <!-- ko ifnot: IsOrdered -->
+        <span class="badge badge-success">
+            El pedido aún no fue realizado. Puede modificarse editando el <em><span data-bind="text: moment(Date).format('dddd')"></span> de la Semana <span data-bind="text: WeekIdx + 1"></span></em> o el <em>día específico</em>.
+        </span>
+        <!-- /ko -->
+        <!-- ko if: IsOrdered -->
+        <span class="badge badge-warning">
+            El pedido ya fue realizado y no puede ser modificado. Si no fue de su agrado, recuerde actualizar el menú semanal (<em>Semana <span data-bind="text: WeekIdx + 1"></span> / <span data-bind="text: moment(Date).format('dddd')"></span></em>).
+        </span>
+        <!-- /ko -->
+
+        <dl class="dl-horizontal">
+            <!-- ko ifnot: Food -->
+            <dt>Comida:</dt>
+            <dd><strong class="text-error">No come aquí</strong></dd>
+            <!-- /ko -->
+            <!-- ko if: Food -->
+            <dt>Lugar:</dt>
+            <dd data-bind="text: Place"></dd>
+            <dt>Opción:</dt>
+            <dd data-bind="text: Option"></dd>
+            <dt>Comida:</dt>
+            <dd data-bind="text: Food"></dd>
+            <!-- /ko -->
+            <!-- ko with: Comment -->
+            <dt>Comentario:</dt>
+            <dd data-bind="text: $data"></dd>
+            <!-- /ko -->
+        </dl>
+        
+        <!-- ko ifnot: IsOrdered -->
+        <div class="alert alert-info">
+            <strong>Coming soon!</strong> Si aún no se ha hecho el pedido, se podrá modificar el menú del día directamente desde aquí.
+        </div>
+        <!-- /ko -->
+
+        <hr />
+
+    </div>
+
     <ul class="nav nav-tabs" id="myTab">
-        <li class="active"><a href="#todayTab" data-toggle="tab">Hoy</a></li>
-        <li><a href="#configTab" data-toggle="tab">Configuración</a></li>
+        <li class="active"><a href="#configTab" data-toggle="tab">Configuración</a></li>
         <li><a href="#overridesTab" data-toggle="tab">Días específicos</a></li>
         <!-- ko foreach: Weeks -->
         <li><a data-toggle="tab" data-bind="attr: { href: '#week' + Key + 'Tab' }, text: Text"></a></li>
@@ -16,69 +60,7 @@
     </ul>
 
     <div class="tab-content">
-        <div class="tab-pane active" id="todayTab">
-            <div data-bind="with: todayToRequest()">
-                <h4>
-                    <span data-bind="text: moment(Date).format('dddd, D [de] MMMM YYYY')"></span> (Semana <span data-bind="text: WeekIdx + 1"></span>)
-                </h4>
-                <span class="badge badge-success">
-                    El pedido aún no fue realizado. Puede modificarse editando el <em><span data-bind="text: moment(Date).format('dddd')"></span> de la Semana <span data-bind="text: WeekIdx + 1"></span></em> o el <em>día específico</em>.
-                </span>
-
-                <dl class="dl-horizontal">
-                   <!-- ko ifnot: Food -->
-                   <dt>Comida:</dt>
-                   <dd><strong class="text-error">No come aquí</strong></dd>
-                   <!-- /ko -->
-                   <!-- ko if: Food -->
-                  <dt>Lugar:</dt>
-                  <dd data-bind="text: Place"></dd>
-                  <dt>Opción:</dt>
-                  <dd data-bind="text: Option"></dd>
-                  <dt>Comida:</dt>
-                  <dd data-bind="text: Food"></dd>
-                  <!-- /ko -->
-                  <!-- ko with: Comment -->
-                  <dt>Comentario:</dt>
-                  <dd data-bind="text: $data"></dd>
-                  <!-- /ko -->
-                </dl>
-                <hr />
-                <div class="alert alert-info alert-block">
-                    <h4>Coming soon!</h4>
-                    <p>Si aún no se ha hecho el pedido, se podrá modificar el menú del día directamente desde aquí.</p>
-                </div>
-            </div>
-            <div data-bind="with: todayRequest()">
-                <h4>
-                    <span data-bind="text: moment(Date).format('dddd, D [de] MMMM YYYY')"></span> (Semana <span data-bind="text: WeekIdx + 1"></span>)
-                </h4>
-                <span class="badge badge-warning">
-                    El pedido ya fue realizado y no puede ser modificado. Si no fue de su agrado, recuerde actualizar el menú semanal (<em>Semana <span data-bind="text: WeekIdx + 1"></span> / <span data-bind="text: moment(Date).format('dddd')"></span></em>).
-                </span>
-
-                <dl class="dl-horizontal">
-                  <!-- ko ifnot: Food -->
-                  <dt>Comida:</dt>
-                  <dd><strong class="text-error">No come aquí</strong></dd>
-                  <!-- /ko -->
-                  <!-- ko if: Food -->
-                  <dt>Lugar:</dt>
-                  <dd data-bind="text: Place"></dd>
-                  <dt>Opción:</dt>
-                  <dd data-bind="text: Option"></dd>
-                  <dt>Comida:</dt>
-                  <dd data-bind="text: Food"></dd>
-                  <!-- /ko -->
-                  <!-- ko with: Comment -->
-                  <dt>Comentario:</dt>
-                  <dd data-bind="text: $data"></dd>
-                  <!-- /ko -->
-                </dl>
-                <hr />
-            </div>
-        </div>
-        <div class="tab-pane" id="configTab">
+        <div class="tab-pane active" id="configTab">
             <form class="form-horizontal">
                 <div class="control-group">
                     <label class="control-label" for="defaultPlace">Lugar por defecto:</label>
@@ -91,24 +73,42 @@
                     </div>
                 </div>
             </form>
-            <div class="alert alert-info alert-block">
-                <h4>Coming soon!</h4>
-                <p>También se podrá configurar si se desean recibir notificaciones por e-mail.</p>
+            <div class="alert alert-info">
+                <strong>Coming soon!</strong> También se podrá configurar si se desean recibir notificaciones por e-mail.
             </div>
         </div>
 
         <div class="tab-pane" id="overridesTab">
-            <div class="alert alert-info alert-block">
-                <h4>Coming soon!</h4>
-                <p>Pronto los cambiós por días específicos se realizarán en una vista de calendario y se permitirá marcar un periodo de varios días.</p>
-                <p>Por ahora, formularios sin validación!</p>
+            <div class="alert alert-info">
+                <strong>Coming soon!</strong> Pronto los cambiós por días específicos se realizarán en una vista de calendario y se permitirá marcar un periodo de varios días.
+                Por ahora: ¡formularios sin validación!
             </div>
 
             <button class="btn" type="button" data-bind="click: addOverride"><i class="icon-plus"></i>Agregar</button>
             <br /><br />
             <!-- ko foreach: Overrides -->
             <form class="well well-small form-horizontal">
-                <button class="btn" type="button" data-bind="click: $root.removeOverride"><i class="icon-remove"></i>Quitar</button>
+
+                <div class="row-fluid">
+                    <div class="span3">
+                        <button class="btn" type="button" data-bind="click: $root.removeOverride"><i class="icon-remove"></i>Quitar</button>
+                    </div>
+                    <div class="span9" data-bind="with: $root.dateFormated(Date())">
+                        <!-- ko if: old -->
+                            <span class="label label-inverse pull-right" data-bind="text: text"></span>
+                        <!-- /ko -->
+                        <!-- ko if: !old && today -->
+                            <span class="label label-important pull-right" data-bind="text: text"></span>
+                        <!-- /ko -->
+                        <!-- ko if: !old && near && !today -->
+                            <span class="label label-warning pull-right" data-bind="text: text"></span>
+                        <!-- /ko -->
+                        <!-- ko if: !old && !near && !today -->
+                            <small class="muted pull-right" data-bind="text: text"></small>
+                        <!-- /ko -->
+                    </div>
+                </div>
+
 
                 <div class="control-group">
                     <label class="control-label">Fecha:</label>
@@ -169,11 +169,23 @@
         <div class="tab-pane" data-bind="attr: { id: 'week' + Key + 'Tab' }">
             <!-- ko foreach: MyMenu.days() -->
             <div class="well well-small">
-                <div>
-                    <h4><!--ko text: MyMenu.days.getName($data)--><!--/ko--></h4>
-                    <small>Próximo día: <!-- ko text: $root.nearFormated($parent.Key, $data) -->TODO: REMOVE<!-- /ko --></small>
+                <div class="row-fluid">
+                    <div class="span3">
+                        <strong><!--ko text: MyMenu.days.getName($data)--><!--/ko--></strong>
+                    </div>
+                    <div class="span9" data-bind="with: $root.nearFormated($parent.Key, $data)">
+                        <!-- ko if: today -->
+                            <span class="label label-important pull-right" data-bind="text: text"></span>
+                        <!-- /ko -->
+                        <!-- ko if: near && !today -->
+                            <span class="label label-warning pull-right" data-bind="text: text"></span>
+                        <!-- /ko -->
+                        <!-- ko if: !near && !today -->
+                            <small class="muted pull-right" data-bind="text: text"></small>
+                        <!-- /ko -->
+                    </div>
                 </div>
-                <div class="row">
+                <div class="row-fluid">
                     <div class="offset1 span7">
                         <label>
                             <input type="radio" data-bind="attr: { name: 'option_' + $parent.Key + '_' + $data }, value: '', checked:$root.getMenuChoice($parent.Key, $data)" />

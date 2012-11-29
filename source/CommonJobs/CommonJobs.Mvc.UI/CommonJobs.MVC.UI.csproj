@@ -262,6 +262,7 @@
     <Content Include="Views\MyMenu\_MyMenuLayout.cshtml" />
     <Content Include="Content\collapsable-sections.less" />
     <Content Include="Content\twitter-bootstrap\less\media.less" />
+    <Content Include="Views\MyMenu\Order.cshtml" />
     <None Include="_bin_deployableAssemblies\FSharp.Core.dll" />
   </ItemGroup>
   <ItemGroup>

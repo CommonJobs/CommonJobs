@@ -47,11 +47,14 @@ namespace CommonJobs.Application.MyMenu
             }
 
             var menuDefinition = ExecuteCommand(new GetMenuDefinitionCommand(employeeMenu.MenuId));
-
-            //if (menuDefinition.LastSentDate == 
-            var lastRequest = RavenSession.Load<DailyMenuRequest>(DailyMenuRequest.GenerateId(employeeMenu.MenuId, menuDefinition.LastSentDate));
             
-            return EmployeeMenuDTO.Create(employee, menuDefinition, employeeMenu, lastRequest);
+            var lastOrder = RavenSession.Load<MenuOrder>(MenuOrder.GenerateId(employeeMenu.MenuId, menuDefinition.LastOrderDate));
+            if (lastOrder != null)
+            {
+                lastOrder.IsOrdered = true;
+            }
+            
+            return EmployeeMenuDTO.Create(employee, menuDefinition, employeeMenu, lastOrder);
         }
 
         private static EmployeeMenu CreateDefaultEmployeeMenu(string username, string menuId)

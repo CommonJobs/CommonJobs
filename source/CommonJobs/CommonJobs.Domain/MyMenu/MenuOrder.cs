@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CommonJobs.Domain.MyMenu
 {
-    public class DailyMenuRequest
+    public class MenuOrder
     {
         public string Id { get; set; }
         public DateTime Date { get; set; }
@@ -16,30 +16,31 @@ namespace CommonJobs.Domain.MyMenu
         public Dictionary<string, string> OptionsByKey { get; set; }
         public Dictionary<string, string> FoodsByOption { get; set; }
         public Dictionary<string, Dictionary<string, int>> QuantityByOptionByPlace { get; set; }
-        public Dictionary<string, DailyMenuRequestDetailItem> DetailByUserName { get; set; }
+        public Dictionary<string, MenuOrderDetailItem> DetailByUserName { get; set; }
+        public bool IsOrdered { get; set; }
 
         public static string GenerateId(string menuId, DateTime date)
         {
             return string.Format("{0}/{1:yyyy-MM-dd}", menuId, date.Date);
         }
 
-        private DailyMenuRequest()
+        private MenuOrder()
         {
             //RavenDB use
-            DetailByUserName = new Dictionary<string, DailyMenuRequestDetailItem>();
+            DetailByUserName = new Dictionary<string, MenuOrderDetailItem>();
             QuantityByOptionByPlace = new Dictionary<string, Dictionary<string, int>>();
             PlacesByKey = new Dictionary<string, string>();
             OptionsByKey = new Dictionary<string, string>();
             FoodsByOption = new Dictionary<string, string>();
         }
 
-        public DailyMenuRequest(Menu menu, DateTime date, IEnumerable<EmployeeMenu> employeeMenues)
+        public MenuOrder(Menu menu, DateTime date, IEnumerable<EmployeeMenu> employeeMenues)
         {
             Date = date.Date;
             Id = GenerateId(menu.Id, date);
             MenuId = menu.Id;
 
-            DetailByUserName = new Dictionary<string, DailyMenuRequestDetailItem>();
+            DetailByUserName = new Dictionary<string, MenuOrderDetailItem>();
             PlacesByKey = menu.Places.ToDictionary(x => x.Key, x => x.Text);
             OptionsByKey = menu.Options.ToDictionary(x => x.Key, x => x.Text);
 
@@ -106,7 +107,7 @@ namespace CommonJobs.Domain.MyMenu
 
         #endregion
 
-        private DailyMenuRequestDetailItem CreateDetailItem(EmployeeMenu employeeMenu)
+        private MenuOrderDetailItem CreateDetailItem(EmployeeMenu employeeMenu)
         {
             string placeKey = null;
             string optionKey = null;
@@ -134,7 +135,7 @@ namespace CommonJobs.Domain.MyMenu
 
             var comment = IsNotEmpty(lastOverride.Comment) ? lastOverride.Comment : null;
 
-            return new DailyMenuRequestDetailItem()
+            return new MenuOrderDetailItem()
             {
                 EmployeeName = employeeMenu.EmployeeName,
                 PlaceKey = placeKey,

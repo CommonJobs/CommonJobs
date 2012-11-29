@@ -22,7 +22,7 @@ namespace CommonJobs.Domain.MyMenu
         public StringKeyedCollection<Place> Places { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public DateTime LastSentDate { get; set; }
+        public DateTime LastOrderDate { get; set; }
         public string DeadlineTime { get; set; }
         public WeekDayOptionKeyedCollection<MenuItem> Foods { get; set; }
 
@@ -33,7 +33,7 @@ namespace CommonJobs.Domain.MyMenu
 
             //TODO: It will fail if the deadlineTime is near to 00:00
             var date = StartDate > now.Date ? StartDate : now.Date;
-            if (LastSentDate.Date >= date)
+            if (LastOrderDate.Date >= date)
                 date = date.AddDays(1);
 
             var deadlineTS = TimeSpan.Zero;
