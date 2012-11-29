@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CommonJobs.Domain.MyMenu
 {
-    public struct DailyMenuRequestDetailItem
+    public struct MenuOrderDetailItem
     {
         public string PlaceKey { get; set; }
         public string OptionKey { get; set; }

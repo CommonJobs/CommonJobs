@@ -426,7 +426,8 @@ var MyMenu;
                 Food: food,
                 Comment: comment,
                 WeekIdx: weekIdx,
-                DayIdx: dayIdx
+                DayIdx: dayIdx,
+                IsOrdered: false
             };
         };
         EmployeeMenuDefinition.prototype.getDefaultPlaceLabel = function () {
@@ -564,7 +565,7 @@ var MyMenu;
             this.StartDate = ko.observable("");
             this.EndDate = ko.observable("");
             this.DeadlineTime = ko.observable("");
-            this.LastSentDate = ko.observable("");
+            this.LastOrderDate = ko.observable("");
             this.FirstWeekIdx = ko.observable(0);
             this.isDirty.register(this.Id);
             this.isDirty.register(this.Title);
@@ -574,7 +575,7 @@ var MyMenu;
             this.isDirty.register(this.EndDate);
             this.isDirty.register(this.DeadlineTime);
             this.isDirty.register(this.FirstWeekIdx);
-            this.isDirty.register(this.LastSentDate);
+            this.isDirty.register(this.LastOrderDate);
             this.MenuDefinitionReset(data);
         }
         MenuDefinition.defaultData = {
@@ -586,7 +587,7 @@ var MyMenu;
             Places: [],
             StartDate: "2000-01-01",
             EndDate: "2100-01-01",
-            LastSentDate: "2000-01-01",
+            LastOrderDate: "2000-01-01",
             DeadlineTime: "09:30",
             Foods: []
         };
@@ -630,7 +631,7 @@ var MyMenu;
             this.EndDate(data.EndDate);
             this.FirstWeekIdx(data.FirstWeekIdx);
             this.DeadlineTime(data.DeadlineTime);
-            this.LastSentDate(data.LastSentDate);
+            this.LastOrderDate(data.LastOrderDate);
             this.Places.removeAll();
             for(i in data.Places) {
                 this.addPlace(data.Places[i]);
@@ -657,7 +658,7 @@ var MyMenu;
             var data = {
                 Id: this.Id(),
                 DeadlineTime: this.DeadlineTime(),
-                LastSentDate: this.LastSentDate(),
+                LastOrderDate: this.LastOrderDate(),
                 Title: this.Title(),
                 FirstWeekIdx: this.FirstWeekIdx(),
                 WeeksQuantity: this.WeeksQuantity(),

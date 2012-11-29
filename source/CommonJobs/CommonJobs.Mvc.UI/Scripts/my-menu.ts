@@ -258,7 +258,7 @@ module MyMenu {
         Places?: KeyText[];
         StartDate?: string;
         EndDate?: string;
-        LastSentDate?: string;
+        LastOrderDate?: string;
         DeadlineTime?: string;
         Foods?: MenuDataItem[]; 
     }
@@ -278,6 +278,17 @@ module MyMenu {
         OptionKey?: string; 
         PlaceKey?: string;
         Comment?: string;
+    }
+
+    export interface EmployeeOrderData {
+        Date: string;
+        Option: string;
+        Place: string;
+        Comment: string;
+        Food: string;
+        WeekIdx: number;
+        DayIdx: number;
+        IsOrdered: bool;
     }
 
     export interface EmployeeMenuData {
@@ -470,7 +481,7 @@ module MyMenu {
             return item && item.PlaceKey;
         }
 
-        getChoicesByDate(date: any) {
+        getChoicesByDate(date: any) : EmployeeOrderData {
             //TODO: resuse the same logic in c#
 
             var weekIdx = this.calendarHelper.week(date);
@@ -522,7 +533,8 @@ module MyMenu {
                 Food: food,
                 Comment: comment,
                 WeekIdx: weekIdx,
-                DayIdx: dayIdx
+                DayIdx: dayIdx,
+                IsOrdered: false
             }
         }
 
@@ -668,7 +680,7 @@ module MyMenu {
             Places: [],
             StartDate: "2000-01-01",
             EndDate: "2100-01-01",
-            LastSentDate: "2000-01-01",
+            LastOrderDate: "2000-01-01",
             DeadlineTime: "09:30",
             Foods: []
         };
@@ -681,7 +693,7 @@ module MyMenu {
         StartDate: knockout.koObservableAny = ko.observable("");
         EndDate: knockout.koObservableAny = ko.observable("");
         DeadlineTime: knockout.koObservableString = ko.observable("");
-        LastSentDate: knockout.koObservableString = ko.observable("");
+        LastOrderDate: knockout.koObservableString = ko.observable("");
         FirstWeekIdx: knockout.koObservableNumber = ko.observable(0);
         static idGenerator = new Utilities.IdGenerator();
 
@@ -732,7 +744,7 @@ module MyMenu {
 			this.isDirty.register(this.EndDate);
 			this.isDirty.register(this.DeadlineTime);
 			this.isDirty.register(this.FirstWeekIdx);
-			this.isDirty.register(this.LastSentDate);
+			this.isDirty.register(this.LastOrderDate);
             this.MenuDefinitionReset(data);
         }
 		
@@ -745,7 +757,7 @@ module MyMenu {
             this.EndDate(data.EndDate);
             this.FirstWeekIdx(data.FirstWeekIdx);
             this.DeadlineTime(data.DeadlineTime);
-            this.LastSentDate(data.LastSentDate);
+            this.LastOrderDate(data.LastOrderDate);
 
             this.Places.removeAll();
             for (i in data.Places) {
@@ -778,7 +790,7 @@ module MyMenu {
             var data: MenuData = { 
                 Id: this.Id(),
                 DeadlineTime: this.DeadlineTime(),
-                LastSentDate: this.LastSentDate(),
+                LastOrderDate: this.LastOrderDate(),
                 Title: this.Title(),
                 FirstWeekIdx: this.FirstWeekIdx(),
                 WeeksQuantity: this.WeeksQuantity(),
