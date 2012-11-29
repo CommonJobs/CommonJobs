@@ -21,8 +21,14 @@ interface KeyObservableText {
 
 module Utilities {
     export function daysDiff(date1: any, date2: any) : number {
-        var mmnt1 = moment(date1).hours(0).minutes(0).seconds(0).milliseconds(0);
-        var mmnt2 = moment(date2).hours(0).minutes(0).seconds(0).milliseconds(0);
+        var mmnt1 = moment(date1);
+        var mmnt2 = moment(date2);
+
+        if (!date1 || !date2 || !mmnt1 || !mmnt2)
+            return NaN;
+
+        mmnt1.hours(0).minutes(0).seconds(0).milliseconds(0);
+        mmnt2.hours(0).minutes(0).seconds(0).milliseconds(0);
         return mmnt1.diff(mmnt2, 'days');
     }
 
