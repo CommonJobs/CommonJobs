@@ -129,15 +129,19 @@ namespace CommonJobs.Mvc.UI.Controllers
         [CommonJobsAuthorize(Roles = "Users,MenuManagers")]
         public ActionResult Order(string id /*menuid*/ = null)
         {
-            ViewBag.ActiveMenuDefinition = true;
+            ViewBag.ActiveMenuOrder = true;
             ViewBag.ShowNavigation = true;
+            ViewBag.HidePersistenceButtons = true;
+
+            var order = ExecuteCommand(new GetOrderCommand() { Date = DateTime.Now, MenuDefinitionId = id });
 
             ScriptManager.RegisterGlobalJavascript(
                 "ViewData",
                 new
                 {
                     menuId = id,
-                    now = DateTime.Now
+                    now = DateTime.Now,
+                    order = order
                 },
                 500);
             return View();

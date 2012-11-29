@@ -17,6 +17,7 @@ namespace CommonJobs.Domain.MyMenu
         public Dictionary<string, string> FoodsByOption { get; set; }
         public Dictionary<string, Dictionary<string, int>> QuantityByOptionByPlace { get; set; }
         public Dictionary<string, MenuOrderDetailItem> DetailByUserName { get; set; }
+        public bool IsOrdered { get; set; }
 
         public static string GenerateId(string menuId, DateTime date)
         {
