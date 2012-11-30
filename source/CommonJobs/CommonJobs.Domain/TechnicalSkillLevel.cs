@@ -8,8 +8,8 @@ namespace CommonJobs.Domain
     public enum TechnicalSkillLevel
     {
         Unknown = 0,
-        Basic,
-        Intermediate,
-        Advanced
+        Basic = 1,
+        Intermediate = 2,
+        Advanced = 3
     }
 }
