@@ -12,26 +12,32 @@
     <div data-bind="if: isOrdered">
         <div class="alert alert-error alert-block">
             <div class="row">
+            @using (Html.BeginForm("GenerateOrder", "MyMenu"))
+            {
                 <div class="span3">
                     <strong>Pedido ya realizado.</strong>
                 </div>
                 <div class="pull-right">
                     <small>En casos excepcionales, es posible volver generar el pedido teniendo en cuenta los últimos cambios </small>
-                    <button class="btn btn-danger btn-mini"><small>¡Generar ahora!</small></button>
+                    <input type="submit" class="btn btn-danger btn-mini" style="font-size: 85%;" value="¡Generar ahora!" />
                 </div>
+            }
             </div>
         </div>
     </div>
     <div data-bind="ifnot: isOrdered">
         <div class="alert alert-success alert-block">
             <div class="row">
+            @using (Html.BeginForm("GenerateOrder", "MyMenu"))
+            {
                 <div class="span3">
                     <strong>Pedido aún no realizado.</strong>
                 </div>
                 <span class="pull-right">
                     <small>En casos excepcionales, es posible generar el pedido antes de la generación automática </small>
-                    <button class="btn btn-danger btn-mini"><small>¡Generar ahora!</small></button>
+                    <input type="submit" class="btn btn-danger btn-mini" style="font-size: 85%;" value="¡Generar ahora!" />
                 </span>
+            }
             </div>
         </div>
     </div>

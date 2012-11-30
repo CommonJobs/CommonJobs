@@ -147,5 +147,12 @@ namespace CommonJobs.Mvc.UI.Controllers
             return View();
         }
 
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult GenerateOrder(string id = null)
+        {
+            ExecuteCommand(new ProcessMenuCommand() { MenuDefinitionId = id, Now = () => DateTime.Now });
+            return RedirectToAction("Order");
+        }
+
     }
 }
