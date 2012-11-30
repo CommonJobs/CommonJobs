@@ -20,7 +20,7 @@ namespace CommonJobs.Application.MyMenu
 
         private MenuOrder GetExistingOrder()
         {
-            var order = RavenSession.Load<MenuOrder>(MenuOrder.GenerateId(MenuDefinitionId, Date));
+            var order = RavenSession.Load<MenuOrder>(MenuOrder.GenerateId(string.IsNullOrWhiteSpace(MenuDefinitionId) ? Common.DefaultMenuId : MenuDefinitionId, Date));
             if (order != null)
             {
                 order.IsOrdered = true;
