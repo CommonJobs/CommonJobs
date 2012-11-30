@@ -64,7 +64,7 @@ namespace CommonJobs.Application.MyMenu
                 Id = Common.GenerateEmployeeMenuId(username),
                 MenuId = menuId,
                 UserName = username,
-                EmployeeName = "",
+                EmployeeName = username,
                 DefaultPlaceKey = "",
                 WeeklyChoices = new WeekDayKeyedCollection<EmployeeMenuItem>(),
                 Overrides = new List<EmployeeMenuOverrideItem>()

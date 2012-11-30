@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using CommonJobs.Utilities;
 
 namespace CommonJobs.Domain.MyMenu
 {
@@ -119,7 +120,7 @@ namespace CommonJobs.Domain.MyMenu
             placeKey = GetPlaceOrDefault(dayChoices.PlaceKey, placeKey);
             optionKey = GetOptionOrDefault(dayChoices.OptionKey, optionKey);
 
-            var lastOverride = employeeMenu.Overrides.Where(x => x.Date.Date == Date).LastOrDefault();
+            var lastOverride = employeeMenu.Overrides.EmptyIfNull().Where(x => x.Date.Date == Date).LastOrDefault();
 
             if (!lastOverride.Cancel)
             {

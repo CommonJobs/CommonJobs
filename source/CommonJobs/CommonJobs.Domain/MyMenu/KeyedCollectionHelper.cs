@@ -10,7 +10,7 @@ namespace CommonJobs.Domain.MyMenu
     {
         public static TValue GetItemSecurely<TKey, TValue>(this KeyedCollection<TKey, TValue> collection, TKey key)
         {
-            return collection.Contains(key) ? collection[key] : default(TValue);
+            return collection != null && collection.Contains(key) ? collection[key] : default(TValue);
         }
     }
 }
