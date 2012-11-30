@@ -1,4 +1,4 @@
-var __extends = this.__extends || function (d, b) {
+﻿var __extends = this.__extends || function (d, b) {
     function __() { this.constructor = d; }
     __.prototype = b.prototype;
     d.prototype = new __();
@@ -40,7 +40,7 @@ var MyMenu;
                     placeName: element.PlaceKey && order.PlacesByKey[element.PlaceKey] || " - ",
                     optionKey: element.OptionKey,
                     optionName: element.OptionKey && order.OptionsByKey[element.OptionKey] || " - ",
-                    food: element.PlaceKey && element.OptionKey && order.FoodsByOption[element.OptionKey] || "No come aqu�",
+                    food: element.PlaceKey && element.OptionKey && order.FoodsByOption[element.OptionKey] || "No come aquí",
                     comment: element.Comment || " - "
                 });
             }), "employeeName"), "placeName");

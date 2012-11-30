@@ -1,4 +1,4 @@
-///<reference path='jquery.d.ts' />
+﻿///<reference path='jquery.d.ts' />
 ///<reference path='Knockout.d.ts' />
 ///<reference path='moment-datepicker.d.ts' />
 ///<reference path='underscore.browser.d.ts' />
@@ -46,7 +46,7 @@ module MyMenu {
                 placeName: element.PlaceKey && order.PlacesByKey[element.PlaceKey] || " - ",
                 optionKey: element.OptionKey,
                 optionName: element.OptionKey && order.OptionsByKey[element.OptionKey] || " - ",
-                food: element.PlaceKey && element.OptionKey && order.FoodsByOption[element.OptionKey] || "No come aqu�",
+                food: element.PlaceKey && element.OptionKey && order.FoodsByOption[element.OptionKey] || "No come aquí",
                 comment: element.Comment || " - "
             })), "employeeName"), "placeName");
         }
