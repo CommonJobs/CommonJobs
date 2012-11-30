@@ -81,6 +81,9 @@ namespace CommonJobs.Domain
         [Display(Name = "Recibido")]
         public bool IsGraduated { get; set; }
 
+        [Display(Name = "Skills técnicos")]
+        public List<TechnicalSkill> TechnicalSkills { get; set; }
+
         //TODO this should be a collection of "tags"
         //TODO this should be a collection of pre-defined values. Each of these should be associated with a tag. Example: Skill C#, Skill Level Advanced. Skill HTML, Skill Level Medium.
         [Display(Name = "Skills")]

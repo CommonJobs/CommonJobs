@@ -36,6 +36,7 @@ namespace CommonJobs.Application.EmployeeSearching
                     x.FullName1.StartsWith(Parameters.Term)
                     || x.FullName2.StartsWith(Parameters.Term)
                     || x.Skills.StartsWith(Parameters.Term)
+                    || x.TechnicalSkills.Any(y => y.StartsWith(Parameters.Term))
                     || x.AttachmentNames.Any(y => y.StartsWith(Parameters.Term))
                     || x.CurrentPosition.StartsWith(Parameters.Term)
                     || x.CurrentProject.StartsWith(Parameters.Term)

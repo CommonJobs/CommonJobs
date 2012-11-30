@@ -27,6 +27,7 @@ namespace CommonJobs.Application.ApplicantSearching
             public string LastName { get; set; }
             public string[] Companies { get; set; }
             public string Skills { get; set; }
+            public string[] TechnicalSkills { get; set; }
             public string FullName1 { get; set; }
             public string FullName2 { get; set; }
             public bool IsHighlighted { get; set; }
@@ -52,6 +53,7 @@ namespace CommonJobs.Application.ApplicantSearching
                     LastName = applicant.LastName,
                     Companies = applicant.CompanyHistory.Select(x => x.CompanyName).ToArray(),
                     Skills = applicant.Skills,
+                    TechnicalSkills = applicant.TechnicalSkills.Select(x => x.Name).ToArray(),
                     FullName1 = string.Format("{0}, {1}", applicant.LastName, applicant.FirstName),
                     FullName2 = string.Format("{0} {1}", applicant.FirstName, applicant.LastName),
                     IsHighlighted = applicant.IsHighlighted,
@@ -73,6 +75,7 @@ namespace CommonJobs.Application.ApplicantSearching
                     LastName = (string)null,
                     Companies = new string[0],
                     Skills = (string)null,
+                    TechnicalSkills = new string[0],
                     FullName1 = (string)null,
                     FullName2 = (string)null,
                     IsHighlighted = false,
@@ -95,6 +98,7 @@ namespace CommonJobs.Application.ApplicantSearching
                     LastName = g.Where(x => x.LastName != null).Select(x => x.LastName).FirstOrDefault(),
                     Companies = g.SelectMany(x => x.Companies).Distinct().ToArray(),
                     Skills = g.Where(x => x.Skills != null).Select(x => x.Skills).FirstOrDefault(),
+                    TechnicalSkills = g.SelectMany(x => x.TechnicalSkills).Distinct().ToArray(),
                     FullName1 = g.Where(x => x.FullName1 != null).Select(x => x.FullName1).FirstOrDefault(),
                     FullName2 = g.Where(x => x.FullName2 != null).Select(x => x.FullName2).FirstOrDefault(),
                     IsHighlighted = g.Any(x => x.IsHighlighted),
@@ -116,6 +120,7 @@ namespace CommonJobs.Application.ApplicantSearching
             Indexes.Add(x => x.FullName2, FieldIndexing.Analyzed);
             Indexes.Add(x => x.Companies, FieldIndexing.Analyzed);
             Indexes.Add(x => x.Skills, FieldIndexing.Analyzed);
+            Indexes.Add(x => x.TechnicalSkills, FieldIndexing.Analyzed);
             Indexes.Add(x => x.AttachmentNames, FieldIndexing.Analyzed);
             Indexes.Add(x => x.AttachmentContent, FieldIndexing.Analyzed);
         }
