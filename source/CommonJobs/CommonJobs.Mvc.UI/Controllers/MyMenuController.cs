@@ -139,9 +139,9 @@ namespace CommonJobs.Mvc.UI.Controllers
                 "ViewData",
                 new
                 {
-                    menuId = id,
                     now = DateTime.Now,
-                    order = order
+                    order = order,
+                    baseLink = Url.Action("Edit")
                 },
                 500);
             return View();

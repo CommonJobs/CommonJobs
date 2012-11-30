@@ -209,6 +209,13 @@
       <DependentUpon>my-menu-admin-page.ts</DependentUpon>
     </Content>
     <Content Include="Scripts\my-menu-admin-page.ts" />
+    <TypeScriptCompile Include="Scripts\my-menu-order-page.ts" />
+    <Content Include="Scripts\my-menu-order-page.js">
+      <DependentUpon>my-menu-order-page.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\my-menu-order-page.min.js">
+      <DependentUpon>my-menu-order-page.ts</DependentUpon>
+    </Content>
     <Content Include="Scripts\my-menu-page.js">
       <DependentUpon>my-menu-page.ts</DependentUpon>
     </Content>
