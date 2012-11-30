@@ -8,19 +8,11 @@
     <h1 data-bind="text: Title">@ViewBag.Title</h1>
     
     <ul class="nav nav-tabs" id="myTab">
-        <li class="active"><a href="#todayTab" data-toggle="tab">Hoy</a></li>
         <li><a href="#configTab" data-toggle="tab">Configuración</a></li>
-        <li><a href="#weeksTab" data-toggle="tab">Menú Semanal</a></li>
+        <li class="active"><a href="#weeksTab" data-toggle="tab">Menú Semanal</a></li>
     </ul>
 
     <div class="tab-content" style="overflow: inherit">
-        <div class="tab-pane active" id="todayTab">
-            <div class="alert alert-info alert-block">
-                <h4>Coming soon!</h4>
-                <p>Aquí se mostrará el pedido del día (ya realizado o a realizarse).</p>
-                <p>Se mostrará el resumen de cantidades por menú y por oficina y un detalle de lo seleccionado por cada empleado con un link a la página de edición de su menú.</p>
-            </div>
-        </div>
         <div class="tab-pane" id="configTab">
             <form class="form-horizontal">
                 <div class="control-group">
@@ -101,7 +93,7 @@
                 </div>
             </form>
         </div>
-        <div class="tab-pane" id="weeksTab">
+        <div class="tab-pane active" id="weeksTab">
             <h2 data-bind="text: Title">Common Food</h2>
             <div data-bind="foreach: $root.Weeks">
                 <h4 data-bind='text: Text'></h4>

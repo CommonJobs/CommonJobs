@@ -90,6 +90,8 @@
     <Compile Include="JobSearchSearching\JobSearchSearchParameters.cs" />
     <Compile Include="JobSearchSearching\SearchJobSearches.cs" />
     <Compile Include="MyMenu\Common.cs" />
+    <Compile Include="MyMenu\GetEmployeeMenusCommand.cs" />
+    <Compile Include="MyMenu\GetOrderCommand.cs" />
     <Compile Include="MyMenu\UpdateEmployeeMenuCommand.cs" />
     <Compile Include="MyMenu\GetMenuDefinitionCommand.cs" />
     <Compile Include="MyMenu\EmployeeMenuDTO.cs" />
