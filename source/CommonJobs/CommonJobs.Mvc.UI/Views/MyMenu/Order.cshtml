@@ -5,86 +5,81 @@
      
     ScriptManager.RegisterJs(Url.Content("~/Scripts/my-menu-order-page.js"));
 }
-<!--
-<div class="container-fluid">
-  <div class="row-fluid">
-    <div class="span10">
-    -->
+
 <div class="container">
-  <div>
+    <h4 data-bind="text: orderDate.format('dddd, D [de] MMMM YYYY')"></h4>
+
+    <div data-bind="if: isOrdered">
+        <div class="alert alert-error alert-block">
+            <div class="row">
+                <div class="span3">
+                    <strong>Pedido ya realizado.</strong>
+                </div>
+                <div class="pull-right">
+                    <small>En casos excepcionales, es posible volver generar el pedido teniendo en cuenta los últimos cambios </small>
+                    <button class="btn btn-danger btn-mini"><small>¡Generar ahora!</small></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div data-bind="ifnot: isOrdered">
+        <div class="alert alert-success alert-block">
+            <div class="row">
+                <div class="span3">
+                    <strong>Pedido aún no realizado.</strong>
+                </div>
+                <span class="pull-right">
+                    <small>En casos excepcionales, es posible generar el pedido antes de la generación automática </small>
+                    <button class="btn btn-danger btn-mini"><small>¡Generar ahora!</small></button>
+                </span>
+            </div>
+        </div>
+    </div>
+
     <div>
-        <h4 data-bind="text: orderDate.format('dddd, D [de] MMMM YYYY')"></h4>
-
-        <div data-bind="if: isOrdered">
-            <div class="alert alert-error">
-                Pedido ya realizado.
-            </div>
-        </div>
-        <div data-bind="ifnot: isOrdered">
-            <div class="alert alert-success">
-                Pedido aún no realizado.
-            </div>
-        </div>
-
-        <div>
-            <h5>Pedido</h5>
-            <table class="table table-striped table-bordered table-hover">
-                <thead>
-                    <tr>
-                        <th>Lugar</th>
-                        <th>Menú</th>
-                        <th>Cantidad</th>
-                    </tr>
-                </thead>
-                <tbody data-bind="foreach: placeSummaries">
-                    <!-- ko foreach: optionSummaries -->
-                    <tr>
-                        <td data-bind="text: $parent.placeName"></td>
-                        <td data-bind="text: optionName"></td>
-                        <td data-bind="text: quantity"></td>
-                    </tr>
-                    <!-- /ko -->
-                </tbody>
-            </table>
-        </div>
-        <div>
-            <h5>Detalle</h5>
-            <table class="table table-striped table-bordered table-hover">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>Lugar</th>
-                        <th>Menú</th>
-                        <th>Comida</th>
-                        <th>Comentario</th>
-                    </tr>
-                </thead>
-                <tbody data-bind="foreach: detail">
-                    <tr>
-                        <td><a data-bind="text: employeeName, attr: { href: url, title: 'Editar menú de ' + employeeName }"></a></td>
-                        <td data-bind="text: placeName"></td>
-                        <td data-bind="text: optionName"></td>
-                        <td data-bind="text: food"></td>
-                        <td data-bind="text: comment"></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        <h5>Pedido</h5>
+        <table class="table table-striped table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>Lugar</th>
+                    <th>Menú</th>
+                    <th>Cantidad</th>
+                </tr>
+            </thead>
+            <tbody data-bind="foreach: placeSummaries">
+                <!-- ko foreach: optionSummaries -->
+                <tr>
+                    <td data-bind="text: $parent.placeName"></td>
+                    <td data-bind="text: optionName"></td>
+                    <td data-bind="text: quantity"></td>
+                </tr>
+                <!-- /ko -->
+            </tbody>
+        </table>
     </div>
-      <!--
-    <div class="span2">
-        <
-        <div data-bind="if: isOrdered">
-            Este pedido ya fue realizado, pero podría volver a soli
-        </div>
-        <div data-bind="ifnot: isOrdered">
-            <div class="alert alert-success">
-                Pedido aún no realizado.
-            </div>
-        </div>
+    <div>
+        <h5>Detalle</h5>
+        <table class="table table-striped table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Lugar</th>
+                    <th>Menú</th>
+                    <th>Comida</th>
+                    <th>Comentario</th>
+                </tr>
+            </thead>
+            <tbody data-bind="foreach: detail">
+                <tr>
+                    <td><a data-bind="text: employeeName, attr: { href: url, title: 'Editar menú de ' + employeeName }"></a></td>
+                    <td data-bind="text: placeName"></td>
+                    <td data-bind="text: optionName"></td>
+                    <td data-bind="text: food"></td>
+                    <td data-bind="text: comment"></td>
+                </tr>
+            </tbody>
+        </table>
     </div>
-          -->
-  </div>
 </div>
 
 
