@@ -255,6 +255,7 @@
             this.initCollectionField("Notes", App.Notes);
             this.initCollectionField("Certifications");
             this.initCollectionField("AttachmentsBySlot");
+            this.initCollectionField("TechnicalSkills");
 
             //TODO: move related logic to App.Salary and App.Salaries models
             this.initCollectionField("SalaryChanges", App.Notes);
@@ -544,7 +545,18 @@
                 HasEuropeanCitizenship: { controlLink: "Options", options: [{ value: false, text: "No" }, { value: true, text: "Si" }] },
                 HasEuropeanPassport: { controlLink: "Options", options: [{ value: false, text: "No" }, { value: true, text: "Si" }] },
                 EuropeanPassportExpiration: { controlLink: "Date" },
-                TerminationDate: { controlLink: "Date" }
+                TerminationDate: { controlLink: "Date" },
+                TechnicalSkills: {
+                    controlLink: "Collection",
+                    item: {
+                        controlLink: "Compound",
+                        template: _.template('<span class="technical-skill-name" data-bind="SkillName"></span> <span class="technical-skill-level" data-bind="SkillLevel"></span>'),
+                        items: [
+                            { controlLink: "Text", name: "SkillName", field: "Name" },
+                            { controlLink: "Options", name: "SkillLevel", field: "Level", options: _.map(ViewData.technicalSkillLevels, function(s, i) { return { value: i, text: s }; }) }
+                        ]
+                    }
+                }
             }
     });
 

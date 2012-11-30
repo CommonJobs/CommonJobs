@@ -77,6 +77,8 @@
     <Compile Include="MyMenu\Option.cs" />
     <Compile Include="MyMenu\MenuItem.cs" />
     <Compile Include="MyMenu\Menu.cs" />
+    <Compile Include="TechnicalSkill.cs" />
+    <Compile Include="TechnicalSkillLevel.cs" />
     <Compile Include="VacationsReport.cs" />
     <Compile Include="Certification.cs" />
     <Compile Include="CompanyHistory.cs" />
