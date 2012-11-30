@@ -14,7 +14,9 @@ var MyMenu;
         function OrderPage(viewData) {
                 _super.call(this);
             this.orderDate = moment();
+            this.isOrdered = false;
             var order = viewData.order;
+            this.isOrdered = order.IsOrdered;
             this.orderDate = moment(order.Date);
             this.placeSummaries = _.sortBy(_.map(order.QuantityByOptionByPlace, function (placeQuantityByOption, placeKey) {
                 return ({
@@ -29,7 +31,7 @@ var MyMenu;
                     })
                 });
             }), "placeKey");
-            this.detail = _.sortBy(_.map(order.DetailByUserName, function (element, key) {
+            this.detail = _.sortBy(_.sortBy(_.map(order.DetailByUserName, function (element, key) {
                 return ({
                     userName: key,
                     url: viewData.baseLink + key,
@@ -41,7 +43,7 @@ var MyMenu;
                     food: element.PlaceKey && element.OptionKey && order.FoodsByOption[element.OptionKey] || "No come aquí",
                     comment: element.Comment || " - "
                 });
-            }), "employeeName");
+            }), "employeeName"), "placeName");
         }
         OrderPage.prototype.bind = function () {
             ko.applyBindings(this);
