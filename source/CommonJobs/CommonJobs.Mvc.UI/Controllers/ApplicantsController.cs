@@ -119,7 +119,8 @@ namespace CommonJobs.Mvc.UI.Controllers
                 new
                 {
                     applicant = applicant,
-                    forceReadOnly = sharedCode != null
+                    forceReadOnly = sharedCode != null,
+                    technicalSkillLevels = Enum.GetNames(typeof(TechnicalSkillLevel))
                 },
                 500);
             return View();
