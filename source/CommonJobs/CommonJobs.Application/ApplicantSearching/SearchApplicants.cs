@@ -37,6 +37,7 @@ namespace CommonJobs.Application.ApplicantSearching
                     || x.FullName2.StartsWith(Parameters.Term)
                     || x.Companies.Any(y => y.StartsWith(Parameters.Term))
                     || x.Skills.StartsWith(Parameters.Term)
+                    || x.TechnicalSkills.Any(y => y.StartsWith(Parameters.Term))
                     || x.AttachmentNames.Any(y => y.StartsWith(Parameters.Term));
 
             if (Parameters.SearchInAttachments)

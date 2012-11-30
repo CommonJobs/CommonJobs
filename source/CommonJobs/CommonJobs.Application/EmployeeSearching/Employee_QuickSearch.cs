@@ -27,6 +27,7 @@ namespace CommonJobs.Application.EmployeeSearching
             public string FirstName { get; set; }
             public string LastName { get; set; }
             public string Skills { get; set; }
+            public string[] TechnicalSkills { get; set; }
             public string FullName1 { get; set; }
             public string FullName2 { get; set; }
             public string Terms { get; set; }
@@ -58,6 +59,7 @@ namespace CommonJobs.Application.EmployeeSearching
                     FirstName = employee.FirstName,
                     LastName = employee.LastName,
                     Skills = employee.Skills,
+                    TechnicalSkills = employee.TechnicalSkills.Select(x => x.Name),
                     FullName1 = string.Format("{0}, {1}", employee.LastName, employee.FirstName),
                     FullName2 = string.Format("{0} {1}", employee.FirstName, employee.LastName),
                     AttachmentIds = employee.AllAttachmentReferences.Select(x => x.Attachment.Id).ToArray(),
@@ -101,6 +103,7 @@ namespace CommonJobs.Application.EmployeeSearching
                     FirstName = (string)null,
                     LastName = (string)null,
                     Skills = (string)null,
+                    TechnicalSkills = new string[0],
                     FullName1 = (string)null,
                     FullName2 = (string)null,
                     AttachmentIds = new string[0],
@@ -128,6 +131,7 @@ namespace CommonJobs.Application.EmployeeSearching
                     FirstName = g.Where(x => x.FirstName != null).Select(x => x.FirstName).FirstOrDefault(),
                     LastName = g.Where(x => x.LastName != null).Select(x => x.LastName).FirstOrDefault(),
                     Skills = g.Where(x => x.Skills != null).Select(x => x.Skills).FirstOrDefault(),
+                    TechnicalSkills = g.SelectMany(x => x.TechnicalSkills).Distinct().ToArray(),
                     FullName1 = g.Where(x => x.FullName1 != null).Select(x => x.FullName1).FirstOrDefault(),
                     FullName2 = g.Where(x => x.FullName2 != null).Select(x => x.FullName2).FirstOrDefault(),
                     FileId = g.Where(x => x.FileId != null).Select(x => x.FileId).FirstOrDefault(),
@@ -154,6 +158,7 @@ namespace CommonJobs.Application.EmployeeSearching
             Indexes.Add(x => x.FullName1, FieldIndexing.Analyzed);
             Indexes.Add(x => x.FullName2, FieldIndexing.Analyzed);
             Indexes.Add(x => x.Skills, FieldIndexing.Analyzed);
+            Indexes.Add(x => x.TechnicalSkills, FieldIndexing.Analyzed);
             Indexes.Add(x => x.AttachmentNames, FieldIndexing.Analyzed);
             Indexes.Add(x => x.AttachmentContent, FieldIndexing.Analyzed);
             Indexes.Add(x => x.Platform, FieldIndexing.Analyzed);
