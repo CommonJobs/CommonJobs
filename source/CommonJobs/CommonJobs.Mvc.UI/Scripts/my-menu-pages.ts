@@ -29,11 +29,34 @@ module Patches {
             $(element).val(moment(value, "HH:mm").format("HH:mm"));
         }
     };
+
+
 }
 
 declare var moment: any;
+declare var urlGenerator: any;
 
 //From default example
 $(document).ready(function () {
     moment.lang('es');
+
+    //#region quick and dirty UserName autocomplete
+    var _previousXHR = null;
+    var $el = <any>$("#openUserMenu");
+    $el.typeahead({
+        autoselect: false,
+        source: function (query, process) {
+            if (_previousXHR)
+                _previousXHR.abort();
+            _previousXHR = (<any>$)
+                .ajax({ url: urlGenerator.action("UserName", "Suggest", { term: query }) })
+                .done(function (data) {
+                    if (data && data.suggestions)
+                        process(data.suggestions);
+                });
+        }, 
+        matcher: function () { return true; }
+    });
+    $("ul.typeahead.dropdown-menu").css("z-index", 3000);
+    //#endregion
 });

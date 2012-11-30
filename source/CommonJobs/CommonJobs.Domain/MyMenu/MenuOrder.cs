@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using CommonJobs.Utilities;
 
 namespace CommonJobs.Domain.MyMenu
 {
@@ -17,6 +18,7 @@ namespace CommonJobs.Domain.MyMenu
         public Dictionary<string, string> FoodsByOption { get; set; }
         public Dictionary<string, Dictionary<string, int>> QuantityByOptionByPlace { get; set; }
         public Dictionary<string, MenuOrderDetailItem> DetailByUserName { get; set; }
+        public bool IsOrdered { get; set; }
 
         public static string GenerateId(string menuId, DateTime date)
         {
@@ -118,7 +120,7 @@ namespace CommonJobs.Domain.MyMenu
             placeKey = GetPlaceOrDefault(dayChoices.PlaceKey, placeKey);
             optionKey = GetOptionOrDefault(dayChoices.OptionKey, optionKey);
 
-            var lastOverride = employeeMenu.Overrides.Where(x => x.Date.Date == Date).LastOrDefault();
+            var lastOverride = employeeMenu.Overrides.EmptyIfNull().Where(x => x.Date.Date == Date).LastOrDefault();
 
             if (!lastOverride.Cancel)
             {

@@ -121,5 +121,12 @@ namespace CommonJobs.Mvc.UI.Controllers
             var results = Query(new CommonJobs.Application.EmployeeAbsences.GetSuggestions(term, maxSuggestions));
             return Json(new { suggestions = results });
         }
+
+        [CommonJobsAuthorize(Roles = "Users,EmployeeManagers,MenuManagers")]
+        public JsonNetResult UserName(string term, int maxSuggestions = 8)
+        {
+            var results = Query(new GetSuggestions(x => x.UserName, term, maxSuggestions));
+            return Json(new { suggestions = results });
+        }
     }
 }

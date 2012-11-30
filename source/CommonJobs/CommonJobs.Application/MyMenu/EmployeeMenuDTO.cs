@@ -30,10 +30,24 @@ namespace CommonJobs.Application.MyMenu
                 result.LastOrder = new EmployeeMenuOrderDTO()
                 {
                     Date = menuDefinition.LastOrderDate,
-                    Option = lastOrder.OptionsByKey[detail.OptionKey],
-                    Place = lastOrder.PlacesByKey[detail.PlaceKey],
+                    Option = detail.OptionKey == null ? null : lastOrder.OptionsByKey[detail.OptionKey],
+                    Place = detail.PlaceKey == null ? null : lastOrder.PlacesByKey[detail.PlaceKey],
                     Comment = detail.Comment,
-                    Food = lastOrder.FoodsByOption[detail.OptionKey],
+                    Food = detail.OptionKey == null ? null : lastOrder.FoodsByOption[detail.OptionKey],
+                    WeekIdx = lastOrder.WeekIdx,
+                    DayIdx = lastOrder.DayIdx,
+                    IsOrdered = true
+                };
+            }
+            else if (lastOrder != null)
+            {
+                result.LastOrder = new EmployeeMenuOrderDTO()
+                {
+                    Date = menuDefinition.LastOrderDate,
+                    Option = null,
+                    Place = null,
+                    Comment = "// El usuario no existía al momento de hacer el pedido //",
+                    Food = null,
                     WeekIdx = lastOrder.WeekIdx,
                     DayIdx = lastOrder.DayIdx,
                     IsOrdered = true

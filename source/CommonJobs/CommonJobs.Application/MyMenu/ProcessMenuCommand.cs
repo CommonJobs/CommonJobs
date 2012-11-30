@@ -15,42 +15,20 @@ namespace CommonJobs.Application.MyMenu
         private static Logger log = LogManager.GetCurrentClassLogger();
 
         public string MenuDefinitionId { get; set; }
-
-        private IEnumerable<EmployeeMenu> GetEmployeeMenus()
-        {
-            RavenQueryStatistics stats = null;
-            List<EmployeeMenu> result = new List<EmployeeMenu>();
-            var skip = 0;
-            var page = 255;
-
-            while (stats == null || skip < stats.TotalResults)
-            {
-                var qry = RavenSession
-                    .Query<EmployeeMenu>()
-                    .Customize(x => x.WaitForNonStaleResultsAsOfNow())
-                    .Statistics(out stats)
-                    .Where(x => x.MenuId == MenuDefinitionId)
-                    .Skip(skip)
-                    .Take(page);
-
-                result.AddRange(qry);
-                skip += page;
-            }
-            return result;
-        }
         
         public override void Execute()
         {
-            var menuDefinition = RavenSession.Load<Menu>(MenuDefinitionId);
-            var employeeMenus = GetEmployeeMenus();
+            var menuDefinition = ExecuteCommand(new GetMenuDefinitionCommand(MenuDefinitionId));
+            var employeeMenus = ExecuteCommand(new GetEmployeeMenusCommand() { MenuDefinitionId = menuDefinition.Id });
             var order = new MenuOrder(menuDefinition, Now(), employeeMenus);
+            order.IsOrdered = true;
             RavenSession.Store(order);
             menuDefinition.LastOrderDate = Now();
         }
 
         protected override DateTime CalculateNextExecutionTime(DateTime start, DateTime scheduled)
         {
-            var menuDefinition = RavenSession.Load<Menu>(MenuDefinitionId);
+            var menuDefinition = ExecuteCommand(new GetMenuDefinitionCommand(MenuDefinitionId));
             return menuDefinition.CalculateNextExecutionTime(start);
         }
     }

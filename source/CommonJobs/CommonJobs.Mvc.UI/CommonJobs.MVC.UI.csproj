@@ -209,6 +209,13 @@
       <DependentUpon>my-menu-admin-page.ts</DependentUpon>
     </Content>
     <Content Include="Scripts\my-menu-admin-page.ts" />
+    <TypeScriptCompile Include="Scripts\my-menu-order-page.ts" />
+    <Content Include="Scripts\my-menu-order-page.js">
+      <DependentUpon>my-menu-order-page.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\my-menu-order-page.min.js">
+      <DependentUpon>my-menu-order-page.ts</DependentUpon>
+    </Content>
     <Content Include="Scripts\my-menu-page.js">
       <DependentUpon>my-menu-page.ts</DependentUpon>
     </Content>
@@ -262,6 +269,7 @@
     <Content Include="Views\MyMenu\_MyMenuLayout.cshtml" />
     <Content Include="Content\collapsable-sections.less" />
     <Content Include="Content\twitter-bootstrap\less\media.less" />
+    <Content Include="Views\MyMenu\Order.cshtml" />
     <None Include="_bin_deployableAssemblies\FSharp.Core.dll" />
   </ItemGroup>
   <ItemGroup>
