@@ -29,4 +29,27 @@ var Patches;
 
 $(document).ready(function () {
     moment.lang('es');
+    var _previousXHR = null;
+    var $el = $("#openUserMenu");
+    $el.typeahead({
+        autoselect: false,
+        source: function (query, process) {
+            if(_previousXHR) {
+                _previousXHR.abort();
+            }
+            _previousXHR = ($).ajax({
+                url: urlGenerator.action("UserName", "Suggest", {
+                    term: query
+                })
+            }).done(function (data) {
+                if(data && data.suggestions) {
+                    process(data.suggestions);
+                }
+            });
+        },
+        matcher: function () {
+            return true;
+        }
+    });
+    $("ul.typeahead.dropdown-menu").css("z-index", 3000);
 });

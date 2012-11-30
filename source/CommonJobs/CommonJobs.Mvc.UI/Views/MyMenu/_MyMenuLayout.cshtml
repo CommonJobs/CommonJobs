@@ -6,6 +6,7 @@
     ScriptManager.RegisterJs(Url.Content("~/Scripts/moment.i18n/es.js"), priority: 900);
     ScriptManager.RegisterJs(Url.Content("~/Content/twitter-bootstrap/js/bootstrap-collapse.js"), priority: 900);
     ScriptManager.RegisterJs(Url.Content("~/Content/twitter-bootstrap/js/bootstrap-tab.js"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Content/twitter-bootstrap/js/bootstrap-typeahead.js"), priority: 900);
 
     ScriptManager.RegisterJs(Url.Content("~/Scripts/knockout-2.2.0.js"), priority: 900);
     ScriptManager.RegisterJs(Url.Content("~/Scripts/underscore.js"), priority: 900);
@@ -91,7 +92,7 @@
                             {
                                 <label for="openUserMenu">Menú de</label>
                                 <div class="input-append">
-                                    <input id="openUserMenu" name="id" type="text" placeholder="username" value="@anotherMenuUser" />
+                                    <input id="openUserMenu" name="id" type="text" placeholder="username" value="@anotherMenuUser" autocomplete="off"/>
                                     <input class="btn" type="submit" value="Ir" />
                                 </div>
                             }

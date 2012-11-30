@@ -15,6 +15,7 @@ namespace CommonJobs.Application.Persons
             public string College { get; set; }
             public string EnglishLevel { get; set; }
             public string Degree { get; set; }
+            public string UserName { get; set; }
             public string Email { get; set; }
             public string EmailDomain { get; set; }
             public string EntityType { get; set; }
@@ -41,6 +42,7 @@ namespace CommonJobs.Application.Persons
                     College = entity.College ?? string.Empty,
                     EnglishLevel = entity.EnglishLevel ?? string.Empty,
                     Degree = entity.Degree ?? string.Empty,
+                    UserName = entity.UserName ?? string.Empty,
                     Email = entity.Email ?? string.Empty,
                     EmailDomain = entity.Email == null || !entity.Email.Contains("@") ? string.Empty : entity.Email.Split(new[] { '@' }, 2)[1] ?? string.Empty,
                     EntityType = "Employee",
@@ -65,6 +67,7 @@ namespace CommonJobs.Application.Persons
                     College = string.Empty,
                     EnglishLevel = string.Empty,
                     Degree = string.Empty,
+                    UserName = string.Empty,
                     Email = entity.CorporativeEmail,
                     EmailDomain = entity.CorporativeEmail == null || !entity.CorporativeEmail.Contains("@") ? string.Empty : entity.CorporativeEmail.Split(new[] { '@' }, 2)[1] ?? string.Empty,
                     EntityType = "Employee",
@@ -90,6 +93,7 @@ namespace CommonJobs.Application.Persons
                     College = string.Empty,
                     EnglishLevel = string.Empty,
                     Degree = string.Empty,
+                    UserName = string.Empty,
                     Email = string.Empty,
                     EmailDomain = string.Empty,
                     EntityType = "Employee",
@@ -114,6 +118,7 @@ namespace CommonJobs.Application.Persons
                     College = entity.College ?? string.Empty,
                     EnglishLevel = entity.EnglishLevel ?? string.Empty,
                     Degree = entity.Degree ?? string.Empty,
+                    UserName = string.Empty,
                     Email = entity.Email ?? string.Empty,
                     EmailDomain = entity.Email == null || !entity.Email.Contains("@") ? string.Empty : entity.Email.Split(new[] { '@' }, 2)[1] ?? string.Empty,
                     EntityType = "Applicant",
@@ -139,6 +144,7 @@ namespace CommonJobs.Application.Persons
                     College = string.Empty,
                     EnglishLevel = string.Empty,
                     Degree = string.Empty,
+                    UserName = string.Empty,
                     Email = string.Empty,
                     EmailDomain = string.Empty,
                     EntityType = "Applicant",
@@ -164,6 +170,7 @@ namespace CommonJobs.Application.Persons
                     College = string.Empty,
                     EnglishLevel = string.Empty,
                     Degree = string.Empty,
+                    UserName = string.Empty,
                     Email = string.Empty,
                     EmailDomain = string.Empty,
                     EntityType = "Applicant",
@@ -194,6 +201,7 @@ namespace CommonJobs.Application.Persons
                                  College = g.Select(x => x.College.Trim()).FirstOrDefault(),
                                  EnglishLevel = g.Select(x => x.EnglishLevel.Trim()).FirstOrDefault(),
                                  Degree = g.Select(x => x.Degree.Trim()).FirstOrDefault(),
+                                 UserName = g.Select(x => x.UserName.Trim()).FirstOrDefault(),
                                  Email = g.Select(x => x.Email.Trim()).FirstOrDefault(),
                                  EmailDomain = g.Select(x => x.EmailDomain.Trim()).FirstOrDefault(),
                                  EntityType = g.Select(x => x.EntityType.Trim()).FirstOrDefault(),
@@ -213,6 +221,7 @@ namespace CommonJobs.Application.Persons
             Index(x => x.College, FieldIndexing.Analyzed);
             Index(x => x.EnglishLevel, FieldIndexing.Analyzed);
             Index(x => x.Degree, FieldIndexing.Analyzed);
+            Index(x => x.UserName, FieldIndexing.Analyzed);
             Index(x => x.Email, FieldIndexing.Analyzed);
             Index(x => x.EmailDomain, FieldIndexing.Analyzed);
             Index(x => x.BankName, FieldIndexing.Analyzed);
