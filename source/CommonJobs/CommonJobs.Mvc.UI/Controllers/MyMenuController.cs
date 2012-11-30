@@ -148,6 +148,7 @@ namespace CommonJobs.Mvc.UI.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
+        [CommonJobsAuthorize(Roles = "Users,MenuManagers")]
         public ActionResult GenerateOrder(string id = null)
         {
             ExecuteCommand(new ProcessMenuCommand() { MenuDefinitionId = id, Now = () => DateTime.Now });
