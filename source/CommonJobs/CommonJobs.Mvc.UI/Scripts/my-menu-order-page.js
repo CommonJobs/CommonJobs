@@ -1,4 +1,4 @@
-﻿var __extends = this.__extends || function (d, b) {
+var __extends = this.__extends || function (d, b) {
     function __() { this.constructor = d; }
     __.prototype = b.prototype;
     d.prototype = new __();
@@ -15,6 +15,7 @@ var MyMenu;
                 _super.call(this);
             this.orderDate = moment();
             this.isOrdered = false;
+            this.isProcessButtonVisible = ko.observable(false);
             var order = viewData.order;
             this.isOrdered = order.IsOrdered;
             this.orderDate = moment(order.Date);
@@ -45,6 +46,9 @@ var MyMenu;
                 });
             }), "employeeName"), "placeName");
         }
+        OrderPage.prototype.toggleProcessButton = function () {
+            this.isProcessButtonVisible(!this.isProcessButtonVisible());
+        };
         OrderPage.prototype.bind = function () {
             ko.applyBindings(this);
         };

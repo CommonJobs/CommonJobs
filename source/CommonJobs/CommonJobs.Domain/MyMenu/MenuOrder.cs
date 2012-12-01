@@ -110,10 +110,11 @@ namespace CommonJobs.Domain.MyMenu
 
         private MenuOrderDetailItem CreateDetailItem(EmployeeMenu employeeMenu)
         {
+            string defaultPlaceKey = null;
             string placeKey = null;
             string optionKey = null;
 
-            placeKey = GetPlaceOrDefault(employeeMenu.DefaultPlaceKey, placeKey);
+            defaultPlaceKey = placeKey = GetPlaceOrDefault(employeeMenu.DefaultPlaceKey, placeKey);
 
             var dayChoices = employeeMenu.WeeklyChoices.GetItemSecurely(new WeekDayKey() { WeekIdx = WeekIdx, DayIdx = DayIdx });
 
@@ -139,7 +140,7 @@ namespace CommonJobs.Domain.MyMenu
             return new MenuOrderDetailItem()
             {
                 EmployeeName = employeeMenu.EmployeeName,
-                PlaceKey = placeKey,
+                PlaceKey = placeKey ?? defaultPlaceKey,
                 OptionKey = optionKey,
                 Comment = comment
             };
