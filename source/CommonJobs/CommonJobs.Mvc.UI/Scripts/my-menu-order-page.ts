@@ -17,13 +17,20 @@ module MyMenu {
     export class OrderPage extends Utilities.HasCallbacks {
         orderDate: moment.Moment = moment();
         isOrdered: bool = false;
+        isProcessButtonVisible: knockout.koObservableBool = ko.observable(false);
 
         //TODO: create interfaces
         placeSummaries: { placeKey: string; placeName: string; optionSummaries: { optionKey: string; optionName: string; quantity: number; }[]; }[];
         detail: { userName: string; url: string; employeeName: string; placekey: string; placeName: string; optionKey: string; optionName: string; food: string; comment: string; }[];
 
+        toggleProcessButton() {
+            this.isProcessButtonVisible(!this.isProcessButtonVisible());
+        }
+
         constructor (viewData) {
             super();
+            //this.isProcessButtonVisible.subscribe((v) => { console.log(v); });
+            //this.isProcessButtonVisible(false);
             //TODO: create interface
             var order = viewData.order;
             this.isOrdered = order.IsOrdered;
