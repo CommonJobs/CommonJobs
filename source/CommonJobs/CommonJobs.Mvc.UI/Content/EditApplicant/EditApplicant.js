@@ -6,6 +6,17 @@
 (function () {
     var App = this.App = {};
 
+    App.TechnicalSkill = Backbone.Model.extend({
+        defaults: {
+                Name: "",
+                Level: 0
+        }
+    });
+
+    App.TechnicalSkills = Backbone.Collection.extend({
+        model: App.TechnicalSkill
+    });
+
     App.Note = Backbone.Model.extend({
         defaults: function () {
             return {
@@ -57,7 +68,7 @@
             this.initCollectionField("Notes", App.Notes);
             this.initCollectionField("SharedLinks", App.SharedLinks);
             this.initCollectionField("CompanyHistory");
-            this.initCollectionField("TechnicalSkills");
+            this.initCollectionField("TechnicalSkills", App.TechnicalSkills);
         }
     });
 
