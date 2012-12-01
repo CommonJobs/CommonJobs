@@ -176,6 +176,17 @@
         }
     });
 
+    App.TechnicalSkill = Backbone.Model.extend({
+        defaults: {
+            Name: "",
+            Level: 0
+        }
+    });
+
+    App.TechnicalSkills = Backbone.Collection.extend({
+        model: App.TechnicalSkill
+    });
+
     App.Notes = Backbone.Collection.extend({
         model: App.Note
     });
@@ -255,7 +266,7 @@
             this.initCollectionField("Notes", App.Notes);
             this.initCollectionField("Certifications");
             this.initCollectionField("AttachmentsBySlot");
-            this.initCollectionField("TechnicalSkills");
+            this.initCollectionField("TechnicalSkills", App.TechnicalSkills);
 
             //TODO: move related logic to App.Salary and App.Salaries models
             this.initCollectionField("SalaryChanges", App.Notes);
