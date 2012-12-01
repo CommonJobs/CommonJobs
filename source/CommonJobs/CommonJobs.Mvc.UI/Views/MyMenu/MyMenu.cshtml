@@ -8,7 +8,7 @@
 
     <div data-bind="with: todayOrder()">
         <h4>
-            <span data-bind="text: moment(Date).format('dddd, D [de] MMMM YYYY')"></span> (Semana <span data-bind="text: WeekIdx + 1"></span>)
+            <span data-bind="text: $root.EmployeeName"></span> - <span data-bind="text: moment(Date).format('dddd, D [de] MMMM YYYY')"></span> (Semana <span data-bind="text: WeekIdx + 1"></span>)
         </h4>
                 
         <!-- ko ifnot: IsOrdered -->
