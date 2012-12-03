@@ -31,5 +31,11 @@ namespace CommonJobs.Application.MyMenu
             var menuDefinition = ExecuteCommand(new GetMenuDefinitionCommand(MenuDefinitionId));
             return menuDefinition.CalculateNextExecutionTime(start);
         }
+
+        protected override bool IsExecutionRequired()
+        {
+            var menuDefinition = ExecuteCommand(new GetMenuDefinitionCommand(MenuDefinitionId));
+            return CalculateNextExecutionTime(menuDefinition.LastOrderDate, menuDefinition.LastOrderDate) <= Now();
+        }
     }
 }
