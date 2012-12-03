@@ -8,6 +8,14 @@
     ScriptManager.RegisterJs(Url.Content("~/Content/twitter-bootstrap/js/bootstrap-tab.js"), priority: 900);
     ScriptManager.RegisterJs(Url.Content("~/Content/twitter-bootstrap/js/bootstrap-typeahead.js"), priority: 900);
 
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/DataTables/jquery.dataTables.js"));
+    //ScriptManager.RegisterJs(Url.Content("~/Content/DataTablesHelpers/DataTablesHelpers.js"));
+    ScriptManager.RegisterCss(Url.Content("~/Content/DataTables/css/jquery.dataTables.css"));
+    ScriptManager.RegisterJs(Url.Content("~/Content/TableTools-2.1.4/media/js/ZeroClipboard.js"));
+    ScriptManager.RegisterJs(Url.Content("~/Content/TableTools-2.1.4/media/js/TableTools.js"));
+    ScriptManager.RegisterCss(Url.Content("~/Content/TableTools-2.1.4/media/css/TableTools.css"));
+    ScriptManager.RegisterGlobalJavascript("TableTools.DEFAULTS.sSwfPath", Url.Content("~/Content/TableTools-2.1.4/media/swf/copy_csv_xls_pdf.swf"));
+
     ScriptManager.RegisterJs(Url.Content("~/Scripts/knockout-2.2.0.js"), priority: 900);
     ScriptManager.RegisterJs(Url.Content("~/Scripts/underscore.js"), priority: 900);
     ScriptManager.RegisterJs(Url.Content("~/Scripts/moment-datepicker.js"), priority: 900);

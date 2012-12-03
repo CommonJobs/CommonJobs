@@ -9,6 +9,8 @@ var MyMenu;
         var orderPage = new OrderPage(window["ViewData"]);
         orderPage.bind();
     });
+    ; ;
+    ; ;
     var OrderPage = (function (_super) {
         __extends(OrderPage, _super);
         function OrderPage(viewData) {
@@ -19,38 +21,66 @@ var MyMenu;
             var order = viewData.order;
             this.isOrdered = order.IsOrdered;
             this.orderDate = moment(order.Date);
-            this.placeSummaries = _.sortBy(_.map(order.QuantityByOptionByPlace, function (placeQuantityByOption, placeKey) {
+            this.placeSummaries = _.sortBy(_.map(order.PlacesByKey, function (placeName, placeKey) {
                 return ({
                     placeKey: placeKey,
-                    placeName: order.PlacesByKey[placeKey],
-                    optionSummaries: _.map(placeQuantityByOption, function (quantity, optionKey) {
+                    placeName: placeName,
+                    optionSummaries: _.map(order.OptionsByKey, function (optionName, optionKey) {
                         return ({
                             optionKey: optionKey,
-                            optionName: order.OptionsByKey[optionKey],
-                            quantity: quantity
+                            optionName: optionName,
+                            food: order.FoodsByOption[optionKey],
+                            quantity: order.QuantityByOptionByPlace[placeKey] && order.QuantityByOptionByPlace[placeKey][optionKey] || 0
                         });
                     })
                 });
             }), "placeKey");
-            this.detail = _.sortBy(_.sortBy(_.map(order.DetailByUserName, function (element, key) {
+            this.detail = _.sortBy(_.map(order.DetailByUserName, function (element, key) {
                 return ({
                     userName: key,
                     url: viewData.baseLink + key,
                     employeeName: element.EmployeeName,
-                    placekey: element.PlaceKey,
+                    placeKey: element.PlaceKey,
                     placeName: element.PlaceKey && order.PlacesByKey[element.PlaceKey] || " - ",
                     optionKey: element.OptionKey,
                     optionName: element.OptionKey && order.OptionsByKey[element.OptionKey] || " - ",
                     food: element.PlaceKey && element.OptionKey && order.FoodsByOption[element.OptionKey] || "No come aquí",
                     comment: element.Comment || " - "
                 });
-            }), "employeeName"), "placeName");
+            }), "employeeName");
         }
         OrderPage.prototype.toggleProcessButton = function () {
             this.isProcessButtonVisible(!this.isProcessButtonVisible());
         };
         OrderPage.prototype.bind = function () {
             ko.applyBindings(this);
+            var tables = $('table.table-detail');
+            tables.dataTable({
+                bPaginate: false,
+                sDom: 'T<"clear">lfrtip',
+                bInfo: false,
+                oTableTools: {
+                    aButtons: [
+                        {
+                            sExtends: "copy",
+                            sButtonText: "Copiar"
+                        }, 
+                        {
+                            sExtends: "print",
+                            sButtonText: "Imprimir"
+                        }, 
+                        {
+                            sExtends: "collection",
+                            sButtonText: "Exportar",
+                            aButtons: [
+                                "csv", 
+                                "xls", 
+                                "pdf"
+                            ]
+                        }
+                    ]
+                }
+            });
         };
         OrderPage.prototype.refresh = function () {
             location.reload();

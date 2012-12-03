@@ -40,50 +40,129 @@
         </div>
     </div>
 
-    <div>
-        <h5>Pedido</h5>
-        <table class="table table-striped table-bordered table-hover">
-            <thead>
-                <tr>
-                    <th>Lugar</th>
-                    <th>Menú</th>
-                    <th>Cantidad</th>
-                </tr>
-            </thead>
-            <tbody data-bind="foreach: placeSummaries">
-                <!-- ko foreach: optionSummaries -->
-                <tr>
-                    <td data-bind="text: $parent.placeName"></td>
-                    <td data-bind="text: optionName"></td>
-                    <td data-bind="text: quantity"></td>
-                </tr>
-                <!-- /ko -->
-            </tbody>
-        </table>
+    <ul class="nav nav-tabs" id="myTab">
+        <li class="active"><a href="#completeOrder" data-toggle="tab">Pedido completo</a></li>
+        <!-- ko foreach: placeSummaries -->
+        <li><a data-toggle="tab" data-bind="text: placeName, attr: { href: '#tab' + placeKey}"></a></li>
+        <!-- /ko -->
+    </ul>
+
+    <div class="tab-content" style="overflow: inherit">
+        <div class="tab-pane active" id="completeOrder">
+            <h4>Pedido completo</h4>
+            <table class="table table-striped table-bordered table-hover table-condensed">
+                <thead>
+                    <tr>
+                        <th>Lugar</th>
+                        <th>Menú</th>
+                        <th>Comida</th>
+                        <th>Cantidad</th>
+                    </tr>
+                </thead>
+                <tbody data-bind="foreach: placeSummaries">
+                    <!-- ko foreach: optionSummaries -->
+                    <!-- ko if: quantity -->
+                    <tr>
+                        <td data-bind="text: $parent.placeName"></td>
+                        <td data-bind="text: optionName"></td>
+                        <td data-bind="text: food"></td>
+                        <td data-bind="text: quantity"></td>
+                    </tr>
+                    <!-- /ko -->
+                    <!-- /ko -->
+                </tbody>
+            </table>
+            <hr />
+            <table class="table table-striped table-bordered table-hover table-condensed table-detail">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Lugar</th>
+                        <th>Menú</th>
+                        <th>Comida</th>
+                        <th>Comentario</th>
+                    </tr>
+                </thead>
+                <tbody data-bind="foreach: detail">
+                    <tr>
+                        <td><a data-bind="text: employeeName, attr: { href: url, title: 'Editar menú de ' + employeeName }"></a></td>
+                        <td data-bind="text: placeName"></td>
+                        <td data-bind="text: optionName"></td>
+                        <td data-bind="text: food"></td>
+                        <td data-bind="text: comment"></td>
+                    </tr>
+                </tbody>
+                <tfoot data-bind="foreach: placeSummaries">
+                    <tr>
+                        <td colspan="5">
+                            <strong data-bind="text: placeName"></strong> <span data-bind="text: $root.orderDate.format('dddd, D [de] MMMM YYYY')"></span>:
+                            <!-- ko foreach: optionSummaries -->
+                            <!-- ko if: quantity -->
+                            <span data-bind="text: quantity"></span> <span data-bind="text: optionName"></span>; 
+                            <!-- /ko -->
+                            <!-- /ko -->
+                        </td>
+                    </tr>
+	            </tfoot>
+            </table>
+        </div>
+        <!-- ko foreach: placeSummaries -->
+        <div class="tab-pane" data-bind="attr: { id: 'tab' + placeKey}">
+            <h4>Pedido <span data-bind="text: placeName"></span></h4>
+            <table class="table table-striped table-bordered table-hover table-condensed">
+                <thead>
+                    <tr>
+                        <th>Menú</th>
+                        <th>Comida</th>
+                        <th>Cantidad</th>
+                    </tr>
+                </thead>
+                <tbody data-bind="foreach: optionSummaries">
+                    <tr>
+                        <td data-bind="text: optionName"></td>
+                        <td data-bind="text: food"></td>
+                        <td data-bind="text: quantity"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <hr />
+            <table class="table table-striped table-bordered table-hover table-condensed table-detail">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Menú</th>
+                        <th>Comida</th>
+                        <th>Comentario</th>
+                    </tr>
+                </thead>
+                <tbody data-bind="foreach: $root.detail">
+                    <!-- ko if: placeKey == $parent.placeKey && optionKey -->
+                    <tr>
+                        <td><a data-bind="text: employeeName, attr: { href: url, title: 'Editar menú de ' + employeeName }"></a></td>
+                        <td data-bind="text: optionName"></td>
+                        <td data-bind="text: food"></td>
+                        <td data-bind="text: comment"></td>
+                    </tr>
+                    <!-- /ko -->
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="4">
+                            <strong data-bind="text: placeName"></strong> <span data-bind="text: $root.orderDate.format('dddd, D [de] MMMM YYYY')"></span>:
+                            <!-- ko foreach: optionSummaries -->
+                            <!-- ko if: quantity -->
+                            <span data-bind="text: quantity"></span> <span data-bind="text: optionName"></span>; 
+                            <!-- /ko -->
+                            <!-- /ko -->
+                        </td>
+                    </tr>
+	            </tfoot>
+            </table>
+
+        </div>
+        <!-- /ko -->
     </div>
-    <div>
-        <h5>Detalle</h5>
-        <table class="table table-striped table-bordered table-hover">
-            <thead>
-                <tr>
-                    <th></th>
-                    <th>Lugar</th>
-                    <th>Menú</th>
-                    <th>Comida</th>
-                    <th>Comentario</th>
-                </tr>
-            </thead>
-            <tbody data-bind="foreach: detail">
-                <tr>
-                    <td><a data-bind="text: employeeName, attr: { href: url, title: 'Editar menú de ' + employeeName }"></a></td>
-                    <td data-bind="text: placeName"></td>
-                    <td data-bind="text: optionName"></td>
-                    <td data-bind="text: food"></td>
-                    <td data-bind="text: comment"></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+
 </div>
 
 
