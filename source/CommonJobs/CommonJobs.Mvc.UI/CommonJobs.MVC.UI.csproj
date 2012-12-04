@@ -199,6 +199,7 @@
     <Content Include="Content\TableTools-2.1.4\media\swf\copy_csv_xls.swf" />
     <Content Include="Content\TableTools-2.1.4\media\swf\copy_csv_xls_pdf.swf" />
     <Content Include="Content\Vacations\Vacations.js" />
+    <Content Include="Scripts\DataTables\dataTables.bootstrap.js" />
     <Content Include="Scripts\knockout.activity.js" />
     <Content Include="Scripts\knockout.asyncCommand.js" />
     <Content Include="Scripts\knockout.dirtyFlag.js" />
