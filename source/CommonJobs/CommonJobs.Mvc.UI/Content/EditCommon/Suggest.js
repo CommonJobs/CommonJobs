@@ -16,6 +16,10 @@
         }
     , matcher: function () { return true; }
     });
+    $el.blur(function () {
+        if (_previousXHR)
+            _previousXHR.abort();
+    });
 }
 
 function cjSuggestEmailDomain(el, key) {
@@ -39,6 +43,10 @@ function cjSuggestEmailDomain(el, key) {
             }
         }
         , matcher: function () { return true; }
+    });
+    $el.blur(function () {
+        if (_previousXHR)
+            _previousXHR.abort();
     });
 }
 
@@ -80,5 +88,9 @@ function cjSuggestMultiple(el, key) {
                 return '<strong>' + match + '</strong>'
             })
         }
+    });
+    $el.blur(function () {
+        if (_previousXHR)
+            _previousXHR.abort();
     });
 }
