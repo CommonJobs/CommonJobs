@@ -36,21 +36,24 @@
         bPaginate: false,
         bAutoWidth: false,
         aoColumns: columns,
-        sDom: 'T<"clear">lfrtip',
+        sDom: "<'row-fluid'<'span6'T><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
         oTableTools: {
             aButtons: [
-                {
-                    sExtends: "copy",
-                    sButtonText: "Copiar"
-                },
                 {
                     sExtends: "print",
                     sButtonText: "Imprimir"
                 },
                 {
-                    sExtends: "collection",
-                    sButtonText: "Exportar",
-                    aButtons: ["csv", "xls", "pdf"]
+                    sExtends: "copy",
+                    sButtonText: "Copiar"
+                },
+                {
+                    sExtends: "pdf",
+                    sButtonText: "PDF"
+                },
+                {
+                    sExtends: "csv",
+                    sButtonText: "Excel"
                 }
             ]
         }
