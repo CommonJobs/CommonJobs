@@ -1,4 +1,5 @@
-﻿@{
+﻿@using CommonJobs.Infrastructure.Mvc.HtmlHelpers
+@{
     Layout = "_MyMenuLayout.cshtml";
     
     ViewBag.Title = "Pedido del día";
@@ -11,32 +12,38 @@
 
     <div class="alert alert-error alert-block" data-bind="visible: isOrdered">
         <div class="row">
-        @using (Html.BeginForm("GenerateOrder", "MyMenu"))
-        {
-            <div class="span3">
-                <strong>Pedido ya realizado.</strong>
-            </div>
-            <div class="pull-right">
-                <a href="#" data-bind="click: toggleProcessButton" style="color: #B94A48;">
-                    <small>En casos excepcionales, es posible volver generar el pedido teniendo en cuenta los últimos cambios<span data-bind="visible: !isProcessButtonVisible()">...</span></small>
-                </a> <input type="submit" class="btn btn-danger btn-mini" style="font-size: 85%;" value="¡Generar ahora!" data-bind="visible: isProcessButtonVisible()" />
-            </div>
-        }
+            @Html.HasActionPermission("GenerateOrder", @<text>
+                @using (Html.BeginForm(item.ActionName, item.ControllerName))
+                {
+                    <div class="span3">
+                        <strong>Pedido ya realizado.</strong>
+                    </div>
+                    <div class="pull-right">
+                        <a href="#" data-bind="click: toggleProcessButton" style="color: #B94A48;">
+                            <small>En casos excepcionales, es posible volver generar el pedido teniendo en cuenta los últimos cambios<span data-bind="visible: !isProcessButtonVisible()">...</span></small>
+                        </a> <input type="submit" class="btn btn-danger btn-mini" style="font-size: 85%;" value="¡Generar ahora!" data-bind="visible: isProcessButtonVisible()" />
+                    </div>
+                }
+                </text>, 
+                @<div class="span3"><strong>Pedido ya realizado.</strong></div>)
         </div>
     </div>
     <div class="alert alert-success alert-block" data-bind="visible: !isOrdered">
         <div class="row">
-        @using (Html.BeginForm("GenerateOrder", "MyMenu"))
-        {
-            <div class="span3">
-                <strong>Pedido aún no realizado.</strong>
-            </div>
-            <span class="pull-right">
-                <a href="#" data-bind="click: toggleProcessButton" style="color: #468847;">
-                    <small>En casos excepcionales, es posible generar el pedido antes de la generación automática<span data-bind="visible: !isProcessButtonVisible()">...</span></small>
-                </a> <input type="submit" class="btn btn-danger btn-mini" style="font-size: 85%;" value="¡Generar ahora!" data-bind="visible: isProcessButtonVisible()" />
-            </span>
-        }
+            @Html.HasActionPermission("GenerateOrder", @<text>
+                @using (Html.BeginForm("GenerateOrder", "MyMenu"))
+                {
+                    <div class="span3">
+                        <strong>Pedido aún no realizado.</strong>
+                    </div>
+                    <span class="pull-right">
+                        <a href="#" data-bind="click: toggleProcessButton" style="color: #468847;">
+                            <small>En casos excepcionales, es posible generar el pedido antes de la generación automática<span data-bind="visible: !isProcessButtonVisible()">...</span></small>
+                        </a> <input type="submit" class="btn btn-danger btn-mini" style="font-size: 85%;" value="¡Generar ahora!" data-bind="visible: isProcessButtonVisible()" />
+                    </span>
+                }
+                </text>, 
+                @<strong>Pedido aún no realizado.</strong>)
         </div>
     </div>
 

@@ -126,7 +126,6 @@ namespace CommonJobs.Mvc.UI.Controllers
             return Json(menu);
         }
 
-        [CommonJobsAuthorize(Roles = "Users,MenuManagers")]
         public ActionResult Order(string id /*menuid*/ = null)
         {
             ViewBag.ActiveMenuOrder = true;
