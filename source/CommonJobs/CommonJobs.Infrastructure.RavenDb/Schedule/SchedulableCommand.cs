@@ -17,10 +17,16 @@ namespace CommonJobs.Infrastructure.RavenDb.Schedule
             RavenSession = ravenSession;
             Now = now;
             var start = Now();
-            Execute();
+            if (IsExecutionRequired())
+                Execute();
             return CalculateNextExecutionTime(start, scheduled);
         }
         
         protected abstract DateTime CalculateNextExecutionTime(DateTime start, DateTime scheduled);
+
+        /// <summary>
+        /// Verify if it is really necesary to execute the command, because something could change from the last schedule
+        /// </summary>
+        protected abstract bool IsExecutionRequired();
     }
 }
