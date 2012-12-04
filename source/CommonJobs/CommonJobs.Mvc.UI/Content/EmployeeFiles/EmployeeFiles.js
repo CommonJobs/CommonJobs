@@ -19,6 +19,7 @@
                 ),
                 function (data) { return urlGenerator.action("Edit", "Employees", data.employee.Id); }
             ),
+            DataTablesHelpers.column.string(function (data) { return data.employee.Platform; }),
             DataTablesHelpers.column.string(function (data) { return data.employee.Cuil; }),
             DataTablesHelpers.column.date(function (data) { return data.employee.HiringDate; }),
             DataTablesHelpers.column.string(function (data) { return data.employee.BankName; }),
