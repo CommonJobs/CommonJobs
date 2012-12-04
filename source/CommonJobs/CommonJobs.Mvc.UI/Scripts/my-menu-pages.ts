@@ -57,6 +57,10 @@ $(document).ready(function () {
         }, 
         matcher: function () { return true; }
     });
+    $el.blur(function () {
+        if (_previousXHR)
+            _previousXHR.abort();
+    });
     $("ul.typeahead.dropdown-menu").css("z-index", 3000);
     //#endregion
 });
