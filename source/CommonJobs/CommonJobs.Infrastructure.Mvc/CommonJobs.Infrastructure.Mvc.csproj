@@ -90,6 +90,7 @@
     <Compile Include="Authorize\PrefixAuthorizationBehavior.cs" />
     <Compile Include="Authorize\IAuthorizationBehavior.cs" />
     <Compile Include="Authorize\PrefixAuthorizationBehaviorBase.cs" />
+    <Compile Include="HtmlHelpers\SecurityTrimmingExtensions.cs" />
     <Compile Include="JsonDotNetValueProviderFactory.cs" />
     <Compile Include="CommonJobsApplication.cs" />
     <Compile Include="CommonJobsController.cs" />
@@ -124,6 +125,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
