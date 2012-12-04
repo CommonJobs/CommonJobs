@@ -50,7 +50,7 @@ namespace CommonJobs.Infrastructure.Mvc.HtmlHelpers
 
         public static bool IsActiveAction(this HtmlHelper htmlHelper, string actionName, string controllerName = null)
         {
-            if (!IsActiveController(htmlHelper, actionName))
+            if (!IsActiveController(htmlHelper, controllerName))
                 return false;
 
             var routeData = htmlHelper.ViewContext.RouteData.Values;
