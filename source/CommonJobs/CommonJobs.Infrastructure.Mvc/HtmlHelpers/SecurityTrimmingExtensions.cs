@@ -71,8 +71,11 @@ namespace CommonJobs.Infrastructure.Mvc.HtmlHelpers
 
             var controllerDescriptor = new ReflectedControllerDescriptor(controllerToLinkTo.GetType());
 
-            var actionDescriptor = controllerDescriptor.FindAction(controllerContext, actionName);
+            var actionDescriptor = controllerDescriptor.GetCanonicalActions().Where(x => String.Equals(x.ActionName, actionName, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+            //Originally it was: //var actionDescriptor = controllerDescriptor.FindAction(controllerContext, actionName);
+            //I changed it because, I want to check accessibility to an POST action. Maybe it could fail for actions for different http method and the same name
 
+            
             return ActionIsAuthorized(controllerContext, actionDescriptor);
         }
 
