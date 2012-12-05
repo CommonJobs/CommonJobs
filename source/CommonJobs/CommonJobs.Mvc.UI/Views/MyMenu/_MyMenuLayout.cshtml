@@ -32,12 +32,7 @@
     Func<dynamic, bool> getBool = v => v == null ? false : (bool)v;
     Func<dynamic, string> getString = v => v == null ? "" : (string)v;
 
-    bool showNavigation = getBool(ViewBag.ShowNavigation);
     bool hidePersistenceButtons = getBool(ViewBag.HidePersistenceButtons);
-    bool activeMenuDefinition = getBool(ViewBag.ActiveMenuDefinition);
-    bool activeMenuOrder = getBool(ViewBag.ActiveMenuOrder);
-    bool activeMyMenu = getBool(ViewBag.ActiveMyMenu);
-    bool activeAnotherMenu = getBool(ViewBag.ActiveAnotherMenu);
     string anotherMenuUser = getString(ViewBag.AnotherMenuUser);
 }
 
