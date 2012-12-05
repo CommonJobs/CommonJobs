@@ -110,6 +110,12 @@ namespace CommonJobs.Mvc.UI.Controllers
             return Json(new { suggestions = results });
         }
 
+        public JsonNetResult TechnicalSkillName(string term, int maxSuggestions = 8)
+        {
+            var results = Query(new GetSuggestions(x => x.TechnicalSkillName, term, maxSuggestions));
+            return Json(new { suggestions = results });
+        }
+
         public JsonNetResult CompanyName(string term, int maxSuggestions = 8)
         {
             var results = Query(new GetSuggestions(x => x.CompanyName, term, maxSuggestions));

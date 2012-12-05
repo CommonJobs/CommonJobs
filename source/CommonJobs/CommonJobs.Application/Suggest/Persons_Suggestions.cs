@@ -29,6 +29,7 @@ namespace CommonJobs.Application.Persons
             public string Agreement { get; set; }
             public string Position { get; set; }
             public string Skill { get; set; }
+            public string TechnicalSkillName { get; set; }
             public string CompanyName { get; set; }
         }
 
@@ -56,6 +57,7 @@ namespace CommonJobs.Application.Persons
                     Agreement = entity.Agreement ?? string.Empty,
                     Position = entity.InitialPosition ?? string.Empty,
                     Skill = string.Empty,
+                    TechnicalSkillName = string.Empty,
                     CompanyName = string.Empty
                 });
 
@@ -81,6 +83,7 @@ namespace CommonJobs.Application.Persons
                     Agreement = string.Empty,
                     Position = entity.CurrentPosition,
                     Skill = string.Empty,
+                    TechnicalSkillName = string.Empty,
                     CompanyName = string.Empty
                 });
 
@@ -107,8 +110,37 @@ namespace CommonJobs.Application.Persons
                     Agreement = string.Empty,
                     Position = string.Empty,
                     Skill = skill,
+                    TechnicalSkillName = string.Empty,
                     CompanyName = string.Empty
                 });
+
+            //Employees indexer (Technical Skills)
+            AddMap<Employee>(employees =>
+                from entity in employees
+                from technicalSkillName in entity.TechnicalSkills.Select(x => x.Name)
+                select new
+                {
+                    College = string.Empty,
+                    EnglishLevel = string.Empty,
+                    Degree = string.Empty,
+                    UserName = string.Empty,
+                    Email = string.Empty,
+                    EmailDomain = string.Empty,
+                    EntityType = "Employee",
+                    Id = entity.Id,
+                    BankName = string.Empty,
+                    HealthInsurance = string.Empty,
+                    BankBranch = string.Empty,
+                    Seniority = string.Empty,
+                    Platform = string.Empty,
+                    Project = string.Empty,
+                    Agreement = string.Empty,
+                    Position = string.Empty,
+                    Skill = string.Empty,
+                    TechnicalSkillName = technicalSkillName,
+                    CompanyName = string.Empty
+                });
+
 
             //Main applicants indexer
             AddMap<Applicant>(applicants =>
@@ -132,6 +164,7 @@ namespace CommonJobs.Application.Persons
                     Agreement = string.Empty,
                     Position = string.Empty,
                     Skill = string.Empty,
+                    TechnicalSkillName = string.Empty,
                     CompanyName = string.Empty
                 });
 
@@ -158,6 +191,7 @@ namespace CommonJobs.Application.Persons
                     Agreement = string.Empty,
                     Position = string.Empty,
                     Skill = string.Empty,
+                    TechnicalSkillName = string.Empty,
                     CompanyName = item.CompanyName
                 });
             
@@ -184,8 +218,37 @@ namespace CommonJobs.Application.Persons
                     Agreement = string.Empty,
                     Position = string.Empty,
                     Skill = skill,
+                    TechnicalSkillName = string.Empty,
                     CompanyName = string.Empty
                 });
+
+            //Applicants indexer (Technical Skills)
+            AddMap<Applicant>(applicant =>
+                from entity in applicant
+                from technicalSkillName in entity.TechnicalSkills.Select(x => x.Name)
+                select new
+                {
+                    College = string.Empty,
+                    EnglishLevel = string.Empty,
+                    Degree = string.Empty,
+                    UserName = string.Empty,
+                    Email = string.Empty,
+                    EmailDomain = string.Empty,
+                    EntityType = "Applicant",
+                    Id = entity.Id,
+                    BankName = string.Empty,
+                    HealthInsurance = string.Empty,
+                    BankBranch = string.Empty,
+                    Seniority = string.Empty,
+                    Platform = string.Empty,
+                    Project = string.Empty,
+                    Agreement = string.Empty,
+                    Position = string.Empty,
+                    Skill = string.Empty,
+                    TechnicalSkillName = technicalSkillName,
+                    CompanyName = string.Empty
+                });
+
 
             Reduce = docs => from doc in docs
                              group doc by new 
@@ -194,6 +257,7 @@ namespace CommonJobs.Application.Persons
                                  doc.Email,
                                  doc.Position,
                                  doc.Skill,
+                                 doc.TechnicalSkillName,
                                  doc.CompanyName
                              } into g
                              select new
@@ -215,6 +279,7 @@ namespace CommonJobs.Application.Persons
                                  Agreement = g.Select(x => x.Agreement.Trim()).FirstOrDefault(),
                                  Position = g.Select(x => x.Position.Trim()).FirstOrDefault(),
                                  Skill = g.Select(x => x.Skill.Trim()).FirstOrDefault(),
+                                 TechnicalSkillName = g.Select(x => x.TechnicalSkillName.Trim()).FirstOrDefault(),
                                  CompanyName = g.Select(x => x.CompanyName.Trim()).FirstOrDefault()
                              };
 
@@ -233,6 +298,7 @@ namespace CommonJobs.Application.Persons
             Index(x => x.Agreement, FieldIndexing.Analyzed);
             Index(x => x.Position, FieldIndexing.Analyzed);
             Index(x => x.Skill, FieldIndexing.Analyzed);
+            Index(x => x.TechnicalSkillName, FieldIndexing.Analyzed);
             Index(x => x.CompanyName, FieldIndexing.Analyzed);
         }
     }
