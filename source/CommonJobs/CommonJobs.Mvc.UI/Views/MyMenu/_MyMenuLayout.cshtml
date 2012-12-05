@@ -1,4 +1,5 @@
-﻿@{
+﻿@using CommonJobs.Infrastructure.Mvc.HtmlHelpers
+@{
     ScriptManager.RegisterCss(Url.Content("~/Content/twitter-bootstrap/less/bootstrap.less"), priority: 900);
     ScriptManager.RegisterCss(Url.Content("~/Content/twitter-bootstrap/less/responsive.less"), priority: 900);
     ScriptManager.RegisterJs(Url.Content("~/Scripts/jquery-1.7.2.min.js"), priority: 900);
@@ -88,15 +89,11 @@
             
             <div class="nav-collapse collapse">
                 <ul class="nav">
-                    @if (showNavigation) {
-                        <li class="@(activeMenuOrder ? "active" : "")">@Html.ActionLink("Pedido del día", "Order")</li>
-                        <li class="@(activeMenuDefinition ? "active" : "")">@Html.ActionLink("Definición de los menues", "Admin")</li>
-                    }
-                    <li class="@(activeMyMenu ? "active" : "")">@Html.ActionLink("Mi Menú", "Index")</li>
-                    
-                    @if (showNavigation) {
-                        <li class="@(activeAnotherMenu ? "active" : "")">
-                            @using (Html.BeginForm("Edit", "MyMenu", new { id = "" }, FormMethod.Get, new { @class = "form-inline", id = "employeeMenuForm" }))
+                    @Html.HasActionPermission("Order", @<li class="@(item.IsActiveAction ? "active" : "")">@Html.ActionLink("Pedido del día"          , item.ActionName, item.ControllerName)</li>)
+                    @Html.HasActionPermission("Admin", @<li class="@(item.IsActiveAction ? "active" : "")">@Html.ActionLink("Definición de los menues", item.ActionName, item.ControllerName)</li>)
+                    @Html.HasActionPermission("Index", @<li class="@(item.IsActiveAction ? "active" : "")">@Html.ActionLink("Mi Menú"                 , item.ActionName, item.ControllerName)</li>)
+                    @Html.HasActionPermission("Edit" , @<li class="@(item.IsActiveAction ? "active" : "")">
+                            @using (Html.BeginForm(item.ActionName, item.ControllerName, new { id = "" }, FormMethod.Get, new { @class = "form-inline", id = "employeeMenuForm" }))
                             {
                                 <label for="openUserMenu">Menú de</label>
                                 <div class="input-append">
@@ -104,8 +101,7 @@
                                     <input class="btn" type="submit" value="Ir" />
                                 </div>
                             }
-                        </li>
-                    }
+                    </li>)
                 </ul>
             </div>
         </div>
