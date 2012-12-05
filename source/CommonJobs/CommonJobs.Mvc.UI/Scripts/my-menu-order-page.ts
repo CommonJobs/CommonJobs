@@ -54,6 +54,7 @@ module MyMenu {
     };
 
     export class OrderPage extends Utilities.HasCallbacks {
+        onAjaxCall = false;
         orderDate: moment.Moment = moment();
         isOrdered: bool = false;
         isProcessButtonVisible: knockout.koObservableBool = ko.observable(false);
