@@ -1,4 +1,4 @@
-﻿@using CommonJobs.Infrastructure.Mvc.HtmlHelpers
+@using CommonJobs.Infrastructure.Mvc.HtmlHelpers
 @{
     Layout = "_MyMenuLayout.cshtml";
     
@@ -92,7 +92,11 @@
                 </thead>
                 <tbody data-bind="foreach: detail">
                     <tr>
-                        <td><a data-bind="text: employeeName, attr: { href: url, title: 'Editar menú de ' + employeeName }"></a></td>
+                        <td>
+                            @Html.HasActionPermission("Edit",
+                                <a data-bind="text: employeeName, attr: { href: url, title: 'Editar menú de ' + employeeName }"></a>,
+                                <span data-bind="text: employeeName"></span>)
+                        </td>
                         <td data-bind="text: placeName"></td>
                         <td data-bind="text: optionName"></td>
                         <td data-bind="text: food"></td>
@@ -145,7 +149,11 @@
                 <tbody data-bind="foreach: $root.detail">
                     <!-- ko if: placeKey == $parent.placeKey && optionKey -->
                     <tr>
-                        <td><a data-bind="text: employeeName, attr: { href: url, title: 'Editar menú de ' + employeeName }"></a></td>
+                        <td>
+                            @Html.HasActionPermission("Edit",
+                                <a data-bind="text: employeeName, attr: { href: url, title: 'Editar menú de ' + employeeName }"></a>,
+                                <span data-bind="text: employeeName"></span>)
+                        </td>
                         <td data-bind="text: optionName"></td>
                         <td data-bind="text: food"></td>
                         <td data-bind="text: comment"></td>
