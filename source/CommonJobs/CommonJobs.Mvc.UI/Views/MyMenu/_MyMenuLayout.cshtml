@@ -63,6 +63,14 @@
             padding-top: 3px;
             height: 26px;
         }
+        span.ajax-loader {
+            background-image: url(@Url.Content("~/Content/Images/bigroller-bbb-111transparent.gif"));
+            background-repeat: no-repeat;
+            display: inline-block;
+            height: 32px;
+            vertical-align: bottom;
+            width: 32px;
+        }
     </style>
 </head>
 <body>
@@ -71,6 +79,7 @@
             
             <div style="float:right;">
                 <form class="form-inline" id="persistenceForm">
+                    <span class="ajax-loader" data-bind="visible: onAjaxCall"></span>
                     @if (!hidePersistenceButtons) {
                     <button class="btn btn-inverse" disabled="disabled" data-bind="click: load, enable: !onAjaxCall(), text: isDirty() ? 'Descartar' : 'Recargar'">Recargar</button>
                     <button class="btn btn-primary" disabled="disabled" data-bind="click: save, enable: isDirty() && !onAjaxCall()">Guardar</button>

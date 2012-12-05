@@ -15,6 +15,7 @@ var MyMenu;
         __extends(OrderPage, _super);
         function OrderPage(viewData) {
                 _super.call(this);
+            this.onAjaxCall = false;
             this.orderDate = moment();
             this.isOrdered = false;
             this.isProcessButtonVisible = ko.observable(false);
