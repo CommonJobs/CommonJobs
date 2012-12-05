@@ -175,6 +175,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="Content\DataTablesHelpers\DataTablesHelpers.js" />
     <Content Include="Content\Images\AddApplicant.png" />
+    <Content Include="Content\Images\bigroller-bbb-111transparent.gif" />
     <Content Include="Content\moment-datepicker\datepicker.css" />
     <Content Include="Content\TableTools-2.1.4\media\css\TableTools.css" />
     <Content Include="Content\TableTools-2.1.4\media\css\TableTools_JUI.css" />
