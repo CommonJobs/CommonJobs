@@ -1,4 +1,4 @@
-﻿@using CommonJobs.Infrastructure.Mvc.HtmlHelpers
+﻿@using CommonJobs.Infrastructure.Mvc.SecurityTrimming
 @{
     ScriptManager.RegisterCss(Url.Content("~/Content/twitter-bootstrap/less/bootstrap.less"), priority: 900);
     ScriptManager.RegisterCss(Url.Content("~/Content/twitter-bootstrap/less/responsive.less"), priority: 900);
@@ -93,10 +93,10 @@
             
             <div class="nav-collapse collapse">
                 <ul class="nav">
-                    @Html.HasActionPermission("Order", @<li class="@(item.IsActiveAction ? "active" : "")">@Html.ActionLink("Pedido del día"          , item.ActionName, item.ControllerName)</li>)
-                    @Html.HasActionPermission("Admin", @<li class="@(item.IsActiveAction ? "active" : "")">@Html.ActionLink("Definición de los menues", item.ActionName, item.ControllerName)</li>)
-                    @Html.HasActionPermission("Index", @<li class="@(item.IsActiveAction ? "active" : "")">@Html.ActionLink("Mi Menú"                 , item.ActionName, item.ControllerName)</li>)
-                    @Html.HasActionPermission("Edit" , @<li class="@(item.IsActiveAction ? "active" : "")">
+                    @Html.RenderIfHasPermission("Order", @<li class="@(item.IsActiveAction ? "active" : "")">@Html.ActionLink("Pedido del día"          , item.ActionName, item.ControllerName)</li>)
+                    @Html.RenderIfHasPermission("Admin", @<li class="@(item.IsActiveAction ? "active" : "")">@Html.ActionLink("Definición de los menues", item.ActionName, item.ControllerName)</li>)
+                    @Html.RenderIfHasPermission("Index", @<li class="@(item.IsActiveAction ? "active" : "")">@Html.ActionLink("Mi Menú"                 , item.ActionName, item.ControllerName)</li>)
+                    @Html.RenderIfHasPermission("Edit" , @<li class="@(item.IsActiveAction ? "active" : "")">
                             @using (Html.BeginForm(item.ActionName, item.ControllerName, new { id = "" }, FormMethod.Get, new { @class = "form-inline", id = "employeeMenuForm" }))
                             {
                                 <label for="openUserMenu">Menú de</label>

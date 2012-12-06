@@ -1,4 +1,4 @@
-﻿@using CommonJobs.Infrastructure.Mvc.HtmlHelpers
+﻿@using CommonJobs.Infrastructure.Mvc.SecurityTrimming
 @{
     Layout = "_MyMenuLayout.cshtml";
     
@@ -12,38 +12,38 @@
 
     <div class="alert alert-error alert-block" data-bind="visible: isOrdered">
         <div class="row">
-            @Html.HasActionPermission("GenerateOrder", @<text>
-                @using (Html.BeginForm(item.ActionName, item.ControllerName))
+            @using (var form = Html.BeginSecurityTrimmingForm("GenerateOrder"))
+            {
+                <div class="span3">
+                    <strong>Pedido ya realizado.</strong>
+                </div>
+                if (form.HasPermission)
                 {
-                    <div class="span3">
-                        <strong>Pedido ya realizado.</strong>
-                    </div>
                     <div class="pull-right">
                         <a href="#" data-bind="click: toggleProcessButton" style="color: #B94A48;">
                             <small>En casos excepcionales, es posible volver generar el pedido teniendo en cuenta los últimos cambios<span data-bind="visible: !isProcessButtonVisible()">...</span></small>
                         </a> <input type="submit" class="btn btn-danger btn-mini" style="font-size: 85%;" value="¡Generar ahora!" data-bind="visible: isProcessButtonVisible()" />
                     </div>
                 }
-                </text>, 
-                @<div class="span3"><strong>Pedido ya realizado.</strong></div>)
+            }
         </div>
     </div>
     <div class="alert alert-success alert-block" data-bind="visible: !isOrdered">
         <div class="row">
-            @Html.HasActionPermission("GenerateOrder", @<text>
-                @using (Html.BeginForm("GenerateOrder", "MyMenu"))
+            @using (var form = Html.BeginSecurityTrimmingForm("GenerateOrder"))
+            {
+                <div class="span3">
+                    <strong>Pedido aún no realizado.</strong>
+                </div>
+                if (form.HasPermission)
                 {
-                    <div class="span3">
-                        <strong>Pedido aún no realizado.</strong>
-                    </div>
                     <span class="pull-right">
                         <a href="#" data-bind="click: toggleProcessButton" style="color: #468847;">
                             <small>En casos excepcionales, es posible generar el pedido antes de la generación automática<span data-bind="visible: !isProcessButtonVisible()">...</span></small>
                         </a> <input type="submit" class="btn btn-danger btn-mini" style="font-size: 85%;" value="¡Generar ahora!" data-bind="visible: isProcessButtonVisible()" />
                     </span>
                 }
-                </text>, 
-                @<strong>Pedido aún no realizado.</strong>)
+            }
         </div>
     </div>
 
@@ -93,9 +93,14 @@
                 <tbody data-bind="foreach: detail">
                     <tr>
                         <td>
-                            @Html.HasActionPermission("Edit",
-                                @<a data-bind="text: employeeName, attr: { href: url, title: 'Editar menú de ' + employeeName }"></a>,
-                                @<span data-bind="text: employeeName"></span>)
+                            @using (var helper = Html.GetSecurityTrimmingHelper("Edit"))
+                            {
+                                if (helper.HasPermission) {
+                                    <a data-bind="text: employeeName, attr: { href: url, title: 'Editar menú de ' + employeeName }"></a>
+                                } else {
+                                    <span data-bind="text: employeeName"></span>
+                                }
+                            }
                         </td>
                         <td data-bind="text: placeName"></td>
                         <td data-bind="text: optionName"></td>
@@ -150,9 +155,14 @@
                     <!-- ko if: placeKey == $parent.placeKey && optionKey -->
                     <tr>
                         <td>
-                            @Html.HasActionPermission("Edit",
-                                @<a data-bind="text: employeeName, attr: { href: url, title: 'Editar menú de ' + employeeName }"></a>,
-                                @<span data-bind="text: employeeName"></span>)
+                            @using (var helper = Html.GetSecurityTrimmingHelper("Edit"))
+                            {
+                                if (helper.HasPermission) {
+                                    <a data-bind="text: employeeName, attr: { href: url, title: 'Editar menú de ' + employeeName }"></a>
+                                } else {
+                                    <span data-bind="text: employeeName"></span>
+                                }
+                            }
                         </td>
                         <td data-bind="text: optionName"></td>
                         <td data-bind="text: food"></td>
