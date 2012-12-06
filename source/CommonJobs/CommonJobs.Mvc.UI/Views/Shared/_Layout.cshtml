@@ -1,4 +1,4 @@
-﻿@using CommonJobs.Infrastructure.Mvc.HtmlHelpers
+﻿@using CommonJobs.Infrastructure.Mvc.SecurityTrimming
 @{
     ScriptManager.RegisterJs(Url.Content("~/Scripts/jquery-1.7.2.min.js"), priority: 900);
     ScriptManager.RegisterJs(Url.Content("~/Scripts/jquery-ui-1.8.23.min.js"), priority: 900);
@@ -39,12 +39,12 @@
 	<div class="page">
 		<div>
 			<ul class="menu"> 
-                @Html.HasActionPermission("Index", "Applicants",    @<li class="top @(@item.IsActiveController ? "active" : "")">@Html.ActionLink("Postulantes", @item.ActionName, @item.ControllerName, null, new { @class = "top_link" })</li>)
-                @Html.HasActionPermission("Index", "JobSearches",   @<li class="top @(@item.IsActiveController ? "active" : "")">@Html.ActionLink("Búsquedas"  , @item.ActionName, @item.ControllerName, null, new { @class = "top_link" })</li>)
-                @Html.HasActionPermission("Index", "Employees",     @<li class="top @(@item.IsActiveController ? "active" : "")">@Html.ActionLink("Empleados"  , @item.ActionName, @item.ControllerName, null, new { @class = "top_link" })</li>)
-                @Html.HasActionPermission("Index", "EmployeeFiles", @<li class="top @(@item.IsActiveController ? "active" : "")">@Html.ActionLink("Legajos"    , @item.ActionName, @item.ControllerName, null, new { @class = "top_link" })</li>)
-                @Html.HasActionPermission("Index", "Vacations",     @<li class="top @(@item.IsActiveController ? "active" : "")">@Html.ActionLink("Vacaciones" , @item.ActionName, @item.ControllerName, null, new { @class = "top_link" })</li>)
-                @Html.HasActionPermission("Index", "Attachments",   @<li class="top @(@item.IsActiveController ? "active" : "")">@Html.ActionLink("Archivos"   , @item.ActionName, @item.ControllerName, null, new { @class = "top_link" })</li>)
+                @Html.RenderIfHasPermission("Index", "Applicants"    , @<li class="top @(@item.IsActiveController ? "active" : "")">@Html.ActionLink("Postulantes", @item.ActionName, @item.ControllerName, null, new { @class = "top_link" })</li>)
+                @Html.RenderIfHasPermission("Index", "JobSearches"   , @<li class="top @(@item.IsActiveController ? "active" : "")">@Html.ActionLink("Búsquedas"  , @item.ActionName, @item.ControllerName, null, new { @class = "top_link" })</li>)
+                @Html.RenderIfHasPermission("Index", "Employees"     , @<li class="top @(@item.IsActiveController ? "active" : "")">@Html.ActionLink("Empleados"  , @item.ActionName, @item.ControllerName, null, new { @class = "top_link" })</li>)
+                @Html.RenderIfHasPermission("Index", "EmployeeFiles" , @<li class="top @(@item.IsActiveController ? "active" : "")">@Html.ActionLink("Legajos"    , @item.ActionName, @item.ControllerName, null, new { @class = "top_link" })</li>)
+                @Html.RenderIfHasPermission("Index", "Vacations"     , @<li class="top @(@item.IsActiveController ? "active" : "")">@Html.ActionLink("Vacaciones" , @item.ActionName, @item.ControllerName, null, new { @class = "top_link" })</li>)
+                @Html.RenderIfHasPermission("Index", "Attachments"   , @<li class="top @(@item.IsActiveController ? "active" : "")">@Html.ActionLink("Archivos"   , @item.ActionName, @item.ControllerName, null, new { @class = "top_link" })</li>)
                 @Html.Partial("EnvironmentBanner")
                 @if (Request.IsAuthenticated && User != null && User.Identity != null && User.Identity.Name != null) 
 				{

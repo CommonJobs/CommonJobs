@@ -90,7 +90,9 @@
     <Compile Include="Authorize\PrefixAuthorizationBehavior.cs" />
     <Compile Include="Authorize\IAuthorizationBehavior.cs" />
     <Compile Include="Authorize\PrefixAuthorizationBehaviorBase.cs" />
-    <Compile Include="HtmlHelpers\SecurityTrimmingExtensions.cs" />
+    <Compile Include="SecurityTrimming\SecurityTrimmingExtensions.cs" />
+    <Compile Include="SecurityTrimming\SecurityTrimmingForm.cs" />
+    <Compile Include="SecurityTrimming\SecurityTrimmingHelper.cs" />
     <Compile Include="JsonDotNetValueProviderFactory.cs" />
     <Compile Include="CommonJobsApplication.cs" />
     <Compile Include="CommonJobsController.cs" />
