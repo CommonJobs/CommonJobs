@@ -4,70 +4,56 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Web.Mvc;
-using System.Web.WebPages;
 
-namespace CommonJobs.Infrastructure.Mvc.HtmlHelpers
+namespace CommonJobs.Infrastructure.Mvc.SecurityTrimming
 {
-    public class IfPermissionsItem
+    public class SecurityTrimmingHelper : IDisposable
     {
-        public string ControllerName { get; set; }
-        public string ActionName { get; set; }
-        public bool IsActiveController { get; set; }
-        public bool IsActiveAction { get; set; }
-    }
+        public HtmlHelper HtmlHelper { get; private set; }
+        public string ControllerName { get; private set; }
+        public string ActionName { get; private set; }
+        public bool IsActiveController { get; private set; }
+        public bool IsActiveAction { get; private set; }
+        public bool HasPermission { get; private set; }
 
-    public static class SecurityTrimmingExtensions
-    {
-        public static HelperResult HasActionPermission(this HtmlHelper htmlHelper, string actionName, string controllerName, Func<IfPermissionsItem, HelperResult> templateTrue, Func<IfPermissionsItem, HelperResult> templateFalse = null)
+        internal SecurityTrimmingHelper(HtmlHelper htmlHelper, string actionName, string controllerName = null)
         {
-            //TODO: support null controller
-            var template = htmlHelper.HasActionPermission(actionName, controllerName) ? templateTrue : templateFalse;
-            return template != null
-                ? new HelperResult(writer => template(new IfPermissionsItem() { 
-                    ActionName = actionName, 
-                    ControllerName = controllerName,
-                    IsActiveAction = IsActiveAction(htmlHelper, actionName, controllerName),
-                    IsActiveController = IsActiveController(htmlHelper, controllerName)
-                }).WriteTo(writer))
-                : new HelperResult(writer => { });
+            //TODO: better supprt to controllerName == null
+            HtmlHelper = htmlHelper;
+            ControllerName = controllerName;
+            ActionName = actionName;
+
+            IsActiveController = CheckIsActiveController(htmlHelper.ViewContext, controllerName);
+            IsActiveAction = IsActiveController && CheckIsActiveAction(htmlHelper.ViewContext, actionName, controllerName);
+            HasPermission = CheckHasActionPermission(htmlHelper.ViewContext, actionName, controllerName);
         }
 
-        public static HelperResult HasActionPermission(this HtmlHelper htmlHelper, string actionName, Func<IfPermissionsItem, HelperResult> templateTrue, Func<IfPermissionsItem, HelperResult> templateFalse = null)
-        {
-            return HasActionPermission(htmlHelper, actionName, null, templateTrue, templateFalse);
-        }
-
-
-        public static bool IsActiveController(this HtmlHelper htmlHelper, string controllerName = null)
+        public static bool CheckIsActiveController(ViewContext viewContext, string controllerName = null)
         {
             if (controllerName == null)
                 return true;
-
-            var routeData = htmlHelper.ViewContext.RouteData.Values;
-            var currentController = routeData["controller"];
+            var currentController = viewContext.RouteData.Values["controller"];
             return String.Equals(controllerName, currentController as string, StringComparison.OrdinalIgnoreCase);
         }
 
-        public static bool IsActiveAction(this HtmlHelper htmlHelper, string actionName, string controllerName = null)
+        public static bool CheckIsActiveAction(ViewContext viewContext, string actionName, string controllerName = null)
         {
-            if (!IsActiveController(htmlHelper, controllerName))
+            if (!CheckIsActiveController(viewContext, controllerName))
                 return false;
-
-            var routeData = htmlHelper.ViewContext.RouteData.Values;
-            var currentAction = routeData["action"];
+            var currentAction = viewContext.RouteData.Values["action"];
             return String.Equals(actionName, currentAction as string, StringComparison.OrdinalIgnoreCase);
         }
 
         //FROM: http://stackoverflow.com/questions/2721869/security-aware-action-link
-        public static bool HasActionPermission(this HtmlHelper htmlHelper, string actionName, string controllerName = null)
+        public static bool CheckHasActionPermission(ViewContext viewContext, string actionName, string controllerName = null)
         {
             //if the controller name is empty the ASP.NET convention is:
             //"we are linking to a different controller
             ControllerBase controllerToLinkTo = string.IsNullOrEmpty(controllerName)
-                                                    ? htmlHelper.ViewContext.Controller
-                                                    : GetControllerByName(htmlHelper, controllerName);
+                                                    ? viewContext.Controller
+                                                    : GetControllerByName(viewContext, controllerName);
 
-            var controllerContext = new ControllerContext(htmlHelper.ViewContext.RequestContext, controllerToLinkTo);
+            var controllerContext = new ControllerContext(viewContext.RequestContext, controllerToLinkTo);
 
             var controllerDescriptor = new ReflectedControllerDescriptor(controllerToLinkTo.GetType());
 
@@ -75,7 +61,7 @@ namespace CommonJobs.Infrastructure.Mvc.HtmlHelpers
             //Originally it was: //var actionDescriptor = controllerDescriptor.FindAction(controllerContext, actionName);
             //I changed it because, I want to check accessibility to an POST action. Maybe it could fail for actions for different http method and the same name
 
-            
+
             return ActionIsAuthorized(controllerContext, actionDescriptor);
         }
 
@@ -101,12 +87,12 @@ namespace CommonJobs.Infrastructure.Mvc.HtmlHelpers
             return true;
         }
 
-        private static ControllerBase GetControllerByName(HtmlHelper helper, string controllerName)
+        private static ControllerBase GetControllerByName(ViewContext viewContext, string controllerName)
         {
             // Instantiate the controller and call Execute
             IControllerFactory factory = ControllerBuilder.Current.GetControllerFactory();
 
-            IController controller = factory.CreateController(helper.ViewContext.RequestContext, controllerName);
+            IController controller = factory.CreateController(viewContext.RequestContext, controllerName);
 
             if (controller == null)
             {
@@ -121,5 +107,9 @@ namespace CommonJobs.Infrastructure.Mvc.HtmlHelpers
             return (ControllerBase)controller;
         }
 
+        public virtual void Dispose()
+        {
+            //NOTE: only to allow use of using in Razor
+        }
     }
 }
