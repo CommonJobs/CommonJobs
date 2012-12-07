@@ -1,4 +1,5 @@
 ﻿@using CommonJobs.Infrastructure.Mvc.SecurityTrimming
+@using CommonJobs.Mvc.UI.HtmlHelpers
 @{
     ScriptManager.RegisterJs(Url.Content("~/Scripts/jquery-1.7.2.min.js"), priority: 900);
     ScriptManager.RegisterJs(Url.Content("~/Scripts/jquery-ui-1.8.23.min.js"), priority: 900);
@@ -48,12 +49,12 @@
                     @Html.Partial("EnvironmentBanner")
                 </ul>
                 <ul class="nav">
-                    @Html.RenderIfHasPermission("Index", "Applicants"    , @<li class="@(@item.IsActiveController ? "active" : "")">@Html.ActionLink("Postulantes", @item.ActionName, @item.ControllerName)</li>)
-                    @Html.RenderIfHasPermission("Index", "JobSearches"   , @<li class="@(@item.IsActiveController ? "active" : "")">@Html.ActionLink("Búsquedas"  , @item.ActionName, @item.ControllerName)</li>)
-                    @Html.RenderIfHasPermission("Index", "Employees"     , @<li class="@(@item.IsActiveController ? "active" : "")">@Html.ActionLink("Empleados"  , @item.ActionName, @item.ControllerName)</li>)
-                    @Html.RenderIfHasPermission("Index", "EmployeeFiles" , @<li class="@(@item.IsActiveController ? "active" : "")">@Html.ActionLink("Legajos"    , @item.ActionName, @item.ControllerName)</li>)
-                    @Html.RenderIfHasPermission("Index", "Vacations"     , @<li class="@(@item.IsActiveController ? "active" : "")">@Html.ActionLink("Vacaciones" , @item.ActionName, @item.ControllerName)</li>)
-                    @Html.RenderIfHasPermission("Index", "Attachments"   , @<li class="@(@item.IsActiveController ? "active" : "")">@Html.ActionLink("Archivos"   , @item.ActionName, @item.ControllerName)</li>)
+                    @Html.NavItem("Postulantes", "Index", "Applicants")
+                    @Html.NavItem("Búsquedas", "Index", "JobSearches")
+                    @Html.NavItem("Empleados", "Index", "Employees")
+                    @Html.NavItem("Legajos", "Index", "EmployeeFiles")
+                    @Html.NavItem("Vacaciones", "Index", "Vacations")
+                    @Html.NavItem("Archivos", "Index", "Attachments")
                 </ul>
             </div>
         </div>
@@ -69,12 +70,12 @@
                     @Html.Partial("EnvironmentBanner")
                 </ul>
                 <ul class="nav">
-                    @Html.RenderIfHasPermission("Index", "Applicants"    , @<li class="@(@item.IsActiveController ? "active" : "")">@Html.ActionLink("Postulantes", @item.ActionName, @item.ControllerName)</li>)
-                    @Html.RenderIfHasPermission("Index", "JobSearches"   , @<li class="@(@item.IsActiveController ? "active" : "")">@Html.ActionLink("Búsquedas"  , @item.ActionName, @item.ControllerName)</li>)
-                    @Html.RenderIfHasPermission("Index", "Employees"     , @<li class="@(@item.IsActiveController ? "active" : "")">@Html.ActionLink("Empleados"  , @item.ActionName, @item.ControllerName)</li>)
-                    @Html.RenderIfHasPermission("Index", "EmployeeFiles" , @<li class="@(@item.IsActiveController ? "active" : "")">@Html.ActionLink("Legajos"    , @item.ActionName, @item.ControllerName)</li>)
-                    @Html.RenderIfHasPermission("Index", "Vacations"     , @<li class="@(@item.IsActiveController ? "active" : "")">@Html.ActionLink("Vacaciones" , @item.ActionName, @item.ControllerName)</li>)
-                    @Html.RenderIfHasPermission("Index", "Attachments"   , @<li class="@(@item.IsActiveController ? "active" : "")">@Html.ActionLink("Archivos"   , @item.ActionName, @item.ControllerName)</li>)
+                    @Html.NavItem("Postulantes", "Index", "Applicants")
+                    @Html.NavItem("Búsquedas", "Index", "JobSearches")
+                    @Html.NavItem("Empleados", "Index", "Employees")
+                    @Html.NavItem("Legajos", "Index", "EmployeeFiles")
+                    @Html.NavItem("Vacaciones", "Index", "Vacations")
+                    @Html.NavItem("Archivos", "Index", "Attachments")
                 </ul>
             </div>
         </div>
