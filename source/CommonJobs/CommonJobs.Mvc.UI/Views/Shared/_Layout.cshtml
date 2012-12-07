@@ -36,23 +36,50 @@
     <link rel="shortcut icon" href="@Url.Content("~/Content/Images/favicon.ico")" />
 </head>
 <body>
+    <div class="bootstrap-scope">
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <ul class="nav nav-right">
+                    @if (Request.IsAuthenticated && User != null && User.Identity != null && User.Identity.Name != null) 
+				    {
+					    //TODO: verify if the `if` is really necessary
+					    <li class="username"><small>@User.Identity.Name</small></li>
+				    }
+                    @Html.Partial("EnvironmentBanner")
+                </ul>
+                <ul class="nav">
+                    @Html.RenderIfHasPermission("Index", "Applicants"    , @<li class="@(@item.IsActiveController ? "active" : "")">@Html.ActionLink("Postulantes", @item.ActionName, @item.ControllerName)</li>)
+                    @Html.RenderIfHasPermission("Index", "JobSearches"   , @<li class="@(@item.IsActiveController ? "active" : "")">@Html.ActionLink("Búsquedas"  , @item.ActionName, @item.ControllerName)</li>)
+                    @Html.RenderIfHasPermission("Index", "Employees"     , @<li class="@(@item.IsActiveController ? "active" : "")">@Html.ActionLink("Empleados"  , @item.ActionName, @item.ControllerName)</li>)
+                    @Html.RenderIfHasPermission("Index", "EmployeeFiles" , @<li class="@(@item.IsActiveController ? "active" : "")">@Html.ActionLink("Legajos"    , @item.ActionName, @item.ControllerName)</li>)
+                    @Html.RenderIfHasPermission("Index", "Vacations"     , @<li class="@(@item.IsActiveController ? "active" : "")">@Html.ActionLink("Vacaciones" , @item.ActionName, @item.ControllerName)</li>)
+                    @Html.RenderIfHasPermission("Index", "Attachments"   , @<li class="@(@item.IsActiveController ? "active" : "")">@Html.ActionLink("Archivos"   , @item.ActionName, @item.ControllerName)</li>)
+                </ul>
+            </div>
+        </div>
+        <br /><br />
+        <div class="navbar navbar-inverse navbar-static-top">
+            <div class="navbar-inner">
+                <ul class="nav nav-right">
+                    @if (Request.IsAuthenticated && User != null && User.Identity != null && User.Identity.Name != null) 
+				    {
+					    //TODO: verify if the `if` is really necessary
+					    <li class="username"><small>@User.Identity.Name</small></li>
+				    }
+                    @Html.Partial("EnvironmentBanner")
+                </ul>
+                <ul class="nav">
+                    @Html.RenderIfHasPermission("Index", "Applicants"    , @<li class="@(@item.IsActiveController ? "active" : "")">@Html.ActionLink("Postulantes", @item.ActionName, @item.ControllerName)</li>)
+                    @Html.RenderIfHasPermission("Index", "JobSearches"   , @<li class="@(@item.IsActiveController ? "active" : "")">@Html.ActionLink("Búsquedas"  , @item.ActionName, @item.ControllerName)</li>)
+                    @Html.RenderIfHasPermission("Index", "Employees"     , @<li class="@(@item.IsActiveController ? "active" : "")">@Html.ActionLink("Empleados"  , @item.ActionName, @item.ControllerName)</li>)
+                    @Html.RenderIfHasPermission("Index", "EmployeeFiles" , @<li class="@(@item.IsActiveController ? "active" : "")">@Html.ActionLink("Legajos"    , @item.ActionName, @item.ControllerName)</li>)
+                    @Html.RenderIfHasPermission("Index", "Vacations"     , @<li class="@(@item.IsActiveController ? "active" : "")">@Html.ActionLink("Vacaciones" , @item.ActionName, @item.ControllerName)</li>)
+                    @Html.RenderIfHasPermission("Index", "Attachments"   , @<li class="@(@item.IsActiveController ? "active" : "")">@Html.ActionLink("Archivos"   , @item.ActionName, @item.ControllerName)</li>)
+                </ul>
+            </div>
+        </div>
+    </div>
 	<div class="page">
-		<div>
-			<ul class="menu"> 
-                @Html.RenderIfHasPermission("Index", "Applicants"    , @<li class="top @(@item.IsActiveController ? "active" : "")">@Html.ActionLink("Postulantes", @item.ActionName, @item.ControllerName, null, new { @class = "top_link" })</li>)
-                @Html.RenderIfHasPermission("Index", "JobSearches"   , @<li class="top @(@item.IsActiveController ? "active" : "")">@Html.ActionLink("Búsquedas"  , @item.ActionName, @item.ControllerName, null, new { @class = "top_link" })</li>)
-                @Html.RenderIfHasPermission("Index", "Employees"     , @<li class="top @(@item.IsActiveController ? "active" : "")">@Html.ActionLink("Empleados"  , @item.ActionName, @item.ControllerName, null, new { @class = "top_link" })</li>)
-                @Html.RenderIfHasPermission("Index", "EmployeeFiles" , @<li class="top @(@item.IsActiveController ? "active" : "")">@Html.ActionLink("Legajos"    , @item.ActionName, @item.ControllerName, null, new { @class = "top_link" })</li>)
-                @Html.RenderIfHasPermission("Index", "Vacations"     , @<li class="top @(@item.IsActiveController ? "active" : "")">@Html.ActionLink("Vacaciones" , @item.ActionName, @item.ControllerName, null, new { @class = "top_link" })</li>)
-                @Html.RenderIfHasPermission("Index", "Attachments"   , @<li class="top @(@item.IsActiveController ? "active" : "")">@Html.ActionLink("Archivos"   , @item.ActionName, @item.ControllerName, null, new { @class = "top_link" })</li>)
-                @Html.Partial("EnvironmentBanner")
-                @if (Request.IsAuthenticated && User != null && User.Identity != null && User.Identity.Name != null) 
-				{
-					//TODO: verify if the `if` is really necessary
-					<li class="username"><span>@User.Identity.Name</span></li>
-				}
-			</ul>
-		</div>
 		@RenderBody()  
 	 </div>     
 </body>
