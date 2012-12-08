@@ -1,6 +1,6 @@
 ﻿@model CommonJobs.Application.ApplicantSearching.ApplicantSearchParameters
 @{
-    ViewBag.Title = "Postulantes | CommonJobs";
+    ViewBag.Title = "Postulantes · CommonJobs";
     ScriptManager.RegisterCss(Url.Content("~/Content/ie.css"), priority: 500, htmlAttributes: new { media = "screen" }, patchCondition: "lte IE 9");
     ScriptManager.RegisterCss(Url.Content("~/Content/1140.css"), priority: 500, htmlAttributes: new { media = "screen" });
     ScriptManager.RegisterCss(Url.Content("~/Content/reset.css"), priority: 500);
@@ -49,28 +49,23 @@
         </div>
     </div>
 </script>
-<div class="container searchContainer">
-    <h1>Postulantes</h1>
-
-    <div class="row">
-        <div class="twocol"></div>
-        <div class="eightcol quickSearchContainer">
-            <form method="get" action="javascript:void(0);">
-                <div class="mainSearch">
-                    <label for="quickSearch">Búsqueda rápida:</label>
-                    <input type="text" id="quickSearch" name="Term" value="@Model.Term" />
-                    <input type="submit" id="quickSearchSubmit" value=">>" />
+<div class="bootstrap-scope">
+    <div class="container-fluid page-header" style="text-align: center;">
+        <form method="get" action="javascript:void(0);" class="form-search form-horizontal">
+            <div class="control-group">
+                <div class="input-append">
+                    <input id="quickSearch" type="text" class="search-query input-xlarge" placeholder="Búsqueda de postulantes" name="Term" value="@Model.Term"/>
+                    <button id="quickSearchSubmit" type="submit" class="btn" title="Buscar ahora"><i class="icon-search"></i></button>
                 </div>
-                <div class="secondarySearch">
-                    <label>Resaltado</label><input type="checkbox" id="HighlightedCheck" name="Highlighted" @(Model.Highlighted ? "checked='checked'" : string.Empty) />
-                    <label>¿Con entrevistas?</label><input type="checkbox" id="HaveInterviewCheck" name="HaveInterview" @(Model.HaveInterview ? "checked='checked'" : string.Empty)/>
-                    <label>¿Con entrevistas técnicas?</label><input type="checkbox" id="HaveTechnicalInterviewCheck" name="HaveTechnicalInterview" @(Model.HaveTechnicalInterview ? "checked='checked'" : string.Empty) />
-                    <br /><label>¿Buscar en adjuntos?</label><input type="checkbox" id="SearchInAttachmentsCheck" name="SearchInAttachments" @(Model.SearchInAttachments ? "checked='checked'" : string.Empty) />
-                </div>
-            </form>
-            <p id="resultCountNotice">Hay <span id="resultCount">0</span> resultado(s).</p>
-        </div>
-        <div class="twocol last"></div>
+            </div>
+            <div class="control-group">
+                <label class="checkbox" style="margin-right: 10px"><input type="checkbox" id="HighlightedCheck" name="Highlighted" @(Model.Highlighted ? "checked='checked'" : string.Empty)/>Resaltado</label>
+                <label class="checkbox" style="margin-right: 10px"><input type="checkbox" id="HaveInterviewCheck" name="HaveInterview" @(Model.HaveInterview ? "checked='checked'" : string.Empty)/>Con entrevistas</label>
+                <label class="checkbox" style="margin-right: 10px"><input type="checkbox" id="HaveTechnicalInterviewCheck" name="HaveTechnicalInterview" @(Model.HaveTechnicalInterview ? "checked='checked'" : string.Empty)/>Con entrevistas técnicas</label>
+                <label class="checkbox" style="margin-right: 10px"><input type="checkbox" id="SearchInAttachmentsCheck" name="SearchInAttachments" @(Model.SearchInAttachments ? "checked='checked'" : string.Empty)/>Buscar en adjuntos</label>
+            </div>
+        </form>
+        <p id="resultCountNotice">Hay <span id="resultCount">0</span> resultado(s).</p>
     </div>
 </div>
 <div class="results">
