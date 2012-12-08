@@ -68,7 +68,7 @@ _**Cambios:** Se modificaron las [Características Mínimas](propuesta-trabajo#C
    * Información para viajes
    * Datos bancarios
    * Beneficios brindados (obra social, almuerzo, etc.)
-   * Información laboral (proyecto, señority, carga horaria)
+   * Información laboral (proyecto, seniority, carga horaria)
    * Ausencias
    * Vacaciones
    * Notas
@@ -84,7 +84,7 @@ _**Cambios:** Se modificaron las [Características Mínimas](propuesta-trabajo#C
 * Almacén y administración de archivos adjuntos y búsqueda Full-Text.
 * Notificación de archivos requeridos para empleados.
 * Cálculo de Vacaciones.
-* Vista integral de datos comunes del stuff de la empresa
+* Vista integral de datos comunes del staff de la empresa
 * Seguridad para el acceso al sistema integrada con el sistema de seguridad de la empresa.
 * Búsquedas laborales publicables para que el propio postulante cargue sus datos.
 
