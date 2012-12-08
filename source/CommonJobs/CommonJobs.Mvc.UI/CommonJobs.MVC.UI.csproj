@@ -136,6 +136,7 @@
     <Content Include="CJLogic\Libs\moment.d.ts" />
     <Content Include="CJLogic\Libs\underscore.browser.d.ts" />
     <Content Include="Content\mymenu.css" />
+    <Content Include="Content\Absences\Absences.js" />
     <Content Include="Content\DataTables\css\demo_page.css" />
     <Content Include="Content\DataTables\css\demo_table.css" />
     <Content Include="Content\DataTables\css\demo_table_jui.css" />
@@ -160,6 +161,7 @@
     <Content Include="Content\FilesListing\FilesListing.js" />
     <Compile Include="Controllers\ApplicantsController.cs" />
     <Compile Include="Controllers\AttachmentsController.cs" />
+    <Compile Include="Controllers\AbsencesController.cs" />
     <Compile Include="Controllers\EmployeeFilesController.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -274,6 +276,7 @@
     <Content Include="Content\collapsable-sections.less" />
     <Content Include="Content\twitter-bootstrap\less\media.less" />
     <Content Include="Views\MyMenu\Order.cshtml" />
+    <Content Include="Views\Absences\Index.cshtml" />
     <None Include="_bin_deployableAssemblies\FSharp.Core.dll" />
   </ItemGroup>
   <ItemGroup>
