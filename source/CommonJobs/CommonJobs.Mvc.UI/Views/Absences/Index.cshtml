@@ -6,6 +6,7 @@
     ScriptManager.RegisterJs(Url.Content("~/Scripts/DataTables/jquery.dataTables.js"));
     ScriptManager.RegisterJs(Url.Content("~/CJLogic/CJLogic.js"));
     ScriptManager.RegisterJs(Url.Content("~/Content/DataTablesHelpers/DataTablesHelpers.js"));
+    ScriptManager.RegisterCss(Url.Content("~/Content/Absences/Absences.less"));
     ScriptManager.RegisterJs(Url.Content("~/Content/Absences/Absences.js"));
     ScriptManager.RegisterCss(Url.Content("~/Content/DataTables/css/jquery.dataTables.css"));
     ScriptManager.RegisterJs(Url.Content("~/Content/TableTools-2.1.4/media/js/ZeroClipboard.js"));
@@ -29,13 +30,13 @@
             } 
         </tr>
         <tr>
-            <th>Nombre</th>
+            <th class="cell-name">Nombre</th>
             @* Other columns with related abscence date, like employee summary, or something *@
             @foreach (KeyValuePair<int, int[]> x in ViewBag.Months)
             {
                 foreach (var d in x.Value)
                 {
-                    <th class="center" data-month="@x.Key" data-day="@d">@d</th>
+                    <th class="cell-day" data-month="@x.Key" data-day="@d">@d</th>
                 }
             } 
         </tr>

@@ -18,10 +18,10 @@
                 DataTablesHelpers.column.fullName(
                     function (data) { return data.employee.LastName; },
                     function (data) { return data.employee.FirstName; }),
-                function (data) { return urlGenerator.action("Edit", "Employees", data.employee.Id); })
-                //TODO: styles:
-                //  white-space: nowrap;
-
+                function (data) { return urlGenerator.action("Edit", "Employees", data.employee.Id); },
+                {
+                    sClass: "cell-name"
+                })
             //TODO: Other columns with related abscence date, like employee summary, or something
     ];
 
@@ -29,16 +29,11 @@
         _.each(days, function (day) {
             columns.push({
                 bSortable: false,
+                sClass: "cell-day",
                 mData: function () {
                     //TODO: day absence data
                     return "";
                 }
-                //TODO: styles:
-                //  max-width: 8px;
-                //  min-width: 8px;
-                //  padding: 2px;
-                //  width: 8px;
-                //  word-wrap: break-word;
             });
         })
     });
@@ -68,7 +63,14 @@
                     sButtonText: "Excel"
                 }
 		    ]
-        }
+        }/*,
+        fnCreatedRow: function (nRow, aData, iDataIndex) {
+            $(nRow).find("td").first().nextAll().addClass("center");
+            $(nRow).find(".vacation-list").popover({
+                title: 'Detalle',
+                placement: "top"
+            });
+        },*/
     });
 
     whileTrue(
