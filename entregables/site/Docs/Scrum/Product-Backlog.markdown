@@ -4,7 +4,13 @@
 
 *Los números son los Story Points asignados a cada Tarea/User Story.*
 
-## Sprint 17
+* (13) Ver de una forma gráfica, por año y para todo el staff un detalle de las ausencias
+* (5) Mostrar vacaciones en gráfico de ausencias
+* (13) Definir skills necesarios para una búsqueda
+* (8) Postulantes sugeridos, según skills, para una búsqueda
+* (1) Mostrar fecha de última actualización en información de postulante
+* (2) Estilos de búsquedas
+* (2) Estilo de barra de menú
 * (5) Estilos de edición de empleado y postulante (barra lateral).
 * (8) Hacer tipo de entrevistas un dato dinámico.
 * (13) Mostrar estado de postulante en flujo de postulantes.
@@ -12,8 +18,6 @@
 * (5) Tener en cuenta skills no técnicos para postulantes sugeridos para una búsqueda.
 * (5) Adaptar búsqueda a tags de entrevistas.
 * (0) Agregar matrícula a los datos del empleado / postulante.
-
-## Sprint 18
 * (8) Asociar postulantes a búsqueda.
 * (5) Convertir postulante en empleado.
 * (1) Estilos de resultados de postulantes.
@@ -33,25 +37,13 @@
 * (?) Abstract.
 * (7) Relacionar ayuda en contexto con manual del usuario.
 
+# Línea de fin de proyecto
 
-## Tareas a analizar
+*Consideramos que las tareas que se indican a continuación no forman parte del criterio de fin de proyecto*
 
-*Por el momento no sabemos con exactitud cuales Tareas/User Story van a ser realizadas antes de que finalice el proyecto. Las siguientes van a ser analizadas por el grupo en los próximos sprints. Aún no están asignados los Story Points correspondientes a la totalidad de las tareas.*
-
-## Postulantes:
- 
-### Sugeridos por búsqueda
-
-* (5) Definir skills deseados para una búsqueda.
 * (?) Skills validados / no validados.
-
-### Flujo
-
 * (20) Postulantes en consideración para una búsqueda.
 * (8) Cambiar orden de postulantes en consideración.
-
-### Funcionalidad miscelánea
-
 * (13) Detectar duplicados en postulaciones: interfaz interna.
 * (20) Detectar duplicados en postulaciones: interfaz pública.
 * (?) Generación de búsquedas desde el proyecto de JIRA.
@@ -59,23 +51,12 @@
 * (2) Referencia: campo de postulante.
 * (5) Referencia en la publicación de la búsqueda.
 * (8) Limitar visión de postulantes por fecha.
-
-## Seguridad:
-
-* (?) Revisar Javascript injection en sitio de careers.
 * (?) Spam en careers.
-
-
-## Terminación
-
 * (10) Crear estilos / presentación para la pantalla posterior principal.
 * (?) Estilo de búsquedas.
 * (?) Revisar estilo general del sitio y mejorar terminación.
 * (5) Aceptar barra y guión en los campos de fecha.
 * (?) Notificación de nuevo empleado en careers.
-
-## Falta priorizar:
-
 * (?) Achievements.
 * (?) Flujo de baja de empleados.
 * (?) Flujo de reclutamiento.
@@ -89,14 +70,6 @@
 * (8) Ver el detalle gráfico de las ausencias en la página de detalle del empleado.
 * (8) Ver el detalle de las vacaciones adeudadas y tomadas en la página de detalle del empleado
 * (5) Marcar vacaciones de un periodo como pagadas.
-
-
-
-# Línea de fin de proyecto
-
-*Consideramos que las tareas que se indican a continuación no forman parte del criterio de fin de proyecto*
-
-
 * (5) Aceptar barra y guión en los campos de fecha.
 * (13) Preparar un entorno para test de integración (base de datos).
 * (40) Como usuario del sistema, desearía que las ofertas de trabajo puedan generarse en base a pedidos realizados en el proyecto de Jira "Sales Pipeline", para así trabajar más eficientemente (Implementación).
