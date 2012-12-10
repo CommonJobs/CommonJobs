@@ -37,29 +37,8 @@
     <link rel="shortcut icon" href="@Url.Content("~/Content/Images/favicon.ico")" />
 </head>
 <body>
-    <div class="bootstrap-scope">
-        <div class="navbar navbar-fixed-top">
-            <div class="navbar-inner">
-                <ul class="nav nav-right">
-                    @if (Request.IsAuthenticated && User != null && User.Identity != null && User.Identity.Name != null) 
-				    {
-					    //TODO: verify if the `if` is really necessary
-					    <li class="username"><small>@User.Identity.Name</small></li>
-				    }
-                    @Html.Partial("EnvironmentBanner")
-                </ul>
-                <ul class="nav">
-                    @Html.NavItem("Postulantes", "Index", "Applicants")
-                    @Html.NavItem("Búsquedas", "Index", "JobSearches")
-                    @Html.NavItem("Empleados", "Index", "Employees")
-                    @Html.NavItem("Legajos", "Index", "EmployeeFiles")
-                    @Html.NavItem("Vacaciones", "Index", "Vacations")
-                    @Html.NavItem("Archivos", "Index", "Attachments")
-                </ul>
-            </div>
-        </div>
-        <br /><br />
-        <div class="navbar navbar-inverse navbar-static-top">
+    <div class="bootstrap-scope" style="margin-bottom:56px">
+        <div class="navbar navbar-inverse navbar-fixed-top">
             <div class="navbar-inner">
                 <ul class="nav nav-right">
                     @if (Request.IsAuthenticated && User != null && User.Identity != null && User.Identity.Name != null) 
