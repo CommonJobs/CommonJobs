@@ -4,72 +4,50 @@
 
 *Los números son los Story Points asignados a cada Tarea/User Story.*
 
-* (13) Ver de una forma gráfica, por año y para todo el staff un detalle de las ausencias
-* (5) Mostrar vacaciones en gráfico de ausencias
-* (13) Definir skills necesarios para una búsqueda
-* (8) Postulantes sugeridos, según skills, para una búsqueda
-* (1) Mostrar fecha de última actualización en información de postulante
-* (2) Estilos de búsquedas
-* (2) Estilo de barra de menú
-* (5) Estilos de edición de empleado y postulante (barra lateral).
-* (8) Hacer tipo de entrevistas un dato dinámico.
-* (13) Mostrar estado de postulante en flujo de postulantes.
-* (8) Permitir incorporar grados de skills a postulantes y empleados - no técnicos.
-* (5) Tener en cuenta skills no técnicos para postulantes sugeridos para una búsqueda.
-* (5) Adaptar búsqueda a tags de entrevistas.
-* (0) Agregar matrícula a los datos del empleado / postulante.
-* (8) Asociar postulantes a búsqueda.
-* (5) Convertir postulante en empleado.
-* (1) Estilos de resultados de postulantes.
-* (8) Estilos de edición de empleado y postulantes (contenido).
-* (1) Estilos de listado de archivos.
-* (3) Estilos de edición de búsqueda.
-* (3) Estilos de listado de búsquedas.
-* (13) Postulantes ingresando por cuenta propia skills.
-* (1) Estilos de resultados de empleados.
-* (2) Relacionar ayuda en contexto con manual del usuario.
 
 
-## Documentación:
+## Sprint 14: 15-Nov
 
+* (5) Cargar información de viaje en la página de detalle del empleado.
+* (20) Mejoras en grilla.
+* (20) Ver de una forma gráfica, por año y para todo el staff un detalle de las ausencias y vacaciones.
+
+## Sprint 15: 6-Dic
+
+*No hay tareas asignadas por el momento.*
+
+## Sprint 16: 27-Dic
+
+*No hay tareas asignadas por el momento.*
+
+## Tareas a analizar
+
+*Por el momento no sabemos con exactitud cuales Tareas/User Story van a ser realizadas antes de que finalice el proyecto. Las siguiente van a ser analizadas por el grupo en los próximos sprints. Aun no están asignados los Story Points correspondientes a la totalidad de las tareas.*
+
+
+* (?) Achievements.
+* (?) Flujo de baja de empleados.
+* (?) Flujo de reclutamiento.
+* (?) Estilo de búsquedas.
+* (3) Colores para menú de navegación.
 * (?) Manual de Sistema.
 * (?) Manual de Usuario.
-* (?) Abstract.
-* (7) Relacionar ayuda en contexto con manual del usuario.
+* (?) ¿Tareas que requiera la cátedra?
+* (?) Mejorar carga de datos con autocompletado.
+* (2) Ver el comentario o detalle de la ausencia al posicionar el mouse.
+* (8) Ver el detalle gráfico de las ausencias en la página de detalle del empleado.
+* (8) Ver el detalle de las vacaciones adeudadas y tomadas en la página de detalle del empleado.
+* (5) Marcar vacaciones de un periodo como pagadas.
+* (?) Las acciones en la barra derecha se pierden un poco. Habría que destacarlas o colocarlas en la parte central de la página, o en alguna barra.
+* (?) Como usuario del sistema me gustaría tener opciones para indicar si el postulante tuvo entrevista técnica, tuvo entrevista en inglés y entrevista por HR.
+* (?) Como usuario del sistema me gustaría que los postulantes cuenten con un estado que pueda ir siendo modificado conforme se avance en la contratación y que este sirva para filtrar y buscar por él. (Primer contacto, entrevista técnica pendiente, etc.) definir con HR.
+
 
 # Línea de fin de proyecto
 
 *Consideramos que las tareas que se indican a continuación no forman parte del criterio de fin de proyecto*
 
-* (?) Skills validados / no validados.
-* (20) Postulantes en consideración para una búsqueda.
-* (8) Cambiar orden de postulantes en consideración.
-* (13) Detectar duplicados en postulaciones: interfaz interna.
-* (20) Detectar duplicados en postulaciones: interfaz pública.
-* (?) Generación de búsquedas desde el proyecto de JIRA.
-* (20) Resultados agregados sobre éxito de una búsqueda.
-* (2) Referencia: campo de postulante.
-* (5) Referencia en la publicación de la búsqueda.
-* (8) Limitar visión de postulantes por fecha.
-* (?) Spam en careers.
-* (10) Crear estilos / presentación para la pantalla posterior principal.
-* (?) Estilo de búsquedas.
-* (?) Revisar estilo general del sitio y mejorar terminación.
-* (5) Aceptar barra y guión en los campos de fecha.
-* (?) Notificación de nuevo empleado en careers.
-* (?) Achievements.
-* (?) Flujo de baja de empleados.
-* (?) Flujo de reclutamiento.
-* (?) Como usuario del sistema me gustaría tener opciones para indicar si el postulante tuvo entrevista técnica, tuvo entrevista en inglés y entrevista por HR.
-* (?) Como usuario del sistema me gustaría que los postulantes cuenten con un estado que pueda ir siendo modificado conforme se avance en la contratación y que este sirva para filtrar y buscar por él. (Primer contacto, entrevista técnica pendiente, etc.) Definir con HR.
-* (30) Como usuario del sistema, poder clasificar postulantes por sus perfiles.
-* (?) Convertir postulante en empleado.
-* (?) Referidos.
-* (?) Estadística de búsquedas (ofertas).
-* (2) Ver el comentario o detalle de la ausencia al posicionar el mouse.
-* (8) Ver el detalle gráfico de las ausencias en la página de detalle del empleado.
-* (8) Ver el detalle de las vacaciones adeudadas y tomadas en la página de detalle del empleado
-* (5) Marcar vacaciones de un periodo como pagadas.
+
 * (5) Aceptar barra y guión en los campos de fecha.
 * (13) Preparar un entorno para test de integración (base de datos).
 * (40) Como usuario del sistema, desearía que las ofertas de trabajo puedan generarse en base a pedidos realizados en el proyecto de Jira "Sales Pipeline", para así trabajar más eficientemente (Implementación).
@@ -79,10 +57,12 @@
 * (10) Como usuario del sistema, desearía que las ofertas de trabajo puedan generarse en base a pedidos realizados en el proyecto de Jira "Sales Pipeline", para así trabajar más eficientemente (Investigación y diseño).
 * (20) Importar CV como postulante.
 * (50) LinkedIn.
+* (3) Agregar un estado "Dado de baja" para los empleados y por defecto no mostrarlos en la lista de empleados.
 * (2) Al hacer click en "Agregar nuevo" (empleado o postulante) y se cancelan los cambios, aparece un empleado con datos en blanco (bug).
 * (2) Indicar claramente cuando una sección está colapsada o expandida (bug).
 * (10) Crear estilos / presentación para la pantalla posterior al login.
 * (30) Como usuario del sistema, poder clasificar postulantes por sus perfiles.
+* (3) ¿Quién refirió a un postulante?
 * (9) Como usuario del sistema, me gustaría poder definir carpetas en las que se sitúa cada postulante, de forma de poder definir un flujo de trabajo personalizado y alterable en el futuro. (Ejemplo: "por entrevistar", "esperando datos", etc.).
 * (7) Como usuario del sistema, me gustaría poder clasificar los postulantes mediante tags arbitrarios.
 * (5) Preparar un entorno para test de integración (utilizarlo en los test unitarios de Visual Studio).
