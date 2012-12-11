@@ -12,15 +12,14 @@ El presente documento está destinado a la Cátedra de Proyecto Final de la Facu
 
 ## Objetivo del proyecto
 
-_**Cambios:** Se modificó el [Objetivo del proyecto](propuesta-trabajo#Objetivo_del_proyecto) para resaltar la administración de empleados además de las incorporaciones. Se incorporaron objetivos secundarios._
+_**Cambios:** Se modificó el [Objetivo del proyecto](propuesta-trabajo#Objetivo_del_proyecto) quitando el inciso relacionado con las incorporaciones. Ya que, si bien se realizó, no es la característica principal del sistema. Se incorporaron objetivos secundarios._
 
-Brindar una herramienta para facilitar el trabajo del área de Recursos Humanos (RRHH) simplificando los procesos de carga, almacenamiento y lectura de la información manejada por dicha área e, indirectamente, optimizar sus resultados mejorando la calidad de las incorporaciones a la empresa y las búsquedas internas.
+Brindar una herramienta para facilitar el trabajo del área de Recursos Humanos (RRHH) simplificando los procesos de carga, almacenamiento, búsqueda y lectura de la información manejada por dicha área.
 
 ### Objetivos Secundarios
 
 * Aprendizaje de tecnologías, metodologías y arquitecturas novedosas para los miembros el equipo, que estimamos nos serán útiles a futuro nuestra carrera profesional.
 * Generación de una plataforma abierta que pueda ser útil para la empresa en futuros desarrollos internos.
-* Generación de una plataforma que pueda implantarse fácilmente y comenzar a utilizarse como herramienta de la empresa sin interferir en los procesos actuales que esta tenga.
 
 ## Descripción del Proyecto
 
@@ -31,7 +30,7 @@ El proyecto consiste en desarrollar e implantar un sistema informático que:
 * Simplifique la administración y búsqueda en legajos de empleados.
 * Realice el cálculo de vacaciones basada en la legislatura laboral argentina y el historial de ausencias/vacaciones de un empleado.
 * Brinde información agregada y detallada sobre las licencias otorgadas a los empleados, para facilitar la toma de decisiones. 
-* Administre los datos personales de postulantes, información de contacto, e historial de contactos con la empresa. 
+* Permita administrar los datos personales de postulantes, información de contacto, e historial de contactos con la empresa. 
 * Facilite el seguimiento y la selección de candidatos a puestos de trabajo según sus capacidades y datos académicos.
 * Simplifique otras tareas relacionadas con el área de recursos humanos, como permitir la carga de información por el propio postulante y la administración de los almuerzos diarios de la empresa.
 
@@ -55,8 +54,8 @@ _**Cambios:** Se modificaron las [Características Mínimas](propuesta-trabajo#C
 
 * Reemplazar el actual legajo de empleados, almacenando los datos personales y datos laborales.
 * Permitir búsquedas sobre los datos de empleados.
-* Almacenamiento de documentación legal para los empleados.
-* Realizar el cálculo de vacaciones.
+* Almacenamiento de documentación legal de los empleados.
+* Realizar el cálculo de días de vacaciones.
 * Administración de almuerzos de los empleados.
 * Mantener información e histórico de los postulantes que hayan aplicado a la empresa.
 * Registro de las entrevistas en la base de datos de postulantes
@@ -65,7 +64,7 @@ _**Cambios:** Se modificaron las [Características Mínimas](propuesta-trabajo#C
 
 ## Resumen de Características desarrolladas hasta ahora 
 
-* Almacén de información de empleados.
+* Gestión de información de empleados.
    * Datos de contacto
    * Información para viajes
    * Datos bancarios
@@ -75,7 +74,7 @@ _**Cambios:** Se modificaron las [Características Mínimas](propuesta-trabajo#C
    * Vacaciones
    * Notas
    * Archivos adjuntos
-* Almacén de información de postulantes.
+* Gestión de información de postulantes.
    * Datos de contacto
    * Información académica
    * Habilidades técnicas con nivel estimado
@@ -92,7 +91,7 @@ _**Cambios:** Se modificaron las [Características Mínimas](propuesta-trabajo#C
 * Seguridad para el acceso al sistema integrada con el sistema de seguridad de la empresa.
 * Búsquedas laborales publicables para que el propio postulante cargue sus datos.
 
-## Resumen del _Product Backlog_ hasta alcanzar el _límite del proyecto_
+## Resumen del _Product Backlog_ pendiente hasta alcanzar el _límite del proyecto_
 
 * Mostrar ausencias y vacaciones de forma gráfica.
 * Definir las habilidades mínimas para búsqueda laboral.
@@ -101,11 +100,10 @@ _**Cambios:** Se modificaron las [Características Mínimas](propuesta-trabajo#C
 * Agregar habilidades no técnicas a empleados, postulantes y requerimientos mínimos de las búsquedas laborales.
 * Sugerencia de postulantes según requerimientos de las búsquedas.
 * Asociación entre postulantes y búsquedas laborales.
-* Crear empleado a partir de postulante
+* Incorporar postulante como empleado.
 * Permitir que el propio postulante complete sus habilidades y conocimientos
 * Mejoras de UI y estilos
 
 ## Conformidad
 
-En muestra de conformidad y aceptación de la actualización de la propuesta de trabajo, firman este documento Gabriel Buyatti (Director Funcional), Alejandro Fantini (Director Técnico) y por el equipo Matías José y Andrés Moschini.
-
+En muestra de conformidad y aceptación de la actualización de la propuesta de trabajo, firman este documento Gabriel Buyatti (Director Funcional), Alejandro Fantini (Director Técnico) y por el equipo Matías José y Andrés Moschini (Juan Diego Raimondi dio su consentimiento, pero no está presente para firmar).
