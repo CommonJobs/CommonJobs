@@ -1,8 +1,11 @@
 # Archivos entregados
 
 * [Actualizacion Propuesta Trabajo](Actualizacion-Propuesta-Trabajo)
+* [Actualizacion Propuesta Trabajo (en formato PDF)](Actualizacion-Propuesta-Trabajo.pdf)
 * [Product Backlog](Product-Backlog)
-
+* [Product Backlog (en formato PDF)](Product-Backlog.pdf)
+* [Retrospectiva del proyecto](Retrospectiva-Proyecto)
+* [Retrospectiva del proyecto (en formato PDF)](Retrospectiva-Proyecto.pdf)
 ## Sprint 13
 
 * [Planificación](Sprint-13-Planificacion)
@@ -33,3 +36,4 @@
 ## Sprint 16
 
 * [Planificación](Sprint-16-Planificacion)
+* [Planificación (en formato PDF)](Sprint-16-Planificacion.pdf)
