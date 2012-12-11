@@ -72,12 +72,29 @@
             vertical-align: bottom;
             width: 32px;
         }
+        .bootstrap-scope .navbar .brand {
+            padding-right: 0;
+            padding-left: 0;
+            margin-left: 20px;
+            margin-right: 5px;
+            font-weight: bold;
+            color: #000;
+            text-shadow: 0 1px 0 rgba(255,255,255,.1), 0 0 30px rgba(255,255,255,.125);
+            -webkit-transition: all .2s linear;
+            -moz-transition: all .2s linear;
+            transition: all .2s linear;
+        }
     </style>
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar navbar-inverse navbar-fixed-top ">
         <div class="navbar-inner">
-            
+            <a class="brand" href="@Url.Content("~")">CommonJobs</a>
+            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>            
             <div style="float:right;">
                 <form class="form-inline" id="persistenceForm">
                     <span class="ajax-loader" data-bind="visible: onAjaxCall"></span>
@@ -94,9 +111,9 @@
             
             <div class="nav-collapse collapse">
                 <ul class="nav">
-                    @Html.NavItem("Pedido del día", "Order")
-                    @Html.NavItem("Definición de los menues", "Admin")
-                    @Html.NavItem("Mi Menú", "Index")
+                    @Html.NavItemAction("Pedido del día", "Order")
+                    @Html.NavItemAction("Definición de los menues", "Admin")
+                    @Html.NavItemAction("Mi Menú", "Index")
                     @Html.RenderIfHasPermission("Edit" , @<li class="@(item.IsActiveAction ? "active" : "")">
                             @using (Html.BeginForm(item.ActionName, item.ControllerName, new { id = "" }, FormMethod.Get, new { @class = "form-inline", id = "employeeMenuForm" }))
                             {

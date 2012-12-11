@@ -21,10 +21,12 @@
     ScriptManager.RegisterJs(Url.Content("~/Content/jQuery-File-Upload/js/jquery.fileupload.js"), priority: 900);
     ScriptManager.RegisterJs(Url.Content("~/Content/DragAndDrop/DragAndDrop.js"), priority: 900);
     ScriptManager.RegisterCss(Url.Content("~/Content/twitter-bootstrap/less/bootstrap.less"), priority: 900);
+    ScriptManager.RegisterCss(Url.Content("~/Content/twitter-bootstrap/less/responsive.less"), priority: 900);
     ScriptManager.RegisterJs(Url.Content("~/Content/twitter-bootstrap/js/bootstrap-modal.js"), priority: 900);
     ScriptManager.RegisterJs(Url.Content("~/Content/twitter-bootstrap/js/bootstrap-tooltip.js"), priority: 900);
     ScriptManager.RegisterJs(Url.Content("~/Content/twitter-bootstrap/js/bootstrap-popover.js"), priority: 900);
     ScriptManager.RegisterJs(Url.Content("~/Content/twitter-bootstrap/js/bootstrap-typeahead.js"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Content/twitter-bootstrap/js/bootstrap-collapse.js"), priority: 900);
     ScriptManager.RegisterJs(Url.Content("~/Content/EditCommon/Suggest.js"), priority: 900);
 }
 
@@ -40,6 +42,12 @@
     <div class="bootstrap-scope" style="margin-bottom:56px">
         <div class="navbar navbar-inverse navbar-fixed-top">
             <div class="navbar-inner">
+                <a class="brand" href="@Url.Content("~")">CommonJobs</a>
+                <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
                 <ul class="nav nav-right">
                     @if (Request.IsAuthenticated && User != null && User.Identity != null && User.Identity.Name != null) 
 				    {
@@ -48,6 +56,8 @@
 				    }
                     @Html.Partial("EnvironmentBanner")
                 </ul>
+                
+                <div class="nav-collapse collapse">
                 <ul class="nav">
                     @Html.NavItem("Postulantes", "Index", "Applicants")
                     @Html.NavItem("Búsquedas", "Index", "JobSearches")
@@ -56,6 +66,7 @@
                     @Html.NavItem("Vacaciones", "Index", "Vacations")
                     @Html.NavItem("Archivos", "Index", "Attachments")
                 </ul>
+                </div>
             </div>
         </div>
     </div>
