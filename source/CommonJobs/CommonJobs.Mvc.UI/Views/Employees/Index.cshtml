@@ -85,7 +85,7 @@
     </div>
 </script>
 <div class="bootstrap-scope">
-    <div class="container-fluid page-header" style="text-align: center; margin-bottom: 5px;">
+    <div class="container-fluid page-header">
         <form method="get" action="javascript:void(0);" class="form-search form-horizontal">
             <div class="control-group">
                 <div class="input-append">
@@ -94,15 +94,15 @@
                 </div>
             </div>
             <div class="control-group">
-                <label class="checkbox" style="margin-right: 10px">
+                <label class="checkbox">
                     <input type="checkbox" id="SearchInNotesCheck" name="SearchInNotes" @(Model.SearchInNotes ? "checked='checked'" : string.Empty) />
                     Buscar en notas
                 </label>
-                <label class="checkbox" style="margin-right: 10px">
+                <label class="checkbox">
                     <input type="checkbox" id="SearchInAttachmentsCheck" name="SearchInAttachments" @(Model.SearchInAttachments ? "checked='checked'" : string.Empty) />
                     Buscar en adjuntos
                 </label>
-                <label class="checkbox" style="margin-right: 10px">
+                <label class="checkbox">
                     <input type="checkbox" id="SearchNonActiveCheck" name="SearchNonActive" @(Model.SearchNonActive ? "checked='checked'" : string.Empty) />
                     Incluir dados de baja
                 </label>

@@ -108,3 +108,19 @@ body span.rdbprofilerbutton
 {
     text-align: right
 }
+
+body div.bootstrap-scope.navbar-container 
+{
+    margin-bottom:56px;
+}
+
+.page-header 
+{
+    text-align: center; 
+    margin-bottom: 5px;
+}
+
+.page-header label.checkbox
+{
+    margin-right: 10px;
+}

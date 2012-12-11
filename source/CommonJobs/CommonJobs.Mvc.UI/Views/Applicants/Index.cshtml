@@ -50,7 +50,7 @@
     </div>
 </script>
 <div class="bootstrap-scope">
-    <div class="container-fluid page-header" style="text-align: center; margin-bottom: 5px;">
+    <div class="container-fluid page-header">
         <form method="get" action="javascript:void(0);" class="form-search form-horizontal">
             <div class="control-group">
                 <div class="input-append">
@@ -59,10 +59,10 @@
                 </div>
             </div>
             <div class="control-group">
-                <label class="checkbox" style="margin-right: 10px"><input type="checkbox" id="HighlightedCheck" name="Highlighted" @(Model.Highlighted ? "checked='checked'" : string.Empty)/>Resaltado</label>
-                <label class="checkbox" style="margin-right: 10px"><input type="checkbox" id="HaveInterviewCheck" name="HaveInterview" @(Model.HaveInterview ? "checked='checked'" : string.Empty)/>Con entrevistas</label>
-                <label class="checkbox" style="margin-right: 10px"><input type="checkbox" id="HaveTechnicalInterviewCheck" name="HaveTechnicalInterview" @(Model.HaveTechnicalInterview ? "checked='checked'" : string.Empty)/>Con entrevistas técnicas</label>
-                <label class="checkbox" style="margin-right: 10px"><input type="checkbox" id="SearchInAttachmentsCheck" name="SearchInAttachments" @(Model.SearchInAttachments ? "checked='checked'" : string.Empty)/>Buscar en adjuntos</label>
+                <label class="checkbox"><input type="checkbox" id="HighlightedCheck" name="Highlighted" @(Model.Highlighted ? "checked='checked'" : string.Empty)/>Resaltado</label>
+                <label class="checkbox"><input type="checkbox" id="HaveInterviewCheck" name="HaveInterview" @(Model.HaveInterview ? "checked='checked'" : string.Empty)/>Con entrevistas</label>
+                <label class="checkbox"><input type="checkbox" id="HaveTechnicalInterviewCheck" name="HaveTechnicalInterview" @(Model.HaveTechnicalInterview ? "checked='checked'" : string.Empty)/>Con entrevistas técnicas</label>
+                <label class="checkbox"><input type="checkbox" id="SearchInAttachmentsCheck" name="SearchInAttachments" @(Model.SearchInAttachments ? "checked='checked'" : string.Empty)/>Buscar en adjuntos</label>
             </div>
         </form>
         <p id="resultCountNotice">Hay <span id="resultCount">0</span> resultado(s).</p>
