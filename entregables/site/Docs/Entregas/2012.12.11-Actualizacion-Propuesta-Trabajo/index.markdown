@@ -6,6 +6,7 @@
 * [Product Backlog (en formato PDF)](Product-Backlog.pdf)
 * [Retrospectiva del proyecto](Retrospectiva-Proyecto)
 * [Retrospectiva del proyecto (en formato PDF)](Retrospectiva-Proyecto.pdf)
+
 ## Sprint 13
 
 * [Planificación](Sprint-13-Planificacion)
