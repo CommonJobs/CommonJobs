@@ -135,6 +135,7 @@
     <Content Include="CJLogic\Libs\Knockout.d.ts" />
     <Content Include="CJLogic\Libs\moment.d.ts" />
     <Content Include="CJLogic\Libs\underscore.browser.d.ts" />
+    <Content Include="Content\mymenu.css" />
     <Content Include="Content\DataTables\css\demo_page.css" />
     <Content Include="Content\DataTables\css\demo_table.css" />
     <Content Include="Content\DataTables\css\demo_table_jui.css" />
