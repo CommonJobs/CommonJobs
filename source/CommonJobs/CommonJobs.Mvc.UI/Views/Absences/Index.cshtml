@@ -14,6 +14,23 @@
     ScriptManager.RegisterCss(Url.Content("~/Content/TableTools-2.1.4/media/css/TableTools.css"));
     ScriptManager.RegisterJs(Url.Content("~/Scripts/DataTables/dataTables.bootstrap.js"));
     ScriptManager.RegisterGlobalJavascript("TableTools.DEFAULTS.sSwfPath", Url.Content("~/Content/TableTools-2.1.4/media/swf/copy_csv_xls_pdf.swf"));
+
+    var months = GetDays((int)ViewBag.Year).GroupBy(x => x.Month).ToDictionary(x => x.Key, x => x.Select(y => new { Day = y.Day, Weekend = y.DayOfWeek == DayOfWeek.Saturday || y.DayOfWeek == DayOfWeek.Sunday, Date = y }).ToArray());
+
+    ScriptManager.RegisterGlobalJavascript("ViewData.Months", months, 500);
+}
+
+@functions 
+{
+    IEnumerable<DateTime> GetDays(int year)
+    {
+        var date = new DateTime(year, 1, 1);
+        while (date.Year == year)
+        {
+            yield return date;
+            date = date.AddDays(1);
+        }
+    }
 }
 
 @* Link to previous, next year? *@
@@ -23,7 +40,7 @@
     <thead>
         <tr>
             <th></th>
-            @foreach (KeyValuePair<int, int[]> x in ViewBag.Months)
+            @foreach (var x in months)
             {
                 //TODO: month name in spanish
                 <th colspan="@x.Value.Length" class="center" data-month="@x.Key">@x.Key</th>
@@ -32,16 +49,37 @@
         <tr>
             <th class="cell-name">Nombre</th>
             @* Other columns with related abscence date, like employee summary, or something *@
-            @foreach (KeyValuePair<int, int[]> x in ViewBag.Months)
+            @foreach (var x in months)
             {
                 foreach (var d in x.Value)
                 {
-                    <th class="cell-day" data-month="@x.Key" data-day="@d">@d</th>
+                    <th class=@("cell-day" + (d.Weekend ? " weekend" : "")) data-month="@x.Key" data-day="@d.Day">@d.Day.ToString("00")</th>
                 }
             } 
         </tr>
     </thead>
     <tbody>
     </tbody>
+    <tfoot>
+        <tr>
+            <th class="cell-name"></th>
+            @* Other columns with related abscence date, like employee summary, or something *@
+            @foreach (var x in months)
+            {
+                foreach (var d in x.Value)
+                {
+                    <th class=@("cell-day" + (d.Weekend ? " weekend" : "")) data-month="@x.Key" data-day="@d.Day">@d.Day.ToString("00")</th>
+                }
+            } 
+        </tr>
+        <tr>
+            <th></th>
+            @foreach (var x in months)
+            {
+                //TODO: month name in spanish
+                <th colspan="@x.Value.Length" class="center" data-month="@x.Key">@x.Key</th>
+            } 
+        </tr>
+    </tfoot>
     </table>
 </div>

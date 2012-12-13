@@ -1,13 +1,27 @@
-﻿.bootstrap-scope .table thead th.cell-name,
-.bootstrap-scope .table tbody td.cell-name {
+﻿.bootstrap-scope .table tbody td.cell-name {
 	white-space: nowrap;
 }
 
-.bootstrap-scope .table thead th.cell-day,
-.bootstrap-scope .table tbody td.cell-day {
- 	max-width: 8px;
-	min-width: 8px;
+.bootstrap-scope .table thead th, 
+.bootstrap-scope .table tbody td,
+.bootstrap-scope .table tbody th, 
+.bootstrap-scope .table tfoot th {
 	padding: 2px;
-	width: 8px;
-	word-wrap: break-word;
+}
+
+.bootstrap-scope .table thead th.cell-day, 
+.bootstrap-scope .table tbody td.cell-day,
+.bootstrap-scope .table tbody th.cell-day,
+.bootstrap-scope .table tfoot th.cell-day {
+ 	max-width: 16px;
+	min-width: 16px;
+	width: 16px;
+}
+
+
+.bootstrap-scope .table thead tr th.weekend, 
+.bootstrap-scope .table tbody tr td.weekend, 
+.bootstrap-scope .table tbody tr th.weekend, 
+.bootstrap-scope .table tfoot tr th.weekend {
+	background-color: #F0F0F0;
 }

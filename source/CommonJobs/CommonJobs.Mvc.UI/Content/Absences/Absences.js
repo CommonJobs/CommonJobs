@@ -11,7 +11,7 @@
     var $table = $('#absences-table');
     var currentYear = ViewData.currentYear;
     var year = ViewData.year;
-    var months = ViewData.months;
+    var months = ViewData.Months;
 
     var columns = [
             DataTablesHelpers.column.link(
@@ -29,7 +29,7 @@
         _.each(days, function (day) {
             columns.push({
                 bSortable: false,
-                sClass: "cell-day",
+                sClass: "cell-day" + (day.Weekend ? " weekend" : ""),
                 mData: function () {
                     //TODO: day absence data
                     return "";
@@ -38,7 +38,7 @@
         })
     });
 
-    $table.dataTable(
+    var table = $table.dataTable(
     {
         bPaginate: false,
         bAutoWidth: false,
@@ -73,6 +73,9 @@
         },*/
     });
 
+    
+    //new FixedHeader(table);
+
     whileTrue(
         function (take, skip, callback) {
             jQuery.getJSON(urlGenerator.action("AbsenceBunch", "Absences"), { year: year, Skip: skip, Take: take }, function (data, textStatus, jqXHR) {
@@ -80,14 +83,16 @@
             });
         },
         function (data, take, skip) {
-            console.log(data);
+            //  le.log(data);
             $table.dataTable().fnAddData(
                 _.map(data.Items, function (employee) {
+                    //console.log(employee);
                     //Prepare absence data
                     return {
                         employee: employee
                     };
                 }));
+
 
             var thereAreMore = skip + take < data.TotalResults;
 

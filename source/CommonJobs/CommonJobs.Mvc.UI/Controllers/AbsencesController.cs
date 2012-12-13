@@ -4,9 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using CommonJobs.Application;
-using CommonJobs.Application.Vacations;
 using CommonJobs.Infrastructure.Mvc;
 using NLog;
+using CommonJobs.Application.EmployeeAbsences;
 
 namespace CommonJobs.Mvc.UI.Controllers
 {
@@ -30,14 +30,15 @@ namespace CommonJobs.Mvc.UI.Controllers
             var currentYear = DateTime.Now.Year;
             year = year > 0 ? year : currentYear;
 
-            var months = GetDays(year).GroupBy(x => x.Month).ToDictionary(x => x.Key, x => x.Select(y => y.Day).ToArray());
-            ViewBag.Months = months;
+            //TODO: move this to the view or javascript
+            //var months = GetDays(year).GroupBy(x => x.Month).ToDictionary(x => x.Key, x => x.Select(y => y.Day).ToArray());
+            ViewBag.Year = year;
 
             ScriptManager.RegisterGlobalJavascript(
                 "ViewData",
                 new {
                     year = year,
-                    months = months,
+                    //months = months,
                     currentYear = currentYear,
                     bsize = bsize
                 }, 500);
@@ -48,7 +49,7 @@ namespace CommonJobs.Mvc.UI.Controllers
         public JsonNetResult AbsenceBunch(int year, BaseSearchParameters parameters)
         {
             //TODO: return abscence data
-            var query = new SearchVacations(parameters);
+            var query = new SearchAbsences(parameters);
             var results = Query(query);
             return Json(new
             {
