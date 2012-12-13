@@ -69,8 +69,11 @@
 	width: 15.5%;
 	float: left;
 	margin: 1em 0.5% 0 0.5%;
-	border: 1px solid @color_primary_dark;
+	border: 1px solid #CCC;
 	padding: 15px;
+	background-color: #F8F8F8;
+	background-image: linear-gradient(to bottom, #FBFBFB, #F5F5F5);
+	background-repeat: repeat-x;
 	.box_sizing_border_box;
 }
 
@@ -102,7 +105,9 @@
 }
 
 .file-dropzone.hover {
+	background-image: none;
 	background-color: #DDD;
+	border-color: #999; 
 	border-style: dashed;
 	border-width: 2px; 
 }
