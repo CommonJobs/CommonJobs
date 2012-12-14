@@ -1,13 +1,7 @@
-﻿$(function () {
-    var rowTemplate = _.template($("#row-template").text());
-    var whileTrue = function (getData, callback, take, skip) {
-        skip = skip || 0;
-        take = take || ViewData.bsize;
-        getData(take, skip, function (data) {
-            callback(data, take, skip) && whileTrue(getData, callback, take, skip + take);
-        });
-    };
+﻿/// <reference path="/Scripts/AjaxHelper.js" />
 
+$(function () {
+    var rowTemplate = _.template($("#row-template").text());
     var $table = $('#absences-table');
     var currentYear = ViewData.currentYear;
     var year = ViewData.year;
@@ -62,7 +56,7 @@
                     sExtends: "csv",
                     sButtonText: "Excel"
                 }
-		    ]
+            ]
         }/*,
         fnCreatedRow: function (nRow, aData, iDataIndex) {
             $(nRow).find("td").first().nextAll().addClass("center");
@@ -72,11 +66,8 @@
             });
         },*/
     });
-
     
-    //new FixedHeader(table);
-
-    whileTrue(
+    var processor = new AjaxHelper.BunchProcessor(
         function (take, skip, callback) {
             jQuery.getJSON(urlGenerator.action("AbsenceBunch", "Absences"), { year: year, Skip: skip, Take: take }, function (data, textStatus, jqXHR) {
                 callback(data);
@@ -92,10 +83,10 @@
                         employee: employee
                     };
                 }));
-
-
-            var thereAreMore = skip + take < data.TotalResults;
-
-            return thereAreMore;
-        });
+        },
+        function (data, take, skip) {
+            return data.TotalResults - skip - take;
+        }
+    );
+    processor.run(ViewData.bsize);
 });
