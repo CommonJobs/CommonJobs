@@ -81,6 +81,8 @@
     <Compile Include="AttachmentStorage\SavePhotoAttachments.cs" />
     <Compile Include="ApplicantSearching\Applicant_QuickSearch.cs" />
     <Compile Include="BaseSearchParameters.cs" />
+    <Compile Include="EmployeeAbsences\AbsencesReasonResult.cs" />
+    <Compile Include="EmployeeAbsences\GetAbsencesReasons.cs" />
     <Compile Include="EmployeeAbsences\EmployeeAbsences_Suggestions.cs" />
     <Compile Include="EmployeeAbsences\GetSuggestions.cs" />
     <Compile Include="EmployeeAbsences\SearchAbsences.cs" />

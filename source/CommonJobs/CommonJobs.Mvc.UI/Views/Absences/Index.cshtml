@@ -17,8 +17,14 @@
     ScriptManager.RegisterGlobalJavascript("TableTools.DEFAULTS.sSwfPath", Url.Content("~/Content/TableTools-2.1.4/media/swf/copy_csv_xls_pdf.swf"));
 
     var months = GetDays((int)ViewBag.Year).GroupBy(x => x.Month).ToDictionary(x => x.Key, x => x.Select(y => new { Day = y.Day, Weekend = y.DayOfWeek == DayOfWeek.Saturday || y.DayOfWeek == DayOfWeek.Sunday, Date = y }).ToArray());
+    var firstColumn = 1;
+    var daysPos = GetDays((int)ViewBag.Year)
+        .Select((x, idx) => new { key = string.Format("m{0}d{1}", x.Month, x.Day), value = idx + firstColumn})
+        .ToDictionary(x => x.key, x => x.value);
+
 
     ScriptManager.RegisterGlobalJavascript("ViewData.Months", months, 500);
+    ScriptManager.RegisterGlobalJavascript("ViewData.DaysPos", daysPos, 500);
 }
 
 @functions 
@@ -34,6 +40,41 @@
     }
 }
 
+<style>
+    @foreach (CommonJobs.Application.EmployeeAbsences.AbsencesReasonResult reason in ViewBag.Reasons)
+    {
+        var color = reason.Color ?? "#D2DCCE";
+        @string.Format(@"
+.cell-day.{0}, 
+td.cell-day.absence.Full.{0} 
+{{ 
+    background-color: {1}; 
+}}
+td.cell-day.absence.Partial.{0} 
+{{ 
+    background-color: {1}; /* TODO: Add some effect to partial absence */ 
+}}
+td.cell-day.absence.RemoteWork.{0} 
+{{ 
+    background-color: {1}; /* TODO: Add some effect to remote work absence */ 
+}}
+.cell-day.{0}, 
+td.cell-day.weekend.absence.Full.{0} 
+{{ 
+    background-color: {1}; /* TODO: Add some effect to weekend */ 
+}}
+td.cell-day.absence.weekend.Partial.{0} 
+{{ 
+    background-color: {1}; /* TODO: Add some effect to weekend partial absence */ 
+}}
+td.cell-day.absence.weekend.RemoteWork.{0} 
+{{ 
+    background-color: {1}; /* TODO: Add some effect to weekend remote work absence */ 
+}}
+", reason.Slug, color)
+    }
+</style>
+
 @* Link to previous, next year? *@
 
 <div class="bootstrap-scope">
@@ -44,7 +85,7 @@
             @foreach (var x in months)
             {
                 //TODO: month name in spanish
-                <th colspan="@x.Value.Length" class="center" data-month="@x.Key">@x.Key</th>
+                <th colspan="@x.Value.Length" class="center">@x.Key</th>
             } 
         </tr>
         <tr>
@@ -54,7 +95,7 @@
             {
                 foreach (var d in x.Value)
                 {
-                    <th class=@("cell-day" + (d.Weekend ? " weekend" : "")) data-month="@x.Key" data-day="@d.Day">@d.Day.ToString("00")</th>
+                    <th class=@("cell-day" + (d.Weekend ? " weekend" : ""))>@d.Day.ToString("00")</th>
                 }
             } 
         </tr>
@@ -69,7 +110,7 @@
             {
                 foreach (var d in x.Value)
                 {
-                    <th class=@("cell-day" + (d.Weekend ? " weekend" : "")) data-month="@x.Key" data-day="@d.Day">@d.Day.ToString("00")</th>
+                    <th class=@("cell-day" + (d.Weekend ? " weekend" : ""))>@d.Day.ToString("00")</th>
                 }
             } 
         </tr>

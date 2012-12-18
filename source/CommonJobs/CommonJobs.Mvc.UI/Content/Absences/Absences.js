@@ -57,19 +57,44 @@ $(function () {
                     sButtonText: "Excel"
                 }
             ]
-        }/*,
+        },
         fnCreatedRow: function (nRow, aData, iDataIndex) {
-            $(nRow).find("td").first().nextAll().addClass("center");
-            $(nRow).find(".vacation-list").popover({
-                title: 'Detalle',
-                placement: "top"
-            });
-        },*/
+            var $row = $(nRow);
+            for (var i in aData.employee && aData.employee && aData.employee.Absences) {
+                var absence = aData.employee.Absences[i];
+                var from = moment(absence.RealDate).startOf('day');
+                var to = moment(absence.To || absence.RealDate).startOf('day');
+                if (to.valueOf() < from.valueOf)
+                    to = from;
+
+
+
+                if (to.year() >= ViewData.year && from.year() <= ViewData.year) 
+                {
+                    var end = to.valueOf();
+                    var current = from;
+                    while (current.valueOf() <= end) {
+                        console.log(current.month());
+                        console.log(current.day());
+                        $td = $row.find("td:eq(" + ViewData.DaysPos["m" + current.month() + "d" + current.day()] + ")");
+                        console.log($td);
+                        var tdAbsences = $td.data("absences");
+                        if (!tdAbsences) {
+                            tdAbsences = [];
+                            $td.data("absences", tdAbsences);
+                        }
+                        tdAbsences.push(absence);
+                        $td.addClass("absence " + absence.AbsenceType + " " + absence.ReasonSlug);
+                        current.add('days', 1);
+                    }
+                }
+            }
+        },
     });
     
     var processor = new AjaxHelper.BunchProcessor(
         function (take, skip, callback) {
-            jQuery.getJSON(urlGenerator.action("AbsenceBunch", "Absences"), { year: year, Skip: skip, Take: take }, function (data, textStatus, jqXHR) {
+            jQuery.getJSON(urlGenerator.action("AbsenceBunch", "Absences"), { year: year, Skip: skip, Take: take, Term: "mos" }, function (data, textStatus, jqXHR) {
                 callback(data);
             });
         },
@@ -86,6 +111,10 @@ $(function () {
         },
         function (data, take, skip) {
             return data.TotalResults - skip - take;
+        },
+        function () {
+            console.log("td.absence");
+            console.log($("td.absence"));
         }
     );
     processor.run(ViewData.bsize);

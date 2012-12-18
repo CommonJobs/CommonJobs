@@ -30,17 +30,19 @@ namespace CommonJobs.Mvc.UI.Controllers
             var currentYear = DateTime.Now.Year;
             year = year > 0 ? year : currentYear;
 
-            //TODO: move this to the view or javascript
-            //var months = GetDays(year).GroupBy(x => x.Month).ToDictionary(x => x.Key, x => x.Select(y => y.Day).ToArray());
             ViewBag.Year = year;
+
+            var reasons = Query(new GetAbsenceReasons());
+
+            ViewBag.Reasons = reasons;
 
             ScriptManager.RegisterGlobalJavascript(
                 "ViewData",
                 new {
                     year = year,
-                    //months = months,
                     currentYear = currentYear,
-                    bsize = bsize
+                    bsize = bsize,
+                    reasons = reasons.ToDictionary(x => x.Slug)
                 }, 500);
 
             return View();
