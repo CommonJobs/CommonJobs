@@ -41,8 +41,7 @@ namespace CommonJobs.Mvc.UI.Controllers
                 new {
                     year = year,
                     currentYear = currentYear,
-                    bsize = bsize,
-                    reasons = reasons.ToDictionary(x => x.Slug)
+                    bsize = bsize
                 }, 500);
 
             return View();

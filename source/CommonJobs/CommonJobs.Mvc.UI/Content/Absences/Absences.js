@@ -5,7 +5,7 @@ $(function () {
     var $table = $('#absences-table');
     var currentYear = ViewData.currentYear;
     var year = ViewData.year;
-    var months = ViewData.Months;
+    var days = ViewData.Days;
 
     var columns = [
             DataTablesHelpers.column.link(
@@ -18,20 +18,18 @@ $(function () {
                 })
             //TODO: Other columns with related abscence date, like employee summary, or something
     ];
-
-    _.each(months, function (days, month) {
-        _.each(days, function (day) {
-            columns.push({
-                bSortable: false,
-                sClass: "cell-day" + (day.Weekend ? " weekend" : ""),
-                mData: function () {
-                    //TODO: day absence data
-                    return "";
-                }
-            });
-        })
+    
+    _.each(days, function (day, idx) {
+        columns.push({
+            bSortable: false,
+            sClass: "cell-day" + (day.Weekend ? " weekend" : ""), //TODO: puedo setear las clases acá en lugar de en fnCreatedRow?
+            mData: function () {
+                //TODO: day absence data
+                return "";
+            }
+        });
     });
-
+    
     var table = $table.dataTable(
     {
         bPaginate: false,
@@ -59,6 +57,7 @@ $(function () {
             ]
         },
         fnCreatedRow: function (nRow, aData, iDataIndex) {
+            console.log("fnCreatedRow");
             var $row = $(nRow);
             for (var i in aData.employee && aData.employee && aData.employee.Absences) {
                 var absence = aData.employee.Absences[i];
@@ -67,17 +66,14 @@ $(function () {
                 if (to.valueOf() < from.valueOf)
                     to = from;
 
-
-
                 if (to.year() >= ViewData.year && from.year() <= ViewData.year) 
                 {
                     var end = to.valueOf();
                     var current = from;
                     while (current.valueOf() <= end) {
-                        console.log(current.month());
-                        console.log(current.day());
-                        $td = $row.find("td:eq(" + ViewData.DaysPos["m" + current.month() + "d" + current.day()] + ")");
-                        console.log($td);
+                        var idx = "m" + (current.month() + 1) + "d" + current.date();
+                        var day = days[idx];
+                        $td = $row.find("td.cell-day:eq(" + day.Index + ")");
                         var tdAbsences = $td.data("absences");
                         if (!tdAbsences) {
                             tdAbsences = [];
