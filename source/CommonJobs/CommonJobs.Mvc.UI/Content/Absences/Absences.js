@@ -5,7 +5,6 @@ $(function () {
     var $table = $('#absences-table');
     var currentYear = ViewData.currentYear;
     var year = ViewData.year;
-    var days = ViewData.Days;
 
     var columns = [
             DataTablesHelpers.column.link(
@@ -19,17 +18,22 @@ $(function () {
             //TODO: Other columns with related abscence date, like employee summary, or something
     ];
     
-    _.each(days, function (day, idx) {
+    var current = moment([year]);
+    var end = moment([year]).endOf("year").startOf('day').valueOf();
+    
+    while (current.valueOf() <= end) {
+        var weekday = current.day();
         columns.push({
             bSortable: false,
-            sClass: "cell-day" + (day.Weekend ? " weekend" : ""), //TODO: puedo setear las clases acá en lugar de en fnCreatedRow?
+            sClass: "cell-day" + (weekday == 0 || weekday == 6 ? " weekend" : ""), //TODO: puedo setear las clases acá en lugar de en fnCreatedRow?
             mData: function () {
                 //TODO: day absence data
                 return "";
             }
         });
-    });
-    
+        current.add('days', 1);
+    }
+
     var table = $table.dataTable(
     {
         bPaginate: false,
@@ -57,7 +61,7 @@ $(function () {
             ]
         },
         fnCreatedRow: function (nRow, aData, iDataIndex) {
-            console.log("fnCreatedRow");
+            //console.log("fnCreatedRow");
             var $row = $(nRow);
             for (var i in aData.employee && aData.employee && aData.employee.Absences) {
                 var absence = aData.employee.Absences[i];
@@ -71,9 +75,7 @@ $(function () {
                     var end = to.valueOf();
                     var current = from;
                     while (current.valueOf() <= end) {
-                        var idx = "m" + (current.month() + 1) + "d" + current.date();
-                        var day = days[idx];
-                        $td = $row.find("td.cell-day:eq(" + day.Index + ")");
+                        $td = $row.find("td.cell-day:eq(" + current.format("DDD") + ")");
                         var tdAbsences = $td.data("absences");
                         if (!tdAbsences) {
                             tdAbsences = [];
@@ -109,8 +111,8 @@ $(function () {
             return data.TotalResults - skip - take;
         },
         function () {
-            console.log("td.absence");
-            console.log($("td.absence"));
+            //console.log("td.absence");
+            //console.log($("td.absence"));
         }
     );
     processor.run(ViewData.bsize);

@@ -16,19 +16,14 @@
     ScriptManager.RegisterJs(Url.Content("~/Scripts/DataTables/dataTables.bootstrap.js"));
     ScriptManager.RegisterGlobalJavascript("TableTools.DEFAULTS.sSwfPath", Url.Content("~/Content/TableTools-2.1.4/media/swf/copy_csv_xls_pdf.swf"));
 
-    var days = GetDays((int)ViewBag.Year)
+    var monthsAndDays = GetDays((int)ViewBag.Year)
         .Select((x, idx) => new 
         { 
-            Month = x.Month, 
-            Day = x.Day, 
-            Weekend = x.DayOfWeek == DayOfWeek.Saturday || x.DayOfWeek == DayOfWeek.Sunday, 
-            Date = x,
-            Index = idx
-        });
-
-
-    var months = days.ToLookup(x => x.Month);
-    ScriptManager.RegisterGlobalJavascript("ViewData.Days", days.ToDictionary(x => string.Format("m{0}d{1}", x.Month, x.Day)), 500);
+            Month = x.Month,
+            Day = x.Day.ToString("00"), 
+            Weekend = x.DayOfWeek == DayOfWeek.Saturday || x.DayOfWeek == DayOfWeek.Sunday
+        })
+        .ToLookup(x => x.Month);
 }
 
 @functions 
@@ -86,7 +81,7 @@ td.cell-day.absence.weekend.RemoteWork.{0}
     <thead>
         <tr>
             <th></th>
-            @foreach (var x in months)
+            @foreach (var x in monthsAndDays)
             {
                 //TODO: month name in spanish
                 <th colspan="@x.Count()" class="center">@x.Key</th>
@@ -95,11 +90,11 @@ td.cell-day.absence.weekend.RemoteWork.{0}
         <tr>
             <th class="cell-name">Nombre</th>
             @* Other columns with related abscence date, like employee summary, or something *@
-            @foreach (var x in months)
+            @foreach (var x in monthsAndDays)
             {
                 foreach (var d in x)
                 {
-                    <th class=@("cell-day" + (d.Weekend ? " weekend" : ""))>@d.Day.ToString("00")</th>
+                    <th class=@("cell-day" + (d.Weekend ? " weekend" : ""))>@d.Day</th>
                 }
             } 
         </tr>
@@ -110,17 +105,17 @@ td.cell-day.absence.weekend.RemoteWork.{0}
         <tr>
             <th class="cell-name"></th>
             @* Other columns with related abscence date, like employee summary, or something *@
-            @foreach (var x in months)
+            @foreach (var x in monthsAndDays)
             {
                 foreach (var d in x)
                 {
-                    <th class=@("cell-day" + (d.Weekend ? " weekend" : ""))>@d.Day.ToString("00")</th>
+                    <th class=@("cell-day" + (d.Weekend ? " weekend" : ""))>@d.Day</th>
                 }
             } 
         </tr>
         <tr>
             <th></th>
-            @foreach (var x in months)
+            @foreach (var x in monthsAndDays)
             {
                 //TODO: month name in spanish
                 <th colspan="@x.Count()" class="center" data-month="@x.Key">@x.Key</th>
