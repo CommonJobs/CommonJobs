@@ -1,6 +1,7 @@
 ﻿/// <reference path="/Scripts/AjaxHelper.js" />
 
 $(function () {
+    var toStringEmpty = function () { return ""; };
     var rowTemplate = _.template($("#row-template").text());
     var $table = $('#absences-table');
     var currentYear = ViewData.currentYear;
@@ -9,9 +10,9 @@ $(function () {
     var columns = [
             DataTablesHelpers.column.link(
                 DataTablesHelpers.column.fullName(
-                    function (data) { return data.employee.LastName; },
-                    function (data) { return data.employee.FirstName; }),
-                function (data) { return urlGenerator.action("Edit", "Employees", data.employee.Id); },
+                    function (data) { return data.LastName; },
+                    function (data) { return data.FirstName; }),
+                function (data) { return urlGenerator.action("Edit", "Employees", data.Id); },
                 {
                     sClass: "cell-name"
                 })
@@ -23,12 +24,21 @@ $(function () {
     
     while (current.valueOf() <= end) {
         var weekday = current.day();
+        var index = "m" + current.month() + "d" + current.date();
+        var generateMData = function (index) {
+            return function (source, type, val) { return source.daysData[index] || null; };
+        };
         columns.push({
             bSortable: false,
-            sClass: "cell-day" + (weekday == 0 || weekday == 6 ? " weekend" : ""), //TODO: puedo setear las clases acá en lugar de en fnCreatedRow?
-            mData: function () {
-                //TODO: day absence data
-                return "";
+            sClass: "cell-day" + (weekday == 0 || weekday == 6 ? " weekend" : ""), 
+            mData: generateMData(index),
+            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                //No puedo usar mRender porque me modifica el sData de fnCreatedCell
+                if (sData) {
+                    $(nTd)
+                        .addClass("absence " + sData.AbsenceType + " " + sData.ReasonSlug)
+                        .data("absenceData", sData);
+                }
             }
         });
         current.add('days', 1);
@@ -61,33 +71,9 @@ $(function () {
             ]
         },
         fnCreatedRow: function (nRow, aData, iDataIndex) {
-            //console.log("fnCreatedRow");
             var $row = $(nRow);
-            for (var i in aData.employee && aData.employee && aData.employee.Absences) {
-                var absence = aData.employee.Absences[i];
-                var from = moment(absence.RealDate).startOf('day');
-                var to = moment(absence.To || absence.RealDate).startOf('day');
-                if (to.valueOf() < from.valueOf)
-                    to = from;
-
-                if (to.year() >= ViewData.year && from.year() <= ViewData.year) 
-                {
-                    var end = to.valueOf();
-                    var current = from;
-                    while (current.valueOf() <= end) {
-                        $td = $row.find("td.cell-day:eq(" + current.format("DDD") + ")");
-                        var tdAbsences = $td.data("absences");
-                        if (!tdAbsences) {
-                            tdAbsences = [];
-                            $td.data("absences", tdAbsences);
-                        }
-                        tdAbsences.push(absence);
-                        $td.addClass("absence " + absence.AbsenceType + " " + absence.ReasonSlug);
-                        current.add('days', 1);
-                    }
-                }
-            }
-        },
+            $row.data("absenceData", aData);
+        }
     });
     
     var processor = new AjaxHelper.BunchProcessor(
@@ -97,15 +83,29 @@ $(function () {
             });
         },
         function (data, take, skip) {
-            //  le.log(data);
-            $table.dataTable().fnAddData(
-                _.map(data.Items, function (employee) {
-                    //console.log(employee);
-                    //Prepare absence data
-                    return {
-                        employee: employee
-                    };
-                }));
+            for (var i in data.Items) {
+                var item = data.Items[i];
+                var daysData = item.daysData = { };
+
+                for (var j in item.Absences) {
+                    var absence = item.Absences[j];
+                    absence.toString = toStringEmpty; //No puedo usar mRender porque me modifica el sData de fnCreatedCell, otra opción sería borrar el contenido del TD en fnCreatedCell
+                    var from = moment(absence.RealDate).startOf('day');
+                    var to = moment(absence.To || absence.RealDate).startOf('day');
+                    if (to.valueOf() < from.valueOf)
+                        to = from;
+
+                    if (to.year() >= ViewData.year && from.year() <= ViewData.year) {
+                        var end = to.valueOf();
+                        var current = from;
+                        while (current.valueOf() <= end) {
+                            daysData["m" + current.month() + "d" + current.date()] = absence;
+                            current.add('days', 1);
+                        }
+                    }
+                }
+            }
+            $table.dataTable().fnAddData(data.Items);
         },
         function (data, take, skip) {
             return data.TotalResults - skip - take;
