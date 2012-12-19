@@ -40,6 +40,26 @@
 }
 
 <style>
+    /* TODO: move to a .css file */
+    .popover h3.popover-title {
+        line-height: 1.1em;
+        font-size: 1em;
+        text-align: center;
+    }
+
+    .popover {
+        width: 300px
+    }
+
+    .popover .dl-horizontal dt {
+        width: 90px
+    }
+    
+    .popover .dl-horizontal dd {
+        margin-left: 95px;
+    }
+
+
     @foreach (CommonJobs.Application.EmployeeAbsences.AbsencesReasonResult reason in ViewBag.Reasons)
     {
         var color = reason.Color ?? "#D2DCCE";
