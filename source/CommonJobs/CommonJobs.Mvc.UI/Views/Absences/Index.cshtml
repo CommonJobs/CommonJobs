@@ -52,24 +52,11 @@ td.cell-day.absence.Full.{0}
 }}
 td.cell-day.absence.Partial.{0} 
 {{ 
-    background-color: {1}; /* TODO: Add some effect to partial absence */ 
+    background-image: linear-gradient(200deg, #FFFFFF 25%, {1} 65%);
 }}
 td.cell-day.absence.RemoteWork.{0} 
 {{ 
-    background-color: {1}; /* TODO: Add some effect to remote work absence */ 
-}}
-.cell-day.{0}, 
-td.cell-day.weekend.absence.Full.{0} 
-{{ 
-    background-color: {1}; /* TODO: Add some effect to weekend */ 
-}}
-td.cell-day.absence.weekend.Partial.{0} 
-{{ 
-    background-color: {1}; /* TODO: Add some effect to weekend partial absence */ 
-}}
-td.cell-day.absence.weekend.RemoteWork.{0} 
-{{ 
-    background-color: {1}; /* TODO: Add some effect to weekend remote work absence */ 
+    background-image: linear-gradient(to right bottom, #FFF 40%, {1}, #FFF 60%);
 }}
 ", reason.Slug, color)
     }
