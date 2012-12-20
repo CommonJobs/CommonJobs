@@ -109,8 +109,12 @@ $(function () {
     function getTitle() {
         var $this = $(this);
         var current = $this.data("current");
+        var sData = $this.data("absenceData");
         var oData = $this.parent("tr").data("absenceData");
-        return "" + oData.LastName + ", " + oData.FirstName + "<br />" + current.format("dddd D [de] MMMM YYYY");
+        var name = "" + oData.LastName + ", " + oData.FirstName;
+        if (sData)
+            name = "<a href='" + urlGenerator.action("Edit", "Employees", oData.Id) + "'>" + name + "</a>";
+        return name + "<br />"  + current.format("dddd D [de] MMMM YYYY");
     }
 
     function getContent() {
@@ -118,12 +122,32 @@ $(function () {
         var current = $this.data("current");
         var sData = $this.data("absenceData");
         var oData = $this.parent("tr").data("absenceData");
+
+
+        var period = "";
+        var from = moment(sData.RealDate);
+        var to = moment(sData.To || sData.RealDate);
+
+        var formatTo = year == from.year() && year == to.year()
+            ? "D MMMM"
+            : "D MMMM YYYY"
+
+        if (to.year() == from.year() && to.month() == from.month() && to.day() == from.day()) {
+            period = to.format(formatTo);
+        } else {
+            var formatFrom = from.year() && to.year()
+                ? (from.month() == to.month() ? "D" : "D MMMM")
+                : "D MMMM YYYY"
+
+            period = from.format(formatFrom) + " - " + to.format(formatTo);
+        }
+
+
         //TODO: complete it
         return "<dl class='dl-horizontal'>" +
             "<dt>" + "Razón:" + "</dt>" + "<dd>" + sData.Reason + "</dd>" +
             "<dt>" + "Tipo:" + "</dt>" + "<dd>" + sData.AbsenceType + "</dd>" + //TODO: traducir
-            "<dt>" + "Desde:" + "</dt>" + "<dd>" + sData.RealDate + "</dd>" + //TODO: formatear y cambiar "Desde" por "Fecha"
-            "<dt>" + "Hasta:" + "</dt>" + "<dd>" + sData.To + "</dd>" + //TODO: formatear u ocultar o mostrar desde/hasta en una linea
+            "<dt>" + "Fecha:" + "</dt>" + "<dd>" + period + "</dd>" + 
             "<dt>" + "Certificado:" + "</dt>" + "<dd>" + (sData.HasCertificate ? "Si" : "No") + "</dd>" + 
             "<dt>" + "Adjunto:" + "</dt>" + "<dd>" + sData.Attachment + "</dd>" + //TODO: mostrar link? se me va el popover, como hago? con click?
             "<dt>" + "Nota:" + "</dt>" + "<dd>" + sData.Note + "</dd>" + //TODO: markdown
