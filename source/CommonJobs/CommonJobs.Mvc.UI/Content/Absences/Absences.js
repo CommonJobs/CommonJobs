@@ -18,10 +18,18 @@ $(function () {
                 })
             //TODO: Other columns with related abscence date, like employee summary, or something
     ];
+
+    $("tr.months").each(function () {
+        var current = moment([year]);
+        $(this).find("th.month").each(function () {
+            $(this).text(current.format("MMMM"));
+            current.add('months', 1);
+        });
+    });
+
     
     var current = moment([year]);
     var end = moment([year]).endOf("year").startOf('day').valueOf();
-    
     while (current.valueOf() <= end) {
         //Necesito evaluar current ahora, no cuando se invocan las funciones
         (function (current) {

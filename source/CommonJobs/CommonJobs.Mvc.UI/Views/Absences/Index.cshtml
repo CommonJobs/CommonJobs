@@ -126,12 +126,11 @@ td.cell-day.absence.weekend.RemoteWork.{0}
 <div class="bootstrap-scope">
     <table id="absences-table" cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered table-hover table-condensed">
     <thead>
-        <tr>
+        <tr class="months">
             <th></th>
             @foreach (var x in monthsAndDays)
             {
-                //TODO: month name in spanish
-                <th colspan="@x.Count()" class="center">@x.Key</th>
+                <th colspan="@x.Count()" class="center month"></th>
             } 
         </tr>
         <tr>
@@ -160,12 +159,11 @@ td.cell-day.absence.weekend.RemoteWork.{0}
                 }
             } 
         </tr>
-        <tr>
+        <tr class="months">
             <th></th>
             @foreach (var x in monthsAndDays)
             {
-                //TODO: month name in spanish
-                <th colspan="@x.Count()" class="center" data-month="@x.Key">@x.Key</th>
+                <th colspan="@x.Count()" class="center month" data-month="@x.Key"></th>
             } 
         </tr>
     </tfoot>
