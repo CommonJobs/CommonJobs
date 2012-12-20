@@ -142,15 +142,22 @@ $(function () {
             period = from.format(formatFrom) + " - " + to.format(formatTo);
         }
 
+        var absenceType =
+            sData.AbsenceType == "Partial" ? "Parte del día"
+            : sData.AbsenceType == "RemoteWork" ? "Trabajo remoto"
+            : "Todo el día";
 
-        //TODO: complete it
+        var attachment =
+            sData.Attachment ? "<a href='" + urlGenerator.action("Get", "Attachments", sData.Attachment.Id) + "'>" + sData.Attachment.FileName + "</a>"
+            : "<em>No tiene</em>";
+
         return "<dl class='dl-horizontal'>" +
-            "<dt>" + "Razón:" + "</dt>" + "<dd>" + sData.Reason + "</dd>" +
-            "<dt>" + "Tipo:" + "</dt>" + "<dd>" + sData.AbsenceType + "</dd>" + //TODO: traducir
-            "<dt>" + "Fecha:" + "</dt>" + "<dd>" + period + "</dd>" + 
-            "<dt>" + "Certificado:" + "</dt>" + "<dd>" + (sData.HasCertificate ? "Si" : "No") + "</dd>" + 
-            "<dt>" + "Adjunto:" + "</dt>" + "<dd>" + sData.Attachment + "</dd>" + //TODO: mostrar link? se me va el popover, como hago? con click?
-            "<dt>" + "Nota:" + "</dt>" + "<dd>" + sData.Note + "</dd>" + //TODO: markdown
+            "<dt>Razón:</dt><dd>" + sData.Reason + "</dd>" +
+            "<dt>Tipo:</dt><dd>" + absenceType + "</dd>" + 
+            "<dt>Fecha:</dt><dd>" + period + "</dd>" + 
+            "<dt>Certificado:</dt><dd>" + (sData.HasCertificate ? "Si" : "No") + "</dd>" +
+            "<dt>Adjunto:</dt><dd>" + attachment + "</dd>" +
+            "<dt>Nota:</dt><dd>" + sData.Note + "</dd>" + //TODO: markdown
             "</dl>";
     }
     
