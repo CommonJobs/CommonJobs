@@ -1,6 +1,6 @@
 ﻿@model CommonJobs.Application.AttachmentSearching.AttachmentSearchParameters
 @{
-    ViewBag.Title = "Archivos | CommonJobs";
+    ViewBag.Title = "Archivos · CommonJobs";
     ScriptManager.RegisterCss(Url.Content("~/Content/ie.css"), priority: 500, htmlAttributes: new { media = "screen" }, patchCondition: "lte IE 9");
     ScriptManager.RegisterCss(Url.Content("~/Content/1140.css"), priority: 500, htmlAttributes: new { media = "screen" });
     ScriptManager.RegisterCss(Url.Content("~/Content/reset.css"), priority: 500);
@@ -37,26 +37,20 @@
         } %>
     </div>
 </script>
-
-<div class="container searchContainer">
-    <h1>Archivos</h1>
-
-    <div class="row">
-        <div class="twocol"></div>
-        <div class="eightcol quickSearchContainer">
-            <form method="get" action="javascript:void(0);">
-                <div class="mainSearch">
-                    <label for="quickSearch">Búsqueda rápida:</label>
-                    <input type="text" id="quickSearch" name="Term" value="@Model.Term" />
-                    <input type="submit" id="quickSearchSubmit" value=">>" />
+<div class="bootstrap-scope">
+    <div class="container-fluid page-header">
+        <form method="get" action="javascript:void(0);" class="form-search form-horizontal">
+            <div class="control-group">
+                <div class="input-append">
+                    <input id="quickSearch" type="text" class="search-query input-xlarge" placeholder="Búsqueda de archivos" name="Term" value="@Model.Term"/>
+                    <button id="quickSearchSubmit" type="submit" class="btn" title="Buscar ahora"><i class="icon-search"></i></button>
                 </div>
-                <div class="secondarySearch">
-                    <label title="Se busca por comienzo o nombre completo, es posible utilizar los comodines '*' y '?'">Buscar solo en nombre de archivo</label><input type="checkbox" id="SearchOnlyInFileName" name="SearchOnlyInFileName" @(Model.SearchOnlyInFileName ? "checked='checked'" : string.Empty)/>
-                </div>
-            </form>
-            <p id="resultCountNotice">Hay <span id="resultCount">0</span> resultado(s).</p>
-        </div>
-        <div class="twocol last"></div>
+            </div>
+            <div class="control-group">
+                <label class="checkbox" title="Se busca por comienzo o nombre completo, es posible utilizar los comodines '*' y '?'"><input type="checkbox" id="SearchOnlyInFileName" name="SearchOnlyInFileName" @(Model.SearchOnlyInFileName ? "checked='checked'" : string.Empty)/>Buscar solo en nombre de archivo</label>
+            </div>
+        </form>
+        <p id="resultCountNotice">Hay <span id="resultCount">0</span> resultado(s).</p>
     </div>
 </div>
 <div class="results">

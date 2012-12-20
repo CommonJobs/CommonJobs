@@ -1,4 +1,5 @@
 ﻿@using CommonJobs.Infrastructure.Mvc.SecurityTrimming
+@using CommonJobs.Mvc.UI.HtmlHelpers
 @{
     ScriptManager.RegisterJs(Url.Content("~/Scripts/jquery-1.7.2.min.js"), priority: 900);
     ScriptManager.RegisterJs(Url.Content("~/Scripts/jquery-ui-1.8.23.min.js"), priority: 900);
@@ -20,10 +21,12 @@
     ScriptManager.RegisterJs(Url.Content("~/Content/jQuery-File-Upload/js/jquery.fileupload.js"), priority: 900);
     ScriptManager.RegisterJs(Url.Content("~/Content/DragAndDrop/DragAndDrop.js"), priority: 900);
     ScriptManager.RegisterCss(Url.Content("~/Content/twitter-bootstrap/less/bootstrap.less"), priority: 900);
+    ScriptManager.RegisterCss(Url.Content("~/Content/twitter-bootstrap/less/responsive.less"), priority: 900);
     ScriptManager.RegisterJs(Url.Content("~/Content/twitter-bootstrap/js/bootstrap-modal.js"), priority: 900);
     ScriptManager.RegisterJs(Url.Content("~/Content/twitter-bootstrap/js/bootstrap-tooltip.js"), priority: 900);
     ScriptManager.RegisterJs(Url.Content("~/Content/twitter-bootstrap/js/bootstrap-popover.js"), priority: 900);
     ScriptManager.RegisterJs(Url.Content("~/Content/twitter-bootstrap/js/bootstrap-typeahead.js"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Content/twitter-bootstrap/js/bootstrap-collapse.js"), priority: 900);
     ScriptManager.RegisterJs(Url.Content("~/Content/EditCommon/Suggest.js"), priority: 900);
 }
 
@@ -36,23 +39,38 @@
     <link rel="shortcut icon" href="@Url.Content("~/Content/Images/favicon.ico")" />
 </head>
 <body>
+    <div class="bootstrap-scope navbar-container">
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="navbar-inner">
+                <a class="brand" href="@Url.Content("~")">CommonJobs</a>
+                <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <ul class="nav nav-right">
+                    @if (Request.IsAuthenticated && User != null && User.Identity != null && User.Identity.Name != null) 
+				    {
+					    //TODO: verify if the `if` is really necessary
+					    <li class="username"><small>@User.Identity.Name</small></li>
+				    }
+                    @Html.Partial("EnvironmentBanner")
+                </ul>
+                
+                <div class="nav-collapse collapse">
+                <ul class="nav">
+                    @Html.NavItem("Postulantes", "Index", "Applicants")
+                    @Html.NavItem("Búsquedas", "Index", "JobSearches")
+                    @Html.NavItem("Empleados", "Index", "Employees")
+                    @Html.NavItem("Legajos", "Index", "EmployeeFiles")
+                    @Html.NavItem("Vacaciones", "Index", "Vacations")
+                    @Html.NavItem("Archivos", "Index", "Attachments")
+                </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 	<div class="page">
-		<div>
-			<ul class="menu"> 
-                @Html.RenderIfHasPermission("Index", "Applicants"    , @<li class="top @(@item.IsActiveController ? "active" : "")">@Html.ActionLink("Postulantes", @item.ActionName, @item.ControllerName, null, new { @class = "top_link" })</li>)
-                @Html.RenderIfHasPermission("Index", "JobSearches"   , @<li class="top @(@item.IsActiveController ? "active" : "")">@Html.ActionLink("Búsquedas"  , @item.ActionName, @item.ControllerName, null, new { @class = "top_link" })</li>)
-                @Html.RenderIfHasPermission("Index", "Employees"     , @<li class="top @(@item.IsActiveController ? "active" : "")">@Html.ActionLink("Empleados"  , @item.ActionName, @item.ControllerName, null, new { @class = "top_link" })</li>)
-                @Html.RenderIfHasPermission("Index", "EmployeeFiles" , @<li class="top @(@item.IsActiveController ? "active" : "")">@Html.ActionLink("Legajos"    , @item.ActionName, @item.ControllerName, null, new { @class = "top_link" })</li>)
-                @Html.RenderIfHasPermission("Index", "Vacations"     , @<li class="top @(@item.IsActiveController ? "active" : "")">@Html.ActionLink("Vacaciones" , @item.ActionName, @item.ControllerName, null, new { @class = "top_link" })</li>)
-                @Html.RenderIfHasPermission("Index", "Attachments"   , @<li class="top @(@item.IsActiveController ? "active" : "")">@Html.ActionLink("Archivos"   , @item.ActionName, @item.ControllerName, null, new { @class = "top_link" })</li>)
-                @Html.Partial("EnvironmentBanner")
-                @if (Request.IsAuthenticated && User != null && User.Identity != null && User.Identity.Name != null) 
-				{
-					//TODO: verify if the `if` is really necessary
-					<li class="username"><span>@User.Identity.Name</span></li>
-				}
-			</ul>
-		</div>
 		@RenderBody()  
 	 </div>     
 </body>
