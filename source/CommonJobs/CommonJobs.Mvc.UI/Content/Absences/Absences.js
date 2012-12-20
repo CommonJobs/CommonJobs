@@ -82,35 +82,7 @@ $(function () {
             ]
         },
         fnCreatedRow: function (nRow, aData, iDataIndex) {
-            
-            $(nRow)
-                .data("absenceData", aData)
-                .tooltip({
-                    selector: "td.cell-day:not(.absence)",
-                    html: true,
-                    title: getTitle,
-                    placement: "bottom"
-                    //, delay: 500
-                });
-
-            //TODO: mejorar esto, está horrible
-            $(nRow).find("td.cell-day.absence")
-                .popover({
-                    content: getContent,
-                    title: getTitle,
-                    trigger: 'manual',
-                    animate: false,
-                    html: true,
-                    placement: "bottom",
-                    template: '<div class="popover" onmouseover="$(this).mouseleave(function() {$(this).hide(); });"><div class="arrow"></div><div class="popover-inner"><button type="button" class="close" onclick="$(this).parent().parent().hide();">&times;</button><h3 class="popover-title"></h3><div class="popover-content"><p></p></div></div></div>'
-                }).mouseenter(function (e) {
-                    $(this).popover('show');
-                    $(this).mouseleave(function (e) {
-                        if (!$(e.relatedTarget).parent(".popover").length)
-                            $(this).popover('hide');
-                    })
-                });
-            ;
+            $(nRow).data("absenceData", aData);
         }
     });
 
@@ -176,7 +148,7 @@ $(function () {
     
     var processor = new AjaxHelper.BunchProcessor(
         function (take, skip, callback) {
-            jQuery.getJSON(urlGenerator.action("AbsenceBunch", "Absences"), { year: year, Skip: skip, Take: take, Term: "mos" }, function (data, textStatus, jqXHR) {
+            jQuery.getJSON(urlGenerator.action("AbsenceBunch", "Absences"), { year: year, Skip: skip, Take: take/*, Term: "mos"*/ }, function (data, textStatus, jqXHR) {
                 callback(data);
             });
         },
@@ -211,6 +183,32 @@ $(function () {
         function () {
             //console.log("td.absence");
             //console.log($("td.absence"));
+            $("#absences-table")
+                .tooltip({
+                    selector: "td.cell-day:not(.absence)",
+                    html: true,
+                    title: getTitle,
+                    placement: "bottom"
+                    //, delay: 500
+                });
+
+            //TODO: mejorar esto, está horrible
+            $("#absences-table").find("td.cell-day.absence")
+                .popover({
+                    content: getContent,
+                    title: getTitle,
+                    trigger: 'manual',
+                    animate: false,
+                    html: true,
+                    placement: "bottom",
+                    template: '<div class="popover" onmouseover="$(this).mouseleave(function() {$(this).hide(); });"><div class="arrow"></div><div class="popover-inner"><button type="button" class="close" onclick="$(this).parent().parent().hide();">&times;</button><h3 class="popover-title"></h3><div class="popover-content"><p></p></div></div></div>'
+                }).mouseenter(function (e) {
+                    $(this).popover('show');
+                    $(this).mouseleave(function (e) {
+                        if (!$(e.relatedTarget).parent(".popover").length)
+                            $(this).popover('hide');
+                    })
+                });
         }
     );
     processor.run(ViewData.bsize);
