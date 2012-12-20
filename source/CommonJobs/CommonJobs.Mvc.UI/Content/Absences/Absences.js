@@ -118,6 +118,7 @@ $(function () {
     }
 
     function getContent() {
+        //TODO: mejorar este método, que como otras cosas está horrible
         var $this = $(this);
         var current = $this.data("current");
         var sData = $this.data("absenceData");
@@ -151,13 +152,17 @@ $(function () {
             sData.Attachment ? "<a href='" + urlGenerator.action("Get", "Attachments", sData.Attachment.Id) + "'>" + sData.Attachment.FileName + "</a>"
             : "<em>No tiene</em>";
 
+        var md = new MarkdownDeep.Markdown();
+        md.ExtraMode = true;
+        var note = sData.Note ? md.Transform(sData.Note) : "<em>No tiene</em>";
+
         return "<dl class='dl-horizontal'>" +
             "<dt>Razón:</dt><dd>" + sData.Reason + "</dd>" +
             "<dt>Tipo:</dt><dd>" + absenceType + "</dd>" + 
             "<dt>Fecha:</dt><dd>" + period + "</dd>" + 
             "<dt>Certificado:</dt><dd>" + (sData.HasCertificate ? "Si" : "No") + "</dd>" +
             "<dt>Adjunto:</dt><dd>" + attachment + "</dd>" +
-            "<dt>Nota:</dt><dd>" + sData.Note + "</dd>" + //TODO: markdown
+            "<dt>Nota:</dt><dd class='markdown-content'>" + note + "</dd>" + 
             "</dl>";
     }
     

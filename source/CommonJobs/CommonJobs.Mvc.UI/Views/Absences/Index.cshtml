@@ -8,6 +8,7 @@
     ScriptManager.RegisterJs(Url.Content("~/Content/DataTablesHelpers/DataTablesHelpers.js"));
     ScriptManager.RegisterCss(Url.Content("~/Content/Absences/Absences.less"));
     ScriptManager.RegisterJs(Url.Content("~/Content/Absences/Absences.js"));
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/MarkdownDeepLib.min.js"));
     ScriptManager.RegisterCss(Url.Content("~/Content/DataTables/css/jquery.dataTables.css"));
     ScriptManager.RegisterJs(Url.Content("~/Content/TableTools-2.1.4/media/js/ZeroClipboard.js"));
     ScriptManager.RegisterJs(Url.Content("~/Content/TableTools-2.1.4/media/js/TableTools.js"));
@@ -63,6 +64,27 @@
         font-size: 24px;
         font-weight: bold;
         margin-right: 3px;
+    }
+
+    .markdown-content 
+    {
+        background-color: rgb(255, 255, 247);
+	    background-color: rgba(255, 255, 0, 0.03);
+    }
+
+    .markdown-content ul
+    {
+	    list-style-type:disc
+    }
+
+    .markdown-content ul ul
+    {
+	    list-style-type:square
+    }
+
+    .markdown-content ul ul ul
+    {
+	    list-style-type:circle
     }
 
     @foreach (CommonJobs.Application.EmployeeAbsences.AbsencesReasonResult reason in ViewBag.Reasons)
