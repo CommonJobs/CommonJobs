@@ -537,7 +537,7 @@
                             { controlLink: "Date", name: "date", field: "RealDate" },
                             { controlLink: "Date", name: "dateTo", field: "To" },
                             { controlLink: "Text", name: "reason", field: "Reason" },
-                            { controlLink: "Options", name: "type", field: "AbsenceType", options: [{ value: 0, text: "Todo el día" }, { value: 1, text: "Parte del día" }, { value: 2, text: "Trabajo remoto" }] },
+                            { controlLink: "Options", name: "type", field: "AbsenceType", options: [{ value: "Full", text: "Todo el día" }, { value: "Partial", text: "Parte del día" }, { value: "RemoteWork", text: "Trabajo remoto" }] },
                             { controlLink: "Options", name: "hasCertificate", field: "HasCertificate", options: [{ value: false, text: "Sin certificado" }, { value: true, text: "Con certificado" }] },
                             { controlLink: "CjEmployeeAttachment", name: "attachment", field: "Attachment" },
                             { controlLink: "Markdown", name: "text", field: "Note" }
