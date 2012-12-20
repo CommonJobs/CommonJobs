@@ -74,20 +74,35 @@ $(function () {
             ]
         },
         fnCreatedRow: function (nRow, aData, iDataIndex) {
-            var $row = $(nRow);
-            $row.data("absenceData", aData);
-            $row.find("td.cell-day:not(.absence)").tooltip({
-                html: true,
-                title: getTitle,
-                placement: "bottom"
-                //, delay: 500
-            });
-            $row.find("td.cell-day.absence").popover({
-                html: true,
-                title: getTitle,
-                placement: "bottom",
-                content: getContent
-            });
+            
+            $(nRow)
+                .data("absenceData", aData)
+                .tooltip({
+                    selector: "td.cell-day:not(.absence)",
+                    html: true,
+                    title: getTitle,
+                    placement: "bottom"
+                    //, delay: 500
+                });
+
+            //TODO: mejorar esto, está horrible
+            $(nRow).find("td.cell-day.absence")
+                .popover({
+                    content: getContent,
+                    title: getTitle,
+                    trigger: 'manual',
+                    animate: false,
+                    html: true,
+                    placement: "bottom",
+                    template: '<div class="popover" onmouseover="$(this).mouseleave(function() {$(this).hide(); });"><div class="arrow"></div><div class="popover-inner"><button type="button" class="close" onclick="$(this).parent().parent().hide();">&times;</button><h3 class="popover-title"></h3><div class="popover-content"><p></p></div></div></div>'
+                }).mouseenter(function (e) {
+                    $(this).popover('show');
+                    $(this).mouseleave(function (e) {
+                        if (!$(e.relatedTarget).parent(".popover").length)
+                            $(this).popover('hide');
+                    })
+                });
+            ;
         }
     });
 
