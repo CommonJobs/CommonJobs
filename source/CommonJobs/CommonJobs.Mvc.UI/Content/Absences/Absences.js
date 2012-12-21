@@ -78,6 +78,7 @@ $(function () {
         sDom: "<'row-fluid'<'span6'T><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
         oTableTools: {
             aButtons: [
+            /*
                 {
                     sExtends: "print",
                     sButtonText: "Imprimir"
@@ -94,6 +95,7 @@ $(function () {
                     sExtends: "csv",
                     sButtonText: "Excel"
                 }
+            */
             ]
         },
         fnCreatedRow: function (nRow, aData, iDataIndex) {
