@@ -1,31 +1,44 @@
-﻿.bootstrap-scope .table tbody td.cell-name {
+﻿#absences-table td.cell-name 
+{
 	white-space: nowrap;
+	text-align: left;
 }
 
-.bootstrap-scope .table thead th, 
-.bootstrap-scope .table tbody td,
-.bootstrap-scope .table tbody th, 
-.bootstrap-scope .table tfoot th {
-	padding: 1px;
-}
-
-.bootstrap-scope .table thead th.cell-day, 
-.bootstrap-scope .table tbody td.cell-day,
-.bootstrap-scope .table tbody th.cell-day,
-.bootstrap-scope .table tfoot th.cell-day {
-    font-size: 10px;
+#absences-table th.cell-day, 
+#absences-table td.cell-day 
+{
+    font-size: 8pt;
     font-stretch: ultra-condensed;
     max-width: 11px;
     min-width: 11px;
     width: 11px;
+	padding-right: 1px;
+	padding-left: 0px;
 }
 
-
-.bootstrap-scope .table thead tr th.weekend, 
-.bootstrap-scope .table tbody tr td.weekend, 
-.bootstrap-scope .table tbody tr th.weekend, 
-.bootstrap-scope .table tfoot tr th.weekend {
+#absences-table th.weekend, 
+#absences-table td.weekend
+{
 	background-color: #F0F0F0;
+}
+
+#absences-table td.cell-day.weekend.absence
+{
+    opacity: 0.75;
+}
+
+#absences-table th,
+#absences-table td
+{
+	font-size: 10pt;
+    text-align: center;
+	padding-top: 1px;
+	padding-bottom: 1px;
+}
+
+#absences-table th.sorting
+{
+	padding-right: 18px;
 }
 
 .popover h3.popover-title {
@@ -73,25 +86,26 @@
 	list-style-type:circle
 }
 
-td.cell-day.weekend.absence
+#absences-table th.year-selection
 {
-    opacity: 0.75;
+	padding-right: 3px;
+	padding-left: 1px;
 }
 
-.year-selection-group
+.year-selection .btn-group
 {
-    width: 99%;
+    width: 100%;
 	min-width: 180px;
 }
 
-.year-selection-group .year-nav 
+.year-selection .year-nav 
 {
 	width: 25%;
 	padding-right: 0px;
 	padding-left: 0px;
 }
 
-.year-selection-group .year-current 
+.year-selection .year-current 
 {
 	width: 50%;
 	font-weight: bold;

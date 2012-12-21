@@ -8,15 +8,36 @@ $(function () {
     var year = ViewData.year;
 
     var columns = [
-            DataTablesHelpers.column.link(
-                DataTablesHelpers.column.fullName(
-                    function (data) { return data.LastName; },
-                    function (data) { return data.FirstName; }),
-                function (data) { return urlGenerator.action("Edit", "Employees", data.Id); },
-                {
-                    sClass: "cell-name"
-                })
-            //TODO: Other columns with related abscence date, like employee summary, or something
+        DataTablesHelpers.column.link(
+            DataTablesHelpers.column.fullName(
+                function (data) { return data.LastName; },
+                function (data) { return data.FirstName; }),
+            function (data) { return urlGenerator.action("Edit", "Employees", data.Id); },
+            {
+                sClass: "cell-name"
+            }
+        ),
+        DataTablesHelpers.column.number(
+            function () {
+                return null; //Calcular y mostrar popover con el detalle, certificado, etc
+            },
+            {
+                sClass: "cell-data"
+            }),
+        DataTablesHelpers.column.number(
+            function () {
+                return null; //Calcular y mostrar popover con el detalle, certificado, etc
+            },
+            {
+                sClass: "cell-data"
+            }),
+        DataTablesHelpers.column.number(
+            function () {
+                return null; //Calcular y mostrar popover con el detalle, certificado, etc
+            },
+            {
+                sClass: "cell-data"
+            })
     ];
 
     $("tr.months").each(function () {
