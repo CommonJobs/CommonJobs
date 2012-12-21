@@ -17,27 +17,21 @@ $(function () {
                 sClass: "cell-name"
             }
         ),
-        DataTablesHelpers.column.number(
-            function () {
-                return null; //Calcular y mostrar popover con el detalle, certificado, etc
-            },
-            {
-                sClass: "cell-data"
-            }),
-        DataTablesHelpers.column.number(
-            function () {
-                return null; //Calcular y mostrar popover con el detalle, certificado, etc
-            },
-            {
-                sClass: "cell-data"
-            }),
-        DataTablesHelpers.column.number(
-            function () {
-                return null; //Calcular y mostrar popover con el detalle, certificado, etc
-            },
-            {
-                sClass: "cell-data"
-            })
+        {
+            sClass: "cell-data",
+            sType: "nulls-below-numeric",
+            mData: "TotalFull"
+        },
+        {
+            sClass: "cell-data",
+            sType: "nulls-below-numeric",
+            mData: "TotalPartial"
+        },
+        {
+            sClass: "cell-data",
+            sType: "nulls-below-numeric",
+            mData: "TotalRemoteWork"
+        }
     ];
 
     $("tr.months").each(function () {
@@ -195,6 +189,16 @@ $(function () {
                         }
                     }
                 }
+
+                item["TotalFull"] = 0;
+                item["TotalPartial"] = 0;
+                item["TotalRemoteWork"] = 0;
+
+                for (var j in daysData) {
+                    var absence = daysData[j];
+                    item["Total" + absence.AbsenceType]++;
+                }
+                
             }
             $table.dataTable().fnAddData(data.Items);
         },
