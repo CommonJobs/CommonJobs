@@ -22,7 +22,7 @@ $(function () {
     $("tr.months").each(function () {
         var current = moment([year]);
         $(this).find("th.month").each(function () {
-            $(this).text(current.format("MMMM"));
+            $(this).text(current.format("MMMM YYYY"));
             current.add('months', 1);
         });
     });
