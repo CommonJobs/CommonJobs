@@ -19,15 +19,6 @@
 
     var year = (int)ViewBag.Year;
     var daysByMonth = GetDays(year).ToLookup(x => x.Month);
-        /*
-            .Select((x, idx) => new 
-            { 
-                Month = x.Month,
-                Day = x.Day.ToString(), 
-                Weekend = x.DayOfWeek == DayOfWeek.Saturday || x.DayOfWeek == DayOfWeek.Sunday
-            })
-            .ToLookup(x => x.Month);
-     */       
 }
 
 @functions 
@@ -69,8 +60,6 @@
     }
 </style>
 
-@* Link to previous, next year? *@
-
 @helper YearSelector(int year)
 {
     <div class="btn-group">
@@ -80,7 +69,7 @@
     </div>
 }
 
-@helper Headers(int year, ILookup<int, DateTime> daysByMonth) 
+@helper Header1(int year, ILookup<int, DateTime> daysByMonth) 
 {
     <tr class="months">
         <th class="year-selection">@YearSelector(year)</th>
@@ -88,13 +77,16 @@
         @foreach (var x in daysByMonth)
         {
             <th colspan="@x.Count()" class="center month"></th>
-        } 
+        }
     </tr>
+}
+@helper Header2(ILookup<int, DateTime> daysByMonth) 
+{
     <tr>
         <th class="cell-name">Nombre</th>
-        <th class="cell-data">Completas</th>
-        <th class="cell-data">Parciales</th>
-        <th class="cell-data">T.Remoto</th>
+        <th class="cell-data" title="Todo el día">Compl.</th>
+        <th class="cell-data" title="Parte del día">Parc.</th>
+        <th class="cell-data" title="Trabajo remoto">Rem.</th>
         @foreach (var x in daysByMonth)
         {
             foreach (var d in x)
@@ -105,6 +97,18 @@
     </tr>
 }
 
+@helper Headers(int year, ILookup<int, DateTime> daysByMonth) 
+{
+    @Header1(year, daysByMonth)
+    @Header2(daysByMonth)
+}
+
+@helper Footers(int year, ILookup<int, DateTime> daysByMonth) 
+{
+    @Header2(daysByMonth)
+    @Header1(year, daysByMonth)
+}
+
 <div class="bootstrap-scope">
     <table id="absences-table" cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered table-hover table-condensed">
     <thead>
@@ -113,7 +117,7 @@
     <tbody>
     </tbody>
     <tfoot>
-        @Headers(year, daysByMonth);
+        @Footers(year, daysByMonth);
     </tfoot>
     </table>
 </div>
