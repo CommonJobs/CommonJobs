@@ -58,23 +58,29 @@ namespace CommonJobs.Application.EmployeeAbsences
 
 
             Func<Absence, bool> filterAbsencesTo;
+            Func<Vacation, bool> filterVacationsTo;
             if (To.HasValue)
             {
                 filterAbsencesTo = item => item.RealDate <= To.Value;
+                filterVacationsTo = item => item.From <= To.Value;
             }
             else
             {
                 filterAbsencesTo = item => true;
+                filterVacationsTo = item => true;
             }
 
             Func<Absence, bool> filterAbsencesFrom;
+            Func<Vacation, bool> filterVacationsFrom;
             if (From.HasValue)
             {
                 filterAbsencesFrom = item => (item.To ?? item.RealDate) >= From.Value;
+                filterVacationsFrom = item => item.To >= From.Value;
             }
             else
             {
                 filterAbsencesFrom = item => true;
+                filterVacationsFrom = item => true;
             }
 
             var results = employees.Select(x => new AbsencesSearchResult()
@@ -84,7 +90,8 @@ namespace CommonJobs.Application.EmployeeAbsences
                     HiringDate = x.HiringDate,
                     TerminationDate = x.TerminationDate,
                     LastName = x.LastName,
-                    Absences = x.Absences.Where(filterAbsencesTo).Where(filterAbsencesFrom).ToList()
+                    Absences = x.Absences.Where(filterAbsencesTo).Where(filterAbsencesFrom).ToList(),
+                    Vacations = x.Vacations.Where(filterVacationsTo).Where(filterVacationsFrom).ToList()
             }).ToArray();
 
             Stats = stats;

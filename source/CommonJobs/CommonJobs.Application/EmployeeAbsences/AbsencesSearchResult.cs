@@ -14,5 +14,6 @@ namespace CommonJobs.Application.EmployeeAbsences
         public DateTime? HiringDate { get; set; }
         public DateTime? TerminationDate { get; set; }
         public List<Absence> Absences { get; set; }
+        public List<Vacation> Vacations { get; set; }
     }
 }
