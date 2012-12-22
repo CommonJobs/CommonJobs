@@ -18,6 +18,9 @@ namespace CommonJobs.Application.EmployeeAbsences
         public RavenQueryStatistics Stats { get; set; }
         BaseSearchParameters Parameters { get; set; }
 
+        public DateTime? From { get; set; }
+        public DateTime? To { get; set; }
+
         public SearchAbsences(BaseSearchParameters parameters)
         {
             Parameters = parameters;
@@ -29,8 +32,14 @@ namespace CommonJobs.Application.EmployeeAbsences
 
             var query1 = RavenSession
                 .Query<Employee_QuickSearch.Projection, Employee_QuickSearch>()
-                .Where(x => x.IsActive);
+                .Where(x => x.IsEmployee);
 
+            if (To.HasValue)
+                query1 = query1.Where(x => x.HiringDate <= To.Value);
+
+            if (From.HasValue)
+                query1 = query1.Where(x => x.TerminationDate >= From.Value);
+                
             if (!string.IsNullOrWhiteSpace(Parameters.Term))
             {
                 query1 = query1.Where(x => x.FullName1.StartsWith(Parameters.Term)
@@ -46,12 +55,36 @@ namespace CommonJobs.Application.EmployeeAbsences
                 .ToArray();
 
             var employees = RavenSession.Load<Employee>(ids);
-            var results = employees.Select(x => new AbsencesSearchResult()
+
+
+            Func<Absence, bool> filterAbsencesTo;
+            if (To.HasValue)
             {
-                FirstName = x.FirstName,
-                Id = x.Id,
-                LastName = x.LastName,
-                Absences = x.Absences
+                filterAbsencesTo = item => item.RealDate <= To.Value;
+            }
+            else
+            {
+                filterAbsencesTo = item => true;
+            }
+
+            Func<Absence, bool> filterAbsencesFrom;
+            if (From.HasValue)
+            {
+                filterAbsencesFrom = item => (item.To ?? item.RealDate) >= From.Value;
+            }
+            else
+            {
+                filterAbsencesFrom = item => true;
+            }
+
+            var results = employees.Select(x => new AbsencesSearchResult()
+                {
+                    FirstName = x.FirstName,
+                    Id = x.Id,
+                    HiringDate = x.HiringDate,
+                    TerminationDate = x.TerminationDate,
+                    LastName = x.LastName,
+                    Absences = x.Absences.Where(filterAbsencesTo).Where(filterAbsencesFrom).ToList()
             }).ToArray();
 
             Stats = stats;

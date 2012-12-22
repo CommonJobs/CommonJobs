@@ -50,7 +50,7 @@ namespace CommonJobs.Mvc.UI.Controllers
         public JsonNetResult AbsenceBunch(int year, BaseSearchParameters parameters)
         {
             //TODO: return abscence data
-            var query = new SearchAbsences(parameters);
+            var query = new SearchAbsences(parameters) { From = new DateTime(year, 1, 1), To = new DateTime(year, 12, 31) };
             var results = Query(query);
             return Json(new
             {
