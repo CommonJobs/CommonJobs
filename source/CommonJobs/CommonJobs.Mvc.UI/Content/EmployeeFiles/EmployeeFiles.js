@@ -5,6 +5,7 @@ $(function () {
 
     var columns = [
             DataTablesHelpers.column.string(function (data) { return data.employee.FileId; }),
+            DataTablesHelpers.column.string(function (data) { return data.employee.Platform; }),
             DataTablesHelpers.column.link(
                 DataTablesHelpers.column.fullName(
                     function (data) { return data.employee.LastName; },
@@ -12,7 +13,6 @@ $(function () {
                 ),
                 function (data) { return urlGenerator.action("Edit", "Employees", data.employee.Id); }
             ),
-            DataTablesHelpers.column.string(function (data) { return data.employee.Platform; }),
             DataTablesHelpers.column.string(function (data) { return data.employee.Cuil; }),
             DataTablesHelpers.column.date(function (data) { return data.employee.HiringDate; }),
             DataTablesHelpers.column.string(function (data) { return data.employee.BankName; }),
@@ -31,6 +31,7 @@ $(function () {
         bAutoWidth: false,
         aoColumns: columns,
         sDom: "<'row-fluid'<'span6'T><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
+        aaSorting: [[2, 'asc']],
         oTableTools: {
             aButtons: [
                 {
