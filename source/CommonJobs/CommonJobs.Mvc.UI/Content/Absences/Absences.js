@@ -53,7 +53,7 @@ $(function () {
     function createDayColumn(date) {
         var weekday = date.day();
         var sClass = "cell-day" + (weekday == 0 || weekday == 6 ? " weekend" : "");
-        var daysDataIndex = date.format("DDD");
+        var daysDataIndex = +date.format("DDD");
         columns.push({
             bSortable: false,
             sClass: sClass,
@@ -61,9 +61,16 @@ $(function () {
             fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
                 var $td = $(nTd);
                 $td.data("date", date);
+                
                 var dayData = oData.daysData[daysDataIndex];
-                if (dayData) {
-                    $td.addClass("absence " + dayData.AbsenceType + " " + dayData.ReasonSlug);
+                
+                var classes = dayData ? ["absence", dayData.AbsenceType, dayData.ReasonSlug] : []
+                if ((oData.HiringDateNo && daysDataIndex < oData.HiringDateNo) || (oData.TerminationDateNo && daysDataIndex > oData.TerminationDateNo)) {
+                    classes.push("not-active");
+                }
+
+                if (classes.length) {
+                    $td.addClass(classes.join(" "));
                 }
             }
         });
@@ -106,7 +113,7 @@ $(function () {
         var $this = $(this);
         var date = $this.data("date");
         var oData = $this.parent("tr").data("employee");
-        var sData = oData.daysData[date.format("DDD")];
+        var sData = oData.daysData[+date.format("DDD")];
         var name = "" + oData.LastName + ", " + oData.FirstName;
         if (sData)
             name = "<a href='" + urlGenerator.action("Edit", "Employees", oData.Id) + "'>" + name + "</a>";
@@ -118,7 +125,7 @@ $(function () {
         var $this = $(this);
         var date = $this.data("date");
         var oData = $this.parent("tr").data("employee");
-        var sData = oData.daysData[date.format("DDD")];
+        var sData = oData.daysData[+date.format("DDD")];
 
         var period = "";
         var from = moment(sData.RealDate);
@@ -163,7 +170,7 @@ $(function () {
     
     var processor = new AjaxHelper.BunchProcessor(
         function (take, skip, callback) {
-            jQuery.getJSON(urlGenerator.action("AbsenceBunch", "Absences"), { year: year, Skip: skip, Take: take/*, Term: "mos"*/ }, function (data, textStatus, jqXHR) {
+            jQuery.getJSON(urlGenerator.action("AbsenceBunch", "Absences"), { year: year, Skip: skip, Take: take/*, Term: "mos" */}, function (data, textStatus, jqXHR) {
                 callback(data);
             });
         },
@@ -171,6 +178,19 @@ $(function () {
             for (var i in data.Items) {
                 var item = data.Items[i];
                 var daysData = item.daysData = [];
+
+                if (item.HiringDate) {
+                    var aux = moment(item.HiringDate);
+                    if (aux.year() == year) {
+                        item.HiringDateNo = +aux.format("DDD");
+                    }
+                }
+                if (item.TerminationDate) {
+                    var aux = moment(item.TerminationDate);
+                    if (aux.year() == year) {
+                        item.TerminationDateNo = +aux.format("DDD");
+                    }
+                }
 
                 for (var j in item.Absences) {
                     var absence = item.Absences[j];
