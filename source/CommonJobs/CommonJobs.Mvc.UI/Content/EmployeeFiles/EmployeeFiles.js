@@ -1,17 +1,11 @@
-﻿$(function () {
+﻿/// <reference path="/Scripts/AjaxHelper.js" />
+$(function () {
     var rowTemplate = _.template($("#row-template").text());
-    var whileTrue = function (getData, callback, take, skip) {
-        skip = skip || 0;
-        take = take || ViewData.batchSize;
-        getData(take, skip, function (data) {
-            callback(data, take, skip) && whileTrue(getData, callback, take, skip + take);
-        });
-    };
-
     var $table = $('#employee-files-table');
 
     var columns = [
             DataTablesHelpers.column.string(function (data) { return data.employee.FileId; }),
+            DataTablesHelpers.column.string(function (data) { return data.employee.Platform; }),
             DataTablesHelpers.column.link(
                 DataTablesHelpers.column.fullName(
                     function (data) { return data.employee.LastName; },
@@ -19,7 +13,6 @@
                 ),
                 function (data) { return urlGenerator.action("Edit", "Employees", data.employee.Id); }
             ),
-            DataTablesHelpers.column.string(function (data) { return data.employee.Platform; }),
             DataTablesHelpers.column.string(function (data) { return data.employee.Cuil; }),
             DataTablesHelpers.column.date(function (data) { return data.employee.HiringDate; }),
             DataTablesHelpers.column.string(function (data) { return data.employee.BankName; }),
@@ -38,6 +31,7 @@
         bAutoWidth: false,
         aoColumns: columns,
         sDom: "<'row-fluid'<'span6'T><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
+        aaSorting: [[2, 'asc']],
         oTableTools: {
             aButtons: [
                 {
@@ -65,7 +59,7 @@
         //}
     });
 
-    whileTrue(
+    var processor = new AjaxHelper.BunchProcessor(
         function (take, skip, callback) {
             jQuery.getJSON(urlGenerator.action("EmployeeFileBatch", "EmployeeFiles"), { Skip: skip, Take: take }, function (data, textStatus, jqXHR) {
                 callback(data);
@@ -76,9 +70,9 @@
                 _.map(data.Items, function (employee) {
                     return { employee: employee };
                 }));
-
-            var thereAreMore = skip + take < data.TotalResults;
-
-            return thereAreMore;
+        },
+        function (data, take, skip) {
+            return data.TotalResults - skip - take;
         });
+    processor.run(ViewData.bsize);
 });
