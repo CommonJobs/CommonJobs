@@ -46,29 +46,28 @@ $(function () {
     var current = moment([year]);
     var end = moment([year]).endOf("year").startOf('day').valueOf();
     while (current.valueOf() <= end) {
-        //Necesito evaluar current ahora, no cuando se invocan las funciones
-        (function (current) {
-            var weekday = current.day();
-            columns.push({
-                bSortable: false,
-                sClass: "cell-day" + (weekday == 0 || weekday == 6 ? " weekend" : ""),
-                mData: function (source, type, val) {
-                    return source.daysData["m" + current.month() + "d" + current.date()] || null;
-                },
-                fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-                    var $td = $(nTd);
-                    $td.data("current", current);
-                    //No puedo usar mRender porque me modifica el sData de fnCreatedCell
-                    if (sData) {
-                        $td
-                            .addClass("absence " + sData.AbsenceType + " " + sData.ReasonSlug)
-                            .data("absenceData", sData);
-                    }
-                },
-            });
-        })(current.clone());
+        createDayColumn(current.clone());
         current.add('days', 1);
     }
+
+    function createDayColumn(date) {
+        var weekday = date.day();
+        var sClass = "cell-day" + (weekday == 0 || weekday == 6 ? " weekend" : "");
+        var daysDataIndex = date.format("DDD");
+        columns.push({
+            bSortable: false,
+            sClass: sClass,
+            mData: null,
+            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                var $td = $(nTd);
+                $td.data("date", date);
+                var dayData = oData.daysData[daysDataIndex];
+                if (dayData) {
+                    $td.addClass("absence " + dayData.AbsenceType + " " + dayData.ReasonSlug);
+                }
+            }
+        });
+    };
 
     var table = $table.dataTable(
     {
@@ -99,28 +98,27 @@ $(function () {
             ]
         },
         fnCreatedRow: function (nRow, aData, iDataIndex) {
-            $(nRow).data("absenceData", aData);
+            $(nRow).data("employee", aData);
         }
     });
 
     function getTitle() {
         var $this = $(this);
-        var current = $this.data("current");
-        var sData = $this.data("absenceData");
-        var oData = $this.parent("tr").data("absenceData");
+        var date = $this.data("date");
+        var oData = $this.parent("tr").data("employee");
+        var sData = oData.daysData[date.format("DDD")];
         var name = "" + oData.LastName + ", " + oData.FirstName;
         if (sData)
             name = "<a href='" + urlGenerator.action("Edit", "Employees", oData.Id) + "'>" + name + "</a>";
-        return name + "<br />"  + current.format("dddd D [de] MMMM YYYY");
+        return name + "<br />" + date.format("dddd D [de] MMMM YYYY");
     }
 
     function getContent() {
         //TODO: mejorar este método, que como otras cosas está horrible
         var $this = $(this);
-        var current = $this.data("current");
-        var sData = $this.data("absenceData");
-        var oData = $this.parent("tr").data("absenceData");
-
+        var date = $this.data("date");
+        var oData = $this.parent("tr").data("employee");
+        var sData = oData.daysData[date.format("DDD")];
 
         var period = "";
         var from = moment(sData.RealDate);
@@ -172,7 +170,7 @@ $(function () {
         function (data, take, skip) {
             for (var i in data.Items) {
                 var item = data.Items[i];
-                var daysData = item.daysData = { };
+                var daysData = item.daysData = [];
 
                 for (var j in item.Absences) {
                     var absence = item.Absences[j];
@@ -184,10 +182,10 @@ $(function () {
 
                     if (to.year() >= ViewData.year && from.year() <= ViewData.year) {
                         var end = to.valueOf();
-                        var current = from;
-                        while (current.valueOf() <= end) {
-                            daysData["m" + current.month() + "d" + current.date()] = absence;
-                            current.add('days', 1);
+                        var date = from;
+                        while (date.valueOf() <= end) {
+                            daysData[date.format("DDD")] = absence;
+                            date.add('days', 1);
                         }
                     }
                 }
