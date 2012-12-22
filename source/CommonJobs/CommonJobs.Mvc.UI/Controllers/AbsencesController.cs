@@ -25,7 +25,7 @@ namespace CommonJobs.Mvc.UI.Controllers
             }
         }
 
-        public ActionResult Index(int year = 0, int bsize = 20)
+        public ActionResult Index(int year = 0, int bsize = 10)
         {
             var currentYear = DateTime.Now.Year;
             year = year > 0 ? year : currentYear;

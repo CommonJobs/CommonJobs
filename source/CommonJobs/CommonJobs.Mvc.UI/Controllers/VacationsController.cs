@@ -15,7 +15,7 @@ namespace CommonJobs.Mvc.UI.Controllers
     {
         private static Logger log = LogManager.GetCurrentClassLogger();
 
-        public ActionResult Index(int yquantity = 6, int bsize = 20)
+        public ActionResult Index(int yquantity = 6, int bsize = 10)
         {
             var currentYear = DateTime.Now.Year;
             var years = Enumerable.Range(currentYear + 1 - yquantity, yquantity).Reverse().ToArray();

@@ -35,13 +35,21 @@ module AjaxHelper {
 
         run(take: number, skip?: number) : void {
             skip = skip || 0;
+            //console.log("getData start " + skip);
             this.getData(take, skip, (data) => {
+                //console.log("getData finish " + skip);
                 this.updateState(data, take, skip);
                 //console.log(this.getPercentage() + " " + this.getPendingCount() + " " + this.getTaken() );
                 var pending = this.getPendingCount() > 0;
-                pending && this.run(take, skip + take);
-                this.process && this.process(data, take, skip);
-                pending || this.final && this.final(data, take, skip + take);
+                //setTimeout(() => {
+                    pending && this.run(take * 2, skip + take);
+                //}, 0);
+                //setTimeout(() => {
+                    //console.log("process start " + skip);
+                    this.process && this.process(data, take, skip);
+                    //console.log("process finish " + skip);
+                    pending || this.final && this.final(data, take, skip + take);
+                //}, 0);
             });
         }
     }

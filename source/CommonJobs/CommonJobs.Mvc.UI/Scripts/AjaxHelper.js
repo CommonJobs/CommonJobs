@@ -30,7 +30,7 @@ var AjaxHelper;
             this.getData(take, skip, function (data) {
                 _this.updateState(data, take, skip);
                 var pending = _this.getPendingCount() > 0;
-                pending && _this.run(take, skip + take);
+                pending && _this.run(take * 2, skip + take);
                 _this.process && _this.process(data, take, skip);
                 pending || _this.final && _this.final(data, take, skip + take);
             });
