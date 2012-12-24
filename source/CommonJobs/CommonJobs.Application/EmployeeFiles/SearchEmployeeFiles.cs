@@ -26,6 +26,7 @@ namespace CommonJobs.Application.EmployeeFiles
                 .Query<Employee>()
                 .Statistics(out stats)
                 .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite())
+                .Where(x => x.TerminationDate == null)
                 .AsProjection<EmployeeFileSearchResult>()
                 .OrderBy(x => x.LastName).ThenBy(x => x.FirstName)
                 .ApplyPagination(Parameters);
