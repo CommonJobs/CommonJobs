@@ -1,12 +1,6 @@
-﻿$(function () {
+﻿/// <reference path="/Scripts/AjaxHelper.js" />
+$(function () {
     var rowTemplate = _.template($("#row-template").text());
-    var whileTrue = function (getData, callback, take, skip) {
-        skip = skip || 0;
-        take = take || ViewData.bsize;
-        getData(take, skip, function (data) {
-            callback(data, take, skip) && whileTrue(getData, callback, take, skip + take);
-        });
-    };
 
     var $table = $('#vacations-table');
     var currentYear = ViewData.currentYear;
@@ -242,7 +236,8 @@
         }
     });
 
-    whileTrue(
+
+    var processor = new AjaxHelper.BunchProcessor(
         function (take, skip, callback) {
             jQuery.getJSON(urlGenerator.action("VacationBunch", "Vacations"), { Skip: skip, Take: take }, function (data, textStatus, jqXHR) {
                 callback(data);
@@ -266,9 +261,9 @@
                             report.Result)
                     };
                 }));
-
-            var thereAreMore = skip + take < data.TotalResults;
-
-            return thereAreMore;
+        },
+        function (data, take, skip) {
+            return data.TotalResults - skip - take;
         });
+    processor.run(ViewData.bsize);
 });

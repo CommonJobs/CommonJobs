@@ -14,11 +14,11 @@ namespace CommonJobs.Mvc.UI.Controllers
     [CommonJobsAuthorize(Roles = "Users,EmployeeManagers")]
     public class EmployeeFilesController : CommonJobsController
     {
-        public ActionResult Index(int batchSize = 100)
+        public ActionResult Index(int bsize = 10)
         {
             ScriptManager.RegisterGlobalJavascript(
                 "ViewData", new  {
-                    batchSize = batchSize
+                    bsize = bsize
                 }
             );
 

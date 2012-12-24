@@ -4,38 +4,53 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using CommonJobs.Application;
-using CommonJobs.Application.Vacations;
 using CommonJobs.Infrastructure.Mvc;
 using NLog;
+using CommonJobs.Application.EmployeeAbsences;
 
 namespace CommonJobs.Mvc.UI.Controllers
 {
     [CommonJobsAuthorize(Roles = "Users,EmployeeManagers")]
-    public class VacationsController : CommonJobsController
+    public class AbsencesController : CommonJobsController
     {
         private static Logger log = LogManager.GetCurrentClassLogger();
 
-        public ActionResult Index(int yquantity = 6, int bsize = 10)
+        private IEnumerable<DateTime> GetDays(int year)
+        {
+            var date = new DateTime(year, 1, 1);
+            while (date.Year == year)
+            {
+                yield return date;
+                date = date.AddDays(1);
+            }
+        }
+
+        public ActionResult Index(int year = 0, int bsize = 10)
         {
             var currentYear = DateTime.Now.Year;
-            var years = Enumerable.Range(currentYear + 1 - yquantity, yquantity).Reverse().ToArray();
+            year = year > 0 ? year : currentYear;
+
+            ViewBag.Year = year;
+
+            var reasons = Query(new GetAbsenceReasons());
+
+            ViewBag.Reasons = reasons;
 
             ScriptManager.RegisterGlobalJavascript(
                 "ViewData",
                 new {
+                    year = year,
                     currentYear = currentYear,
-                    years = years,
                     bsize = bsize
                 }, 500);
-
-            ViewBag.years = years;
 
             return View();
         }
 
-        public JsonNetResult VacationBunch(BaseSearchParameters parameters)
+        public JsonNetResult AbsenceBunch(int year, BaseSearchParameters parameters)
         {
-            var query = new SearchVacations(parameters);
+            //TODO: return abscence data
+            var query = new SearchAbsences(parameters) { From = new DateTime(year, 1, 1), To = new DateTime(year, 12, 31) };
             var results = Query(query);
             return Json(new
             {

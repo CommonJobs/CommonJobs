@@ -46,6 +46,9 @@ namespace CommonJobs.Application.EmployeeSearching
             public bool IsEmployee { get; set; }
             public bool IsActive { get; set; }
             public OrphanAttachment[] OrphanAttachments { get; set; }
+
+            public DateTime HiringDate { get; set; }
+            public DateTime TerminationDate { get; set; }
         }
         
         public Employee_QuickSearch()
@@ -90,7 +93,9 @@ namespace CommonJobs.Application.EmployeeSearching
                         employee.Seniority,
                         employee.Degree,
                         employee.College
-                    }
+                    },
+                    HiringDate = employee.HiringDate ?? DateTime.MinValue,
+                    TerminationDate = employee.TerminationDate ?? DateTime.MaxValue
                 });
 
 
@@ -119,6 +124,8 @@ namespace CommonJobs.Application.EmployeeSearching
                     Photo = (object)null,
                     Terms = new object[0],
                     OrphanAttachments = new[] { new { Id = attachment.Id, FileName = attachment.FileName, PlainContent = attachment.PlainContent } },
+                    HiringDate = DateTime.MinValue,
+                    TerminationDate = DateTime.MaxValue
                 });
             
             Reduce = docs =>
@@ -152,7 +159,10 @@ namespace CommonJobs.Application.EmployeeSearching
                     ).ToArray(),
                     OrphanAttachments = g.SelectMany(x => x.OrphanAttachments).Where(x => !g.SelectMany(y => y.AttachmentIds).Contains(x.Id)).ToArray(),
 
-                    AttachmentsBySlot = g.SelectMany(x => x.AttachmentsBySlot).Where(x => x != null).ToArray()
+                    AttachmentsBySlot = g.SelectMany(x => x.AttachmentsBySlot).Where(x => x != null).ToArray(),
+
+                    HiringDate = g.Max(x => x.HiringDate),
+                    TerminationDate = g.Min(x => x.TerminationDate)
                 };
             
             Indexes.Add(x => x.FullName1, FieldIndexing.Analyzed);

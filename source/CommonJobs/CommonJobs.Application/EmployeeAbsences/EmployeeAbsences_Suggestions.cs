@@ -24,7 +24,7 @@ namespace CommonJobs.Application.EmployeeAbsences
                 from absence in entity.Absences
                 select new
                 {
-                    Text = (absence.Reason ?? string.Empty).Trim(),
+                    Text = string.IsNullOrWhiteSpace(absence.Reason) ? null : absence.Reason.Trim(),
                     Color = (string)null,
                     Predefined = false
                 });
@@ -33,7 +33,7 @@ namespace CommonJobs.Application.EmployeeAbsences
                 from entity in reasons
                 select new
                 {
-                    Text = (entity.Text ?? string.Empty).Trim(),
+                    Text = string.IsNullOrWhiteSpace(entity.Text) ? null : entity.Text.Trim(),
                     Color = entity.Color,
                     Predefined = true
                 });
@@ -49,6 +49,8 @@ namespace CommonJobs.Application.EmployeeAbsences
                                  Color = g.OrderByDescending(x => x.Predefined).Select(x => x.Color).FirstOrDefault(),
                                  Predefined = g.Any(x => x.Predefined)
                              };
+
+            TransformResults = (db, results) => results.Where(x => !string.IsNullOrWhiteSpace(x.Text)).Select(x => x);
 
             Index(x => x.Text, FieldIndexing.Analyzed);
         }
