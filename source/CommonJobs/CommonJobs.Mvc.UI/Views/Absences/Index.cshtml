@@ -73,7 +73,7 @@
 {
     <tr class="months">
         <th class="year-selection">@YearSelector(year)</th>
-        <th colspan="3">Totales @year</th>
+        <th colspan="4">Totales @year</th>
         @foreach (var x in daysByMonth)
         {
             <th colspan="@x.Count()" class="center month"></th>
@@ -87,6 +87,7 @@
         <th class="cell-data" title="Todo el día">Compl.</th>
         <th class="cell-data" title="Parte del día">Parc.</th>
         <th class="cell-data" title="Trabajo remoto">Rem.</th>
+        <th class="cell-data" title="Vacaciones">Vac.</th>
         @foreach (var x in daysByMonth)
         {
             foreach (var d in x)

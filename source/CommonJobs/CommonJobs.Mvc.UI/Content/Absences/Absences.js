@@ -31,6 +31,11 @@ $(function () {
             sClass: "cell-data",
             sType: "nulls-below-numeric",
             mData: "TotalRemoteWork"
+        },
+        {
+            sClass: "cell-data",
+            sType: "nulls-below-numeric",
+            mData: "TotalVacations"
         }
     ];
 
@@ -114,7 +119,9 @@ $(function () {
         var date = $this.data("date");
         var oData = $this.parent("tr").data("employee");
         var sData = oData.daysData[+date.format("DDD")];
-        var name = "" + oData.LastName + ", " + oData.FirstName;
+        var lastName = oData.LastName || "<em>Sin apellido</em>";
+        var firstName = oData.FirstName || "<em>Sin nombre</em>";
+        var name = lastName + ", " + firstName;
         if (sData)
             name = "<a href='" + urlGenerator.action("Edit", "Employees", oData.Id) + "'>" + name + "</a>";
         return name + "<br />" + date.format("dddd D [de] MMMM YYYY");
@@ -128,14 +135,14 @@ $(function () {
         var sData = oData.daysData[+date.format("DDD")];
 
         var period = "";
-        var from = moment(sData.RealDate);
-        var to = moment(sData.To || sData.RealDate);
+        var from = moment(sData.From);
+        var to = moment(sData.To);
 
         var formatTo = year == from.year() && year == to.year()
             ? "D MMMM"
             : "D MMMM YYYY"
 
-        if (to.year() == from.year() && to.month() == from.month() && to.day() == from.day()) {
+        if (to.year() == from.year() && to.month() == from.month() && to.date() == from.date()) {
             period = to.format(formatTo);
         } else {
             var formatFrom = from.year() && to.year()
@@ -148,7 +155,8 @@ $(function () {
         var absenceType =
             sData.AbsenceType == "Partial" ? "Parte del día"
             : sData.AbsenceType == "RemoteWork" ? "Trabajo remoto"
-            : "Todo el día";
+            : sData.AbsenceType == "Full" ? "Todo el día"
+            : sData.AbsenceType;
 
         var attachment =
             sData.Attachment ? "<a href='" + urlGenerator.action("Get", "Attachments", sData.Attachment.Id) + "'>" + sData.Attachment.FileName + "</a>"
@@ -156,21 +164,23 @@ $(function () {
 
         var md = new MarkdownDeep.Markdown();
         md.ExtraMode = true;
-        var note = sData.Note ? md.Transform(sData.Note) : "<em>No tiene</em>";
+        var note = sData.Note ? ("<dd class='markdown-content'>" + md.Transform(sData.Note) + "</dd>") : "<dd><em>No tiene</em></dd>";
 
         return "<dl class='dl-horizontal'>" +
             "<dt>Razón:</dt><dd>" + sData.Reason + "</dd>" +
-            "<dt>Tipo:</dt><dd>" + absenceType + "</dd>" + 
-            "<dt>Fecha:</dt><dd>" + period + "</dd>" + 
-            "<dt>Certificado:</dt><dd>" + (sData.HasCertificate ? "Si" : "No") + "</dd>" +
-            "<dt>Adjunto:</dt><dd>" + attachment + "</dd>" +
-            "<dt>Nota:</dt><dd class='markdown-content'>" + note + "</dd>" + 
+            (absenceType == "Vacations" ? "" : "<dt>Tipo:</dt><dd>" + absenceType + "</dd>") +
+            "<dt>Fecha:</dt><dd>" + period + "</dd>" +
+            (absenceType == "Vacations" ? "" :
+                "<dt>Certificado:</dt><dd>" + (sData.HasCertificate ? "Si" : "No") + "</dd>" +
+                "<dt>Adjunto:</dt><dd>" + attachment + "</dd>" +
+                "<dt>Nota:</dt>" + note
+            ) +
             "</dl>";
     }
     
     var processor = new AjaxHelper.BunchProcessor(
         function (take, skip, callback) {
-            jQuery.getJSON(urlGenerator.action("AbsenceBunch", "Absences"), { year: year, Skip: skip, Take: take/*, Term: "mos" */}, function (data, textStatus, jqXHR) {
+            jQuery.getJSON(urlGenerator.action("AbsenceBunch", "Absences"), { year: year, Skip: skip, Take: take/*, Term: "mos"*/ }, function (data, textStatus, jqXHR) {
                 callback(data);
             });
         },
@@ -195,8 +205,8 @@ $(function () {
                 for (var j in item.Absences) {
                     var absence = item.Absences[j];
                     absence.toString = toStringEmpty; //No puedo usar mRender porque me modifica el sData de fnCreatedCell, otra opción sería borrar el contenido del TD en fnCreatedCell
-                    var from = moment(absence.RealDate).startOf('day');
-                    var to = moment(absence.To || absence.RealDate).startOf('day');
+                    var from = moment(absence.From).startOf('day');
+                    var to = moment(absence.To).startOf('day');
                     if (to.valueOf() < from.valueOf)
                         to = from;
 
@@ -204,15 +214,34 @@ $(function () {
                         var end = to.valueOf();
                         var date = from;
                         while (date.valueOf() <= end) {
-                            daysData[date.format("DDD")] = absence;
+                            daysData[+date.format("DDD")] = absence;
                             date.add('days', 1);
                         }
                     }
                 }
 
+                for (var j in item.Vacations) {
+                    var vacation = item.Vacations[j];
+                    var from = moment(vacation.From).startOf('day');
+                    var to = moment(vacation.To || vacation.From).startOf('day');
+                    if (to.valueOf() < from.valueOf)
+                        to = from;
+
+                    if (to.year() >= ViewData.year && from.year() <= ViewData.year) {
+                        var end = to.valueOf();
+                        var date = from;
+                        while (date.valueOf() <= end) {
+                            daysData[+date.format("DDD")] = vacation;
+                            date.add('days', 1);
+                        }
+                    }
+                }
+
+
                 item["TotalFull"] = 0;
                 item["TotalPartial"] = 0;
                 item["TotalRemoteWork"] = 0;
+                item["TotalVacations"] = 0;
 
                 for (var j in daysData) {
                     var absence = daysData[j];

@@ -83,16 +83,12 @@ namespace CommonJobs.Application.EmployeeAbsences
                 filterVacationsFrom = item => true;
             }
 
-            var results = employees.Select(x => new AbsencesSearchResult()
-                {
-                    FirstName = x.FirstName,
-                    Id = x.Id,
-                    HiringDate = x.HiringDate,
-                    TerminationDate = x.TerminationDate,
-                    LastName = x.LastName,
-                    Absences = x.Absences.Where(filterAbsencesTo).Where(filterAbsencesFrom).ToList(),
-                    Vacations = x.Vacations.Where(filterVacationsTo).Where(filterVacationsFrom).ToList()
-            }).ToArray();
+            var results = employees
+                .Select(x => new AbsencesSearchResult(
+                    x, 
+                    x.Absences.Where(filterAbsencesTo).Where(filterAbsencesFrom).ToList(),
+                    x.Vacations.Where(filterVacationsTo).Where(filterVacationsFrom).ToList()))
+                .ToArray();
 
             Stats = stats;
 
