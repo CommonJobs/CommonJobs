@@ -3,9 +3,55 @@
 @{
     Page.Title = "CommonJobs Docs | Search";
 
+  /*
+   * Si queremos usar la api de custom search:
+   * https://www.googleapis.com/customsearch/v1
+   * ?q={searchTerms}
+   * &num={count?}
+   * &start={startIndex?}
+   * &lr={language?}
+   * &safe={safe?}
+   * &cx={cx?}
+   * &cref={cref?}
+   * &sort={sort?}
+   * &filter={filter?}
+   * &gl={gl?}
+   * &cr={cr?}
+   * &googlehost={googleHost?}
+   * &c2coff={disableCnTwTranslation?}
+   * &hq={hq?}
+   * &hl={hl?}
+   * &nsc={nsc?}
+   * &siteSearch={siteSearch?}
+   * &siteSearchFilter={siteSearchFilter?}
+   * &exactTerms={exactTerms?}
+   * &excludeTerms={excludeTerms?}
+   * &linkSite={linkSite?}
+   * &orTerms={orTerms?}
+   * &relatedSite={relatedSite?}
+   * &dateRestrict={dateRestrict?}
+   * &lowRange={lowRange?}
+   * &highRange={highRange?}
+   * &searchType={searchType}
+   * &fileType={fileType?}
+   * &rights={rights?}
+   * &imgSize={imgSize?}
+   * &imgType={imgType?}
+   * &imgColorType={imgColorType?}
+   * &imgDominantColor={imgDominantColor?}
+   * &alt=json
+   * 
+   * https://www.googleapis.com/customsearch/v1
+   * ?key=AIzaSyCd-Q7NM0ovzzAl5pUQr08Jhol3esWNfT8
+   * &cx=017362797798141842208:0ci0cu6a7uo
+   * &q={searchTerms}
+  */
+    
+    @*
     const int resultsPerPage = 10;
     const string bingSearchUrlTemplate = "http://api.search.live.net/json.aspx?AppId={0}&query={1}&sources=web&web.count={2}&web.offset={3}";
     const string appId = "079107A06124F136AD224769F658F042A7BB8694";
+    *@
 
     string originalQuery = Request.QueryString["q"];
     if (originalQuery.IsEmpty()) {
@@ -18,7 +64,7 @@
     }
 
     PageData["query"] = originalQuery;
-
+    @*
     // append site:docs.nuget.org to the query
     string query = originalQuery + " site:commonjobs.makingsense.com/documentation";
 
@@ -52,8 +98,36 @@
     }
 
     string linkTemplate = "Search.cshtml?q=" + originalQuery + "&p=";
+    *@
 }
 
+<script>
+  (function () {
+    var cx = '017362797798141842208:0ci0cu6a7uo';
+    var gcse = document.createElement('script'); gcse.type = 'text/javascript'; gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(gcse, s);
+  })();
+
+  $(function () {
+    var personalize = function () {
+      // Parche feo para ocultar el campo de búsqueda
+      $(".gsc-search-box").hide();
+      // Si queremos ocultar la publicidad :P
+      // $(".gsc-adBlock").hide();
+      // $(".gsc-adBlockVertical").hide();
+    };
+    window.setTimeout(personalize, 1000);
+    window.setTimeout(personalize, 2000);
+    window.setTimeout(personalize, 3000);
+    window.setTimeout(personalize, 4000);
+    window.setTimeout(personalize, 5000);
+  });
+</script>
+<gcse:search></gcse:search>
+
+@*
 @if ((int)jsonResult.SearchResponse.Web.Total == 0) {
     <h1>There is no result for '@originalQuery'.</h1>
 }
@@ -77,3 +151,4 @@ else {
         </footer>
     </section>
 }
+*@
