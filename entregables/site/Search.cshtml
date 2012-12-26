@@ -109,6 +109,21 @@
         '//www.google.com/cse/cse.js?cx=' + cx;
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(gcse, s);
   })();
+
+  $(function () {
+    var personalize = function () {
+      // Parche feo para ocultar el campo de búsqueda
+      $(".gsc-search-box").hide();
+      // Si queremos ocultar la publicidad :P
+      // $(".gsc-adBlock").hide();
+      // $(".gsc-adBlockVertical").hide();
+    };
+    window.setTimeout(personalize, 1000);
+    window.setTimeout(personalize, 2000);
+    window.setTimeout(personalize, 3000);
+    window.setTimeout(personalize, 4000);
+    window.setTimeout(personalize, 5000);
+  });
 </script>
 <gcse:search></gcse:search>
 
