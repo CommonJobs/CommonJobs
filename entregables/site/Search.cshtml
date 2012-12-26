@@ -51,7 +51,7 @@
     const int resultsPerPage = 10;
     const string bingSearchUrlTemplate = "http://api.search.live.net/json.aspx?AppId={0}&query={1}&sources=web&web.count={2}&web.offset={3}";
     const string appId = "079107A06124F136AD224769F658F042A7BB8694";
-    
+    *@
 
     string originalQuery = Request.QueryString["q"];
     if (originalQuery.IsEmpty()) {
@@ -64,7 +64,7 @@
     }
 
     PageData["query"] = originalQuery;
-
+    @*
     // append site:docs.nuget.org to the query
     string query = originalQuery + " site:commonjobs.makingsense.com/documentation";
 
