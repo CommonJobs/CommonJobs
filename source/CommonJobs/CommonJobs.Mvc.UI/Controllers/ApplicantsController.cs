@@ -142,9 +142,12 @@ namespace CommonJobs.Mvc.UI.Controllers
             return Json(GetApplicantJsonWithModifiedDate(applicant));
         }
 
-        public JsonNetResult Post(Applicant applicant)
+        public ActionResult Post(string id)
         {
-            RavenSession.Store(applicant);
+            var applicant = RavenSession.Load<Applicant>(id);
+            if (applicant == null)
+                return HttpNotFound();
+            this.TryUpdateModel(applicant);
             return Get(applicant.Id);
         }
 
