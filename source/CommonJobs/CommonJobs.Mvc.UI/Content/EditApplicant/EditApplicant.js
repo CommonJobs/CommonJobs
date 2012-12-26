@@ -72,6 +72,14 @@
         }
     });
 
+    var formatLongDate = function (value) {
+        var year = value.substring(0, 4);
+        var month = value.substring(5, 7);
+        var day = value.substring(8, 10);
+        var date = new Date(year, month - 1, day, 0, 0, 0, 0);
+        return Globalize.format(date, "d' de 'MMMM' de 'yyyy");
+    }
+
     var formatLongDateWithYears = function (value) {
         // date format: yyyy-mm-dd
         var year = value.substring(0, 4);
@@ -221,6 +229,11 @@
     App.EditApplicantAppViewDataBinder = Nervoustissue.FormBinder.extend({
         dataBindings:
         {
+            "Last-Modified":
+            {
+                controlLink: "ReadOnlyText",
+                valueToContent: formatLongDate
+            },
             fullName:
             {
                 controlLink: "Text",
