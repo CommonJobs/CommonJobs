@@ -10,6 +10,7 @@ using Raven.Client.Linq;
 using CommonJobs.Application.AttachmentStorage;
 using CommonJobs.Application.ApplicantSearching;
 using CommonJobs.Mvc.UI.Infrastructure;
+using Newtonsoft.Json.Linq;
 
 namespace CommonJobs.Mvc.UI.Controllers
 {
@@ -108,6 +109,14 @@ namespace CommonJobs.Mvc.UI.Controllers
             }
         }
 
+        private JObject GetApplicantJsonWithModifiedDate(Applicant applicant)
+        {
+            var lastModified = RavenSession.Advanced.GetMetadataFor(applicant).Value<DateTime>("Last-Modified");
+            var jsonApplicant = Newtonsoft.Json.Linq.JObject.FromObject(applicant);
+            jsonApplicant["Last-Modified"] = lastModified;
+            return jsonApplicant;
+        }
+
         [SharedEntityAlternativeAuthorization]
         public ActionResult Edit(string id, string sharedCode = null) 
         {
@@ -118,7 +127,7 @@ namespace CommonJobs.Mvc.UI.Controllers
                 "ViewData",
                 new
                 {
-                    applicant = applicant,
+                    applicant = GetApplicantJsonWithModifiedDate(applicant),
                     forceReadOnly = sharedCode != null,
                     technicalSkillLevels = Enum.GetNames(typeof(TechnicalSkillLevel))
                 },
@@ -130,12 +139,15 @@ namespace CommonJobs.Mvc.UI.Controllers
         public JsonNetResult Get(string id, string sharedCode = null) 
         {
             var applicant = RavenSession.Load<Applicant>(id);
-            return Json(applicant);
+            return Json(GetApplicantJsonWithModifiedDate(applicant));
         }
 
-        public JsonNetResult Post(Applicant applicant)
+        public ActionResult Post(string id)
         {
-            RavenSession.Store(applicant);
+            var applicant = RavenSession.Load<Applicant>(id);
+            if (applicant == null)
+                return HttpNotFound();
+            this.TryUpdateModel(applicant);
             return Get(applicant.Id);
         }
 
