@@ -68,14 +68,15 @@ namespace CommonJobs.Mvc.UI.Controllers
         {
             var jobSearch = RavenSession.Load<JobSearch>(id);
             if (jobSearch == null)
-                return HttpNotFound(); 
-            
+                return HttpNotFound();
+
             ScriptManager.RegisterGlobalJavascript(
                 "ViewData",
                 new
                 {
                     jobSearch = jobSearch,
-                    publicSiteUrl = GetJobSearchPublicUrl(jobSearch, false)
+                    publicSiteUrl = GetJobSearchPublicUrl(jobSearch, false),
+                    technicalSkillLevels = Enum.GetNames(typeof(TechnicalSkillLevel))
                 },
                 500);
             

@@ -11,8 +11,10 @@ namespace CommonJobs.Domain
         public string Title { get; set; }
         public string PublicNotes { get; set; }
         public string PrivateNotes { get; set; }
-        public bool IsPublic { get; set; }
 
+        public List<TechnicalSkill> RequiredTechnicalSkills { get; set; }
+
+        public bool IsPublic { get; set; }
         public string PublicCode { get; set; }
     }
 }

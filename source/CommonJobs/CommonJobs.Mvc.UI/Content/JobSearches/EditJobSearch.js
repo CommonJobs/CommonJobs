@@ -14,7 +14,27 @@
         }
     });
 
+    App.TechnicalSkill = Backbone.Model.extend({
+        defaults: {
+            Name: "",
+            Level: 0
+        }
+    });
+
+    App.TechnicalSkills = Backbone.Collection.extend({
+        model: App.TechnicalSkill
+    });
+
     App.JobSearch = Backbone.Model.extend({
+        initCollectionField: function (fieldName, fieldType) {
+            fieldType = fieldType || Backbone.Collection;
+            this.set(fieldName, new fieldType(this.get(fieldName)));
+            this.get(fieldName).on("add remove reset change", function () { this.trigger("change"); }, this);
+            this.get(fieldName).parentModel = this;
+        },
+        initialize: function () {
+            this.initCollectionField("RequiredTechnicalSkills", App.TechnicalSkills);
+        }
     });
 
     App.EditJobSearchAppViewDataBinder = Nervoustissue.FormBinder.extend({
@@ -40,8 +60,19 @@
                     var url = App.publicUrlGenerator.bySections([value]);
                     return _.template('<span class="view-editable"><a href="<%= url %>"><%= url %></a> <span class="icon-edit">&nbsp;</span></span>', { url: url });
                 },
+            },
+            RequiredTechnicalSkills: {
+                controlLink: "Collection",
+                item: {
+                    controlLink: "Compound",
+                    template: _.template('<span class="technical-skill-name" data-cj-suggest="TechnicalSkillName" data-bind="SkillName"></span>: <span class="technical-skill-level" data-bind="SkillLevel"></span>'),
+                    items: [
+                        { controlLink: "Text", name: "SkillName", field: "Name" },
+                        { controlLink: "Options", name: "SkillLevel", field: "Level", options: _.map(ViewData.technicalSkillLevels, function(s, i) { return { value: i, text: s }; }) }
+                    ]
+                }
             }
-        } 
+} 
     });
 
     App.EditJobSearchAppView = Backbone.View.extend({
