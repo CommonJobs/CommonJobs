@@ -76,7 +76,8 @@ namespace CommonJobs.Mvc.UI.Controllers
                 {
                     jobSearch = jobSearch,
                     publicSiteUrl = GetJobSearchPublicUrl(jobSearch, false),
-                    technicalSkillLevels = Enum.GetNames(typeof(TechnicalSkillLevel))
+                    technicalSkillLevels = Enum.GetNames(typeof(TechnicalSkillLevel)),
+                    suggestedApplicants = Query(new GetJobSearchSuggestedApplicants(jobSearch))
                 },
                 500);
             
