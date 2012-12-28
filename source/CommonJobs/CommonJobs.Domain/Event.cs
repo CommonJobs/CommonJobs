@@ -19,5 +19,7 @@ namespace CommonJobs.Domain
         [Display(Name = "Nota")]
         [DataType(DataType.MultilineText)]
         public string Note { get; set; }
+
+        public string EventType { get; set; }
     }
 }

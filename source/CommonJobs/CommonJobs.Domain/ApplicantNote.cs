@@ -7,9 +7,11 @@ namespace CommonJobs.Domain
 {
     public class ApplicantNote : NoteWithAttachment
     {
+        [Obsolete]
         public ApplicantNoteType NoteType { get; set; }
     }
 
+    [Obsolete]
     public enum ApplicantNoteType
     {
         GeneralNote = 0,

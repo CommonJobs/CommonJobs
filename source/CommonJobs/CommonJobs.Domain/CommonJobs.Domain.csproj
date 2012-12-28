@@ -64,6 +64,7 @@
     <Compile Include="AttachmentReference.cs" />
     <Compile Include="AttachmentSlot.cs" />
     <Compile Include="AttachmentSlotNecessity.cs" />
+    <Compile Include="ApplicantEventType.cs" />
     <Compile Include="MyMenu\MenuOrder.cs">
       <SubType>Code</SubType>
     </Compile>
