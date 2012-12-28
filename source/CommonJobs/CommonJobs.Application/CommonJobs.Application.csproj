@@ -91,6 +91,7 @@
     <Compile Include="EmployeeFiles\SearchEmployeeFiles.cs" />
     <Compile Include="EmployeeSearching\EmployeeSearchResult.cs" />
     <Compile Include="EmployeeSearching\EmployeeSearchParameters.cs" />
+    <Compile Include="JobSearchSearching\Applicant_BySkills.cs" />
     <Compile Include="JobSearchSearching\GetJobSearchSuggestedApplicants.cs" />
     <Compile Include="JobSearchSearching\JobSearchSearchParameters.cs" />
     <Compile Include="JobSearchSearching\SearchJobSearches.cs" />

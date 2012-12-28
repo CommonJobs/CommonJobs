@@ -23,18 +23,18 @@ namespace CommonJobs.Application.JobSearchSearching
             RavenQueryStatistics stats;
 
             var query = RavenSession
-                .Query<Applicant>();
+                .Query<Applicant_BySkills.Projection, Applicant_BySkills>();
 
             if (JobSearch.RequiredTechnicalSkills != null) 
                 foreach (var rts in JobSearch.RequiredTechnicalSkills)
-                    query = query.Where(a => a.TechnicalSkills.Any(ts => ts.Name == rts.Name && ts.Level > rts.Level));
+                    query = query.Where(a => a.Searcheables.StartsWith(rts.Searcheable));
 
             query = query
-                //.OrderByDescending(a => a.TechnicalSkills.Sum(ts => (int)ts.Level))*/
+                .OrderByDescending(a => a.Total)
                 .Statistics(out stats)
                 .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite());
 
-            var result = query.ToArray();
+            var result = query.As<Applicant>().ToArray();
             Stats = stats;
             return result;
         }
