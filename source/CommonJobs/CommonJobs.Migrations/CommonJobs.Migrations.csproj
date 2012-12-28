@@ -81,6 +81,8 @@
     <Compile Include="201210181021_DefaultAbsenceReasons.cs" />
     <Compile Include="201212010811_CreateDefaultMenus.cs" />
     <Compile Include="201212031157_ConfigureMyMenuVersioning.cs" />
+    <Compile Include="201212280848_DefaultApplicantEventTypes.cs" />
+    <Compile Include="201212280918_MoveApplicantNoteTypeToEventType.cs" />
     <Compile Include="MoveAttachmentToSlotBaseMigration.cs" />
     <Compile Include="MigrationClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
