@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.ComponentModel.DataAnnotations;
+using CommonJobs.Utilities;
 
 namespace CommonJobs.Domain
 {
@@ -24,6 +25,8 @@ namespace CommonJobs.Domain
         [DataType(DataType.Currency)]
         public decimal Salary { get; set; }
 
-        public string EventType { get { return "[SalaryChange]"; } }
+        public string EventType { get { return "_SalaryChange_"; } }
+
+        public string EventTypeSlug { get { return EventType.GenerateSlug(); } }
     }
 }

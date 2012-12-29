@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.ComponentModel.DataAnnotations;
+using CommonJobs.Utilities;
 
 namespace CommonJobs.Domain
 {
@@ -21,5 +22,7 @@ namespace CommonJobs.Domain
         public string Note { get; set; }
 
         public string EventType { get; set; }
+
+        public string EventTypeSlug { get { return EventType.GenerateSlug(); } }
     }
 }

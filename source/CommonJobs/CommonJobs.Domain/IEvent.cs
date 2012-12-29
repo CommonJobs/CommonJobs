@@ -21,6 +21,8 @@ namespace CommonJobs.Domain
         string Note { get; set; }
 
         string EventType { get; }
+
+        string EventTypeSlug { get; }
     }
 
     public interface IEventWithAttachment : IEvent

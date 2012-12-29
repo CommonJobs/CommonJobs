@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using CommonJobs.Utilities;
 
 namespace CommonJobs.Domain
 {
@@ -25,7 +26,9 @@ namespace CommonJobs.Domain
 
         public AttachmentReference Attachment { get; set; }
 
-        public string EventType { get { return "[Absence]"; } }
+        public string EventType { get { return "_Absence_"; } }
+
+        public string EventTypeSlug { get { return EventType.GenerateSlug(); } }
 
         public string Reason { get; set; }
         
@@ -35,17 +38,10 @@ namespace CommonJobs.Domain
         public AbsenceType AbsenceType { get; set; }
         public bool HasCertificate { get; set; }
 
-        static Regex notAllowed = new Regex("[^a-z0-9]+");
-        static Regex trim = new Regex("^-|-$");
-        //TODO: refactor
         public string ReasonSlug
         {
-            get { return Reason == null ? null : trim.Replace(notAllowed.Replace(Reason.ToLower(), "-"), ""); }
+            get { return Reason.GenerateSlug(); }
         }
-        //From Event:
-        //  public DateTime RealDate { get; set; }
-        //  public DateTime RegisterDate { get; set; }
-        //  public string Note { get; set; }
 
     }
 }
