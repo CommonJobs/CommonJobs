@@ -5,6 +5,7 @@ using System.Text;
 
 namespace CommonJobs.Domain
 {
+    [Obsolete("It will be replaced by NoteWithAttachment")]
     public class ApplicantNote : NoteWithAttachment
     {
         [Obsolete]

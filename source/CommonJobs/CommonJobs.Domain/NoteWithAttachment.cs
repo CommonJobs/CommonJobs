@@ -7,7 +7,7 @@ using CommonJobs.Utilities;
 
 namespace CommonJobs.Domain
 {
-    public class NoteWithAttachment : SimpleNote
+    public class NoteWithAttachment : SimpleNote, IEventWithAttachment
     {
         public AttachmentReference Attachment { get; set; }
     }

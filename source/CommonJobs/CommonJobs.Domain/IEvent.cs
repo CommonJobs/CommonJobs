@@ -6,20 +6,25 @@ using System.Web;
 
 namespace CommonJobs.Domain
 {
-    public abstract class Event
+    public interface IEvent
     {
         [Display(Name = "Fecha Real")]
         [DataType(DataType.DateTime)]
-        public DateTime RealDate { get; set; }
+        DateTime RealDate { get; set; }
 
         [Display(Name = "Fecha registrada")]
         [DataType(DataType.DateTime)]
-        public DateTime RegisterDate { get; set; }
+        DateTime RegisterDate { get; set; }
 
         [Display(Name = "Nota")]
         [DataType(DataType.MultilineText)]
-        public string Note { get; set; }
+        string Note { get; set; }
 
-        public string EventType { get; set; }
+        string EventType { get; }
+    }
+
+    public interface IEventWithAttachment : IEvent
+    {
+        AttachmentReference Attachment { get; set; }
     }
 }
