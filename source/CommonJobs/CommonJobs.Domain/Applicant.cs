@@ -21,21 +21,20 @@ namespace CommonJobs.Domain
         public bool IsHighlighted { get; set; }
 
         [Display(Name = "Notas")]
-        public List<ApplicantNote> Notes { get; set; }
+        public List<NoteWithAttachment> Notes { get; set; }
 
         [Display(Name = "LinkedIn")]
         public string LinkedInLink { get; set; }
 
-        public void AddNote(ApplicantNote note)
+        public void AddNote(NoteWithAttachment note)
         {
             this.Notes.Add(note);
         }
         public void AddGeneralNote(string note, AttachmentReference attachment = null)
         {
-            AddNote(new ApplicantNote()
+            AddNote(new NoteWithAttachment()
             {
                 Note = note,
-                NoteType = ApplicantNoteType.GeneralNote,
                 RealDate = DateTime.Now,
                 RegisterDate = DateTime.Now,
                 Attachment = attachment
@@ -45,13 +44,13 @@ namespace CommonJobs.Domain
         [Obsolete]
         public bool HaveInterview
         {
-            get { return Notes != null && Notes.Any(x => ApplicantEventType.Match(x.EventType, ApplicantEventType.DefaultRHInterview) || x.NoteType == ApplicantNoteType.InteviewNote); }
+            get { return Notes != null && Notes.Any(x => ApplicantEventType.Match(x.EventType, ApplicantEventType.DefaultRHInterview)); }
         }
 
         [Obsolete]
         public bool HaveTechnicalInterview
         {
-            get { return Notes != null && Notes.Any(x => ApplicantEventType.Match(x.EventType, ApplicantEventType.DefaultTechnicalInterview) || x.NoteType == ApplicantNoteType.TechnicalInterviewNote); }
+            get { return Notes != null && Notes.Any(x => ApplicantEventType.Match(x.EventType, ApplicantEventType.DefaultTechnicalInterview)); }
         }
         
         public override IEnumerable<SlotWithAttachment> AllAttachmentReferences

@@ -59,7 +59,6 @@
   <ItemGroup>
     <Compile Include="Absence.cs" />
     <Compile Include="Applicant.cs" />
-    <Compile Include="ApplicantNote.cs" />
     <Compile Include="Attachment.cs" />
     <Compile Include="AttachmentReference.cs" />
     <Compile Include="AttachmentSlot.cs" />
