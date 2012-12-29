@@ -96,6 +96,10 @@
       <Project>{B6D54592-07C8-4B5E-A607-DD7FE49A43B6}</Project>
       <Name>CommonJobs.Infrastructure.Migrations</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CommonJobs.Utilities\CommonJobs.Utilities.csproj">
+      <Project>{fabfcafa-f6f2-47c2-b393-66e97203f107}</Project>
+      <Name>CommonJobs.Utilities</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

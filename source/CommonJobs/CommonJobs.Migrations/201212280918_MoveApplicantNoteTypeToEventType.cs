@@ -8,6 +8,7 @@ using Raven.Abstractions.Data;
 using Raven.Abstractions.Extensions;
 using Raven.Client;
 using Raven.Json.Linq;
+using CommonJobs.Utilities;
 
 namespace CommonJobs.Migrations
 {
@@ -19,10 +20,10 @@ namespace CommonJobs.Migrations
             DoInResults(action, sortedBy: "Id", index: "Dynamic/Applicants");
         }
 
-        readonly Dictionary<int, string> noteTypeToEventTypeMap = new Dictionary<int, string>()
+        readonly Dictionary<string, string> noteTypeToEventTypeMap = new Dictionary<string, string>()
         {
-            { 1, ApplicantEventType.DefaultRHInterview },
-            { 2, ApplicantEventType.DefaultTechnicalInterview }
+            { "InteviewNote", ApplicantEventType.DefaultRHInterview },
+            { "TechnicalInterviewNote", ApplicantEventType.DefaultTechnicalInterview }
         };
 
         
@@ -30,29 +31,55 @@ namespace CommonJobs.Migrations
         {
             ForAllApplicants(result =>
             {
-                var noteType = result.ContainsKey("NoteType") ? result.Value<int>("NoteType") : 0;
-                var previousEventType = result.ContainsKey("EventType") ? result.Value<string>("EventType") : null;
-
-                if (previousEventType == null && noteTypeToEventTypeMap.ContainsKey(noteType))
+                var patchs = new List<PatchRequest>();
+                if (result["Notes"].Type == Newtonsoft.Json.Linq.JTokenType.Array)
                 {
-                    var patchs = new List<PatchRequest>() {
-                        new PatchRequest() 
-                        {
-                            Type = PatchCommandType.Unset,
-                            Name = "NoteType"
-                        },
-                        new PatchRequest() 
-                        { 
-                            Type = PatchCommandType.Set, 
-                            Name = "EventType", 
-                            Value = noteTypeToEventTypeMap[noteType]
-                        }
-                    };
+                    var position = 0;
+                    foreach (var note in result["Notes"].Values())
+                    {
+                        var noteType = note.Value<string>("NoteType");
+                        var previousEventType = note.Value<string>("EventType");
 
-                    var metadata = result["@metadata"] as RavenJObject;
-                    DocumentStore.DatabaseCommands.Patch(
-                        result["@metadata"].Value<string>("@id").ToString(),
-                        patchs.ToArray());
+                        if (previousEventType == null && noteType != null && noteTypeToEventTypeMap.ContainsKey(noteType))
+                        {
+                            patchs.Add(
+                                new PatchRequest
+                                {
+                                    Type = PatchCommandType.Modify,
+                                    Name = "Notes",
+                                    Position = position,
+                                    Nested = new[] {
+                                        new PatchRequest()
+                                        {
+                                            Type = PatchCommandType.Unset,
+                                            Name = "NoteType"
+                                        },
+                                        new PatchRequest()
+                                        {
+                                            Type = PatchCommandType.Set,
+                                            Name = "EventType",
+                                            Value = noteTypeToEventTypeMap[noteType]
+                                        },
+                                        new PatchRequest()
+                                        {
+                                            Type = PatchCommandType.Set,
+                                            Name = "EventTypeSlug",
+                                            Value = noteTypeToEventTypeMap[noteType].GenerateSlug()
+                                        }
+                                    }
+                                });
+                        }
+
+                        position++;
+                    }
+
+                    if (patchs.Any())
+                    {
+                        var metadata = result["@metadata"] as RavenJObject;
+                        DocumentStore.DatabaseCommands.Patch(
+                            result["@metadata"].Value<string>("@id").ToString(),
+                            patchs.ToArray());
+                    }
                 }
             });
         }
@@ -63,30 +90,53 @@ namespace CommonJobs.Migrations
             
             ForAllApplicants(result =>
             {
-                var eventType = result.ContainsKey("EventType") ? result.Value<string>("EventType") : null;
-                var previousNoteType = result.ContainsKey("NoteType") ? result.Value<int>("NoteType") : 0;
-
-
-                if (previousNoteType == 0 && eventTypeToNoteTypeMap.ContainsKey(eventType))
+                var patchs = new List<PatchRequest>();
+                if (result["Notes"].Type == Newtonsoft.Json.Linq.JTokenType.Array)
                 {
-                    var patchs = new List<PatchRequest>() {
-                        new PatchRequest() 
-                        {
-                            Type = PatchCommandType.Unset,
-                            Name = "EventType"
-                        },
-                        new PatchRequest() 
-                        { 
-                            Type = PatchCommandType.Set, 
-                            Name = "NoteType", 
-                            Value = eventTypeToNoteTypeMap[eventType]
-                        }
-                    };
+                    var position = 0;
+                    foreach (var note in result["Notes"].Values())
+                    {
+                        var eventType = note.Value<string>("EventType");
+                        var previousNoteType = note.Value<string>("NoteType");
 
-                    var metadata = result["@metadata"] as RavenJObject;
-                    DocumentStore.DatabaseCommands.Patch(
-                        result["@metadata"].Value<string>("@id").ToString(),
-                        patchs.ToArray());
+                        if (previousNoteType == null && eventType != null && eventTypeToNoteTypeMap.ContainsKey(eventType))
+                        {
+                            patchs.Add(
+                                new PatchRequest
+                                {
+                                    Type = PatchCommandType.Modify,
+                                    Name = "Notes",
+                                    Position = position,
+                                    Nested = new[] {
+                                        new PatchRequest()
+                                        {
+                                            Type = PatchCommandType.Unset,
+                                            Name = "EventType"
+                                        },
+                                        new PatchRequest()
+                                        {
+                                            Type = PatchCommandType.Unset,
+                                            Name = "EventTypeSlug"
+                                        },
+                                        new PatchRequest()
+                                        {
+                                            Type = PatchCommandType.Set,
+                                            Name = "NoteType",
+                                            Value = eventTypeToNoteTypeMap[eventType]
+                                        }
+                                    }
+                                });
+                        }
+                        position++;
+                    }
+
+                    if (patchs.Any())
+                    {
+                        var metadata = result["@metadata"] as RavenJObject;
+                        DocumentStore.DatabaseCommands.Patch(
+                            result["@metadata"].Value<string>("@id").ToString(),
+                            patchs.ToArray());
+                    }
                 }
             });
         }
