@@ -42,18 +42,18 @@ namespace CommonJobs.Domain
             });
         }
 
-        //TODO replace for "HasInterview"
+        [Obsolete]
         public bool HaveInterview
         {
-            get { return Notes != null && Notes.Any(x => x.NoteType == ApplicantNoteType.InteviewNote); }
+            get { return Notes != null && Notes.Any(x => ApplicantEventType.Match(x.EventType, ApplicantEventType.DefaultRHInterview) || x.NoteType == ApplicantNoteType.InteviewNote); }
         }
 
-        //TODO replace for "HasTechnicalInterview"
+        [Obsolete]
         public bool HaveTechnicalInterview
         {
-            get { return Notes != null && Notes.Any(x => x.NoteType == ApplicantNoteType.TechnicalInterviewNote); }
+            get { return Notes != null && Notes.Any(x => ApplicantEventType.Match(x.EventType, ApplicantEventType.DefaultTechnicalInterview) || x.NoteType == ApplicantNoteType.TechnicalInterviewNote); }
         }
-
+        
         public override IEnumerable<SlotWithAttachment> AllAttachmentReferences
         {
             get { return base.AllAttachmentReferences.Union(SlotWithAttachment.GenerateFromNotes(Notes)); }

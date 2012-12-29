@@ -26,11 +26,11 @@ namespace CommonJobs.Migrations
 
 
         private ApplicantEventType[] newOnes = new[] {
-            new ApplicantEventType("Entrevista RRHH", ColorDarkGray) { Id = "ApplicantEventTypes/entrevista-rrhh" },
-            new ApplicantEventType("Entrevista Técnica",  ColorYellow) { Id = "ApplicantEventTypes/entrevista-tecnica" }, 
-            new ApplicantEventType("Entrevista Inglés",  ColorBlue) { Id = "ApplicantEventTypes/entrevista-ingles" },
-            new ApplicantEventType("Entrevista PM",  ColorOrange) { Id = "ApplicantEventTypes/entrevista-pm" },
-            new ApplicantEventType("Test Psicológico", ColorPurple) { Id = "ApplicantEventTypes/test-psicologico" }
+            new ApplicantEventType(ApplicantEventType.DefaultRHInterview, ColorDarkGray) { Id = "ApplicantEventTypes/entrevista-rrhh" },
+            new ApplicantEventType(ApplicantEventType.DefaultTechnicalInterview,  ColorYellow) { Id = "ApplicantEventTypes/entrevista-tecnica" }, 
+            new ApplicantEventType(ApplicantEventType.DefaultEnglishInterview,  ColorBlue) { Id = "ApplicantEventTypes/entrevista-ingles" },
+            new ApplicantEventType(ApplicantEventType.DefaultPMInterview,  ColorOrange) { Id = "ApplicantEventTypes/entrevista-pm" },
+            new ApplicantEventType(ApplicantEventType.DefaultPsychologicalTest, ColorPurple) { Id = "ApplicantEventTypes/test-psicologico" }
         };
         
         public override void Up()
