@@ -33,5 +33,16 @@ namespace CommonJobs.Domain
         {
             return value1.GenerateSlug() == value2.GenerateSlug();
         }
+
+        public override bool Equals(object obj)
+        {
+            var other = obj as EventType;
+            return (other != null && other.Slug == this.Slug) || base.Equals(obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return Slug != null ? Slug.GetHashCode() : base.GetHashCode();
+        }
     }
 }

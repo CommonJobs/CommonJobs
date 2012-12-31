@@ -11,6 +11,7 @@ using CommonJobs.Application.AttachmentStorage;
 using CommonJobs.Application.ApplicantSearching;
 using CommonJobs.Mvc.UI.Infrastructure;
 using Newtonsoft.Json.Linq;
+using CommonJobs.Application.ApplicantFlow;
 
 namespace CommonJobs.Mvc.UI.Controllers
 {
@@ -21,6 +22,7 @@ namespace CommonJobs.Mvc.UI.Controllers
         // GET: /Applicants/
         public ViewResult Index(ApplicantSearchParameters searchParameters)
         {
+            ViewBag.EventTypes = Query(new GetEventTypesQuery());
             return View(searchParameters);
         }
 
