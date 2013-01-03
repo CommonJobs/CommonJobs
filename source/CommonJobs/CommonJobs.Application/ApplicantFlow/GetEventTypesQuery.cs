@@ -16,13 +16,12 @@ namespace CommonJobs.Application.ApplicantFlow
     {
         public override EventType[] Execute()
         {
-            //It is only getting predefined EventTypes
-            var query = RavenSession.Query<ApplicantEventType>()
-                .OrderBy(x => x.Text);
+            var query = RavenSession.Query<ApplicantEventType_Suggestions.Projection, ApplicantEventType_Suggestions>()
+                .OrderByDescending(x => x.Predefined)
+                .ThenBy(x => x.Text);
 
             var results = query
-                .AsEnumerable()
-                .Distinct()
+                .AsProjection<EventType>()
                 .ToArray();
 
             return results;

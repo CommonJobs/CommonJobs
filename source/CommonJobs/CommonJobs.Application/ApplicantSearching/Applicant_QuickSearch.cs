@@ -31,12 +31,18 @@ namespace CommonJobs.Application.ApplicantSearching
             public string FullName1 { get; set; }
             public string FullName2 { get; set; }
             public bool IsHighlighted { get; set; }
+
+            [Obsolete]
             public bool HasInterview { get; set; }
+            [Obsolete]
             public bool HasTechnicalInterview { get; set; }
 
             public string[] AttachmentIds { get; set; }
             public string[] AttachmentNames { get; set; }
             public string[] AttachmentContent { get; set; }
+
+            public NoteWithAttachment[] Interviews { get; set; }
+            public string EventSlugs { get; set; }
 
             public bool IsApplicant { get; set; }
             public OrphanAttachment[] OrphanAttachments { get; set; }
@@ -62,6 +68,8 @@ namespace CommonJobs.Application.ApplicantSearching
                     AttachmentIds = applicant.AllAttachmentReferences.Select(x => x.Attachment.Id).ToArray(),
                     AttachmentNames = applicant.AllAttachmentReferences.Select(x => x.Attachment.FileName).ToArray(),
                     AttachmentContent = new string[0],
+                    Interviews = applicant.Notes.Where(x => !string.IsNullOrWhiteSpace(x.EventTypeSlug)).ToArray(),
+                    EventSlugs = applicant.Notes.Where(x => !string.IsNullOrWhiteSpace(x.EventTypeSlug)).Select(x => x.EventTypeSlug).Distinct().ToArray(),
                     IsApplicant = true,
                     OrphanAttachments = new dynamic[0]
                 });
@@ -84,6 +92,8 @@ namespace CommonJobs.Application.ApplicantSearching
                     AttachmentIds = new string[0],
                     AttachmentNames = new string[0],
                     AttachmentContent = new string[0],
+                    Interviews = new dynamic[0],
+                    EventSlugs = new dynamic[0],
                     IsApplicant = false,
                     OrphanAttachments = new[] { new { Id = attachment.Id, FileName = attachment.FileName, PlainContent = attachment.PlainContent } },
                 });
@@ -108,6 +118,9 @@ namespace CommonJobs.Application.ApplicantSearching
                     AttachmentIds = g.SelectMany(x => x.AttachmentIds).Distinct().ToArray(),
                     AttachmentNames = g.SelectMany(x => x.AttachmentNames).Distinct().ToArray(),
 
+                    Interviews = g.SelectMany(x => x.Interviews).Distinct().ToArray(),
+                    EventSlugs = g.SelectMany(x => x.EventSlugs).Distinct().ToArray(),
+
                     IsApplicant = g.Any(x => x.IsApplicant),
 
                     AttachmentContent = g.SelectMany(x => x.AttachmentContent).Union(
@@ -123,6 +136,7 @@ namespace CommonJobs.Application.ApplicantSearching
             Indexes.Add(x => x.TechnicalSkills, FieldIndexing.Analyzed);
             Indexes.Add(x => x.AttachmentNames, FieldIndexing.Analyzed);
             Indexes.Add(x => x.AttachmentContent, FieldIndexing.Analyzed);
+            Indexes.Add(x => x.EventSlugs, FieldIndexing.NotAnalyzed);
         }
     }
 }

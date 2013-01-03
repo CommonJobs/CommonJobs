@@ -51,6 +51,9 @@ namespace CommonJobs.Application.ApplicantSearching
             if (Parameters.HaveTechnicalInterview)
                 query = query.Where(x => x.HasTechnicalInterview);
 
+            foreach (var slug in Parameters.WithEvents.EmptyIfNull())
+                query = query.Where(x => x.EventSlugs == slug);
+
             if (Parameters.Highlighted)
                 query = query.Where(x => x.IsHighlighted);
 
