@@ -12,6 +12,8 @@
 <style>
     @foreach (CommonJobs.Domain.EventType eventType in ViewBag.EventTypes)
     {
+        if (eventType.Color != null)
+        {
         //TODO: complete style definition and also add in .less file event-tag style for non-redefined styles
         //TODO: Also add the elements in the applicants cards and a popover with related note. what happen when there are more notes?
         @string.Format(@"
@@ -19,7 +21,12 @@
 {{ 
     background-color: {1}; 
 }}
+.event-filter.{0}
+{{ 
+    background-color: {1}; 
+}}
 ", eventType.Slug, eventType.Color)
+        }
     }
 </style>
 
@@ -78,6 +85,15 @@
                 <label class="checkbox"><input type="checkbox" id="HaveInterviewCheck" name="HaveInterview" @(Model.HaveInterview ? "checked='checked'" : string.Empty)/>Con entrevistas</label>
                 <label class="checkbox"><input type="checkbox" id="HaveTechnicalInterviewCheck" name="HaveTechnicalInterview" @(Model.HaveTechnicalInterview ? "checked='checked'" : string.Empty)/>Con entrevistas técnicas</label>
                 <label class="checkbox"><input type="checkbox" id="SearchInAttachmentsCheck" name="SearchInAttachments" @(Model.SearchInAttachments ? "checked='checked'" : string.Empty)/>Buscar en adjuntos</label>
+            </div>
+            <div class="control-group">
+                @foreach (CommonJobs.Domain.EventType eventType in ViewBag.EventTypes)
+                {
+                <label class="checkbox event-filter @eventType.Slug">
+                    <input type="checkbox" id="WithEvents-@eventType.Slug" name="WithEvents" value="@eventType.Slug" @(Model.WithEvents != null && Model.WithEvents.Contains(eventType.Slug) ? "checked='checked'" : string.Empty)/>
+                    @eventType.Text
+                </label>
+                }
             </div>
         </form>
         <p id="resultCountNotice">Hay <span id="resultCount">0</span> resultado(s).</p>

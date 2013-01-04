@@ -34,6 +34,14 @@ $(function () {
                 searchParameters.HaveTechnicalInterview = true;
             if ($("#SearchInAttachmentsCheck").prop("checked"))
                 searchParameters.SearchInAttachments = true;
+
+            var withEvents = []
+            $(".event-filter input[name=WithEvents]:checked").each(function () {
+                withEvents.push(this.value);
+            });
+            if (withEvents.length) {
+                searchParameters.WithEvents = withEvents;
+            }
         },
         prepareNewCard: function ($card) {
             dragAndDrop.prepareFileDropzone($card, {
@@ -120,7 +128,7 @@ $(function () {
 
     });
 
-    $("#HighlightedCheck, #HaveInterviewCheck, #HaveTechnicalInterviewCheck, #SearchInAttachmentsCheck").change(function () {
+    $("#HighlightedCheck, #HaveInterviewCheck, #HaveTechnicalInterviewCheck, #SearchInAttachmentsCheck, .event-filter input[name=WithEvents]").change(function () {
         qs.search();
     });
 
