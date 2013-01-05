@@ -25,7 +25,7 @@
                 RegisterDate: new Date().toJSON(),
                 Note: "",
                 NoteType: 0,
-                Attachment: null
+                EventType: ""
             }
         }
     });
@@ -273,13 +273,14 @@
                 item:
                 {
                     controlLink: "Compound",
-                    template: _.template('<span data-bind="date"></span> (<span data-bind="NoteType"></span>) | <span data-bind="attachment"></span> <div data-bind="text"></div> '),
+                    template: _.template('<span data-bind="date"></span> (Tipo: <span data-bind="EventType" data-cj-suggest="ApplicantEventType"></span>) | <span data-bind="attachment"></span> <div data-bind="text"></div> '),
                     items:
                     [
                         { controlLink: "Date", name: "date", field: "RealDate" },
                         { controlLink: "CjApplicantAttachment", name: "attachment", field: "Attachment" },
                         { controlLink: "Markdown", name: "text", field: "Note" },
-                        { controlLink: "Options", name: "NoteType", field: "NoteType", options: [{ value: 0, text: "Nota Genérica" }, { value: 1, text: "Nota de entrevista" }, { value: 2, text: "Nota de entrevista técnica"}] }
+                        { controlLink: "Options", name: "NoteType", field: "NoteType", options: [{ value: 0, text: "Nota Genérica" }, { value: 1, text: "Nota de entrevista" }, { value: 2, text: "Nota de entrevista técnica" }] },
+                        { controlLink: "Text", name: "EventType", field: "EventType" }
                     ]
                 }
             },

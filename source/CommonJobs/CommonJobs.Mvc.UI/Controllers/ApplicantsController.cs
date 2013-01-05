@@ -11,6 +11,7 @@ using CommonJobs.Application.AttachmentStorage;
 using CommonJobs.Application.ApplicantSearching;
 using CommonJobs.Mvc.UI.Infrastructure;
 using Newtonsoft.Json.Linq;
+using CommonJobs.Application.ApplicantFlow;
 
 namespace CommonJobs.Mvc.UI.Controllers
 {
@@ -21,6 +22,7 @@ namespace CommonJobs.Mvc.UI.Controllers
         // GET: /Applicants/
         public ViewResult Index(ApplicantSearchParameters searchParameters)
         {
+            ViewBag.EventTypes = Query(new GetEventTypesQuery());
             return View(searchParameters);
         }
 
@@ -80,11 +82,10 @@ namespace CommonJobs.Mvc.UI.Controllers
                     .Select(x => ExecuteCommand(new SaveAttachment(applicant, x.Key, x.Value)))
                     .ToArray();
 
-                var notes = attachments.Select(x => new ApplicantNote() 
+                var notes = attachments.Select(x => new NoteWithAttachment() 
                     {
                         Attachment = x,
                         Note = "QuickAttachment!",
-                        NoteType = ApplicantNoteType.GeneralNote,
                         RealDate = DateTime.Now,
                         RegisterDate = DateTime.Now
                     });

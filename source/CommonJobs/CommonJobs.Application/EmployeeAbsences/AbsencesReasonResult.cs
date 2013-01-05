@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using CommonJobs.Domain;
+using CommonJobs.Utilities;
 
 namespace CommonJobs.Application.EmployeeAbsences
 {
     public class AbsencesReasonResult
     {
-        public string Slug { get; set; }
+        public string Slug { get { return Text.GenerateSlug(); } }
         public string Text { get; set; }
         public string Color { get; set; }
         public bool Predefined { get; set; }

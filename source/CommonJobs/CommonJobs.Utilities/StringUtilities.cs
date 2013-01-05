@@ -22,6 +22,9 @@ namespace CommonJobs.Utilities
         //http://predicatet.blogspot.com.ar/2009/04/improved-c-slug-generator-or-how-to.html
         public static string GenerateSlug(this string phrase, int maxLength = 45)
         {
+            if (phrase == null)
+                return null;
+
             string str = phrase.RemoveAccent().ToLower();
 
             str = Regex.Replace(str, @"[^a-z0-9\s-]", ""); // invalid chars           

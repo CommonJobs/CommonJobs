@@ -1,6 +1,16 @@
 ﻿/// <reference path="../DragAndDrop/DragAndDrop.js" />
 $(function () {
 
+    $("#event_filters").on('click', '.event-filter input[type=checkbox]', function (e) {
+        var $chk = $(e.target)
+        var $btn = $chk.closest('.btn')
+        if ($chk.prop("checked")) {
+            $btn.addClass('active')
+        } else {
+            $btn.removeClass('active')
+        }
+    })
+
     var previousInit = UploadModal.prototype._init;
     UploadModal.prototype._init = function ($modal) {
         _.bind(previousInit, this)($modal);
@@ -28,12 +38,16 @@ $(function () {
         fillOtherSearchParameters: function (searchParameters) {
             if ($("#HighlightedCheck").prop("checked"))
                 searchParameters.Highlighted = true;
-            if ($("#HaveInterviewCheck").prop("checked"))
-                searchParameters.HaveInterview = true;
-            if ($("#HaveTechnicalInterviewCheck").prop("checked"))
-                searchParameters.HaveTechnicalInterview = true;
             if ($("#SearchInAttachmentsCheck").prop("checked"))
                 searchParameters.SearchInAttachments = true;
+
+            var withEvents = []
+            $(".event-filter input[name=WithEvents]:checked").each(function () {
+                withEvents.push(this.value);
+            });
+            if (withEvents.length) {
+                searchParameters.WithEvents = withEvents;
+            }
         },
         prepareNewCard: function ($card) {
             dragAndDrop.prepareFileDropzone($card, {
@@ -120,7 +134,7 @@ $(function () {
 
     });
 
-    $("#HighlightedCheck, #HaveInterviewCheck, #HaveTechnicalInterviewCheck, #SearchInAttachmentsCheck").change(function () {
+    $("#HighlightedCheck, #SearchInAttachmentsCheck, .event-filter input[name=WithEvents]").change(function () {
         qs.search();
     });
 

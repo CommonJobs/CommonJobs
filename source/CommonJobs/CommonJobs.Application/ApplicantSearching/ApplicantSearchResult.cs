@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CommonJobs.Domain;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -13,7 +14,7 @@ namespace CommonJobs.Application.ApplicantSearching
         public string[] Companies { get; set; }
         public string Skills { get; set; }
         public bool IsHighlighted { get; set; }
-        public bool HaveInterview { get; set; }
-        public bool HaveTechnicalInterview { get; set; }
+
+        public NoteWithAttachment[] Interviews { get; set; }
     }
 }
