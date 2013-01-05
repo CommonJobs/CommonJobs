@@ -24,7 +24,7 @@ namespace CommonJobs.Domain
             Color = color;
         }
 
-        public bool Match(string value)
+        public bool IsMatch(string value)
         {
             return Match(Text, value);
         }

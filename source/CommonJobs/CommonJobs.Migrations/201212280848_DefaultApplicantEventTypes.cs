@@ -26,7 +26,7 @@ namespace CommonJobs.Migrations
 
 
         private ApplicantEventType[] newOnes = new[] {
-            new ApplicantEventType(ApplicantEventType.DefaultRHInterview, ColorDarkGray) { Id = "ApplicantEventTypes/entrevista-rrhh" },
+            new ApplicantEventType(ApplicantEventType.DefaultHRInterview, ColorDarkGray) { Id = "ApplicantEventTypes/entrevista-rrhh" },
             new ApplicantEventType(ApplicantEventType.DefaultTechnicalInterview,  ColorYellow) { Id = "ApplicantEventTypes/entrevista-tecnica" }, 
             new ApplicantEventType(ApplicantEventType.DefaultEnglishInterview,  ColorBlue) { Id = "ApplicantEventTypes/entrevista-ingles" },
             new ApplicantEventType(ApplicantEventType.DefaultPMInterview,  ColorOrange) { Id = "ApplicantEventTypes/entrevista-pm" },
