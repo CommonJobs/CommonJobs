@@ -14,18 +14,10 @@
     {
         if (eventType.Color != null)
         {
-        //TODO: complete style definition and also add in .less file event-tag style for non-redefined styles
-        //TODO: Also add the elements in the applicants cards and a popover with related note. what happen when there are more notes?
-        @string.Format(@"
-.event-tag.{0}
-{{ 
-    background-color: {1}; 
-}}
-.event-filter.{0}
-{{ 
-    background-color: {1}; 
-}}
-", eventType.Slug, eventType.Color)
+            @Html.Raw(string.Format(@"
+.event-tag.{0} {{ background-color: {1}; }}
+#event_filters > .event-filter.{0} .reference {{ background-color: {1}; }}
+", eventType.Slug, eventType.Color))
         }
     }
 </style>
@@ -86,11 +78,14 @@
                 <label class="checkbox"><input type="checkbox" id="HaveTechnicalInterviewCheck" name="HaveTechnicalInterview" @(Model.HaveTechnicalInterview ? "checked='checked'" : string.Empty)/>Con entrevistas técnicas</label>
                 <label class="checkbox"><input type="checkbox" id="SearchInAttachmentsCheck" name="SearchInAttachments" @(Model.SearchInAttachments ? "checked='checked'" : string.Empty)/>Buscar en adjuntos</label>
             </div>
-            <div class="control-group">
+            <div class="btn-group" id="event_filters">
                 @foreach (CommonJobs.Domain.EventType eventType in ViewBag.EventTypes)
                 {
-                <label class="checkbox event-filter @eventType.Slug">
+                <label class="event-filter @eventType.Slug btn @(Model.WithEvents != null && Model.WithEvents.Contains(eventType.Slug) ? "active" : string.Empty)" >
                     <input type="checkbox" id="WithEvents-@eventType.Slug" name="WithEvents" value="@eventType.Slug" @(Model.WithEvents != null && Model.WithEvents.Contains(eventType.Slug) ? "checked='checked'" : string.Empty)/>
+                    @if (eventType.Color != null) {
+                        <span class="reference"></span>
+                    }
                     @eventType.Text
                 </label>
                 }

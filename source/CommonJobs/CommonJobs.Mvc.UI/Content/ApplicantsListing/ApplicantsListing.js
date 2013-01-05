@@ -1,6 +1,16 @@
 ﻿/// <reference path="../DragAndDrop/DragAndDrop.js" />
 $(function () {
 
+    $("#event_filters").on('click', '.event-filter input[type=checkbox]', function (e) {
+        var $chk = $(e.target)
+        var $btn = $chk.closest('.btn')
+        if ($chk.is(':checked')) {
+            $btn.addClass('active')
+        } else {
+            $btn.removeClass('active')
+        }
+    })
+
     var previousInit = UploadModal.prototype._init;
     UploadModal.prototype._init = function ($modal) {
         _.bind(previousInit, this)($modal);
