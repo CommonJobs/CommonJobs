@@ -41,18 +41,6 @@ namespace CommonJobs.Domain
             });
         }
 
-        [Obsolete]
-        public bool HaveInterview
-        {
-            get { return Notes != null && Notes.Any(x => ApplicantEventType.Match(x.EventType, ApplicantEventType.DefaultRHInterview)); }
-        }
-
-        [Obsolete]
-        public bool HaveTechnicalInterview
-        {
-            get { return Notes != null && Notes.Any(x => ApplicantEventType.Match(x.EventType, ApplicantEventType.DefaultTechnicalInterview)); }
-        }
-        
         public override IEnumerable<SlotWithAttachment> AllAttachmentReferences
         {
             get { return base.AllAttachmentReferences.Union(SlotWithAttachment.GenerateFromNotes(Notes)); }

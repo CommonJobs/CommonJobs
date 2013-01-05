@@ -32,11 +32,6 @@ namespace CommonJobs.Application.ApplicantSearching
             public string FullName2 { get; set; }
             public bool IsHighlighted { get; set; }
 
-            [Obsolete]
-            public bool HasInterview { get; set; }
-            [Obsolete]
-            public bool HasTechnicalInterview { get; set; }
-
             public string[] AttachmentIds { get; set; }
             public string[] AttachmentNames { get; set; }
             public string[] AttachmentContent { get; set; }
@@ -63,8 +58,6 @@ namespace CommonJobs.Application.ApplicantSearching
                     FullName1 = string.Format("{0}, {1}", applicant.LastName, applicant.FirstName),
                     FullName2 = string.Format("{0} {1}", applicant.FirstName, applicant.LastName),
                     IsHighlighted = applicant.IsHighlighted,
-                    HasInterview = applicant.HaveInterview,
-                    HasTechnicalInterview = applicant.HaveTechnicalInterview,
                     AttachmentIds = applicant.AllAttachmentReferences.Select(x => x.Attachment.Id).ToArray(),
                     AttachmentNames = applicant.AllAttachmentReferences.Select(x => x.Attachment.FileName).ToArray(),
                     AttachmentContent = new string[0],
@@ -87,8 +80,6 @@ namespace CommonJobs.Application.ApplicantSearching
                     FullName1 = (string)null,
                     FullName2 = (string)null,
                     IsHighlighted = false,
-                    HasInterview = false,
-                    HasTechnicalInterview = false,
                     AttachmentIds = new string[0],
                     AttachmentNames = new string[0],
                     AttachmentContent = new string[0],
@@ -112,8 +103,6 @@ namespace CommonJobs.Application.ApplicantSearching
                     FullName1 = g.Where(x => x.FullName1 != null).Select(x => x.FullName1).FirstOrDefault(),
                     FullName2 = g.Where(x => x.FullName2 != null).Select(x => x.FullName2).FirstOrDefault(),
                     IsHighlighted = g.Any(x => x.IsHighlighted),
-                    HasInterview = g.Any(x => x.HasInterview),
-                    HasTechnicalInterview = g.Any(x => x.HasTechnicalInterview),
                     
                     AttachmentIds = g.SelectMany(x => x.AttachmentIds).Distinct().ToArray(),
                     AttachmentNames = g.SelectMany(x => x.AttachmentNames).Distinct().ToArray(),

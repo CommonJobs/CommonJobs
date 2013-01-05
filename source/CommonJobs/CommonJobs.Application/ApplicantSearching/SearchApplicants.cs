@@ -45,12 +45,6 @@ namespace CommonJobs.Application.ApplicantSearching
 
             query = query.Where(predicate);
 
-            if (Parameters.HaveInterview)
-                query = query.Where(x => x.HasInterview);
-
-            if (Parameters.HaveTechnicalInterview)
-                query = query.Where(x => x.HasTechnicalInterview);
-
             foreach (var slug in Parameters.WithEvents.EmptyIfNull())
                 query = query.Where(x => x.EventSlugs == slug);
 

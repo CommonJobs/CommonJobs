@@ -15,12 +15,6 @@ namespace CommonJobs.Application.ApplicantSearching
         public string Skills { get; set; }
         public bool IsHighlighted { get; set; }
 
-        [Obsolete]
-        public bool HaveInterview { get; set; }
-
-        [Obsolete]
-        public bool HaveTechnicalInterview { get; set; }
-
         public NoteWithAttachment[] Interviews { get; set; }
     }
 }

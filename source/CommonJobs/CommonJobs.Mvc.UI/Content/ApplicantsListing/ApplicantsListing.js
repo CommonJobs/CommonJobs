@@ -4,7 +4,7 @@ $(function () {
     $("#event_filters").on('click', '.event-filter input[type=checkbox]', function (e) {
         var $chk = $(e.target)
         var $btn = $chk.closest('.btn')
-        if ($chk.is(':checked')) {
+        if ($chk.prop("checked")) {
             $btn.addClass('active')
         } else {
             $btn.removeClass('active')
@@ -38,10 +38,6 @@ $(function () {
         fillOtherSearchParameters: function (searchParameters) {
             if ($("#HighlightedCheck").prop("checked"))
                 searchParameters.Highlighted = true;
-            if ($("#HaveInterviewCheck").prop("checked"))
-                searchParameters.HaveInterview = true;
-            if ($("#HaveTechnicalInterviewCheck").prop("checked"))
-                searchParameters.HaveTechnicalInterview = true;
             if ($("#SearchInAttachmentsCheck").prop("checked"))
                 searchParameters.SearchInAttachments = true;
 
@@ -138,7 +134,7 @@ $(function () {
 
     });
 
-    $("#HighlightedCheck, #HaveInterviewCheck, #HaveTechnicalInterviewCheck, #SearchInAttachmentsCheck, .event-filter input[name=WithEvents]").change(function () {
+    $("#HighlightedCheck, #SearchInAttachmentsCheck, .event-filter input[name=WithEvents]").change(function () {
         qs.search();
     });
 
