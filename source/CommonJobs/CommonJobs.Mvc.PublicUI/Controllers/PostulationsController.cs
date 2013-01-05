@@ -47,7 +47,7 @@ namespace CommonJobs.Mvc.PublicUI.Controllers
             };
             RavenSession.Store(applicant);
 
-            applicant.Notes = new List<ApplicantNote>();
+            applicant.Notes = new List<NoteWithAttachment>();
 
             if (postulation.Curriculum != null)
             {

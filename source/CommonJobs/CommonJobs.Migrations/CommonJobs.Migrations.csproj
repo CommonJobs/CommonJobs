@@ -81,6 +81,8 @@
     <Compile Include="201210181021_DefaultAbsenceReasons.cs" />
     <Compile Include="201212010811_CreateDefaultMenus.cs" />
     <Compile Include="201212031157_ConfigureMyMenuVersioning.cs" />
+    <Compile Include="201212280848_DefaultApplicantEventTypes.cs" />
+    <Compile Include="201212280918_MoveApplicantNoteTypeToEventType.cs" />
     <Compile Include="MoveAttachmentToSlotBaseMigration.cs" />
     <Compile Include="MigrationClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -93,6 +95,10 @@
     <ProjectReference Include="..\CommonJobs.Infrastructure.Migrations\CommonJobs.Infrastructure.Migrations.csproj">
       <Project>{B6D54592-07C8-4B5E-A607-DD7FE49A43B6}</Project>
       <Name>CommonJobs.Infrastructure.Migrations</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CommonJobs.Utilities\CommonJobs.Utilities.csproj">
+      <Project>{fabfcafa-f6f2-47c2-b393-66e97203f107}</Project>
+      <Name>CommonJobs.Utilities</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

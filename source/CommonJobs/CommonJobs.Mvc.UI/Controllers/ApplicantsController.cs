@@ -80,11 +80,10 @@ namespace CommonJobs.Mvc.UI.Controllers
                     .Select(x => ExecuteCommand(new SaveAttachment(applicant, x.Key, x.Value)))
                     .ToArray();
 
-                var notes = attachments.Select(x => new ApplicantNote() 
+                var notes = attachments.Select(x => new NoteWithAttachment() 
                     {
                         Attachment = x,
                         Note = "QuickAttachment!",
-                        NoteType = ApplicantNoteType.GeneralNote,
                         RealDate = DateTime.Now,
                         RegisterDate = DateTime.Now
                     });
