@@ -22,7 +22,7 @@ namespace CommonJobs.Migrations
 
         readonly Dictionary<string, string> noteTypeToEventTypeMap = new Dictionary<string, string>()
         {
-            { "InteviewNote", ApplicantEventType.DefaultRHInterview },
+            { "InteviewNote", ApplicantEventType.DefaultHRInterview },
             { "TechnicalInterviewNote", ApplicantEventType.DefaultTechnicalInterview }
         };
 
