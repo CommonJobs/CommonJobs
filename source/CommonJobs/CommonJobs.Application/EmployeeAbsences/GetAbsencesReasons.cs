@@ -8,6 +8,7 @@ using CommonJobs.Application.Persons;
 using CommonJobs.Infrastructure.RavenDb;
 using Raven.Client.Linq;
 using System.Text.RegularExpressions;
+using CommonJobs.Utilities;
 
 namespace CommonJobs.Application.EmployeeAbsences
 {
@@ -23,7 +24,6 @@ namespace CommonJobs.Application.EmployeeAbsences
                 .AsEnumerable()
                 .Select(x => new AbsencesReasonResult()
                 {
-                    Slug = GenerateSlug(x.Text),
                     Text = x.Text,
                     Color = x.Color, //TODO: set a random color?
                     Predefined = x.Predefined
@@ -32,15 +32,6 @@ namespace CommonJobs.Application.EmployeeAbsences
                 .ToArray();
 
             return results;
-        }
-
-        static Regex notAllowed = new Regex("[^a-z0-9]+");
-        static Regex trim = new Regex("^-|-$");
-
-        //TODO: refactor
-        private string GenerateSlug(string text)
-        {
-            return trim.Replace(notAllowed.Replace(text.ToLower(), "-"), "");
         }
     }
 }
