@@ -53,7 +53,7 @@ namespace CommonJobs.Application.EmployeeAbsences
         public AbsenceResult(Absence absence)
         {
             Reason = absence.Reason;
-            ReasonSlug = absence.Reason.GenerateSlug();
+            ReasonSlug = absence.ReasonSlug;
             AbsenceType = absence.AbsenceType.ToString();
             HasCertificate = absence.HasCertificate;
             From = absence.RealDate;

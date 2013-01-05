@@ -8,7 +8,7 @@ namespace CommonJobs.Domain
 {
     public class ApplicantEventType : EventType
     {
-        public const string DefaultRHInterview = "Entrevista RRHH";
+        public const string DefaultHRInterview = "Entrevista RRHH";
         public const string DefaultTechnicalInterview = "Entrevista Técnica";
         public const string DefaultEnglishInterview = "Entrevista Inglés";
         public const string DefaultPMInterview = "Entrevista PM";

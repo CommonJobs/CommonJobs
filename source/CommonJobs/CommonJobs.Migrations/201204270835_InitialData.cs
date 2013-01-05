@@ -64,7 +64,7 @@ namespace CommonJobs.Migrations
                             Note = "Parece muy buena opción, su experiencia previa es increíble.",
                             RealDate = DateTime.Parse("2012-02-15"), 
                             RegisterDate = DateTime.Parse("2012-02-15"),
-                            EventType = ApplicantEventType.DefaultRHInterview
+                            EventType = ApplicantEventType.DefaultHRInterview
                         },
                         new NoteWithAttachment() {
                             Note = "Demostró tener amplios conocimientos de project management.",

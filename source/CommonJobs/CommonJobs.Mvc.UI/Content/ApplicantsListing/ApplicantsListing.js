@@ -27,6 +27,60 @@ $(function () {
 
     var dragAndDrop = new DragAndDrop();
 
+    var md = new MarkdownDeep.Markdown();
+    md.ExtraMode = true;
+
+    var markFlowEvents = function ($card, employee) {
+        if (!employee.Interviews || !employee.Interviews.length)
+            return;
+
+        var notesByEvent = _.groupBy(employee.Interviews, "EventTypeSlug");
+        $el = $('<span class="flow-marks-element"></span>');
+        _.each(notesByEvent, function (notes, slug) {
+            var $event = $('<span title="' + notes[0].EventType + '" class="event-tag ' + slug + '">&nbsp;</span>');
+            var notesHtml = ["<ul>"];
+            _.each(notes, function (note) {
+                notesHtml.push("<li><dl class='dl-horizontal'>");
+
+                if (note.RealDate) {
+                    notesHtml.push('<dt>Fecha:</dt><dd>');
+                    notesHtml.push(moment(note.RealDate).format("D MMMM YYYY"));
+                    notesHtml.push('</dd>');
+                }
+                if (note.Note) {
+                    notesHtml.push('<dt>Nota:</dt><dd>');
+                    notesHtml.push("<span class='markdown-content'>" + md.Transform(note.Note) + "</span>");
+                    notesHtml.push('</dd>');
+                }
+                if (note.Attachment) {
+                    notesHtml.push('<dt>Adjunto:</dt><dd>');
+                    notesHtml.push("<a href='" + urlGenerator.action("Get", "Attachments", note.Attachment.Id) + "'>" + note.Attachment.FileName + "</a>");
+                    notesHtml.push('</dd>');
+                }
+                notesHtml.push("</dl></li>");
+            });
+            notesHtml.push("</ul>");
+            $event.attr("data-content", notesHtml.join(""));
+            $el.append($event); 
+        });
+
+        var $el = $('<span class="bootstrap-scope"></span>').append($el);
+        $card.prepend($el);
+        $el.find(".flow-marks-element span").popover({
+            trigger: 'manual',
+            animate: false,
+            html: true,
+            placement: "bottom",
+            template: '<div class="popover" onmouseover="$(this).mouseleave(function() {$(this).hide(); });"><div class="arrow"></div><div class="popover-inner"><button type="button" class="close" onclick="$(this).parent().parent().hide();">&times;</button><h3 class="popover-title"></h3><div class="popover-content"><p></p></div></div></div>'
+        }).mouseenter(function (e) {
+            $(this).popover('show');
+            $(this).mouseleave(function (e) {
+                if (!$(e.relatedTarget).parent(".popover").length)
+                    $(this).popover('hide');
+            })
+        });
+    };
+
     var qs = new QuickSearchPage({
         //pageSize: 3,
         generateRedirectUrl: function (searchParameters) {
@@ -107,6 +161,7 @@ $(function () {
             });
         },
         prepareResultCard: function ($card, item) {
+            markFlowEvents($card, item);
             dragAndDrop.prepareFileDropzone($card, {
                 done: function (e, data, $el) {
                     new UploadModal($('#generic-modal'))
