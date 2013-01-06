@@ -86,6 +86,7 @@
                 this.$el.addClass("edition-force-readonly");
                 this.editionReadOnly();
             }
+            this.reloadSuggestedApplicants();
         },
         events: {
             "click .saveJobSearch": "saveJobSearch",
@@ -120,6 +121,41 @@
                 success: function(result) {
                     me.editionNormal();
                     me.setModel(new App.JobSearch(result));
+                }
+            });
+            this.reloadSuggestedApplicants();
+        },
+        reloadSuggestedApplicants: function () {
+            var me = this;
+            $.ajax({
+                url: urlGenerator.action("GetSuggestedApplicants", "JobSearches"),
+                type: "GET",
+                dataType: "json",
+                data: { id: ViewData.jobSearch.Id },
+                contentType: "application/json; charset=utf-8",
+                success: function (suggestedApplicants) {
+                    var suggestedApplicantsTemplate = $("#suggested-applicants-tmpl").html();
+                    var templateData = {
+                        applicants: suggestedApplicants,
+                        requiredSkills: _.sortBy(
+                            _.map(me.model.get('RequiredTechnicalSkills').toJSON(), function (rts) {
+                                return rts.Name;
+                            }),
+                            function (name) { return name; }
+                        ),
+                        applicantSkills: _.sortBy(
+                            _.flatten(
+                                _.map(suggestedApplicants, function (app) {
+                                    return _.map(app.TechnicalSkills, function (ts) {
+                                        return ts.Name;
+                                    });
+                                })
+                            ),
+                            function (name) { return name; }
+                        )
+                    };
+                    var renderedSuggestedApplicants = _.template(suggestedApplicantsTemplate, templateData);
+                    me.$('.suggestedApplicants').html(renderedSuggestedApplicants);
                 }
             });
         },

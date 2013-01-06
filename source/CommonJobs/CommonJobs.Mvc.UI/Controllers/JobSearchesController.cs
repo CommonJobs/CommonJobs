@@ -76,12 +76,18 @@ namespace CommonJobs.Mvc.UI.Controllers
                 {
                     jobSearch = jobSearch,
                     publicSiteUrl = GetJobSearchPublicUrl(jobSearch, false),
-                    technicalSkillLevels = Enum.GetNames(typeof(TechnicalSkillLevel)),
-                    suggestedApplicants = Query(new GetJobSearchSuggestedApplicants(jobSearch))
+                    technicalSkillLevels = Enum.GetNames(typeof(TechnicalSkillLevel))
                 },
                 500);
             
             return View();
+        }
+
+        public JsonNetResult GetSuggestedApplicants(string id)
+        {
+            var jobSearch = RavenSession.Load<JobSearch>(id);
+            var suggestedApplicants = Query(new GetJobSearchSuggestedApplicants(jobSearch));
+            return Json(suggestedApplicants);
         }
 
         public JsonNetResult Get(string id)

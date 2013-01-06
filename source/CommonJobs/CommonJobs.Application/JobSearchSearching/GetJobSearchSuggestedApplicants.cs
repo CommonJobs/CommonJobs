@@ -19,6 +19,7 @@ namespace CommonJobs.Application.JobSearchSearching
             public string LastName { get; set; }
             public string Id { get; set; }
             public List<TechnicalSkill> TechnicalSkills { get; set; }
+            public int Total { get; set; }
         }
 
         public GetJobSearchSuggestedApplicants(JobSearch search)
