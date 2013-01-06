@@ -53,14 +53,33 @@
     <div class="editable-field" data-bind="PrivateNotes"></div>
 
     <h2>Postulantes sugeridos</h2>
-    <div class="suggestedApplicants"></div>
+    <div class="suggestedApplicants bootstrap-scope"></div>
 </div>
 
 <script id="suggested-applicants-tmpl" type="text/template">
-    <table class="table table-condensed">
+    <table class="table table-condensed table-hover">
         <theader>
             <tr>
+                <th>Postulante</th>
+                <% _.each(applicantSkills, function(skill) { %>
+                    <th class="<%= skill.IsRequired ? "required" : "" %>"><%= skill.Name %></th>
+                <% }); %>
             </tr>
         </theader>
+        <tbody>
+            <% _.each(applicants, function(applicant) { %>
+                <tr>
+                    <th><%= applicant.LastName %>, <%= applicant.FirstName %></th>
+                    <%
+                        _.each(applicantSkills, function(skill) {
+                            var currentSkill = _.find(applicant.TechnicalSkills, function (ats) {
+                                return ats.Name == skill.Name;
+                            });
+                    %>
+                        <td class="applicant-skill-level-<%= !!currentSkill ? currentSkill.Level : "" %>">&nbsp;</td>
+                    <% }); %>
+                </tr>
+            <% }); %>
+        </tbody>
     </table>
 </script>

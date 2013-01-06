@@ -135,24 +135,32 @@
                 contentType: "application/json; charset=utf-8",
                 success: function (suggestedApplicants) {
                     var suggestedApplicantsTemplate = $("#suggested-applicants-tmpl").html();
+                    var requiredSkills = _.map(me.model.get('RequiredTechnicalSkills').toJSON(), function (rts) {
+                        return rts.Name;
+                    });
                     var templateData = {
                         applicants: suggestedApplicants,
-                        requiredSkills: _.sortBy(
-                            _.map(me.model.get('RequiredTechnicalSkills').toJSON(), function (rts) {
-                                return rts.Name;
-                            }),
-                            function (name) { return name; }
-                        ),
-                        applicantSkills: _.sortBy(
-                            _.flatten(
-                                _.map(suggestedApplicants, function (app) {
-                                    return _.map(app.TechnicalSkills, function (ts) {
-                                        return ts.Name;
-                                    });
-                                })
-                            ),
-                            function (name) { return name; }
-                        )
+                        //TODO this is a mess -- fix for something more straightforward
+                        applicantSkills:
+                            _.sortBy(
+                                _.uniq(
+                                    _.flatten(
+                                        _.map(suggestedApplicants, function (app) {
+                                            return _.map(app.TechnicalSkills, function (ts) {
+                                                return {
+                                                    Name: ts.Name,
+                                                    IsRequired: _.contains(requiredSkills, ts.Name)
+                                                };
+                                            });
+                                        })
+                                    ),
+                                    false, // list is partially sorted, so sorted = false
+                                    function (item) {
+                                        return item.Name;
+                                    }
+                                ),
+                                function (name) { return name; }
+                            )
                     };
                     var renderedSuggestedApplicants = _.template(suggestedApplicantsTemplate, templateData);
                     me.$('.suggestedApplicants').html(renderedSuggestedApplicants);

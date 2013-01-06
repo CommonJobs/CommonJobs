@@ -43,6 +43,7 @@ namespace CommonJobs.Application.JobSearchSearching
                 .Statistics(out stats)
                 .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite());
 
+            //TODO fix -- totals are always 0 in the projections
             var result = query.AsProjection<Projection>().ToArray();
             Stats = stats;
             return result;
