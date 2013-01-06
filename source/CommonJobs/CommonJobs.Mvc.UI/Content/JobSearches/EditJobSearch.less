@@ -39,11 +39,21 @@ h1 {
 }
 
 .suggestedApplicants .table.table-hover {
-	.applicant-skill-level-0 { background-color: white; }
-	.applicant-skill-level-1 { background-color: red; }
-	.applicant-skill-level-2 { background-color: yellow; }
-	.applicant-skill-level-3 { background-color: green; }
+	.applicant-skill-level-0 { background-color: transparent; }
+	.applicant-skill-level-1 { background-color: darken(#f2dede, 10%); } //@errorBackground
+	.applicant-skill-level-2 { background-color: darken(#fcf8e3, 10%); } //@warningBackground
+	.applicant-skill-level-3 { background-color: darken(#dff0d8, 10%); } //@successBackground
 
 	th { font-weight: normal; }
 	th.required { font-weight: bold; }
+	th.skill-header {
+		text-align: center;
+		/*TODO fix -- right now messes up the layout
+		-moz-transform: rotate(-60deg) translateY(-60px);
+		-webkit-transform: rotate(-60deg) translateY(-60px);
+        -o-transform: rotate(-60deg) translateY(-60px);
+        -ms-transform: rotate(-60deg) translateY(-60px);
+        transform: rotate(-60deg) translateY(-60px);
+		*/
+	}
 }

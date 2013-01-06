@@ -62,7 +62,7 @@
             <tr>
                 <th>Postulante</th>
                 <% _.each(applicantSkills, function(skill) { %>
-                    <th class="<%= skill.IsRequired ? "required" : "" %>"><%= skill.Name %></th>
+                    <th class="skill-header <%= skill.IsRequired ? "required" : "" %>"><%= skill.Name %></th>
                 <% }); %>
             </tr>
         </theader>

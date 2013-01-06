@@ -104,9 +104,10 @@
                 dataType: "json",
                 data: JSON.stringify(App.appView.model.toJSON()),
                 contentType: "application/json; charset=utf-8",
-                success: function(result) {
+                success: function (result) {
                     me.editionNormal();
                     me.setModel(new App.JobSearch(result));
+                    me.reloadSuggestedApplicants();
                 }
             });
         },
@@ -121,9 +122,9 @@
                 success: function(result) {
                     me.editionNormal();
                     me.setModel(new App.JobSearch(result));
+                    me.reloadSuggestedApplicants();
                 }
             });
-            this.reloadSuggestedApplicants();
         },
         reloadSuggestedApplicants: function () {
             var me = this;
