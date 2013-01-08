@@ -4,6 +4,20 @@
 
 *Los números son los Story Points asignados a cada Tarea/User Story.*
 
+* (13) Ver de una forma gráfica, por año y para todo el staff un detalle de las ausencias
+* (5) Mostrar vacaciones en gráfico de ausencias
+* (13) Definir skills necesarios para una búsqueda
+* (8) Postulantes sugeridos, según skills, para una búsqueda
+* (1) Mostrar fecha de última actualización en información de postulante
+* (2) Estilos de búsquedas
+* (2) Estilo de barra de menú
+* (5) Estilos de edición de empleado y postulante (barra lateral).
+* (8) Hacer tipo de entrevistas un dato dinámico.
+* (13) Mostrar estado de postulante en flujo de postulantes.
+* (8) Permitir incorporar grados de skills a postulantes y empleados - no técnicos.
+* (5) Tener en cuenta skills no técnicos para postulantes sugeridos para una búsqueda.
+* (5) Adaptar búsqueda a tags de entrevistas.
+* (0) Agregar matrícula a los datos del empleado / postulante.
 * (8) Asociar postulantes a búsqueda.
 * (5) Convertir postulante en empleado.
 * (1) Estilos de resultados de postulantes.
@@ -27,9 +41,6 @@
 
 *Consideramos que las tareas que se indican a continuación no forman parte del criterio de fin de proyecto*
 
-* (5) Tener en cuenta skills no técnicos para postulantes sugeridos para una búsqueda.
-* (8) Permitir incorporar grados de skills a postulantes y empleados - no técnicos.
-* (5) Definir skills deseados para una búsqueda.
 * (?) Skills validados / no validados.
 * (20) Postulantes en consideración para una búsqueda.
 * (8) Cambiar orden de postulantes en consideración.
