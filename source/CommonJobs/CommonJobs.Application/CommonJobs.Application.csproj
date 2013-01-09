@@ -98,6 +98,7 @@
     <Compile Include="JobSearchSearching\GetJobSearchSuggestedApplicants.cs" />
     <Compile Include="JobSearchSearching\JobSearchSearchParameters.cs" />
     <Compile Include="JobSearchSearching\SearchJobSearches.cs" />
+    <Compile Include="JobSearchSearching\SuggestedApplicantsResult.cs" />
     <Compile Include="MyMenu\Common.cs" />
     <Compile Include="MyMenu\GetEmployeeMenusCommand.cs" />
     <Compile Include="MyMenu\GetOrderCommand.cs" />
