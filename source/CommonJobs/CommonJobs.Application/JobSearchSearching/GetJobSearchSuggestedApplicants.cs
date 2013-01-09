@@ -8,8 +8,9 @@ using System.Text;
 
 namespace CommonJobs.Application.JobSearchSearching
 {
-    public class GetJobSearchSuggestedApplicants : Query<Applicant_BySkills.Projection[]>
+    public class GetJobSearchSuggestedApplicants : Query<SuggestedApplicantsResult[]>
     {
+
         public RavenQueryStatistics Stats { get; set; }
         public JobSearch JobSearch { get; set; }
 
@@ -18,7 +19,7 @@ namespace CommonJobs.Application.JobSearchSearching
             this.JobSearch = search;
         }
 
-        public override Applicant_BySkills.Projection[] Execute()
+        public override SuggestedApplicantsResult[] Execute()
         {
             RavenQueryStatistics stats;
 
@@ -34,7 +35,7 @@ namespace CommonJobs.Application.JobSearchSearching
                 .Statistics(out stats)
                 .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite());
 
-            var result = query.AsProjection<Applicant_BySkills.Projection>().ToArray();
+            var result = query.AsProjection<SuggestedApplicantsResult>().ToArray();
             Stats = stats;
             return result;
         }
