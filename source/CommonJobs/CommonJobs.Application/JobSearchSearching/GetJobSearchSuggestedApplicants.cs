@@ -8,26 +8,17 @@ using System.Text;
 
 namespace CommonJobs.Application.JobSearchSearching
 {
-    public class GetJobSearchSuggestedApplicants : Query<GetJobSearchSuggestedApplicants.Projection[]>
+    public class GetJobSearchSuggestedApplicants : Query<Applicant_BySkills.Projection[]>
     {
         public RavenQueryStatistics Stats { get; set; }
         public JobSearch JobSearch { get; set; }
-
-        public class Projection
-        {
-            public string FirstName { get; set; }
-            public string LastName { get; set; }
-            public string Id { get; set; }
-            public List<TechnicalSkill> TechnicalSkills { get; set; }
-            public int Total { get; set; }
-        }
 
         public GetJobSearchSuggestedApplicants(JobSearch search)
         {
             this.JobSearch = search;
         }
 
-        public override Projection[] Execute()
+        public override Applicant_BySkills.Projection[] Execute()
         {
             RavenQueryStatistics stats;
 
@@ -43,8 +34,7 @@ namespace CommonJobs.Application.JobSearchSearching
                 .Statistics(out stats)
                 .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite());
 
-            //TODO fix -- totals are always 0 in the projections
-            var result = query.AsProjection<Projection>().ToArray();
+            var result = query.AsProjection<Applicant_BySkills.Projection>().ToArray();
             Stats = stats;
             return result;
         }

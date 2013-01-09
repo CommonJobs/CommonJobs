@@ -15,6 +15,7 @@ namespace CommonJobs.Application.JobSearchSearching
             public string FirstName { get; set; }
             public string LastName { get; set; }
             public string Searcheables { get; set; }
+            public List<TechnicalSkill> TechnicalSkills { get; set; }
             public int Total { get; set; }
         }
 
@@ -27,8 +28,19 @@ namespace CommonJobs.Application.JobSearchSearching
                                     FirstName = applicant.FirstName,
                                     LastName = applicant.LastName,
                                     Searcheables = applicant.TechnicalSkills.Select(x => x.Searcheable).ToArray(),
+                                    TechnicalSkills = applicant.TechnicalSkills,
                                     Total = applicant.TechnicalSkills == null ? 0 : applicant.TechnicalSkills.Sum(ts => ts.Weight)
                                 };
+
+            //TODO fix reduce? Total still is returned as 0 everytime
+            Reduce = doc => doc.Select(d => new Projection() {
+                Id = d.Id,
+                FirstName = d.FirstName,
+                LastName = d.LastName,
+                Searcheables = d.Searcheables,
+                TechnicalSkills = d.TechnicalSkills,
+                Total = d.Total
+            });
         }
     }
 }
