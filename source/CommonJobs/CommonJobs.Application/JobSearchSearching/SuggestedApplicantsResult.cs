@@ -11,7 +11,7 @@ namespace CommonJobs.Application.JobSearchSearching
         public string Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public List<TechnicalSkill> TechnicalSkills { get; set; }
+        public TechnicalSkill[] TechnicalSkills { get; set; }
         public int Total { get; set; }
     }
 }
