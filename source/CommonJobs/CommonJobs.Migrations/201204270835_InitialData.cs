@@ -58,25 +58,24 @@ namespace CommonJobs.Migrations
                 College = "MIT",
                 IsGraduated = true,
                 IsHighlighted = true,
-                Notes = new List<ApplicantNote>()
+                Notes = new List<NoteWithAttachment>()
                     {
-                        new ApplicantNote() {
+                        new NoteWithAttachment() {
                             Note = "Parece muy buena opción, su experiencia previa es increíble.",
                             RealDate = DateTime.Parse("2012-02-15"), 
                             RegisterDate = DateTime.Parse("2012-02-15"),
-                            NoteType = ApplicantNoteType.InteviewNote
+                            EventType = ApplicantEventType.DefaultHRInterview
                         },
-                        new ApplicantNote() {
+                        new NoteWithAttachment() {
                             Note = "Demostró tener amplios conocimientos de project management.",
                             RealDate = DateTime.Parse("2012-02-16"),
                             RegisterDate = DateTime.Parse("2012-03-01"),
-                            NoteType = ApplicantNoteType.TechnicalInterviewNote
+                            EventType = ApplicantEventType.DefaultTechnicalInterview
                         },
-                        new ApplicantNote() {
+                        new NoteWithAttachment() {
                             Note = "Tiene pensado mudarse a Mar del Plata.",
                             RealDate = DateTime.Parse("2012-02-16"),
-                            RegisterDate = DateTime.Parse("2012-02-16"),
-                            NoteType = ApplicantNoteType.GeneralNote
+                            RegisterDate = DateTime.Parse("2012-02-16")
                         }
                     },
                 Skills = "C#, Python, Ruby, Perl, HTML, CSS, HTML5, JS, SEO"

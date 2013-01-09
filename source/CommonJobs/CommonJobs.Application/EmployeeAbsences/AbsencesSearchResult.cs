@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using CommonJobs.Domain;
 using System.Text.RegularExpressions;
+using CommonJobs.Utilities;
 
 namespace CommonJobs.Application.EmployeeAbsences
 {
@@ -38,9 +39,6 @@ namespace CommonJobs.Application.EmployeeAbsences
         public AttachmentReference Attachment { get; set; }
         public string Note { get; set; }
 
-        static Regex notAllowed = new Regex("[^a-z0-9]+");
-        static Regex trim = new Regex("^-|-$");
-
         public AbsenceResult(Vacation vacation)
         {
             Reason = "Vacaciones";
@@ -55,7 +53,7 @@ namespace CommonJobs.Application.EmployeeAbsences
         public AbsenceResult(Absence absence)
         {
             Reason = absence.Reason;
-            ReasonSlug = Reason == null ? null : trim.Replace(notAllowed.Replace(Reason.ToLower(), "-"), "");
+            ReasonSlug = absence.ReasonSlug;
             AbsenceType = absence.AbsenceType.ToString();
             HasCertificate = absence.HasCertificate;
             From = absence.RealDate;

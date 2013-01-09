@@ -6,8 +6,23 @@
     ScriptManager.RegisterCss(Url.Content("~/Content/reset.css"), priority: 500);
     ScriptManager.RegisterCss(Url.Content("~/Content/ApplicantsListing/ApplicantsListing.less"));
     ScriptManager.RegisterJs(Url.Content("~/Content/ListingCommon/QuickSearch.js"));
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/MarkdownDeepLib.min.js"));
     ScriptManager.RegisterJs(Url.Content("~/Content/ApplicantsListing/ApplicantsListing.js"));
 }
+
+<style>
+    @foreach (CommonJobs.Domain.EventType eventType in ViewBag.EventTypes)
+    {
+        if (eventType.Color != null)
+        {
+            @Html.Raw(string.Format(@"
+.event-tag.{0} {{ background-color: {1}; }}
+#event_filters > .event-filter.{0} .reference {{ background-color: {1}; }}
+", eventType.Slug, eventType.Color))
+        }
+    }
+</style>
+
 <script type="text/template" id="add-new-card-template">
     <div class="card column clickable add-new-card file-dropzone drop-fade">
         <img class="cardPicture" src="@Url.Content("~/Content/Images/AddApplicant.png")" alt="Agregar nuevo..."  />
@@ -60,9 +75,19 @@
             </div>
             <div class="control-group">
                 <label class="checkbox"><input type="checkbox" id="HighlightedCheck" name="Highlighted" @(Model.Highlighted ? "checked='checked'" : string.Empty)/>Resaltado</label>
-                <label class="checkbox"><input type="checkbox" id="HaveInterviewCheck" name="HaveInterview" @(Model.HaveInterview ? "checked='checked'" : string.Empty)/>Con entrevistas</label>
-                <label class="checkbox"><input type="checkbox" id="HaveTechnicalInterviewCheck" name="HaveTechnicalInterview" @(Model.HaveTechnicalInterview ? "checked='checked'" : string.Empty)/>Con entrevistas técnicas</label>
                 <label class="checkbox"><input type="checkbox" id="SearchInAttachmentsCheck" name="SearchInAttachments" @(Model.SearchInAttachments ? "checked='checked'" : string.Empty)/>Buscar en adjuntos</label>
+            </div>
+            <div class="btn-group" id="event_filters">
+                @foreach (CommonJobs.Domain.EventType eventType in ViewBag.EventTypes)
+                {
+                <label class="event-filter @eventType.Slug btn @(Model.WithEvents != null && Model.WithEvents.Contains(eventType.Slug) ? "active" : string.Empty)" >
+                    <input type="checkbox" id="WithEvents-@eventType.Slug" name="WithEvents" value="@eventType.Slug" @(Model.WithEvents != null && Model.WithEvents.Contains(eventType.Slug) ? "checked='checked'" : string.Empty)/>
+                    @if (eventType.Color != null) {
+                        <span class="reference"></span>
+                    }
+                    @eventType.Text
+                </label>
+                }
             </div>
         </form>
         <p id="resultCountNotice">Hay <span id="resultCount">0</span> resultado(s).</p>

@@ -66,6 +66,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicantFlow\ApplicantEventType_Suggestions.cs" />
+    <Compile Include="ApplicantFlow\GetEventTypesQuery.cs" />
+    <Compile Include="ApplicantFlow\GetEventTypeSuggestionsQuery.cs" />
     <Compile Include="ApplicantSearching\ApplicantSearchParameters.cs" />
     <Compile Include="ApplicantSearching\ApplicantSearchResult.cs" />
     <Compile Include="ApplicantSearching\SearchApplicants.cs" />
