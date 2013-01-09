@@ -44,16 +44,23 @@ h1 {
 	.applicant-skill-level-2 { background-color: darken(#fcf8e3, 10%); } //@warningBackground
 	.applicant-skill-level-3 { background-color: darken(#dff0d8, 10%); } //@successBackground
 
-	th { font-weight: normal; }
-	th.required { font-weight: bold; }
-	th.skill-header {
-		text-align: center;
-		/*TODO fix -- right now messes up the layout
-		-moz-transform: rotate(-60deg) translateY(-60px);
-		-webkit-transform: rotate(-60deg) translateY(-60px);
-        -o-transform: rotate(-60deg) translateY(-60px);
-        -ms-transform: rotate(-60deg) translateY(-60px);
-        transform: rotate(-60deg) translateY(-60px);
-		*/
+	th { 
+		font-weight: normal;
+		width: 150px;
 	}
+		th.required { 
+			font-weight: bold; 
+			width: 100px;
+		}
+
+		th.skill-header {
+			text-align: center;
+			/*TODO fix -- right now messes up the layout
+			-moz-transform: rotate(-60deg) translateY(-60px);
+			-webkit-transform: rotate(-60deg) translateY(-60px);
+			-o-transform: rotate(-60deg) translateY(-60px);
+			-ms-transform: rotate(-60deg) translateY(-60px);
+			transform: rotate(-60deg) translateY(-60px);
+			*/
+		}
 }
