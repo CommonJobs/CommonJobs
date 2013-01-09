@@ -83,6 +83,13 @@ namespace CommonJobs.Mvc.UI.Controllers
             return View();
         }
 
+        public JsonNetResult GetSuggestedApplicants(string id)
+        {
+            var jobSearch = RavenSession.Load<JobSearch>(id);
+            var suggestedApplicants = Query(new GetJobSearchSuggestedApplicants(jobSearch));
+            return Json(suggestedApplicants);
+        }
+
         public JsonNetResult Get(string id)
         {
             var jobSearch = RavenSession.Load<JobSearch>(id);
