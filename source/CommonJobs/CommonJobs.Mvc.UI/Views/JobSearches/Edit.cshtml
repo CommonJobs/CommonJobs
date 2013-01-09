@@ -60,7 +60,7 @@
     <table class="table table-condensed table-hover">
         <theader>
             <tr>
-                <th>Postulante</th>
+                <th class="name-title">Postulante</th>
                 <% _.each(applicantSkills, function(skill) { %>
                     <th class="skill-header <%= skill.IsRequired ? "required" : "" %>"><%= skill.Name %></th>
                 <% }); %>
@@ -76,7 +76,9 @@
                                 return ats.Name == skill.Name;
                             });
                     %>
-                        <td class="applicant-skill-level-<%= !!currentSkill ? currentSkill.Level : "" %>">&nbsp;</td>
+                        <td class="applicant-skill-level-<%= !!currentSkill ? currentSkill.Level : "" %>">
+                            <div class="level-indicator">&nbsp;</div>
+                        </td>
                     <% }); %>
                 </tr>
             <% }); %>
