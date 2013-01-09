@@ -15,32 +15,33 @@ namespace CommonJobs.Application.JobSearchSearching
             public string FirstName { get; set; }
             public string LastName { get; set; }
             public string Searcheables { get; set; }
-            public List<TechnicalSkill> TechnicalSkills { get; set; }
+            public TechnicalSkill[] TechnicalSkills { get; set; }
             public int Total { get; set; }
         }
 
         public Applicant_BySkills()
         {
             Map = applicants => from applicant in applicants
+                                from skill in applicant.TechnicalSkills
                                 select new
                                 {
                                     Id = applicant.Id,
                                     FirstName = applicant.FirstName,
                                     LastName = applicant.LastName,
-                                    Searcheables = applicant.TechnicalSkills.Select(x => x.Searcheable).ToArray(),
-                                    TechnicalSkills = applicant.TechnicalSkills,
-                                    Total = applicant.TechnicalSkills == null ? 0 : applicant.TechnicalSkills.Sum(ts => ts.Weight)
+                                    Searcheables = new object[] { skill.Searcheable },
+                                    TechnicalSkills = new object[] { skill },
+                                    Total = skill.Weight
                                 };
-            //TODO fix reduce? Total still is returned as 0 everytime
+            
             Reduce = doc => doc
                 .GroupBy(x => x.Id)
                 .Select(g => new {
                     Id = g.Key,
                     FirstName = g.FirstOrDefault().FirstName,
                     LastName = g.FirstOrDefault().LastName,
-                    Searcheables = g.FirstOrDefault().Searcheables,
-                    TechnicalSkills = g.FirstOrDefault().TechnicalSkills,
-                    Total = g.FirstOrDefault().Total
+                    Searcheables = g.SelectMany(x => x.Searcheables).Distinct().ToArray(),
+                    TechnicalSkills = g.SelectMany(x => x.TechnicalSkills).Distinct().ToArray(),
+                    Total = g.Sum(x => x.Total)
                 });
         }
     }
