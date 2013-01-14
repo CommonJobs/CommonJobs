@@ -140,9 +140,12 @@
 
             var data = {};
             _.each(requiredTechnicalSkills, function (x, i) {
-                _.each(x, function (v, k) {
-                    data["[" + i + "]." + k] = v;
-                });
+                if (x.Name) {
+                    data["[" + i + "].Name"] = x.Name;
+                    if (+x.Level) {
+                        data["[" + i + "].Level"] = x.Level;
+                    }
+                }
             });
 
             $.ajax({
