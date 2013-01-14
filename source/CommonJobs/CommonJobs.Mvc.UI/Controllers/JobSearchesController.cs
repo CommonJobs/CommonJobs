@@ -84,11 +84,9 @@ namespace CommonJobs.Mvc.UI.Controllers
             return View();
         }
 
-        // sending as string because I could not get MVC to model bind it
-        public JsonNetResult GetSuggestedApplicants(string requiredTechnicalSkills)
+        public JsonNetResult GetSuggestedApplicants(List<TechnicalSkill> requiredTechnicalSkills)
         {
-            var rts = JsonConvert.DeserializeObject<TechnicalSkill[]>(requiredTechnicalSkills);
-            var suggestedApplicants = Query(new GetJobSearchSuggestedApplicants(rts));
+            var suggestedApplicants = Query(new GetJobSearchSuggestedApplicants(requiredTechnicalSkills == null ? new TechnicalSkill[0] : requiredTechnicalSkills.ToArray()));
             return Json(suggestedApplicants);
         }
 
