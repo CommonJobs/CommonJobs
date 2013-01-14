@@ -10,6 +10,7 @@ using CommonJobs.Application.JobSearchSearching;
 using CommonJobs.Infrastructure.Mvc;
 using CommonJobs.Infrastructure.RavenDb;
 using CommonJobs.Utilities;
+using Newtonsoft.Json;
 
 namespace CommonJobs.Mvc.UI.Controllers
 {
@@ -83,10 +84,11 @@ namespace CommonJobs.Mvc.UI.Controllers
             return View();
         }
 
-        public JsonNetResult GetSuggestedApplicants(string id)
+        // sending as string because I could not get MVC to model bind it
+        public JsonNetResult GetSuggestedApplicants(string requiredTechnicalSkills)
         {
-            var jobSearch = RavenSession.Load<JobSearch>(id);
-            var suggestedApplicants = Query(new GetJobSearchSuggestedApplicants(jobSearch));
+            var rts = JsonConvert.DeserializeObject<TechnicalSkill[]>(requiredTechnicalSkills);
+            var suggestedApplicants = Query(new GetJobSearchSuggestedApplicants(rts));
             return Json(suggestedApplicants);
         }
 

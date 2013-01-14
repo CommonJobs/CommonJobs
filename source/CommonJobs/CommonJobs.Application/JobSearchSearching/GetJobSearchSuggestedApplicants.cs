@@ -10,13 +10,12 @@ namespace CommonJobs.Application.JobSearchSearching
 {
     public class GetJobSearchSuggestedApplicants : Query<SuggestedApplicantsResult[]>
     {
-
         public RavenQueryStatistics Stats { get; set; }
-        public JobSearch JobSearch { get; set; }
+        public TechnicalSkill[] RequiredTechnicalSkills { get; set; }
 
-        public GetJobSearchSuggestedApplicants(JobSearch search)
+        public GetJobSearchSuggestedApplicants(TechnicalSkill[] requiredTechnicalSkills)
         {
-            this.JobSearch = search;
+            this.RequiredTechnicalSkills = requiredTechnicalSkills;
         }
 
         public override SuggestedApplicantsResult[] Execute()
@@ -26,8 +25,8 @@ namespace CommonJobs.Application.JobSearchSearching
             var query = RavenSession
                 .Query<Applicant_BySkills.Projection, Applicant_BySkills>();
 
-            if (JobSearch.RequiredTechnicalSkills != null) 
-                foreach (var rts in JobSearch.RequiredTechnicalSkills)
+            if (RequiredTechnicalSkills != null) 
+                foreach (var rts in RequiredTechnicalSkills)
                     query = query.Where(a => a.Searcheables.StartsWith(rts.Searcheable));
 
             query = query

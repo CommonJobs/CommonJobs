@@ -82,6 +82,8 @@
         },
         initialize: function () {
             this.dataBinder = new App.EditJobSearchAppViewDataBinder({ el: this.el, model: this.model });
+            //TODO this does not fully work -- why?
+            this.model.get('RequiredTechnicalSkills').on("add remove reset change", this.reloadSuggestedApplicants, this);
             if (this.options.forceReadOnly) {
                 this.$el.addClass("edition-force-readonly");
                 this.editionReadOnly();
@@ -128,11 +130,20 @@
         },
         reloadSuggestedApplicants: function () {
             var me = this;
+            
+            var requiredTechnicalSkills = _.map(this.model.get('RequiredTechnicalSkills').models, function (rts) {
+                return {
+                    Name: rts.get('Name'),
+                    Level: rts.get('Level')
+                };
+            });
+
             $.ajax({
                 url: urlGenerator.action("GetSuggestedApplicants", "JobSearches"),
                 type: "GET",
                 dataType: "json",
-                data: { id: ViewData.jobSearch.Id },
+                // sending as string because I could not get MVC to model bind it
+                data: { requiredTechnicalSkills: JSON.stringify(requiredTechnicalSkills) },
                 contentType: "application/json; charset=utf-8",
                 success: function (suggestedApplicants) {
                     var suggestedApplicantsTemplate = $("#suggested-applicants-tmpl").html();
