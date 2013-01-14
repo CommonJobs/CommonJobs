@@ -67,9 +67,11 @@
             </tr>
         </theader>
         <tbody>
-            <% _.each(applicants, function(applicant) { %>
+            <% _.each(applicants, function(applicant) {
+                   var applicantUrl = urlGenerator.action("Edit", "Applicants", applicant.Id);
+            %>
                 <tr>
-                    <th><%= applicant.LastName %>, <%= applicant.FirstName %></th>
+                    <th><a href="<%= applicantUrl %>" target="_blank"><%= applicant.LastName %>, <%= applicant.FirstName %></a></th>
                     <%
                         _.each(applicantSkills, function(skill) {
                             var currentSkill = _.find(applicant.TechnicalSkills, function (ats) {
