@@ -214,29 +214,13 @@ $(function () {
                         var end = to.valueOf();
                         var date = from;
                         while (date.valueOf() <= end) {
-                            daysData[+date.format("DDD")] = absence;
+                            if (date.year() == ViewData.year) {
+                                daysData[+date.format("DDD")] = absence;
+                            }
                             date.add('days', 1);
                         }
                     }
                 }
-
-                for (var j in item.Vacations) {
-                    var vacation = item.Vacations[j];
-                    var from = moment(vacation.From).startOf('day');
-                    var to = moment(vacation.To || vacation.From).startOf('day');
-                    if (to.valueOf() < from.valueOf)
-                        to = from;
-
-                    if (to.year() >= ViewData.year && from.year() <= ViewData.year) {
-                        var end = to.valueOf();
-                        var date = from;
-                        while (date.valueOf() <= end) {
-                            daysData[+date.format("DDD")] = vacation;
-                            date.add('days', 1);
-                        }
-                    }
-                }
-
 
                 item["TotalFull"] = 0;
                 item["TotalPartial"] = 0;
