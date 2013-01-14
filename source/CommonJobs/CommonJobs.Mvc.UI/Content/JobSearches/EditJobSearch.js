@@ -138,12 +138,21 @@
                 };
             });
 
+            var data = {};
+            _.each(requiredTechnicalSkills, function (x, i) {
+                if (x.Name) {
+                    data["[" + i + "].Name"] = x.Name;
+                    if (+x.Level) {
+                        data["[" + i + "].Level"] = x.Level;
+                    }
+                }
+            });
+
             $.ajax({
                 url: urlGenerator.action("GetSuggestedApplicants", "JobSearches"),
                 type: "GET",
                 dataType: "json",
-                // sending as string because I could not get MVC to model bind it
-                data: { requiredTechnicalSkills: JSON.stringify(requiredTechnicalSkills) },
+                data: data,
                 contentType: "application/json; charset=utf-8",
                 success: function (suggestedApplicants) {
                     var suggestedApplicantsTemplate = $("#suggested-applicants-tmpl").html();

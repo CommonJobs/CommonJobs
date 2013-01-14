@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using CommonJobs.Utilities;
 
 namespace CommonJobs.Domain
 {
@@ -21,7 +22,9 @@ namespace CommonJobs.Domain
         {
             get
             {
-                var result = Name.Replace(" ", "").Replace("_", ""); //TODO: Slug
+                if (Name == null)
+                    return null;
+                var result = Name.GenerateSlug().Replace("_", ""); 
                 if (Level > 0) {
                     for (var l = 1; l <= (int)Level; l++) {
                         result += "_" + l;
