@@ -214,7 +214,9 @@ $(function () {
                         var end = to.valueOf();
                         var date = from;
                         while (date.valueOf() <= end) {
-                            daysData[+date.format("DDD")] = absence;
+                            if (date.year() == ViewData.year) {
+                                daysData[+date.format("DDD")] = absence;
+                            }
                             date.add('days', 1);
                         }
                     }
