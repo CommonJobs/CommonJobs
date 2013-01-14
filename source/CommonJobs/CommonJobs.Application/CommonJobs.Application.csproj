@@ -94,8 +94,11 @@
     <Compile Include="EmployeeFiles\SearchEmployeeFiles.cs" />
     <Compile Include="EmployeeSearching\EmployeeSearchResult.cs" />
     <Compile Include="EmployeeSearching\EmployeeSearchParameters.cs" />
+    <Compile Include="JobSearchSearching\Applicant_BySkills.cs" />
+    <Compile Include="JobSearchSearching\GetJobSearchSuggestedApplicants.cs" />
     <Compile Include="JobSearchSearching\JobSearchSearchParameters.cs" />
     <Compile Include="JobSearchSearching\SearchJobSearches.cs" />
+    <Compile Include="JobSearchSearching\SuggestedApplicantsResult.cs" />
     <Compile Include="MyMenu\Common.cs" />
     <Compile Include="MyMenu\GetEmployeeMenusCommand.cs" />
     <Compile Include="MyMenu\GetOrderCommand.cs" />
