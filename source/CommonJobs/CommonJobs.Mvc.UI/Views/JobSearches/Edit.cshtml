@@ -51,4 +51,43 @@
 
     <h3>Notas</h3>
     <div class="editable-field" data-bind="PrivateNotes"></div>
+
+    <h2>Postulantes sugeridos</h2>
+    <div class="suggestedApplicants bootstrap-scope"></div>
 </div>
+
+<script id="suggested-applicants-tmpl" type="text/template">
+    <% if (!applicants || !applicants.length) { %>
+        <p class="no-applicants-notice">No hay ningún postulante que cumpla con los requisitos mínimos para esta búsqueda.</p>
+    <% } else { %>
+        <table class="table table-condensed table-hover">
+            <theader>
+                <tr>
+                    <th class="name-title">Postulante</th>
+                    <% _.each(applicantSkills, function(skill) { %>
+                        <th class="skill-header <%= skill.IsRequired ? "required" : "" %>"><%= skill.Name %></th>
+                    <% }); %>
+                </tr>
+            </theader>
+            <tbody>
+                <% _.each(applicants, function(applicant) {
+                       var applicantUrl = urlGenerator.action("Edit", "Applicants", applicant.Id);
+                %>
+                    <tr>
+                        <th><a href="<%= applicantUrl %>" target="_blank"><%= applicant.LastName %>, <%= applicant.FirstName %></a></th>
+                        <%
+                            _.each(applicantSkills, function(skill) {
+                                var currentSkill = _.find(applicant.TechnicalSkills, function (ats) {
+                                    return ats.Name == skill.Name;
+                                });
+                        %>
+                            <td class="applicant-skill-level-<%= !!currentSkill ? currentSkill.Level : "" %>">
+                                <div class="level-indicator">&nbsp;</div>
+                            </td>
+                        <% }); %>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    <% } %>
+</script>

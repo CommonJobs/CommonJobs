@@ -10,6 +10,7 @@ using CommonJobs.Application.JobSearchSearching;
 using CommonJobs.Infrastructure.Mvc;
 using CommonJobs.Infrastructure.RavenDb;
 using CommonJobs.Utilities;
+using Newtonsoft.Json;
 
 namespace CommonJobs.Mvc.UI.Controllers
 {
@@ -81,6 +82,12 @@ namespace CommonJobs.Mvc.UI.Controllers
                 500);
             
             return View();
+        }
+
+        public JsonNetResult GetSuggestedApplicants(List<TechnicalSkill> requiredTechnicalSkills)
+        {
+            var suggestedApplicants = Query(new GetJobSearchSuggestedApplicants(requiredTechnicalSkills == null ? new TechnicalSkill[0] : requiredTechnicalSkills.ToArray()));
+            return Json(suggestedApplicants);
         }
 
         public JsonNetResult Get(string id)
