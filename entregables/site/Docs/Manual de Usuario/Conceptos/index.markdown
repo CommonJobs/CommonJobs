@@ -1,0 +1,2 @@
+# Conceptos
+* [Slots](Slots)
