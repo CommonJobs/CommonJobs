@@ -159,6 +159,7 @@
     <Content Include="Content\EditCommon\Suggest.js" />
     <Content Include="Content\EmployeeFiles\EmployeeFiles.js" />
     <Content Include="Content\FilesListing\FilesListing.js" />
+    <Compile Include="Areas\MyMenu\MyMenuAreaRegistration.cs" />
     <Compile Include="Areas\Profiles\Controllers\ProfilesController.cs" />
     <Compile Include="Areas\Profiles\ProfilesAreaRegistration.cs" />
     <Compile Include="Controllers\ApplicantsController.cs" />
@@ -169,7 +170,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\JobSearchesController.cs" />
     <Compile Include="Controllers\MigrationsController.cs" />
-    <Compile Include="Controllers\MyMenuController.cs" />
+    <Compile Include="Areas\MyMenu\Controllers\MyMenuController.cs" />
     <Compile Include="Controllers\SuggestController.cs" />
     <Compile Include="Controllers\VacationsController.cs" />
     <Compile Include="Global.asax.cs">
@@ -279,16 +280,18 @@
     <Content Include="Content\TableTools-2.1.4\media\js\TableTools.min.js.gz" />
     <Content Include="Views\EmployeeFiles\Index.cshtml" />
     <Content Include="Content\EmployeeFilesBase.less" />
-    <Content Include="Views\MyMenu\MyMenu.cshtml" />
-    <Content Include="Views\MyMenu\Admin.cshtml" />
-    <Content Include="Views\MyMenu\_MyMenuLayout.cshtml" />
+    <Content Include="Areas\MyMenu\Views\MyMenu\MyMenu.cshtml" />
+    <Content Include="Areas\MyMenu\Views\MyMenu\Admin.cshtml" />
+    <Content Include="Areas\MyMenu\Views\Shared\_Layout.cshtml" />
     <Content Include="Content\collapsable-sections.less" />
     <Content Include="Content\twitter-bootstrap\less\media.less" />
-    <Content Include="Views\MyMenu\Order.cshtml" />
+    <Content Include="Areas\MyMenu\Views\MyMenu\Order.cshtml" />
     <Content Include="Views\Absences\Index.cshtml" />
     <Content Include="Content\Absences\Absences.less" />
     <Content Include="Areas\Profiles\Views\Web.config" />
     <Content Include="Areas\Profiles\Views\Profiles\Index.cshtml" />
+    <Content Include="Areas\MyMenu\Views\Web.config" />
+    <Content Include="Areas\MyMenu\Views\_ViewStart.cshtml" />
     <None Include="_bin_deployableAssemblies\FSharp.Core.dll" />
   </ItemGroup>
   <ItemGroup>
@@ -1084,6 +1087,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Areas\MyMenu\Models\" />
     <Folder Include="Areas\Profiles\Models\" />
     <Folder Include="Areas\Profiles\Views\Shared\" />
   </ItemGroup>
