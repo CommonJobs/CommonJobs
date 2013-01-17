@@ -159,6 +159,8 @@
     <Content Include="Content\EditCommon\Suggest.js" />
     <Content Include="Content\EmployeeFiles\EmployeeFiles.js" />
     <Content Include="Content\FilesListing\FilesListing.js" />
+    <Compile Include="Areas\Profiles\Controllers\ProfilesController.cs" />
+    <Compile Include="Areas\Profiles\ProfilesAreaRegistration.cs" />
     <Compile Include="Controllers\ApplicantsController.cs" />
     <Compile Include="Controllers\AttachmentsController.cs" />
     <Compile Include="Controllers\AbsencesController.cs" />
@@ -285,6 +287,8 @@
     <Content Include="Views\MyMenu\Order.cshtml" />
     <Content Include="Views\Absences\Index.cshtml" />
     <Content Include="Content\Absences\Absences.less" />
+    <Content Include="Areas\Profiles\Views\Web.config" />
+    <Content Include="Areas\Profiles\Views\Profiles\Index.cshtml" />
     <None Include="_bin_deployableAssemblies\FSharp.Core.dll" />
   </ItemGroup>
   <ItemGroup>
@@ -1079,7 +1083,10 @@
       <Name>CommonJobs.Utilities</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Areas\Profiles\Models\" />
+    <Folder Include="Areas\Profiles\Views\Shared\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
