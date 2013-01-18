@@ -25,12 +25,17 @@ namespace CommonJobs.Infrastructure.Mvc.SecurityTrimming
 
         public static HelperResult RenderIfHasPermission(this HtmlHelper htmlHelper, string actionName, Func<SecurityTrimmingHelper, HelperResult> template)
         {
-            return RenderIfHasPermission(htmlHelper, actionName, null, template);
+            return RenderIfHasPermission(htmlHelper, actionName, null, null, template);
         }
 
         public static HelperResult RenderIfHasPermission(this HtmlHelper htmlHelper, string actionName, string controllerName, Func<SecurityTrimmingHelper, HelperResult> template)
         {
-            using (var helper = new SecurityTrimmingHelper(htmlHelper, actionName, controllerName))
+            return RenderIfHasPermission(htmlHelper, actionName, controllerName, null, template);
+        }
+
+        public static HelperResult RenderIfHasPermission(this HtmlHelper htmlHelper, string actionName, string controllerName, string areaName, Func<SecurityTrimmingHelper, HelperResult> template)
+        {
+            using (var helper = new SecurityTrimmingHelper(htmlHelper, actionName, controllerName, areaName))
             {
                 return helper.HasPermission ? template(helper) : new HelperResult(writer => { });
             }

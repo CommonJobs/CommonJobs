@@ -11,12 +11,18 @@ namespace CommonJobs.Mvc.UI.HtmlHelpers
 {
     public static class BootstrapHelpers
     {
-        public static HelperResult NavItem(this HtmlHelper Html, string linkText, string actionName, string controllerName = null)
+        public static HelperResult NavItem(this HtmlHelper Html, string linkText, string actionName, string controllerName = null, string areaName = null)
         {
             return Html.RenderIfHasPermission(
                 actionName,
                 controllerName,
-                item => Html.NavItem(item.IsActiveController, Html.ActionLink(linkText, item.ActionName, item.ControllerName).ToHtmlString()));
+                areaName,
+                item => Html.NavItem(item.IsActiveController, Html.ActionLink(
+                    linkText,
+                    item.ActionName,
+                    item.ControllerName,
+                    item.AreaName != null ? new { area = item.AreaName } : null,
+                    null).ToHtmlString()));
         }
 
         public static HelperResult NavItemAction(this HtmlHelper Html, string linkText, string actionName, string controllerName = null)

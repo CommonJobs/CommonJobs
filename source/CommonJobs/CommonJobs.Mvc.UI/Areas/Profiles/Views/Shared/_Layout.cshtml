@@ -1,0 +1,65 @@
+﻿@using CommonJobs.Infrastructure.Mvc.SecurityTrimming
+@using CommonJobs.Mvc.UI.HtmlHelpers
+@{
+    ScriptManager.RegisterCss(Url.Content("~/Content/twitter-bootstrap/less/bootstrap.less"), priority: 900);
+    ScriptManager.RegisterCss(Url.Content("~/Content/twitter-bootstrap/less/responsive.less"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/jquery-1.7.2.min.js"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/moment.js"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/moment.i18n/es.js"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Content/twitter-bootstrap/js/bootstrap-collapse.js"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Content/twitter-bootstrap/js/bootstrap-tab.js"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Content/twitter-bootstrap/js/bootstrap-typeahead.js"), priority: 900);
+
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/DataTables/jquery.dataTables.js"));
+    ScriptManager.RegisterCss(Url.Content("~/Content/DataTables/css/jquery.dataTables.css"));
+    ScriptManager.RegisterJs(Url.Content("~/Content/TableTools-2.1.4/media/js/ZeroClipboard.js"));
+    ScriptManager.RegisterJs(Url.Content("~/Content/TableTools-2.1.4/media/js/TableTools.js"));
+    ScriptManager.RegisterCss(Url.Content("~/Content/TableTools-2.1.4/media/css/TableTools.css"));
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/DataTables/dataTables.bootstrap.js"));
+    ScriptManager.RegisterGlobalJavascript("TableTools.DEFAULTS.sSwfPath", Url.Content("~/Content/TableTools-2.1.4/media/swf/copy_csv_xls_pdf.swf"));
+
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/knockout-2.2.0.js"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/underscore.js"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/moment-datepicker.js"), priority: 900);
+    ScriptManager.RegisterCss(Url.Content("~/Content/moment-datepicker/datepicker.css"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/moment-datepicker-ko.js"), priority: 900);
+
+    ScriptManager.RegisterGlobalJavascript("baseUrl", Url.Content("~"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/url-generator.js"), priority: 900);
+}
+
+<!DOCTYPE html>
+<html class="bootstrap-scope">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title</title>
+    @Html.RenderScriptManagerEntries(ScriptManager)
+    <link rel="shortcut icon" href="@Url.Content("~/Content/Images/favicon.ico")" />
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top ">
+        <div class="navbar-inner">
+            <a class="brand" href="@Url.Content("~")">CommonJobs</a>
+            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>            
+            
+            <div class="nav-collapse collapse">
+                <ul class="nav">
+                </ul>
+            </div>
+        </div>
+    </div>
+    <br /><br /><br />
+    <div class="body-container">
+        @RenderBody()
+    </div>
+    <footer>
+        <div class="container">
+            <p><strong>CommonJobs Profiles</strong> es un desarrollo <em>OpenSource</em> realizado en ratos libres. Cualquier mejora es bienvenida, descargá el <a href="https://github.com/CommonJobs/CommonJobs">código fuente de GitHub</a> y hacé tu <em>Pull Request</em>.</p>
+        </div>
+    </footer>
+</body>
+</html>

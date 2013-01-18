@@ -159,6 +159,9 @@
     <Content Include="Content\EditCommon\Suggest.js" />
     <Content Include="Content\EmployeeFiles\EmployeeFiles.js" />
     <Content Include="Content\FilesListing\FilesListing.js" />
+    <Compile Include="Areas\MyMenu\MyMenuAreaRegistration.cs" />
+    <Compile Include="Areas\Profiles\Controllers\ProfilesController.cs" />
+    <Compile Include="Areas\Profiles\ProfilesAreaRegistration.cs" />
     <Compile Include="Controllers\ApplicantsController.cs" />
     <Compile Include="Controllers\AttachmentsController.cs" />
     <Compile Include="Controllers\AbsencesController.cs" />
@@ -167,7 +170,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\JobSearchesController.cs" />
     <Compile Include="Controllers\MigrationsController.cs" />
-    <Compile Include="Controllers\MyMenuController.cs" />
+    <Compile Include="Areas\MyMenu\Controllers\MyMenuController.cs" />
     <Compile Include="Controllers\SuggestController.cs" />
     <Compile Include="Controllers\VacationsController.cs" />
     <Compile Include="Global.asax.cs">
@@ -277,14 +280,20 @@
     <Content Include="Content\TableTools-2.1.4\media\js\TableTools.min.js.gz" />
     <Content Include="Views\EmployeeFiles\Index.cshtml" />
     <Content Include="Content\EmployeeFilesBase.less" />
-    <Content Include="Views\MyMenu\MyMenu.cshtml" />
-    <Content Include="Views\MyMenu\Admin.cshtml" />
-    <Content Include="Views\MyMenu\_MyMenuLayout.cshtml" />
+    <Content Include="Areas\MyMenu\Views\MyMenu\MyMenu.cshtml" />
+    <Content Include="Areas\MyMenu\Views\MyMenu\Admin.cshtml" />
+    <Content Include="Areas\MyMenu\Views\Shared\_Layout.cshtml" />
     <Content Include="Content\collapsable-sections.less" />
     <Content Include="Content\twitter-bootstrap\less\media.less" />
-    <Content Include="Views\MyMenu\Order.cshtml" />
+    <Content Include="Areas\MyMenu\Views\MyMenu\Order.cshtml" />
     <Content Include="Views\Absences\Index.cshtml" />
     <Content Include="Content\Absences\Absences.less" />
+    <Content Include="Areas\Profiles\Views\Web.config" />
+    <Content Include="Areas\Profiles\Views\Profiles\Index.cshtml" />
+    <Content Include="Areas\MyMenu\Views\Web.config" />
+    <Content Include="Areas\MyMenu\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Profiles\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Profiles\Views\Shared\_Layout.cshtml" />
     <None Include="_bin_deployableAssemblies\FSharp.Core.dll" />
   </ItemGroup>
   <ItemGroup>
@@ -1034,6 +1043,14 @@
     <Content Include="Views\Employees\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CommonJobs.Application.MyMenu\CommonJobs.Application.MyMenu.csproj">
+      <Project>{16534ba4-8f5c-4214-8840-8062090bf7a2}</Project>
+      <Name>CommonJobs.Application.MyMenu</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CommonJobs.Application.Profiles\CommonJobs.Application.Profiles.csproj">
+      <Project>{d5a300e2-ecbb-45b9-b266-2419180597dc}</Project>
+      <Name>CommonJobs.Application.Profiles</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CommonJobs.ContentExtraction.Extractors\CommonJobs.ContentExtraction.Extractors.csproj">
       <Project>{BD46EC5E-D3DD-42C2-81D1-D7B2B05B7A4E}</Project>
       <Name>CommonJobs.ContentExtraction.Extractors</Name>
@@ -1045,6 +1062,14 @@
     <ProjectReference Include="..\CommonJobs.ContentExtraction\CommonJobs.ContentExtraction.csproj">
       <Project>{FCF0DC4A-8A75-499D-AE7D-25D2F5174E38}</Project>
       <Name>CommonJobs.ContentExtraction</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CommonJobs.Domain.MyMenu\CommonJobs.Domain.MyMenu.csproj">
+      <Project>{962ee4f4-0045-42d2-9941-18d9ca184abe}</Project>
+      <Name>CommonJobs.Domain.MyMenu</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CommonJobs.Domain.Profiles\CommonJobs.Domain.Profiles.csproj">
+      <Project>{a897b065-2207-4faf-897a-31449b95f3fe}</Project>
+      <Name>CommonJobs.Domain.Profiles</Name>
     </ProjectReference>
     <ProjectReference Include="..\CommonJobs.Domain\CommonJobs.Domain.csproj">
       <Project>{CC2939C6-A278-4789-B937-ADB693E69C89}</Project>
@@ -1079,7 +1104,10 @@
       <Name>CommonJobs.Utilities</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Areas\MyMenu\Models\" />
+    <Folder Include="Areas\Profiles\Models\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
