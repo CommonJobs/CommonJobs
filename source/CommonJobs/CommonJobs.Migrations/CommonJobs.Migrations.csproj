@@ -84,6 +84,10 @@
     <Compile Include="201212280848_DefaultApplicantEventTypes.cs" />
     <Compile Include="201212280918_MoveApplicantNoteTypeToEventType.cs" />
     <Compile Include="201212310827_ReStoreApplicants.cs" />
+    <Compile Include="201301163531_DeleteMenu.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="201301161535_CleanLastModifiedBy.cs" />
     <Compile Include="MoveAttachmentToSlotBaseMigration.cs" />
     <Compile Include="MigrationClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
