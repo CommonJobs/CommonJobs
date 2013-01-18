@@ -1041,6 +1041,10 @@
     <Content Include="Views\Employees\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CommonJobs.Application.MyMenu\CommonJobs.Application.MyMenu.csproj">
+      <Project>{16534ba4-8f5c-4214-8840-8062090bf7a2}</Project>
+      <Name>CommonJobs.Application.MyMenu</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CommonJobs.ContentExtraction.Extractors\CommonJobs.ContentExtraction.Extractors.csproj">
       <Project>{BD46EC5E-D3DD-42C2-81D1-D7B2B05B7A4E}</Project>
       <Name>CommonJobs.ContentExtraction.Extractors</Name>
@@ -1052,6 +1056,10 @@
     <ProjectReference Include="..\CommonJobs.ContentExtraction\CommonJobs.ContentExtraction.csproj">
       <Project>{FCF0DC4A-8A75-499D-AE7D-25D2F5174E38}</Project>
       <Name>CommonJobs.ContentExtraction</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CommonJobs.Domain.MyMenu\CommonJobs.Domain.MyMenu.csproj">
+      <Project>{962ee4f4-0045-42d2-9941-18d9ca184abe}</Project>
+      <Name>CommonJobs.Domain.MyMenu</Name>
     </ProjectReference>
     <ProjectReference Include="..\CommonJobs.Domain\CommonJobs.Domain.csproj">
       <Project>{CC2939C6-A278-4789-B937-ADB693E69C89}</Project>

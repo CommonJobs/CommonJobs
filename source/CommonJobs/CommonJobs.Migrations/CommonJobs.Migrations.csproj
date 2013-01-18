@@ -89,6 +89,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CommonJobs.Domain.MyMenu\CommonJobs.Domain.MyMenu.csproj">
+      <Project>{962ee4f4-0045-42d2-9941-18d9ca184abe}</Project>
+      <Name>CommonJobs.Domain.MyMenu</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CommonJobs.Domain\CommonJobs.Domain.csproj">
       <Project>{CC2939C6-A278-4789-B937-ADB693E69C89}</Project>
       <Name>CommonJobs.Domain</Name>
