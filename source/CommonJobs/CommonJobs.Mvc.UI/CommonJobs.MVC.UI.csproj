@@ -292,6 +292,8 @@
     <Content Include="Areas\Profiles\Views\Profiles\Index.cshtml" />
     <Content Include="Areas\MyMenu\Views\Web.config" />
     <Content Include="Areas\MyMenu\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Profiles\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Profiles\Views\Shared\_Layout.cshtml" />
     <None Include="_bin_deployableAssemblies\FSharp.Core.dll" />
   </ItemGroup>
   <ItemGroup>
@@ -1105,7 +1107,6 @@
   <ItemGroup>
     <Folder Include="Areas\MyMenu\Models\" />
     <Folder Include="Areas\Profiles\Models\" />
-    <Folder Include="Areas\Profiles\Views\Shared\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
