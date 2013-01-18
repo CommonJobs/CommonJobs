@@ -93,6 +93,10 @@
       <Project>{962ee4f4-0045-42d2-9941-18d9ca184abe}</Project>
       <Name>CommonJobs.Domain.MyMenu</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CommonJobs.Domain.Profiles\CommonJobs.Domain.Profiles.csproj">
+      <Project>{a897b065-2207-4faf-897a-31449b95f3fe}</Project>
+      <Name>CommonJobs.Domain.Profiles</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CommonJobs.Domain\CommonJobs.Domain.csproj">
       <Project>{CC2939C6-A278-4789-B937-ADB693E69C89}</Project>
       <Name>CommonJobs.Domain</Name>
