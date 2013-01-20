@@ -1,0 +1,54 @@
+Book.svg:
+	http://thenounproject.com/noun/book/#icon-No9845
+	Designed by  Matt Gipson, 2013
+	Public Domain
+
+Car.svg:
+	http://thenounproject.com/noun/car/#icon-No72
+	Collaboration by  Roger Cook & Don Shanosky, US 1974
+	Public Domain
+	
+Checklist.svg:
+	http://thenounproject.com/noun/checklist/#icon-No5166
+	Designed by Aaron Dodson from the Noun Project, United States 2013
+	CC BY 3.0
+	
+Fast Food.svg:
+	http://thenounproject.com/noun/fast-food/#icon-No7278
+	Designed by Marco Olgio, 1987
+	Public Domain
+	
+Files.svg:
+	http://thenounproject.com/noun/files/#icon-No6858
+	Pieter J. Smits, from The Noun Project, Netherlands 2012
+	CC BY 3.0
+	
+Full Time Job.svg:
+	http://thenounproject.com/noun/full-time-job/#icon-No8230
+	Lemon Liu, from The Noun Project, New Zealand 2012
+	CC BY 3.0
+	
+Search.svg:
+	http://thenounproject.com/noun/search/#icon-No9873
+	Faith, Hope & Love Creative, LLC, from The Noun Project, US 2013
+	CC BY 3.0
+	
+Source code.svg:
+	http://thenounproject.com/noun/source-code/#icon-No1171
+	d, 2012
+	Public Domain
+	
+Unemployed.svg:
+	http://thenounproject.com/noun/unemployed/#icon-No6727
+	Ezra Keddell, from The Noun Project, New Zealand, 2012
+	CC BY 3.0
+	
+Vacation.svg:
+	http://thenounproject.com/noun/vacation/#icon-No8232
+	Lemon Liu, from The Noun Project, New Zealand 2012
+	CC BY 3.0
+	
+Written document.svg:
+	http://thenounproject.com/noun/written-document/#icon-No6119
+	Thomas Le Bas, from The Noun Project, Germany 2012
+	CC BY 3.0
