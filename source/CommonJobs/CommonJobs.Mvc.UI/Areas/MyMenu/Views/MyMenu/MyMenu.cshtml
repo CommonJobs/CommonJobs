@@ -1,5 +1,4 @@
 ﻿@{
-    Layout = "_MyMenuLayout.cshtml";
     ViewBag.Title = string.IsNullOrEmpty(ViewBag.AnotherMenuUser) ? "Mi Menú · CommonJobs" : "Menú de " + ViewBag.AnotherMenuUser + " · CommonJobs";
     ScriptManager.RegisterJs(Url.Content("~/Scripts/my-menu-page.js"));
 }
