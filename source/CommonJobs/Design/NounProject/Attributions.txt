@@ -1,3 +1,8 @@
+Attach.svg:
+	http://thenounproject.com/noun/attach/#icon-No10061
+	Attach designed by iconoci from The Noun Project, UK 2013
+	CC BY 3.0
+
 Book.svg:
 	http://thenounproject.com/noun/book/#icon-No9845
 	Designed by  Matt Gipson, 2013
