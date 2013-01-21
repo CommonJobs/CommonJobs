@@ -8,26 +8,35 @@
 <div class="menuContainer">
     <h2>Elija una sección del sistema:</h2>
 
-    @MenuItem("Empleados", Url.Content("~/Content/Home/employees.png"))
-    @MenuItem("Legajos", Url.Content("~/Content/Home/files.png"))
-    @MenuItem("Archivos", Url.Content("~/Content/Home/attach.png"))
-    @MenuItem("MyMenu", Url.Content("~/Content/Home/mymenu.png"))
+    @MenuItem("Empleados", Url.Content("~/Content/Home/employees.png"), Url.Action("Index", "Employees"))
+    @MenuItem("Legajos", Url.Content("~/Content/Home/files.png"), Url.Action("Index", "EmployeeFiles"))
+    @MenuItem("Archivos", Url.Content("~/Content/Home/attach.png"), Url.Action("Index", "Attachments"))
+    @MenuItem("MyMenu", Url.Content("~/Content/Home/mymenu.png"), Url.Action("Index", "MyMenu"))
 
-    @MenuItem("Postulantes", Url.Content("~/Content/Home/applicant.png"))
-    @MenuItem("Vacaciones", Url.Content("~/Content/Home/vacation.png"))
-    @MenuItem("Ausencias", Url.Content("~/Content/Home/absence.png"))
-    @MenuItem("Búsquedas", Url.Content("~/Content/Home/search.png"))
+    @MenuItem("Postulantes", Url.Content("~/Content/Home/applicant.png"), Url.Action("Index", "Applicants"))
+    @MenuItem("Vacaciones", Url.Content("~/Content/Home/vacation.png"), Url.Action("Index", "Vacations"))
+    @MenuItem("Ausencias", Url.Content("~/Content/Home/absence.png"), Url.Action("Index", "Absences"))
+    @MenuItem("Búsquedas", Url.Content("~/Content/Home/search.png"), Url.Action("Index", "JobSearches"))
 
     <h2>O infórmese sobre el proyecto <em>CommonJobs</em>:</h2>
 
-    @MenuItem("Documentación", Url.Content("~/Content/Home/documentation.png"), true)
-    @MenuItem("Manual de usuario", Url.Content("~/Content/Home/manual.png"), true)
-    @MenuItem("Código fuente", Url.Content("~/Content/Home/sourcecode.png"), true)
+    @MenuItem("Documentación", Url.Content("~/Content/Home/documentation.png"), "http://todo.com/plete", true) @*TODO: Complete*@
+    @MenuItem("Manual de usuario", Url.Content("~/Content/Home/manual.png"), "http://todo.com/plete", true) @*TODO: Complete*@
+    @MenuItem("Código fuente", Url.Content("~/Content/Home/sourcecode.png"), "https://github.com/CommonJobs/CommonJobs", true)
 </div>
 
-@helper MenuItem(string label, string imageUrl, bool isLarge = false) {
-    <div class="menuItem @(isLarge ? "large" : string.Empty)">
+@helper MenuItem(string label, string imageUrl, string linkTo, bool isLarge = false)
+{
+    <div class="menuItem @(isLarge ? "large" : string.Empty)" data-desturl="@linkTo">
         <img src="@imageUrl" alt="@label" />
         <p>@label</p>
     </div>
 }
+
+<script>
+    //TODO check if we can use progressive enhancement (i.e. actual links) without breaking the layout and making it occupy the whole box
+    $('.menuItem').on('click', function () {
+        var destUrl = $(this).data('desturl');
+        window.location = destUrl;
+    });
+</script>
