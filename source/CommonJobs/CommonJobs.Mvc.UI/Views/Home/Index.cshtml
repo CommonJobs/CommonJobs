@@ -8,63 +8,26 @@
 <div class="menuContainer">
     <h2>Elija una sección del sistema:</h2>
 
-    <!-- first row -->
-    <div class="menuItem">
-        <img src="../../Content/Home/employees.png" />
-        <p>Empleados</p>
-    </div>
+    @MenuItem("Empleados", Url.Content("~/Content/Home/employees.png"))
+    @MenuItem("Legajos", Url.Content("~/Content/Home/files.png"))
+    @MenuItem("Archivos", Url.Content("~/Content/Home/attach.png"))
+    @MenuItem("MyMenu", Url.Content("~/Content/Home/mymenu.png"))
 
-    <div class="menuItem">
-        <img src="../../Content/Home/files.png" />
-        <p>Legajo</p>
-    </div>
-
-    <div class="menuItem">
-        <img src="../../Content/Home/attach.png" />
-        <p>Archivos</p>
-    </div>
-
-    <div class="menuItem">
-        <img src="../../Content/Home/mymenu.png" />
-        <p>MyMenu</p>
-    </div>
-
-    <!-- second row -->
-    <div class="menuItem">
-        <img src="../../Content/Home/applicant.png" />
-        <p>Postulantes</p>
-    </div>
-
-    <div class="menuItem">
-        <img src="../../Content/Home/vacation.png" />
-        <p>Vacaciones</p>
-    </div>
-
-    <div class="menuItem">
-        <img src="../../Content/Home/absence.png" />
-        <p>Ausencias</p>
-    </div>
-
-    <div class="menuItem">
-        <img src="../../Content/Home/search.png" />
-        <p>Búsquedas</p>
-    </div>
+    @MenuItem("Postulantes", Url.Content("~/Content/Home/applicant.png"))
+    @MenuItem("Vacaciones", Url.Content("~/Content/Home/vacation.png"))
+    @MenuItem("Ausencias", Url.Content("~/Content/Home/absence.png"))
+    @MenuItem("Búsquedas", Url.Content("~/Content/Home/search.png"))
 
     <h2>O infórmese sobre el proyecto <em>CommonJobs</em>:</h2>
 
-    <!-- third row -->
-    <div class="menuItem large">
-        <img src="../../Content/Home/documentation.png" />
-        <p>Documentación</p>
-    </div>
-
-    <div class="menuItem large">
-        <img src="../../Content/Home/manual.png" />
-        <p>Manual de usuario</p>
-    </div>
-
-    <div class="menuItem large">
-        <img src="../../Content/Home/sourcecode.png" />
-        <p>Código fuente</p>
-    </div>
+    @MenuItem("Documentación", Url.Content("~/Content/Home/documentation.png"), true)
+    @MenuItem("Manual de usuario", Url.Content("~/Content/Home/manual.png"), true)
+    @MenuItem("Código fuente", Url.Content("~/Content/Home/sourcecode.png"), true)
 </div>
+
+@helper MenuItem(string label, string imageUrl, bool isLarge = false) {
+    <div class="menuItem @(isLarge ? "large" : string.Empty)">
+        <img src="@imageUrl" alt="@label" />
+        <p>@label</p>
+    </div>
+}
