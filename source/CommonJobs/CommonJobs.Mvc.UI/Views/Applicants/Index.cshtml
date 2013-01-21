@@ -54,13 +54,6 @@
             </a></p>
             <p class="employeeProject"><%= item.CurrentProject %></p>
             <p class="position"><%= item.Companies ? item.Companies.join(", ", item.Companies) : "<i>(Sin experiencia previa)</i>" %></p>
-            <p class="tags">
-                <% if (_.isString(item.Skills)) { 
-                    _.each(item.Skills.split(','), function(tag) { %>
-                        <span class="tag"><%= $.trim(tag) %></span>
-                    <% });
-                } %>
-            </p>
         </div>
     </div>
 </script>
