@@ -50,5 +50,12 @@ namespace CommonJobs.Domain
         public SharedLinkList SharedLinks { get; set; }
 
         public string JobSearchId { get; set; }
+
+        public string EmployeeId { get; set; }
+
+        public bool Hired
+        {
+            get { return !string.IsNullOrWhiteSpace(EmployeeId); }
+        }
     }
 }
