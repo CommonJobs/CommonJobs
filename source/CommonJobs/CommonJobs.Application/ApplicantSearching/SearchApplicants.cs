@@ -32,6 +32,15 @@ namespace CommonJobs.Application.ApplicantSearching
 
             query = query.Where(x => x.IsApplicant);
 
+            if (Parameters.Hired == ApplicantHiredFilter.Exclude) 
+            {
+                query = query.Where(x => !x.IsHired);
+            }
+            else if (Parameters.Hired == ApplicantHiredFilter.OnlyHired)
+            {
+                query = query.Where(x => x.IsHired);
+            }
+
             Expression<Func<Applicant_QuickSearch.Projection, bool>> predicate = x =>
                 x.FullName1.StartsWith(Parameters.Term)
                     || x.FullName2.StartsWith(Parameters.Term)
