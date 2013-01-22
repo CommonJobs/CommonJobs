@@ -22,6 +22,7 @@ namespace CommonJobs.Application.JobSearchSearching
         public Applicant_BySkills()
         {
             Map = applicants => from applicant in applicants
+                                where !applicant.Hired
                                 from skill in applicant.TechnicalSkills
                                 select new
                                 {

@@ -47,6 +47,7 @@ namespace CommonJobs.Application.ApplicantSearching
         {
             AddMap<Applicant>(applicants => 
                 from applicant in applicants
+                where !applicant.Hired
                 select new
                 {
                     Id = applicant.Id,
