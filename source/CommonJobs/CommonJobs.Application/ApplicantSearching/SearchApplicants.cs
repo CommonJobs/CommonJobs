@@ -30,46 +30,12 @@ namespace CommonJobs.Application.ApplicantSearching
                 .Statistics(out stats)
                 .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite());
 
-            query = query.Where(x => x.IsApplicant);
-
-            if (Parameters.Hired == ApplicantHiredFilter.Exclude) 
-            {
-                query = query.Where(x => !x.IsHired);
-            }
-            else if (Parameters.Hired == ApplicantHiredFilter.OnlyHired)
-            {
-                query = query.Where(x => x.IsHired);
-            }
-
-            Expression<Func<Applicant_QuickSearch.Projection, bool>> predicate = x =>
-                x.FullName1.StartsWith(Parameters.Term)
-                    || x.FullName2.StartsWith(Parameters.Term)
-                    || x.Companies.Any(y => y.StartsWith(Parameters.Term))
-                    || x.Skills.StartsWith(Parameters.Term)
-                    || x.TechnicalSkills.Any(y => y.StartsWith(Parameters.Term))
-                    || x.AttachmentNames.Any(y => y.StartsWith(Parameters.Term));
-
-            if (Parameters.SearchInAttachments)
-                predicate = predicate.Or(x => x.AttachmentContent.Any(y => y.StartsWith(Parameters.Term)));
-
-            query = query.Where(predicate);
-
-            foreach (var slug in Parameters.WithEvents.EmptyIfNull())
-                query = query.Where(x => x.EventSlugs == slug);
-
-            if (Parameters.Highlighted)
-                query = query.Where(x => x.IsHighlighted);
-
             query = query
                 .OrderByDescending(x => x.IsHighlighted)
                 .OrderBy(x => x.LastName)
                 .ThenBy(x => x.FirstName);
 
-            if (Parameters.Skip > 0)
-                query = query.Skip(Parameters.Skip);
-
-            if (Parameters.Take > 0)
-                query = query.Take(Parameters.Take);
+            query = Parameters.Apply(query);
 
             var result = query.AsProjection<ApplicantSearchResult>().ToArray();
             Stats = stats;
