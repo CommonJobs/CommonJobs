@@ -53,7 +53,7 @@ namespace CommonJobs.Domain
 
         public string EmployeeId { get; set; }
 
-        public bool Hired
+        public bool IsHired
         {
             get { return !string.IsNullOrWhiteSpace(EmployeeId); }
         }
