@@ -135,6 +135,17 @@
     <Content Include="CJLogic\Libs\Knockout.d.ts" />
     <Content Include="CJLogic\Libs\moment.d.ts" />
     <Content Include="CJLogic\Libs\underscore.browser.d.ts" />
+    <Content Include="Content\Home\absence.png" />
+    <Content Include="Content\Home\applicant.png" />
+    <Content Include="Content\Home\attach.png" />
+    <Content Include="Content\Home\documentation.png" />
+    <Content Include="Content\Home\employees.png" />
+    <Content Include="Content\Home\mymenu.png" />
+    <Content Include="Content\Home\files.png" />
+    <Content Include="Content\Home\manual.png" />
+    <Content Include="Content\Home\search.png" />
+    <Content Include="Content\Home\sourcecode.png" />
+    <Content Include="Content\Home\vacation.png" />
     <Content Include="Content\mymenu.css" />
     <Content Include="Content\Absences\Absences.js" />
     <Content Include="Content\DataTables\css\demo_page.css" />
@@ -288,6 +299,7 @@
     <Content Include="Areas\MyMenu\Views\MyMenu\Order.cshtml" />
     <Content Include="Views\Absences\Index.cshtml" />
     <Content Include="Content\Absences\Absences.less" />
+    <Content Include="Content\home.less" />
     <Content Include="Areas\Profiles\Views\Web.config" />
     <Content Include="Areas\Profiles\Views\Profiles\Index.cshtml" />
     <Content Include="Areas\MyMenu\Views\Web.config" />
