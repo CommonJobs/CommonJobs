@@ -57,5 +57,35 @@ namespace CommonJobs.Domain
         {
             get { return !string.IsNullOrWhiteSpace(EmployeeId); }
         }
+
+        public Employee Hire(DateTime hiringDate)
+        {
+            var employee = new Employee();
+            employee.HiringDate = hiringDate;
+
+            //It is not sooo elegant but works
+            employee.IdChanged += (sender, e) =>
+            {
+                EmployeeId = employee.Id;
+            };
+
+            employee.FirstName = FirstName;
+            employee.LastName = LastName;
+            employee.Address = Address;
+            employee.ApplicantId = Id;
+            employee.BirthDate = BirthDate;
+            employee.College = College;
+            employee.Degree = Degree;
+            employee.Email = Email;
+            employee.EnglishLevel = EnglishLevel;
+            employee.IsGraduated = IsGraduated;
+            employee.MaritalStatus = MaritalStatus;
+            employee.Skills = Skills;
+            employee.TechnicalSkills = TechnicalSkills;
+            employee.Telephones = Telephones;
+            //employee.Photo = Photo //I am not sure because of entity associated to attachments
+
+            return employee;
+        }
     }
 }
