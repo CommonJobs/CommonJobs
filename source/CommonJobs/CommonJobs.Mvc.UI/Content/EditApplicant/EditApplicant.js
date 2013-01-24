@@ -79,7 +79,6 @@
         var date = new Date(year, month - 1, day, 0, 0, 0, 0);
         return Globalize.format(date, "d' de 'MMMM' de 'yyyy");
     }
-
     var formatLongDateWithYears = function (value) {
         // date format: yyyy-mm-dd
         var year = value.substring(0, 4);
@@ -226,6 +225,7 @@
         attachedUrl: function (value) { return urlGenerator.action("Get", "Attachments", value.Id); }
     });
 
+
     App.EditApplicantAppViewDataBinder = Nervoustissue.FormBinder.extend({
         dataBindings:
         {
@@ -233,6 +233,16 @@
             {
                 controlLink: "ReadOnlyText",
                 valueToContent: formatLongDate
+            },
+            "EmployeeId":
+            {
+                controlLink: "ReadOnlyText",
+                template: _.template('<span class="view-editable" style="display: none;"></span>'),
+                valueToContent: function (value) {
+                    return " <a href='"
+                    + urlGenerator.action("Edit", "Employees", value)
+                    + "' target='_blank' title='Ver empleado'>Contratado</a>";
+                }
             },
             fullName:
             {
