@@ -40,5 +40,20 @@ namespace CommonJobs.Infrastructure.Mvc.SecurityTrimming
                 return helper.HasPermission ? template(helper) : new HelperResult(writer => { });
             }
         }
+
+        public static bool HasPermission(this HtmlHelper htmlHelper, string actionName) 
+        {
+            return htmlHelper.HasPermission(actionName, null, null);
+        }
+
+        public static bool HasPermission(this HtmlHelper htmlHelper, string actionName, string controllerName)
+        {
+            return htmlHelper.HasPermission(actionName, controllerName, null);
+        }
+
+        public static bool HasPermission(this HtmlHelper htmlHelper, string actionName, string controllerName, string areaName)
+        {
+            return new SecurityTrimmingHelper(htmlHelper, actionName, controllerName, areaName).HasPermission;
+        }
     }
 }
