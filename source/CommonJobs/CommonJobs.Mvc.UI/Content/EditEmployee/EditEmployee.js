@@ -472,6 +472,16 @@
     App.EditEmployeeAppViewDataBinder = Nervoustissue.FormBinder.extend({
         dataBindings:
             {
+                "ApplicantId":
+                {
+                    controlLink: "ReadOnlyText",
+                    template: _.template('<span class="view-editable" style="display: none;"></span>'),
+                    valueToContent: function (value) {
+                        return " <a href='"
+                        + urlGenerator.action("Edit", "Applicants", value)
+                        + "' target='_blank'>Ver postulante relacionado</a>";
+                    }
+                },
                 fullName:
                 {
                     controlLink: "Text",
