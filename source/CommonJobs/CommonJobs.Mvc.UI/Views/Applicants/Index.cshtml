@@ -1,4 +1,5 @@
 ﻿@model CommonJobs.Application.ApplicantSearching.ApplicantSearchParameters
+@using CommonJobs.Application.ApplicantSearching
 @{
     ViewBag.Title = "Postulantes · CommonJobs";
     ScriptManager.RegisterCss(Url.Content("~/Content/ie.css"), priority: 500, htmlAttributes: new { media = "screen" }, patchCondition: "lte IE 9");
@@ -69,6 +70,8 @@
             <div class="control-group">
                 <label class="checkbox"><input type="checkbox" id="HighlightedCheck" name="Highlighted" @(Model.Highlighted ? "checked='checked'" : string.Empty)/>Resaltado</label>
                 <label class="checkbox"><input type="checkbox" id="SearchInAttachmentsCheck" name="SearchInAttachments" @(Model.SearchInAttachments ? "checked='checked'" : string.Empty)/>Buscar en adjuntos</label>
+                <label class="checkbox"><input type="checkbox" id="HiredInclude" name="Hired" @(Model.Hired == ApplicantHiredFilter.Include  ? "checked='checked'" : string.Empty) value="Include"/>Incluir contratados</label>
+                <label class="checkbox"><input type="checkbox" id="HiredOnlyHired" name="Hired" @(Model.Hired == ApplicantHiredFilter.OnlyHired  ? "checked='checked'" : string.Empty) value="OnlyHired"/>Solo contratados</label>
             </div>
             <div class="btn-group" id="event_filters">
                 @foreach (CommonJobs.Domain.EventType eventType in ViewBag.EventTypes)

@@ -1,4 +1,5 @@
-﻿@{
+﻿@using CommonJobs.Infrastructure.Mvc.SecurityTrimming;
+@{
     ViewBag.Title = "Edit";
     ScriptManager.RegisterCss(Url.Content("~/Scripts/mdd_styles.css"));
     ScriptManager.RegisterCss(Url.Content("~/Content/EditApplicant/EditApplicant.less"));
@@ -43,6 +44,9 @@
         <div class="danger-zone">
             <h3>Precaución!</h3>
             <p><button class="deleteApplicant">Eliminar postulante</button></p>
+            @Html.RenderIfHasPermission("HireApplicant", "Employees",
+                @<p><button class="hireApplicant">Contratar postulante</button></p>
+            )
         </div>
         <div class="back-link">
             @Html.ActionLink("« Volver al listado", "Index")
@@ -51,7 +55,7 @@
     
     <div class="info-section firstInfo">
         <span class="last-modified"><strong>Última actualización:</strong> <span data-bind="Last-Modified"></span></span>
-        <h1 class="fullName"><span class="editable-field" data-bind="fullName"></span></h1>
+        <h1 class="fullName"><span class="editable-field" data-bind="fullName"></span><span class="related-employee" data-bind="EmployeeId"></span></h1>
         <div class="editable-field photo" data-bind="Photo"></div>
     </div>
     <div class="additional-info-section shared-profile admin-section">
