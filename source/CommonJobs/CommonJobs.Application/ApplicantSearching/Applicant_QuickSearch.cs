@@ -41,6 +41,7 @@ namespace CommonJobs.Application.ApplicantSearching
 
             public bool IsApplicant { get; set; }
             public OrphanAttachment[] OrphanAttachments { get; set; }
+            public bool IsHired { get; set; }
         }
 
         public Applicant_QuickSearch()
@@ -64,7 +65,8 @@ namespace CommonJobs.Application.ApplicantSearching
                     Interviews = applicant.Notes.Where(x => !string.IsNullOrWhiteSpace(x.EventTypeSlug)).ToArray(),
                     EventSlugs = applicant.Notes.Where(x => !string.IsNullOrWhiteSpace(x.EventTypeSlug)).Select(x => x.EventTypeSlug).Distinct().ToArray(),
                     IsApplicant = true,
-                    OrphanAttachments = new dynamic[0]
+                    OrphanAttachments = new dynamic[0],
+                    IsHired = applicant.IsHired
                 });
 
             AddMap<Attachment>(attachments =>
@@ -87,6 +89,7 @@ namespace CommonJobs.Application.ApplicantSearching
                     EventSlugs = new dynamic[0],
                     IsApplicant = false,
                     OrphanAttachments = new[] { new { Id = attachment.Id, FileName = attachment.FileName, PlainContent = attachment.PlainContent } },
+                    IsHired = false
                 });
 
             Reduce = docs => 
@@ -115,7 +118,8 @@ namespace CommonJobs.Application.ApplicantSearching
                     AttachmentContent = g.SelectMany(x => x.AttachmentContent).Union(
                         g.SelectMany(x => x.OrphanAttachments).Where(x => g.SelectMany(y => y.AttachmentIds).Contains(x.Id)).Select(x => x.PlainContent)
                     ).ToArray(),
-                    OrphanAttachments = g.SelectMany(x => x.OrphanAttachments).Where(x => !g.SelectMany(y => y.AttachmentIds).Contains(x.Id)).ToArray()
+                    OrphanAttachments = g.SelectMany(x => x.OrphanAttachments).Where(x => !g.SelectMany(y => y.AttachmentIds).Contains(x.Id)).ToArray(),
+                    IsHired = g.Any(x => x.IsHired)
                 };
 
             Indexes.Add(x => x.FullName1, FieldIndexing.Analyzed);
