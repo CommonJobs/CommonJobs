@@ -12,32 +12,36 @@ namespace CommonJobs.Infrastructure.Mvc.SecurityTrimming
         public HtmlHelper HtmlHelper { get; private set; }
         public string ControllerName { get; private set; }
         public string ActionName { get; private set; }
+        public string AreaName { get; private set; }
         public bool IsActiveController { get; private set; }
         public bool IsActiveAction { get; private set; }
         public bool HasPermission { get; private set; }
 
-        internal SecurityTrimmingHelper(HtmlHelper htmlHelper, string actionName, string controllerName = null)
+        internal SecurityTrimmingHelper(HtmlHelper htmlHelper, string actionName, string controllerName = null, string areaName = null)
         {
             //TODO: better supprt to controllerName == null
             HtmlHelper = htmlHelper;
             ControllerName = controllerName;
             ActionName = actionName;
+            AreaName = areaName;
 
-            IsActiveController = CheckIsActiveController(htmlHelper.ViewContext, controllerName);
-            IsActiveAction = IsActiveController && CheckIsActiveAction(htmlHelper.ViewContext, actionName, controllerName);
-            HasPermission = CheckHasActionPermission(htmlHelper.ViewContext, actionName, controllerName);
+            IsActiveController = CheckIsActiveController(htmlHelper.ViewContext, controllerName, areaName);
+            IsActiveAction = IsActiveController && CheckIsActiveAction(htmlHelper.ViewContext, actionName, controllerName, areaName);
+            HasPermission = CheckHasActionPermission(htmlHelper.ViewContext, actionName, controllerName, areaName != null);
         }
 
-        public static bool CheckIsActiveController(ViewContext viewContext, string controllerName = null)
+        public static bool CheckIsActiveController(ViewContext viewContext, string controllerName = null, string areaName = null)
         {
+            //TODO: check area
             if (controllerName == null)
                 return true;
             var currentController = viewContext.RouteData.Values["controller"];
             return String.Equals(controllerName, currentController as string, StringComparison.OrdinalIgnoreCase);
         }
 
-        public static bool CheckIsActiveAction(ViewContext viewContext, string actionName, string controllerName = null)
+        public static bool CheckIsActiveAction(ViewContext viewContext, string actionName, string controllerName = null, string areaName = null)
         {
+            //TODO: check area
             if (!CheckIsActiveController(viewContext, controllerName))
                 return false;
             var currentAction = viewContext.RouteData.Values["action"];
@@ -45,13 +49,13 @@ namespace CommonJobs.Infrastructure.Mvc.SecurityTrimming
         }
 
         //FROM: http://stackoverflow.com/questions/2721869/security-aware-action-link
-        public static bool CheckHasActionPermission(ViewContext viewContext, string actionName, string controllerName = null)
+        public static bool CheckHasActionPermission(ViewContext viewContext, string actionName, string controllerName = null, bool useNamespaceFallback = false)
         {
             //if the controller name is empty the ASP.NET convention is:
             //"we are linking to a different controller
             ControllerBase controllerToLinkTo = string.IsNullOrEmpty(controllerName)
                                                     ? viewContext.Controller
-                                                    : GetControllerByName(viewContext, controllerName);
+                                                    : GetControllerByName(viewContext, controllerName, useNamespaceFallback);
 
             var controllerContext = new ControllerContext(viewContext.RequestContext, controllerToLinkTo);
 
@@ -87,11 +91,14 @@ namespace CommonJobs.Infrastructure.Mvc.SecurityTrimming
             return true;
         }
 
-        private static ControllerBase GetControllerByName(ViewContext viewContext, string controllerName)
+        private static ControllerBase GetControllerByName(ViewContext viewContext, string controllerName, bool useNamespaceFallback)
         {
             // Instantiate the controller and call Execute
             IControllerFactory factory = ControllerBuilder.Current.GetControllerFactory();
 
+            if (useNamespaceFallback)
+                viewContext.RequestContext.RouteData.DataTokens["UseNamespaceFallback"] = true;
+            
             IController controller = factory.CreateController(viewContext.RequestContext, controllerName);
 
             if (controller == null)

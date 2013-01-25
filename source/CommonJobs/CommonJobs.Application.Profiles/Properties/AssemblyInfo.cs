@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("CommonJobs")]
+[assembly: AssemblyTitle("CommonJobs.Application.Profiles")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("CommonJobs")]
-[assembly: AssemblyProduct("CommonJobs")]
-[assembly: AssemblyCopyright("Copyright © CommonJobs 2012")]
+[assembly: AssemblyCompany("Microsoft")]
+[assembly: AssemblyProduct("CommonJobs.Application.Profiles")]
+[assembly: AssemblyCopyright("Copyright © Microsoft 2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("5c1f1ae3-e3f0-4c18-8dfb-9d658fe7bc26")]
+[assembly: Guid("6dbe0bf2-222e-4162-9181-af92b23fcb86")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -29,7 +29,8 @@ using System.Runtime.InteropServices;
 //      Build Number
 //      Revision
 //
-// You can specify all the values or you can default the Revision and Build Numbers 
+// You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
-[assembly: AssemblyVersion("1.1.0.6")]
-[assembly: AssemblyFileVersion("1.1.0.6")]
+// [assembly: AssemblyVersion("1.0.*")]
+[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("1.0.0.0")]

@@ -84,11 +84,23 @@
     <Compile Include="201212280848_DefaultApplicantEventTypes.cs" />
     <Compile Include="201212280918_MoveApplicantNoteTypeToEventType.cs" />
     <Compile Include="201212310827_ReStoreApplicants.cs" />
+    <Compile Include="201301163531_DeleteMenu.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="201301161535_CleanLastModifiedBy.cs" />
     <Compile Include="MoveAttachmentToSlotBaseMigration.cs" />
     <Compile Include="MigrationClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CommonJobs.Domain.MyMenu\CommonJobs.Domain.MyMenu.csproj">
+      <Project>{962ee4f4-0045-42d2-9941-18d9ca184abe}</Project>
+      <Name>CommonJobs.Domain.MyMenu</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CommonJobs.Domain.Profiles\CommonJobs.Domain.Profiles.csproj">
+      <Project>{a897b065-2207-4faf-897a-31449b95f3fe}</Project>
+      <Name>CommonJobs.Domain.Profiles</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CommonJobs.Domain\CommonJobs.Domain.csproj">
       <Project>{CC2939C6-A278-4789-B937-ADB693E69C89}</Project>
       <Name>CommonJobs.Domain</Name>

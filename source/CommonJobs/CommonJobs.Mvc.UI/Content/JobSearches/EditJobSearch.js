@@ -82,10 +82,13 @@
         },
         initialize: function () {
             this.dataBinder = new App.EditJobSearchAppViewDataBinder({ el: this.el, model: this.model });
+            //TODO this does not fully work -- why?
+            this.model.get('RequiredTechnicalSkills').on("add remove reset change", this.reloadSuggestedApplicants, this);
             if (this.options.forceReadOnly) {
                 this.$el.addClass("edition-force-readonly");
                 this.editionReadOnly();
             }
+            this.reloadSuggestedApplicants();
         },
         events: {
             "click .saveJobSearch": "saveJobSearch",
@@ -103,9 +106,10 @@
                 dataType: "json",
                 data: JSON.stringify(App.appView.model.toJSON()),
                 contentType: "application/json; charset=utf-8",
-                success: function(result) {
+                success: function (result) {
                     me.editionNormal();
                     me.setModel(new App.JobSearch(result));
+                    me.reloadSuggestedApplicants();
                 }
             });
         },
@@ -120,6 +124,67 @@
                 success: function(result) {
                     me.editionNormal();
                     me.setModel(new App.JobSearch(result));
+                    me.reloadSuggestedApplicants();
+                }
+            });
+        },
+        reloadSuggestedApplicants: function () {
+            var me = this;
+            
+            var requiredTechnicalSkills = _.map(this.model.get('RequiredTechnicalSkills').models, function (rts) {
+                return {
+                    Name: rts.get('Name'),
+                    Level: rts.get('Level')
+                };
+            });
+
+            var data = {};
+            _.each(requiredTechnicalSkills, function (x, i) {
+                if (x.Name) {
+                    data["[" + i + "].Name"] = x.Name;
+                    if (+x.Level) {
+                        data["[" + i + "].Level"] = x.Level;
+                    }
+                }
+            });
+
+            $.ajax({
+                url: urlGenerator.action("GetSuggestedApplicants", "JobSearches"),
+                type: "GET",
+                dataType: "json",
+                data: data,
+                contentType: "application/json; charset=utf-8",
+                success: function (suggestedApplicants) {
+                    var suggestedApplicantsTemplate = $("#suggested-applicants-tmpl").html();
+                    var requiredSkills = _.map(me.model.get('RequiredTechnicalSkills').toJSON(), function (rts) {
+                        return rts.Name;
+                    });
+                    var templateData = {
+                        applicants: suggestedApplicants,
+                        //TODO this is a mess -- fix for something more straightforward
+                        applicantSkills:
+                            _.sortBy(
+                                _.uniq(
+                                    _.flatten(
+                                        _.map(suggestedApplicants, function (app) {
+                                            return _.map(app.TechnicalSkills, function (ts) {
+                                                return {
+                                                    Name: ts.Name,
+                                                    IsRequired: _.contains(requiredSkills, ts.Name)
+                                                };
+                                            });
+                                        })
+                                    ),
+                                    false, // list is partially sorted, so sorted = false
+                                    function (item) {
+                                        return item.Name;
+                                    }
+                                ),
+                                function (name) { return name; }
+                            )
+                    };
+                    var renderedSuggestedApplicants = _.template(suggestedApplicantsTemplate, templateData);
+                    me.$('.suggestedApplicants').html(renderedSuggestedApplicants);
                 }
             });
         },

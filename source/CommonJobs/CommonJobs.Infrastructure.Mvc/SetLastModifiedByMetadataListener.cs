@@ -20,9 +20,10 @@ namespace CommonJobs.Infrastructure.Mvc
 
         public bool BeforeStore(string key, object entityInstance, RavenJObject metadata, RavenJObject original)
         {
-            if (HttpContext.Current != null && HttpContext.Current.User != null && HttpContext.Current.User.Identity != null)
+            if (HttpContext.Current != null && HttpContext.Current.User != null && HttpContext.Current.User.Identity != null && HttpContext.Current.User.Identity.Name != null)
             {
-                metadata[UpdatedByMetadataKey] = HttpContext.Current.User.Identity.Name;
+                var parts = HttpContext.Current.User.Identity.Name.Split(new[] { '\\' });
+                metadata[UpdatedByMetadataKey] = parts.LastOrDefault();
                 return true;
             }
             return false;
