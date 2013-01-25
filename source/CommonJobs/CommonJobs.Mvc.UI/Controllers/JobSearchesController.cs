@@ -11,10 +11,12 @@ using CommonJobs.Infrastructure.Mvc;
 using CommonJobs.Infrastructure.RavenDb;
 using CommonJobs.Utilities;
 using Newtonsoft.Json;
+using CommonJobs.Mvc.UI.Infrastructure;
 
 namespace CommonJobs.Mvc.UI.Controllers
 {
     [CommonJobsAuthorize(Roles = "Users,JobSearchManagers")]
+    [Documentation("manual-de-usuario/busquedas-laborales")]
     public class JobSearchesController : CommonJobsController
     {
         private string GetJobSearchPublicUrl(JobSearch j, bool includePublicCode = true)

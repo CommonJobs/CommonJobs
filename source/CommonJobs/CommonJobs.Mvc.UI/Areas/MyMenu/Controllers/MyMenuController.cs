@@ -2,6 +2,7 @@
 using CommonJobs.Domain;
 using CommonJobs.Domain.MyMenu;
 using CommonJobs.Infrastructure.Mvc;
+using CommonJobs.Mvc.UI.Infrastructure;
 using NLog;
 using Raven.Client.Linq;
 using System;
@@ -12,6 +13,7 @@ using System.Web.Mvc;
 
 namespace CommonJobs.Mvc.UI.Areas.MyMenu
 {
+    [Documentation("manual-de-usuario/pedido-de-almuerzos")]
     public class MyMenuController : CommonJobsController
     {
         private static Logger log = LogManager.GetCurrentClassLogger();
@@ -89,6 +91,7 @@ namespace CommonJobs.Mvc.UI.Areas.MyMenu
         }
 
         [CommonJobsAuthorize(Roles = "Users,MenuManagers")]
+        [Documentation("manual-de-usuario/administracion-de-almuerzos")]
         public ActionResult Admin(string id /*menuid*/ = null)
         {
             ScriptManager.RegisterGlobalJavascript(

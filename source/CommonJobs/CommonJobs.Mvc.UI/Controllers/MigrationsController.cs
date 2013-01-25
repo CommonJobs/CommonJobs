@@ -7,10 +7,12 @@ using CommonJobs.Infrastructure.Migrations;
 using CommonJobs.Infrastructure.Mvc;
 using CommonJobs.Migrations;
 using Miscellaneous.Attributes.Controller;
+using CommonJobs.Mvc.UI.Infrastructure;
 
 namespace CommonJobs.Mvc.UI.Controllers
 {
     [CommonJobsAuthorize(Roles="Migrators")]
+    [Documentation("manual-de-usuario/administracion/Migraciones")]
     public class MigrationsController : Controller
     {
         //

@@ -7,10 +7,12 @@ using CommonJobs.Application;
 using CommonJobs.Infrastructure.Mvc;
 using NLog;
 using CommonJobs.Application.EmployeeAbsences;
+using CommonJobs.Mvc.UI.Infrastructure;
 
 namespace CommonJobs.Mvc.UI.Controllers
 {
     [CommonJobsAuthorize(Roles = "Users,EmployeeManagers")]
+    [Documentation("manual-de-usuario/ausencias")]
     public class AbsencesController : CommonJobsController
     {
         private static Logger log = LogManager.GetCurrentClassLogger();
