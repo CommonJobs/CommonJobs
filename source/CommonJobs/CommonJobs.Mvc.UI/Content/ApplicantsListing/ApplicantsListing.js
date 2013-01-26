@@ -95,6 +95,11 @@ $(function () {
             if ($("#SearchInAttachmentsCheck").prop("checked"))
                 searchParameters.SearchInAttachments = true;
 
+            if ($("#HiredInclude").prop("checked")) 
+                searchParameters.Hired = "Include";
+            if ($("#HiredOnlyHired").prop("checked")) 
+                searchParameters.Hired = "OnlyHired";
+
             var withEvents = []
             $(".event-filter input[name=WithEvents]:checked").each(function () {
                 withEvents.push(this.value);
@@ -189,7 +194,17 @@ $(function () {
 
     });
 
-    $("#HighlightedCheck, #SearchInAttachmentsCheck, .event-filter input[name=WithEvents]").change(function () {
+    $("#HiredInclude").change(function () {
+        if ($(this).attr("checked"))
+            $("#HiredOnlyHired").attr("checked", false);
+    });
+
+    $("#HiredOnlyHired").change(function () {
+        if ($(this).attr("checked"))
+            $("#HiredInclude").attr("checked", false);
+    });
+
+    $("#HighlightedCheck, #SearchInAttachmentsCheck, #HiredInclude, #HiredOnlyHired, .event-filter input[name=WithEvents]").change(function () {
         qs.search();
     });
 

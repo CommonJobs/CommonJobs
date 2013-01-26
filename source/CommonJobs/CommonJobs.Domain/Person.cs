@@ -39,8 +39,31 @@ namespace CommonJobs.Domain
                 }
             }
 		}
-		
-        public string Id { get; set; }
+
+        public event EventHandler IdChanged;
+
+        private void OnIdChanged()
+        {
+            var handler = IdChanged;
+            if (handler != null)
+            {
+                handler(this, EventArgs.Empty);
+            }
+        }
+
+        private string _id;
+        public string Id 
+        {
+            get { return _id; }
+            set
+            {
+                if (_id != value)
+                {
+                    _id = value;
+                    OnIdChanged();
+                }
+            }
+        }
 
         public ImageAttachment Photo { get; set; }
 

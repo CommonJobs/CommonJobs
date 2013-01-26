@@ -202,5 +202,7 @@ namespace CommonJobs.Domain
 
             return added;
         }
+
+        public string ApplicantId { get; set; }
     }
 }
