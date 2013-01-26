@@ -12,6 +12,7 @@ using CommonJobs.Application.ApplicantSearching;
 using CommonJobs.Mvc.UI.Infrastructure;
 using Newtonsoft.Json.Linq;
 using CommonJobs.Application.ApplicantFlow;
+using CommonJobs.Utilities;
 
 namespace CommonJobs.Mvc.UI.Controllers
 {

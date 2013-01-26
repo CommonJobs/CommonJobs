@@ -17,6 +17,7 @@ using System.IO;
 using CommonJobs.Application.AttachmentSearching;
 using System.Text.RegularExpressions;
 using CommonJobs.Mvc.UI.Infrastructure;
+using CommonJobs.Utilities;
 
 namespace CommonJobs.Mvc.UI.Controllers
 {

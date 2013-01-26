@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace CommonJobs.Mvc.UI.Infrastructure
+namespace CommonJobs.Utilities
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = true)]
     public class DocumentationAttribute : Attribute
