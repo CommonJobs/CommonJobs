@@ -1,5 +1,55 @@
-﻿@{
+﻿@using CommonJobs.Infrastructure.Mvc.SecurityTrimming
+@{
     ViewBag.Title = "Index";
+    ScriptManager.RegisterCss(Url.Content("~/Content/home.less"));
 }
 
-<h2>Index</h2>
+<h1>¡Bienvenido a CommonJobs!</h1>
+
+<div class="menuContainer">
+    <h2>Elija una sección del sistema:</h2>
+
+    @MenuItem("Empleados", Url.Content("~/Content/Home/employees.png"), "Index", "Employees")
+    @MenuItem("Legajos", Url.Content("~/Content/Home/files.png"), "Index", "EmployeeFiles")
+    @MenuItem("Archivos", Url.Content("~/Content/Home/attach.png"), "Index", "Attachments")
+    @MenuItem("MyMenu", Url.Content("~/Content/Home/mymenu.png"), "Index", "MyMenu")
+
+    @MenuItem("Postulantes", Url.Content("~/Content/Home/applicant.png"), "Index", "Applicants")
+    @MenuItem("Vacaciones", Url.Content("~/Content/Home/vacation.png"), "Index", "Vacations")
+    @MenuItem("Ausencias", Url.Content("~/Content/Home/absence.png"), "Index", "Absences")
+    @MenuItem("Búsquedas", Url.Content("~/Content/Home/search.png"), "Index", "JobSearches")
+
+    <h2>O infórmese sobre el proyecto <em>CommonJobs</em>:</h2>
+
+    @MenuLinkItem("Documentación", Url.Content("~/Content/Home/documentation.png"), "http://todo.com/plete", true) @*TODO: Complete*@
+    @MenuLinkItem("Manual de usuario", Url.Content("~/Content/Home/manual.png"), "http://todo.com/plete", true) @*TODO: Complete*@
+    @MenuLinkItem("Código fuente", Url.Content("~/Content/Home/sourcecode.png"), "https://github.com/CommonJobs/CommonJobs", true)
+</div>
+
+@helper MenuLinkItem(string label, string imageUrl, string linkTo, bool isLarge = false)
+{
+    <a class="menuItem @(isLarge ? "large" : string.Empty)" href="@linkTo">
+        <img src="@imageUrl" alt="@label" />
+        <p>@label</p>
+    </a>
+}
+
+@helper MenuDisabledItem(string label, string imageUrl, bool isLarge = false)
+{
+    <div class="disabled menuItem @(isLarge ? "large" : string.Empty)">
+        <img src="@imageUrl" alt="@label" />
+        <p>@label</p>
+    </div>
+}
+
+@helper MenuItem(string label, string imageUrl, string action, string controller, bool isLarge = false) 
+{
+    if (Html.HasPermission(action, controller))
+    {
+        @MenuLinkItem(label, imageUrl, Url.Action(action, controller), isLarge)
+    }
+    else 
+    {
+        @MenuDisabledItem(label, imageUrl, isLarge)
+    }
+}

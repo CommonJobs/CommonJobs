@@ -223,5 +223,23 @@ namespace CommonJobs.Mvc.UI.Controllers
                 return Json(new { success = true, attachment = employee.Photo });
             }
         }
+
+        [HttpPost]
+        public ActionResult HireApplicant(string applicantId)
+        {
+            var applicant = RavenSession.Load<Applicant>(applicantId);
+            if (applicant == null)
+                return HttpNotFound();
+            
+            var employee = applicant.Hire(DateTime.Now);
+            RavenSession.Store(employee);
+
+            return Json(new 
+            { 
+                success = true, 
+                applicantId = applicantId, 
+                employeeId = employee.Id 
+            });
+        }
     }
 }

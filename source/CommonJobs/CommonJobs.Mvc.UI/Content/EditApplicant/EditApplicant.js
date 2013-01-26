@@ -79,7 +79,6 @@
         var date = new Date(year, month - 1, day, 0, 0, 0, 0);
         return Globalize.format(date, "d' de 'MMMM' de 'yyyy");
     }
-
     var formatLongDateWithYears = function (value) {
         // date format: yyyy-mm-dd
         var year = value.substring(0, 4);
@@ -226,6 +225,7 @@
         attachedUrl: function (value) { return urlGenerator.action("Get", "Attachments", value.Id); }
     });
 
+
     App.EditApplicantAppViewDataBinder = Nervoustissue.FormBinder.extend({
         dataBindings:
         {
@@ -233,6 +233,16 @@
             {
                 controlLink: "ReadOnlyText",
                 valueToContent: formatLongDate
+            },
+            "EmployeeId":
+            {
+                controlLink: "ReadOnlyText",
+                template: _.template('<span class="view-editable" style="display: none;"></span>'),
+                valueToContent: function (value) {
+                    return " <a href='"
+                    + urlGenerator.action("Edit", "Employees", value)
+                    + "' target='_blank' title='Ver empleado'>Contratado</a>";
+                }
             },
             fullName:
             {
@@ -376,7 +386,8 @@
             "click .editionNormal": "editionNormal",
             "click .editionReadonly": "editionReadonly",
             "click .editionFullEdit": "editionFullEdit",
-            "click .deleteApplicant": "deleteApplicant"
+            "click .deleteApplicant": "deleteApplicant",
+            "click .hireApplicant": "hireApplicant",
         },
         saveApplicant: function () {
             var me = this;
@@ -389,6 +400,26 @@
                 success: function (result) {
                     me.editionNormal();
                     me.setModel(new App.Applicant(result));
+                }
+            });
+        },
+        hireApplicant: function () {
+            //TODO: Nervoustissue it to hide the button when the employee is already hired
+            if (App.appView.model.get("EmployeeId")) {
+                alert("Este postulante ya está contratado.");
+                return;
+            } else if (this.$el.hasClass("editing")) {
+                alert("Guarde o descarte los cambios antes de continuar.");
+                return;
+            }
+            $.ajax({
+                url: urlGenerator.action("HireApplicant", "Employees"),
+                type: 'POST',
+                dataType: 'json',
+                data: JSON.stringify({ applicantId: App.appView.model.get("Id") }),
+                contentType: 'application/json; charset=utf-8',
+                success: function (result) {
+                    window.location.href = urlGenerator.action("Edit", "Employees", result.employeeId);
                 }
             });
         },
