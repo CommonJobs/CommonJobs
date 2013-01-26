@@ -34,5 +34,8 @@ namespace CommonJobs.Domain
         [UIHint("MultilineText")]
         [Display(Name = "Comentarios")]
         public string Comment { get; set; }
+
+        [Display(Name = "Habilidades técnicas")]
+        public List<TechnicalSkill> TechnicalSkills { get; set; }
     }
 }

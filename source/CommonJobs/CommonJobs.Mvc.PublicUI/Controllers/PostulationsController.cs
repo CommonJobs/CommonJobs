@@ -95,6 +95,7 @@ namespace CommonJobs.Mvc.PublicUI.Controllers
             ViewBag.JobSearchId = jobSearch.Id;
             ViewBag.Title = jobSearch.Title;
             ViewBag.PublicNotes = new MvcHtmlString(md.Transform(jobSearch.PublicNotes));
+            ViewBag.TechnicalSkillLevels = TechnicalSkillLevelExtensions.GetValues();
         }
 
         private ActionResult NotFoundOrNotAvailable()
