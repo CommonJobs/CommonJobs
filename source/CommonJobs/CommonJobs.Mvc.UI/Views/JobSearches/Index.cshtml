@@ -27,7 +27,6 @@
 <script type="text/template" id="card-template">
     <% 
         var jobSearch = item.jobSearch;
-        var publicUrl = item.publicUrl;
     %>
     <div class="card column clickable item-card <%= jobSearch.IsPublic ? "public" : "" %>">
         <div class="cardDescription">
@@ -38,7 +37,7 @@
                     <i>Sin título</i>
                 <% } %>
             </a></p>
-            <p class="publicUrl"><a href="<%= publicUrl %>"><%= publicUrl %></a></p>
+            <p>.../<%= item.Slug %></p>
         </div>
     </div>
 </script>

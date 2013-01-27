@@ -51,7 +51,8 @@ namespace CommonJobs.Mvc.UI.Controllers
                 Items = results.Select(j => new
                 {
                     jobSearch = j,
-                    publicUrl = GetJobSearchPublicUrl(j)
+                    publicUrl = GetJobSearchPublicUrl(j),
+                    Slug = j.PublicCode
                 }).ToArray(),
                 Skipped = searchParameters.Skip,
                 TotalResults = query.Stats.TotalResults
