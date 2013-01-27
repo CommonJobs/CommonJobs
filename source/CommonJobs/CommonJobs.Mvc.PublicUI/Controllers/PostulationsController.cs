@@ -122,7 +122,7 @@ namespace CommonJobs.Mvc.PublicUI.Controllers
         public ActionResult TechnicalSkillSuggestions(string term, int maxSuggestions = 8)
         {
             var results = Query(new GetSuggestions(x => x.TechnicalSkillName, term, maxSuggestions));
-            return Json(new { suggestions = results });
+            return Json(results.Select(x => new { id = x, label = x }));
         }
 
         [HttpPost]

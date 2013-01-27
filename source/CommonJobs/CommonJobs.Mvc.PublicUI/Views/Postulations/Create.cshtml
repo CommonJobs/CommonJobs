@@ -3,6 +3,7 @@
 @section styles
 {
     <link href="@Url.Content("~/Content/Postulations.css")" rel="stylesheet" media="screen" />
+    <link href="@Url.Content("~/Content/themes/base/jquery.ui.all.css")" rel="stylesheet" media="screen" />
 }
 
 @section scripts
@@ -148,7 +149,8 @@
             );
 
             $("#technicalSkillList input[type=text]:last").autocomplete({
-                source: "@Url.Action("TechnicalSkillSuggestions")"
+                source: "@Url.Action("TechnicalSkillSuggestions")",
+                appendTo: "#technicalSkillList"
             });
         }
 

@@ -68,6 +68,11 @@ li .inputField {
     margin-bottom: 15px;
 }
 
+    li .inputField .editor-field,
+    li .inputField .editor-field input {
+        width: 235px;
+    }
+
 .fileField>.editor-field {
     display: inline-block;
 }
@@ -123,6 +128,10 @@ legend {
 #technicalSkillList {
     margin-top: 0;
 }
+
+    #technicalSkillList .ui-widget {
+        font-size: 0.8em;
+    }
 
 #btnAddTechnicalSkill {
     margin-left: 40px;
