@@ -33,6 +33,12 @@ namespace CommonJobs.Mvc.PublicUI
                 "new/{jobSearchNumber}/{*slug}", // URL with parameters
                 new { controller = "Postulations", action = "Create", slug = UrlParameter.Optional } // Parameter defaults
             );
+
+            routes.MapRoute(
+                "TechnicalSkillSuggestions",
+                "TechnicalSkillSuggestions",
+                new { controller = "Postulations", action = "TechnicalSkillSuggestions" }
+            );
         }
          
         protected override System.Reflection.Assembly[] GetIndexAssemblies()
