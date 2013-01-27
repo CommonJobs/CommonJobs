@@ -56,7 +56,7 @@
                 },
                 dataEmpty: function () { return false; },
                 valueToContent: function (value) {
-                    if (!value) value = "nuevaBusqueda";
+                    if (!value) value = "";
                     var url = App.publicUrlGenerator.bySections([value]);
                     return _.template('<span class="view-editable"><a href="<%= url %>"><%= url %></a> <span class="icon-edit">&nbsp;</span></span>', { url: url });
                 },
