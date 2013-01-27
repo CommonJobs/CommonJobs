@@ -30,7 +30,7 @@
     <% 
         var jobSearch = item.jobSearch;
     %>
-    <div class="card column clickable item-card <%= jobSearch.IsPublic ? "public" : "" %>">
+    <div class="card column clickable item-card">
         <div class="cardDescription">
             <p class="name"><a class="clickable-link" href="<%= urlGenerator.action("Edit", "JobSearches", jobSearch.Id) %>">
                 <% if (jobSearch.Title) { %>
@@ -43,6 +43,13 @@
         </div>
     </div>
 </script>
+
+<script type="text/template" id="public-mark-template">
+    <span class="bootstrap-scope">
+        <span class="public-element label label-info" title="<%= title %>">Pública</span>
+    </span>
+</script>
+
 
 <!-- TODO separate public from non-public results -->
 <div class="results">
