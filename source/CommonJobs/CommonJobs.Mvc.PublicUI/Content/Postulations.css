@@ -123,3 +123,8 @@ legend {
 #technicalSkillList {
     margin-top: 0;
 }
+
+#btnAddTechnicalSkill {
+    margin-left: 40px;
+    padding: 3px;
+}
