@@ -1,4 +1,16 @@
 ﻿$(function() {
+    var publicMarkTemplate = _.template($("#public-mark-template").html());
+    var markPublicJobSearches = function ($card, item) {
+        if (!item.jobSearch.IsPublic) return;
+
+        $el = $(publicMarkTemplate({
+            title: "Pública"
+        }));
+
+        $card.prepend($el);
+        $card.addClass("public");
+    };
+
     var qs = new QuickSearchPage({
         //page: 3,
         generateRedirectUrl: function(searchParameters) {
@@ -9,6 +21,9 @@
         },
         fillOtherSearchParameters: function(searchParameters) {
             //nothing in here for the moment
+        },
+        prepareResultCard: function ($card, item) {
+            markPublicJobSearches($card, item);
         }
     });
 

@@ -134,7 +134,7 @@ namespace CommonJobs.Mvc.UI.Controllers
                 {
                     applicant = GetApplicantJsonWithModifiedDate(applicant),
                     forceReadOnly = sharedCode != null,
-                    technicalSkillLevels = Enum.GetNames(typeof(TechnicalSkillLevel))
+                    technicalSkillLevels = TechnicalSkillLevelExtensions.GetLevelNames()
                 },
                 500);
             return View();

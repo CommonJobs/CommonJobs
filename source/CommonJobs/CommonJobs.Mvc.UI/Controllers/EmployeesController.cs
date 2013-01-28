@@ -174,7 +174,7 @@ namespace CommonJobs.Mvc.UI.Controllers
                 new { 
                     employee = employee,
                     attachmentSlots = slotsToShow,
-                    technicalSkillLevels = Enum.GetNames(typeof(TechnicalSkillLevel))
+                    technicalSkillLevels = TechnicalSkillLevelExtensions.GetLevelNames()
                 }, 
                 500);
             return View();

@@ -47,13 +47,14 @@ namespace CommonJobs.Mvc.UI.Controllers
         public JsonNetResult List(JobSearchSearchParameters searchParameters)
         {
             var query = new SearchJobSearches(searchParameters);
-            var results = Query(query);
+            var results = Query(query).OrderByDescending(j => j.IsPublic);
             return Json(new
             {
                 Items = results.Select(j => new
                 {
                     jobSearch = j,
-                    publicUrl = GetJobSearchPublicUrl(j)
+                    publicUrl = GetJobSearchPublicUrl(j),
+                    Slug = j.PublicCode
                 }).ToArray(),
                 Skipped = searchParameters.Skip,
                 TotalResults = query.Stats.TotalResults
