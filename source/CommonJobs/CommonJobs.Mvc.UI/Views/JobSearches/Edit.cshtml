@@ -61,14 +61,14 @@
         <p class="no-applicants-notice">No hay ningún postulante que cumpla con los requisitos mínimos para esta búsqueda.</p>
     <% } else { %>
         <table class="table table-condensed table-hover">
-            <theader>
+            <thead>
                 <tr>
                     <th class="name-title">Postulante</th>
                     <% _.each(applicantSkills, function(skill) { %>
                         <th class="skill-header <%= skill.IsRequired ? "required" : "" %>"><%= skill.Name %></th>
                     <% }); %>
                 </tr>
-            </theader>
+            </thead>
             <tbody>
                 <% _.each(applicants, function(applicant) {
                        var applicantUrl = urlGenerator.action("Edit", "Applicants", applicant.Id);
