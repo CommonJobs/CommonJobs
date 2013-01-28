@@ -72,8 +72,11 @@ namespace CommonJobs.Mvc.UI
 #if NO_AD
             CommonJobsAuthorizeAttribute.AuthorizationBehavior = new ForcedGroupsFromSettingsAuthorizationBehavior("CommonJobs/FakeADGroups");
 #else
-            CommonJobsAuthorizeAttribute.AuthorizationBehavior = new PrefixFromSettingsAuthorizationBehavior("CommonJobs/ADGroupsPrefix");
+            CommonJobsAuthorizeAttribute.AuthorizationBehavior = new MixedAuthorizationBehavior(
+                new SessionRolesAuthorizationBehavior(CommonJobs.Mvc.UI.Controllers.AccountController.SessionRolesKey),
+                new PrefixFromSettingsAuthorizationBehavior("CommonJobs/ADGroupsPrefix"));
 #endif
+
 
             // Es cierto que iniciar recurrentes aquí puede no ser una buena idea (http://haacked.com/archive/2011/10/16/the-dangers-of-implementing-recurring-background-tasks-in-asp-net.aspx)
             // Pero es la mejor forma de lograr un deploy simple, y a la vez soporar AppHarbor.

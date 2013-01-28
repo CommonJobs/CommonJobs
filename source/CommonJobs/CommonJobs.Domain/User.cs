@@ -54,5 +54,7 @@ namespace CommonJobs.Domain
         {
             return HashedPassword == GetHashedPassword(maybePwd);
         }
+
+        public string[] Roles { get; set; }
     }
 }

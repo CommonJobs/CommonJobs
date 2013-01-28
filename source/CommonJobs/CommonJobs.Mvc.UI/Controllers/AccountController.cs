@@ -12,6 +12,7 @@ namespace CommonJobs.Mvc.UI.Controllers
 {
     public class AccountController : CommonJobsController
     {
+        public const string SessionRolesKey = "CommonJobs/Roles";
         //
         // GET: /Account/LogOn
 
@@ -33,6 +34,8 @@ namespace CommonJobs.Mvc.UI.Controllers
                 if (user != null && user.ValidatePassword(model.Password))
                 {
                     FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
+                    Session[SessionRolesKey] = user.Roles;
+                    
                     if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
                         && !returnUrl.StartsWith("//") && !returnUrl.StartsWith("/\\"))
                     {
@@ -58,8 +61,9 @@ namespace CommonJobs.Mvc.UI.Controllers
 
         public ActionResult LogOff()
         {
+            Session.Remove(SessionRolesKey);
             FormsAuthentication.SignOut();
-
+            
             return RedirectToAction("Index", "Home");
         }
 
