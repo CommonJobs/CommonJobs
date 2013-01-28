@@ -21,7 +21,7 @@ using CommonJobs.Mvc.UI.Infrastructure;
 namespace CommonJobs.Mvc.UI.Controllers
 {
     [CommonJobsAuthorize(Roles="Users,EmployeeManagers")]
-    [Documentation("manual-de-usuario/empleados")]
+    [Documentation("docs/manual-de-usuario/empleados")]
     public class EmployeesController : CommonJobsController
     {
         private static Logger log = LogManager.GetCurrentClassLogger();
@@ -68,7 +68,7 @@ namespace CommonJobs.Mvc.UI.Controllers
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 
-        [Documentation("manual-de-usuario/edicion-de-empleado")]
+        [Documentation("docs/manual-de-usuario/edicion-de-empleado")]
         public ActionResult Create(string name)
         {
             var newEmployee = CreateEmployee(name);
@@ -158,7 +158,7 @@ namespace CommonJobs.Mvc.UI.Controllers
             }
         }
 
-        [Documentation("manual-de-usuario/edicion-de-empleado")]
+        [Documentation("docs/manual-de-usuario/edicion-de-empleado")]
         public ActionResult Edit(string id)
         {
             log.Info("Edit employee (id: " + id + ")");

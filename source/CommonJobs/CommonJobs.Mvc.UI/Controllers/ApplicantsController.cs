@@ -17,7 +17,7 @@ using CommonJobs.Utilities;
 namespace CommonJobs.Mvc.UI.Controllers
 {
     [CommonJobsAuthorize(Roles="Users,ApplicantManagers")]
-    [Documentation("manual-de-usuario/postulantes")]
+    [Documentation("docs/manual-de-usuario/postulantes")]
     public class ApplicantsController : CommonJobsController
     {
         //
@@ -52,7 +52,7 @@ namespace CommonJobs.Mvc.UI.Controllers
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 
-        [Documentation("manual-de-usuario/edicion-de-postulante")]
+        [Documentation("docs/manual-de-usuario/edicion-de-postulante")]
         public ActionResult Create(string name)
         {
             var newApplicant = new Applicant(name);
@@ -122,7 +122,7 @@ namespace CommonJobs.Mvc.UI.Controllers
         }
 
         [SharedEntityAlternativeAuthorization]
-        [Documentation("manual-de-usuario/edicion-de-postulante")]
+        [Documentation("docs/manual-de-usuario/edicion-de-postulante")]
         public ActionResult Edit(string id, string sharedCode = null) 
         {
             var applicant = RavenSession.Load<Applicant>(id);

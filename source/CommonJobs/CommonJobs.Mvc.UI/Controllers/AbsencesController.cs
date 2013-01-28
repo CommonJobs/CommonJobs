@@ -13,7 +13,7 @@ using CommonJobs.Utilities;
 namespace CommonJobs.Mvc.UI.Controllers
 {
     [CommonJobsAuthorize(Roles = "Users,EmployeeManagers")]
-    [Documentation("manual-de-usuario/ausencias")]
+    [Documentation("docs/manual-de-usuario/ausencias")]
     public class AbsencesController : CommonJobsController
     {
         private static Logger log = LogManager.GetCurrentClassLogger();

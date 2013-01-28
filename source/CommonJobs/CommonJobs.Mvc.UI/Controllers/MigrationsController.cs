@@ -13,7 +13,7 @@ using CommonJobs.Utilities;
 namespace CommonJobs.Mvc.UI.Controllers
 {
     [CommonJobsAuthorize(Roles="Migrators")]
-    [Documentation("manual-de-usuario/administracion/Migraciones")]
+    [Documentation("docs/manual-de-usuario/administracion/Migraciones")]
     public class MigrationsController : Controller
     {
         //

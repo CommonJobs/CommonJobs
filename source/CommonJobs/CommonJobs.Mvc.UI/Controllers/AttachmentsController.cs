@@ -21,7 +21,7 @@ using CommonJobs.Utilities;
 
 namespace CommonJobs.Mvc.UI.Controllers
 {
-    [Documentation("manual-de-usuario/archivos")]
+    [Documentation("docs/manual-de-usuario/archivos")]
     public class AttachmentsController : CommonJobsController
     {
         //TODO: permitir no usar los nombres de las acciones
