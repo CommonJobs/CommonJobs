@@ -2,6 +2,7 @@
 using CommonJobs.Domain;
 using CommonJobs.Domain.MyMenu;
 using CommonJobs.Infrastructure.Mvc;
+using CommonJobs.Mvc.UI.Infrastructure;
 using NLog;
 using Raven.Client.Linq;
 using System;
@@ -9,9 +10,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using CommonJobs.Utilities;
 
 namespace CommonJobs.Mvc.UI.Areas.MyMenu
 {
+    [Documentation("docs/manual-de-usuario/pedido-de-almuerzos")]
     public class MyMenuController : CommonJobsController
     {
         private static Logger log = LogManager.GetCurrentClassLogger();
@@ -26,7 +29,11 @@ namespace CommonJobs.Mvc.UI.Areas.MyMenu
             }
             else
             {
+#if NO_AD
+                return "DemoUser";
+#else
                 throw new ApplicationException("User cannot be detected");
+#endif
             }
         }
 
@@ -89,6 +96,7 @@ namespace CommonJobs.Mvc.UI.Areas.MyMenu
         }
 
         [CommonJobsAuthorize(Roles = "Users,MenuManagers")]
+        [Documentation("docs/manual-de-usuario/administracion-de-almuerzos")]
         public ActionResult Admin(string id /*menuid*/ = null)
         {
             ScriptManager.RegisterGlobalJavascript(

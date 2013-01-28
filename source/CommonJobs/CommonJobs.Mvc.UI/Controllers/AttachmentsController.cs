@@ -16,9 +16,12 @@ using System.Drawing;
 using System.IO;
 using CommonJobs.Application.AttachmentSearching;
 using System.Text.RegularExpressions;
+using CommonJobs.Mvc.UI.Infrastructure;
+using CommonJobs.Utilities;
 
 namespace CommonJobs.Mvc.UI.Controllers
 {
+    [Documentation("docs/manual-de-usuario/archivos")]
     public class AttachmentsController : CommonJobsController
     {
         //TODO: permitir no usar los nombres de las acciones
