@@ -9,6 +9,8 @@
     ScriptManager.RegisterJs(Url.Content("~/Content/JobSearches/JobSearchListing.js"));
 }
 
+<h1>Búsquedas laborales</h1>
+
 <script type="text/template" id="add-new-card-template">
     <div class="card column clickable add-new-card">
         <img class="cardPicture" src="@Url.Content("~/Content/Images/AddJobSearch.png")" alt="Agregar nueva..."  />
@@ -27,9 +29,8 @@
 <script type="text/template" id="card-template">
     <% 
         var jobSearch = item.jobSearch;
-        var publicUrl = item.publicUrl;
     %>
-    <div class="card column clickable item-card <%= jobSearch.IsPublic ? "public" : "" %>">
+    <div class="card column clickable item-card">
         <div class="cardDescription">
             <p class="name"><a class="clickable-link" href="<%= urlGenerator.action("Edit", "JobSearches", jobSearch.Id) %>">
                 <% if (jobSearch.Title) { %>
@@ -38,10 +39,17 @@
                     <i>Sin título</i>
                 <% } %>
             </a></p>
-            <p class="publicUrl"><a href="<%= publicUrl %>"><%= publicUrl %></a></p>
+            <p>.../<%= item.Slug %></p>
         </div>
     </div>
 </script>
+
+<script type="text/template" id="public-mark-template">
+    <span class="bootstrap-scope">
+        <span class="public-element label label-info" title="<%= title %>">Pública</span>
+    </span>
+</script>
+
 
 <!-- TODO separate public from non-public results -->
 <div class="results">
