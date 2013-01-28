@@ -3,108 +3,164 @@
 @section styles
 {
     <link href="@Url.Content("~/Content/Postulations.css")" rel="stylesheet" media="screen" />
+    <link href="@Url.Content("~/Content/themes/base/jquery.ui.all.css")" rel="stylesheet" media="screen" />
 }
 
 @section scripts
 {
     <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/underscore.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery-ui-1.8.11.js")" type="text/javascript"></script>
 }
 
 <div id="carreers-section" class="section-container careers-section">
     <div class="outer-container">
         <div id="postulations" class="inner-container">
-            
-            <div class="center">
-                <span class="title"></span>
-            </div>
+            <div class="new-application">
 
-            <div class="notes">
-                @ViewBag.PublicNotes
-            </div>
+                <div class="center">
+                    <span class="title"></span>
+                </div>
 
-            @using (Html.BeginForm("Create", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
-            {
-                @Html.Hidden("JobSearchId")
-                @Html.ValidationSummary(true)
-                <fieldset>
-                    <div class="textField inputField">
-                        <div class="editor-label">
-                            @Html.LabelFor(model => model.FirstName)
-                        </div>
-                        <div class="editor-field">
-                            @Html.EditorFor(model => model.FirstName)
-                        </div>
-                        @Html.ValidationMessageFor(model => model.FirstName)
-                    </div>
+                <div class="notes">
+                    @ViewBag.PublicNotes
+                </div>
 
-                    <div class="textField inputField">
-                        <div class="editor-label">
-                            @Html.LabelFor(model => model.LastName)
-                        </div>
-                        <div class="editor-field">
-                            @Html.EditorFor(model => model.LastName)
-                        </div>
-                        @Html.ValidationMessageFor(model => model.LastName)
-                    </div>
+                @using (Html.BeginForm("Create", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.Hidden("JobSearchId")
+                    @Html.ValidationSummary(true)
+                    <fieldset>
+                        <legend>Datos principales</legend>
 
-                    <div class="textField inputField">
-                        <div class="editor-label">
-                            @Html.LabelFor(model => model.Phone)
+                        <div class="textField inputField">
+                            <div class="editor-label">
+                                @Html.LabelFor(model => model.FirstName)
+                            </div>
+                            <div class="editor-field">
+                                @Html.EditorFor(model => model.FirstName)
+                            </div>
+                            @Html.ValidationMessageFor(model => model.FirstName)
                         </div>
-                        <div class="editor-field">
-                            @Html.EditorFor(model => model.Phone)
+
+                        <div class="textField inputField">
+                            <div class="editor-label">
+                                @Html.LabelFor(model => model.LastName)
+                            </div>
+                            <div class="editor-field">
+                                @Html.EditorFor(model => model.LastName)
+                            </div>
+                            @Html.ValidationMessageFor(model => model.LastName)
                         </div>
-                        @Html.ValidationMessageFor(model => model.Phone)
-                    </div>
+
+                        <div class="textField inputField">
+                            <div class="editor-label">
+                                @Html.LabelFor(model => model.Phone)
+                            </div>
+                            <div class="editor-field">
+                                @Html.EditorFor(model => model.Phone)
+                            </div>
+                            @Html.ValidationMessageFor(model => model.Phone)
+                        </div>
       
-                    <div class="textField inputField">
-                        <div class="editor-label">
-                            @Html.LabelFor(model => model.Email)
+                        <div class="textField inputField">
+                            <div class="editor-label">
+                                @Html.LabelFor(model => model.Email)
+                            </div>
+                            <div class="editor-field">
+                                @Html.EditorFor(model => model.Email)
+                            </div>
+                            @Html.ValidationMessageFor(model => model.Email)
                         </div>
-                        <div class="editor-field">
-                            @Html.EditorFor(model => model.Email)
-                        </div>
-                        @Html.ValidationMessageFor(model => model.Email)
-                    </div>
                     
-                    <div class="inputField fileField">
-                        <div class="editor-label">
-                            @Html.LabelFor(model => model.Curriculum)
+                        <div class="inputField fileField">
+                            <div class="editor-label">
+                                @Html.LabelFor(model => model.Curriculum)
+                            </div>
+
+                            <div class="editor-field">
+                                <input type="file" name="curriculumFile" id="curriculumFile" />
+                            </div>
+                            @Html.ValidationMessage("curriculumFile")
                         </div>
 
-                        <div class="editor-field">
-                            <input type="file" name="curriculumFile" id="curriculumFile" />
+                        <div class="textField inputField">
+                            <div class="editor-label">
+                                @Html.LabelFor(model => model.LinkedInUrl)
+                            </div>
+                            <div class="editor-field">
+                                @Html.EditorFor(model => model.LinkedInUrl)
+                            </div>
+                            @Html.ValidationMessage("LinkedInUrl")
                         </div>
-                        @Html.ValidationMessage("curriculumFile")
-                    </div>
 
-                    <div class="textField inputField">
-                        <div class="editor-label">
-                            @Html.LabelFor(model => model.LinkedInUrl)
+                        <div class="largeTextField textField inputField">
+                            <div class="editor-label">
+                                @Html.LabelFor(model => model.Comment)
+                            </div>
+                            <div class="editor-field">
+                                @Html.EditorFor(model => model.Comment)
+                            </div>
+                            @Html.ValidationMessage("LinkedInUrl")
                         </div>
-                        <div class="editor-field">
-                            @Html.EditorFor(model => model.LinkedInUrl)
-                        </div>
-                        @Html.ValidationMessage("LinkedInUrl")
-                    </div>
-
-                    <div class="largeTextField textField inputField">
-                        <div class="editor-label">
-                            @Html.LabelFor(model => model.Comment)
-                        </div>
-                        <div class="editor-field">
-                            @Html.EditorFor(model => model.Comment)
-                        </div>
-                        @Html.ValidationMessage("LinkedInUrl")
-                    </div>
-
+                    </fieldset>
+                    <fieldset>
+                        <legend>Habilidades técnicas</legend>
+                        <ul id="technicalSkillList"> <!-- Filled by template -->
+                        </ul>
+                        <button id="btnAddTechnicalSkill" type="button">+ Agregar habilidad técnica...</button>
+                    </fieldset>
                     <p class="center">
                         <input type="submit" value="Enviar" class="big-button" />
                     </p>
-                </fieldset>
-            }
-
+                }
+            </div>
         </div>
     </div>
 </div>
+
+<script type="text/template" id="technicalSkill-template">
+    <li>
+        <input type="hidden" name="TechnicalSkills.Index" value="<%= Index %>" />
+        <div class="textField inputField">
+            <div class="editor-field">
+                <input class="technicalSkillName" type="text" name="TechnicalSkills[<%= Index %>].Name" value="" />
+            </div>
+
+            <select name="TechnicalSkills[<%= Index %>].Level">
+                @foreach (var skill in ViewBag.TechnicalSkillLevels)
+                { 
+                    <option value="@((int)skill)">@skill</option>
+                }
+            </select>
+        </div>                                
+    </li>
+</script>
+
+<script>
+    $(function () {
+        var technicalSkillIndex = 0;
+        var template = $("#technicalSkill-template").html();
+
+        function addTechnicalSkillContainer() {
+            $("#technicalSkillList").append(
+                _.template(template, { Index: technicalSkillIndex++ })
+            );
+
+            $("#technicalSkillList input[type=text]:last").autocomplete({
+                source: "@Url.Action("TechnicalSkillSuggestions")",
+                appendTo: "#technicalSkillList"
+            });
+        }
+
+        addTechnicalSkillContainer();
+
+        $("#btnAddTechnicalSkill").click(function () { 
+            addTechnicalSkillContainer();
+            $("#technicalSkillList input[type=text]:last").focus();
+        });
+
+        
+    });
+</script>

@@ -11,6 +11,7 @@ using CommonJobs.Infrastructure.Mvc;
 using CommonJobs.Infrastructure.RavenDb;
 using NLog;
 using CommonJobs.Utilities;
+using CommonJobs.Application.Suggestions;
 
 namespace CommonJobs.Mvc.PublicUI.Controllers
 {
@@ -43,7 +44,9 @@ namespace CommonJobs.Mvc.PublicUI.Controllers
                 JobSearchId = postulation.JobSearchId,
                 Email = postulation.Email,
                 FirstName = postulation.FirstName,
-                LastName = postulation.LastName
+                LastName = postulation.LastName,
+                TechnicalSkills = postulation.TechnicalSkills,
+                LinkedInLink = postulation.LinkedInUrl
             };
             RavenSession.Store(applicant);
 
@@ -58,12 +61,6 @@ namespace CommonJobs.Mvc.PublicUI.Controllers
             if (!string.IsNullOrEmpty(postulation.Comment))
             {
                 applicant.AddGeneralNote("Nota de postulación:\n\n" + postulation.Comment);
-            }
-
-            //TODO change this when links are in place
-            if (!string.IsNullOrEmpty(postulation.LinkedInUrl))
-            {
-                applicant.AddGeneralNote("Perfil de LinkedIn: " + postulation.LinkedInUrl);
             }
         }
 
@@ -95,6 +92,7 @@ namespace CommonJobs.Mvc.PublicUI.Controllers
             ViewBag.JobSearchId = jobSearch.Id;
             ViewBag.Title = jobSearch.Title;
             ViewBag.PublicNotes = new MvcHtmlString(md.Transform(jobSearch.PublicNotes));
+            ViewBag.TechnicalSkillLevels = TechnicalSkillLevelExtensions.GetValues();
         }
 
         private ActionResult NotFoundOrNotAvailable()
@@ -119,6 +117,12 @@ namespace CommonJobs.Mvc.PublicUI.Controllers
 
             PrepareJobSearchView(jobSearch);
             return View();
+        }
+
+        public ActionResult TechnicalSkillSuggestions(string term, int maxSuggestions = 8)
+        {
+            var results = Query(new GetSuggestions(x => x.TechnicalSkillName, term, maxSuggestions));
+            return Json(results.Select(x => new { id = x, label = x }));
         }
 
         [HttpPost]
