@@ -28,11 +28,14 @@ namespace CommonJobs.Domain
         [Display(Name = "Currículum")]
         public TemporalFileReference Curriculum { get; set; }
 
-        [Display(Name = "URL de perfil de LinkedIn")]
+        [Display(Name = "URL de LinkedIn")]
         public string LinkedInUrl { get; set; }
 
         [UIHint("MultilineText")]
         [Display(Name = "Comentarios")]
         public string Comment { get; set; }
+
+        [Display(Name = "Habilidades técnicas")]
+        public List<TechnicalSkill> TechnicalSkills { get; set; }
     }
 }

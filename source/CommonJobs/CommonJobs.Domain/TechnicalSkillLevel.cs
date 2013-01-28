@@ -12,4 +12,18 @@ namespace CommonJobs.Domain
         Intermediate = 2,
         Advanced = 3
     }
+
+    public static class TechnicalSkillLevelExtensions
+    {
+        public static string[] GetLevelNames()
+        {
+            return Enum.GetNames(typeof(TechnicalSkillLevel));
+        }
+
+        public static IEnumerable<TechnicalSkillLevel> GetValues()
+        {
+            return Enum.GetValues(typeof(TechnicalSkillLevel))
+                .Cast<TechnicalSkillLevel>();
+        }
+    }
 }
