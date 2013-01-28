@@ -67,6 +67,7 @@
     <Compile Include="EventType.cs" />
     <Compile Include="TechnicalSkill.cs" />
     <Compile Include="TechnicalSkillLevel.cs" />
+    <Compile Include="User.cs" />
     <Compile Include="VacationsReport.cs" />
     <Compile Include="Certification.cs" />
     <Compile Include="CompanyHistory.cs" />
