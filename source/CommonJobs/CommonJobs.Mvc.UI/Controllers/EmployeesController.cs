@@ -16,10 +16,12 @@ using NLog;
 using CommonJobs.Application.AttachmentSlots;
 using CommonJobs.Application;
 using Raven.Abstractions.Data;
+using CommonJobs.Mvc.UI.Infrastructure;
 
 namespace CommonJobs.Mvc.UI.Controllers
 {
     [CommonJobsAuthorize(Roles="Users,EmployeeManagers")]
+    [Documentation("docs/manual-de-usuario/empleados")]
     public class EmployeesController : CommonJobsController
     {
         private static Logger log = LogManager.GetCurrentClassLogger();
@@ -65,7 +67,8 @@ namespace CommonJobs.Mvc.UI.Controllers
                 .Where(x => x.StartsWith(term));
             return Json(list, JsonRequestBehavior.AllowGet);
         }
-        
+
+        [Documentation("docs/manual-de-usuario/edicion-de-empleado")]
         public ActionResult Create(string name)
         {
             var newEmployee = CreateEmployee(name);
@@ -154,7 +157,8 @@ namespace CommonJobs.Mvc.UI.Controllers
                 employee.Notes.AddRange(notes);
             }
         }
-         
+
+        [Documentation("docs/manual-de-usuario/edicion-de-empleado")]
         public ActionResult Edit(string id)
         {
             log.Info("Edit employee (id: " + id + ")");

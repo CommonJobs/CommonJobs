@@ -6,12 +6,15 @@ using System.Web.Mvc;
 using CommonJobs.Application;
 using CommonJobs.Application.EmployeeFiles;
 using CommonJobs.Infrastructure.Mvc;
+using CommonJobs.Mvc.UI.Infrastructure;
+using CommonJobs.Utilities;
 
 namespace CommonJobs.Mvc.UI.Controllers
 {
     //NOTE: "Employee Files" as a name refers to the file that is the source of record for employee data
     //It is NOT meant as an synonym to "attachment"
     [CommonJobsAuthorize(Roles = "Users,EmployeeManagers")]
+    [Documentation("docs/manual-de-usuario/legajos")]
     public class EmployeeFilesController : CommonJobsController
     {
         public ActionResult Index(int bsize = 10)
