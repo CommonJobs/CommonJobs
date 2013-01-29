@@ -2,6 +2,7 @@
 using CommonJobs.Domain;
 using CommonJobs.Domain.MyMenu;
 using CommonJobs.Infrastructure.Mvc;
+using CommonJobs.Mvc.UI.Infrastructure;
 using NLog;
 using Raven.Client.Linq;
 using System;
@@ -9,9 +10,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using CommonJobs.Utilities;
 
 namespace CommonJobs.Mvc.UI.Areas.MyMenu
 {
+    [CommonJobsAuthorize]
     public class MyMenuController : CommonJobsController
     {
         private static Logger log = LogManager.GetCurrentClassLogger();
@@ -20,13 +23,20 @@ namespace CommonJobs.Mvc.UI.Areas.MyMenu
         {
             //TODO: remove hardcoded "CS\\"
             //TODO: move to an AuthorizeAttribute or something more elegant
-            if (User != null && User.Identity != null && User.Identity.Name != null && User.Identity.Name.StartsWith("CS\\"))
+            if (User != null && User.Identity != null && User.Identity.Name != null)
             {
-                return User.Identity.Name.Substring(3);
+                var user =  User.Identity.Name;
+                if (user.StartsWith("CS\\"))
+                    user = user.Substring(3);
+                return user;
             }
             else
             {
+#if NO_AD
+                return "DemoUser";
+#else
                 throw new ApplicationException("User cannot be detected");
+#endif
             }
         }
 
@@ -89,6 +99,7 @@ namespace CommonJobs.Mvc.UI.Areas.MyMenu
         }
 
         [CommonJobsAuthorize(Roles = "Users,MenuManagers")]
+        [Documentation("manual-de-usuario/administracion-de-almuerzos")]
         public ActionResult Admin(string id /*menuid*/ = null)
         {
             ScriptManager.RegisterGlobalJavascript(
