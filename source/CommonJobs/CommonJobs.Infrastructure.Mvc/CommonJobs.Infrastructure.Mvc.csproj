@@ -81,6 +81,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Authorize\CommonJobsAuthorizeAttribute.cs" />
+    <Compile Include="Authorize\MixedAuthorizationBehavior.cs" />
+    <Compile Include="Authorize\SessionRolesAuthorizationBehavior.cs" />
     <Compile Include="Authorize\ForcedGroupsAuthorizationBehavior.cs" />
     <Compile Include="Authorize\ForcedGroupsAuthorizationBehaviorBase.cs" />
     <Compile Include="Authorize\ForcedGroupsFromSettingsAuthorizationBehavior.cs" />
