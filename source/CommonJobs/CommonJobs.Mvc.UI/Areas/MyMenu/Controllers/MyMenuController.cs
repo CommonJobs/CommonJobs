@@ -1,4 +1,4 @@
-﻿using CommonJobs.Application.MyMenu;
+using CommonJobs.Application.MyMenu;
 using CommonJobs.Domain;
 using CommonJobs.Domain.MyMenu;
 using CommonJobs.Infrastructure.Mvc;
@@ -15,6 +15,7 @@ using CommonJobs.Utilities;
 namespace CommonJobs.Mvc.UI.Areas.MyMenu
 {
     [CommonJobsAuthorize]
+    [Documentation("docs/manual-de-usuario/pedido-de-almuerzos")]
     public class MyMenuController : CommonJobsController
     {
         private static Logger log = LogManager.GetCurrentClassLogger();
@@ -100,6 +101,7 @@ namespace CommonJobs.Mvc.UI.Areas.MyMenu
 
         [CommonJobsAuthorize(Roles = "Users,MenuManagers")]
         [Documentation("manual-de-usuario/administracion-de-almuerzos")]
+        [Documentation("docs/manual-de-usuario/administracion-de-almuerzos")]
         public ActionResult Admin(string id /*menuid*/ = null)
         {
             ScriptManager.RegisterGlobalJavascript(

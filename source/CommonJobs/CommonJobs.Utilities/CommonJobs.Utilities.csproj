@@ -56,6 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CleanTextBuilder.cs" />
+    <Compile Include="DocumentationAttribute.cs" />
     <Compile Include="Encoding.cs" />
     <Compile Include="FunctionHelper.cs" />
     <Compile Include="IEnumerableExtensions.cs" />

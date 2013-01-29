@@ -92,6 +92,7 @@
     <Compile Include="Authorize\PrefixAuthorizationBehavior.cs" />
     <Compile Include="Authorize\IAuthorizationBehavior.cs" />
     <Compile Include="Authorize\PrefixAuthorizationBehaviorBase.cs" />
+    <Compile Include="HtmlDocumentationExtensions.cs" />
     <Compile Include="SecurityTrimming\SecurityTrimmingExtensions.cs" />
     <Compile Include="SecurityTrimming\SecurityTrimmingForm.cs" />
     <Compile Include="SecurityTrimming\SecurityTrimmingHelper.cs" />
