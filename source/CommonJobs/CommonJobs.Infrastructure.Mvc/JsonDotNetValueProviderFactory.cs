@@ -27,9 +27,16 @@ namespace CommonJobs.Infrastructure.Mvc
             else if (value is JArray)
             {
                 var jArray = value as JArray;
-                for (int i = 0; i < jArray.Count; i++)
+                if (jArray.Count == 0)
                 {
-                    AddToBackingStore(backingStore, MakeArrayKey(prefix, i), jArray[i]);
+                    AddToBackingStore(backingStore, prefix, (JValue)null);
+                }
+                else
+                {
+                    for (int i = 0; i < jArray.Count; i++)
+                    {
+                        AddToBackingStore(backingStore, MakeArrayKey(prefix, i), jArray[i]);
+                    }
                 }
             }
             else if (value is JValue)
@@ -39,6 +46,10 @@ namespace CommonJobs.Infrastructure.Mvc
                     backingStore[prefix] = null;
                 else
                     backingStore[prefix] = jValue.Value.ToString(); //ToString added by Andres in order to allow Int64 to Decimal conversions
+            }
+            else if (value == null)
+            {
+                backingStore[prefix] = null;
             }
             else
             {
