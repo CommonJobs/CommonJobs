@@ -51,9 +51,16 @@
                 <ul class="nav nav-right">
                     @if (Request.IsAuthenticated && User != null && User.Identity != null && User.Identity.Name != null) 
 				    {
-					    //TODO: verify if the `if` is really necessary
-					    <li class="username"><small>@User.Identity.Name</small></li>
+                        <li class="username"><small>@User.Identity.Name</small></li>
+                        if (User.Identity.AuthenticationType == "Forms")
+                        {
+                            //TODO: show logoff link
+                        }
 				    }
+                    else
+                    {
+                        //TODO: show link to logon page when AuthenticationType == "Forms"
+                    }
                     @Html.Partial("EnvironmentBanner")
                 </ul>
                 
