@@ -97,6 +97,7 @@ QuickSearchPage.prototype = {
             url: self._config.generateSearchUrl(searchParameters)
         })
         .done(function (result) {
+            self._previousXHR = null;
             self._skip = 0;
             self._lastSearchParameters = searchParameters;
             self._appendNewCard();
