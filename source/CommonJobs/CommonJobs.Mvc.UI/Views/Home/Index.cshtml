@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "Index";
     ScriptManager.RegisterCss(Url.Content("~/Content/home.less"));
+    var logedIn = Request.IsAuthenticated && User != null && User.Identity != null && User.Identity.Name != null;
 }
 
 <div class="bootstrap-scope">
@@ -11,15 +12,15 @@
 <div class="menuContainer">
     <h3>Elija una sección del sistema:</h3>
 
-    @MenuItem("Empleados", Url.Content("~/Content/Home/employees.png"), "Index", "Employees")
-    @MenuItem("Legajos", Url.Content("~/Content/Home/files.png"), "Index", "EmployeeFiles")
-    @MenuItem("Archivos", Url.Content("~/Content/Home/attach.png"), "Index", "Attachments")
-    @MenuItem("MyMenu", Url.Content("~/Content/Home/mymenu.png"), "Index", "MyMenu")
+    @MenuItem(logedIn, "Empleados", Url.Content("~/Content/Home/employees.png"), "Index", "Employees")
+    @MenuItem(logedIn, "Legajos", Url.Content("~/Content/Home/files.png"), "Index", "EmployeeFiles")
+    @MenuItem(logedIn, "Archivos", Url.Content("~/Content/Home/attach.png"), "Index", "Attachments")
+    @MenuItem(logedIn, "MyMenu", Url.Content("~/Content/Home/mymenu.png"), "Index", "MyMenu")
 
-    @MenuItem("Postulantes", Url.Content("~/Content/Home/applicant.png"), "Index", "Applicants")
-    @MenuItem("Vacaciones", Url.Content("~/Content/Home/vacation.png"), "Index", "Vacations")
-    @MenuItem("Ausencias", Url.Content("~/Content/Home/absence.png"), "Index", "Absences")
-    @MenuItem("Búsquedas", Url.Content("~/Content/Home/search.png"), "Index", "JobSearches")
+    @MenuItem(logedIn, "Postulantes", Url.Content("~/Content/Home/applicant.png"), "Index", "Applicants")
+    @MenuItem(logedIn, "Vacaciones", Url.Content("~/Content/Home/vacation.png"), "Index", "Vacations")
+    @MenuItem(logedIn, "Ausencias", Url.Content("~/Content/Home/absence.png"), "Index", "Absences")
+    @MenuItem(logedIn, "Búsquedas", Url.Content("~/Content/Home/search.png"), "Index", "JobSearches")
 
     <h3>O infórmese sobre el proyecto <em>CommonJobs</em>:</h3>
 
@@ -53,9 +54,9 @@
     </div>
 }
 
-@helper MenuItem(string label, string imageUrl, string action, string controller, bool isLarge = false) 
+@helper MenuItem(bool logedIn, string label, string imageUrl, string action, string controller, bool isLarge = false) 
 {
-    if (Html.HasPermission(action, controller))
+    if (!logedIn || Html.HasPermission(action, controller))
     {
         @MenuLinkItem(label, imageUrl, Url.Action(action, controller), isLarge)
     }
