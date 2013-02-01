@@ -24,7 +24,7 @@ namespace Epnuke.OAuth.Demo.SignWihTwitter.Controllers
             if (!string.IsNullOrEmpty(login) && login.Equals(pwd))
             {
                 FormsAuthentication.SetAuthCookie(login, false);
-                RedirectToAction("Index", "Private");
+                return RedirectToAction("Index", "Private");
             }
 
             ViewBag.MensajeError = "Credenciales inválidas";
