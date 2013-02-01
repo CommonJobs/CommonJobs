@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epnuke.OAuth", "Epnuke.OAuth\Epnuke.OAuth.csproj", "{74E96859-8C53-48D1-A50A-038E43B83B2D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epnuke.OAuth.Mvc", "Epnuke.OAuth.Mvc\Epnuke.OAuth.Mvc.csproj", "{B0CBF3F0-02FA-457A-8FDA-313F5AC87222}"
@@ -10,24 +10,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epnuke.OAuth.Demo.SignWihTwitter", "Epnuke.OAuth.Demo.SignWihTwitter\Epnuke.OAuth.Demo.SignWihTwitter.csproj", "{387CA5E4-5DF3-4F74-BBFB-94595742D99D}"
 EndProject
 Global
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 5
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs16
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = Epnuke.OAuth.Demo.SignWihTwitter\\Epnuke.OAuth.Demo.SignWihTwitter.csproj
-		SccProjectName1 = Epnuke.OAuth.Demo.SignWihTwitter
-		SccLocalPath1 = Epnuke.OAuth.Demo.SignWihTwitter
-		SccProjectUniqueName2 = Epnuke.OAuth.Mvc\\Epnuke.OAuth.Mvc.csproj
-		SccProjectName2 = Epnuke.OAuth.Mvc
-		SccLocalPath2 = Epnuke.OAuth.Mvc
-		SccProjectUniqueName3 = Epnuke.OAuth.Tests\\Epnuke.OAuth.Tests.csproj
-		SccProjectName3 = Epnuke.OAuth.Tests
-		SccLocalPath3 = Epnuke.OAuth.Tests
-		SccProjectUniqueName4 = Epnuke.OAuth\\Epnuke.OAuth.csproj
-		SccProjectName4 = Epnuke.OAuth
-		SccLocalPath4 = Epnuke.OAuth
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
