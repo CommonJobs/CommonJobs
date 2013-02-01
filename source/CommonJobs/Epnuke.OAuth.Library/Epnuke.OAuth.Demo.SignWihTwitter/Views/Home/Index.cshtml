@@ -1,0 +1,12 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Demo de "Sign with Twitter"</h2>
+
+Esta web es muy sencilla. Tiene una parte privada desde la que se puede acceder aquí:
+@Html.ActionLink("Ir a parte privada", "Index",new {controller="private"})
+<p>
+    Si no estás autenticado te pedirá login/password de la web o bien podrás entrar via twitter usando OAuth. <br />
+    Si quieres entrar usando un usuario propio de la web, cualquier combinación de login/pwd igual es válida (p.ej. pepe/pepe).
+</p>
