@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epnuke.OAuth.Tests", "Epnuk
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epnuke.OAuth.Demo.SignWihTwitter", "Epnuke.OAuth.Demo.SignWihTwitter\Epnuke.OAuth.Demo.SignWihTwitter.csproj", "{387CA5E4-5DF3-4F74-BBFB-94595742D99D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epnuke.OAuth.Demo.SignWihGoogle", "Epnuke.OAuth.Demo.SignWihGoogle\Epnuke.OAuth.Demo.SignWihGoogle.csproj", "{34B2BA65-6A1C-4C4F-91F0-2F613B43BA48}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,10 @@ Global
 		{387CA5E4-5DF3-4F74-BBFB-94595742D99D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{387CA5E4-5DF3-4F74-BBFB-94595742D99D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{387CA5E4-5DF3-4F74-BBFB-94595742D99D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34B2BA65-6A1C-4C4F-91F0-2F613B43BA48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34B2BA65-6A1C-4C4F-91F0-2F613B43BA48}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34B2BA65-6A1C-4C4F-91F0-2F613B43BA48}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34B2BA65-6A1C-4C4F-91F0-2F613B43BA48}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
