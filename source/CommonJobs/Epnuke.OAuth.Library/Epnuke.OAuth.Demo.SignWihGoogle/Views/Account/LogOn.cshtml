@@ -1,0 +1,20 @@
+﻿@{
+    ViewBag.Title = "LogOn";
+}
+
+<h2>LogOn a la web</h2>
+
+Si quieres entrar credenciales, recuerda: simplemente login y pwd que sean iguales ;-)
+
+<p>@ViewBag.MensajeError</p>
+
+@using (Html.BeginForm())
+{
+    <label for="login">Usuario</label>
+    <input type="text" name="login" />
+    <br/>
+    <label for="login">Password</label>
+    <input type="password" name="pwd" />
+    <br />
+    <input type="submit" value="enviar" />    
+}
