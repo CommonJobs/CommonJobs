@@ -10,6 +10,12 @@ namespace Epnuke.OAuth.Demo.SignWihTwitter.Controllers
 {
     public class AccountController : Controller
     {
+        public ActionResult LogOff()
+        {
+            FormsAuthentication.SignOut();
+            return RedirectToAction("Index", "Home");
+        }
+
         //
         // GET: /Account/
 
