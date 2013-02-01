@@ -37,7 +37,7 @@ namespace Epnuke.OAuth.Demo.SignWihTwitter.Controllers
                 ConfigurationManager.AppSettings["consumer-secret"],
                 new NonceGenerator32Bytes());
             var uri = ConfigurationManager.AppSettings["request_token"];
-            oauthSession.RequestTemporaryCredentials(uri, "POST", "http://127.0.0.1:64983/Account/Callback");
+            oauthSession.RequestTemporaryCredentials(uri, "POST", "http://localhost:64983/Account/Callback");
             Session["oauth"] = oauthSession;
             return Redirect(oauthSession.GetAuthorizationUri(ConfigurationManager.AppSettings["authorize"]));
         }
