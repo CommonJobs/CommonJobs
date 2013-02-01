@@ -118,6 +118,12 @@
   <ItemGroup>
     <Content Include="Views\Account\LogOn.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Epnuke.OAuth\Epnuke.OAuth.csproj">
+      <Project>{74e96859-8c53-48d1-a50a-038e43b83b2d}</Project>
+      <Name>Epnuke.OAuth</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
@@ -132,9 +138,9 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
-          <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>False</AutoAssignPort>
+          <DevelopmentServerPort>64984</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:30599/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
