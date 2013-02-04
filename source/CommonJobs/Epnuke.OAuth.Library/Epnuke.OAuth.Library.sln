@@ -1,0 +1,44 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epnuke.OAuth", "Epnuke.OAuth\Epnuke.OAuth.csproj", "{74E96859-8C53-48D1-A50A-038E43B83B2D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epnuke.OAuth.Mvc", "Epnuke.OAuth.Mvc\Epnuke.OAuth.Mvc.csproj", "{B0CBF3F0-02FA-457A-8FDA-313F5AC87222}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epnuke.OAuth.Tests", "Epnuke.OAuth.Tests\Epnuke.OAuth.Tests.csproj", "{6FA39ABC-DF59-440D-8F55-D589AC4E4022}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epnuke.OAuth.Demo.SignWihTwitter", "Epnuke.OAuth.Demo.SignWihTwitter\Epnuke.OAuth.Demo.SignWihTwitter.csproj", "{387CA5E4-5DF3-4F74-BBFB-94595742D99D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epnuke.OAuth.Demo.SignWihGoogle", "Epnuke.OAuth.Demo.SignWihGoogle\Epnuke.OAuth.Demo.SignWihGoogle.csproj", "{34B2BA65-6A1C-4C4F-91F0-2F613B43BA48}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{74E96859-8C53-48D1-A50A-038E43B83B2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74E96859-8C53-48D1-A50A-038E43B83B2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74E96859-8C53-48D1-A50A-038E43B83B2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74E96859-8C53-48D1-A50A-038E43B83B2D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0CBF3F0-02FA-457A-8FDA-313F5AC87222}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0CBF3F0-02FA-457A-8FDA-313F5AC87222}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0CBF3F0-02FA-457A-8FDA-313F5AC87222}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0CBF3F0-02FA-457A-8FDA-313F5AC87222}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6FA39ABC-DF59-440D-8F55-D589AC4E4022}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FA39ABC-DF59-440D-8F55-D589AC4E4022}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FA39ABC-DF59-440D-8F55-D589AC4E4022}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6FA39ABC-DF59-440D-8F55-D589AC4E4022}.Release|Any CPU.Build.0 = Release|Any CPU
+		{387CA5E4-5DF3-4F74-BBFB-94595742D99D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{387CA5E4-5DF3-4F74-BBFB-94595742D99D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{387CA5E4-5DF3-4F74-BBFB-94595742D99D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{387CA5E4-5DF3-4F74-BBFB-94595742D99D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34B2BA65-6A1C-4C4F-91F0-2F613B43BA48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34B2BA65-6A1C-4C4F-91F0-2F613B43BA48}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34B2BA65-6A1C-4C4F-91F0-2F613B43BA48}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34B2BA65-6A1C-4C4F-91F0-2F613B43BA48}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

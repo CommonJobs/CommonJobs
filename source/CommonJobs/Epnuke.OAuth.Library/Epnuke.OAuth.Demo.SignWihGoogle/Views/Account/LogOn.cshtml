@@ -1,0 +1,22 @@
+﻿@{
+    ViewBag.Title = "LogOn";
+}
+
+<h2>LogOn a la web</h2>
+
+Introduce aquí tus credeciales para la web o bien @Html.ActionLink("Entra con tu usuario de google", "LogOnGoogle", new { controller = "Account" } ) <br/>
+
+Si quieres entrar credenciales, recuerda: simplemente login y pwd que sean iguales ;-)
+
+<p>@ViewBag.MensajeError</p>
+
+@using (Html.BeginForm())
+{
+    <label for="login">Usuario</label>
+    <input type="text" name="login" />
+    <br/>
+    <label for="login">Password</label>
+    <input type="password" name="pwd" />
+    <br />
+    <input type="submit" value="enviar" />    
+}
