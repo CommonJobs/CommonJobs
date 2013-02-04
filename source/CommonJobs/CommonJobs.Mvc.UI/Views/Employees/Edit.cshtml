@@ -18,36 +18,28 @@
     <link href="../../Content/EditEmployee/EditEmployee.css" rel="stylesheet" type="text/css" />
     <script src="../../Content/EditEmployee/EditEmployee.js" type="text/javascript"></script>
 }
-<div id="EditApp" class="edition-normal file-dropzone">
+<div id="EditApp" class="edition-normal file-dropzone bootstrap-scope">
     
     <input type="file" class="dropzoneinput" multiple />
-    <div class="editing-bar">
-        <div class="references">
-            <h3>Referencias</h3>
-            <ul>
-                <li>Click en un <span class="reference-editable-field">campo subrayado</span> para editarlo.</li>
-                <li>Click en <em>Guardar Cambios</em> luego de editar.</li>
-                <li>Click en <em>Modo de edición &rarr; Todos los campos</em> para editar todos los campos.</li>
-            </ul>
+    <div class="editing-bar form-actions">
+        <div class="back-link">
+            @Html.ActionLink("« Volver al listado principal", "Index")
         </div>
-        <div class="edition-mode">
-            <h3>Modo de edición</h3>
-            <p><button class="editionNormal">Normal</button></p>
-            <p><button class="editionFullEdit">Todos los campos</button></p>
-            <!-- <p><button class="editionReadonly">Solo lectura</button></p> -->
+        <div class="references">
+            <h3>Ayuda</h3>
+            <ul>
+                <li>Hacer click en un <span class="reference-editable-field">campo subrayado</span> para editarlo.</li>
+                <li>Hacer click en <em><i class="icon-ok"></i> Guardar Cambios</em> luego de aceptar los cambios para guardarlos.</li>
+            </ul>
         </div>
         <div class="change-management-options">
             <h3>Cambios</h3>
-            <p><button class="saveEmployee">Guardar cambios</button></p>
-            <p><button class="reloadEmployee">Descartar cambios</button></p>
+            <p>
+                <button class="saveEmployee btn btn-primary"><i class="icon-ok icon-white"></i> Guardar cambios</button>
+                <button class="reloadEmployee btn">Descartar cambios</button>
+                <button class="deleteEmployee btn btn-danger pull-right"><i class="icon-remove icon-white"></i> Eliminar empleado</button>
+            </p>
         </div>
-        <div class="danger-zone">
-            <h3>¡Precaución!</h3>
-            <p><button class="deleteEmployee">Eliminar empleado</button></p>
-        </div>
-        <div class="back-link">
-        @Html.ActionLink("« Volver al listado", "Index")
-    </div>
     </div>
     
     <h1 class="editable-field" data-bind="fullName"></h1>

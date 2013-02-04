@@ -118,7 +118,7 @@
                            + '</div>'
                            + '<span class="view-attached" style="display: none;">'
                            + '    <div class="view-editable-content"></div>'
-                           + '    <button class="view-editable-clear">&#x2717;</button>'
+                           + '    <button class="view-editable-clear btn btn-mini"><i class="icon-remove"></i></button>'
                            + '</span>'
                            + '<div class="cropDialog">'
                            + '    <div class="originalImage"></div>'
@@ -219,7 +219,7 @@
                                    + '</span>'
                                    + '<span class="view-attached" style="display: none;">'
                                    + '    Adjunto: <span class="view-editable-content"></span>'
-                                   + '<button class="view-editable-clear">-</button>'
+                                   + '<button class="view-editable-clear btn btn-mini"><i class="icon-remove"></i></button>'
                                    + '</span>'),
         uploadUrl: function () { return urlGenerator.action("Post", "Attachments", /* TODO */this.model.collection.parentModel.get('Id')); },
         attachedUrl: function (value) { return urlGenerator.action("Get", "Attachments", value.Id); }
