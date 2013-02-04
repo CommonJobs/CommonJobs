@@ -192,6 +192,7 @@
     <Compile Include="Controllers\ApplicantsController.cs" />
     <Compile Include="Controllers\AttachmentsController.cs" />
     <Compile Include="Controllers\AbsencesController.cs" />
+    <Compile Include="Controllers\GoogleAuthenticationController.cs" />
     <Compile Include="Controllers\EmployeeFilesController.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
