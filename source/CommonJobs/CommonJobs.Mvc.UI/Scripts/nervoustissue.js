@@ -885,10 +885,14 @@
                 this.model = model;
             }
             this.$el.removeClass("editing");
+            this.trigger("notEditing");
             this.autoDataBind();
             if (this.model) {
                 //TODO: remover la dependencia con Backbone acá
-                this.registerModelEvent(this.model, "change", function () { this.$el.addClass("editing"); }, this);
+                this.registerModelEvent(this.model, "change", function () {
+                    this.$el.addClass("editing");
+                    this.trigger("editing");
+                }, this);
                 //TODO: Tal vez acá podría escuchar los eventos de las inner collections para no 
                 //tener que hacerlo afuera.
             }

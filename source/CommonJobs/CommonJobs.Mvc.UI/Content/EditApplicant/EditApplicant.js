@@ -344,6 +344,9 @@
         initialize: function () {
             var me = this;
             this.dataBinder = new App.EditApplicantAppViewDataBinder({ el: this.el, model: this.model });
+            this.dataBinder.on("editing", function () { this.isEditing(true); }, this);
+            this.dataBinder.on("notEditing", function () { this.isEditing(false); }, this);
+
             this.model.on("change:IsHighlighted", this.refreshHighlightedView, this);
             this.refreshHighlightedView();
             if (this.options.forceReadOnly) {
@@ -472,6 +475,11 @@
                 $highlight.addClass('highlighted');
             else
                 $highlight.removeClass('highlighted');
+        },
+        isEditing: function (isCurrentlyEditing) {
+            this.$el.find('.reloadApplicant, .saveApplicant')
+                .attr('disabled', isCurrentlyEditing ? null : "disabled")
+                .toggleClass("disabled", !isCurrentlyEditing);
         }
     });
 

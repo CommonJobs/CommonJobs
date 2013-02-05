@@ -658,6 +658,8 @@
         },
         initialize: function () {
             this.dataBinder = new App.EditEmployeeAppViewDataBinder({ el: this.el, model: this.model });
+            this.dataBinder.on("editing", function () { this.isEditing(true); }, this);
+            this.dataBinder.on("notEditing", function () { this.isEditing(false); }, this);
             this.prepareSlots();
         },
         events: {
@@ -715,6 +717,11 @@
             this.dataBinder.editionMode("full-edit");
             this.$el.removeClass("edition-readonly edition-normal");
             this.$el.addClass("edition-full-edit");
+        },
+        isEditing: function (isCurrentlyEditing) {
+            this.$el.find('.reloadEmployee, .saveEmployee')
+                .attr('disabled', isCurrentlyEditing ? null : "disabled")
+                .toggleClass("disabled", !isCurrentlyEditing);
         }
     });
 
