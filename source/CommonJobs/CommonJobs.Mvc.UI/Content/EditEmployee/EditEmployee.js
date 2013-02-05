@@ -335,12 +335,12 @@
             '<thead><tr><th></th><th><table><tr><th class="vacations-period-column">Periodo</th><th class="vacations-from-column">Desde</th><th class="vacations-to-column">Hasta</th><th class="vacation-days">Total</th></tr></table></th></tr></thead>' +
             '<tbody class="list-editable">' +
             '</tbody>' +
-            '<tfoot><tr><td><button class="add-button">+</button></td><td><table><tr><td class="vacations-period-column"></td><td class="vacations-from-column"></td><td class="vacations-to-column"></td><td class="vacation-items-total vacation-days"></td></tr></table></td></tr></tfoot>' +
+            '<tfoot><tr><td><button class="add-button btn btn-mini"><i class="icon-plus"></i></button></td><td><table><tr><td class="vacations-period-column"></td><td class="vacations-from-column"></td><td class="vacations-to-column"></td><td class="vacation-items-total vacation-days"></td></tr></table></td></tr></tfoot>' +
             '</table>'
             ),
         subtemplate: _.template(
             '<tr>' +
-            '<td><button class="remove-button">&#x2717;</button></td>' +
+            '<td><button class="remove-button btn btn-mini"><i class="icon-remove"></i></button></td>' +
             '<td><table><tr class="editable-field" data-bind="item"><td></td></tr></table></td>' +
             '</tr>'),
         refresh: function () {
@@ -362,7 +362,7 @@
                            + '</div>'
                            + '<span class="view-attached" style="display: none;">'
                            + '    <div class="view-editable-content"></div>'
-                           + '    <button class="view-editable-clear">&#x2717;</button>'
+                           + '    <button class="view-editable-clear btn btn-mini"><i class="icon-remove"></i></button>'
                            + '</span>'
                            + '<div class="cropDialog">'
                            + '    <div class="originalImage"></div>'
@@ -658,6 +658,8 @@
         },
         initialize: function () {
             this.dataBinder = new App.EditEmployeeAppViewDataBinder({ el: this.el, model: this.model });
+            this.dataBinder.on("editing", function () { this.isEditing(true); }, this);
+            this.dataBinder.on("notEditing", function () { this.isEditing(false); }, this);
             this.prepareSlots();
         },
         events: {
@@ -715,6 +717,11 @@
             this.dataBinder.editionMode("full-edit");
             this.$el.removeClass("edition-readonly edition-normal");
             this.$el.addClass("edition-full-edit");
+        },
+        isEditing: function (isCurrentlyEditing) {
+            this.$el.find('.reloadEmployee, .saveEmployee')
+                .attr('disabled', isCurrentlyEditing ? null : "disabled")
+                .toggleClass("disabled", !isCurrentlyEditing);
         }
     });
 

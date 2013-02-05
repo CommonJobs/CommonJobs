@@ -3,32 +3,26 @@
 @import "../EditCommon/EditPerson.less";
 @import "../collapsable-sections.less";
 
-body.highlighted 
-{
-	background-color: @color_highlight - #111;
-}
-
-.editing-bar.highlighted 
-{
-	background-color: @color_highlight - #333;
+.hireApplicant.pull-right {
+   margin-right: 5px;
 }
 
 .Employment-data
 {
-	float: left;
-	width: 100%;
+	//float: left;
+	//width: 100%;
 }
 
 .personal-data
 {
-	float: left;
-	width: 45%;
+	//float: left;
+	//width: 45%;
 	border-right: 1px solid black;
 }
 
 .firstInfo
 {
-	float: left;
+	//float: left;
 }
 
 .fullName 
@@ -42,25 +36,11 @@ body.highlighted
 }
 
 .additional-info-section.shared-profile {
-	width: 200px;
+	width: 300px;
 	margin-top: 1em;
 	padding: 1em;
 	border: 1px solid black;
-	.rounded_corners(10px);
-	
-	.remove-button  {
-		padding-left: 5px;
-		padding-right: 5px;
-		.rounded_corners(0);
-		background-color: transparent;
-		border: 0;
-		font-size: 0.8em;
-		margin: 0;
-
-		&:hover {
-			color: @color_primary_semi_light;
-		}
-	}
+	.rounded_corners(10px);	
 }
 
 .linkedIn.icon {

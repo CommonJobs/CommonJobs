@@ -294,8 +294,8 @@
         m.Base.extend = Backbone.Model.extend;
 
         m.Collection = m.Base.extend({
-            template: _.template('<ul class="list-editable"></ul><button class="add-button">+</button>'),
-            subtemplate: _.template('<li><button class="remove-button">&#x2717;</button><span class="editable-field" data-bind="item"></span></li>'),
+            template: _.template('<ul class="list-editable"></ul><button class="add-button btn btn-mini"><i class="icon-plus"></i></button>'),
+            subtemplate: _.template('<li><button class="remove-button btn btn-mini"><i class="icon-remove"></i></button><span class="editable-field" data-bind="item"></span></li>'),
             dataLink: Nervoustissue.DataLinking.Collection,
             _initialize: function () {
                 var me = this;
@@ -885,10 +885,14 @@
                 this.model = model;
             }
             this.$el.removeClass("editing");
+            this.trigger("notEditing");
             this.autoDataBind();
             if (this.model) {
                 //TODO: remover la dependencia con Backbone acá
-                this.registerModelEvent(this.model, "change", function () { this.$el.addClass("editing"); }, this);
+                this.registerModelEvent(this.model, "change", function () {
+                    this.$el.addClass("editing");
+                    this.trigger("editing");
+                }, this);
                 //TODO: Tal vez acá podría escuchar los eventos de las inner collections para no 
                 //tener que hacerlo afuera.
             }

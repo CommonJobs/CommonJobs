@@ -118,7 +118,7 @@
                            + '</div>'
                            + '<span class="view-attached" style="display: none;">'
                            + '    <div class="view-editable-content"></div>'
-                           + '    <button class="view-editable-clear">&#x2717;</button>'
+                           + '    <button class="view-editable-clear btn btn-mini"><i class="icon-remove"></i></button>'
                            + '</span>'
                            + '<div class="cropDialog">'
                            + '    <div class="originalImage"></div>'
@@ -219,7 +219,7 @@
                                    + '</span>'
                                    + '<span class="view-attached" style="display: none;">'
                                    + '    Adjunto: <span class="view-editable-content"></span>'
-                                   + '<button class="view-editable-clear">-</button>'
+                                   + '<button class="view-editable-clear btn btn-mini"><i class="icon-remove"></i></button>'
                                    + '</span>'),
         uploadUrl: function () { return urlGenerator.action("Post", "Attachments", /* TODO */this.model.collection.parentModel.get('Id')); },
         attachedUrl: function (value) { return urlGenerator.action("Get", "Attachments", value.Id); }
@@ -344,6 +344,9 @@
         initialize: function () {
             var me = this;
             this.dataBinder = new App.EditApplicantAppViewDataBinder({ el: this.el, model: this.model });
+            this.dataBinder.on("editing", function () { this.isEditing(true); }, this);
+            this.dataBinder.on("notEditing", function () { this.isEditing(false); }, this);
+
             this.model.on("change:IsHighlighted", this.refreshHighlightedView, this);
             this.refreshHighlightedView();
             if (this.options.forceReadOnly) {
@@ -472,6 +475,11 @@
                 $highlight.addClass('highlighted');
             else
                 $highlight.removeClass('highlighted');
+        },
+        isEditing: function (isCurrentlyEditing) {
+            this.$el.find('.reloadApplicant, .saveApplicant')
+                .attr('disabled', isCurrentlyEditing ? null : "disabled")
+                .toggleClass("disabled", !isCurrentlyEditing);
         }
     });
 
