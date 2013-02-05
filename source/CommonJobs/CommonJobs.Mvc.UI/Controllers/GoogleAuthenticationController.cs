@@ -43,6 +43,12 @@ namespace CommonJobs.Mvc.UI.Controllers
             return null;
         }
 
+        public ActionResult Error(string returnUrl, string error)
+        {
+            ViewBag.Error = error;
+            return View();
+        }
+
         public ActionResult LogOnCallback(string returnUrl)
         {
             OpenIdRelyingParty openid = new OpenIdRelyingParty();
@@ -50,32 +56,32 @@ namespace CommonJobs.Mvc.UI.Controllers
 
             if (response == null)
             {
-                throw new ApplicationException("No authentication response");
+                return RedirectToAction("Error", new { returnUrl = returnUrl, error = "No authentication response" });
             }
 
             if (response.Status != AuthenticationStatus.Authenticated)
             {
-                throw new ApplicationException("response status is not Authenticated");
+                return RedirectToAction("Error", new { returnUrl = returnUrl, error = "Response status is not Authenticated" });
             }
 
             var fetch = response.GetExtension<FetchResponse>();
 
             if (fetch == null)
             {
-                throw new ApplicationException("No fetch response");
+                return RedirectToAction("Error", new { returnUrl = returnUrl, error = "No fetch response" });
             }
 
             string email = fetch.GetAttributeValue(WellKnownAttributes.Contact.Email);
 
             if (string.IsNullOrWhiteSpace(email))
             {
-                throw new ApplicationException("Email is empty");
+                return RedirectToAction("Error", new { returnUrl = returnUrl, error = "Response Email is empty" });
             }
             
 
             if (!email.EndsWith(EmailSuffix))
             {
-                throw new ApplicationException("Only emails ended with " + EmailSuffix + " are allowed");
+                return RedirectToAction("Error", new { returnUrl = returnUrl, error = "Only emails ended with " + EmailSuffix + " are allowed" });
             }
 
             var username = email.Substring(0, email.Length - EmailSuffix.Length);
