@@ -33,11 +33,7 @@ namespace CommonJobs.Mvc.UI.Areas.MyMenu
             }
             else
             {
-#if NO_AD
-                return "DemoUser";
-#else
                 throw new ApplicationException("User cannot be detected");
-#endif
             }
         }
 
