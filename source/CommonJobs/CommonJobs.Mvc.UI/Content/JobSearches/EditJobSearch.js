@@ -82,6 +82,9 @@
         },
         initialize: function () {
             this.dataBinder = new App.EditJobSearchAppViewDataBinder({ el: this.el, model: this.model });
+            this.dataBinder.on("editing", function () { this.isEditing(true); }, this);
+            this.dataBinder.on("notEditing", function () { this.isEditing(false); }, this);
+
             //TODO this does not fully work -- why?
             this.model.get('RequiredTechnicalSkills').on("add remove reset change", this.reloadSuggestedApplicants, this);
             if (this.options.forceReadOnly) {
@@ -216,6 +219,11 @@
                 this.$el.addClass("edition-full-edit");
             }
         },
+        isEditing: function (isCurrentlyEditing) {
+            this.$el.find('.reloadJobSearch, .saveJobSearch')
+                .attr('disabled', isCurrentlyEditing ? null : "disabled")
+                .toggleClass("disabled", !isCurrentlyEditing);
+        }
     });
 }).call(this);
 
