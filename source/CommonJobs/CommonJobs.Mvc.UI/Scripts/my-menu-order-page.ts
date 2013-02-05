@@ -88,7 +88,7 @@ module MyMenu {
 
             this.detail = _.sortBy(_.map(order.DetailByUserName, (element: any, key: string) => ({
                 userName: key,
-                url: viewData.baseLink + key,
+                url: viewData.baseLink + "/" + key,
                 employeeName: element.EmployeeName,
                 placeKey: element.PlaceKey,
                 placeName: element.PlaceKey && order.PlacesByKey[element.PlaceKey] || " - ",
