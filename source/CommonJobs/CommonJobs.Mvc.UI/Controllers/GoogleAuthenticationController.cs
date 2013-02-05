@@ -100,7 +100,7 @@ namespace CommonJobs.Mvc.UI.Controllers
             if (user != null) 
             {
                 log.Dump(LogLevel.Debug, user, "RavenDB User");
-                Session[SessionRolesKey] = user.Roles;
+                Session[SessionRolesKey] = user.Roles ?? new string[0];
             }
 
             if (!string.IsNullOrWhiteSpace(returnUrl) && Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")

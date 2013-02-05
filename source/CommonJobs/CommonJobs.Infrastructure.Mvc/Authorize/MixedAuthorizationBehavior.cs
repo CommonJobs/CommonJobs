@@ -10,7 +10,7 @@ namespace CommonJobs.Infrastructure.Mvc.Authorize
         readonly IAuthorizationBehavior SessionRolesAuthorizationBehavior;
         readonly IAuthorizationBehavior PrefixAuthorizationBehavior;
 
-        public MixedAuthorizationBehavior(SessionRolesAuthorizationBehavior sessionRolesAuthorizationBehavior, PrefixAuthorizationBehaviorBase prefixAuthorizationBehavior)
+        public MixedAuthorizationBehavior(IAuthorizationBehavior sessionRolesAuthorizationBehavior, PrefixAuthorizationBehaviorBase prefixAuthorizationBehavior)
         {
             SessionRolesAuthorizationBehavior = sessionRolesAuthorizationBehavior;
             PrefixAuthorizationBehavior = prefixAuthorizationBehavior;

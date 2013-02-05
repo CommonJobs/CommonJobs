@@ -69,8 +69,16 @@ namespace CommonJobs.Mvc.UI
 
             RegisterRoutes(RouteTable.Routes);
 
+
             CommonJobsAuthorizeAttribute.AuthorizationBehavior = new MixedAuthorizationBehavior(
-                new SessionRolesAuthorizationBehavior(CommonJobs.Mvc.UI.Controllers.AccountController.SessionRolesKey),
+                new SessionAndExternalRolesAuthorizationBehavior(CommonJobs.Mvc.UI.Controllers.AccountController.SessionRolesKey, userName =>
+                {
+                    using (var session = RavenSessionManager.DocumentStore.OpenSession())
+                    {
+                        var user = session.Query<CommonJobs.Domain.User>().Where(u => u.UserName == userName).FirstOrDefault();
+                        return user.Roles ?? new string[0];
+                    }
+                }),
                 new PrefixFromSettingsAuthorizationBehavior("CommonJobs/ADGroupsPrefix"));
 
             // Es cierto que iniciar recurrentes aquí puede no ser una buena idea (http://haacked.com/archive/2011/10/16/the-dangers-of-implementing-recurring-background-tasks-in-asp-net.aspx)
