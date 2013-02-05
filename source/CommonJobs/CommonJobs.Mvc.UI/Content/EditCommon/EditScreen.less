@@ -51,6 +51,7 @@ input, select {
 #EditApp 
 {
 	width: 942px;
+	padding-top: 80px;
 	margin: 1em auto;
 	background-color: white;
 	position: relative;
@@ -117,10 +118,15 @@ a.editable-field.editable-link, a.view-editable-empty.editable-link
 	padding: 1em;
 	background-color: @color_primary_lighter;
 	.rounded_corners(10px);
+	position: fixed;
+	top: 40px;
+	width: 902px;
+	z-index: 10;
 
 	p
     {
 		line-height: 1em;
+		margin-bottom: 0;
     }
 
 	.references
