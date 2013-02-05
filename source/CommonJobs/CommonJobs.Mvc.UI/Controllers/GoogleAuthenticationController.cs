@@ -9,11 +9,14 @@ using CommonJobs.Infrastructure.Mvc;
 using CommonJobs.Domain;
 using DotNetOpenAuth.OpenId.RelyingParty;
 using DotNetOpenAuth.OpenId.Extensions.AttributeExchange;
+using NLog;
+using CommonJobs.Utilities;
 
 namespace CommonJobs.Mvc.UI.Controllers
 {
     public class GoogleAuthenticationController : CommonJobsController
     {
+        private static Logger log = LogManager.GetCurrentClassLogger();
         private const string GoogleOAuthEndpoint = "https://www.google.com/accounts/o8/id";
         private const string EmailSuffix = "@makingsense.com";
         public const string SessionRolesKey = "CommonJobs/Roles";
@@ -51,6 +54,7 @@ namespace CommonJobs.Mvc.UI.Controllers
 
         public ActionResult LogOnCallback(string returnUrl)
         {
+            
             OpenIdRelyingParty openid = new OpenIdRelyingParty();
             var response = openid.GetResponse();
 
@@ -85,14 +89,17 @@ namespace CommonJobs.Mvc.UI.Controllers
             }
 
             var username = email.Substring(0, email.Length - EmailSuffix.Length);
-            Session[SessionRolesKey] = null;
-            FormsAuthentication.SetAuthCookie(username, false);
             
+            FormsAuthentication.SetAuthCookie(username, true);
+
+            Session[SessionRolesKey] = null;
             var user = RavenSession.Query<User>().Where(u => u.UserName == username).FirstOrDefault();
 
-            
+            log.Debug("User {0} found: {1}", username, user != null);
+
             if (user != null) 
             {
+                log.Dump(LogLevel.Debug, user, "RavenDB User");
                 Session[SessionRolesKey] = user.Roles;
             }
 
