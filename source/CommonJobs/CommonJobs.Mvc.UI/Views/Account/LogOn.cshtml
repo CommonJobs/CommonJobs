@@ -7,40 +7,33 @@
     ViewBag.Title = "Iniciar sesión";
 }
 
-<h2>@ViewBag.Title</h2>
-
-<div>
-    @Html.ActionLink("Utilizar Google Authentication para ingresar utilizando tu cuenta de @makingsense.com", "index", "GoogleAuthentication", new { returnUrl = ViewBag.ReturnUrl }, null);
+<div class="bootstrap-scope">
+<div class="hero-unit">
+  <h1>Google Authentication</h1>
+  <p>Utilizá tu cuenta de email @@makingsense.com para ingresar.</p>
+  <p>
+    @Html.ActionLink("Ingresar!", "index", "GoogleAuthentication", new { returnUrl = ViewBag.ReturnUrl }, new { @class = "btn btn-primary btn-large", style = "color: white;" })
+  </p>
 </div>
 
+<br />
+<br />
+<hr />
+
+<div class="muted">
+<p>Si Google no funciona, algunos usuarios pueden utilizar la autenticación local: </p>
 
 @Html.ValidationSummary(true, "No se pudo iniciar sesión. Corrija los errores e intente nuevamente.")
 
-@using (Html.BeginForm()) {
-    <div>
-        <div class="editor-label">
-            @Html.LabelFor(m => m.UserName)
-        </div>
-        <div class="editor-field">
-            @Html.TextBoxFor(m => m.UserName)
-            @Html.ValidationMessageFor(m => m.UserName)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(m => m.Password)
-        </div>
-        <div class="editor-field">
-            @Html.PasswordFor(m => m.Password)
-            @Html.ValidationMessageFor(m => m.Password)
-        </div>
-
-        <div class="editor-label">
-            @Html.CheckBoxFor(m => m.RememberMe)
-            @Html.LabelFor(m => m.RememberMe)
-        </div>
-
-        <p>
-            <input type="submit" value="Iniciar sesión" />
-        </p>
-    </div>
+@using (Html.BeginForm("LogOn", "Account", FormMethod.Post, new { @class = "form-inline" })) {
+    <text>&nbsp;</text>@Html.TextBoxFor(m => m.UserName, new { @class = "input-small", placeholder = "Username" })
+    @Html.ValidationMessageFor(m => m.UserName)
+    <text>&nbsp;</text>@Html.PasswordFor(m => m.Password, new { @class = "input-small", placeholder = "Password" })
+    @Html.ValidationMessageFor(m => m.Password)
+    <text>&nbsp;</text><label class="checkbox">
+      Recordar Usuario
+      @Html.CheckBoxFor(m => m.RememberMe)
+    </label>
+    <text>&nbsp;</text><button type="submit" class="btn">Iniciar sesión</button>
 }
+</div>
