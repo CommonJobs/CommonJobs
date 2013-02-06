@@ -16,8 +16,9 @@ namespace CommonJobs.Mvc.UI.Controllers
         //
         // GET: /Account/LogOn
 
-        public ActionResult LogOn()
+        public ActionResult LogOn(string returnUrl)
         {
+            ViewBag.ReturnUrl = returnUrl;
             return View();
         }
 
@@ -34,7 +35,7 @@ namespace CommonJobs.Mvc.UI.Controllers
                 if (user != null && user.ValidatePassword(model.Password))
                 {
                     FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
-                    Session[SessionRolesKey] = user.Roles;
+                    Session[SessionRolesKey] = user.Roles ?? new string[0];
                     
                     if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
                         && !returnUrl.StartsWith("//") && !returnUrl.StartsWith("/\\"))

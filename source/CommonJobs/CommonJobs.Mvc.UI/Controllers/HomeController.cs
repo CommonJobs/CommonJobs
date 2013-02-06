@@ -9,6 +9,7 @@ using CommonJobs.Utilities;
 
 namespace CommonJobs.Mvc.UI.Controllers
 {
+    [CommonJobsAuthorize]
     [Documentation("docs/manual-de-usuario/introduccion")]
     public class HomeController : Controller
     {
