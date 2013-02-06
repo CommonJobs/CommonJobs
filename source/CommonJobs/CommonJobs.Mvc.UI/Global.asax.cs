@@ -76,7 +76,7 @@ namespace CommonJobs.Mvc.UI
                     using (var session = RavenSessionManager.DocumentStore.OpenSession())
                     {
                         var user = session.Query<CommonJobs.Domain.User>().Where(u => u.UserName == userName).FirstOrDefault();
-                        return user.Roles ?? new string[0];
+                        return user == null || user.Roles == null ? new string[0] : user.Roles;
                     }
                 }),
                 new PrefixFromSettingsAuthorizationBehavior("CommonJobs/ADGroupsPrefix"));

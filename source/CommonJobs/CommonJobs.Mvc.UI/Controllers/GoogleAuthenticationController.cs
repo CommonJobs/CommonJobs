@@ -92,12 +92,12 @@ namespace CommonJobs.Mvc.UI.Controllers
             
             FormsAuthentication.SetAuthCookie(username, true);
 
-            Session[SessionRolesKey] = null;
+            Session[SessionRolesKey] = new string[0];
             var user = RavenSession.Query<User>().Where(u => u.UserName == username).FirstOrDefault();
 
             log.Debug("User {0} found: {1}", username, user != null);
 
-            if (user != null) 
+            if (user != null)
             {
                 log.Dump(LogLevel.Debug, user, "RavenDB User");
                 Session[SessionRolesKey] = user.Roles ?? new string[0];
