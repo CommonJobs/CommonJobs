@@ -1,8 +1,8 @@
-var __extends = this.__extends || function (d, b) {
+﻿var __extends = this.__extends || function (d, b) {
     function __() { this.constructor = d; }
     __.prototype = b.prototype;
     d.prototype = new __();
-}
+};
 var MyMenu;
 (function (MyMenu) {
     $(document).ready(function () {
@@ -39,7 +39,7 @@ var MyMenu;
             this.detail = _.sortBy(_.map(order.DetailByUserName, function (element, key) {
                 return ({
                     userName: key,
-                    url: viewData.baseLink + key,
+                    url: viewData.baseLink + "/" + key,
                     employeeName: element.EmployeeName,
                     placeKey: element.PlaceKey,
                     placeName: element.PlaceKey && order.PlacesByKey[element.PlaceKey] || " - ",
@@ -112,4 +112,3 @@ var MyMenu;
     })(Utilities.HasCallbacks);
     MyMenu.OrderPage = OrderPage;    
 })(MyMenu || (MyMenu = {}));
-

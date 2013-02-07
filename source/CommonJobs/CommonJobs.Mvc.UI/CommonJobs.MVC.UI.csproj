@@ -63,6 +63,15 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\dotless.1.3.0.3\lib\dotless.Core.dll</HintPath>
     </Reference>
+    <Reference Include="DotNetOpenAuth.Core">
+      <HintPath>..\packages\DotNetOpenAuth.Core.4.2.1.13026\lib\net40-full\DotNetOpenAuth.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OpenId">
+      <HintPath>..\packages\DotNetOpenAuth.OpenId.Core.4.2.1.13026\lib\net40-full\DotNetOpenAuth.OpenId.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OpenId.RelyingParty">
+      <HintPath>..\packages\DotNetOpenAuth.OpenId.RelyingParty.4.2.1.13026\lib\net40-full\DotNetOpenAuth.OpenId.RelyingParty.dll</HintPath>
+    </Reference>
     <Reference Include="FSharp.Core">
       <HintPath>..\packages\FSharp.Core.4.0.0\lib\FSharp.Core.dll</HintPath>
     </Reference>
@@ -92,6 +101,12 @@
     </Reference>
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Net.Http, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Net.Http.2.0.20710.0\lib\net40\System.Net.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Net.Http.2.0.20710.0\lib\net40\System.Net.Http.WebRequest.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.Helpers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
@@ -177,6 +192,7 @@
     <Compile Include="Controllers\ApplicantsController.cs" />
     <Compile Include="Controllers\AttachmentsController.cs" />
     <Compile Include="Controllers\AbsencesController.cs" />
+    <Compile Include="Controllers\GoogleAuthenticationController.cs" />
     <Compile Include="Controllers\EmployeeFilesController.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -310,6 +326,7 @@
     <Content Include="Views\Account\ChangePassword.cshtml" />
     <Content Include="Views\Account\ChangePasswordSuccess.cshtml" />
     <Content Include="Views\Account\LogOn.cshtml" />
+    <Content Include="Views\GoogleAuthentication\Error.cshtml" />
     <None Include="_bin_deployableAssemblies\FSharp.Core.dll" />
   </ItemGroup>
   <ItemGroup>

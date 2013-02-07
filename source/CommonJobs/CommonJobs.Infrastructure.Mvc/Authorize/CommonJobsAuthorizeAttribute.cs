@@ -6,12 +6,14 @@ using System.Web.Mvc;
 using System.Web;
 using System.Configuration;
 using CommonJobs.Infrastructure.Mvc.Authorize;
+using NLog;
 
 namespace CommonJobs.Infrastructure.Mvc
 {
     public class CommonJobsAuthorizeAttribute : AuthorizeAttribute
     {
         public static IAuthorizationBehavior AuthorizationBehavior { get; set; }
+        private static Logger log = LogManager.GetCurrentClassLogger();
                 
         private string ApplyMapping(string from, Func<IEnumerable<string>, IEnumerable<string>> mapping)
         {
@@ -39,11 +41,19 @@ namespace CommonJobs.Infrastructure.Mvc
 
         public override void OnAuthorization(AuthorizationContext filterContext)
         {
-            var actionAlternatives = filterContext.ActionDescriptor.GetCustomAttributes(true).OfType<IAlternativeAuthorizationAttribute>();
-            var controllerAlternatives = filterContext.ActionDescriptor.ControllerDescriptor.GetCustomAttributes(true).OfType<IAlternativeAuthorizationAttribute>();
+            try
+            {
+                var actionAlternatives = filterContext.ActionDescriptor.GetCustomAttributes(true).OfType<IAlternativeAuthorizationAttribute>();
+                var controllerAlternatives = filterContext.ActionDescriptor.ControllerDescriptor.GetCustomAttributes(true).OfType<IAlternativeAuthorizationAttribute>();
 
-            if (!actionAlternatives.Union(controllerAlternatives).Any(x => x.Authorize(filterContext)))
-                base.OnAuthorization(filterContext);
+                if (!actionAlternatives.Union(controllerAlternatives).Any(x => x.Authorize(filterContext)))
+                    base.OnAuthorization(filterContext);
+            }
+            catch (Exception e)
+            {
+                log.DebugException("Exception on OnAuthorization", e);
+                throw;
+            }
         }
 
         protected override bool AuthorizeCore(System.Web.HttpContextBase httpContext)
@@ -51,8 +61,14 @@ namespace CommonJobs.Infrastructure.Mvc
             bool? result = AuthorizationBehavior == null ? null 
                 : AuthorizationBehavior.OverrideAuthorize(this, httpContext);
 
-            return result.HasValue ? result.Value
+            log.Debug("AuthorizeCore1: ", result);
+
+            bool aux = result.HasValue ? result.Value
                 : base.AuthorizeCore(httpContext);
+
+            log.Debug("AuthorizeCore2: ", result);
+
+            return aux;
         }
     }
 }

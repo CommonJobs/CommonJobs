@@ -57,6 +57,21 @@
             </button>            
             <div class="pull-right">
                 <form class="form-inline" id="persistenceForm">
+                    <ul class="nav nav-right">
+                        @if (Request.IsAuthenticated && User != null && User.Identity != null && User.Identity.Name != null) 
+				        {
+                            <li class="username"><small style="display: block; float: none; padding: 10px 15px;">@User.Identity.Name
+                            @if (User.Identity.AuthenticationType == "Forms")
+                            {
+                                <text>[<a href="@Url.Content("~/Account/LogOff")">LogOff</a>]</text>
+                            }
+                            </small></li>
+				        }
+                        else
+                        {
+                            //TODO: show link to logon page when AuthenticationType == "Forms"
+                        }
+                    </ul>
                     <span class="ajax-loader" data-bind="visible: onAjaxCall"></span>
                     @if (!hidePersistenceButtons) {
                     <button class="btn btn-inverse" disabled="disabled" data-bind="click: load, enable: !onAjaxCall(), text: isDirty() ? 'Descartar' : 'Recargar'">Recargar</button>

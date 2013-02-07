@@ -69,14 +69,17 @@ namespace CommonJobs.Mvc.UI
 
             RegisterRoutes(RouteTable.Routes);
 
-#if NO_AD
-            CommonJobsAuthorizeAttribute.AuthorizationBehavior = new ForcedGroupsFromSettingsAuthorizationBehavior("CommonJobs/FakeADGroups");
-#else
-            CommonJobsAuthorizeAttribute.AuthorizationBehavior = new MixedAuthorizationBehavior(
-                new SessionRolesAuthorizationBehavior(CommonJobs.Mvc.UI.Controllers.AccountController.SessionRolesKey),
-                new PrefixFromSettingsAuthorizationBehavior("CommonJobs/ADGroupsPrefix"));
-#endif
 
+            CommonJobsAuthorizeAttribute.AuthorizationBehavior = new MixedAuthorizationBehavior(
+                new SessionAndExternalRolesAuthorizationBehavior(CommonJobs.Mvc.UI.Controllers.AccountController.SessionRolesKey, userName =>
+                {
+                    using (var session = RavenSessionManager.DocumentStore.OpenSession())
+                    {
+                        var user = session.Query<CommonJobs.Domain.User>().Where(u => u.UserName == userName).FirstOrDefault();
+                        return user == null || user.Roles == null ? new string[0] : user.Roles;
+                    }
+                }),
+                new PrefixFromSettingsAuthorizationBehavior("CommonJobs/ADGroupsPrefix"));
 
             // Es cierto que iniciar recurrentes aquí puede no ser una buena idea (http://haacked.com/archive/2011/10/16/the-dangers-of-implementing-recurring-background-tasks-in-asp-net.aspx)
             // Pero es la mejor forma de lograr un deploy simple, y a la vez soporar AppHarbor.

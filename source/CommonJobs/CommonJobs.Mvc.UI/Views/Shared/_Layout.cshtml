@@ -51,11 +51,14 @@
                 <ul class="nav nav-right">
                     @if (Request.IsAuthenticated && User != null && User.Identity != null && User.Identity.Name != null) 
 				    {
-                        <li class="username"><small>@User.Identity.Name</small></li>
-                        if (User.Identity.AuthenticationType == "Forms")
+                        <li class="username"><small>@User.Identity.Name
+                        @if (User.Identity.AuthenticationType == "Forms")
                         {
-                            //TODO: show logoff link
+                            <text>[</text>
+                            @Html.ActionLink("LogOff", "LogOff", "Account")
+                            <text>]</text>
                         }
+                        </small></li>
 				    }
                     else
                     {
