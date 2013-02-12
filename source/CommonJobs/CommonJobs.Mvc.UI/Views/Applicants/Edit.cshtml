@@ -26,6 +26,7 @@
             <p>
                 <button class="saveApplicant btn btn-primary disabled" disabled="disabled"><i class="icon-ok icon-white"></i> Guardar cambios</button>
                 <button class="reloadApplicant btn disabled" disabled="disabled">Descartar cambios</button>
+                <button class="editionFullEdit btn">Editar todos</button>
                 <button class="deleteApplicant btn btn-danger pull-right"><i class="icon-remove icon-white"></i> Eliminar postulante</button>
                 @Html.RenderIfHasPermission("HireApplicant", "Employees",
                     @:<button class="hireApplicant btn btn-success pull-right">Contratar postulante</button>
