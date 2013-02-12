@@ -707,6 +707,10 @@
             this.dataBinder.editionMode("normal");
             this.$el.removeClass("edition-readonly edition-full-edit");
             this.$el.addClass("edition-normal");
+            this.$el.find('.btn.editionNormal')
+                         .addClass('editionFullEdit')
+                         .removeClass('active editionNormal')
+                         .text("Editar todos");
         },
         editionReadonly: function () {
             this.dataBinder.editionMode("readonly");
@@ -717,6 +721,10 @@
             this.dataBinder.editionMode("full-edit");
             this.$el.removeClass("edition-readonly edition-normal");
             this.$el.addClass("edition-full-edit");
+            this.$el.find('.btn.editionFullEdit')
+                    .addClass('active editionNormal')
+                    .removeClass('editionFullEdit')
+                    .text("Edición normal");
         },
         isEditing: function (isCurrentlyEditing) {
             this.$el.find('.reloadEmployee, .saveEmployee')
