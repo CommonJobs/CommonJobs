@@ -8,7 +8,7 @@
 
 * Destaco feedback de Gabriel.
 
-* Observo más interés en el proyecto por parte de la empresa gracias al subsistema de administración de almuersos.
+* Observo más interés en el proyecto por parte de la empresa gracias al subsistema de administración de almuerzos.
 
 ## Andrés
 

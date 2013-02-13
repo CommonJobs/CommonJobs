@@ -10,6 +10,7 @@
 * Quitar skills de tarjetas de postulantes.
 * Documentación Fin Sprint 17.
 * Estilos de listado de búsquedas.
+* Estilos de edición de búsqueda.
 * Postulantes ingresando por cuenta propia skills.
 * Investigando acerca de OAuth y Google.
 * No se pueden borrar los links de compartir postulante (bug).
@@ -33,7 +34,7 @@
 * En anchos chicos no se puede presionar los botones de la derecha de la barra de edición (bug).
 * Habría que volver a agregar el botón de "editar todo".
 * Análisis en mejorar performance  en página de ausencias.
-* Estilos de edición de búsqueda.
+
 
 
 ## Salida Sprint  

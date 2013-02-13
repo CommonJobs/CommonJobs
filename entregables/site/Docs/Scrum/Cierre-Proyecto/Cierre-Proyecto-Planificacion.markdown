@@ -7,7 +7,7 @@ A acordar con la cátedra.
 
 ## Tareas
 
-*Utilizamos esta [Pizzara de trello](https://trello.com/board/cierre-de-proyecto/5113fe16452c5a62700075fc ) para organizarnos en las tareas de cierre de proyecto. A cada una de las tareas faltantes se le asigna una fecha límite, responsables y se las agrupa según el estado en que se encuentran.*
+*Utilizamos esta [Pizara de trello](https://trello.com/board/cierre-de-proyecto/5113fe16452c5a62700075fc ) para organizarnos en las tareas de cierre de proyecto. A cada una de las tareas faltantes se le asigna una fecha límite, responsables y se las agrupa según el estado en que se encuentran.*
 
 
 * Reunión con Gabriela.
