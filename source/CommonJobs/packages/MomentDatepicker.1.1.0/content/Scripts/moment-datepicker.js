@@ -24,7 +24,7 @@
     var Datepicker = function (element, options) {
         this.element = $(element);
         this.autoHide = true && (options.autoHide !== false) && (this.element.data('datepicker-autohide') !== false);
-        this.format = options.format || this.element.data('datepicker-format') || moment.longDateFormat.L;
+        this.format = options.format || this.element.data('datepicker-format') || moment.langData().longDateFormat('L');
         this.picker = $(DPGlobal.template)
 							.appendTo('body')
 							.on({
@@ -32,12 +32,12 @@
 							    mousedown: $.proxy(this.mousedown, this)
 							});
         this.isInput = this.element.is('input');
-        this.component = this.element.is('.date') ? this.element.find('.add-on') : false;
+        this.component = !this.isInput && this.element.is('.date') ? this.element.find('.add-on') : false;
 
         if (this.isInput) {
             this.element.on({
                 focus: $.proxy(this.show, this),
-                blur: $.proxy(function (e) { 
+                blur: $.proxy(function (e) {
                     this.hide();
                     this.triggerChangeDate();
                 }, this),
@@ -101,7 +101,7 @@
             return (this.moment && this.moment.clone());
         },
         getAsText: function (format) {
-            return (this.moment && this.moment.format(format || this.format));
+            return (this.moment && this.moment.format(format || this.format)) || '';
         },
         show: function (e) {
             this.picker.show();
@@ -139,11 +139,11 @@
 
             if (!this.isInput) {
                 if (this.component) {
-                    this.element.find('input').prop('value', formated);
+                    this.element.find('input').prop('value', formated).change();
                 }
-                this.element.data('date', formated);
+                this.element.data('date', formated).change();
             } else {
-                this.element.prop('value', formated);
+                this.element.prop('value', formated).change();
             }
         },
 
@@ -151,7 +151,7 @@
             this.update(newDate, ommitEvent);
             this.refresh();
         },
-        
+
         place: function () {
             var offset = this.component ? this.component.offset() : this.element.offset();
             this.picker.css({
@@ -196,9 +196,9 @@
         fillDow: function () {
             var dowCnt = this.weekStart;
             var html = '<tr>';
-            var daysMin = moment.weekdaysMin;
+            var daysMin = $.proxy(moment.langData().weekdaysMin, moment.langData());
             while (dowCnt < this.weekStart + 7) {
-                html += '<th class="dow">' + daysMin[(dowCnt++) % 7] + '</th>';
+                html += '<th class="dow">' + daysMin(moment().day((dowCnt++) % 7)) + '</th>';
             }
             html += '</tr>';
             this.picker.find('.datepicker-days thead').append(html);
@@ -207,9 +207,9 @@
         fillMonths: function () {
             var html = '';
             var i = 0
-            var monthsShort = moment.monthsShort;
+            var monthsShort = $.proxy(moment.langData().monthsShort, moment.langData());
             while (i < 12) {
-                html += '<span class="month">' + monthsShort[i++] + '</span>';
+                html += '<span class="month">' + monthsShort(moment().month(i++)) + '</span>';
             }
             this.picker.find('.datepicker-months td').append(html);
         },
@@ -221,9 +221,9 @@
             var currentDate = currentMoment ? currentMoment.valueOf() : null; //TODO: use diff
             var currentYear = currentMoment ? currentMoment.year() : null;
             var currentMonth = currentMoment ? currentMoment.month() : null;
-            
+
             this.picker.find('.datepicker-days th:eq(1)')
-						.text(moment.months[month] + ' ' + year);
+						.text(moment.langData().months(moment().month(month)) + ' ' + year);
 
             var prevMonth = moment([year, month, 0]);
             prevMonth.day(prevMonth.day() - (prevMonth.day() - this.weekStart + 7) % 7);
@@ -303,7 +303,7 @@
                         break;
                     case 'span':
                         if (target.is('.month')) {
-                            
+
                             var newMonth = target.parent().find('span').index(target);
                             //this.viewDate.month(newMonth); I do not like how it works when the new month have less days
                             this.viewDate.add('months', newMonth - this.viewDate.month());
@@ -312,14 +312,14 @@
                             var year = parseInt(target.text(), 10) || 0;
                             this.viewDate.year(year);
                         }
-                        
+
                         if (this.viewMode !== this.minViewMode) {
                             this.showMode(-1);
                             this.set(this.viewDate, true);
                         } else {
                             this.set(this.viewDate);
                         }
-                        
+
                         break;
                     case 'td':
                         if (target.is('.day')) {
