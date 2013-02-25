@@ -150,6 +150,10 @@
     <Content Include="CJLogic\Libs\Knockout.d.ts" />
     <Content Include="CJLogic\Libs\moment.d.ts" />
     <Content Include="CJLogic\Libs\underscore.browser.d.ts" />
+    <Content Include="Content\bootstrap-responsive.css" />
+    <Content Include="Content\bootstrap-responsive.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Home\absence.png" />
     <Content Include="Content\Home\applicant.png" />
     <Content Include="Content\Home\attach.png" />
@@ -161,6 +165,9 @@
     <Content Include="Content\Home\search.png" />
     <Content Include="Content\Home\sourcecode.png" />
     <Content Include="Content\Home\vacation.png" />
+    <Content Include="Content\Images\glyphicons-halflings-white.png" />
+    <Content Include="Content\Images\glyphicons-halflings.png" />
+    <Content Include="Content\moment-datepicker\datepicker.css" />
     <Content Include="Content\mymenu.css" />
     <Content Include="Content\Absences\Absences.js" />
     <Content Include="Content\DataTables\css\demo_page.css" />
@@ -211,7 +218,6 @@
     <Content Include="Content\DataTablesHelpers\DataTablesHelpers.js" />
     <Content Include="Content\Images\AddApplicant.png" />
     <Content Include="Content\Images\bigroller-bbb-111transparent.gif" />
-    <Content Include="Content\moment-datepicker\datepicker.css" />
     <Content Include="Content\TableTools-2.1.4\media\css\TableTools.css" />
     <Content Include="Content\TableTools-2.1.4\media\css\TableTools_JUI.css" />
     <Content Include="Content\TableTools-2.1.4\media\images\background.png" />
@@ -242,10 +248,20 @@
     <Content Include="Scripts\AjaxHelper.min.js">
       <DependentUpon>AjaxHelper.ts</DependentUpon>
     </Content>
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\DataTables\dataTables.bootstrap.js" />
     <Content Include="Scripts\knockout.activity.js" />
     <Content Include="Scripts\knockout.asyncCommand.js" />
     <Content Include="Scripts\knockout.dirtyFlag.js" />
+    <Content Include="Scripts\moment-datepicker-ko.js" />
+    <Content Include="Scripts\moment-datepicker.d.ts" />
+    <Content Include="Scripts\moment-datepicker.js" />
+    <Content Include="Scripts\moment-datepicker.min.js" />
+    <Content Include="Scripts\moment.js" />
+    <Content Include="Scripts\moment.min.js">
+      <DependentUpon>moment.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\my-menu-admin-page.js">
       <DependentUpon>my-menu-admin-page.ts</DependentUpon>
     </Content>
@@ -284,10 +300,6 @@
     <Content Include="Scripts\knockout-2.2.0.debug.js" />
     <Content Include="Scripts\knockout-2.2.0.js" />
     <Content Include="Scripts\Knockout.d.ts" />
-    <Content Include="Scripts\moment-datepicker-ko.js" />
-    <Content Include="Scripts\moment-datepicker.d.ts" />
-    <Content Include="Scripts\moment-datepicker.js" />
-    <Content Include="Scripts\moment-datepicker.min.js" />
     <Content Include="Scripts\moment.d.ts" />
     <Content Include="Scripts\jquery.collapsable-sections.js" />
     <Content Include="Scripts\moment.i18n\es.js" />
@@ -566,10 +578,6 @@
     <Content Include="Scripts\jquery.Jcrop.min.js" />
     <Content Include="Scripts\jquery.jqGrid.min.js" />
     <Content Include="Scripts\jquery.jqGrid.src.js" />
-    <Content Include="Scripts\moment.js" />
-    <Content Include="Scripts\moment.min.js">
-      <DependentUpon>moment.js</DependentUpon>
-    </Content>
     <Content Include="Scripts\twix.js" />
     <Content Include="Scripts\url-generator.js" />
     <Content Include="Scripts\nervoustissue-uploader.js" />
