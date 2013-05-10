@@ -1,8 +1,8 @@
-var __extends = this.__extends || function (d, b) {
+﻿var __extends = this.__extends || function (d, b) {
     function __() { this.constructor = d; }
     __.prototype = b.prototype;
     d.prototype = new __();
-}
+};
 var Utilities;
 (function (Utilities) {
     function daysDiff(date1, date2) {
@@ -50,9 +50,7 @@ var Utilities;
     Utilities.idGenerator = new IdGenerator();
     var HasCallbacks = (function () {
         function HasCallbacks() {
-            var _this = this;
-            var _constructor = (this).constructor;
-
+            var _this = this, _constructor = (this).constructor;
             if(!_constructor.__cb__) {
                 _constructor.__cb__ = {
                 };
@@ -134,9 +132,7 @@ var Utilities;
         ObservableArrays.removeItem = removeItem;
     })(Utilities.ObservableArrays || (Utilities.ObservableArrays = {}));
     var ObservableArrays = Utilities.ObservableArrays;
-
 })(Utilities || (Utilities = {}));
-
 var MyMenu;
 (function (MyMenu) {
     var CalendarHelper = (function () {
@@ -210,7 +206,8 @@ var MyMenu;
             return mmnt;
         };
         return CalendarHelper;
-    })();    
+    })();
+    MyMenu.CalendarHelper = CalendarHelper;    
     MyMenu.days = (function () {
         var DAYS = [
             1, 
@@ -299,14 +296,16 @@ var MyMenu;
             });
         };
         return WeekStorage;
-    })(Utilities.HasCallbacks);    
+    })(Utilities.HasCallbacks);
+    MyMenu.WeekStorage = WeekStorage;    
     var DayChoice = (function () {
         function DayChoice() {
             this.OptionKey = ko.observable("");
             this.PlaceKey = ko.observable("");
         }
         return DayChoice;
-    })();    
+    })();
+    MyMenu.DayChoice = DayChoice;    
     var Override = (function (_super) {
         __extends(Override, _super);
         function Override(data) {
@@ -755,4 +754,3 @@ var MyMenu;
     })(WeekStorage);
     MyMenu.MenuDefinition = MenuDefinition;    
 })(MyMenu || (MyMenu = {}));
-

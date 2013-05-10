@@ -9,8 +9,6 @@ var MyMenu;
         var orderPage = new OrderPage(window["ViewData"]);
         orderPage.bind();
     });
-    ; ;
-    ; ;
     var OrderPage = (function (_super) {
         __extends(OrderPage, _super);
         function OrderPage(viewData) {

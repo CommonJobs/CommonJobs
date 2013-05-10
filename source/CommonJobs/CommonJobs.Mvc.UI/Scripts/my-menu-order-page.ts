@@ -37,7 +37,7 @@ module MyMenu {
         url: string;
         employeeName: string;
         comment: string;
-    };
+    }
 
     export interface IOrderData {
         Id: string;
@@ -51,7 +51,7 @@ module MyMenu {
         QuantityByOptionByPlace: any; //public Dictionary<string, Dictionary<string, int>>
         DetailByUserName: any; //public Dictionary<string, MenuOrderDetailItem>
         IsOrdered: bool;
-    };
+    }
 
     export class OrderPage extends Utilities.HasCallbacks {
         onAjaxCall = false;
