@@ -38,6 +38,7 @@ var MyMenu;
                     _this.LastOrder(employeeMenuDTO.LastOrder);
                 },
                 error: function (jqXHR) {
+                    window.location.href = "/MyMenu/Order";
                     alert("Error getting EmployeeMenu");
                     $("html").html(jqXHR.responseText);
                 },
