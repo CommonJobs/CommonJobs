@@ -11,6 +11,8 @@
         <div class="row">
             @using (var form = Html.BeginSecurityTrimmingForm("GenerateOrder"))
             {
+                @Html.Hidden("dateOffset");
+                @Html.Hidden("date");
                 <div class="span3">
                     <strong>Pedido ya realizado.</strong>
                 </div>
@@ -29,6 +31,8 @@
         <div class="row">
             @using (var form = Html.BeginSecurityTrimmingForm("GenerateOrder"))
             {
+                @Html.Hidden("dateOffset");
+                @Html.Hidden("date");
                 <div class="span3">
                     <strong>Pedido aún no realizado.</strong>
                 </div>

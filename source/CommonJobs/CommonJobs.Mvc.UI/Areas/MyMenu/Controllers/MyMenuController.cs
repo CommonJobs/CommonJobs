@@ -129,11 +129,15 @@ namespace CommonJobs.Mvc.UI.Areas.MyMenu
             return Json(menu);
         }
 
-        public ActionResult Order(string id /*menuid*/ = null)
+        public ActionResult Order(string id /*menuid*/ = null, DateTime? date = null, int? dateOffset = null)
         {
             ViewBag.HidePersistenceButtons = true;
+            ViewBag.date = date;
+            ViewBag.dateOffset = dateOffset;
 
-            var order = ExecuteCommand(new GetOrderCommand() { Date = DateTime.Now, MenuDefinitionId = id });
+            var orderDate = GenerateDate(date, dateOffset);
+            
+            var order = ExecuteCommand(new GetOrderCommand() { Date = orderDate, MenuDefinitionId = id });
 
             ScriptManager.RegisterGlobalJavascript(
                 "ViewData",
@@ -141,18 +145,26 @@ namespace CommonJobs.Mvc.UI.Areas.MyMenu
                 {
                     now = DateTime.Now,
                     order = order,
-                    baseLink = Url.Action("Edit")
+                    baseLink = Url.Action("Edit"),
+                    date = date,
+                    dateOffset = dateOffset
                 },
                 500);
             return View();
         }
 
+        private static DateTime GenerateDate(DateTime? date, int? dateOffset)
+        {
+            return date.GetValueOrDefault(DateTime.Now).AddDays(dateOffset.GetValueOrDefault());
+        }
+
         [AcceptVerbs(HttpVerbs.Post)]
         [CommonJobsAuthorize(Roles = "Users,MenuManagers")]
-        public ActionResult GenerateOrder(string id = null)
+        public ActionResult GenerateOrder(string id = null, DateTime? date = null, int? dateOffset = null)
         {
-            ExecuteCommand(new ProcessMenuCommand() { MenuDefinitionId = id, Now = () => DateTime.Now });
-            return RedirectToAction("Order");
+            var orderDate = GenerateDate(date, dateOffset);
+            ExecuteCommand(new ProcessMenuCommand() { MenuDefinitionId = id, Now = () => orderDate });
+            return RedirectToAction("Order", new { date, dateOffset });
         }
 
     }
