@@ -143,7 +143,7 @@ namespace CommonJobs.Mvc.UI.Areas.MyMenu
                 "ViewData",
                 new
                 {
-                    now = DateTime.Now,
+                    now = DateTime.Now.Date,
                     order = order,
                     baseLink = Url.Action("Edit"),
                     date = date,
@@ -155,7 +155,7 @@ namespace CommonJobs.Mvc.UI.Areas.MyMenu
 
         private static DateTime GenerateDate(DateTime? date, int? dateOffset)
         {
-            return date.GetValueOrDefault(DateTime.Now).AddDays(dateOffset.GetValueOrDefault());
+            return date.GetValueOrDefault(DateTime.Now).AddDays(dateOffset.GetValueOrDefault()).Date;
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
