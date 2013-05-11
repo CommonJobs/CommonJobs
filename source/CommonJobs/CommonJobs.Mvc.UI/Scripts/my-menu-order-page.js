@@ -9,19 +9,19 @@ var MyMenu;
         var orderPage = new OrderPage(window["ViewData"]);
         orderPage.bind();
     });
-    ; ;
-    ; ;
     var OrderPage = (function (_super) {
         __extends(OrderPage, _super);
         function OrderPage(viewData) {
                 _super.call(this);
             this.onAjaxCall = false;
             this.orderDate = moment();
+            this.isToday = false;
             this.isOrdered = false;
             this.isProcessButtonVisible = ko.observable(false);
             var order = viewData.order;
             this.isOrdered = order.IsOrdered;
             this.orderDate = moment(order.Date);
+            this.isToday = order.Date == viewData.now;
             this.placeSummaries = _.sortBy(_.map(order.PlacesByKey, function (placeName, placeKey) {
                 return ({
                     placeKey: placeKey,

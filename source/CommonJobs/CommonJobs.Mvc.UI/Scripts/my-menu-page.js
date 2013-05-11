@@ -2,7 +2,7 @@ var __extends = this.__extends || function (d, b) {
     function __() { this.constructor = d; }
     __.prototype = b.prototype;
     d.prototype = new __();
-}
+};
 var MyMenu;
 (function (MyMenu) {
     $(document).ready(function () {
@@ -38,6 +38,7 @@ var MyMenu;
                     _this.LastOrder(employeeMenuDTO.LastOrder);
                 },
                 error: function (jqXHR) {
+                    window.location.href = "/MyMenu/Order";
                     alert("Error getting EmployeeMenu");
                     $("html").html(jqXHR.responseText);
                 },
@@ -71,4 +72,3 @@ var MyMenu;
     })(MyMenu.EmployeeMenuDefinition);
     MyMenu.MyMenuPage = MyMenuPage;    
 })(MyMenu || (MyMenu = {}));
-

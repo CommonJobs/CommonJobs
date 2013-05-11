@@ -62,6 +62,7 @@ module MyMenu {
                     this.LastOrder(employeeMenuDTO.LastOrder);
                 },
                 error: (jqXHR) => {
+                    window.location.href = "/MyMenu/Order";
                     alert("Error getting EmployeeMenu");
                     $("html").html(jqXHR.responseText);
                 },

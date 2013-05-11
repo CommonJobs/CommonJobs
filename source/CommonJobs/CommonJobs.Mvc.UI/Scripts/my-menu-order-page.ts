@@ -37,7 +37,7 @@ module MyMenu {
         url: string;
         employeeName: string;
         comment: string;
-    };
+    }
 
     export interface IOrderData {
         Id: string;
@@ -51,11 +51,12 @@ module MyMenu {
         QuantityByOptionByPlace: any; //public Dictionary<string, Dictionary<string, int>>
         DetailByUserName: any; //public Dictionary<string, MenuOrderDetailItem>
         IsOrdered: bool;
-    };
+    }
 
     export class OrderPage extends Utilities.HasCallbacks {
         onAjaxCall = false;
         orderDate: moment.Moment = moment();
+        isToday: bool = false;
         isOrdered: bool = false;
         isProcessButtonVisible: knockout.koObservableBool = ko.observable(false);
 
@@ -72,6 +73,7 @@ module MyMenu {
             var order: IOrderData = viewData.order;
             this.isOrdered = order.IsOrdered;
             this.orderDate = moment(order.Date);
+            this.isToday = order.Date == viewData.now;
 
             this.placeSummaries = _.sortBy(
                 _.map(order.PlacesByKey, (placeName: string, placeKey: string) => ({
