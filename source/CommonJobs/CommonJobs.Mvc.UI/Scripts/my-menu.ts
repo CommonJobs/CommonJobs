@@ -136,7 +136,7 @@ module Utilities {
 
 module MyMenu {
     
-    class CalendarHelper {
+    export class CalendarHelper {
         StartDate: () => moment.Moment;
         WeeksQuantity: () => number;
         FirstWeekIdx: () => number; 
@@ -305,7 +305,7 @@ module MyMenu {
         Value: any;
     }
 
-    class WeekStorage extends Utilities.HasCallbacks {
+    export class WeekStorage extends Utilities.HasCallbacks {
         WeeksQuantity: { (): number; };
         Weeks: { (): KeyText[]; };
         private items: any[][];
@@ -383,7 +383,7 @@ module MyMenu {
         };
     }
 
-    class DayChoice {
+    export class DayChoice {
         OptionKey: knockout.koObservableString = ko.observable("");
         PlaceKey: knockout.koObservableString = ko.observable("");
     }
