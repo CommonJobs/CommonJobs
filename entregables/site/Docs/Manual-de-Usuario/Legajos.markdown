@@ -53,23 +53,41 @@ Nota: sería muy bueno poder mostrar una imagen de esto. ¿Cuál es el límite d
 
 ## Búsqueda
 
-//TODO
+Para buscar algún valor en particular, puede escribirse sobre la caja de búsqueda que se encuentra en la esquina superior derecha. Al comenzar a escribir, los valores serán filtrados automáticamente para mostrar los resultados.
+
+![Búsqueda](./Images/Legajos/05-busqueda.png)
+
+De la misma forma que cuando se muestran todos los resultados, al efectuar una búsqueda de filtrado, se verá una leyenda que indica cuántos registros se encuentran actualmente visibles del total, y se indicará además que se trata de un filtrado.
+
+El filtrado se aplica sobre cualquiera de las columnas de la tabla.
 
 ## Botones de exportación
 
-//TODO
+En la esquina superior izquierda se encuentran varios botones que permiten la exportación de los datos visualizados en distintos formatos. Estos son: *Imprimir*, *Copiar*, *PDF*, y *Excel*.
 
 ### Imprimir
 
-//TODO
+Al presionar el botón imprimir se mostrará un mensaje indicando que la tabla se ha acomodado para una óptima impresión. Los menúes y mensajes adicionales serán retirados de la pantalla, para permitir imprimir los contenidos de la tabla.
+
+Para efectuar la impresión, se debe iniciar la impresión desde el navegador que se esté utilizando.
+
+![Visualización de impresión](./Images/Legajos/06-impresion.png)
+
+Una vez que se haya efectuado la impresión, puede cancelarse este modo de visualización presionando la tecla *Escape*.
 
 ### Copiar
 
-//TODO
+Para copiar la información visualizada en pantalla y poder compartirla con otros programas, el botón de Copiar permitirá hacerlo, a través del portapapeles.
+
+Una vez que el botón se presiona, una confirmación de la información copiada se mostrará en pantalla. Esta confirmación incluirá el número de filas copiadas, que coincidirá con el número de filas visualizadas actualmente.
+
+![Confirmación de copiado](./Images/Legajos/07-copiar.png)
+
+Una vez realizado esto, la información se encontrará disponible en el portapapeles para ser pegada en otra aplicación. El formato de esta información copiada será de texto separado por tabulaciones.
 
 ### PDF
 
-//TODO
+La exportación a PDF permitirá generar un archivo en formato de documento portable (PDF). La información en pantalla será llevada a ese formato en orientación vertical.
 
 ### Excel
 
