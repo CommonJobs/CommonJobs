@@ -89,6 +89,18 @@ Una vez realizado esto, la información se encontrará disponible en el portapap
 
 La exportación a PDF permitirá generar un archivo en formato de documento portable (PDF). La información en pantalla será llevada a ese formato en orientación vertical.
 
+![Ejemplo de exportación PDF](./Images/Legajos/08-pdf.png)
+
+Notesé que el formato del PDF generado actualmente no se encuentra optimizado para datos de longitud ni para mostrar información de contexto (como el día en el que se generó, o la búsqueda efectuada). Esta funcionalidad se agregará en un futuro al sistema.
+
 ### Excel
 
-//TODO
+La opción de exportación a Excel permitirá descargar un archivo *.csv*, siglas de *Comma Separated Values* (Valores separados por comas). Este formato estándar permite interactuar con varios programas de manejo de datos, incluyendo el popular Microsoft Excel.
+
+![Exportación por defecto a CSV](./Images/Legajos/09-csv.png)
+
+Una vez que estos archivos se encuentren en su programa, usted puede manipularlos a gusto, generar reportes útiles, incluso filtrar o manipular la información y darle formato.
+
+![Ejemplo de utilización de datos exportados a Excel](./Images/Legajos/10-csv-reporte.png)
+
+En el ejemplo anterior, se puede apreciar cómo se le ha dado formato a la exportación generada y cómo se ha generado un reporte automático utilizando tablas pivote en base a los datos de la tabla.
