@@ -64,13 +64,15 @@ En este caso el sistema mostrará una pantalla en donde se confirma la adición 
 
 De forma similar a la que se puede crear un postulante arrastrando un archivo a la tarjeta de *Agregar nuevo...*, también pueden adjuntarse archivos a postulantes existentes arrastrándolos hasta su tarjeta.
 
-//TODO imagen de archivo siendo arrastrado a la aplicación
+![Adjuntar archivo a postulante](Images/Postulantes/04-arrastrar-archivo-a-tarjeta.png)
 
 ## Detalle de un postulante
 
 La pantalla de detalle o edición de un postulante posee varias secciones que permiten administrar su información. A continuación se explicará en qué consiste dicha pantalla y qué información se dispone en ella.
 
 ### Sección principal del perfil
+
+![Sección principal del perfil](Images/Postulantes/05-perfil-seccion-principal.png)
 
 La sección principal del perfil posee la siguiente información del postulante:
 
@@ -86,6 +88,8 @@ Del lado derecho de esta sección se encuentra una sub-sección que permite admi
 - **Links de acceso:** Esta sección permite la creación de links públicos para acceder al perfil de este postulante. Los links permiten también acceso de edición al mismo y son válidos sólo durante el tiempo que se mantengan asociados al perfil. Esto puede hacerse indicando un tiempo de expiración al mismo, tras el cual dicho link no estará más activo. La utilidad de esta funcionalidad permite a personas sin acceso al sistema contribuir con la construcción del perfil de un postulante (por ejemplo, entrevistadores o asociados).
 
 ### Datos personales
+
+![Datos personales del perfil](Images/Postulantes/06-perfil-datos-personales.png)
 
 La siguiente sección posee esta información sobre un postulante:
 
@@ -104,6 +108,8 @@ La siguiente sección posee esta información sobre un postulante:
 
 ### Datos laborales
 
+![Datos laborales del perfil](Images/Postulantes/07-perfil-datos-laborales.png)
+
 Los datos laborales permiten recavar información sobre la experiencia previa de trabajo que este postulante ha tenido.
 
 Por cada uno de esos registros, se almacena la siguiente información:
@@ -115,6 +121,8 @@ Por cada uno de esos registros, se almacena la siguiente información:
 
 ### Notas
 
+![Notas del perfil](Images/Postulantes/08-perfil-notas.png)
+
 Finalmente, la sección de notas permite almacenar notas variadas y adjuntos sobre el postulante. Estas permiten también indicar su progreso sobre el proceso de contratación (entrevistas, tests, etc).
 
 Por cada una de esas notas se registra la siguiente información:
@@ -124,3 +132,17 @@ Por cada una de esas notas se registra la siguiente información:
 - Archivo adjunto
 - Notas
 
+### Acciones
+
+![Acciones del perfil](Images/Postulantes/09-perfil-acciones.png)
+
+Finalmente, en el perfil de un usuario, algunas acciones se puede realizar que afecten a la totalidad del perfil. Las primeras tres se relacionan a los campos del perfil y sus datos:
+
+- **Guardar cambios** sólo estará disponible si se han efectuado cambios en los datos del postulante. En este caso, presionarlo guardará esos cambios como parte del perfil.
+- **Descartar cambios**, por otro lado, descartará cualquier cambio actual efectuado en los datos del postulante y restaurará los campos a los datos que se encuentran almacenados para el mismo.
+- **Editar todos** cambiará el estado de estos campos para comenzar la edición de los mismos. Esta posibilidad es útil para editarlos todos a la vez sólo con el uso del teclado.  
+
+Por otro lado, hay acciones que afectan al postulante en su totalidad, y estas son:
+
+- **Contratar postulante:** marcará al postulante como contratado y creará un empleado con los mismos datos del postulante.
+- **Eliminar postulante:** eliminará al postulante de la base de datos.
