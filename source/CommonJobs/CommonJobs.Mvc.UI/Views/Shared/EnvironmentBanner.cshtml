@@ -1,12 +1,12 @@
 ﻿@{
   var environment = System.Configuration.ConfigurationManager.AppSettings["CommonJobs/Environment"];
-  if (!"PROD".Equals(environment, StringComparison.InvariantCultureIgnoreCase))
+  @*if (!"PROD".Equals(environment, StringComparison.InvariantCultureIgnoreCase))
   {
     @Raven.Client.MvcIntegration.RavenProfiler.CurrentRequestSessions()
     <li class="environmentBanner">
       <small>ENTORNO DE PRUEBAS (@environment)</small>
     </li>
-  }
+  }*@
 }
   
   
