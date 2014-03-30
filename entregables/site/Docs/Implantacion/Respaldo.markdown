@@ -1,8 +1,8 @@
-﻿# Respaldo y restauración
+# Respaldos y restauración
 
 ## Introducción
 
-Para resguardar la información almacenada por el sistema, proveemos un script de backup que se encargará de copiar y comprimir los datos junto con otros archivos importantes para poner en funcionamiento rápidamente el sitio en caso de existir algún problema. 
+Para resguardar la información almacenada por el sistema, un script de backup es provisto que se encargará de copiar y comprimir los datos junto con otros archivos importantes para poner en funcionamiento rápidamente el sitio en caso de existir algún problema. 
 
 La restauración deberá realizarse manualmente según instrucciones descritas más abajo. 
 
