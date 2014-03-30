@@ -12,7 +12,7 @@ La utilización de las dos herramientas en simultaneo resulto incomoda y gracias
 
 Tenemos una pizarra con el *Product Backlog* (con una etiqueta por cada _User Stories_, _Bugs_ o _tareas_), donde el _Product Owner_ y los integrantes del equipo nos encargamos de actualizar, refinar y priorizar durante el transcurso del proyecto.
 
-Por cada _Sprint_ generamos una nueva pizarra organizada en columnas (Todo, Doing, Done y For Product Backlog) en donde se pasan cada etiqueta seleccionada, para el *sprint* en cuestion, desde la pizarra del *Product Backlog*.
+Por cada _Sprint_ generamos una nueva pizarra organizada en columnas (Todo, Doing, Pull Request, Done y For Product Backlog) en donde se pasan cada etiqueta seleccionada, para el *sprint* en cuestion, desde la pizarra del *Product Backlog*.
 Cada etiqueta se va pasando de columna según su estado y además podemos generar feedback como comentarios en cada etiqueta.
 
 [Link a Pizarras CommonJobs](https://trello.com/commonjobs)

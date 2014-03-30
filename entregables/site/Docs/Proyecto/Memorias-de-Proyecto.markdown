@@ -46,3 +46,5 @@ El proyecto final _CommonJobs_ fue desarrollado y llevado a cabo por los alumnos
 - aprendizaje: personal, técnico, profesional
 - qué habilidades requiere el desarrollo de un proyecto
 - cierre
+
+<!-- Notas de edición: Al finalizar la edición de este documento renombrarlo con su fecha de entrega y actualizar el link y la fecha en index.markdown -->
