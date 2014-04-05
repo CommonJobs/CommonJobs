@@ -1,4 +1,4 @@
-﻿# Configuración de los entornos
+# Configuración de los entornos
 
 ## Notas
 
@@ -22,13 +22,13 @@ Este documento se ha modificado para describir la configuración de los sitios c
 
 Para ambos entornos DEV y PROD, el cliente pone a disposición el servidor `LAN-SERVER-NAME` con la dirección IP interna `LAN-SERVER-IP` y accesible externamente mediante el siguiente nombre: `DNS-SERVER-NAME`.
 
-Ambos servidores web, DEV y PROD, serán accesibles externamente mediante las siguientes URLs https://DNS-SERVER-NAME:8888 y https://DNS-SERVER-NAME respectivamente.
+Ambos servidores web, DEV y PROD, serán accesibles externamente mediante las siguientes URLs `https://DNS-SERVER-NAME:8888` y `https://DNS-SERVER-NAME` respectivamente.
 
 Los servicios de base de datos correrán en el mismo servidor. El servicio correspondiente a DEV será accesible externamente a través del puerto `8080` por los desarrolladores del sistema autenticados mediante _Windows Authentication_. La base de datos PROD solo será accesible localmente por el servidor web de PROD.
 
 ### Sitio público
 
-Algunas funciones del sistema requieren de un sitio accesible públicamente sin autenticación. Para eso se reservaron las direcciones http://PUBLIC-DNS-SERVER-NAME para el entorno PROD y http://DNS-SERVER-NAME:8889 para el entorno DEV. 
+Algunas funciones del sistema requieren de un sitio accesible públicamente sin autenticación. Para eso se reservaron las direcciones `http://PUBLIC-DNS-SERVER-NAME` para el entorno PROD y `http://DNS-SERVER-NAME:8889` para el entorno DEV. 
 
 
 ## Configuración de los usuarios y grupos
@@ -62,7 +62,7 @@ Para configurar la seguridad del sistema se crearán los grupos `LAN-SERVER-NAME
 
 ### Sitios
 
-* `CommonJobs DEV` (https://DNS-SERVER-NAME:8888)
+* `CommonJobs DEV` (`https://DNS-SERVER-NAME:8888`)
    * Bindings: `https:*:8888:` (Se utilizará un Self-Generated certificate)
    * Application Pool: `CommonJobs DEV AppPool`
    * Physical Path: `C:\CommonJobsDEV\DNS-SERVER-NAME_8888`
@@ -75,13 +75,13 @@ Para configurar la seguridad del sistema se crearán los grupos `LAN-SERVER-NAME
 
 ![ ](Images/Sharing_DEV_folder.jpg)
 
-* `Documentation` (https://DNS-SERVER-NAME:8888/Documentation)
+* `Documentation` (`https://DNS-SERVER-NAME:8888/Documentation`)
    * Subsitio de `CommonJobs DEV` con similar configuración
    * Physical Path: `DNS-SERVER-NAME_8888_documentation`
 
 ![ ](Images/IIS_DEV_Documentation_Site.jpg)
 
-* `CommonJobs PROD` (https://DNS-SERVER-NAME)
+* `CommonJobs PROD` (`https://DNS-SERVER-NAME`)
    * Bindings: `https:*:443:` 
    * Application Pool: `CommonJobs PROD AppPool`
    * Physical Path: `C:\Sites\CommonJobs\DNS-SERVER-NAME`
@@ -92,14 +92,14 @@ Para configurar la seguridad del sistema se crearán los grupos `LAN-SERVER-NAME
 
 ![ ](Images/FileSystem_PROD.jpg)
 
-* `CommonJobs Careers DEV` (https://DNS-SERVER-NAME:8889)
+* `CommonJobs Careers DEV` (`https://DNS-SERVER-NAME:8889`)
    * Bindings: `http:*:8889:`
    * Application Pool: `CommonJobs DEV AppPool`
    * Physical Path: `C:\CommonJobsDEV\DNS-SERVER-NAME_8889`
    * Physical Path Credentials: `LAN-SERVER-NAME\CommonJobsDEVUsr`
    * Permisos completos en el sistema de archivos y _File Sharing_ habilitado para `LAN-SERVER-NAME\CommonJobsDEV` 
 
-* `CommonJobs Careers PROD` (http://PUBLIC-DNS-SERVER-NAME)
+* `CommonJobs Careers PROD` (`http://PUBLIC-DNS-SERVER-NAME`)
    * Bindings: `http:PUBLIC-DNS-SERVER-NAME:` 
    * Application Pool: `CommonJobs PROD AppPool`
    * Physical Path: `C:\Sites\CommonJobs\PUBLIC-DNS-SERVER-NAME`
@@ -175,10 +175,10 @@ Los archivos adjuntos se almacenarán en el sistema de archivos:
 Las migraciones permitirán modificar los documentos de la base de datos para adaptarse a la versión de la aplicación. Deberán ejecutarse manualmente y el acceso será restringido por dirección IP configurable en el web.config de la aplicación.
 
 * Migraciones de DEV
-  * URL: https://DNS-SERVER-NAME:8888/migrations / https://localhost:8888/migrations
+  * URL: `https://DNS-SERVER-NAME:8888/migrations` / `https://localhost:8888/migrations`
   * Accesible localmente desde `LAN-SERVER-NAME` o desde las direcciones IPs de los desarrolladores
 * Migraciones de PROD
-  * URL: https://localhost/migrations
+  * URL: `https://localhost/migrations`
   * Solo accesible localmente desde `LAN-SERVER-NAME`
 
 ![ ](Images/Migrations.jpg)

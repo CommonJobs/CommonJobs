@@ -1,3 +1,0 @@
-# General
-
-* [Autocompletado](Autocompletado)

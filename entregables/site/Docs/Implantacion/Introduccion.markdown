@@ -1,4 +1,4 @@
-﻿# Introducción
+# Introducción
 
 Creemos que para asegurar el éxito de este proyecto, es decir que el sistema cumpla su cometido de ser útil al área de recursos humanos de la empresa, es muy importante la implantación temprana. De esta manera no solo comenzará a generar valor lo antes posible sino que además permitirá al cliente tener una visión mas cercana del producto, y podrá guiarnos mejor para satisfacer sus necesidades.
 
@@ -16,7 +16,7 @@ A medida que agreguemos características o resolvamos errores en el sistema, ire
 
 Al finalizar el _sprint_ o cuando nos parezca conveniente, realizaremos el despliegue de esa rama en nuestro entorno DEV (en algunos casos puntuales, por ejemplo para demos o consultas, podremos desplegar en DEV código aún no mergeado en la rama `master`).
 
-El cliente evaluará los cambios en el entorno DEV y decidirá cuando serán desplegados en el entorno PROD. Entonces se realizará un _tag_ en nuestro repositorio de código y realizaremos el despliegue. En caso de ser necesario un arreglo puntual en PROD, podremos continuar una rama desde el _tag_ creado.
+El cliente evaluará los cambios en el entorno DEV y decidirá cuando serán desplegados en el entorno PROD.
 
 
 ## Consideraciones de Seguridad
