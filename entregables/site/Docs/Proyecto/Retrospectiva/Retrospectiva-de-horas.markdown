@@ -2,7 +2,7 @@
 
 A lo largo del proyecto hemos mantenido una bitácora de horas utilizadas en distintas actividades. Hemos además planificado cada sprint según la cantidad de horas que creíamos que podríamos dedicar según las necesidades de los objetivos del nuevo sprint y según nuestra disponibilidad personal.
 
-Tras terminar el proyecto, hemos puesto los números juntos para evluar el resultado de dichas dedicaciones. A continuación pueden leerse las conclusiones obtenidas.
+Tras terminar el proyecto, hemos puesto los números juntos para evaluar el resultado de dichas dedicaciones. A continuación pueden leerse las conclusiones obtenidas.
 
 ## Horas planeadas vs. dedicadas
 
