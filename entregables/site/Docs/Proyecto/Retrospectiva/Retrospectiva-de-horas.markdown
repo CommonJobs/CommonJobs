@@ -10,7 +10,7 @@ Tras terminar el proyecto, hemos puesto los números juntos para evaluar el resu
 
 ### Errores de estimacion
 
-El gráfico demuestra claramente que hemos sido muy optimistas al estimar la cantidad de horas que tendríamos disponibles para un determinado sprint. Creemos que esto se debe a la situación de planificar horas fuera de nuestro horario laboral, en donde por lo general es el tiempo que es ocupado por imprevistos de tipo personal, académico o incluso laboral. Si bien siempre hubo intenciones de dedicar un tiempo grande al proyecto, no siempre resultó posible.
+El gráfico demuestra claramente que hemos estimado más tiempo disponible que la cantidad de horas que realmente podríamos dedicar a un determinado sprint. Creemos que esto se debe a la situación de planificar horas fuera de nuestro horario laboral, en donde por lo general es el tiempo que es ocupado por imprevistos de tipo personal, académico o incluso laboral. Si bien siempre hubo intenciones de dedicar un tiempo grande al proyecto, no siempre resultó posible.
 
 ### Ajustes de planificación
 
