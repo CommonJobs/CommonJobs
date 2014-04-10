@@ -9,6 +9,7 @@ Al momento de la investigación inicial, elegimos RavenDB como nuestro sistema d
 - Programado en .NET (simplificando interoperabilidad)
 - Amplia variedad de APIs disponibles
 - Comunidad activa (incluyendo al autor original)
+- Curiosidad personal y oportunidad de aprendizaje
 
 A la vez, reconocíamos las siguientes desventajas:
 
