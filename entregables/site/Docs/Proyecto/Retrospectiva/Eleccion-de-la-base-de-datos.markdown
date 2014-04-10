@@ -53,8 +53,6 @@ En retrospectiva, creemos que RavenDB fue una buena elección.
 
 Su característica de bases de datos no relacional nos permitió ser liberales con la estructura de los datos, manteniendo a la vez un significado semántico de los objetos que tratábamos, sin sacrificar la funcionalidad existente.
 
-Su característica de migraciones fue esencial para el avance del sistema en etapas, que permitieron agregar funcionalidad a un sistema que se encontraba funcionando en producción, siempre mantiendo los datos y las funcionalides ya existentes.
-
 La construcción de índices con map-reduce nos permitió generar búsquedas en el sistema de una forma simple, que no deterioraban la performance ni generaban complejidad en el desarrollo.
 
 La creación de índices automáticos basadado en los tipos de las colecciones nos permitió hacer búsquedas básicas sobre documentos sin necesidad de configuraciones previas.
@@ -62,6 +60,8 @@ La creación de índices automáticos basadado en los tipos de las colecciones n
 La característica de versionamiento de documentos nos permitió adquirir la posibilidad de múltiples revisiones sin cambiar en absoluto la forma en la que el código trabaja. Fácilmente permitiría en el futuro agregar la capacidad de auditoría de cambios y regresión a versiones pasadas de los datos.
 
 Su administrador gráficos nos permitió fácilmente trabajar con el proyecto en las primeras etapas y configurarlo correctamente para iniciar nuestro desarrollo de forma rápida.
+
+Su característica de migraciones permitiría mejorar la forma en la que el sistema puede avanzar en etapas, estrategia que permitió agregar funcionalidad a un sistema que se encontraba funcionando en producción, siempre mantiendo los datos y las funcionalides ya existentes.
 
 ## Conclusión
 
