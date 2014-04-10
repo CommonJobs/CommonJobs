@@ -57,7 +57,7 @@ La construcción de índices con map-reduce nos permitió generar búsquedas en 
 
 La creación de índices automáticos basadado en los tipos de las colecciones nos permitió hacer búsquedas básicas sobre documentos sin necesidad de configuraciones previas.
 
-La característica de versionamiento de documentos nos permitió adquirir la posibilidad de múltiples revisiones sin cambiar en absoluto la forma en la que el código trabaja. Fácilmente permitiría en el futuro agregar la capacidad de auditoría de cambios y regresión a versiones pasadas de los datos.
+La característica de versionamiento de documentos y su fácil visualización desde Raven Studio nos permitió adquirir la posibilidad de múltiples revisiones sin cambiar en absoluto la forma en la que el código trabaja, y la capacidad de auditoría de cambios. Fácilmente permitiría en el futuro agregar la capacidad de auditoría de cambios desde el sistema mismo y regresión a versiones pasadas de los datos.
 
 Su administrador gráficos nos permitió fácilmente trabajar con el proyecto en las primeras etapas y configurarlo correctamente para iniciar nuestro desarrollo de forma rápida.
 
