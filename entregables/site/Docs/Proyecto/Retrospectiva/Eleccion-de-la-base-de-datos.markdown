@@ -68,3 +68,5 @@ Su característica de migraciones permitiría mejorar la forma en la que el sist
 Creemos que la experiencia de elección de RavenDB fue una muy enriquecedora, tanto para el proyecto por las capacidades del producto como para nosotros por los nuevos conocimientos adquiridos.
 
 Consideramos que la investigación realizada fue hecha de la forma correcta, y si bien podría haber sido más extensiva y detallista, fue lo suficientemente profunda como para predecir cualquier riesgo que podríamos haber tenido.
+
+Consideramos además que en este tiempo la plataforma en sí misma ha evolucionado mientras nuestro proyecto tomaba lugar. Hoy la plataforma de RavenDB se encuentra en su nueva versión 3 (cambio de versión mayor), con lo cual muchas nuevas características se encuentran disponibles para ser aprovechadas.
