@@ -23,6 +23,6 @@
 * Documentar la forma en que se generarán las _entregas_.
 * Lograr una automatización mayor de la generación de las _entregas_.
 
-[Detalles-Repositorio-de-Codigo-Fuente]: ../../Proyecto/Detalles-Repositorio-de-Codigo-Fuente
-[Detalles-Gestion-de-Tareas]: ../../Proyecto/Detalles-Gestion-de-Tareas
-[Detalles-Seleccion-Base-de-Datos]: ../../Proyecto/Detalles-Seleccion-Base-de-Datos
+[Detalles-Repositorio-de-Codigo-Fuente]: ../../Proyecto/2012-02-15-Detalles-Repositorio-de-Codigo-Fuente
+[Detalles-Gestion-de-Tareas]: ../../Proyecto/2012-02-24-Detalles-Gestion-de-Tareas
+[Detalles-Seleccion-Base-de-Datos]: ../../Proyecto/2012-02-15-Detalles-Seleccion-Base-de-Datos
