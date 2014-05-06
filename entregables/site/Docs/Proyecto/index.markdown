@@ -11,3 +11,4 @@
 * [Cambios de procesos y requerimientos](2012-11-07-Cambios-de-procesos-y-requerimientos) (7 de Noviembre de 2012)
 * [Actualización de propuesta de trabajo](2012-12-11-Actualizacion-Propuesta-Trabajo) (11 de Diciembre de 2012)
 * [Memorias de proyecto](Memorias-de-Proyecto) (A ser completado)
+* [Diseño del sistema](2014-05-04-Diseno-de-sistema) (4 de Mayo de 2014)
