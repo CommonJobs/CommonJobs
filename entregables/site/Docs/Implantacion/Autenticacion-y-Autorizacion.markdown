@@ -2,7 +2,7 @@
 
 Actualmente el sistema verifica los siguientes roles:
 
-* **Users**: Usuarios del sistema, con acceso a creción y edición de empleados y aplicantes asi como también consultas.
+* **Users**: Usuarios del sistema, con acceso a creación y edición de empleados y postulantes asi como también consultas.
 * **Migrators**: Usuarios con acceso a la UI de migración de datos entre versiones.
 * **Applicant Managers**: Usuarios con acceso a la administración de los postulantes a empleos.
 * **Employee Managers**: Usuarios con acceso a la administración de los empleados cargados en el sistema.
