@@ -17,3 +17,4 @@
 * [Diseño del sistema](2014-05-04-Diseno-de-sistema) (4 de Mayo de 2014)
 * [Diseño de autenticación y autorización](2014-05-06-Diseno-autenticacion-y-autorizacion) (6 de Mayo de 2014)
 * [Documentación de librerías utilizadas](2014-05-07-Librerias-utilizadas) (7 de Mayo de 2014)
+* [Clases de dominio](2014-05-10-Clases-de-dominio) (10 de Mayo de 2014)
