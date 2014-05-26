@@ -9,8 +9,3 @@
 * [Vacaciones](Vacaciones)
 * [Ausencias](Ausencias)
 * [Búsquedas laborales](Busquedas-laborales)
-
-# Manual del administrador
-
-* [Administración de almuerzos](Administracion-de-almuerzos)
-* [Migraciones](Administracion/Migraciones)

@@ -2,7 +2,7 @@
 
 La aplicación se encuentra configurada al momento de la entrega del proyecto para poder utilizar un sistema de autenticación: Google Auth, recuperando información del usuario desde la base de datos. Active Directory no es presentemente utilizado pero ha sido uno de los puntos fuertes en las primeras fases del proyecto.
 
-A continuación se describirá el diseño utilizado para la integración de estos sistemas. La configuración de Active Directory, los distintos grupos y los permisos que estos otorgan se encuentran documentados en [la documentación de administración de Active Directory](../Implantacion/Autenticacion-y-Autorizacion).
+A continuación se describirá el diseño utilizado para la integración de estos sistemas. La configuración de Active Directory, los distintos grupos y los permisos que estos otorgan se encuentran documentados en [la documentación de administración de Active Directory](../Manual-de-Sistema/Autenticacion-y-Autorizacion).
 
 ## Uso de autenticación y autorización dentro de CommonJobs
 
