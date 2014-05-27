@@ -1,7 +1,8 @@
-#Product Backlog CommonJobs ([Trello])
-[Trello]: https://trello.com/board/product-backlog/4f15d6128f513d777e0269bd
-**Los numeros son los Story Points asignados a cada Tarea/UserStory.*
+# Product Backlog CommonJobs ([Trello])
 
+[Trello]: https://trello.com/board/product-backlog/4f15d6128f513d777e0269bd
+
+*Los numeros son los Story Points asignados a cada Tarea/User Story.*
 
 * (5) Como responsable de recursos humanos quiero cargar y modificar el legajo de un empleado más cómodamente y sin tanta necesidad del mouse.
 * (1) Empleados: Poner orden alfabético en la vista principal.
