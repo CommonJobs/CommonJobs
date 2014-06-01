@@ -46,9 +46,10 @@ Coincidiendo con esto, fue bajando la motivación personal de los integrantes de
 
 En ese momento se planteó a la cátedra finalizar el desarrollo, lo cual se acordó. Y por distintas cuestiones, a otro ritmo, se continuó con la documentación, los exámenes pendientes y los demás requisitos para presentar el proyecto. En este punto estamos ahora.
 
-Aprendí mucho y cumplí mis objetivos personales en este proyecto. 
+Aprendí mucho y cumplí mis objetivos personales en este proyecto:
 
 * Bases de datos de documentos, conceptos, posibilidades.
+* Git, GitHub y flujos de trabajo en sistemas de control de versiones desentralizados.
 * Tecnologías para clientes web más _gruesos_, JavaScript, CSS, HTML, data-binding, librerías, etc.
 * Conocimientos avanzados y de bajo nivel de las actuales tecnologías de Microsoft para desarrollo web.
 * Conocimiento de Scrum, sus limitaciones en ciertos tipos de proyectos, como resolver algunos de esos problemas. 
