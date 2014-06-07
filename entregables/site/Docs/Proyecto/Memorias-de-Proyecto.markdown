@@ -20,39 +20,40 @@ Cuando Matías me propuso comenzar este proyecto, yo ya no estaba interesado en 
 * Se podría crear un equipo con gente que conocía, admiraba y confiaba.
 * Existía la posibilidad de realizar un proyecto realmente útil para un cliente externo que podría utilizarlo. 
 
-Por lo tanto acepté. Sin embargo, como sabía que terminar mi carrera no era suficiente incentivo, plantee como objetivo del proyecto la investigación, el descubrir y experimentar con nuevas tecnologías y prácticas, más allá de que fueran las mejores opciones en este proyecto en particular desde el punto de vista de las necesidades del cliente o los requerimientos de la cátedra.
+Por lo tanto acepté. Sin embargo, como sabía que terminar mi carrera no era suficiente incentivo, plantee como objetivo del proyecto la investigación, el descubrir y experimentar con nuevas tecnologías y prácticas, más allá de que fueran o no las mejores opciones según las necesidades del cliente o los requerimientos de la cátedra.
 
 Como suele ocurrir, el proyecto comenzó con investigación y selección de las tecnologías, algunas pruebas de concepto, definición de un marco de trabajo y de una forma de documentación. 
 
-En ese entonces, en mi trabajo se estaba intentando trabajar de una forma más ágil, utilizando Scrum como framework de referencia. Por otro lado, yo entendía que un desarrollo en cascada (que suele ser la opción más natural para estos proyectos finales) no era una buena idea, ya que las necesidades del cliente iban a cambiar, y tampoco serviría para mis objetivos personales, ni para mantener la motivación. De esta manera, elegimos definir un marco de trabajo basado en Scrum y adaptado a nuestras necesidades y limitaciones.
+En ese entonces, en la empresa en la que trabajo se estaba intentando organizarse de una forma ágil, utilizando Scrum como framework de referencia. Por otro lado, yo entendía que un desarrollo en cascada (que suele ser la opción más natural para estos proyectos finales) no era una buena idea, ya que las necesidades del cliente seguramente iban a cambiar, y tampoco serviría para mis objetivos personales, ni para mantener la motivación. De esta manera, elegimos definir un marco de trabajo basado en Scrum y adaptado a nuestras necesidades y limitaciones.
 
 Para poder cumplir con los objetivos planteados en cada sprint, intenté crearme una rutina, de manera que todas las semanas podría trabajar una cierta cantidad de horas. Dado que el tiempo era limitado, muchas veces tuve que resignar investigación o refinamiento en pos de obtener avances en la funcionalidad, tal vez el equilibrio no fue el mejor, pero fue adecuado para mantenerme motivado. 
 
-Como yo tenía mis propios incentivos (aprendizaje y experimentación), no me preocupé demasiado por la organización del equipo más allá del marco inicial, lo que resultó bien, ya que naturalmente nos fuimos adaptando a los roles que podríamos ocupar. Así y todo empezaron a detectarse problemas, al enfocarnos tanto en nuestros incentivos, al principio descuidamos un poco la calidad, cosa que se fue corrigiendo con el compromiso del equipo. 
+Como yo tenía mis propios incentivos (aprendizaje y experimentación), no me preocupé demasiado por la organización del equipo más allá del marco inicial (y sus ajustes), lo que resultó bien, ya que naturalmente nos fuimos adaptando a los roles que podríamos ocupar. Así y todo empezaron a detectarse problemas, al enfocarnos tanto en nuestros incentivos, al principio descuidamos un poco la calidad, cosa que se fue corrigiendo con el compromiso del equipo. 
 
-Otro problema que surgió fue con los requerimientos, que no eran reales. Ya desde el comienzo parece ser que las necesidades no eran reales o eran muy lejanas: nuestro trabajo de sprint a sprint no estaba dando valor al cliente. Esto provocó una menor atención y falta de interés del mismo. Intentamos resolver esta situación (y en parte lo logramos) tomando más libertades al interpretar las necesidades y replanteando los objetivos iniciales del proyecto.
+Otro problema que surgió fue con los requerimientos, que no eran reales. Nuestro trabajo de sprint a sprint no estaba dando valor al cliente ya que las necesidades identificadas inicialmente no eran correctas. Esto provocó una menor atención y falta de interés del cliente. Intentamos resolver esta situación (y en parte lo logramos) tomando más libertades al interpretar las necesidades y replanteando los objetivos iniciales del proyecto.
 
 Afortunadamente, el desarrollo del proyecto continuó hasta alcanzar un punto donde se cumplen los requisitos iniciales:
 
 * Horas invertidas.
 * Tiempo transcurrido.
-* Necesidades del cliente satisfechas, el sistema está en producción y se está utilizando.
+* Necesidades del cliente satisfechas ya que el sistema está en producción y se está utilizando.
 
-Coincidiendo con esto, fue bajando la motivación personal de los integrantes del equipo: 
+Coincidiendo con esto, el desgaste natural en un proyecto prolongado se estaba haciendo presente y fue bajando la motivación personal de los integrantes del equipo: 
 
 * Se había experimentado con nuevas tecnologías y prácticas.
 * Se quería poner en práctica los conocimientos adquiridos en otros proyectos.
-* Otros proyectos y responsabilidades empezaban a competir por la atención de los integrantes. 
+* Otros proyectos y responsabilidades (laborales y personales) empezaban a competir por la atención de los integrantes. 
 
-En ese momento se planteó a la cátedra finalizar el desarrollo, lo cual se acordó. Y por distintas cuestiones, a otro ritmo, se continuó con la documentación, los exámenes pendientes y los demás requisitos para presentar el proyecto. En este punto estamos ahora.
+En ese momento se planteó a la cátedra finalizar el desarrollo y se acordó continuar con la documentación, los exámenes pendientes y los demás requisitos a un ritmo más lento. En este punto estamos ahora.
 
 Aprendí mucho y cumplí mis objetivos personales en este proyecto:
 
-* Bases de datos de documentos, conceptos, posibilidades.
-* Git, GitHub y flujos de trabajo en sistemas de control de versiones desentralizados.
+* Bases de datos de documentos, conceptos, posibilidades, ventajas e inconvenientes, casos de uso.
+* Experiencia en otras arquitecturas de software y patrones no utilizados por mi hasta el momento.
+* Git, GitHub y flujos de trabajo en sistemas de control de versiones descentralizados.
 * Tecnologías para clientes web más _gruesos_, JavaScript, CSS, HTML, data-binding, librerías, etc.
 * Conocimientos avanzados y de bajo nivel de las actuales tecnologías de Microsoft para desarrollo web.
-* Conocimiento de Scrum, sus limitaciones en ciertos tipos de proyectos, como resolver algunos de esos problemas. 
+* Conocimientos de Scrum, sus limitaciones en ciertos tipos de proyectos, como resolver algunos de esos problemas. 
 
 Muchas veces en el proyecto la solución implementada no es la mejor, pero funciona, y nos dió la posibilidad de hacerlo mejor en la siguiente oportunidad. Creo que se podrían nombrar muchos ejemplos, pero escaparía al propósito de este documento, baste decir que la implementación puede no ser la mejor, pero que nos permitió divertirnos, aprender, conocer profundamente muchas áreas, ampliar nuestra caja de herramientas para futuros proyectos y también tener una mejor visión de que prácticas deberíamos evitar.
    
