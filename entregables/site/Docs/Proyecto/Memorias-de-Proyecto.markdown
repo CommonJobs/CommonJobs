@@ -69,7 +69,7 @@ El comenzar este proyecto me proponía otra serie de desafíos: ¿qué tan fáci
 
 Otro desafío era el trabajo con tecnologías que no había trabajado antes, una de las propuestas centrales de nuestro proyecto. Si bien estaba de acuerdo con el concepto central de esa propuesta - hacer el proyecto excitante y productivo para nosotros también - ¿tendría el tiempo y la destreza suficiente para trabajar con tecnologías desconocidas en un proyecto de este tipo?
 
-Y finalmente, una de los desafíos principales tenía que ver con "el proyecto de este tipo". Yo había ya intentado presentar un proeycto de tesis anteriormente, y creo que uno de los factores que determinó que fallara es el poco tiempo que podía dedicarle. Si bien mi situación había cambiado mucho desde aquella vez y se veía más prometedor, ¿sería realmente lo suficiente como para que esta vez fuera un éxito?
+Y finalmente, una de los desafíos principales tenía que ver con "el proyecto de este tipo". Yo había ya intentado presentar un proyecto de tesis anteriormente, y creo que uno de los factores que determinó que fallara es el poco tiempo que podía dedicarle. Si bien mi situación había cambiado mucho desde aquella vez y se veía más prometedor, ¿sería realmente lo suficiente como para que esta vez fuera un éxito?
 
 Sin duda el trabajar en equipo significaría una mejora muy grande, ya que me proveería la motivación de sentirme responsable por el equipo (una sensación muy distinta a ser responsable sólo por uno mismo), y a la vez tener ayuda cuando lo necesitara.
 
@@ -89,9 +89,9 @@ Era bastante común que tomáramos decisiones conjuntas en el proyecto, por lo q
 
 Por tanto, las decisiones de estrategia de proyecto se tomaban en conjunto, lo mismo ocurría con las decisiones en cuanto a tecnología. En cuanto a implementación, muchas decisiones eran tomadas y luego expuestas al equipo para que se mejoraran según la necesidad, permitiendo la mejora y la crítica sin ralentizar el avance del producto.
 
-Finalmente, según la organización personal, una vez que encontramos nuestra forma de comunicarnos apropiadamente, había mucha libertad para las decisiones de cómo trabajar personalmente. Git nos data esta libertad antes de la sincronización de repositorios también, y los entornos podían prepararse de forma independiente, con lo que no había razones para no probar cambiar el flujo de trabajo personal. Personalmente tomé varias aproximaciones a esto antes de llegar a un punto en donde me sentía cómodo y podía trabajar eficientemente, sin afectar al equipo con estas decisiones.
+Finalmente, según la organización personal, una vez que encontramos nuestra forma de comunicarnos apropiadamente, había mucha libertad para las decisiones de cómo trabajar personalmente. Git nos daba esta libertad antes de la sincronización de repositorios también, y los entornos podían prepararse de forma independiente, con lo que no había razones para no probar cambiar el flujo de trabajo personal. Personalmente tomé varias aproximaciones a esto antes de llegar a un punto en donde me sentía cómodo y podía trabajar eficientemente, sin afectar al equipo con estas decisiones.
 
-Una vez que nuestros roles se identificaron, me encontré principalmente implementando las funcionaliades de la aplicación, haciendo code reviews de las implementaciones de otros miembros del equipo para asegurar la calidad y sugiriendo mejoras, tanto técnicas como de proceso. Participé de la mayoría de las reuniones en cuanto se refirieran a la dirección del proyecto y las auditorías de tesis (remotamente).
+Una vez que nuestros roles se identificaron, me encontré principalmente implementando las funcionalidades de la aplicación, haciendo code reviews de las implementaciones de otros miembros del equipo para asegurar la calidad y sugiriendo mejoras, tanto técnicas como de proceso. Participé de la mayoría de las reuniones en cuanto se refirieran a la dirección del proyecto y las auditorías de tesis (remotamente).
 
 ### Desafíos al proyecto
 
@@ -103,7 +103,7 @@ El transcurso de todo lo ocurrido puede verse en las distintas revisiones de spr
 
 Técnicamente, afiancé más de mi experiencia con las herramientas de Microsoft, tanto Visual Studio como la plataforma ASP.NET MVC y varios de sus detalles de implementación, llegando incluso a resolver algunos de sus problemas internos. Esto fue un paso grande en mi carrera profesional, donde me di cuenta que no debo depender del software de terceros, sino que, dentro de las limitaciones, también puedo ayudar a construirlo y mejorarlo si es que fuera necesario. Esto ha cambiado enormemente mi forma de aproximar la resolución de problemas en el área del desarrollo de software.
 
-Como mi primer experiencia con bases de datos relacionales, creo que tuve la base necesaria para luego poder comprender los conceptos necesarios y utilizarlos más sabiamente. En retrospectiva creo que podría haberme nutrido más de los conceptos de este tipo de almacenamiento, pero lo que aprendí fue lo necesario para el proyecto -- hoy en día mis conocimienos superan aquellos que utilicé sólo para estas implementaciones.
+Como mi primer experiencia con bases de datos no relacionales, creo que tuve la base necesaria para luego poder comprender los conceptos necesarios y utilizarlos más sabiamente. En retrospectiva creo que podría haberme nutrido más de los conceptos de este tipo de almacenamiento, pero lo que aprendí fue lo necesario para el proyecto -- hoy en día mis conocimienos superan aquellos que utilicé sólo para estas implementaciones.
 
 Pude solidificar muchos de mis conocimientos de los procesos ágiles y presenciar en carne propia sus ventajas, la forma en la que ágilmente puede virar direcciones para construir el producto necesitado, sea o no el que se veía originalmente como objetivo. El feedback rápido y la autocrítica fueron partes fundamentales de nuestro avance y la forma apropiada de poder detectar problemas y resolverlos.
 
