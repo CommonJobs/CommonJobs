@@ -55,7 +55,7 @@ Aprendí mucho y cumplí mis objetivos personales en este proyecto:
 * Conocimientos avanzados y de bajo nivel de las actuales tecnologías de Microsoft para desarrollo web.
 * Conocimientos de Scrum, sus limitaciones en ciertos tipos de proyectos, como resolver algunos de esos problemas. 
 
-Muchas veces en el proyecto la solución implementada no es la mejor, pero funciona, y nos dió la posibilidad de hacerlo mejor en la siguiente oportunidad. Creo que se podrían nombrar muchos ejemplos, pero escaparía al propósito de este documento, baste decir que la implementación puede no ser la mejor, pero que nos permitió divertirnos, aprender, conocer profundamente muchas áreas, ampliar nuestra caja de herramientas para futuros proyectos y también tener una mejor visión de que prácticas deberíamos evitar.
+Muchas veces la solución implementada en el proyecto no es la más adecuada, pero funciona, y nos da la posibilidad de hacerlo mejor en la siguiente oportunidad. Creo que se podrían nombrar muchos ejemplos, pero escaparía al propósito de este documento. Baste decir que, a pesar de todo, la implementación realizada nos permitió divertirnos, aprender, conocer profundamente muchas áreas, ampliar nuestra caja de herramientas para futuros proyectos y también tener una mejor visión de que prácticas deberíamos evitar.
    
 ## Juan Diego Raimondi
 
