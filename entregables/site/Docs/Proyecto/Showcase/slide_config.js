@@ -1,8 +1,8 @@
 var SLIDE_CONFIG = {
   // Slide settings
   settings: {
-    title: 'Title Goes Here<br>Up To Two Lines',
-    subtitle: 'Subtitle Goes Here',
+    title: 'Proyecto: CommonJobs',
+    subtitle: 'Sistema de seguimiento de empleados y candidatos',
     //eventInfo: {
     //  title: 'Google I/O',
     //  date: '6/x/2013'
@@ -22,19 +22,26 @@ var SLIDE_CONFIG = {
 
   // Author information
   presenters: [{
-    name: 'Firstname Lastname',
-    company: 'Job Title<br>Google',
-    gplus: 'http://plus.google.com/1234567890',
-    twitter: '@yourhandle',
+    name: 'Andrés Moschini',
+    company: 'MakingSense',
+    //gplus: 'http://plus.google.com/1234567890',
+    //twitter: '@yourhandle',
+    www: 'http://andresmochini.github.io/',
+    github: 'http://github.com/andresmochini'
+  }, {
+    name: 'Matías José',
+    company: 'Sistemas Bejerman',
+    //gplus: 'http://plus.google.com/1234567890',
+    //twitter: '@yourhandle',
     www: 'http://www.you.com',
-    github: 'http://github.com/you'
-  }/*, {
-    name: 'Second Name',
-    company: 'Job Title, Google',
-    gplus: 'http://plus.google.com/1234567890',
-    twitter: '@yourhandle',
-    www: 'http://www.you.com',
-    github: 'http://github.com/you'
-  }*/]
+    github: 'http://github.com/matias78'
+  }, {
+    name: 'Juan Diego Raimondi',
+    company: 'MakingSense',
+    www: 'http://www.alphasmanifesto.com/',
+    github: 'http://github.com/AlphaGit',
+    //gplus: 'http://plus.google.com/1234567890',
+    //twitter: '@yourhandle',
+  }]
 };
 
