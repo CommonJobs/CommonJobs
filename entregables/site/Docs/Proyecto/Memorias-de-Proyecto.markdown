@@ -20,7 +20,7 @@ Cuando Matías me propuso comenzar este proyecto, yo ya no estaba interesado en 
 * Se podría crear un equipo con gente que conocía, admiraba y confiaba.
 * Existía la posibilidad de realizar un proyecto realmente útil para un cliente externo que podría utilizarlo. 
 
-Por lo tanto acepté. Sin embargo, como sabía que terminar mi carrera no era suficiente incentivo, plantee como objetivo del proyecto la investigación, el descubrir y experimentar con nuevas tecnologías y prácticas, más allá de que fueran o no las mejores opciones según las necesidades del cliente o los requerimientos de la cátedra.
+Por lo tanto acepté. Sin embargo, como sabía que terminar mi carrera no era suficiente incentivo, planteé como objetivo del proyecto la investigación, el descubrir y experimentar con nuevas tecnologías y prácticas, más allá de que fueran o no las mejores opciones según las necesidades del cliente o los requerimientos de la cátedra.
 
 Como suele ocurrir, el proyecto comenzó con investigación y selección de las tecnologías, algunas pruebas de concepto, definición de un marco de trabajo y de una forma de documentación. 
 
