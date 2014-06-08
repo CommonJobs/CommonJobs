@@ -30,7 +30,7 @@ Para poder cumplir con los objetivos planteados en cada sprint, intenté crearme
 
 Como yo tenía mis propios incentivos (aprendizaje y experimentación), no me preocupé demasiado por la organización del equipo más allá del marco inicial (y sus ajustes), lo que resultó bien, ya que naturalmente nos fuimos adaptando a los roles que podríamos ocupar. Así y todo empezaron a detectarse problemas, al enfocarnos tanto en nuestros incentivos, al principio descuidamos un poco la calidad, cosa que se fue corrigiendo con el compromiso del equipo. 
 
-Otro problema que surgió fue con los requerimientos, que no eran reales. Nuestro trabajo de sprint a sprint no estaba dando valor al cliente ya que las necesidades identificadas inicialmente no eran correctas. Esto provocó una menor atención y falta de interés del cliente. Intentamos resolver esta situación (y en parte lo logramos) tomando más libertades al interpretar las necesidades y replanteando los objetivos iniciales del proyecto.
+Otro problema que surgió fue con los requerimientos, que no eran reales. Nuestro trabajo de sprint a sprint no estaba dando valor al cliente ya que las necesidades identificadas inicialmente no eran correctas. Esto provocó una menor atención y falta de interés del cliente. Esta situación se fue resolviendo al, nosotros, tomar más libertades interpretando las necesidades y replanteando los objetivos iniciales del proyecto.
 
 Afortunadamente, el desarrollo del proyecto continuó hasta alcanzar un punto donde se cumplen los requisitos iniciales:
 
