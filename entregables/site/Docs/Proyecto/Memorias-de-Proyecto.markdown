@@ -15,14 +15,47 @@ El proyecto final _CommonJobs_ fue desarrollado y llevado a cabo por los alumnos
 
 ## Andrés Moschini
 
-- //TODO: Antes de responder, re-leer las retrospectivas de los sprints antiguos para refrescar la historia del proyecto.
-- //TODO: qué experiencia tenés con el desarrollo de software, técnicamente y profesionalmente, al momento de comenzar este proyecto. ¿Te proponía desafíos encarar este proyecto? ¿Cuáles y por qué?
-- //TODO: ¿cómo comenzó el proyecto para vos? ¿Cómo manejaste los tiempos? ¿Cómo manejabas las herramientas? ¿Cómo manejabas la situación del proyecto?
-- //TODO: ¿tomaste decisiones, delegaste otras? ¿Cuáles de esas decisiones cambiaron el curso del proyecto, para bien o para mal?
-- //TODO: ¿Encontraste tu lugar en el grupo? ¿Cuál era?
-- //TODO: ¿Qué problemas encontraron durante el desarrollo del proyecto, una vez que ya había una dinámica de grupo? ¿Cómo las resolvieron o mitigaron?
-- //TODO: ¿Qué aprendiste durante el transcurso del proyecto? (Técnicamente, personalmente, profesionalmente) ¿Qué habilidades requirió tuyas el proyecto? ¿Cuáles esperabas que necesitaras y cuáles te sorprendieron? ¿Cómo resultó eso?
-- //TODO: ¿Cómo sentiste estar llegando a la conclusión del proyecto? ¿Por qué?
+Cuando Matías me propuso comenzar este proyecto, yo ya no estaba interesado en realizar mi proyecto final debido a unas muy malas experiencias con mis intentos anteriores. Sin embargo, algunas circunstancias habían cambiado, por lo que reconsideré mi postura:
+
+* Se podría crear un equipo con gente que conocía, admiraba y confiaba.
+* Existía la posibilidad de realizar un proyecto realmente útil para un cliente externo que podría utilizarlo. 
+
+Por lo tanto acepté. Sin embargo, como sabía que terminar mi carrera no era suficiente incentivo, planteé como objetivo del proyecto la investigación, el descubrir y experimentar con nuevas tecnologías y prácticas, más allá de que fueran o no las mejores opciones según las necesidades del cliente o los requerimientos de la cátedra.
+
+Como suele ocurrir, el proyecto comenzó con investigación y selección de las tecnologías, algunas pruebas de concepto, definición de un marco de trabajo y de una forma de documentación. 
+
+En ese entonces, en la empresa en la que trabajo se estaba intentando organizarse de una forma ágil, utilizando Scrum como framework de referencia. Por otro lado, yo entendía que un desarrollo en cascada (que suele ser la opción más natural para estos proyectos finales) no era una buena idea, ya que las necesidades del cliente seguramente iban a cambiar, y tampoco serviría para mis objetivos personales, ni para mantener la motivación. De esta manera, elegimos definir un marco de trabajo basado en Scrum y adaptado a nuestras necesidades y limitaciones.
+
+Para poder cumplir con los objetivos planteados en cada sprint, intenté crearme una rutina, de manera que todas las semanas podría trabajar una cierta cantidad de horas. Dado que el tiempo era limitado, muchas veces tuve que resignar investigación o refinamiento en pos de obtener avances en la funcionalidad, tal vez el equilibrio no fue el mejor, pero fue adecuado para mantenerme motivado. 
+
+Como yo tenía mis propios incentivos (aprendizaje y experimentación), no me preocupé demasiado por la organización del equipo más allá del marco inicial (y sus ajustes), lo que resultó bien, ya que naturalmente nos fuimos adaptando a los roles que podríamos ocupar. Así y todo empezaron a detectarse problemas, al enfocarnos tanto en nuestros incentivos, al principio descuidamos un poco la calidad, cosa que se fue corrigiendo con el compromiso del equipo. 
+
+Otro problema que surgió fue con los requerimientos, que no eran reales. Nuestro trabajo de sprint a sprint no estaba dando valor al cliente ya que las necesidades identificadas inicialmente no eran correctas. Esto provocó una menor atención y falta de interés del cliente. Esta situación se fue resolviendo al, nosotros, tomar más libertades interpretando las necesidades y replanteando los objetivos iniciales del proyecto.
+
+Afortunadamente, el desarrollo del proyecto continuó hasta alcanzar un punto donde se cumplen los requisitos iniciales:
+
+* Horas invertidas.
+* Tiempo transcurrido.
+* Necesidades del cliente satisfechas ya que el sistema está en producción y se está utilizando.
+
+Coincidiendo con esto, el desgaste natural en un proyecto prolongado se estaba haciendo presente y fue bajando la motivación personal de los integrantes del equipo: 
+
+* Se había experimentado con nuevas tecnologías y prácticas.
+* Se quería poner en práctica los conocimientos adquiridos en otros proyectos.
+* Otros proyectos y responsabilidades (laborales y personales) empezaban a competir por la atención de los integrantes. 
+
+En ese momento se planteó a la cátedra finalizar el desarrollo y se acordó continuar con la documentación, los exámenes pendientes y los demás requisitos a un ritmo más lento. En este punto estamos ahora.
+
+Aprendí mucho y cumplí mis objetivos personales en este proyecto:
+
+* Bases de datos de documentos, conceptos, posibilidades, ventajas e inconvenientes, casos de uso.
+* Experiencia en otras arquitecturas de software y patrones no utilizados por mi hasta el momento.
+* Git, GitHub y flujos de trabajo en sistemas de control de versiones descentralizados.
+* Tecnologías para clientes web más _gruesos_, JavaScript, CSS, HTML, data-binding, librerías, etc.
+* Conocimientos avanzados y de bajo nivel de las actuales tecnologías de Microsoft para desarrollo web.
+* Conocimientos de Scrum, sus limitaciones en ciertos tipos de proyectos, como resolver algunos de esos problemas. 
+
+Muchas veces la solución implementada en el proyecto no es la más adecuada, pero funciona, y nos da la posibilidad de hacerlo mejor en la siguiente oportunidad. Creo que se podrían nombrar muchos ejemplos, pero escaparía al propósito de este documento. Baste decir que, a pesar de todo, la implementación realizada nos permitió divertirnos, aprender, conocer profundamente muchas áreas, ampliar nuestra caja de herramientas para futuros proyectos y también tener una mejor visión de que prácticas deberíamos evitar.
    
 ## Juan Diego Raimondi
 
@@ -36,7 +69,7 @@ El comenzar este proyecto me proponía otra serie de desafíos: ¿qué tan fáci
 
 Otro desafío era el trabajo con tecnologías que no había trabajado antes, una de las propuestas centrales de nuestro proyecto. Si bien estaba de acuerdo con el concepto central de esa propuesta - hacer el proyecto excitante y productivo para nosotros también - ¿tendría el tiempo y la destreza suficiente para trabajar con tecnologías desconocidas en un proyecto de este tipo?
 
-Y finalmente, una de los desafíos principales tenía que ver con "el proyecto de este tipo". Yo había ya intentado presentar un proeycto de tesis anteriormente, y creo que uno de los factores que determinó que fallara es el poco tiempo que podía dedicarle. Si bien mi situación había cambiado mucho desde aquella vez y se veía más prometedor, ¿sería realmente lo suficiente como para que esta vez fuera un éxito?
+Y finalmente, una de los desafíos principales tenía que ver con "el proyecto de este tipo". Yo había ya intentado presentar un proyecto de tesis anteriormente, y creo que uno de los factores que determinó que fallara es el poco tiempo que podía dedicarle. Si bien mi situación había cambiado mucho desde aquella vez y se veía más prometedor, ¿sería realmente lo suficiente como para que esta vez fuera un éxito?
 
 Sin duda el trabajar en equipo significaría una mejora muy grande, ya que me proveería la motivación de sentirme responsable por el equipo (una sensación muy distinta a ser responsable sólo por uno mismo), y a la vez tener ayuda cuando lo necesitara.
 
@@ -56,9 +89,9 @@ Era bastante común que tomáramos decisiones conjuntas en el proyecto, por lo q
 
 Por tanto, las decisiones de estrategia de proyecto se tomaban en conjunto, lo mismo ocurría con las decisiones en cuanto a tecnología. En cuanto a implementación, muchas decisiones eran tomadas y luego expuestas al equipo para que se mejoraran según la necesidad, permitiendo la mejora y la crítica sin ralentizar el avance del producto.
 
-Finalmente, según la organización personal, una vez que encontramos nuestra forma de comunicarnos apropiadamente, había mucha libertad para las decisiones de cómo trabajar personalmente. Git nos data esta libertad antes de la sincronización de repositorios también, y los entornos podían prepararse de forma independiente, con lo que no había razones para no probar cambiar el flujo de trabajo personal. Personalmente tomé varias aproximaciones a esto antes de llegar a un punto en donde me sentía cómodo y podía trabajar eficientemente, sin afectar al equipo con estas decisiones.
+Finalmente, según la organización personal, una vez que encontramos nuestra forma de comunicarnos apropiadamente, había mucha libertad para las decisiones de cómo trabajar personalmente. Git nos daba esta libertad antes de la sincronización de repositorios también, y los entornos podían prepararse de forma independiente, con lo que no había razones para no probar cambiar el flujo de trabajo personal. Personalmente tomé varias aproximaciones a esto antes de llegar a un punto en donde me sentía cómodo y podía trabajar eficientemente, sin afectar al equipo con estas decisiones.
 
-Una vez que nuestros roles se identificaron, me encontré principalmente implementando las funcionaliades de la aplicación, haciendo code reviews de las implementaciones de otros miembros del equipo para asegurar la calidad y sugiriendo mejoras, tanto técnicas como de proceso. Participé de la mayoría de las reuniones en cuanto se refirieran a la dirección del proyecto y las auditorías de tesis (remotamente).
+Una vez que nuestros roles se identificaron, me encontré principalmente implementando las funcionalidades de la aplicación, haciendo code reviews de las implementaciones de otros miembros del equipo para asegurar la calidad y sugiriendo mejoras, tanto técnicas como de proceso. Participé de la mayoría de las reuniones en cuanto se refirieran a la dirección del proyecto y las auditorías de tesis (remotamente).
 
 ### Desafíos al proyecto
 
@@ -70,7 +103,7 @@ El transcurso de todo lo ocurrido puede verse en las distintas revisiones de spr
 
 Técnicamente, afiancé más de mi experiencia con las herramientas de Microsoft, tanto Visual Studio como la plataforma ASP.NET MVC y varios de sus detalles de implementación, llegando incluso a resolver algunos de sus problemas internos. Esto fue un paso grande en mi carrera profesional, donde me di cuenta que no debo depender del software de terceros, sino que, dentro de las limitaciones, también puedo ayudar a construirlo y mejorarlo si es que fuera necesario. Esto ha cambiado enormemente mi forma de aproximar la resolución de problemas en el área del desarrollo de software.
 
-Como mi primer experiencia con bases de datos relacionales, creo que tuve la base necesaria para luego poder comprender los conceptos necesarios y utilizarlos más sabiamente. En retrospectiva creo que podría haberme nutrido más de los conceptos de este tipo de almacenamiento, pero lo que aprendí fue lo necesario para el proyecto -- hoy en día mis conocimienos superan aquellos que utilicé sólo para estas implementaciones.
+Como mi primer experiencia con bases de datos no relacionales, creo que tuve la base necesaria para luego poder comprender los conceptos necesarios y utilizarlos más sabiamente. En retrospectiva creo que podría haberme nutrido más de los conceptos de este tipo de almacenamiento, pero lo que aprendí fue lo necesario para el proyecto -- hoy en día mis conocimienos superan aquellos que utilicé sólo para estas implementaciones.
 
 Pude solidificar muchos de mis conocimientos de los procesos ágiles y presenciar en carne propia sus ventajas, la forma en la que ágilmente puede virar direcciones para construir el producto necesitado, sea o no el que se veía originalmente como objetivo. El feedback rápido y la autocrítica fueron partes fundamentales de nuestro avance y la forma apropiada de poder detectar problemas y resolverlos.
 
