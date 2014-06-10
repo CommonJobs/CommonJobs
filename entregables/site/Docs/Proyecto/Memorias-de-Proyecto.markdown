@@ -4,14 +4,57 @@ El proyecto final _CommonJobs_ fue desarrollado y llevado a cabo por los alumnos
 
 ## Matías José
 
-- //TODO: Antes de responder, re-leer las retrospectivas de los sprints antiguos para refrescar la historia del proyecto.
-- //TODO: qué experiencia tenés con el desarrollo de software, técnicamente y profesionalmente, al momento de comenzar este proyecto. ¿Te proponía desafíos encarar este proyecto? ¿Cuáles y por qué?
-- //TODO: ¿cómo comenzó el proyecto para vos? ¿Cómo manejaste los tiempos? ¿Cómo manejabas las herramientas? ¿Cómo manejabas la situación del proyecto?
-- //TODO: ¿tomaste decisiones, delegaste otras? ¿Cuáles de esas decisiones cambiaron el curso del proyecto, para bien o para mal?
-- //TODO: ¿Encontraste tu lugar en el grupo? ¿Cuál era?
-- //TODO: ¿Qué problemas encontraron durante el desarrollo del proyecto, una vez que ya había una dinámica de grupo? ¿Cómo las resolvieron o mitigaron?
-- //TODO: ¿Qué aprendiste durante el transcurso del proyecto? (Técnicamente, personalmente, profesionalmente) ¿Qué habilidades requirió tuyas el proyecto? ¿Cuáles esperabas que necesitaras y cuáles te sorprendieron? ¿Cómo resultó eso?
-- //TODO: ¿Cómo sentiste estar llegando a la conclusión del proyecto? ¿Por qué?
+### Inicio de proyecto
+
+En el momento que estaba terminando de cursar todas las materias, sin dejar de pasar tiempo, decidí anotarme en el proyecto final de la carrera sin saber con qué grupo lo realizaría. Durante las primeras reuniones con la cátedra me comunique con Andrés, que sabía que también tenía pendiente terminar la carrera quien al poco tiempo lo consultó a JD., que estaba en su misma situación académica y trabajando para la misma empresa. Los 3 coincidimos en el momento y  las ganas de realizar el proyecto final.
+
+Mi situación en la facultad era algo distinta a la de mis compañeros. Ellos habían terminado de rendir todos los finales hace años y yo todavía debía algunos. Al principio pensaba que eso me iba frenar mucho y me iba a dejar fuera de ritmo con mis compañeros y un paso atrás  con las novedades del proyecto pero la documentación y la comunicación fluída ayudaron para que esto no pase.
+
+Otro aspecto que me tenía intranquilo era que no  tenía experiencia en desarrollo de software fuera de la facultad. Toda mi experiencia laboral es en el área de soporte  y no sabía cómo me iba a adaptar al grupo sabiendo que mis dos compañeros estaban trabajando hace tiempo y también compartiendo algunos proyectos de desarrollo.
+
+Más allá de todas estas dudas, cuando comenzamos, enseguida noté mucho compañerismo y energía en cómo se empezaba a gestar el  proyecto final de la carrera.
+
+Al principio del proyecto empezamos con muchas reuniones seguidas las cuales creo que fueron necesarias y me sirvieron mucho para consultarle a mis compañeros sobre la instalación y manejo de las herramientas utilizadas ya que no tenía experiencia con ninguna de ellas. 
+
+### Manejo de horarios de trabajo
+
+Intenté establecer horarios fijos para dedicarme al proyecto pero no fue posible. A veces me dedicaba los fines de semana, a veces en la semana luego de mi jornada laboral y también en tiempos muertos durante mi trabajo (los menos). Esto se mantuvo de esa forma durante todo el proyecto. 
+
+Durante las fechas de finales decidí ausentarme totalmente para poder dedicar el poco tiempo libre que me dejaba mi trabajo. Por cada examen me ausentaba 3 semanas aproximadamente. Luego de rendir cada final me dedicaba a ver las pizarras del gestor de proyecto. Cabe destacar que a medida que avanzaba el proyecto, esta herramienta (Trello) fue mejorando y nos dejaba ver cada vez más información sobre las tareas. De esta manera en poco tiempo podía saber el estado actual del proyecto.
+
+### Rol en el proyecto y aprendizaje
+
+Me costó un poco encontrar mi rol en el proyecto. En un principio intente encarar las tareas más sencillas  de desarrollo a modo de aprendizaje pero sentía no tenían la calidad suficiente y  que  el tiempo empleado era demasiado. Al paso de unos pocos sprints me empecé a sentir poco productivo. Lo hablé con mis compañeros y empecé a dedicarme, principalmente, a realizar tareas relacionadas con la generación de la documentación. 
+
+En algún momento creí que podía asumir el rol  de extracción de requerimientos y funcionalidades del sistema pero, al final, fue un rol en el que participamos todos en la misma medida durante las reuniones de final de sprint con Gabriel (Director funcional).
+
+En general, creo cada integrante se dedicó a las tareas en donde más cómodo se sintió pero  todos participamos, de algún modo, en las decisiones que tomamos a lo largo del todo proyecto. Esto lo adjudico a la fluída comunicación que nos dio la herramienta de gestor del proyecto (Trello) y la utilización de repositorios compartidos (Git).
+
+Todas las herramientas y tecnologías utilizadas durante el proyecto fueron nuevas para mí  por lo que, al principio, notaba que me costaba un poco más que mis compañeros en adaptarme a la uso  de ellas. Trataba de investigar por mi cuenta pero al final terminaba consultando con mis compañeros para tener una respuesta más rápida y específica de cómo tenía que utilizarlas.
+
+
+Como ya dije mi experiencia siempre fue relacionada con tareas del área  soporte. Nunca había intentado realizar algún proyecto de ningun tipo a largo plazo como este ni había utilizado las herramientas que fueron necesarias para realizarlo. 
+
+Personalmente, la metodología ágil que utilizamos sólo era conocida en la teoría. Fue muy bueno poder experimentar, ver la fluidez y las ventajas que le dio al proyecto. Fue interesante vivir  el  “cara a cara con el Cliente”  durante los momentos en  que se gesta el sistema y ver cómo va tomando forma y direcciones al pasar de los sprints.
+
+En lo que respecta a la documentación del proyecto, que fue donde más emplee mi tiempo, creo que registramos todo de forma muy eficiente y constante utilizando Markdown y generando entregas con mmd2pdf  de forma semiautomática. Este proceso me queda de utilidad para futuros proyectos personales.
+
+Creo que participar en esta experiencia de y trabajo en grupo  me ayudó a tener una visión general en todos los aspectos relacionados al proyecto. Me hubiese gustado poder aprender de lenguajes y aportar a las tareas de desarrollo del sistema pero creo que este acercamiento me sirve de escalón para  proyectos futuros.
+
+### Desafíos y cambios en el proyecto
+
+Creo que el primer desafío era la combinación de administrar el tiempo y tener constancia a lo largo de todo el proyecto. Personalmente me encontraba bastante atareado en el trabajo y demás compromisos personales. 
+
+En segundo plano pero  no menos importante, el desafío, era poder llevar a cabo o darle dirección a  las ideas que surgieron al principio del proyecto y, a la vez, cumplir con las expectativas/exigencias de la cátedra. En mi opinión creo que el grupo supo  sobrepasar los cambios que fueron surgiendo durante todo el proyecto. Cuando notamos cambios de dirección en los requerimientos nos amoldarnos a ellos  para dejar conformes al director técnico y funcional sin salir de lo que nos pedía la auditora. Por ejemplo en  algunos  momentos tuvimos dudas sobre cambios e inestabilidad de algunos requerimientos y tuvimos que asumir un papel un poco más protagónico en las prioridades de los mismos.
+
+En algunas ocasiones noté que Gabriel  no tenía mucho tiempo para brindarnos en las reuniones y  me daba a entender que se encontraba un poco desinteresado en  la futura utilización del sistema con lo cual el proyecto fracasaría. En esos momentos el grupo pudo llamar su atención con nuevas posibles funcionalidades que hicieron que lo empiece a utilizar y así estar más presente en el proyecto.
+
+### Conclusión
+
+Como conclusión puedo decir que el proyecto final cierra un camino que se hizo muy largo de mi carrera y hoy puedo decir que lo estoy finalizando. Era un pendiente que me demandaba mucho esfuerzo pero creo que ya terminando valió la pena.  
+
+Más allá de estar trabajando hace bastante tiempo creo que la manera en que se realizó  el proyecto y las personas con las que lo compartí le da un aporte muy importante a mi vida profesional. Si quiero encontrar alguna crítica o cambiar algo de como transcurrió el proyecto no encontraría nada importante que cambie el producto final. En todo momento note un alto nivel de conocimientos y experiencia por parte  de mis compañeros. En mi lugar, sin experiencia de este tipo, creo que me brindaron una buena visión de metodología de trabajo en general y cómo encarar las dificultades que puedan ocurrir.
+
 
 ## Andrés Moschini
 
