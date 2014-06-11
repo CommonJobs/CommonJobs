@@ -1,1 +1,1 @@
-start ..\Libs\RavenDB\Server\Raven.Server.exe --debug
+start %~dp0..\Libs\RavenDB\Server\Raven.Server.exe --debug
