@@ -340,6 +340,7 @@
     <Content Include="Views\Account\ChangePasswordSuccess.cshtml" />
     <Content Include="Views\Account\LogOn.cshtml" />
     <Content Include="Views\GoogleAuthentication\Error.cshtml" />
+    <None Include="Properties\PublishProfiles\DEVProfile.pubxml" />
     <None Include="_bin_deployableAssemblies\FSharp.Core.dll" />
   </ItemGroup>
   <ItemGroup>
