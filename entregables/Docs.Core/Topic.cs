@@ -58,6 +58,7 @@ namespace Docs.Core {
                    let subMetadata = GetMetadata(subTitle, directoryMetadata)
                    where !subTitle.Equals(MetadataFile, StringComparison.OrdinalIgnoreCase)
                         && DocumentExtensions.Contains(Path.GetExtension(file.Name))
+                        && !IndexFiles.Contains(file.Name)
                    select new 
                    {
                        Title = subTitle,
