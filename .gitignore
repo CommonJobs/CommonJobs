@@ -43,3 +43,5 @@ PersonsBase.css
 StylesBase.css
 
 source/CommonJobs/packages/**
+
+source/CommonJobs/packages/**/*
