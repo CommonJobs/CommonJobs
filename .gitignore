@@ -41,4 +41,7 @@ EmployeesListing.css
 PersonBase.css
 PersonsBase.css
 StylesBase.css
-source/CommonJobs/packages
+
+source/CommonJobs/packages/**
+
+source/CommonJobs/packages/**/*
