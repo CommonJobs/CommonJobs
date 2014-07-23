@@ -31,3 +31,7 @@ Es fácil saber si el pedido ya se ha realizado observando la barra indicativa v
 ![Pedido ya realizado](Images/Pedido-de-almuerzos/05.jpg)
 
 Como se ve en la captura anterior, luego de realizado el pedido los cambios para el día no se aplican.
+
+## Configuración de los menues
+
+Los usuarios con el rol `MenuManagers` pueden administrar los menues, por ejemplo agregando nuevas opciones, modificando los platos, oficinas, etc. Se pueden encontrar más detalles en el apartado acerca de [Administración de almuerzos](Instalacion-y-Mantenimiento/Administracion-de-almuerzos) en la sección de instalación y mantenimiento.
