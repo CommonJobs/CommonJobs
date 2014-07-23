@@ -1,6 +1,6 @@
 # Configuración de IFilter
 
-El sistema utiliza [IFilter](http://msdn.microsoft.com/en-us/library/ms691105) para la [indexacion de archivos adjuntos](../Proyecto/Indexacion-archivos-adjuntos) y su contenido relevante.
+El sistema utiliza [IFilter](http://msdn.microsoft.com/en-us/library/ms691105) para la [indexación de archivos adjuntos](../Manual-de-Sistema/Indexacion-archivos-adjuntos) y su contenido relevante.
 
 Recomendamos la instalación de [Citeknet IFilterExplorer](http://www.citeknet.com/Products/IFilters/IFilterExplorer/tabid/62/Default.aspx) en el servidor del sistema para verificar los filtros instalados.
 

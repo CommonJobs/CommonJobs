@@ -1,11 +1,12 @@
 # Manual de Usuario
 
 * [Introducción](Introduccion)
+* [Postulantes](Postulantes)
+* [Búsquedas laborales](Busquedas-laborales)
 * [Empleados](Empleados)
 * [Legajos](Legajos)
-* [Archivos](Archivos)
-* [MyMenu](Pedido-de-almuerzos)
-* [Postulantes](Postulantes)
 * [Vacaciones](Vacaciones)
 * [Ausencias](Ausencias)
-* [Búsquedas laborales](Busquedas-laborales)
+* [Archivos](Archivos)
+* [Pedido de almuerzos](Pedido-de-almuerzos)
+* [Administración de almuerzos](Administracion-de-almuerzos)

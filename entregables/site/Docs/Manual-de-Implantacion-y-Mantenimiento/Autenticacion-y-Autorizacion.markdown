@@ -25,7 +25,7 @@ Esto permitirá mantener ambos ambientes en un mismo árbol de Active Directory,
 
 Como extra, se ha creado en el entorno de desarrollo un grupo `CommonJobsDEV` que incluye al grupo de desarrollo de la aplicación.
 
-A continuación se enumeran los grupos del sistema correspondientes a los roles descriptos anteriormente, obviando el prefijo del entorno como ha sido enumerado más arriba.
+A continuación se enumeran los grupos del sistema correspondientes a los roles descritos anteriormente, obviando el prefijo del entorno como ha sido enumerado más arriba.
 
 * Grupo `Users`, es sugerido que se le asigne a los encargados de RRHH y tal vez a una persona con rol técnico dentro de la empresa.
    * Asignado al grupo `CommonJobsDEV`, para que los desarrolladores puedan acceder al entorno de desarrollo.
