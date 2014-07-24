@@ -6,13 +6,13 @@ El proyecto final _CommonJobs_ fue desarrollado y llevado a cabo por los alumnos
 
 ### Inicio de proyecto
 
-En el momento que estaba terminando de cursar todas las materias, sin dejar de pasar tiempo, decidí anotarme en el proyecto final de la carrera sin saber con qué grupo lo realizaría. Durante las primeras reuniones con la cátedra me comunique con Andrés, que sabía que también tenía pendiente terminar la carrera quien al poco tiempo lo consultó a JD., que estaba en su misma situación académica y trabajando para la misma empresa. Los 3 coincidimos en el momento y  las ganas de realizar el proyecto final.
+En el momento que estaba terminando de cursar todas las materias, sin dejar de pasar tiempo, decidí anotarme en el proyecto final de la carrera sin saber con qué grupo lo realizaría. Durante las primeras reuniones con la cátedra me comunique con Andrés, que sabía que también tenía pendiente terminar la carrera, quien al poco tiempo lo consultó a Juan Diego, que estaba en su misma situación académica y trabajando para la misma empresa. Los 3 coincidimos en el momento y las ganas de realizar el proyecto final.
 
-Mi situación en la facultad era algo distinta a la de mis compañeros. Ellos habían terminado de rendir todos los finales hace años y yo todavía debía algunos. Al principio pensaba que eso me iba frenar mucho y me iba a dejar fuera de ritmo con mis compañeros y un paso atrás  con las novedades del proyecto pero la documentación y la comunicación fluída ayudaron para que esto no pase.
+Mi situación en la facultad era algo distinta a la de mis compañeros. Ellos habían terminado de rendir todos los finales hace años y yo todavía debía algunos. Al principio pensaba que eso me iba frenar mucho y me iba a dejar fuera de ritmo con mis compañeros y un paso atrás con las novedades del proyecto pero la documentación y la comunicación fluída ayudaron para que esto no pase.
 
-Otro aspecto que me tenía intranquilo era que no  tenía experiencia en desarrollo de software fuera de la facultad. Toda mi experiencia laboral es en el área de soporte  y no sabía cómo me iba a adaptar al grupo sabiendo que mis dos compañeros estaban trabajando hace tiempo y también compartiendo algunos proyectos de desarrollo.
+Otro aspecto que me tenía intranquilo era que no tenía experiencia en desarrollo de software fuera de la facultad. Toda mi experiencia laboral es en el área de soporte y no sabía cómo me iba a adaptar al grupo sabiendo que mis dos compañeros estaban trabajando hace tiempo y también compartiendo algunos proyectos de desarrollo.
 
-Más allá de todas estas dudas, cuando comenzamos, enseguida noté mucho compañerismo y energía en cómo se empezaba a gestar el  proyecto final de la carrera.
+Más allá de todas estas dudas, cuando comenzamos, enseguida noté mucho compañerismo y energía en cómo se empezaba a gestar el proyecto final de la carrera.
 
 Al principio del proyecto empezamos con muchas reuniones seguidas las cuales creo que fueron necesarias y me sirvieron mucho para consultarle a mis compañeros sobre la instalación y manejo de las herramientas utilizadas ya que no tenía experiencia con ninguna de ellas. 
 
@@ -24,37 +24,35 @@ Durante las fechas de finales decidí ausentarme totalmente para poder dedicar e
 
 ### Rol en el proyecto y aprendizaje
 
-Me costó un poco encontrar mi rol en el proyecto. En un principio intente encarar las tareas más sencillas  de desarrollo a modo de aprendizaje pero sentía no tenían la calidad suficiente y  que  el tiempo empleado era demasiado. Al paso de unos pocos sprints me empecé a sentir poco productivo. Lo hablé con mis compañeros y empecé a dedicarme, principalmente, a realizar tareas relacionadas con la generación de la documentación. 
+Me costó un poco encontrar mi rol en el proyecto. En un principio intente encarar las tareas más sencillas de desarrollo a modo de aprendizaje pero sentía no tenían la calidad suficiente y que el tiempo empleado era demasiado. Al paso de unos pocos sprints me empecé a sentir poco productivo. Lo hablé con mis compañeros y empecé a dedicarme, principalmente, a realizar tareas relacionadas con la generación de la documentación. 
 
-En algún momento creí que podía asumir el rol  de extracción de requerimientos y funcionalidades del sistema pero, al final, fue un rol en el que participamos todos en la misma medida durante las reuniones de final de sprint con Gabriel (Director funcional).
+En algún momento creí que podía asumir el rol de extracción de requerimientos y funcionalidades del sistema pero, al final, fue un rol en el que participamos todos en la misma medida durante las reuniones de final de sprint con Gabriel (Director funcional).
 
-En general, creo cada integrante se dedicó a las tareas en donde más cómodo se sintió pero  todos participamos, de algún modo, en las decisiones que tomamos a lo largo del todo proyecto. Esto lo adjudico a la fluída comunicación que nos dio la herramienta de gestor del proyecto (Trello) y la utilización de repositorios compartidos (Git).
+En general, creo cada integrante se dedicó a las tareas en donde más cómodo se sintió pero todos participamos, de algún modo, en las decisiones que tomamos a lo largo del todo proyecto. Esto lo adjudico a la fluída comunicación que nos dio la herramienta de gestor del proyecto (Trello) y la utilización de repositorios compartidos (Git).
 
-Todas las herramientas y tecnologías utilizadas durante el proyecto fueron nuevas para mí  por lo que, al principio, notaba que me costaba un poco más que mis compañeros en adaptarme a la uso  de ellas. Trataba de investigar por mi cuenta pero al final terminaba consultando con mis compañeros para tener una respuesta más rápida y específica de cómo tenía que utilizarlas.
+Todas las herramientas y tecnologías utilizadas durante el proyecto fueron nuevas para mí  por lo que, al principio, notaba que me costaba un poco más que mis compañeros en adaptarme al uso de ellas. Trataba de investigar por mi cuenta pero al final terminaba consultando con mis compañeros para tener una respuesta más rápida y específica de cómo tenía que utilizarlas.
 
+Como ya dije, mi experiencia de trabajo siempre fue relacionada con tareas del área soporte. Nunca había intentado realizar algún proyecto de ningun tipo a largo plazo, como este, ni había utilizado las herramientas que fueron necesarias para realizarlo. 
 
-Como ya dije mi experiencia siempre fue relacionada con tareas del área  soporte. Nunca había intentado realizar algún proyecto de ningun tipo a largo plazo como este ni había utilizado las herramientas que fueron necesarias para realizarlo. 
+Personalmente, la metodología ágil que utilizamos sólo era conocida en la teoría. Fue muy bueno poder experimentar, ver la fluidez y las ventajas que le dio al proyecto. Fue interesante vivir el “cara a cara con el Cliente” durante los momentos en que se gesta el sistema y ver cómo va tomando forma y direcciones al pasar de los sprints.
 
-Personalmente, la metodología ágil que utilizamos sólo era conocida en la teoría. Fue muy bueno poder experimentar, ver la fluidez y las ventajas que le dio al proyecto. Fue interesante vivir  el  “cara a cara con el Cliente”  durante los momentos en  que se gesta el sistema y ver cómo va tomando forma y direcciones al pasar de los sprints.
+En lo que respecta a la documentación del proyecto, que fue donde más emplee mi tiempo, creo que registramos todo de forma muy eficiente y constante utilizando Markdown y generando entregas con mmd2pdf de forma semiautomática. Este proceso me queda de utilidad para futuros proyectos personales.
 
-En lo que respecta a la documentación del proyecto, que fue donde más emplee mi tiempo, creo que registramos todo de forma muy eficiente y constante utilizando Markdown y generando entregas con mmd2pdf  de forma semiautomática. Este proceso me queda de utilidad para futuros proyectos personales.
-
-Creo que participar en esta experiencia de y trabajo en grupo  me ayudó a tener una visión general en todos los aspectos relacionados al proyecto. Me hubiese gustado poder aprender de lenguajes y aportar a las tareas de desarrollo del sistema pero creo que este acercamiento me sirve de escalón para  proyectos futuros.
+Creo que participar en esta experiencia de y trabajo en grupo me ayudó a tener una visión general en todos los aspectos relacionados al proyecto. Me hubiese gustado poder aprender de lenguajes y aportar a las tareas de desarrollo del sistema pero creo que este acercamiento me sirve de escalón para proyectos futuros.
 
 ### Desafíos y cambios en el proyecto
 
 Creo que el primer desafío era la combinación de administrar el tiempo y tener constancia a lo largo de todo el proyecto. Personalmente me encontraba bastante atareado en el trabajo y demás compromisos personales. 
 
-En segundo plano pero  no menos importante, el desafío, era poder llevar a cabo o darle dirección a  las ideas que surgieron al principio del proyecto y, a la vez, cumplir con las expectativas/exigencias de la cátedra. En mi opinión creo que el grupo supo  sobrepasar los cambios que fueron surgiendo durante todo el proyecto. Cuando notamos cambios de dirección en los requerimientos nos amoldarnos a ellos  para dejar conformes al director técnico y funcional sin salir de lo que nos pedía la auditora. Por ejemplo en  algunos  momentos tuvimos dudas sobre cambios e inestabilidad de algunos requerimientos y tuvimos que asumir un papel un poco más protagónico en las prioridades de los mismos.
+En segundo plano pero no menos importante, el desafío era poder llevar a cabo o darle dirección a las ideas que surgieron al principio del proyecto y, a la vez, cumplir con las expectativas/exigencias de la cátedra. En mi opinión creo que el grupo supo sobrepasar los cambios que fueron surgiendo durante todo el proyecto. Cuando notamos cambios de dirección en los requerimientos nos amoldarnos a ellos para dejar conformes al director técnico y funcional sin salir de lo que nos pedía la auditora. Por ejemplo, en algunos momentos tuvimos dudas sobre cambios e inestabilidad de algunos requerimientos y tuvimos que asumir un papel un poco más protagónico en las prioridades de los mismos.
 
-En algunas ocasiones noté que Gabriel  no tenía mucho tiempo para brindarnos en las reuniones y  me daba a entender que se encontraba un poco desinteresado en  la futura utilización del sistema con lo cual el proyecto fracasaría. En esos momentos el grupo pudo llamar su atención con nuevas posibles funcionalidades que hicieron que lo empiece a utilizar y así estar más presente en el proyecto.
+En algunas ocasiones noté que Gabriel (Director Funcional) no tenía mucho tiempo para brindarnos en las reuniones y me daba a entender que se encontraba un poco desinteresado en la futura utilización del sistema con lo cual el proyecto fracasaría. En esos momentos el grupo pudo llamar su atención con nuevas posibles funcionalidades que hicieron que lo empiece a utilizar y así estar más presente en el proyecto.
 
 ### Conclusión
 
 Como conclusión puedo decir que el proyecto final cierra un camino que se hizo muy largo de mi carrera y hoy puedo decir que lo estoy finalizando. Era un pendiente que me demandaba mucho esfuerzo pero creo que ya terminando valió la pena.  
 
-Más allá de estar trabajando hace bastante tiempo creo que la manera en que se realizó  el proyecto y las personas con las que lo compartí le da un aporte muy importante a mi vida profesional. Si quiero encontrar alguna crítica o cambiar algo de como transcurrió el proyecto no encontraría nada importante que cambie el producto final. En todo momento note un alto nivel de conocimientos y experiencia por parte  de mis compañeros. En mi lugar, sin experiencia de este tipo, creo que me brindaron una buena visión de metodología de trabajo en general y cómo encarar las dificultades que puedan ocurrir.
-
+Más allá de estar trabajando hace bastante tiempo creo que la manera en que se realizó el proyecto y las personas con las que lo compartí le da un aporte muy importante a mi vida profesional. Si quiero encontrar alguna crítica o cambiar algo de como transcurrió el proyecto no encontraría nada importante que cambie el producto final. En todo momento note un alto nivel de conocimientos y experiencia por parte de mis compañeros. En mi lugar, sin experiencia de este tipo, creo que me brindaron una buena visión de metodología de trabajo en general y cómo encarar las dificultades que puedan ocurrir.
 
 ## Andrés Moschini
 
@@ -65,7 +63,7 @@ Cuando Matías me propuso comenzar este proyecto, yo ya no estaba interesado en 
 
 Por lo tanto acepté. Sin embargo, como sabía que terminar mi carrera no era suficiente incentivo, planteé como objetivo del proyecto la investigación, el descubrir y experimentar con nuevas tecnologías y prácticas, más allá de que fueran o no las mejores opciones según las necesidades del cliente o los requerimientos de la cátedra.
 
-Como suele ocurrir, el proyecto comenzó con investigación y selección de las tecnologías, algunas pruebas de concepto, definición de un marco de trabajo y de una forma de documentación. 
+Como suele ocurrir, el proyecto comenzó con investigación y selección de las tecnologías, algunas pruebas de concepto, definición de un marco de trabajo y de una forma de documentación.
 
 En ese entonces, en la empresa en la que trabajo se estaba intentando organizarse de una forma ágil, utilizando Scrum como framework de referencia. Por otro lado, yo entendía que un desarrollo en cascada (que suele ser la opción más natural para estos proyectos finales) no era una buena idea, ya que las necesidades del cliente seguramente iban a cambiar, y tampoco serviría para mis objetivos personales, ni para mantener la motivación. De esta manera, elegimos definir un marco de trabajo basado en Scrum y adaptado a nuestras necesidades y limitaciones.
 
@@ -114,7 +112,7 @@ Otro desafío era el trabajo con tecnologías que no había trabajado antes, una
 
 Y finalmente, una de los desafíos principales tenía que ver con "el proyecto de este tipo". Yo había ya intentado presentar un proyecto de tesis anteriormente, y creo que uno de los factores que determinó que fallara es el poco tiempo que podía dedicarle. Si bien mi situación había cambiado mucho desde aquella vez y se veía más prometedor, ¿sería realmente lo suficiente como para que esta vez fuera un éxito?
 
-Sin duda el trabajar en equipo significaría una mejora muy grande, ya que me proveería la motivación de sentirme responsable por el equipo (una sensación muy distinta a ser responsable sólo por uno mismo), y a la vez tener ayuda cuando lo necesitara.
+Sin duda el trabajar en equipo sería un factor muy influyente, ya que me proveería la motivación de sentirme responsable por el equipo (una sensación muy distinta a ser responsable sólo por uno mismo), y a la vez tener ayuda cuando lo necesitara.
 
 ### El comienzo del proyecto
 
@@ -128,9 +126,9 @@ La utilización de RavenDB fue nueva para mí, y aprendí primero cómo poder ut
 
 ### Mi rol en el proyecto
 
-Era bastante común que tomáramos decisiones conjuntas en el proyecto, por lo que no ha habido mucha separación de trayectos o estrategias. Los roles inmediatamente fueron identificados por cada uno en lo que mejor podíamos aportar al proyecto, y los roles fluyeron naturalmente.
+Era bastante común que tomáramos decisiones conjuntas en el proyecto, por lo que no ha habido mucha separación de trayectos o estrategias. Los roles inmediatamente fueron identificados por cada uno en lo que mejor podíamos aportar al proyecto, y las responsabilidades fluyeron naturalmente.
 
-Por tanto, las decisiones de estrategia de proyecto se tomaban en conjunto, lo mismo ocurría con las decisiones en cuanto a tecnología. En cuanto a implementación, muchas decisiones eran tomadas y luego expuestas al equipo para que se mejoraran según la necesidad, permitiendo la mejora y la crítica sin ralentizar el avance del producto.
+Por tanto, las decisiones de estrategia de proyecto se tomaban en conjunto. Lo mismo ocurría con las decisiones en cuanto a tecnología. En cuanto a implementación, muchas decisiones eran tomadas y luego expuestas al equipo para que se mejoraran según la necesidad, permitiendo la mejora y la crítica sin ralentizar el avance del producto.
 
 Finalmente, según la organización personal, una vez que encontramos nuestra forma de comunicarnos apropiadamente, había mucha libertad para las decisiones de cómo trabajar personalmente. Git nos daba esta libertad antes de la sincronización de repositorios también, y los entornos podían prepararse de forma independiente, con lo que no había razones para no probar cambiar el flujo de trabajo personal. Personalmente tomé varias aproximaciones a esto antes de llegar a un punto en donde me sentía cómodo y podía trabajar eficientemente, sin afectar al equipo con estas decisiones.
 
@@ -150,26 +148,24 @@ Como mi primer experiencia con bases de datos no relacionales, creo que tuve la 
 
 Pude solidificar muchos de mis conocimientos de los procesos ágiles y presenciar en carne propia sus ventajas, la forma en la que ágilmente puede virar direcciones para construir el producto necesitado, sea o no el que se veía originalmente como objetivo. El feedback rápido y la autocrítica fueron partes fundamentales de nuestro avance y la forma apropiada de poder detectar problemas y resolverlos.
 
-Personalmente, tuve muchos problemas para encontrar la motivación necesaria para trabajar en este proyecto. Intenté muchas aproximaciones a este problema y aunque logré aportar lo necesario al proyecto para terminar, aún estoy trabajando en encontrar la motivación necesaria para los proyectos personales y comprometerme a largo plazo con ellos. Como había previsto, el compromiso con los otros miembros del equipo fue definitivamente algo que ayudó a seguir adelante y comprometerme más seriamente.
+Personalmente, tuve muchos problemas para encontrar la motivación necesaria para trabajar en este proyecto, considerando que restaba a mi tiempo de descanso o de otros proyectos personales. Intenté muchas aproximaciones a este problema y aunque logré aportar lo necesario al proyecto para terminar, aún estoy trabajando en encontrar la motivación necesaria para los proyectos extra-laborales y comprometerme a largo plazo con ellos. Como había previsto, el compromiso y cooperación con los otros miembros del equipo fue definitivamente algo que ayudó a seguir adelante y comprometerme más seriamente.
 
 En cuanto a las habilidades que el proyecto requirió de mí, no tuve sorpresas. Mis experiencias de trabajo anterior ya me habían puesto en situaciones de trabajar en proyectos con desafíos de comunicación, o proyectos en donde el objetivo puede variar y no siempre es claro el camino adelante, pude poner en práctica nuevamente estas habilidades y ponerme el sombrero de analista de negocios, o de desarrollador, o de arquitecto de software o de tester.
 
 ### Conclusión del proyecto
 
-Llegar a la conclusión del proyecto me produce muchos sentimientos encontrados. Por un lado, gran alegría de cerrar este capítulo y poder moverme adelante y declararlo un éxito, pero por otro lado, puedo fácilmente reflexionar en los errores que hemos cometido, o en la forma en la que aproximaría ahora los problemas que hemos encontrado y cómo podría encontrar soluciones más elegantes, simples y eficientes. Quizá incluso haber hecho algo más ambicioso del proyecto, o completar la visión original, pero esa es agua que ya pasó bajo del puente.
+Llegar a la conclusión del proyecto me produce muchos sentimientos encontrados. Por un lado, gran alegría de cerrar este capítulo y poder moverme adelante y declararlo un éxito, pero por otro lado, puedo fácilmente reflexionar en los errores que hemos cometido, o en la forma en la que aproximaría ahora los problemas que hemos encontrado y cómo podría encontrar soluciones más elegantes, simples y eficientes. Quizá incluso haber hecho algo más ambicioso del proyecto, o completar la visión original, pero esa es agua que ya pasó debajo del puente.
 
-Considero esto como una etapa que me permite aprender desde criticarla y replantear mis acciones para cuando los problemas se presenten nuevamente. Como todo proyecto con desafíos y problemas, me permite no solamente aprender sobre las tecnologías que utilizamos sino sobre mi misma forma de solucionar y trabajar con los problemas que encuentro. Ese crecimiento es mi ganancia principal de la conclusión de este proyecto.
+Considero esto como una etapa que me permite aprender desde criticarla y replantear mis acciones para cuando los problemas se presenten nuevamente. Como todo proyecto con desafíos y problemas, me permite no solamente aprender sobre las tecnologías que utilizamos sino sobre mi misma forma de solucionar problemas y trabajar. Ese crecimiento es mi ganancia principal de la conclusión de este proyecto.
 
 ## Visión grupal
 
-//TODO como visión grupal (resumen de las partes comunes de lo anterior):
+Como grupo concluimos que hubo unas expectativas iniciales que favorecieron la formación del equipo y la visión del proyecto. En cuanto al equipo: dinámica de grupo, confianza mutua, compromiso y experiencia técnica. En cuanto al proyecto: posibilidad de experimentar dinámicas y ajustar el proceso a lo necesario, un proyecto a diseñar desde necesidades básicas de un cliente (sin muchas restricciones de negocios), libertad de implementación. En cuanto a tecnología: libertad total sobre la plataforma y métodos a utilizar.
 
-- mayores desafíos antes de comenzar
-- mayores desafíos al comenzar
-- qué rol desempeñó cada integrante
-- dificultades durante el proyecto
-- aprendizaje: personal, técnico, profesional
-- qué habilidades requiere el desarrollo de un proyecto
-- cierre
+Concordamos en que no sabíamos cómo sería la dinámica de trabajo en equipo, siendo este equipo en particular la primera vez que trabaja junto. Rápidamente logramos coordinar esfuerzos y encontrar un marco de trabajo que permitía el seguimiento, la planificación y el trabajo.
 
-<!-- Notas de edición: Al finalizar la edición de este documento renombrarlo con su fecha de entrega y actualizar el link y la fecha en index.markdown -->
+Encontramos desafíos de negocios, prioridades y dirección, y la metodología sirvió perfectamente para adaptarnos a ese desafío, superándolo. Tuvimos desafío de tiempos de dedicación disponible, pero fueron superadas con distintas formas según la necesidad de cada integrante, siendo cubierto por los demás cuando fuera necesario. También tuvimos desafíos de conocimientos variados, los cuales también fueron solucionados en cooperación.
+
+Obtuvimos mucho aprendizaje sobre el llevar adelante proyectos, más allá de la implementación técnica que ellos conllevan. Aprendimos sobre la relación cliente-proveedor y ese partnership que permite a ambos cooperar para el producto que lleva a la visión. Aprendimos sobre herramientas de desarrollo de software (Git, RavenDB) y plataformas (Backbone, ASP.NET MVC). Ejercitamos nuestra habilidad de relevamiento de requerimientos, nuestro conocimiento de Agile SCRUM, nuestro seguimiento de procesos y saber desafiarlos cuando no son útiles.
+
+En conclusión, este proyecto cumplió nuestras expectativas de ser interesante, divertido y un aprendizaje técnico, superándolo para convertirse en un aprendizaje de administración, análisis, relaciones humanas y trabajo en equipo.
