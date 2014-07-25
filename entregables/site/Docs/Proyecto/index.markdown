@@ -7,7 +7,7 @@
 * [Propuesta de Trabajo final](2012-03-24-Propuesta-Trabajo) (24 de Marzo de 2012)
 * [Cambios de procesos y requerimientos](2012-11-07-Cambios-de-procesos-y-requerimientos) (7 de Noviembre de 2012)
 * [Actualización de propuesta de trabajo](2012-12-11-Actualizacion-Propuesta-Trabajo) (11 de Diciembre de 2012)
-* [Memorias de proyecto](Memorias-de-Proyecto) (A ser completado)
+* [Memorias de proyecto](2014-08-11-Memorias-de-Proyecto) (11 de Agosto de 2014)
 
 ## Manual de sistema
 
