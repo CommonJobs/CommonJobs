@@ -68,7 +68,6 @@ namespace CommonJobs.Mvc.UI.Controllers
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 
-        [Documentation("docs/manual-de-usuario/empleados")]
         public ActionResult Create(string name)
         {
             var newEmployee = CreateEmployee(name);
@@ -158,7 +157,6 @@ namespace CommonJobs.Mvc.UI.Controllers
             }
         }
 
-        [Documentation("docs/manual-de-usuario/empleados")]
         public ActionResult Edit(string id)
         {
             log.Info("Edit employee (id: " + id + ")");

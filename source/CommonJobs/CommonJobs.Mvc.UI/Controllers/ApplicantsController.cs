@@ -52,7 +52,6 @@ namespace CommonJobs.Mvc.UI.Controllers
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 
-        [Documentation("docs/manual-de-usuario/postulantes")]
         public ActionResult Create(string name)
         {
             var newApplicant = new Applicant(name);
@@ -122,7 +121,6 @@ namespace CommonJobs.Mvc.UI.Controllers
         }
 
         [SharedEntityAlternativeAuthorization]
-        [Documentation("docs/manual-de-usuario/postulantes")]
         public ActionResult Edit(string id, string sharedCode = null) 
         {
             var applicant = RavenSession.Load<Applicant>(id);
