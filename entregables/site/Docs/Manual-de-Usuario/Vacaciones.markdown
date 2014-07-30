@@ -4,7 +4,7 @@ La sección de vacaciones permite una visualización sumarizada de la informaci�
 
 Esta información se encuentra detallada para cada empleado, en la sección de Vacaciones de su perfil. Para más información, ver la sección de [Empleados](Empleados.markdown).
 
-![Listado de vacaciones](Images\Vacaciones\01-listado.png)
+![Listado de vacaciones](./Images/Vacaciones/01-listado.png)
 
 ## Columnas incluídas
 
