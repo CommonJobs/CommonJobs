@@ -52,8 +52,6 @@ Las clases de la aplicación que exponen la funcionalidad en alguna forma de UI 
 
 Simplificando el conjunto de componentes que se ha descripto anteriormente, un diagrama de arquitectura del sistmema surge fácilmente en donde se pueden ver las dependencias de estas distintas capas del sistema.
 
-Este diagrama, sin embargo, no habla sobre las dependencias que son independientes en una implantación y pueden comunicarse a través de distintos servidores.
-
 ## Diagrama de implantación
 
 Si bien al momento de escritura el sistema se encuentra corriendo en un único servidor, CommonJobs soporta la separación de sus componentes en distintos servidores virtuales o físicos, siempre y cuando puedan comunicarse.
