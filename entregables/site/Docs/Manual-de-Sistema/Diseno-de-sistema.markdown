@@ -48,9 +48,14 @@ Las clases de la aplicación que exponen la funcionalidad en alguna forma de UI 
 
 ## Diseño de arquitectura del sistema
 
+Simplificando el conjunto de componentes que se ha descripto anteriormente, un diagrama de arquitectura del sistema surge fácilmente en donde se pueden ver las dependencias de las distintas capas del sistema. El grosor de las líneas representa la cantidad de referencias entre componentes.
+
+![Diagrama de Arquitectura Simplificado](Images/ArchitectureDiagramSimplified.png)
+
+En una vista más completa puede observarse la librería de utilidades utilizada globalmente, las capas relacionadas con las administración de almuerzos, con extracción de contenido y con ejecución de código JavaScript del lado del servidor.
+
 ![Diagrama de Arquitectura](Images/ArchitectureDiagram.png)
 
-Simplificando el conjunto de componentes que se ha descripto anteriormente, un diagrama de arquitectura del sistmema surge fácilmente en donde se pueden ver las dependencias de estas distintas capas del sistema.
 
 ## Diagrama de implantación
 
