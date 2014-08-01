@@ -1,9 +1,13 @@
-# Documentos de implantación
+# Manual de sistema
 
-* [Introducción](Introduccion)
-* [Configuracion de los entornos](Configuracion-de-los-entornos)
-* [Autenticación y Autorización](Autenticacion-y-Autorizacion)
-* [Configuracion de IFilter](Configuracion-de-IFilter)
-* [Respaldos y restauración](Respaldo)
-* [Migraciones](Migraciones)
-* [Administración de almuerzos](Administracion-de-almuerzos)
+## Decisiones de Infrastructura
+
+* [Autenticación y autorización](Diseno-autenticacion-y-autorizacion)
+* [Historial de cambios de entidades](Historial-de-Cambios-de-Entidades)
+* [Indexación de archivos adjuntos](Indexacion-archivos-adjuntos)
+* [Librerías utilizadas](Librerias-utilizadas)
+
+## Diseño del sistema
+
+* [Introducción](Diseno-de-sistema)
+* [Clases de dominio](Clases-de-dominio)
