@@ -2,9 +2,9 @@
 
 ## Propósito de este documento
 
-Como observamos en el documento [Retrospectiva de proyecto](retrospectiva-proyecto#El_problema), la metodología ágil utilizada permitió al cliente ir descubriendo sus necesidades reales durante el desarrollo. 
+Como observamos en el documento [Cambios de procesos y requerimientos](2012-11-07-Cambios-de-procesos-y-requerimientos#El_problema), la metodología ágil utilizada permitió al cliente ir descubriendo sus necesidades reales durante el desarrollo. 
 
-Este documento actualiza la [Propuesta de trabajo](propuesta-trabajo) de los alumnos Andrés Moschini, Matías José y Juan Diego Raimondi, correspondiente al Proyecto Final de la Carrera Ingeniería en Informática de Universidad FASTA según lo consensuado entre el Director Funcional, el Director Técnico y el equipo siguiendo las recomendaciones de la Cátedra, como se explica en la [Retrospectiva de proyecto](Retrospectiva-Proyecto#C%c3%b3mo_seguir).
+Este documento actualiza la [Propuesta de trabajo](2012-03-24-Propuesta-Trabajo) de los alumnos Andrés Moschini, Matías José y Juan Diego Raimondi, correspondiente al Proyecto Final de la Carrera Ingeniería en Informática de Universidad FASTA según lo consensuado entre el Director Funcional, el Director Técnico y el equipo siguiendo las recomendaciones de la Cátedra, como se explica en el documento de [Cambios de procesos y requerimientos](2012-11-07-Cambios-de-procesos-y-requerimientos#C%c3%b3mo_seguir).
 
 ## Alcance de este documento
 
@@ -12,7 +12,7 @@ El presente documento está destinado a la Cátedra de Proyecto Final de la Facu
 
 ## Objetivo del proyecto
 
-_**Cambios:** Se modificó el [Objetivo del proyecto](propuesta-trabajo#Objetivo_del_proyecto) quitando el inciso relacionado con las incorporaciones. Ya que, si bien se realizó, no es la característica principal del sistema. Se incorporaron objetivos secundarios._
+_**Cambios:** Se modificó el [Objetivo del proyecto](2012-03-24-Propuesta-Trabajo#Objetivo_del_proyecto) quitando el inciso relacionado con las incorporaciones. Ya que, si bien se realizó, no es la característica principal del sistema. Se incorporaron objetivos secundarios._
 
 Brindar una herramienta para facilitar el trabajo del área de Recursos Humanos (RRHH) simplificando los procesos de carga, almacenamiento, búsqueda y lectura de la información manejada por dicha área.
 
@@ -23,7 +23,7 @@ Brindar una herramienta para facilitar el trabajo del área de Recursos Humanos 
 
 ## Descripción del Proyecto
 
-_**Cambios:** Se modificó la [Descripción del Proyecto](propuesta-trabajo#Descripci%c3%b3n_del_Proyecto) para resaltar el área de empleados además de la de postulantes. Se eliminaron menciones de funcionalidad que no será parte del proyecto._
+_**Cambios:** Se modificó la [Descripción del Proyecto](2012-03-24-Propuesta-Trabajo#Descripci%c3%b3n_del_Proyecto) para resaltar el área de empleados además de la de postulantes. Se eliminaron menciones de funcionalidad que no será parte del proyecto._
 
 El proyecto consiste en desarrollar e implantar un sistema informático que:
 
@@ -36,13 +36,13 @@ El proyecto consiste en desarrollar e implantar un sistema informático que:
 
 ## Relevamiento
 
-_Ver [Relevamiento original](propuesta-trabajo#Relevamiento)._
+_Ver [Relevamiento original](2012-03-24-Propuesta-Trabajo#Relevamiento)._
 
 ### Cambios observados en el relevamiento original
 
 * La denominación de la empresa cambio de _CommonSense_ a _Making Sense_. Aún así, el nombre propuesto del proyecto no será modificado.
 * El proyecto de JIRA "Sales pipeline" para administrar las necesidades de nuevos profesionales según los potenciales proyectos quedó en desuso. El proceso de selección ahora se realiza de una manera más informal, en pos de la agilidad y el rápido cambio de la información disponible.
-* El proyecto de JIRA "Recruit" quedó en desuso, se utiliza el e-mail y _LinkedIn_ para almacenar la información relacionada, ya no se ve la necesidad imperiosa de estandarizar el proceso (ver inciso anterior). Aún así, de forma lenta y gradual se está comenzando a utilizar CommonJobs para ello. (ver [nuevo objetivo sobre no interferir con los procesos de la empresa](actualizacion-propuesta-trabajo#Objetivos%20secundarios))
+* El proyecto de JIRA "Recruit" quedó en desuso, se utiliza el e-mail y _LinkedIn_ para almacenar la información relacionada, ya no se ve la necesidad imperiosa de estandarizar el proceso (ver inciso anterior). Aún así, de forma lenta y gradual se está comenzando a utilizar CommonJobs para ello. (ver [nuevo objetivo sobre no interferir con los procesos de la empresa](#Objetivos_Secundarios))
 * Servicios como _ZonaJobs_, _Boomeran_ o _BuscoJobs_ ya no son tan utilizados, muchos de los postulantes son contactados por _LikedIn_ o por consultoras externas.
 * Los términos y condiciones de la API _LinkedIn_ desalientan la integración con el servicio.
 * En la empresa ya no se busca inexorablemente sistematizar los procesos de selección o administración siempre que esto no les aporte un valor agregado. Por tanto, se permite un proceso más relajado en donde la información contenida en el sistema es suficiente para el uso del mismo, en lugar de extensiva y completa. La información incompleta, por tanto, no debería ser un obstáculo para poder continuar con dichos procesos.
@@ -50,7 +50,7 @@ _Ver [Relevamiento original](propuesta-trabajo#Relevamiento)._
 
 ## Actualización de las Características Mínimas (incluídas en el _límite del proyecto_)
 
-_**Cambios:** Se modificaron las [Características Mínimas](propuesta-trabajo#Caracter%c3%adsticas_M%c3%adnimas_(inclu%c3%addas_en_el_%3cem%3el%c3%admite_del_proyecto%3c%2fem%3e)) quitando la migración de datos del proyecto JIRA "Recruit" ya que no es utilizado. Por otro lado, si bien se desarrollaron características relacionadas con las ofertas de trabajo o "búsquedas laborales", se quitaron de las características mínimas ya que no son las más prioritarias para el cliente. Se agregaron características relacionadas con administración de empleados._
+_**Cambios:** Se modificaron las [Características Mínimas](2012-03-24-Propuesta-Trabajo#Caracter%c3%adsticas_M%c3%adnimas_(inclu%c3%addas_en_el_%3cem%3el%c3%admite_del_proyecto%3c%2fem%3e)) quitando la migración de datos del proyecto JIRA "Recruit" ya que no es utilizado. Por otro lado, si bien se desarrollaron características relacionadas con las ofertas de trabajo o "búsquedas laborales", se quitaron de las características mínimas ya que no son las más prioritarias para el cliente. Se agregaron características relacionadas con administración de empleados._
 
 * Reemplazar el actual legajo de empleados, almacenando los datos personales y datos laborales.
 * Permitir búsquedas sobre los datos de empleados.
