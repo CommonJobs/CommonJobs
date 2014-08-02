@@ -1,6 +1,6 @@
 # Elección de la base de datos (retrospectiva)
 
-Casi dos años atrás escribimos cuando el proyecto comenzaba sobre nuestra [eleccion de la base datos, favoreciendo RavenDB](../2012-02-15-Detalles-Seleccion-Base-de-Datos). En el día de hoy, ya casi culminando el proyecto, presentaremos una reflexión sobre dicha elección.
+Casi dos años atrás escribimos cuando el proyecto comenzaba sobre nuestra [elección de la base datos, favoreciendo RavenDB](../2012-02-15-Detalles-Seleccion-Base-de-Datos). En el día de hoy, ya casi culminando el proyecto, presentaremos una reflexión sobre dicha elección.
 
 ## La perspectiva sobre RavenDB
 
