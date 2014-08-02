@@ -10,15 +10,13 @@ En la interfaz encargada de la implementación de los accesos (la interfaz web, 
 
 Al tratarse de atributos de autenticación, estos pueden encontrarse tanto al nivel de controlador como al nivel de método de controlador (acción).
 
-```csharp
-public class AttachmentsController: CommonJobsController {
-    [HttpPost]
-    [CommonJobsAuthorize("Users,ApplicationManagers,EmployeeManagers")]
-    public ActionResult Post(string id) {
-        ...
-    }   
-}
-```
+    public class AttachmentsController: CommonJobsController {
+        [HttpPost]
+        [CommonJobsAuthorize("Users,ApplicationManagers,EmployeeManagers")]
+        public ActionResult Post(string id) {
+            ...
+        }   
+    }
 
 ## Implementación
 

@@ -24,8 +24,6 @@
 * Mantener el historial de cambios de las entidades.
 * Bug al agregar nueva nota en applicants (bug).
 
-
-
 ## Pendiente
 
  *Las tareas pendientes surgieron o se desprendieron de otra tarea de este Sprint. Estas tareas se agregan al Product Backlog o a la planificación del Sprint siguiente.*
