@@ -11,7 +11,3 @@ También nos permitirá acceder a esas versiones mediante _Raven Studio_ en caso
 ## Metadata
 
 Cada vez que una entidad es almacenada en Raven DB se registra la fecha del servidor en el campo `Last-Modified` de su _metadata_, _CommonJobs_ además intentará determinar quien es el usuario actual y almacenará su `user name` en el campo `Last-Modified-By`.
-
-
-
-
