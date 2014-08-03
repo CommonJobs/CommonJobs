@@ -1,6 +1,6 @@
 # Autenticación y Autorización
 
-Actualmente el sistema verifica los siguientes roles:
+Actualmente el sistema identifica los siguientes roles:
 
 * **Users**: Usuarios del sistema, con acceso a creación y edición de empleados y postulantes así como también consultas.
 * **Migrators**: Usuarios con acceso a la UI de migración de datos entre versiones.
@@ -22,7 +22,7 @@ De esta manera la asociación funcionará tanto para Active Directory o Google A
 
 ## Autenticación por Active Directory
 
-_**Nota**: Originalmente el sistema diseñado preparado para autenticar usuarios utilizando Active Directory, ya que era un requerimiento de seguridad del cliente. Circunstancialmente, hubo problemas con el servicio de Active Directory de la empresa, por lo que se requirió urgentemente implementar un sistema alternativo de autenticación. Se desactivó Active Directory y se comenzó a utilizar autenticación con Google Authentication y como backup autenticación con usuario y password almacenados en el sistema. No se descarta volver a utilizar Active Directory en un futuro._
+_**Nota**: Originalmente el sistema estaba preparado para autenticar usuarios utilizando Active Directory, ya que era un requerimiento de seguridad del cliente. Circunstancialmente, hubo problemas con el servicio de Active Directory de la empresa, por lo que se requirió urgentemente implementar un sistema alternativo de autenticación. Se desactivó Active Directory y se comenzó a utilizar autenticación con Google Authentication y, como backup, autenticación con usuario y password almacenados en el sistema. No se descarta volver a utilizar Active Directory en un futuro._
 
 Los roles del sistema se corresponderán con grupos de Active Directory del dominio de la empresa, según el entorno:
 
@@ -55,9 +55,9 @@ Si bien originalmente la utilización de Active Directory era un requerimiento i
 
 ![Pantalla de autenticación actual](images/commonjobs-authentication.png)
 
-Si el email del usuario autenticado mediante _Google Authentication_ pertenece al dominio de la compañía, se considera al usuario un _Usuario del dominio_. Si además se corresponde con el `Email Corporativo` de un empleado, se considera al usuario y empleado relacionados.
+Si el email del usuario autenticado mediante _Google Authentication_ pertenece al dominio de la compañía, se considera al usuario un _Usuario del dominio_. Si además se corresponde con el `Email Corporativo` de un empleado, se considera que usuario y empleado se corresponden entre si.
 
-_Google Authentication_ solo se encarga de la autenticación, para asociar los roles a los usuarios se utilizarán documentos en nuestra base de datos, relacionados con los nombres de usuario a través del id del documento.
+_Google Authentication_ solo se encarga de la autenticación. Para asociar los roles a los usuarios se utilizarán documentos en nuestra base de datos, relacionados con los nombres de usuario a través del id del documento.
 
 ![Documentos de Usuarios](images/user-documents.png)
 
