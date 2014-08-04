@@ -39,7 +39,7 @@ Esto nos permitió siempre mantener un control claro de la situación del proyec
 
 ### El diseño inconsistente entre subsistemas
 
-Tal como fue mencionado en la [Retrospectiva del diseño](***** TODO: LINK! *****), la agilidad de cambio de nuestro proyecto no permitió generar subsistemas que tuvieran una diseño interno homogéneo, aunque esto no afectara la forma en que se integraban.
+Tal como fue mencionado en la [Retrospectiva del diseño](Retrospectiva-del-diseno-del-sistema), la agilidad de cambio de nuestro proyecto no permitió generar subsistemas que tuvieran una diseño interno homogéneo, aunque esto no afectara la forma en que se integraban.
 
 Los módulos son relativamente desacoplados, por lo que no hay necesidad que cada uno de ellos se parezca a los otros (esto abre muchas posibilidades en cuanto a la funcionalidad que los módulos podrían implementar), pero tampoco es obvio en el código la separación de cada uno de ellos.
 
