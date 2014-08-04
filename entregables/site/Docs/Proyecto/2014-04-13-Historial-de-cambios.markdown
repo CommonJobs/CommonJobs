@@ -1,6 +1,6 @@
 # Historial de cambios
 
-Este documento resume los cambios realizados durante el proyecto. La misma información puede verse de forma detallada en cada uno de los documentos de cierre y planificación de sprint, en la [carpeta de Scrum](../Scrum) del proyecto.
+Este documento resume los cambios realizados durante el proyecto. La misma información puede verse de forma detallada en cada uno de los documentos de cierre y planificación de sprint, en la carpeta de Scrum del proyecto.
 
 A continuación se detallan los avances logrados al momento de finalización de cada uno de los sprints.
 
