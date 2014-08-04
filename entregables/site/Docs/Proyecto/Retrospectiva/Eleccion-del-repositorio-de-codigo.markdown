@@ -6,11 +6,11 @@ Elegimos aventurarnos en Git y una de sus plataformas más populares: GitHub. Ca
 
 ## Git
 
-La curva de aprendizaje de Git es sin duda uno de sus mayores deflectores: hace muy difícil el manejo de la herramienta para quienes no están entrenados en ella ni conocen sus conceptos. Los tutoriales, artículos y libros introductorios explican los aspectos más bases, sin explicar los mecanismos internos que hacen tomar sentido a sus posibilidades.
+La curva de aprendizaje de Git es sin duda uno de sus mayores deflectores: hace muy difícil el manejo de la herramienta para quienes no están entrenados en ella ni conocen sus conceptos. Los tutoriales, artículos y libros introductorios explican los aspectos más básicos, sin explicar los mecanismos internos que hacen tomar sentido a sus posibilidades.
 
 Durante mucho tiempo luchamos contra este obstáculo, disminuído por las herramientas gráficas que esconden parte de la complejidad.
 
-Con el paso del tiempo, y nuestro proyecto y flujo ya en marcha, hemos explorado artículos más avanzados que nos permitían comprender el diseño interno de git, permitiéndonos acercar más a su uso directo a través de la consola y su potencial.
+Con el paso del tiempo, y nuestro proyecto y flujo ya en marcha, hemos explorado material más avanzado que nos permitió comprender el diseño interno de git, permitiéndonos acercar más a su uso directo a través de la consola y su potencial.
 
 ## GitHub
 
@@ -20,4 +20,4 @@ Con esto en mente, parte de nuestro proceso se convirtió de forma natural en lo
 
 ## En retrospectiva
 
-Creemos que esta fue una de las mejores decisiones tomadas alrededor de las tecnologías del proyecto. Inicialmente elegimos git por todas las capacidades que su documentación y comunidad menciona, y GitHub por las mismas razones. Cumplió y superó nuestras espectativas, a la vez que fue una herramienta muy útil para nuestras vidas profesionales. Todavía nos encontramos en aprendizaje de aprender más sobre sus mecanismos interiores, y GitHub sigue agregando nuevas características que lo hacen más útil.
+Creemos que esta fue una de las mejores decisiones tomadas alrededor de las tecnologías del proyecto. Inicialmente elegimos git por todas las capacidades que su documentación y comunidad menciona, y GitHub por las mismas razones. Cumplió y superó nuestras espectativas, a la vez que fue una herramienta muy útil para nuestras vidas profesionales. Todavía nos encontramos en aprendizaje de aprender más sobre sus mecanismos interiores, y GitHub sigue agregando nuevas características que lo hacen más útil. A la vez, fue una herramienta que incluso fue de utilidad a MakingSense en distintas ocasiones, incluso esta decisión ayudando en su adopción.
