@@ -2,6 +2,6 @@
 
 * [Configuración de los entornos](Configuracion-de-los-entornos)
 * [Configuración de autenticación y autorización](Autenticacion-y-Autorizacion)
-* [Configuración IFilter](Configuracion-de-IFilter)
+* [Configuración de indexación de archivos adjuntos](Configuracion-de-indexacion-archivos-adjuntos)
 * [Respaldos y restauración](Respaldo)
 * [Migraciones](Migraciones)
