@@ -20,7 +20,7 @@ A continuación se mostrarán los tiempos dedicados a nuestras tareas en distint
 
 ## Horas planeadas vs. dedicadas
 
-![Horas planeadas vs dedicadas](Horas-planeadas-vs-dedicadas.png)
+![Horas planeadas vs dedicadas](Images/Horas-planeadas-vs-dedicadas.png)
 
 ### Errores de estimacion
 
@@ -32,7 +32,7 @@ A medida que este patrón se hizo más y más evidente, nuestras estimaciones de
 
 ## Horas por actividad
 
-![Horas por actividad](Horas-por-actividad.png)
+![Horas por actividad](Images/Horas-por-actividad.png)
 
 ### Aprendizaje y desarrollo
 
@@ -50,7 +50,7 @@ Hemos notado también una presencia importante de las tareas de instalación y c
 
 ## Horas por actividad por sprint
 
-![Horas por actividad por sprint](Horas-por-actividad-por-sprint.png)
+![Horas por actividad por sprint](Images/Horas-por-actividad-por-sprint.png)
 
 ### Aprendizaje e investigación
 
@@ -74,7 +74,7 @@ Los primeros sprints tuvieron una presencia importante de reuniones, determinaci
 
 ## Horas por persona por actividad
 
-![Horas por persona por actividad](Horas-por-persona-por-actividad.png)
+![Horas por persona por actividad](Images/Horas-por-persona-por-actividad.png)
 
 Este gráfico demuestra la forma en la que el equipo naturalmente se acomodó con los talentos multidisciplinarios que cada uno de los integrantes poseía. Cada uno de los siguientes es un ejemplo de cómo el equipo naturalmente cubrió necesidades de la forma más natural:
 
