@@ -1,6 +1,6 @@
 # Autenticación de CommonJobs
 
-Al momento de la redacción de este documento, el sistema se encuentra configurado para utilizar _Google Authentication_ para la autenticación de usuarios, utilizando información de la base de datos para asignar los roles. En un principio, de había decidido utilizar _Active Directory_ para estos fines, pero por problemas de infraestructura del cliente, se solicitó cambiar urgentemente a otro tipo de autenticación.
+Como se explica en la [retrospectiva relacionada](../Proyecto/Retrospectiva/Diseno-de-autenticacion-y-autorizacion), al momento de la redacción de este documento, el sistema se encuentra configurado para utilizar _Google Authentication_ para la autenticación de usuarios. No se descarta volver a utilizar _Active Directory_ en un futuro.
 
 En este documento se describe el diseño utilizado para ambos sistemas de autenticación y autorización, para detalles acerca de la configuración y grupos hay más información disponible en el [Manual de Implantación y Mantenimiento](../Manual-de-Implantacion-y-Mantenimiento/Autenticacion-y-Autorizacion).
 
@@ -35,14 +35,3 @@ En el momento en que Active Directory se encontraba en uso como sistema principa
 
 Esto era suficiente para que la aplicación pudiera identificar los roles actuales del usuario loggeado.
 
-## Migración a Google Auth / usuarios en base de datos
-
-Tras que cambios estructurales en la empresa requirieran que no se pudiera utilizar más Active Directory como el punto principal de autenticación, la flexibilidad construida permitió hacer una migración gradual de un sistema de autenticación a otro.
-
-El uso de estos distintos hooks permitía delegar la autenticación y la obtención de los roles del usuario, lo que resultó en un cambio que no afectaba al sistema en sí en su proceso de autenticación, sino simplemente en la implementación que recuperaría los datos del usuario.
-
-Tras verificar que el usuario se encuentra loggeado con su email corporativo, gracias a la autenticación que Google provee (estándar OAuth y OAuth 2.0), el sistema puede identificar al usuario, y gracias a la información de usuario disponible en la base de datos, se pueden identificar los roles asignados al usuario, e incluso el empleado correspondiente al usuario actualmente loggeado. 
-
-Al momento de la escritura de este documento, la relación entre usuario y empleado solo se ha utilizado para que los empleados completen sus preferencias en el sub-sistema de administración de almuerzos, en un futuro podría ser aprovechada para la implementación de una interfaz donde los empleados completan sus propios perfiles o lo usan como oportunidad para discusiones con el área de recursos humanos -- todas ideas tenidas en cuenta durante el desarrollo del proyecto, pero que no fueron parte del backlog a implementar.
-
-La implementación de un sistema de autenticación con el estándar OAuth o la descripción de este estándar quedan fuera del propósito de este documento, pero de ser necesaria su consulta, puede observarse en `CommonJobs.MVC.UI.Controllers.GoogleAuthenticationController`.
