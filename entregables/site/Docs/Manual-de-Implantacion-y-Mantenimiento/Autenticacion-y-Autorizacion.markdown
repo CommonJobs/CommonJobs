@@ -1,5 +1,11 @@
 # Autenticación y Autorización
 
+Como se explica en la [retrospectiva relacionada](../Proyecto/Retrospectiva/Diseno-de-autenticacion-y-autorizacion), al momento de la redacción de este documento, el sistema se encuentra configurado para utilizar _Google Authentication_ para la autenticación de usuarios. No se descarta volver a utilizar _Active Directory_ en un futuro.
+
+En este documento se describe la configuración requerida para ambos sistemas de autenticación y autorización.
+
+## Roles
+
 Actualmente el sistema identifica los siguientes roles:
 
 * **Users**: Usuarios del sistema, con acceso a creación y edición de empleados y postulantes así como también consultas.
@@ -21,8 +27,6 @@ En algunos casos, es útil identificar cual es el empleado (entidad de dominio) 
 De esta manera la asociación funcionará tanto para Active Directory o Google Authentication.
 
 ## Autenticación por Active Directory
-
-_**Nota**: Originalmente el sistema estaba preparado para autenticar usuarios utilizando Active Directory, ya que era un requerimiento de seguridad del cliente. Circunstancialmente, hubo problemas con el servicio de Active Directory de la empresa, por lo que se requirió urgentemente implementar un sistema alternativo de autenticación. Se desactivó Active Directory y se comenzó a utilizar autenticación con Google Authentication y, como backup, autenticación con usuario y password almacenados en el sistema. No se descarta volver a utilizar Active Directory en un futuro._
 
 Los roles del sistema se corresponderán con grupos de Active Directory del dominio de la empresa, según el entorno:
 
@@ -50,8 +54,6 @@ A continuación se enumeran los grupos del sistema correspondientes a los roles 
    * Ha sido asignado al grupo `Migrators`, para que quienes realizan las migraciones en el entorno de producción puedan hacer pruebas en el entorno de desarrollo.
 
 ## Autenticación por Google Authentication y Local
-
-Si bien originalmente la utilización de Active Directory era un requerimiento importante, debido a un problema en la infraestructura del cliente, tuvimos que implementar de urgencia otro tipo de autenticación. Dado que el cliente utiliza _Google Apps_ y cada usuario tiene un mail de Google con el dominio de la empresa, se decidió utilizar _Google Authentication_. Alternativamente si debiera acceder al sistema un usuario externo, permitimos la autenticación por usuario y password almacenados por el sistema.
 
 ![Pantalla de autenticación actual](images/commonjobs-authentication.png)
 
