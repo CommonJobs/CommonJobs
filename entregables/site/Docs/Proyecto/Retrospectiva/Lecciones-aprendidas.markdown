@@ -17,7 +17,7 @@ Dichas evaluaciones se tomaban sprint a sprint y se identificaban riesgos, lo qu
 
 ### El proceso
 
-El proceso era lo suficientemente simple como para que pudiéramos seguirlo, incluso mientras nos encontrábamos en aprendizaje de herramientas y tecnología, pero era lo suficientemente complet como para que cada cambio fuera auditado por todo el grupo y las decisiones se tomaran en conjunto.
+El proceso era lo suficientemente simple como para que pudiéramos seguirlo, incluso mientras nos encontrábamos en aprendizaje de herramientas y tecnología, pero era lo suficientemente completo como para que cada cambio fuera auditado por todo el grupo y las decisiones se tomaran en conjunto.
 
 Las reuniones de sprint, las pláticas con el cliente, los cambios en el código y los code reviews eran parte de este proceso que aseguraban un producto formado y revisado que pudiera ser útil y de buena calidad.
 
@@ -27,7 +27,7 @@ Los integrantes del equipo nos mantuvimos en constante comunicación y sin motiv
 
 ### La gestión del proyecto
 
-Nuestro proceso y herramientas elegidas también permitió mantener un control ordenado de cada requerimiento, pedido, problema y mejora encontrada, cada hora utilizada en el proyecto y cada línea de código o documento que fue parte de él. Todo se encuentra documentado y todo está disponible públicamente, incluso con los cambios a lo largo del tiempo, lo que permite auditar el proyecto en su completitud.
+Nuestro proceso y las herramientas elegidas también permitieron mantener un control ordenado de cada requerimiento, pedido, problema y mejora encontrada, cada hora utilizada en el proyecto y cada línea de código o documento que fue parte de él. Todo se encuentra documentado y todo está disponible públicamente, incluso con los cambios a lo largo del tiempo, lo que permite auditar el proyecto en su completitud.
 
 Esto nos permitió siempre mantener un control claro de la situación del proyecto para detectar situaciones de riesgo u oportunidades de cambio.
 
