@@ -12,8 +12,8 @@
     * Como nos organizamos
         * Proceso: base
         * Proceso: flujo propio
-        * Herramientas del proceso (Trello)
     * Herramientas / Tecnologías: (para cada una: qué es y por qué la elegimos)
+        * Herramientas del proceso (Trello)
         * Generación de la documentación
         * ASP.NET MVC 3
         * Raven DB
