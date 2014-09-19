@@ -70,6 +70,7 @@ New content:
             <li>Herramientas: Documentación (mmd2pdf)</li>
             <li>Herramientas: git &amp; GitHub</li>
             <li>Tecnologías: ASP.NET MVC 3</li>
+            <li>Tecnologías: Backbone.js &amp; nervoustissue</li>
             <li>Tecnologías: RavenDB</li>
           </ul>
         </li>
@@ -87,36 +88,7 @@ New content:
         <li>Cambio de rumbo del proyecto <small>(10 mins)</small></li>
         <li>Lecciones aprendidas <small>(10 mins)</small></li>
         <li>Conclusiones <small>(10 mins)</small></li>
-      </ul>
-    </article>
-  </slide>
-
-  <slide>
-    <hgroup>
-      <h2>¿Qué es CommonJobs?</h2>
-    </hgroup>
-    <article>
-      <ul>
-        <li>Administración de empleados</li>
-        <li>Administración de postulantes</li>
-        <li>Búsquedas de trabajo públicas</li>
-        <li>Contabilización de vacaciones</li>
-        <li>Contabilización de ausencias</li>
-      </ul>
-    </article>
-  </slide>
-
-  <slide>
-    <hgroup>
-      <h2>¿Por qué es útil?</h2>
-    </hgroup>
-    <article>
-      <ul>
-        <li>Información centralizada</li>
-        <li>¡No más papeles en la oficina!</li>
-        <li>Colaboración en el deparamento de RRHH</li>
-        <li>Seguimiento histórico sin recurrir a la memoria</li>
-        <li>Herramienta de discusión: provee una plataforma con la información para resolver problemas</li>
+        <li>Preguntas y respuestas <small>(15 mins)</small></li>
       </ul>
     </article>
   </slide>
@@ -124,307 +96,232 @@ New content:
   <slide class="segue dark nobackground">
     <aside class="gdbar"><img src="images/CommonJobs_logo.png"></aside>
     <hgroup class="auto-fadein">
-      <h2>Características especiales</h2>
-      <h3>Funcionalidad</h3>
+      <h2>¿Por qué, qué y quién?</h2>
     </hgroup>
   </slide>
 
   <slide>
     <hgroup>
-      <h2>Características especiales: funcionalidad</h2>
-      <h3>Legajo electrónico</h3>
+      <h2>¿Por qué, qué y quién?</h2>
+      <h3>MakingSense</h3>
     </hgroup>
     <article>
-      <p>Mantener legajo y documentación de todos los empleados es un proceso arduo. Mucho proceso manual es requerido y la consolidación con documentación física es desafiante.</p>
-      <p>CommonJobs presenta un legajo electrónico que se combina con perfiles de usuarios individuales. Esto permite el seguimiento personalizado y grupal de los empleados.</p>
-    </article>
-  </slide>
-
-  <slide class="fill nobackground" style="background-image: url(images/legajo.png)">
-  </slide>
-
-  <slide>
-    <hgroup>
-      <h2>Características especiales: funcionalidad</h2>
-      <h3>Seguimiento de empleados y postulantes</h3>
-    </hgroup>
-    <article>
-      <p>Cada persona recibe un <strong>perfil</strong> para mantener toda su información agrupada y actualizada.</p>
-      <p>Estos perfiles constan de secciones independientes que permiten enfocarse en aspectos particulares de la relación empresarial con esta persona.</p>
-      <p>Cada perfil comienza con un resumen simple de la persona.</p>
-      <img src="images/datos-principales-empleado.png">
+      <ul>
+        <li>Empresa de software Marplatense</li>
+        <li>Se ha extendido mucho en los últimos años</li>
+        <li>Nuevas formas de organizarse, nuevos roles y departamentos</li>
+      </ul>
     </article>
   </slide>
 
   <slide>
     <hgroup>
-      <h2>Características especiales: funcionalidad</h2>
-      <h3>Seguimiento de empleados y postulantes</h3>
+      <h2>¿Por qué, qué y quién?</h2>
+      <h3>El desafío</h3>
     </hgroup>
     <article>
-      <img src="images/datos-personales-empleado.png" style="max-width: 100%">
+      <p>Manejo de empleados: no es una tarea simple</p>
+      <div class="flexbox vcenter">
+        <img src="images/crazyManager.jpg" />
+        <!-- Credit, CC: https://www.flickr.com/photos/barkbud/4257136773/in/photostream/ -->
+      </div>
     </article>
   </slide>
 
   <slide>
     <hgroup>
-      <h2>Características especiales: funcionalidad</h2>
-      <h3>Seguimiento de empleados y postulantes</h3>
+      <h2>¿Por qué, qué y quién?</h2>
+      <h3>El desafío</h3>
     </hgroup>
     <article>
-      <img src="images/datos-laborales-empleado.png" style="max-width: 100%">
+      <p>Algunas de las tareas que los HR managers realizan día a día:</p>
+      <ul>
+        <li>Seguimiento de empleados y resolución de problemas</li>
+        <li>Contacto y seguimiento de postulantes a distintas ofertas de trabajo</li>
+        <li>Evaluación de remuneraciones</li>
+        <li>Seguimiento de presentismo y vacaciones</li>
+        <li>Mantenimiento de legajos</li>
+        <li>Evaluación de posibilidades de crecimiento</li>
+        <li>Compartir datos con otras áreas de la empresa</li>
+      </ul>
     </article>
   </slide>
 
   <slide>
     <hgroup>
-      <h2>Características especiales: funcionalidad</h2>
-      <h3>Seguimiento de empleados y postulantes</h3>
+      <h2>¿Por qué, qué y quién?</h2>
+      <h3>CommonJobs</h3>
     </hgroup>
     <article>
-      <img src="images/vacaciones-empleado.png" style="max-width: 100%">
-      <br><br>
-      <img src="images/ausencias-empleado.png" style="max-width: 100%">
+      <p>El proyecto consistió en desarrollar e implantar un sistema informático que:</p>
+      <ul>
+        <li>Simplifique la administración y búsqueda en legajos de empleados</li>
+        <li>Realice el cálculo de vacaciones</li>
+        <li>Brinde información sobre las licencias otorgadas a los empleados, para facilitar la toma de decisiones</li>
+        <li>Permita administrar los datos personales de postulantes</li>
+        <li>Facilite el seguimiento y la selección de candidatos a puestos de trabajo según sus capacidades y datos académicos</li>
+        <li>Administre los almuerzos diarios de la empresa</li>
+      </ul>
     </article>
-  </slide>
-
-  <slide>
-    <hgroup>
-      <h2>Características especiales: funcionalidad</h2>
-      <h3>Seguimiento de empleados y postulantes</h3>
-    </hgroup>
-    <article>
-      <img src="images/adjuntos-empleado.png" style="max-width: 100%">
-    </article>
-  </slide>
-
-  <slide>
-    <hgroup>
-      <h2>Características especiales: funcionalidad</h2>
-      <h3>Seguimiento de empleados y postulantes</h3>
-    </hgroup>
-    <article>
-      <img src="images/notas-empleado.png" style="max-width: 100%">
-    </article>
-  </slide>
-
-  <slide class="fill nobackground" style="background-image: url(images/listado-postulantes.png)">
-  </slide>
-
-  <slide>
-    <hgroup>
-      <h2>Características especiales: funcionalidad</h2>
-      <h3>Búsquedas laborales</h3>
-    </hgroup>
-    <article>
-      <p>CommonJobs permite crear búsquedas de trabajo que al publicadas estarán disponibles en internet para la postulación.</p>
-      <p>Estas postulaciones automáticamente se convierten en postulantes a ser seguidos en el banco de postulantes.</p>
-    </article>
-  </slide>
-
-  <slide class="fill nobackground" style="background-image: url(images/busqueda-laboral.png); background-position: 0 -80px;">
-  </slide>
-
-  <slide>
-    <hgroup>
-      <h2>Características especiales: funcionalidad</h2>
-      <h3>Búsquedas laborales</h3>
-    </hgroup>
-    <article>
-      <p>Cada búsqueda laboral sugerirá los postulantes más adecuados para ocupar el puesto de acuerdo a las aptitudes que dichos postulantes posean.</p>
-      <img src="images/postulantes-sugeridos.png" style="max-width: 100%">
-    </article>
-  </slide>
-
-  <slide>
-    <hgroup>
-      <h2>Características especiales: funcionalidad</h2>
-      <h3>Contabilización de ausencias</h3>
-    </hgroup>
-    <article>
-      <p>Es fácil dar un vistazo general a la empresa y saber qué personas tuvieron un mayor presentismo.</p>
-      <img src="images/referencias-ausencias.png" style="max-width: 100%"><br><br>
-      <p>Siempre puede agregarse o consultarse el detalle de una ausencia particular.</p>
-      <p>Las vacaciones son calculadas automáticamente.</p>
-    </article>
-  </slide>
-
-  <slide class="fill nobackground" style="background-image: url(images/detalle-ausencia.png)">
-  </slide>
-
-  <slide class="fill nobackground" style="background-image: url(images/vacaciones.png)">
   </slide>
 
   <slide class="segue dark nobackground">
     <aside class="gdbar"><img src="images/CommonJobs_logo.png"></aside>
     <hgroup class="auto-fadein">
-      <h2>Características especiales</h2>
-      <h3>Tecnología</h3>
+      <h2>Proyecto: ¿Cómo?</h2>
     </hgroup>
   </slide>
 
-
   <slide>
     <hgroup>
-      <h2>Características especiales: tecnología</h2>
-      <h3>Seguridad desacoplada</h3>
+      <h2>Proyecto: ¿Cómo?</h2>
+      <h3>Proceso: la idea original</h3>
     </hgroup>
     <article>
-      <p>Las clases que identifican a los usuarios y sus permisos están abstraídas de los sistemas en los que recaen. Esto significa que es simple agregar, quitar o cambiar el comportamiento del sistetma de seguridad sin tener que incurrir en grandes cambios en el sistema.</p>
-      <p>Dicho cambio ya se afrontó una vez durante el desarrollo, en donde se eliminó el uso de Active Directory para ser reemplazado por permisos de usuarios en bases de datos.</p>
-      <p>Para más detalles, ver la documentación de proyecto sobre el <a href="http://commonjobs.makingsense.com/documentation/docs/manual-de-sistema/diseno-autenticacion-y-autorizacion">diseño de la autenticación y autorización</a>.</p>
+      <!-- TODO image of scrum process -->
     </article>
   </slide>
 
   <slide>
     <hgroup>
-      <h2>Características especiales: tecnología</h2>
-      <h3>RavendB</h3>
+      <h2>Proyecto: ¿Cómo?</h2>
+      <h3>Proceso: ya establecido</h3>
     </hgroup>
     <article>
+      <p>Nuestras modificaciones al proceso:</p>
       <ul>
-        <li>Base de datos de documentos
-          <ul>
-            <li>Extensible fácilmente</li>
-            <li>Flexible en forma de los documentos</li>
-            <li>Soporta estructuras complejas</li>
-          </ul>
-        </li>
-        <li>Open source
-          <ul>
-            <li>Amplio soporte de la comunidad</li>
-            <li>Filosofía apegadas a las buenas prácticas de desarrollo de software</li>
-          </ul>
-        </li>
-        <li>Combo completo
-          <ul>
-            <li>Motor de base de datos</li>
-            <li>Herramientas de administración e interfaz gráfica</li>
-            <li>Documentación extensiva</li>
-            <li>Soporte y ayuda por parte de los desarrolladores</li>
-          </ul>
-        </li>
+        <li>Distribuido e independiente para los participantes</li>
+        <li>Documentación obligatoria para cada sprint</li>
+        <li>Registro de horas, pero estimación en puntos</li>
+        <li>Meetings menos y menos frecuentes, luego según lo necesario</li>
       </ul>
     </article>
   </slide>
 
-  <slide class="fill nobackground" style="background-image: url(images/versionamiento.jpg)">
+  <slide>
+    <hgroup>
+      <h2>Proyecto: ¿Cómo?</h2>
+      <h3>Herramienta: backlog y tracking (Trello)</h3>
+    </hgroup>
+    <article>
+      <!-- TODO Screenshot del trello board de un sprint -->
+    </article>
   </slide>
 
   <slide>
     <hgroup>
-      <h2>Características especiales: tecnología</h2>
-      <h3>Integración IFilter</h3>
+      <h2>Proyecto: ¿Cómo?</h2>
+      <h3>Herramienta: documentación (mmd2pdf)</h3>
+    </hgroup>
+    <article>
+      <!-- TODO Screenshot de un markdown y el PDF / sitio resultante -->
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Proyecto: ¿Cómo?</h2>
+      <h3>Herramienta: git &amp; GitHub</h3>
+    </hgroup>
+    <article>
+      <!-- TODO Screenshot de un una discusión en un PR -->
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Proyecto: ¿Cómo?</h2>
+      <h3>Tecnologías: ASP.NET MVC 3</h3>
+    </hgroup>
+    <article>
+      <!-- TODO Diagrama de arquitectura de la aplicación -->
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Proyecto: ¿Cómo?</h2>
+      <h3>Tecnologías: Backbone.js &amp; nervoustissue</h3>
+    </hgroup>
+    <article>
+      <!-- TODO Ejemplos de código -->
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Proyecto: ¿Cómo?</h2>
+      <h3>Tecnologías: RavenDB</h3>
+    </hgroup>
+    <article>
+      <!-- TODO Screenshot de documentos en RavenDB -->
+    </article>
+  </slide>
+
+  <slide class="segue dark nobackground">
+    <aside class="gdbar"><img src="images/CommonJobs_logo.png"></aside>
+    <hgroup class="auto-fadein">
+      <h2>Desafíos</h2>
+    </hgroup>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Desafíos</h2>
     </hgroup>
     <article>
       <ul>
-        <li>Capacidad provista por librerías de terceros para la extracción de contenido de archivos</li>
-        <li>Siempre extensible y actualizable, sin cambios en el código del sistema.</li>
-        <li>Administrable desde el sistema operativo</li>
+        <li>Tiempo disponible</li>
+        <li>Trabajo distribuido</li>
+        <li>Desconocimiento del dominio del problema a atacar</li>
+        <li>Tecnologías nuevas</li>
       </ul>
     </article>
   </slide>
 
-  <slide class="fill nobackground" style="background-image: url(images/IFilters.jpg)">
+  <slide class="segue dark nobackground">
+    <aside class="gdbar"><img src="images/CommonJobs_logo.png"></aside>
+    <hgroup class="auto-fadein">
+      <h2>Cambio de rumbo del proyecto</h2>
+    </hgroup>
   </slide>
 
   <slide>
     <hgroup>
-      <h2>Características especiales: tecnología</h2>
-      <h3>Migraciones</h3>
+      <h2>Cambio de rumbo del proyecto</h2>
     </hgroup>
     <article>
+      <p>Durante el desarrollo del proyecto, detectamos que el producto final no estaba satisfaciendo las necesidades del cliente.</p>
       <ul>
-        <li>Capacidad de avanzar / volver a versiones anteriores la forma de los datos.</li>
-        <li>Permite instalar una versión nueva del proyecto o volver a versiones anteriores manteniendo los datos compatibles.</li>
-        <li>Reportan su estado y errores si es que los hubieran.</li>
+        <li>Replanteo de requerimientos y necesidades</li>
+        <li>Ajuste de los objetivos específicos</li>
+        <li>Mayor foco en la necesidad inmediata</li>
       </ul>
     </article>
   </slide>
 
-  <slide class="fill nobackground" style="background-image: url(images/migraciones.png)">
-  </slide>
-
   <slide>
     <hgroup>
-      <h2>Características especiales: tecnología</h2>
-      <h3>Encapsulaciones Command</h3>
+      <h2>Lecciones aprendidas</h2>
     </hgroup>
     <article>
-      <pre class="prettyprint" data-lang="csharp">
-public JsonNetResult AbsenceBunch(int year, BaseSearchParameters parameters)
-{
-    var query = new <b>SearchAbsences(parameters)</b>
-    {
-        From = new DateTime(year, 1, 1),
-        To = new DateTime(year, 12, 31)
-    };
-    var results = <b>Query(query)</b>;
-    return Json(new
-    {
-        Items = results,
-        Skipped = parameters.Skip,
-        TotalResults = query.Stats.TotalResults
-    });
-}
-</pre>
+      <ul>
+        <li>Lo importante de comprender el dominio, y las necesidades no-explicitadas</li>
+        <li>La utilización de buenas prácticas, herramientas adecuadas para cada proyecto</li>
+        <li>El proceso como framework de trabajo y no sólo una herramienta más</li>
+        <li>Tecnologías y herramientas: git, github, markdown, backbone, No-SQL</li>
+        <li>Habilidades: Relevamiento de requerimientos, análisis de dominio, entrevistas con stakeholders secundarios, trabajo distribuído y comunicación concisa, documentación de proceso</li>
+      </ul>
     </article>
   </slide>
 
-  <slide>
-    <hgroup>
-      <h2>Características especiales: tecnología</h2>
-      <h3>Pre-inicialización del cliente</h3>
+  <slide class="segue dark nobackground">
+    <aside class="gdbar"><img src="images/CommonJobs_logo.png"></aside>
+    <hgroup class="auto-fadein">
+      <h2>Conclusiones</h2>
     </hgroup>
-    <article>
-      <pre class="prettyprint" data-lang="csharp">
-ScriptManager.RegisterGlobalJavascript("ViewData", new
-    {
-        applicant = GetApplicantJsonWithModifiedDate(applicant),
-        forceReadOnly = sharedCode != null,
-        technicalSkillLevels = TechnicalSkillLevelExtensions.GetLevelNames()
-    },
-    500);
-</pre>
-      <pre class="prettyprint" data-lang="javascript">
-&lt;script type='text/javascript'&gt;
-  window.ViewData = {
-    "applicant": { /* muchas cosas aquí */ },
-    "forceReadOnly": false,
-    "technicalSkillLevels": [ "Unknown", "Basic", "Intermediate", "Advanced" ]
-  };
-&lt;/script&gt;
-</pre>
-    </article>
   </slide>
-
-  <slide>
-    <hgroup>
-      <h2>Características especiales: tecnología</h2>
-      <h3>NervousTissue Data-binding</h3>
-    </hgroup>
-    <article class="smaller">
-      <pre class="prettyprint" data-lang="html">
-&lt;span class="editable-field" data-bind="LinkedInLink"&gt;&lt;/span&gt;
-</pre>
-      <pre class="prettyprint" data-lang="javascript">
-App.EditApplicantAppViewDataBinder = Nervoustissue.FormBinder.extend({
-  dataBindings: {
-    LinkedInLink: {
-        controlLink: "Text",
-        name: "LinkedInLink",
-        valueToContent: function (value) {
-            return value + " &lt;a href='" + value + "'&gt;(visitar)&lt;/a&gt;";
-        }
-    },
-  }
-});
-</pre>
-    <p>Soporta text, readOnlyText, toggle, date, options, collection, compound, markdown. Es extensible. Es personalizable en sus opciones (template, items), basado en Backbone.js</p>
-    </article>
-  </slide>
-  <!-- The following from here on is just examples, DELETE -->
-
+  <!-- Sin diapositiva extra: creo que se tomaría más sincero decirlo sin mencionarlo. Explicar como esta experiencia fue positiva y generó un producto útil para la empresa. -->
 
   <slide class="thank-you-slide segue nobackground">
     <aside class="gdbar right"><img src="images/CommonJobs_logo.png"></aside>
