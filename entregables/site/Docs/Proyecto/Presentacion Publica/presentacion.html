@@ -1,0 +1,346 @@
+﻿<!--
+Original:
+
+  Google IO 2012/2013 HTML5 Slide Template
+
+  Authors: Eric Bidelman <ebidel@gmail.com>
+           Luke Mahé <lukem@google.com>
+
+  URL: https://code.google.com/p/io-2012-slides
+
+New content:
+
+  -  Juan Diego Raimondi, for CommonJobs (https://github.com/CommonJobs/CommonJobs)
+
+-->
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <!--<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">-->
+  <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+  <!--This one seems to work all the time, but really small on ipad-->
+  <!--<meta name="viewport" content="initial-scale=0.4">-->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="stylesheet" media="all" href="theme/css/default.css">
+  <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="theme/css/phone.css">
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->
+  <script data-main="js/slides" src="js/require-1.0.8.min.js"></script>
+</head>
+<body style="opacity: 0">
+
+<slides class="layout-widescreen">
+
+  <slide class="logoslide nobackground">
+    <article class="flexbox vcenter">
+      <span><img src="images/CommonJobs.png"></span>
+    </article>
+  </slide>
+
+  <slide class="title-slide segue nobackground">
+    <aside class="gdbar"><img src="images/CommonJobs_logo.png"></aside>
+    <!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+      <p data-config-presenter><!-- populated from slide_config.json --></p>
+    </hgroup>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Agenda</h2>
+    </hgroup>
+    <article>
+      <ul>
+        <li>¿Por qué, qué y quién?
+          <ul>
+            <li>MakingSense <small>(5 min)</small></li>
+            <li>El desafío <small>(5 min)</small></li>
+            <li>CommonJobs <small>(10 min)</small></li>
+          </ul>
+        </li>
+        <li>Proyecto: ¿Cómo? <small>(45 mins)</small>
+          <ul>
+            <li>Proceso: la idea original</li>
+            <li>Proceso: ya establecido</li>
+            <li>Herramientas: Backlog y tracking (Trello)</li>
+            <li>Herramientas: Documentación (mmd2pdf)</li>
+            <li>Herramientas: git &amp; GitHub</li>
+            <li>Tecnologías: ASP.NET MVC 3</li>
+            <li>Tecnologías: Backbone.js &amp; nervoustissue</li>
+            <li>Tecnologías: RavenDB</li>
+          </ul>
+        </li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Agenda (cont.)</h2>
+    </hgroup>
+    <article>
+      <ul>
+        <li>Desafíos <small>(5 mins)</small></li>
+        <li>Cambio de rumbo del proyecto <small>(10 mins)</small></li>
+        <li>Lecciones aprendidas <small>(10 mins)</small></li>
+        <li>Conclusiones <small>(10 mins)</small></li>
+        <li>Preguntas y respuestas <small>(15 mins)</small></li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide class="segue dark nobackground">
+    <aside class="gdbar"><img src="images/CommonJobs_logo.png"></aside>
+    <hgroup class="auto-fadein">
+      <h2>¿Por qué, qué y quién?</h2>
+    </hgroup>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>¿Por qué, qué y quién?</h2>
+      <h3>MakingSense</h3>
+    </hgroup>
+    <article>
+      <ul>
+        <li>Empresa de software Marplatense</li>
+        <li>Se ha extendido mucho en los últimos años</li>
+        <li>Nuevas formas de organizarse, nuevos roles y departamentos</li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>¿Por qué, qué y quién?</h2>
+      <h3>El desafío</h3>
+    </hgroup>
+    <article>
+      <p>Manejo de empleados: no es una tarea simple</p>
+      <div class="flexbox vcenter">
+        <img src="images/crazyManager.jpg" />
+        <!-- Credit, CC: https://www.flickr.com/photos/barkbud/4257136773/in/photostream/ -->
+      </div>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>¿Por qué, qué y quién?</h2>
+      <h3>El desafío</h3>
+    </hgroup>
+    <article>
+      <p>Algunas de las tareas que los HR managers realizan día a día:</p>
+      <ul>
+        <li>Seguimiento de empleados y resolución de problemas</li>
+        <li>Contacto y seguimiento de postulantes a distintas ofertas de trabajo</li>
+        <li>Evaluación de remuneraciones</li>
+        <li>Seguimiento de presentismo y vacaciones</li>
+        <li>Mantenimiento de legajos</li>
+        <li>Evaluación de posibilidades de crecimiento</li>
+        <li>Compartir datos con otras áreas de la empresa</li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>¿Por qué, qué y quién?</h2>
+      <h3>CommonJobs</h3>
+    </hgroup>
+    <article>
+      <p>El proyecto consistió en desarrollar e implantar un sistema informático que:</p>
+      <ul>
+        <li>Simplifique la administración y búsqueda en legajos de empleados</li>
+        <li>Realice el cálculo de vacaciones</li>
+        <li>Brinde información sobre las licencias otorgadas a los empleados, para facilitar la toma de decisiones</li>
+        <li>Permita administrar los datos personales de postulantes</li>
+        <li>Facilite el seguimiento y la selección de candidatos a puestos de trabajo según sus capacidades y datos académicos</li>
+        <li>Administre los almuerzos diarios de la empresa</li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide class="segue dark nobackground">
+    <aside class="gdbar"><img src="images/CommonJobs_logo.png"></aside>
+    <hgroup class="auto-fadein">
+      <h2>Proyecto: ¿Cómo?</h2>
+    </hgroup>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Proyecto: ¿Cómo?</h2>
+      <h3>Proceso: la idea original</h3>
+    </hgroup>
+    <article>
+      <!-- TODO image of scrum process -->
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Proyecto: ¿Cómo?</h2>
+      <h3>Proceso: ya establecido</h3>
+    </hgroup>
+    <article>
+      <p>Nuestras modificaciones al proceso:</p>
+      <ul>
+        <li>Distribuido e independiente para los participantes</li>
+        <li>Documentación obligatoria para cada sprint</li>
+        <li>Registro de horas, pero estimación en puntos</li>
+        <li>Meetings menos y menos frecuentes, luego según lo necesario</li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Proyecto: ¿Cómo?</h2>
+      <h3>Herramienta: backlog y tracking (Trello)</h3>
+    </hgroup>
+    <article>
+      <!-- TODO Screenshot del trello board de un sprint -->
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Proyecto: ¿Cómo?</h2>
+      <h3>Herramienta: documentación (mmd2pdf)</h3>
+    </hgroup>
+    <article>
+      <!-- TODO Screenshot de un markdown y el PDF / sitio resultante -->
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Proyecto: ¿Cómo?</h2>
+      <h3>Herramienta: git &amp; GitHub</h3>
+    </hgroup>
+    <article>
+      <!-- TODO Screenshot de un una discusión en un PR -->
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Proyecto: ¿Cómo?</h2>
+      <h3>Tecnologías: ASP.NET MVC 3</h3>
+    </hgroup>
+    <article>
+      <!-- TODO Diagrama de arquitectura de la aplicación -->
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Proyecto: ¿Cómo?</h2>
+      <h3>Tecnologías: Backbone.js &amp; nervoustissue</h3>
+    </hgroup>
+    <article>
+      <!-- TODO Ejemplos de código -->
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Proyecto: ¿Cómo?</h2>
+      <h3>Tecnologías: RavenDB</h3>
+    </hgroup>
+    <article>
+      <!-- TODO Screenshot de documentos en RavenDB -->
+    </article>
+  </slide>
+
+  <slide class="segue dark nobackground">
+    <aside class="gdbar"><img src="images/CommonJobs_logo.png"></aside>
+    <hgroup class="auto-fadein">
+      <h2>Desafíos</h2>
+    </hgroup>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Desafíos</h2>
+    </hgroup>
+    <article>
+      <ul>
+        <li>Tiempo disponible</li>
+        <li>Trabajo distribuido</li>
+        <li>Desconocimiento del dominio del problema a atacar</li>
+        <li>Tecnologías nuevas</li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide class="segue dark nobackground">
+    <aside class="gdbar"><img src="images/CommonJobs_logo.png"></aside>
+    <hgroup class="auto-fadein">
+      <h2>Cambio de rumbo del proyecto</h2>
+    </hgroup>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Cambio de rumbo del proyecto</h2>
+    </hgroup>
+    <article>
+      <p>Durante el desarrollo del proyecto, detectamos que el producto final no estaba satisfaciendo las necesidades del cliente.</p>
+      <ul>
+        <li>Replanteo de requerimientos y necesidades</li>
+        <li>Ajuste de los objetivos específicos</li>
+        <li>Mayor foco en la necesidad inmediata</li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Lecciones aprendidas</h2>
+    </hgroup>
+    <article>
+      <ul>
+        <li>Lo importante de comprender el dominio, y las necesidades no-explicitadas</li>
+        <li>La utilización de buenas prácticas, herramientas adecuadas para cada proyecto</li>
+        <li>El proceso como framework de trabajo y no sólo una herramienta más</li>
+        <li>Tecnologías y herramientas: git, github, markdown, backbone, No-SQL</li>
+        <li>Habilidades: Relevamiento de requerimientos, análisis de dominio, entrevistas con stakeholders secundarios, trabajo distribuído y comunicación concisa, documentación de proceso</li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide class="segue dark nobackground">
+    <aside class="gdbar"><img src="images/CommonJobs_logo.png"></aside>
+    <hgroup class="auto-fadein">
+      <h2>Conclusiones</h2>
+    </hgroup>
+  </slide>
+  <!-- Sin diapositiva extra: creo que se tomaría más sincero decirlo sin mencionarlo. Explicar como esta experiencia fue positiva y generó un producto útil para la empresa. -->
+
+  <slide class="thank-you-slide segue nobackground">
+    <aside class="gdbar right"><img src="images/CommonJobs_logo.png"></aside>
+    <article class="flexbox vleft auto-fadein">
+      <h2>¡Gracias!</h2>
+      <p>¿Preguntas?</p>
+    </article>
+    <p class="auto-fadein" data-config-contact>
+      <!-- populated from slide_config.json -->
+    </p>
+  </slide>
+
+  <slide class="backdrop"></slide>
+
+</slides>
+
+<!--[if IE]>
+  <script src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+  <script>CFInstall.check({mode: 'overlay'});</script>
+<![endif]-->
+</body>
+</html>
