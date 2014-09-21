@@ -153,6 +153,15 @@ slides > slide {
   box-sizing: border-box;
 }
 
+article.img {
+  margin-top: 0;
+}
+
+slide img {
+  max-height: 100%;
+  max-width: 100%;
+}
+
 /* Slide styles */
 /*article.fill iframe {
   position: absolute;
