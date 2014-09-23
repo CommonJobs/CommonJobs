@@ -23,21 +23,21 @@ var SLIDE_CONFIG = {
   // Author information
   presenters: [{
     name: 'Andrés Moschini',
-    company: 'MakingSense',
+    //company: 'MakingSense',
     //gplus: 'http://plus.google.com/1234567890',
     //twitter: '@yourhandle',
     www: 'http://andresmochini.github.io/',
     github: 'http://github.com/andresmochini'
   }, {
     name: 'Matías José',
-    company: 'Sistemas Bejerman',
+    //company: 'Sistemas Bejerman',
     //gplus: 'http://plus.google.com/1234567890',
     //twitter: '@yourhandle',
     www: 'http://www.you.com',
     github: 'http://github.com/matias78'
   }, {
     name: 'Juan Diego Raimondi',
-    company: 'MakingSense',
+    //company: 'MakingSense',
     www: 'http://www.alphasmanifesto.com/',
     github: 'http://github.com/AlphaGit',
     //gplus: 'http://plus.google.com/1234567890',
