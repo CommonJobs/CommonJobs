@@ -317,8 +317,8 @@
                 name: "LinkedInLink",
                 valueToContent: function (value) {
                     if (!value) return value;
-
-                    return value + " <a href='" + value + "'>(visitar)</a>";
+                    if (value.indexOf("http://") == -1) fullUrl = "http://" + value;
+                    return value + " <a href='" + fullUrl + "' target='_blank'>(visitar)</a>";
                 }
             },
             TechnicalSkills: {
