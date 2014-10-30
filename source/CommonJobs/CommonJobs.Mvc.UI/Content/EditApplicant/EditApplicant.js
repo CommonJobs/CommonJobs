@@ -317,7 +317,7 @@
                 name: "LinkedInLink",
                 valueToContent: function (value) {
                     if (!value) return value;
-                    if (value.indexOf("http://") == -1) fullUrl = "http://" + value;
+                    if (value.indexOf("http://") == -1 && value.indexOf("https://") == -1) fullUrl = "https://" + value;
                     return value + " <a href='" + fullUrl + "' target='_blank'>(visitar)</a>";
                 }
             },
