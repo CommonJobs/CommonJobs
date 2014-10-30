@@ -39,7 +39,7 @@ var MyMenu;
                 },
                 error: function (jqXHR) {
                     window.location.href = "/MyMenu/Order";
-                    alert("Error getting EmployeeMenu");
+                    //alert("Error getting EmployeeMenu");
                     $("html").html(jqXHR.responseText);
                 },
                 complete: function () {
