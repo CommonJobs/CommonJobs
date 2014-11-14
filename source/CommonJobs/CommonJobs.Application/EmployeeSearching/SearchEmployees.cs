@@ -9,6 +9,8 @@ using CommonJobs.ContentExtraction;
 using CommonJobs.Application.Indexes;
 using System.Linq.Expressions;
 using CommonJobs.Utilities;
+using System.Globalization;
+using System.Threading;
 
 namespace CommonJobs.Application.EmployeeSearching
 {
@@ -32,6 +34,27 @@ namespace CommonJobs.Application.EmployeeSearching
 
             query = query.Where(x => x.IsEmployee);
 
+            string firstPart ="";
+            string SecondPart ="";
+            var isSplit = false;
+
+            if (Parameters != null && Parameters.Term != null)
+            {
+                if (Parameters.Term.Contains(","))
+                {
+                    firstPart = Parameters.Term.Split(',')[0].Replace(" ", string.Empty);
+                    SecondPart = Parameters.Term.Split(',')[1].Replace(" ", string.Empty);
+                    isSplit = true;
+                }
+                else if (Parameters.Term.Contains(" "))
+                {
+                    firstPart = Parameters.Term.Split(' ')[0].Replace(" ", string.Empty);
+                    SecondPart = Parameters.Term.Split(' ')[1].Replace(" ", string.Empty);
+                    isSplit = true;
+                }
+            }
+
+
             Expression<Func<Employee_QuickSearch.Projection, bool>> predicate = x =>
                     x.FullName1.StartsWith(Parameters.Term)
                     || x.FullName2.StartsWith(Parameters.Term)
@@ -43,6 +66,10 @@ namespace CommonJobs.Application.EmployeeSearching
                     || x.FileId.StartsWith(Parameters.Term)
                     || x.Platform.StartsWith(Parameters.Term)
                     || x.Terms.StartsWith(Parameters.Term);
+
+            if (isSplit)
+                predicate = predicate.Or(x=> (x.FirstName.StartsWith(firstPart) && x.LastName.StartsWith(SecondPart))
+                                  || (x.FirstName.StartsWith(SecondPart)&& x.LastName.StartsWith(firstPart)));
 
             if (Parameters.SearchInNotes)
                 predicate = predicate.Or(x => x.Notes.StartsWith(Parameters.Term));

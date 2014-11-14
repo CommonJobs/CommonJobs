@@ -32,6 +32,26 @@ namespace CommonJobs.Application.ApplicantSearching
                 query = query.Where(x => x.IsHired);
             }
 
+            string firstPart = "";
+            string SecondPart = "";
+            var isSplit = false;
+
+            if (Term != null)
+            {
+                if (Term.Contains(","))
+                {
+                    firstPart = Term.Split(',')[0].Replace(" ", string.Empty);
+                    SecondPart = Term.Split(',')[1].Replace(" ", string.Empty);
+                    isSplit = true;
+                }
+                else if (Term.Contains(" "))
+                {
+                    firstPart = Term.Split(' ')[0].Replace(" ", string.Empty);
+                    SecondPart = Term.Split(' ')[1].Replace(" ", string.Empty);
+                    isSplit = true;
+                }
+            }
+
             Expression<Func<Applicant_QuickSearch.Projection, bool>> predicate = x =>
                             x.FullName1.StartsWith(Term)
                                 || x.FullName2.StartsWith(Term)
@@ -39,6 +59,10 @@ namespace CommonJobs.Application.ApplicantSearching
                                 || x.Skills.StartsWith(Term)
                                 || x.TechnicalSkills.Any(y => y.StartsWith(Term))
                                 || x.AttachmentNames.Any(y => y.StartsWith(Term));
+
+            if (isSplit)
+                predicate = predicate.Or(x => (x.FirstName.StartsWith(firstPart) && x.LastName.StartsWith(SecondPart))
+                                  || (x.FirstName.StartsWith(SecondPart) && x.LastName.StartsWith(firstPart)));
 
             if (SearchInAttachments)
                 predicate = predicate.Or(x => x.AttachmentContent.Any(y => y.StartsWith(Term)));
