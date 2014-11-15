@@ -24,5 +24,7 @@ namespace CommonJobs.Domain
         public string EventType { get; set; }
 
         public string EventTypeSlug { get { return EventType.GenerateSlug(); } }
+
+        public string Author { get; set; }
     }
 }
