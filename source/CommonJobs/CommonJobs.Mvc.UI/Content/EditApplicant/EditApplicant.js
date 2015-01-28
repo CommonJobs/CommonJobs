@@ -283,14 +283,15 @@
                 item:
                 {
                     controlLink: "Compound",
-                    template: _.template('<span data-bind="date"></span> (Tipo: <span data-bind="EventType" data-cj-suggest="ApplicantEventType"></span>) | <span data-bind="attachment"></span> <div data-bind="text"></div> '),
+                    template: _.template('<span data-bind="date"></span> | Autor: <span data-bind="author"></span>  | (Tipo: <span data-bind="EventType" data-cj-suggest="ApplicantEventType"></span>) | <span data-bind="attachment"></span> <div data-bind="text"></div> '),
                     items:
                     [
                         { controlLink: "Date", name: "date", field: "RealDate" },
                         { controlLink: "CjApplicantAttachment", name: "attachment", field: "Attachment" },
                         { controlLink: "Markdown", name: "text", field: "Note" },
                         { controlLink: "Options", name: "NoteType", field: "NoteType", options: [{ value: 0, text: "Nota Genérica" }, { value: 1, text: "Nota de entrevista" }, { value: 2, text: "Nota de entrevista técnica" }] },
-                        { controlLink: "Text", name: "EventType", field: "EventType" }
+                        { controlLink: "Text", name: "EventType", field: "EventType" },
+                        { controlLink: "Text", name: "author", field: "Author" }
                     ]
                 }
             },
@@ -317,8 +318,9 @@
                 name: "LinkedInLink",
                 valueToContent: function (value) {
                     if (!value) return value;
-
-                    return value + " <a href='" + value + "'>(visitar)</a>";
+                    var fullUrl = value;
+                    if (fullUrl.indexOf('://') === -1) fullUrl = "http://" + fullUrl;
+                    return value + " <a href='" + fullUrl + "' target='_blank'>(visitar)</a>";
                 }
             },
             TechnicalSkills: {

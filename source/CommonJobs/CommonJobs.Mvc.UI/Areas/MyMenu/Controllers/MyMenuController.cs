@@ -45,6 +45,9 @@ namespace CommonJobs.Mvc.UI.Areas.MyMenu
         [CommonJobsAuthorize(Roles = "Users,MenuManagers")]
         public ActionResult Edit(string id /*username*/, bool ownMenu = false)
         {
+            if (id == "") 
+                ownMenu = true;
+
             ViewBag.AnotherMenuUser = ownMenu ? "" : id;
 
             ScriptManager.RegisterGlobalJavascript(
