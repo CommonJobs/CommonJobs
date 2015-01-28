@@ -1,6 +1,6 @@
 ﻿@using CommonJobs.Infrastructure.Mvc.SecurityTrimming;
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = Model.FullName + " | CommonJobs";
     ScriptManager.RegisterCss(Url.Content("~/Scripts/mdd_styles.css"));
     ScriptManager.RegisterCss(Url.Content("~/Content/EditApplicant/EditApplicant.less"));
     ScriptManager.RegisterCss(Url.Content("~/Content/jquery.Jcrop.min.css"));
@@ -11,11 +11,6 @@
     ScriptManager.RegisterJs(Url.Content("~/Scripts/nervoustissue-uploader.js"));
     ScriptManager.RegisterJs(Url.Content("~/Content/EditApplicant/EditApplicant.js"));
     ScriptManager.RegisterJs(Url.Content("~/Scripts/jquery.collapsable-sections.js"));
-}
-@if (false)
-{
-    <link href="../../Content/EditApplicant/EditApplicant.less" rel="stylesheet" type="text/css" />
-    <script src="../../Content/EditApplicant/EditApplicant.js" type="text/javascript"></script>
 }
 <div id="EditApp" class="edition-normal file-dropzone bootstrap-scope">
     

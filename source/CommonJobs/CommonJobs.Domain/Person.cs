@@ -40,6 +40,14 @@ namespace CommonJobs.Domain
             }
 		}
 
+        public string FullName
+        {
+            get { 
+                var separator = String.IsNullOrWhiteSpace(FirstName) || String.IsNullOrWhiteSpace(LastName) ? "" : ", ";
+                return string.Join(separator, LastName, FirstName);
+            }
+        }
+
         public event EventHandler IdChanged;
 
         private void OnIdChanged()

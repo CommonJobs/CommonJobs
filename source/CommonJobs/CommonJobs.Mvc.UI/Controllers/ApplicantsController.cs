@@ -135,7 +135,7 @@ namespace CommonJobs.Mvc.UI.Controllers
                     technicalSkillLevels = TechnicalSkillLevelExtensions.GetLevelNames()
                 },
                 500);
-            return View();
+            return View(applicant);
         }
 
         [SharedEntityAlternativeAuthorization]

@@ -175,7 +175,7 @@ namespace CommonJobs.Mvc.UI.Controllers
                     technicalSkillLevels = TechnicalSkillLevelExtensions.GetLevelNames()
                 }, 
                 500);
-            return View();
+            return View(employee);
         }
 
         public JsonNetResult Get(string id)
