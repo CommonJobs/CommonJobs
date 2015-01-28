@@ -82,27 +82,35 @@ QuickSearchPage.prototype = {
             searchParameters = this.getSearchParameters();
         location.href = this._config.generateRedirectUrl(searchParameters);
     },
-    search: function (searchParameters) {
+    executeSearchQuery: function (searchParameters) {
         var self = this;
-        if (!searchParameters)
-            searchParameters = this.getSearchParameters();
-        if (this._config.pageSize)
-            searchParameters.Take = this._config.pageSize;
         self._startLoading();
         if (self._previousXHR)
             self._previousXHR.abort();
-        this._previousXHR = $.ajax({
+
+        self._previousXHR = $.ajax({
             cache: false,
             type: "GET",
             url: self._config.generateSearchUrl(searchParameters)
-        })
-        .done(function (result) {
+        }).done(function (result) {
             self._previousXHR = null;
             self._skip = 0;
             self._lastSearchParameters = searchParameters;
             self._appendNewCard();
             self._appendResults(result);
         });
+    },
+    search: function (searchParameters) {
+        var self = this;
+        if (!searchParameters)
+            searchParameters = self.getSearchParameters();
+        if (self._config.pageSize)
+            searchParameters.Take = self._config.pageSize;
+
+        if (self._timeoutToSearch) clearTimeout(self._timeoutToSearch);
+        self._timeoutToSearch = setTimeout(function() {
+            self.executeSearchQuery(searchParameters);
+        }, 300);
     },
     _appendNewCard: function () {
         var self = this;
