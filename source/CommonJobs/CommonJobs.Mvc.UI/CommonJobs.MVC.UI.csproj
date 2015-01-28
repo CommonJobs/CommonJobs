@@ -168,6 +168,7 @@
     <Content Include="Content\Home\vacation.png" />
     <Content Include="Content\Images\glyphicons-halflings-white.png" />
     <Content Include="Content\Images\glyphicons-halflings.png" />
+    <Content Include="Content\markdown-styles.less">
     <Content Include="Content\moment-datepicker\datepicker.css" />
     <Content Include="Content\mymenu.css" />
     <Content Include="Content\Absences\Absences.js" />
@@ -219,6 +220,7 @@
     <Content Include="Content\DataTablesHelpers\DataTablesHelpers.js" />
     <Content Include="Content\Images\AddApplicant.png" />
     <Content Include="Content\Images\bigroller-bbb-111transparent.gif" />
+    <Content Include="Content\PersonsBase.less">
     <Content Include="Content\TableTools-2.1.4\media\css\TableTools.css" />
     <Content Include="Content\TableTools-2.1.4\media\css\TableTools_JUI.css" />
     <Content Include="Content\TableTools-2.1.4\media\images\background.png" />
@@ -340,6 +342,7 @@
     <Content Include="Views\Account\ChangePasswordSuccess.cshtml" />
     <Content Include="Views\Account\LogOn.cshtml" />
     <Content Include="Views\GoogleAuthentication\Error.cshtml" />
+    <Content Include="Content\markdown-styles.less" />
     <None Include="Properties\PublishProfiles\DEVProfile.pubxml" />
     <None Include="_bin_deployableAssemblies\FSharp.Core.dll" />
   </ItemGroup>
@@ -1158,7 +1161,7 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
