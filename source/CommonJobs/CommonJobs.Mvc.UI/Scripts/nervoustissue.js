@@ -801,7 +801,7 @@
             },
             template: _.template('<span class="view-editable-empty">Sin datos</span><span class="view-editable" style="display: none;"></span><select class="editor-editable" style="display: none;"><% for (var i in Model) { %><option value="<%= Model[i].value %>"><%= Model[i].text %></option><% } %></select>'),
             refreshEdit: function (value) {
-                this.$editor.val(value === null ? '' : value.toString());
+                this.$editor.val(!value ? '' : value.toString());
             },
             valueToContent: function (value) {
                 for (var i in this.options) {
