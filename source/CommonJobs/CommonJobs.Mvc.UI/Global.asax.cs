@@ -12,6 +12,8 @@ using CommonJobs.Infrastructure.Mvc.Authorize;
 using Raven.Client.Listeners;
 using CommonJobs.Infrastructure.RavenDb.Schedule;
 using NLog;
+using Microsoft.Web.WebPages.OAuth;
+using DotNetOpenAuth.Clients;
 
 namespace CommonJobs.Mvc.UI
 {
@@ -87,6 +89,8 @@ namespace CommonJobs.Mvc.UI
             // Hay un problema: la aplicación no se inicia sola
             //TODO: make period configurable
             ExecuteScheduledTasks.StartPeriodicTasks(RavenSessionManager.DocumentStore);
+
+            OAuthWebSecurity.RegisterClient(new GooglePlusOAuthClient("293136734985.apps.googleusercontent.com", "z0IsQwpgFZBTRsmvSvzdThKV"));
         }
     }
 }
