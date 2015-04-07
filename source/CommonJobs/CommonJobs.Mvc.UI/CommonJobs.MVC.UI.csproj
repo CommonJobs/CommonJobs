@@ -1176,6 +1176,10 @@
       <Project>{FABFCAFA-F6F2-47C2-B393-66E97203F107}</Project>
       <Name>CommonJobs.Utilities</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DotNetOpenAuth.Clients\DotNetOpenAuth.Clients.csproj">
+      <Project>{545c1a16-75e3-469d-b6a9-9921ccd49bdd}</Project>
+      <Name>DotNetOpenAuth.Clients</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\MyMenu\Models\" />
