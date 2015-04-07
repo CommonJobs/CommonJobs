@@ -14,6 +14,7 @@ using CommonJobs.Infrastructure.RavenDb.Schedule;
 using NLog;
 using Microsoft.Web.WebPages.OAuth;
 using DotNetOpenAuth.Clients;
+using System.Configuration;
 
 namespace CommonJobs.Mvc.UI
 {
@@ -90,7 +91,9 @@ namespace CommonJobs.Mvc.UI
             //TODO: make period configurable
             ExecuteScheduledTasks.StartPeriodicTasks(RavenSessionManager.DocumentStore);
 
-            OAuthWebSecurity.RegisterClient(new GooglePlusOAuthClient("293136734985.apps.googleusercontent.com", "z0IsQwpgFZBTRsmvSvzdThKV"));
+            OAuthWebSecurity.RegisterClient(new GooglePlusOAuthClient(
+                ConfigurationManager.AppSettings["CommonJobs/GoogleOAuthClientId"],
+                ConfigurationManager.AppSettings["CommonJobs/GoogleOAuthSecret"]));
         }
     }
 }
