@@ -54,6 +54,7 @@ namespace DotNetOpenAuth.Clients {
             return JObject.Parse(PostRequest(url, param));
         }
 
+        [Obsolete]
         public static AuthenticationResult CreateAuthenticationResult(string providerName, UserInfo userInfo) {
             return new AuthenticationResult(
                 isSuccessful: true,
@@ -64,5 +65,16 @@ namespace DotNetOpenAuth.Clients {
                     new Dictionary<string, string>()
                     );
         }
+
+        public static AuthenticationResult CreateAuthenticationResult(string providerName, string providerUserId, string userName, Dictionary<String, String> extraData)
+        {
+            return new AuthenticationResult(
+                isSuccessful: true,
+                provider: providerName,
+                providerUserId: providerUserId,
+                userName: userName,
+                extraData: extraData);
+        }
+
     }
 }

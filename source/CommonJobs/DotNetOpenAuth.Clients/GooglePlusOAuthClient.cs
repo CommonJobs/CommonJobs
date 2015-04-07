@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Linq;
 using System.Web;
 using System.Collections.Specialized;
 using DotNetOpenAuth.AspNet;
+using System.ComponentModel;
 
 namespace DotNetOpenAuth.Clients {
     public class GooglePlusOAuthClient : IAuthenticationClient {
@@ -39,9 +41,20 @@ namespace DotNetOpenAuth.Clients {
         public AuthenticationResult VerifyAuthentication(HttpContextBase context) {
             var authorizationCode = context.Request["code"];
             var accessToken = GetAccessToken(authorizationCode, context.Request.Url);
-            var userData = GetUserData(accessToken);
 
-            return OAuthHelpers.CreateAuthenticationResult(ProviderName, userData);
+            var uri = OAuthHelpers.BuildUri(ApiUrl, "oauth2/v1/userinfo", new NameValueCollection {
+                { "access_token", accessToken }
+            });
+
+            var response = OAuthHelpers.GetObjectFromAddress(uri);
+
+            var responseAsDictionary = ((PropertyDescriptorCollection)TypeDescriptor.GetProperties(response))
+                .OfType<PropertyDescriptor>()
+                .ToDictionary(
+                    x => x.Name,
+                    x => (string)x.GetValue(response));
+
+            return OAuthHelpers.CreateAuthenticationResult(ProviderName, responseAsDictionary["id"], responseAsDictionary["name"], responseAsDictionary);
         }
 
         #endregion
@@ -52,7 +65,7 @@ namespace DotNetOpenAuth.Clients {
                 {"client_id", _appId},
                 {"redirect_uri", returnUrl.GetLeftPart(UriPartial.Path)},
                 {"response_type", "code"},
-                {"scope", "profile"},
+                {"scope", "email"},
                 {"state", HttpUtility.UrlEncode(returnUrl.Query)}
             });
         }
@@ -69,16 +82,5 @@ namespace DotNetOpenAuth.Clients {
             return OAuthHelpers.GetObjectWithPost(url, param).access_token;
         }
 
-        private static UserInfo GetUserData(string accessToken) {
-            var uri = OAuthHelpers.BuildUri(ApiUrl, "oauth2/v1/userinfo", new NameValueCollection {
-                { "access_token", accessToken }
-            });
-
-            var response = OAuthHelpers.GetObjectFromAddress(uri);
-            return new UserInfo {
-                Id = response.id,
-                UserName = response.name
-            };
-        }
     }
 }
