@@ -7,43 +7,25 @@ using System.Web.Routing;
 using System.Web.Security;
 using CommonJobs.Infrastructure.Mvc;
 using CommonJobs.Domain;
-using DotNetOpenAuth.OpenId.RelyingParty;
-using DotNetOpenAuth.OpenId.Extensions.AttributeExchange;
 using NLog;
 using CommonJobs.Utilities;
+using Microsoft.Web.WebPages.OAuth;
+using DotNetOpenAuth.Clients;
 
 namespace CommonJobs.Mvc.UI.Controllers
 {
     public class GoogleAuthenticationController : CommonJobsController
     {
         private static Logger log = LogManager.GetCurrentClassLogger();
-        private const string GoogleOAuthEndpoint = "https://www.google.com/accounts/o8/id";
         private const string EmailSuffix = "@makingsense.com";
         public const string SessionRolesKey = "CommonJobs/Roles";
 
         public ActionResult Index(string returnUrl = null)
         {
-            using (OpenIdRelyingParty openid = new OpenIdRelyingParty())
-            {
-                //Set up the callback URL
-                var callbackUrl = Url.Action("LogOnCallback", "GoogleAuthentication", new { returnUrl = returnUrl }, Request.IsSecureConnection ? "https" : "http");
-                Uri callbackUri = new Uri(callbackUrl);
+            var callbackUrl = Url.Action("LogOnCallback", "GoogleAuthentication", new { returnUrl = returnUrl }, Request.IsSecureConnection ? "https" : "http");
 
-                //Set up request object for Google Authentication
-                IAuthenticationRequest request =
-                    openid.CreateRequest(GoogleOAuthEndpoint,
-                    DotNetOpenAuth.OpenId.Realm.AutoDetect, callbackUri);
-
-
-                //Let's tell Google, what we want to have from the user:
-                var fetch = new FetchRequest();
-                fetch.Attributes.AddRequired(WellKnownAttributes.Contact.Email);
-                request.AddExtension(fetch);
-
-                //Redirect to Google Authentication
-                request.RedirectToProvider();
-            }
-            return null;
+            OAuthWebSecurity.RequestAuthentication("google-plus", callbackUrl);
+            return Content(string.Empty);
         }
 
         public ActionResult Error(string returnUrl, string error)
@@ -54,28 +36,15 @@ namespace CommonJobs.Mvc.UI.Controllers
 
         public ActionResult LogOnCallback(string returnUrl)
         {
-            
-            OpenIdRelyingParty openid = new OpenIdRelyingParty();
-            var response = openid.GetResponse();
-
-            if (response == null)
-            {
-                return RedirectToAction("Error", new { returnUrl = returnUrl, error = "No authentication response" });
-            }
-
-            if (response.Status != AuthenticationStatus.Authenticated)
+            GooglePlusOAuthClient.RewriteRequest(); // HACK for Google Plus
+            var result = OAuthWebSecurity.VerifyAuthentication();
+            if (!result.IsSuccessful)
             {
                 return RedirectToAction("Error", new { returnUrl = returnUrl, error = "Response status is not Authenticated" });
             }
 
-            var fetch = response.GetExtension<FetchResponse>();
-
-            if (fetch == null)
-            {
-                return RedirectToAction("Error", new { returnUrl = returnUrl, error = "No fetch response" });
-            }
-
-            string email = fetch.GetAttributeValue(WellKnownAttributes.Contact.Email);
+            string email;
+            result.ExtraData.TryGetValue("email", out email);
 
             if (string.IsNullOrWhiteSpace(email))
             {
