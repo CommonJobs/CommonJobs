@@ -7,43 +7,27 @@ using System.Web.Routing;
 using System.Web.Security;
 using CommonJobs.Infrastructure.Mvc;
 using CommonJobs.Domain;
-using DotNetOpenAuth.OpenId.RelyingParty;
-using DotNetOpenAuth.OpenId.Extensions.AttributeExchange;
 using NLog;
 using CommonJobs.Utilities;
+using System.Configuration;
+using System.Collections.Specialized;
+using System.ComponentModel;
+using CommonJobs.Mvc.UI.Infrastructure;
 
 namespace CommonJobs.Mvc.UI.Controllers
 {
     public class GoogleAuthenticationController : CommonJobsController
     {
         private static Logger log = LogManager.GetCurrentClassLogger();
-        private const string GoogleOAuthEndpoint = "https://www.google.com/accounts/o8/id";
         private const string EmailSuffix = "@makingsense.com";
         public const string SessionRolesKey = "CommonJobs/Roles";
+        private const string OAuthUrl = "https://accounts.google.com/";
+        private const string ApiUrl = "https://www.googleapis.com/";
 
         public ActionResult Index(string returnUrl = null)
         {
-            using (OpenIdRelyingParty openid = new OpenIdRelyingParty())
-            {
-                //Set up the callback URL
-                var callbackUrl = Url.Action("LogOnCallback", "GoogleAuthentication", new { returnUrl = returnUrl }, Request.IsSecureConnection ? "https" : "http");
-                Uri callbackUri = new Uri(callbackUrl);
-
-                //Set up request object for Google Authentication
-                IAuthenticationRequest request =
-                    openid.CreateRequest(GoogleOAuthEndpoint,
-                    DotNetOpenAuth.OpenId.Realm.AutoDetect, callbackUri);
-
-
-                //Let's tell Google, what we want to have from the user:
-                var fetch = new FetchRequest();
-                fetch.Attributes.AddRequired(WellKnownAttributes.Contact.Email);
-                request.AddExtension(fetch);
-
-                //Redirect to Google Authentication
-                request.RedirectToProvider();
-            }
-            return null;
+            var authUri = BuildAuthUri(returnUrl);
+            return Redirect(authUri);
         }
 
         public ActionResult Error(string returnUrl, string error)
@@ -52,37 +36,22 @@ namespace CommonJobs.Mvc.UI.Controllers
             return View();
         }
 
-        public ActionResult LogOnCallback(string returnUrl)
+        public ActionResult LogOnCallback(string state, string code)
         {
+            var returnUrl = state;
             
-            OpenIdRelyingParty openid = new OpenIdRelyingParty();
-            var response = openid.GetResponse();
-
-            if (response == null)
-            {
-                return RedirectToAction("Error", new { returnUrl = returnUrl, error = "No authentication response" });
-            }
-
-            if (response.Status != AuthenticationStatus.Authenticated)
+            if (string.IsNullOrEmpty(code))
             {
                 return RedirectToAction("Error", new { returnUrl = returnUrl, error = "Response status is not Authenticated" });
             }
 
-            var fetch = response.GetExtension<FetchResponse>();
-
-            if (fetch == null)
-            {
-                return RedirectToAction("Error", new { returnUrl = returnUrl, error = "No fetch response" });
-            }
-
-            string email = fetch.GetAttributeValue(WellKnownAttributes.Contact.Email);
+            string email = RetrieveUserEmail(code);
 
             if (string.IsNullOrWhiteSpace(email))
             {
                 return RedirectToAction("Error", new { returnUrl = returnUrl, error = "Response Email is empty" });
             }
             
-
             if (!email.EndsWith(EmailSuffix))
             {
                 return RedirectToAction("Error", new { returnUrl = returnUrl, error = "Only emails ended with " + EmailSuffix + " are allowed" });
@@ -112,6 +81,74 @@ namespace CommonJobs.Mvc.UI.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
+        }
+
+        private static string GetAppId()
+        {
+            return ConfigurationManager.AppSettings["CommonJobs/GoogleOAuthClientId"];
+        }
+
+        private static string GetAppSecret()
+        {
+            return ConfigurationManager.AppSettings["CommonJobs/GoogleOAuthSecret"];
+        }
+
+        private string BuildAuthUri(string returnUrl)
+        {
+            var appId = GetAppId();
+            var returnUriValue = BuildCallbackUriValue();
+            var authUri = OAuthHelpers.BuildUri(OAuthUrl, "o/oauth2/auth", new NameValueCollection()
+            {
+                { "client_id", appId },
+                { "redirect_uri", returnUriValue },
+                { "response_type", "code" },
+                { "scope", "email" },
+                { "state", HttpUtility.UrlEncode(returnUrl) }
+            });
+            return authUri;
+        }
+
+        private string BuildCallbackUriValue()
+        {
+            var callbackUrl = Url.Action("LogOnCallback", "GoogleAuthentication", null, Request.IsSecureConnection ? "https" : "http");
+            return callbackUrl;
+        }
+
+        private string RetrieveUserEmail(string authorizationCode)
+        {
+            string accessToken = RetrieveAccessToken(authorizationCode);
+            var userinfo = RetrieveUserInfo(accessToken);
+            string email = userinfo.email;
+            return email;
+        }
+
+        private static dynamic RetrieveUserInfo(string accessToken)
+        {
+            var uri = OAuthHelpers.BuildUri(ApiUrl, "oauth2/v1/userinfo", new NameValueCollection {
+                { "access_token", accessToken }
+            });
+
+            var response = OAuthHelpers.GetObjectFromAddress(uri);
+            return response;
+        }
+
+        private string RetrieveAccessToken(string authorizationCode)
+        {
+            var appId = GetAppId();
+            var appSecret = GetAppSecret();
+
+            var returnUriValue = BuildCallbackUriValue();
+            var param = new NameValueCollection {
+                 { "client_id",     appId },
+                 { "client_secret", appSecret },
+                 { "code",          authorizationCode },
+                 { "grant_type",    "authorization_code" },
+                 { "redirect_uri",  returnUriValue },
+            };
+            var url = OAuthHelpers.BuildUri(OAuthUrl, "o/oauth2/token", new NameValueCollection());
+
+            string accessToken = OAuthHelpers.GetObjectWithPost(url, param).access_token;
+            return accessToken;
         }
     }
 }
