@@ -87,9 +87,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonJobs.Domain.Profiles"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EvalForm", "EvalForm", "{8385A9A7-1E68-4190-A262-9F3D4D3173E0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonJobs.Application.EvalForm", "CommonJobs.Application.EvalForm\CommonJobs.Application.EvalForm.csproj", "{AC3B3FCE-3611-4085-B58F-EF533E81B26E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonJobs.Application.Evaluations", "CommonJobs.Application.EvalForm\CommonJobs.Application.Evaluations.csproj", "{AC3B3FCE-3611-4085-B58F-EF533E81B26E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonJobs.Domain.EvalForm", "CommonJobs.Domain.EvalForm\CommonJobs.Domain.EvalForm.csproj", "{ABB4B6E5-FBEB-4E60-A190-2ACAF9EFAE13}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonJobs.Domain.Evaluations", "CommonJobs.Domain.EvalForm\CommonJobs.Domain.Evaluations.csproj", "{ABB4B6E5-FBEB-4E60-A190-2ACAF9EFAE13}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
