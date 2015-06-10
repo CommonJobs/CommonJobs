@@ -179,6 +179,8 @@
     <Content Include="Content\EditCommon\Suggest.js" />
     <Content Include="Content\EmployeeFiles\EmployeeFiles.js" />
     <Content Include="Content\FilesListing\FilesListing.js" />
+    <Compile Include="Areas\EvalForm\Controllers\EvalFormController.cs" />
+    <Compile Include="Areas\EvalForm\EvalFormAreaRegistration.cs" />
     <Compile Include="Areas\MyMenu\MyMenuAreaRegistration.cs" />
     <Compile Include="Areas\Profiles\Controllers\ProfilesController.cs" />
     <Compile Include="Areas\Profiles\ProfilesAreaRegistration.cs" />
@@ -1137,6 +1139,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Areas\EvalForm\Models\" />
+    <Folder Include="Areas\EvalForm\Views\" />
     <Folder Include="Areas\MyMenu\Models\" />
     <Folder Include="Areas\Profiles\Models\" />
   </ItemGroup>
