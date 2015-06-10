@@ -16,7 +16,7 @@ namespace CommonJobs.Mvc.UI.Areas.EvalForm
 {
     [CommonJobsAuthorize]
     //TODO: Add documentation
-    [Documentation("docs/manual-de-usuario/...")]
+    [Documentation("docs/manual-de-usuario/evaluaciones")]
     public class EvalFormController : CommonJobsController
     {
         private static Logger log = LogManager.GetCurrentClassLogger();
