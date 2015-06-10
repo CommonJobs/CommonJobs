@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{ABB4B6E5-FBEB-4E60-A190-2ACAF9EFAE13}</ProjectGuid>
+    <ProjectGuid>{AC3B3FCE-3611-4085-B58F-EF533E81B26E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CommonJobs.Domain.EvalForm</RootNamespace>
-    <AssemblyName>CommonJobs.Domain.EvalForm</AssemblyName>
+    <RootNamespace>CommonJobs.Application.EvalForm</RootNamespace>
+    <AssemblyName>CommonJobs.Application.EvalForm</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -36,9 +36,25 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\CommonJobs.Application.MyMenu\bin\Debug\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="NLog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\CommonJobs.Application.MyMenu\bin\Debug\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="Raven.Abstractions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\CommonJobs.Application.MyMenu\bin\Debug\Raven.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Raven.Client.Debug, Version=1.0.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\CommonJobs.Application.MyMenu\bin\Debug\Raven.Client.Debug.dll</HintPath>
+    </Reference>
+    <Reference Include="Raven.Client.Lightweight, Version=1.0.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\CommonJobs.Application.MyMenu\bin\Debug\Raven.Client.Lightweight.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -49,6 +65,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common.cs" />
+    <Compile Include="GenerateEvaluationsCommand.cs" />
+    <Compile Include="GetEmployeesForEvaluationCommand.cs" />
+    <Compile Include="ProcessGenerateEvaluations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -58,9 +78,17 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CommonJobs.Domain.EvalForm\CommonJobs.Domain.Evaluations.csproj">
+      <Project>{abb4b6e5-fbeb-4e60-a190-2acaf9efae13}</Project>
+      <Name>CommonJobs.Domain.Evaluations</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CommonJobs.Domain\CommonJobs.Domain.csproj">
       <Project>{cc2939c6-a278-4789-b937-adb693e69c89}</Project>
       <Name>CommonJobs.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CommonJobs.Infrastructure.RavenDb\CommonJobs.Infrastructure.RavenDb.csproj">
+      <Project>{7b4a0a21-0cde-432a-a785-599d4339ad8e}</Project>
+      <Name>CommonJobs.Infrastructure.RavenDb</Name>
     </ProjectReference>
     <ProjectReference Include="..\CommonJobs.Utilities\CommonJobs.Utilities.csproj">
       <Project>{fabfcafa-f6f2-47c2-b393-66e97203f107}</Project>
