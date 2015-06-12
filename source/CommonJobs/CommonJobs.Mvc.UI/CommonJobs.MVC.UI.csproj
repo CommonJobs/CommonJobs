@@ -340,7 +340,6 @@
     <Content Include="Areas\Evaluations\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Evaluations\Views\Evaluations\PeriodCreation.cshtml" />
     <Content Include="Areas\Evaluations\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\Evaluations\Views\Evaluations\GenerateEvaluations.cshtml" />
     <None Include="Properties\PublishProfiles\DEVProfile.pubxml" />
     <None Include="_bin_deployableAssemblies\FSharp.Core.dll" />
   </ItemGroup>
@@ -1157,7 +1156,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Areas\Evaluations\Models\" />
     <Folder Include="Areas\MyMenu\Models\" />
     <Folder Include="Areas\Profiles\Models\" />
   </ItemGroup>

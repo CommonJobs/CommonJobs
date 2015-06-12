@@ -5,7 +5,7 @@ using System.Web;
 
 namespace CommonJobs.Mvc.UI.Areas.Evaluations.Models
 {
-    public class GenerateEvaluationsModel
+    public class PeriodCreation
     {
         public List<EmployeeModel> Employees;
         public List<EmployeeModel> Owners;
