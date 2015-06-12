@@ -15,6 +15,12 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
         public override void RegisterArea(AreaRegistrationContext context)
         {
             context.MapRoute(
+                "Evaluations_creation",
+                "Evaluations/create/{period}",
+                new { controller = "Evaluations", action = "PeriodCreation" }
+            );
+
+            context.MapRoute(
                 "Evaluations_period",
                 "Evaluations/{period}",
                 new { controller = "Evaluations", action = "PeriodEvaluation" }
