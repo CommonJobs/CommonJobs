@@ -3,8 +3,8 @@
 @{
     ViewBag.Title = "Generate Evaluations";
     Layout = "~/Areas/Evaluations/Views/Shared/_Layout.cshtml";
-    //ScriptManager.RegisterCss(Url.Content("~/Content/twitter-bootstrap/less/bootstrap.less"), priority: 900);
-    //ScriptManager.RegisterCss(Url.Content("~/Content/twitter-bootstrap/less/responsive.less"), priority: 900);
+    ScriptManager.RegisterCss(Url.Content("~/Content/twitter-bootstrap/less/bootstrap.less"), priority: 900);
+    ScriptManager.RegisterCss(Url.Content("~/Content/twitter-bootstrap/less/responsive.less"), priority: 900);
     ScriptManager.RegisterJs(Url.Content("~/Scripts/underscore.js"), priority: 900);
     ScriptManager.RegisterJs(Url.Content("~/Scripts/jquery-1.7.2.min.js"), priority: 900);
     ScriptManager.RegisterJs(Url.Content("~/Content/twitter-bootstrap/js/bootstrap-typeahead.js"), priority: 900);
@@ -32,10 +32,17 @@
             <td>@Employee.Name</td>
             <td>@Employee.Position</td>
             <td>@Employee.Seniority</td>
-            <td><input id="EvaluationOwner_@(i)" name="EvaluationOwner" type="text" placeholder="Owner" value="@Employee.EvaluationOwner" autocomplete="off"/></td>
+            <td><input id="EvaluationOwner_@(i)" name="EvaluationOwner" class="evaluation-owner-field" type="text" placeholder="Owner" value="@Employee.EvaluationOwner" autocomplete="off"/></td>
         </tr>
         i++;
         }
     </table>
     <button>GENERAR EVALUACION</button>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.evaluation-owner-field').each(function (index, elem) {
+                commonSuggest(elem, 'UserName');
+            });
+        });
+    </script>
 </div>
