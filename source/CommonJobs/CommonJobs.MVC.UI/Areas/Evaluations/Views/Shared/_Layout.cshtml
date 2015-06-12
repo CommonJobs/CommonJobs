@@ -1,0 +1,85 @@
+﻿@using CommonJobs.Infrastructure.Mvc.SecurityTrimming
+@using CommonJobs.Mvc.UI.HtmlHelpers
+@{
+    ScriptManager.RegisterCss(Url.Content("~/Content/mymenu.css"), priority: 900);
+}
+
+<!DOCTYPE html>
+<html class="bootstrap-scope">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title</title>
+    @Html.RenderScriptManagerEntries(ScriptManager)
+    <link rel="shortcut icon" href="@Url.Content("~/Content/Images/favicon.ico")" />
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top ">
+        <div class="navbar-inner">
+            <a class="brand" href="@Url.Content("~")">CommonJobs</a>
+            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>            
+            <div class="pull-right">
+                <form class="form-inline" id="persistenceForm">
+                    <ul class="nav nav-right">
+                        @if (Request.IsAuthenticated && User != null && User.Identity != null && User.Identity.Name != null) 
+				        {
+                            <li class="username"><small style="display: block; float: none; padding: 10px 15px;">@User.Identity.Name
+                            @if (User.Identity.AuthenticationType == "Forms")
+                            {
+                                <text>[<a href="@Url.Content("~/Account/LogOff")">LogOff</a>]</text>
+                            }
+                            </small></li>
+				        }
+                        else
+                        {
+                            //TODO: show link to logon page when AuthenticationType == "Forms"
+                        }
+                    </ul>
+                    <span class="ajax-loader" data-bind="visible: onAjaxCall"></span>
+                    @if (!hidePersistenceButtons) {
+                    <button class="btn btn-inverse" disabled="disabled" data-bind="click: load, enable: !onAjaxCall(), text: isDirty() ? 'Descartar' : 'Recargar'">Recargar</button>
+                    <button class="btn btn-primary" disabled="disabled" data-bind="click: save, enable: isDirty() && !onAjaxCall()">Guardar</button>
+                    }
+                    else
+                    {
+                    <button class="btn btn-inverse" data-bind="click: refresh">Recargar</button>
+                    }
+                </form>
+            </div>
+            
+            <div class="nav-collapse collapse">
+                <ul class="nav">
+                    @Html.NavItemAction("Pedido del día", "Order")
+                    @Html.NavItemAction("Definición de los menues", "Admin")
+                    @Html.NavItemAction("Mi Menú", "Index")
+                    @Html.RenderIfHasPermission("Edit" , @<li class="@(item.IsActiveAction ? "active" : "")">
+                            @using (Html.BeginForm(item.ActionName, item.ControllerName, new { id = "" }, FormMethod.Get, new { @class = "form-inline", id = "employeeMenuForm" }))
+                            {
+                                <label for="openUserMenu">Menú de</label>
+                                <div class="input-append">
+                                    <input id="openUserMenu" name="id" type="text" placeholder="username" value="@anotherMenuUser" autocomplete="off"/>
+                                    <input class="btn" type="submit" value="Ir" />
+                                </div>
+                            }
+                    </li>)
+                    <li>
+                        @Html.DocumentationLink("Ayuda")
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <br /><br /><br />
+    <div class="body-container">
+        @RenderBody()
+    </div>
+    <footer>
+        <div class="container">
+            <p><strong>MyMenu</strong> es un desarrollo <em>OpenSource</em> realizado en ratos libres. Cualquier mejora es bienvenida, descargá el <a href="https://github.com/CommonJobs/CommonJobs">código fuente de GitHub</a> y hacé tu <em>Pull Request</em>.</p>
+        </div>
+    </footer>
+</body>
+</html>

@@ -140,6 +140,8 @@
     <Content Include="Content\bootstrap-responsive.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Evaluations\evaluations.css" />
+    <Content Include="Scripts\evaluations.js" />
     <Content Include="Content\Home\absence.png" />
     <Content Include="Content\Home\applicant.png" />
     <Content Include="Content\Home\attach.png" />
@@ -181,6 +183,8 @@
     <Content Include="Content\FilesListing\FilesListing.js" />
     <Compile Include="Areas\Evaluations\Controllers\EvaluationsController.cs" />
     <Compile Include="Areas\Evaluations\EvaluationsAreaRegistration.cs" />
+    <Compile Include="Areas\Evaluations\Models\EmployeeModel.cs" />
+    <Compile Include="Areas\Evaluations\Models\GenerateEvaluationsModel.cs" />
     <Compile Include="Areas\MyMenu\MyMenuAreaRegistration.cs" />
     <Compile Include="Areas\Profiles\Controllers\ProfilesController.cs" />
     <Compile Include="Areas\Profiles\ProfilesAreaRegistration.cs" />
@@ -333,6 +337,9 @@
     <Content Include="Content\markdown-styles.less" />
     <Content Include="Areas\Evaluations\Views\Evaluations\PeriodEvaluation.cshtml" />
     <Content Include="Areas\Evaluations\Views\Web.config" />
+    <Content Include="Areas\Evaluations\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Evaluations\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Evaluations\Views\Evaluations\GenerateEvaluations.cshtml" />
     <None Include="Properties\PublishProfiles\DEVProfile.pubxml" />
     <None Include="_bin_deployableAssemblies\FSharp.Core.dll" />
   </ItemGroup>
@@ -1149,7 +1156,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Areas\Evaluations\Models\" />
     <Folder Include="Areas\MyMenu\Models\" />
     <Folder Include="Areas\Profiles\Models\" />
   </ItemGroup>
