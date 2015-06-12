@@ -1,0 +1,48 @@
+﻿@model CommonJobs.Mvc.UI.Areas.Evaluations.Models.PeriodCreation
+
+@{
+    ViewBag.Title = "Generate Evaluations";
+    Layout = "~/Areas/Evaluations/Views/Shared/_Layout.cshtml";
+    ScriptManager.RegisterCss(Url.Content("~/Content/twitter-bootstrap/less/bootstrap.less"), priority: 900);
+    ScriptManager.RegisterCss(Url.Content("~/Content/twitter-bootstrap/less/responsive.less"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/underscore.js"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/jquery-1.7.2.min.js"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Content/twitter-bootstrap/js/bootstrap-typeahead.js"), priority: 900);
+    ScriptManager.RegisterGlobalJavascript("baseUrl", Url.Content("~"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/url-generator.js"), priority: 900);    
+    
+    ScriptManager.RegisterCss(Url.Content("~/Content/Evaluations/evaluations.css"));
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/evaluations.js"));
+}
+
+<div class="content">
+    <h2>Generate Evaluations</h2>
+    <table>
+	    <tr>
+	        <th>EMPLEADO</th>
+	        <th>PUESTO</th>
+	        <th>SENIORITY</th>
+	        <th>RESPONSABLE</th>
+	    </tr>
+        @{int i = 1;}
+
+        @foreach (var Employee in Model.Employees)
+        {
+        <tr>
+            <td>@Employee.Name</td>
+            <td>@Employee.Position</td>
+            <td>@Employee.Seniority</td>
+            <td><input id="EvaluationOwner_@(i)" name="EvaluationOwner" class="evaluation-owner-field" type="text" placeholder="Owner" value="@Employee.EvaluationOwner" autocomplete="off"/></td>
+        </tr>
+        i++;
+        }
+    </table>
+    <button>GENERAR EVALUACION</button>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.evaluation-owner-field').each(function (index, elem) {
+                commonSuggest(elem, 'UserName');
+            });
+        });
+    </script>
+</div>

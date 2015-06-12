@@ -1,0 +1,215 @@
+﻿/**
+ * 
+ * Define mixins, functions, 
+ * animations, placeholders, 
+ * helper classes.
+ * 
+**/
+/*
+ * Absolute positioning elements.
+ */
+/*
+ * Control animations.
+ */
+/*
+ * Calculate margin, paddings, positioning, width, height.
+ */
+/*
+ * Style placeholders.
+ */
+/*
+ * Text truncate with an ellipsis.
+ */
+/*
+ * Calculate responsive breakpoints.
+ */
+/*
+ * Hide from both screenreaders and browsers: h5bp.com/u
+ */
+/* line 76, ../sass/_mixins.scss */
+.element-hidden {
+  display: none !important;
+  visibility: hidden;
+}
+
+/*
+ * Hide only visually, but have it available for screenreaders: h5bp.com/v
+ */
+/* line 85, ../sass/_mixins.scss */
+.visually-hidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+/*
+ * Hide visually and from screenreaders, but maintain layout
+ */
+/* line 100, ../sass/_mixins.scss */
+.element-invisible {
+  visibility: hidden;
+}
+
+/*
+ * Show element. Block layout.
+ */
+/* line 108, ../sass/_mixins.scss */
+.element-visible {
+  display: block;
+}
+
+/*
+ * Show element. Inline block layout.
+ */
+/* line 116, ../sass/_mixins.scss */
+.element-visible-inline {
+  display: inline-block !important;
+}
+
+/*
+ * Pull element to the left.
+ */
+/* line 124, ../sass/_mixins.scss */
+.pull-left {
+  float: left;
+}
+
+/*
+ * Pull element to the right.
+ */
+/* line 132, ../sass/_mixins.scss */
+.pull-right {
+  float: right;
+}
+
+/*
+ * Clear floats.
+ */
+/* line 140, ../sass/_mixins.scss */
+.clearfix {
+  zoom: 1;
+}
+/* line 142, ../sass/_mixins.scss */
+.clearfix:before, .clearfix:after {
+  content: "\0020";
+  display: block;
+  height: 0;
+  overflow: hidden;
+}
+/* line 148, ../sass/_mixins.scss */
+.clearfix:after {
+  clear: both;
+}
+
+/* line 3, ../sass/_base.scss */
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+/* line 8, ../sass/_base.scss */
+body {
+  font: 100% Arial, Helvetica, initial;
+}
+
+/* line 12, ../sass/_base.scss */
+* {
+  box-sizing: border-box;
+}
+
+/* line 16, ../sass/_base.scss */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #000;
+  color: white;
+  height: 60px;
+  width: 100%;
+  padding: 10px 0px;
+}
+
+/* line 26, ../sass/_base.scss */
+.content {
+  min-width: 1024px;
+  width: 100%;
+  padding: 60px 50px 0;
+}
+
+/* line 5, ../sass/_generar_evaluacion.scss */
+h1 {
+  margin: 0;
+  padding-left: 50px;
+}
+
+/* line 10, ../sass/_generar_evaluacion.scss */
+table {
+  border-spacing: 0;
+  width: 100%;
+}
+
+/* line 15, ../sass/_generar_evaluacion.scss */
+.title {
+  background-color: #888;
+  color: white;
+  width: 100%;
+  padding: 10px 0px;
+  margin: 0;
+}
+
+/* line 24, ../sass/_generar_evaluacion.scss */
+tr:nth-child(even) {
+  background-color: #ddd;
+}
+
+/* line 28, ../sass/_generar_evaluacion.scss */
+tr:nth-child(odd) {
+  background-color: #fff;
+}
+
+/* line 32, ../sass/_generar_evaluacion.scss */
+th, td {
+  text-align: left;
+}
+
+/* line 36, ../sass/_generar_evaluacion.scss */
+th {
+  background-color: #aaa;
+  color: white;
+  padding: 10px;
+}
+
+/* line 42, ../sass/_generar_evaluacion.scss */
+td {
+  padding: 5px 10px;
+}
+
+/* line 46, ../sass/_generar_evaluacion.scss */
+button {
+  padding: 20px;
+  float: right;
+  background-color: black;
+  color: white;
+  margin-top: 20px;
+  border: none;
+}
+
+/* line 55, ../sass/_generar_evaluacion.scss */
+input {
+  width: 100%;
+}
+
+/* line 2, ../sass/_responsable.scss */
+.button {
+  padding: 10px;
+}
+
+/* line 6, ../sass/_responsable.scss */
+.rol {
+  text-align: center;
+}
