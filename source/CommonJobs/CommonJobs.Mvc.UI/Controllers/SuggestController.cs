@@ -128,7 +128,6 @@ namespace CommonJobs.Mvc.UI.Controllers
             return Json(new { suggestions = results });
         }
 
-        [CommonJobsAuthorize(Roles = "Users,EmployeeManagers,MenuManagers")]
         public JsonNetResult UserName(string term, int maxSuggestions = 8)
         {
             var results = Query(new GetSuggestions(x => x.UserName, term, maxSuggestions));
