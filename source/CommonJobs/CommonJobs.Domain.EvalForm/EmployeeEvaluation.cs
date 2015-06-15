@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CommonJobs.Domain.Evaluations
 {
-    public class EmployeeToEval
+    public class EmployeeEvaluation
     {
         public string Id { get; set; }
 

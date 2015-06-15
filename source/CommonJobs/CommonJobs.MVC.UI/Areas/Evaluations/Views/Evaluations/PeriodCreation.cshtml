@@ -1,4 +1,4 @@
-﻿@model List<CommonJobs.Domain.Evaluations.EmployeeToEval>
+﻿@model List<CommonJobs.Domain.Evaluations.EmployeeEvaluation>
 
 @{
     ViewBag.Title = "Generate Evaluations";
@@ -9,8 +9,8 @@
     ScriptManager.RegisterJs(Url.Content("~/Scripts/jquery-1.7.2.min.js"), priority: 900);
     ScriptManager.RegisterJs(Url.Content("~/Content/twitter-bootstrap/js/bootstrap-typeahead.js"), priority: 900);
     ScriptManager.RegisterGlobalJavascript("baseUrl", Url.Content("~"), priority: 900);
-    ScriptManager.RegisterJs(Url.Content("~/Scripts/url-generator.js"), priority: 900);    
-    
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/url-generator.js"), priority: 900);
+
     ScriptManager.RegisterCss(Url.Content("~/Content/Evaluations/evaluations.css"));
     ScriptManager.RegisterJs(Url.Content("~/Scripts/evaluations.js"));
 }
