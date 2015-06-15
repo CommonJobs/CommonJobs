@@ -18,8 +18,11 @@ namespace CommonJobs.Application.Evaluations
 
         public override void Execute()
         {
-            //EmployeeMenu.Id = Common.GenerateEmployeeMenuId(EmployeeMenu.UserName);
-            //RavenSession.Store(EmployeeMenu);
+            foreach (var e in EmployeesToEval)
+            {
+                e.Id = Common.GenerateEvaluationId(e.UserName);
+            }
+            RavenSession.Store(EmployeesToEval);
         }
     }
 }

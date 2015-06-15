@@ -12,6 +12,7 @@ using System.Web;
 using System.Web.Mvc;
 using CommonJobs.Utilities;
 using CommonJobs.Mvc.UI.Areas.Evaluations.Models;
+using CommonJobs.Domain.Evaluations;
 
 namespace CommonJobs.Mvc.UI.Areas.Evaluations
 {
@@ -66,6 +67,10 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
             //2. Check if the current user has to evaluate someone
             //2.a. If not, redirect to /Evaluations/{period}/{username}
             //2.b. If so, fetch the users to evaluate
+
+            var l = new List<EmployeeToEval>();
+
+            ExecuteCommand(new GenerateEvaluationsCommand(employeeMenu));
 
             return View();
         }
