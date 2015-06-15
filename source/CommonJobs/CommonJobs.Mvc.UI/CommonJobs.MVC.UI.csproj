@@ -183,8 +183,6 @@
     <Content Include="Content\FilesListing\FilesListing.js" />
     <Compile Include="Areas\Evaluations\Controllers\EvaluationsController.cs" />
     <Compile Include="Areas\Evaluations\EvaluationsAreaRegistration.cs" />
-    <Compile Include="Areas\Evaluations\Models\EmployeeModel.cs" />
-    <Compile Include="Areas\Evaluations\Models\GenerateEvaluationsModel.cs" />
     <Compile Include="Areas\MyMenu\MyMenuAreaRegistration.cs" />
     <Compile Include="Areas\Profiles\Controllers\ProfilesController.cs" />
     <Compile Include="Areas\Profiles\ProfilesAreaRegistration.cs" />

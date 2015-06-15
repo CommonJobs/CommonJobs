@@ -1,4 +1,4 @@
-﻿@model CommonJobs.Mvc.UI.Areas.Evaluations.Models.PeriodCreation
+﻿@model List<CommonJobs.Domain.Evaluations.EmployeeToEval>
 
 @{
     ViewBag.Title = "Generate Evaluations";
@@ -16,7 +16,7 @@
 }
 
 <div class="content">
-    <h2>Generate Evaluations</h2>
+    <h2>Generar Evaluación</h2>
     <table>
 	    <tr>
 	        <th>EMPLEADO</th>
@@ -26,13 +26,13 @@
 	    </tr>
         @{int i = 1;}
 
-        @foreach (var Employee in Model.Employees)
+        @foreach (var Employee in Model)
         {
         <tr>
-            <td>@Employee.Name</td>
-            <td>@Employee.Position</td>
+            <td>@Employee.EmployeeName</td>
+            <td>@Employee.CurrentPosition</td>
             <td>@Employee.Seniority</td>
-            <td><input id="EvaluationOwner_@(i)" name="EvaluationOwner" class="evaluation-owner-field" type="text" placeholder="Owner" value="@Employee.EvaluationOwner" autocomplete="off"/></td>
+            <td><input id="EvaluationOwner_@(i)" name="EvaluationOwner" class="evaluation-owner-field" type="text" placeholder="Owner" value="@Employee.Responsible" autocomplete="off"/></td>
         </tr>
         i++;
         }

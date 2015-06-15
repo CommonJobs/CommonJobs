@@ -48,15 +48,8 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
             //2.a. If not, redirect to /Evaluations/{period}/{username}
             //2.b. If so, fetch the users to evaluate
 
-            PeriodCreation generateEvaluationsModel = new PeriodCreation();
-            generateEvaluationsModel.Employees = new List<EmployeeModel>();
-            generateEvaluationsModel.Employees.Add(new EmployeeModel() { Name = "Pérez, Juan", Position = "Developer", Seniority = "Semi-Senior" });
-            generateEvaluationsModel.Employees.Add(new EmployeeModel() { Name = "López, Alfredo", Position = "Developer", Seniority = "Semi-Senior" });
-            generateEvaluationsModel.Employees.Add(new EmployeeModel() { Name = "García, Braulio", Position = "Developer", Seniority = "Semi-Senior" });
-            generateEvaluationsModel.Employees.Add(new EmployeeModel() { Name = "Perez, Juan", Position = "Developer", Seniority = "Semi-Senior" });
-            generateEvaluationsModel.Employees.Add(new EmployeeModel() { Name = "Perez, Juan", Position = "Developer", Seniority = "Semi-Senior" });
-            generateEvaluationsModel.Employees.Add(new EmployeeModel() { Name = "Perez, Juan", Position = "Developer", Seniority = "Semi-Senior" });
-            return View(generateEvaluationsModel);
+            var employees = ExecuteCommand(new GetEmployeesForEvaluationCommand());
+            return View(employees);
         }
 
 

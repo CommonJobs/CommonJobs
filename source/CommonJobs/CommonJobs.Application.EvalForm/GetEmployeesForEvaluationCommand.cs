@@ -30,6 +30,7 @@ namespace CommonJobs.Application.Evaluations
                 employeesToEval.Add(new EmployeeToEval()
                 {
                     UserName = e.UserName,
+                    EmployeeName = e.FullName,
                     Seniority = e.Seniority,
                     CurrentPosition = e.CurrentPosition
                 });
