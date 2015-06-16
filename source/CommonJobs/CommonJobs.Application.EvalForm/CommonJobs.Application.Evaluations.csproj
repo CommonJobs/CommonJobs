@@ -69,8 +69,10 @@
     <Compile Include="Common.cs" />
     <Compile Include="GenerateEvaluationsCommand.cs" />
     <Compile Include="GetEmployeesForEvaluationCommand.cs" />
+    <Compile Include="GetTemplateCommand.cs" />
     <Compile Include="ProcessGenerateEvaluations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UpdateTemplateCommand.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

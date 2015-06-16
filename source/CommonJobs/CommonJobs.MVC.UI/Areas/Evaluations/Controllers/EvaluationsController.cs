@@ -12,7 +12,7 @@ using System.Web;
 using System.Web.Mvc;
 using CommonJobs.Utilities;
 using CommonJobs.Domain.Evaluations;
-using CommonJobs.Application.EvalForm;
+using CommonJobs.Application.Evaluations;
 
 namespace CommonJobs.Mvc.UI.Areas.Evaluations
 {
@@ -62,15 +62,10 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
             //2.b. If so, fetch the users to evaluate
 
             /// GK TESTING, PLEASE DELETE
-            //var employees = new List<EmployeeEvaluation>();
-            //employees = ExecuteCommand(new GetEmployeesForEvaluationCommand());
-            //foreach (var e in employees)
-            //{
-            //    e.Responsible = "ResponsibleId";
-            //}
-            //ExecuteCommand(new GenerateEvaluationsCommand(employees));
+            var employees = ExecuteCommand(new GetEmployeesForEvaluationCommand());
+            ExecuteCommand(new GenerateEvaluationsCommand(employees));
 
-            //ExecuteCommand(new AddEvaluatorsCommand(employees[0], new List<string>() { "Users/gkolocsar" }));
+            ExecuteCommand(new AddEvaluatorsCommand(employees[0], new List<string>() { "Users/gkolocsar" }));
             /// GK TESTING, PLEASE DELETE
 
             return View();

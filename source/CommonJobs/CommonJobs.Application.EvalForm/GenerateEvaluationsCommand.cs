@@ -21,6 +21,7 @@ namespace CommonJobs.Application.Evaluations
             foreach (var e in _employeesEvaluations)
             {
                 e.Id = Common.GenerateEvaluationId(e.UserName);
+                e.CreationDate = DateTime.Now.Date;
                 RavenSession.Store(e);
             }
         }

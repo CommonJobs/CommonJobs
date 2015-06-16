@@ -17,6 +17,8 @@ namespace CommonJobs.Domain.Evaluations
 
         public string Seniority { get; set; }
 
+        public string Project { get; set; }
+
         //An Id
         public string Responsible { get; set; }
 
@@ -26,7 +28,9 @@ namespace CommonJobs.Domain.Evaluations
         //An Id
         public string Template { get; set; }
 
-        public DateTime Date { get; set; }
+        public string Period { get; set; }
+
+        public DateTime CreationDate { get; set; }
     }
 }
 ;
