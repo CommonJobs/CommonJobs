@@ -11,7 +11,8 @@ namespace CommonJobs.Domain.Evaluations
 
         public string UserName { get; set; }
 
-        public string EmployeeName { get; set; }
+        //TODO: Remove from here and use directly the Employee
+        public string FullName { get; set; }
 
         public string CurrentPosition { get; set; }
 
@@ -20,12 +21,12 @@ namespace CommonJobs.Domain.Evaluations
         public string Project { get; set; }
 
         //An Id
-        public string Responsible { get; set; }        
+        public string Responsible { get; set; }
 
         //An Id
         public string Template { get; set; }
 
-        public string Period { get; set; }        
+        public string Period { get; set; }
     }
 }
 ;

@@ -10,8 +10,12 @@ namespace CommonJobs.Domain.Evaluations
     {
         public string Id { get; set; }
 
-        //TODO: It's necessary? We have it in the EmployeeEvaluation object
+        //TODO: Update this value!!
+        public string EvaluationId { get; set; }
+
         public string Period { get; set; }
+
+        public string Template { get; set; }
 
         public string EvaluatedEmployee { get; set; }
 
@@ -28,6 +32,8 @@ namespace CommonJobs.Domain.Evaluations
         //Won't be always used
         public string EvaluatedEmployeeComment { get; set; }
 
-        public List<KeyValuePair<string, decimal>> Califications { get; set; }        
+        public List<KeyValuePair<string, decimal>> Califications { get; set; }
+
+        public bool Finished { get; set; }
     }
 }

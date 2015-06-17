@@ -43,7 +43,7 @@ namespace CommonJobs.Application.Evaluations
                     UserName = e.UserName,
                     Period = period == null ? null : period.Period,
                     Responsible = period == null ? null : period.Responsible,
-                    EmployeeName = e.FirstName + ", " + e.LastName,
+                    FullName = e.FirstName + ", " + e.LastName,
                     Seniority = e.Seniority,
                     CurrentPosition = e.CurrentPosition
                 };

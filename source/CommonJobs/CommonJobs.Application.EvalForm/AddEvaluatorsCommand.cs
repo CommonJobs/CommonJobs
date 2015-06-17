@@ -13,13 +13,11 @@ namespace CommonJobs.Application.Evaluations
     {
         private EmployeeEvaluation _employeeEvaluation { get; set; }
         private List<string> _evaluators { get; set; }
-        private string _period { get; set; }
 
-        public AddEvaluatorsCommand(string period, EmployeeEvaluation employeeEvaluation, List<string> evaluators)
+        public AddEvaluatorsCommand(EmployeeEvaluation employeeEvaluation, List<string> evaluators)
         {
             _employeeEvaluation = employeeEvaluation;
             _evaluators = evaluators;
-            _period = period;
         }
 
         public override void Execute()
@@ -30,7 +28,7 @@ namespace CommonJobs.Application.Evaluations
 
             foreach (var e in _evaluators)
             {
-                ExecuteCommand(new GenerateCalificationCommand(_period, _employeeEvaluation.UserName, e));
+                ExecuteCommand(new GenerateCalificationCommand(_employeeEvaluation.Period, _employeeEvaluation.UserName, e, _employeeEvaluation.Template));
             }
         }
     }

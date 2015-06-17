@@ -13,12 +13,14 @@ namespace CommonJobs.Application.EvalForm
         private string _period { get; set; }
         private string _evaluated { get; set; }
         private string _evaluator { get; set; }
+        private string _template { get; set; }
 
-        public GenerateCalificationCommand(string period, string evaluated, string evaluator)
+        public GenerateCalificationCommand(string period, string evaluated, string evaluator, string template)
         {
             _period = period;
             _evaluated = evaluated;
             _evaluator = evaluator;
+            _template = template;
         }
 
         public override void Execute()
@@ -28,7 +30,8 @@ namespace CommonJobs.Application.EvalForm
                 Id = Common.GenerateCalificationId(_period, _evaluated, _evaluator),
                 Period = _period,
                 EvaluatedEmployee = _evaluated,
-                EvaluatorEmployee = _evaluator
+                EvaluatorEmployee = _evaluator,
+                Template = _template
             };
 
             RavenSession.Store(calification);
