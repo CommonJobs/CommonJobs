@@ -55,7 +55,7 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
             //2.b. If so, fetch the users to evaluate
 
             /// GK TESTING, PLEASE DELETE
-            var employees = ExecuteCommand(new GetEmployeesForEvaluationCommand());
+            var employees = ExecuteCommand(new GetEmployeesForEvaluationCommand("2015-06"));
             ExecuteCommand(new GenerateEvaluationsCommand(employees));
 
             ExecuteCommand(new AddEvaluatorsCommand(employees[0], new List<string>() { "Users/gkolocsar" }));
