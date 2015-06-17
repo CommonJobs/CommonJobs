@@ -10,7 +10,7 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations.Models
     {
         public PeriodCreation()
         {
-            Employees = new List<EmployeeEvaluation>();    
+            Employees = new List<EmployeeEvaluation>();
         }
         public List<EmployeeEvaluation> Employees { get; set; }
 

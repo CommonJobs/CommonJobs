@@ -20,17 +20,12 @@ namespace CommonJobs.Domain.Evaluations
         public string Project { get; set; }
 
         //An Id
-        public string Responsible { get; set; }
-
-        //List of Ids
-        public List<string> Evaluators { get; set; }
+        public string Responsible { get; set; }        
 
         //An Id
         public string Template { get; set; }
 
-        public string Period { get; set; }
-
-        public DateTime CreationDate { get; set; }
+        public string Period { get; set; }        
     }
 }
 ;
