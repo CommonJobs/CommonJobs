@@ -55,7 +55,7 @@
         };
     }
 
-    $.getJSON("/Evaluations/api/getEmployeesToGenerateEvalution", function (model) {
+    $.getJSON("/Evaluations/api/getEmployeesToGenerateEvalution/" + evaluationPeriod + "/", function (model) {
         viewmodel = new PeriodCreation(model);
         ko.applyBindings(viewmodel);
         $('.evaluation-owner-field').each(function (index, elem) {

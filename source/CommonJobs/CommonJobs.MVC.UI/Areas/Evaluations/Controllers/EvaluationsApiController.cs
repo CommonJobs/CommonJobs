@@ -22,7 +22,7 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations.Controllers
             //2.b. If so, fetch the users to evaluate
 
             PeriodCreation periodCreation = new PeriodCreation();
-            periodCreation.Employees = ExecuteCommand(new GetEmployeesForEvaluationCommand("2015-06"));
+            periodCreation.Employees = ExecuteCommand(new GetEmployeesForEvaluationCommand(period));
             return Json(periodCreation);
         }
 

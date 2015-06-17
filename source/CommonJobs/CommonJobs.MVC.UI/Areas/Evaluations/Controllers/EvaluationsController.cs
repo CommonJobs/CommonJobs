@@ -43,6 +43,7 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
 
         [AcceptVerbs(HttpVerbs.Get)]
         public ActionResult PeriodCreation(string period){
+            ViewBag.Period = period;
             return View();
         }
 
