@@ -26,7 +26,7 @@
 /*
  * Hide from both screenreaders and browsers: h5bp.com/u
  */
-/* line 76, ../sass/_mixins.scss */
+/* line 76, ../../sass/Evaluations/_mixins.scss */
 .element-hidden {
   display: none !important;
   visibility: hidden;
@@ -35,7 +35,7 @@
 /*
  * Hide only visually, but have it available for screenreaders: h5bp.com/v
  */
-/* line 85, ../sass/_mixins.scss */
+/* line 85, ../../sass/Evaluations/_mixins.scss */
 .visually-hidden {
   border: 0;
   clip: rect(0 0 0 0);
@@ -50,7 +50,7 @@
 /*
  * Hide visually and from screenreaders, but maintain layout
  */
-/* line 100, ../sass/_mixins.scss */
+/* line 100, ../../sass/Evaluations/_mixins.scss */
 .element-invisible {
   visibility: hidden;
 }
@@ -58,7 +58,7 @@
 /*
  * Show element. Block layout.
  */
-/* line 108, ../sass/_mixins.scss */
+/* line 108, ../../sass/Evaluations/_mixins.scss */
 .element-visible {
   display: block;
 }
@@ -66,7 +66,7 @@
 /*
  * Show element. Inline block layout.
  */
-/* line 116, ../sass/_mixins.scss */
+/* line 116, ../../sass/Evaluations/_mixins.scss */
 .element-visible-inline {
   display: inline-block !important;
 }
@@ -74,7 +74,7 @@
 /*
  * Pull element to the left.
  */
-/* line 124, ../sass/_mixins.scss */
+/* line 124, ../../sass/Evaluations/_mixins.scss */
 .pull-left {
   float: left;
 }
@@ -82,7 +82,7 @@
 /*
  * Pull element to the right.
  */
-/* line 132, ../sass/_mixins.scss */
+/* line 132, ../../sass/Evaluations/_mixins.scss */
 .pull-right {
   float: right;
 }
@@ -90,39 +90,39 @@
 /*
  * Clear floats.
  */
-/* line 140, ../sass/_mixins.scss */
+/* line 140, ../../sass/Evaluations/_mixins.scss */
 .clearfix {
   zoom: 1;
 }
-/* line 142, ../sass/_mixins.scss */
+/* line 142, ../../sass/Evaluations/_mixins.scss */
 .clearfix:before, .clearfix:after {
   content: "\0020";
   display: block;
   height: 0;
   overflow: hidden;
 }
-/* line 148, ../sass/_mixins.scss */
+/* line 148, ../../sass/Evaluations/_mixins.scss */
 .clearfix:after {
   clear: both;
 }
 
-/* line 3, ../sass/_base.scss */
+/* line 7, ../../sass/Evaluations/_base.scss */
 html, body {
   margin: 0;
   padding: 0;
 }
 
-/* line 8, ../sass/_base.scss */
+/* line 12, ../../sass/Evaluations/_base.scss */
 body {
   font: 100% Arial, Helvetica, initial;
 }
 
-/* line 12, ../sass/_base.scss */
+/* line 16, ../../sass/Evaluations/_base.scss */
 * {
   box-sizing: border-box;
 }
 
-/* line 16, ../sass/_base.scss */
+/* line 20, ../../sass/Evaluations/_base.scss */
 header {
   position: fixed;
   top: 0;
@@ -132,35 +132,36 @@ header {
   height: 60px;
   width: 100%;
   padding: 10px 0px;
+  z-index: 99999;
 }
 
-/* line 27, ../sass/_base.scss */
+/* line 32, ../../sass/Evaluations/_base.scss */
 .content {
   min-width: 1024px;
   width: 100%;
   padding: 60px 50px 0;
 }
 
-/* line 33, ../sass/_base.scss */
+/* line 38, ../../sass/Evaluations/_base.scss */
 li {
   list-style: none;
   padding-left: 20px;
 }
 
-/* line 6, ../sass/_generar_evaluacion.scss */
+/* line 43, ../../sass/Evaluations/_base.scss */
 h1 {
   margin: 0;
   padding-left: 50px;
 }
 
-/* line 11, ../sass/_generar_evaluacion.scss */
+/* line 48, ../../sass/Evaluations/_base.scss */
 table {
   border-spacing: 0;
   width: 100%;
   margin-bottom: 20px;
 }
 
-/* line 16, ../sass/_generar_evaluacion.scss */
+/* line 54, ../../sass/Evaluations/_base.scss */
 .title {
   background-color: #FFFFFF;
   color: #000000;
@@ -170,125 +171,134 @@ table {
   height: 60px;
 }
 
-/* line 26, ../sass/_generar_evaluacion.scss */
+/* line 64, ../../sass/Evaluations/_base.scss */
 tr:nth-child(even) {
   background-color: #FFFFFF;
 }
 
-/* line 30, ../sass/_generar_evaluacion.scss */
+/* line 68, ../../sass/Evaluations/_base.scss */
 tr:nth-child(odd) {
   background-color: #F2F4F5;
 }
 
-/* line 34, ../sass/_generar_evaluacion.scss */
+/* line 72, ../../sass/Evaluations/_base.scss */
 tr {
   height: 45px;
 }
 
-/* line 38, ../sass/_generar_evaluacion.scss */
+/* line 76, ../../sass/Evaluations/_base.scss */
 th, td {
   text-align: left;
+  color: #444;
 }
 
-/* line 42, ../sass/_generar_evaluacion.scss */
+/* line 3, ../../sass/Evaluations/_generate-evaluation.scss */
 th {
   background-color: #FFFFFF;
-  color: #AAAAAA;
   padding: 10px;
-  border-top: 1px solid black;
-  border-bottom: 1px solid black;
+  border-top: 1px solid #CCC;
+  border-bottom: 1px solid #CCC;
 }
 
-/* line 50, ../sass/_generar_evaluacion.scss */
+/* line 10, ../../sass/Evaluations/_generate-evaluation.scss */
 td {
   padding: 5px 10px;
   font-size: 0.85em;
-  color: #777777;
 }
 
-/* line 56, ../sass/_generar_evaluacion.scss */
-.generar-evaluacion {
-  background-color: black;
-  padding: 20px;
+/* line 15, ../../sass/Evaluations/_generate-evaluation.scss */
+tr.evaluation-generated td {
+  color: #777;
+}
+
+/* line 19, ../../sass/Evaluations/_generate-evaluation.scss */
+.generate-evaluation-button {
+  background-color: #4499F4;
+  padding: 15px;
   float: right;
   color: white;
-  margin-top: 20px;
+  border-radius: 5px;
   border: none;
 }
 
-/* line 65, ../sass/_generar_evaluacion.scss */
+/* line 28, ../../sass/Evaluations/_generate-evaluation.scss */
+.generate-evaluation-button:disabled {
+  background-color: #ccc;
+}
+
+/* line 32, ../../sass/Evaluations/_generate-evaluation.scss */
 input {
   width: 100%;
 }
 
-/* line 69, ../sass/_generar_evaluacion.scss */
+/* line 36, ../../sass/Evaluations/_generate-evaluation.scss */
 th.selected {
   color: #000000;
 }
 
-/* line 73, ../sass/_generar_evaluacion.scss */
+/* line 40, ../../sass/Evaluations/_generate-evaluation.scss */
 td.selected {
   color: #000000;
 }
 
-/* line 4, ../sass/_responsable.scss */
+/* line 4, ../../sass/Evaluations/_responsible.scss */
 .rol {
   text-align: center;
 }
 
-/* line 8, ../sass/_responsable.scss */
+/* line 8, ../../sass/Evaluations/_responsible.scss */
 a.calification-links {
   text-decoration: none;
-  color: black;
+  color: inherit;
 }
 
-/* line 13, ../sass/_responsable.scss */
+/* line 13, ../../sass/Evaluations/_responsible.scss */
 .calification-links.disable {
-  color: #777777;
+  color: #777;
 }
 
-/* line 17, ../sass/_responsable.scss */
+/* line 17, ../../sass/Evaluations/_responsible.scss */
 .link-responsable {
   border: none;
   padding: 10px;
   text-decoration: underline;
   cursor: pointer;
-  color: #777777;
+  color: inherit;
 }
 
-/* line 25, ../sass/_responsable.scss */
+/* line 25, ../../sass/Evaluations/_responsible.scss */
 i {
   padding-left: 20px;
   background-size: contain;
   background-repeat: no-repeat;
 }
 
-/* line 31, ../sass/_responsable.scss */
+/* line 31, ../../sass/Evaluations/_responsible.scss */
 i.add {
-  background-image: url("images/1-02.svg");
+  background-image: url("../Images/Evaluations/1-02.svg");
 }
 
-/* line 35, ../sass/_responsable.scss */
+/* line 35, ../../sass/Evaluations/_responsible.scss */
 i.edit {
-  background-image: url("images/6-02.svg");
+  background-image: url("../Images/Evaluations/6-02.svg");
 }
 
-/* line 39, ../sass/_responsable.scss */
+/* line 39, ../../sass/Evaluations/_responsible.scss */
 i.user {
-  background-image: url("images/3-02.svg");
+  background-image: url("../Images/Evaluations/3-02.svg");
 }
 
-/* line 43, ../sass/_responsable.scss */
+/* line 43, ../../sass/Evaluations/_responsible.scss */
 i.empresa {
-  background-image: url("images/7-02.svg");
+  background-image: url("../Images/Evaluations/7-02.svg");
 }
 
-/* line 47, ../sass/_responsable.scss */
+/* line 47, ../../sass/Evaluations/_responsible.scss */
 i.view {
-  background-image: url("images/4-02.svg");
+  background-image: url("../Images/Evaluations/4-02.svg");
 }
 
-/* line 51, ../sass/_responsable.scss */
+/* line 51, ../../sass/Evaluations/_responsible.scss */
 .devolucion {
   background-color: #4499F4;
   color: white;
@@ -298,7 +308,7 @@ i.view {
   width: 90px;
 }
 
-/* line 60, ../sass/_responsable.scss */
+/* line 60, ../../sass/Evaluations/_responsible.scss */
 li.green:before {
   /* For a round bullet */
   content: '\2022';
@@ -312,7 +322,7 @@ li.green:before {
   font-size: 36px;
 }
 
-/* line 73, ../sass/_responsable.scss */
+/* line 73, ../../sass/Evaluations/_responsible.scss */
 li.blue:before {
   /* For a round bullet */
   content: '\2022';
@@ -326,7 +336,7 @@ li.blue:before {
   font-size: 36px;
 }
 
-/* line 86, ../sass/_responsable.scss */
+/* line 86, ../../sass/Evaluations/_responsible.scss */
 li.red:before {
   /* For a round bullet */
   content: '\2022';
@@ -340,7 +350,7 @@ li.red:before {
   font-size: 36px;
 }
 
-/* line 1, ../sass/_agregar_calificador.scss */
+/* line 1, ../../sass/Evaluations/_add-calificator.scss */
 .content-modal {
   width: 200px;
   border: 1px solid #D9D9D9;
@@ -349,14 +359,14 @@ li.red:before {
   border-radius: 5px;
 }
 
-/* line 9, ../sass/_agregar_calificador.scss */
+/* line 9, ../../sass/Evaluations/_add-calificator.scss */
 .modal-title {
   position: relative;
   height: 22px;
   border-bottom: 1px solid #D9D9D9;
 }
 
-/* line 15, ../sass/_agregar_calificador.scss */
+/* line 15, ../../sass/Evaluations/_add-calificator.scss */
 .modal-title h4 {
   color: #7F7F7F;
   width: auto;
@@ -365,42 +375,42 @@ li.red:before {
   margin: 0;
 }
 
-/* line 23, ../sass/_agregar_calificador.scss */
+/* line 23, ../../sass/Evaluations/_add-calificator.scss */
 .modal-title i.delete {
-  background-image: url("images/2-02.svg");
+  background-image: url("../Images/Evaluations/2-02.svg");
   float: right;
   padding: 9px;
   margin-right: 10px;
 }
 
-/* line 30, ../sass/_agregar_calificador.scss */
+/* line 30, ../../sass/Evaluations/_add-calificator.scss */
 input[type="search"] {
   height: 30px;
   margin: 15px 0px;
   background-color: #ECECFB;
   border: none;
   border-radius: 5px;
-  background-image: url("images/8-02.svg");
+  background-image: url("../Images/Evaluations/8-02.svg");
   background-repeat: no-repeat;
   background-position-x: 154px;
   background-size: 18px;
   background-position-y: 4px;
 }
 
-/* line 43, ../sass/_agregar_calificador.scss */
+/* line 43, ../../sass/Evaluations/_add-calificator.scss */
 .content-add-calificadores {
   height: 100px;
   padding: 0;
   margin-bottom: 10px;
 }
 
-/* line 49, ../sass/_agregar_calificador.scss */
+/* line 49, ../../sass/Evaluations/_add-calificator.scss */
 .content-add-calificadores ul {
   padding: 0;
   margin: 0;
 }
 
-/* line 54, ../sass/_agregar_calificador.scss */
+/* line 54, ../../sass/Evaluations/_add-calificator.scss */
 .content-add-calificadores li {
   padding: 0px;
   color: #777777;
@@ -409,7 +419,7 @@ input[type="search"] {
   padding-top: 5px;
 }
 
-/* line 62, ../sass/_agregar_calificador.scss */
+/* line 62, ../../sass/Evaluations/_add-calificator.scss */
 a.cancelar {
   float: left;
   padding: 5px 0px;
@@ -417,11 +427,105 @@ a.cancelar {
   color: #777777;
 }
 
-/* line 69, ../sass/_agregar_calificador.scss */
+/* line 69, ../../sass/Evaluations/_add-calificator.scss */
 a.guardar {
   float: right;
   padding: 5px 15px;
   background-color: #4499F4;
   color: white;
   border-radius: 5px;
+}
+
+/* line 1, ../../sass/Evaluations/_evaluation.scss */
+.evaluacion th, .evaluacion td {
+  border: none;
+}
+
+/* line 4, ../../sass/Evaluations/_evaluation.scss */
+.top-left {
+  width: 50%;
+  position: relative;
+  height: 250px;
+  float: left;
+  padding: 10px;
+}
+
+/* line 12, ../../sass/Evaluations/_evaluation.scss */
+.top-right {
+  width: 50%;
+  position: relative;
+  height: 250px;
+  float: right;
+  padding: 10px;
+}
+
+/* line 20, ../../sass/Evaluations/_evaluation.scss */
+.top-right h4, .top-left h4 {
+  border-bottom: 1px solid;
+  margin-top: 0;
+}
+
+/* line 25, ../../sass/Evaluations/_evaluation.scss */
+.evaluadores {
+  background-color: #AAAAAA;
+  color: white;
+}
+
+/* line 30, ../../sass/Evaluations/_evaluation.scss */
+.title-evaluacion {
+  background-color: #888888;
+  color: white;
+}
+
+/* line 35, ../../sass/Evaluations/_evaluation.scss */
+.sub-title-evaluacion {
+  background-color: #656565;
+  color: white;
+}
+
+/* line 40, ../../sass/Evaluations/_evaluation.scss */
+.evaluacion th:first-child {
+  width: 70%;
+  text-align: left;
+}
+
+/* line 45, ../../sass/Evaluations/_evaluation.scss */
+.evaluacion td:first-child {
+  width: 80%;
+  text-align: left;
+}
+
+/* line 50, ../../sass/Evaluations/_evaluation.scss */
+.evaluacion td, .evaluacion th {
+  text-align: center;
+}
+
+/* line 54, ../../sass/Evaluations/_evaluation.scss */
+h5.inf-personal {
+  width: 50%;
+  position: relative;
+  float: left;
+  margin-bottom: 15px;
+  margin-top: 0;
+}
+
+/* line 62, ../../sass/Evaluations/_evaluation.scss */
+.top-left span {
+  font-weight: 500;
+}
+
+/* line 66, ../../sass/Evaluations/_evaluation.scss */
+.top-right span {
+  font-weight: 500;
+}
+
+/* line 70, ../../sass/Evaluations/_evaluation.scss */
+.comentarios-generales {
+  width: 100%;
+  height: 165px;
+}
+
+/* line 75, ../../sass/Evaluations/_evaluation.scss */
+input.calificacion {
+  width: 50%;
 }
