@@ -1,4 +1,6 @@
-﻿using CommonJobs.Domain;
+﻿using CommonJobs.Application.Evaluations.EmployeeSearching;
+using CommonJobs.Utilities;
+using CommonJobs.Domain;
 using CommonJobs.Domain.Evaluations;
 using CommonJobs.Infrastructure.RavenDb;
 using Raven.Client.Linq;
@@ -14,28 +16,38 @@ namespace CommonJobs.Application.Evaluations
     /// </summary>
     public class GetEmployeesForEvaluationCommand : Command<List<EmployeeEvaluation>>
     {
+        private string _period;
+
+        public GetEmployeesForEvaluationCommand(string period)
+        {
+            _period = period;
+        }
+
         public override List<EmployeeEvaluation> ExecuteWithResult()
         {
-            var employeesToEval = new List<EmployeeEvaluation>();
-
             RavenQueryStatistics stats;
-
-            var employee = RavenSession
-                .Query<Employee>()
+            IQueryable<Employee_Search.Projection> query = RavenSession
+                .Query<Employee_Search.Projection, Employee_Search>()
                 .Statistics(out stats)
                 .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite());
 
-            foreach (var e in employee)
+            query = query.Where(x => x.IsActive);
+
+            var employeesProjection = query.ToList();
+
+            var employeesToEval = employeesProjection.Select(e =>
             {
-                employeesToEval.Add(new EmployeeEvaluation()
+                var period = e.EvaluationPeriods.EmptyIfNull().Where(x => x.Period == _period).FirstOrDefault();
+                return new EmployeeEvaluation()
                 {
                     UserName = e.UserName,
-                    EmployeeName = e.FullName,
+                    Period = period == null ? null : period.Period,
+                    Responsible = period == null ? null : period.Responsible,
+                    EmployeeName = e.FirstName + ", " + e.LastName,
                     Seniority = e.Seniority,
                     CurrentPosition = e.CurrentPosition
-                });
-            }
-
+                };
+            }).ToList();
             return employeesToEval;
         }
     }

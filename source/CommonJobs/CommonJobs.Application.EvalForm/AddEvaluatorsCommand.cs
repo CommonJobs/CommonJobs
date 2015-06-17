@@ -21,8 +21,8 @@ namespace CommonJobs.Application.Evaluations
 
         public override void Execute()
         {
-            _employeeEvaluation.Evaluators = _evaluators;
-            RavenSession.Store(_employeeEvaluation);
+            //_employeeEvaluation.Evaluators = _evaluators;
+            //RavenSession.Store(_employeeEvaluation);
         }
     }
 }
