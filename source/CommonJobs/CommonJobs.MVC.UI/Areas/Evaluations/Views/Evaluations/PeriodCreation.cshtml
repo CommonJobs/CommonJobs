@@ -17,7 +17,7 @@
 }
 
 <div class="content">
-    <h2>Generar Evaluación</h2>
+    <h2 class="title">Generar Evaluación</h2>
     <table>
         <thead>
             <tr>
@@ -27,7 +27,7 @@
                 <th>Responsable</th>
             </tr>
         </thead>
-        <tbody data-bind="test: console.log($data), foreach: employees">
+        <tbody data-bind="foreach: employees">
             <tr>
                 <td data-bind="text: employeeName"></td>
                 <td data-bind="text: currentPosition"></td>
@@ -38,7 +38,7 @@
             </tr>
         </tbody>
     </table>
-    <button type="submit" class="generate-evaluations-btn">GENERAR EVALUACION</button>
+    <button type="submit" class="generar-evaluacion">GENERAR EVALUACION</button>
 </div>
 
 <script type="text/javascript">
@@ -87,7 +87,13 @@
         }
 
         Employee.prototype.toJs = function () {
-            return { Id: this.id, UserName: this.userName, Responsible: this.responsible() };
+            return {
+                UserName: this.userName,
+                Responsible: this.responsible(),
+                CurrentPosition: this.currentPosition,
+                Seniority: this.seniority,
+                EmployeeName: this.employeeName
+            };
         }
 
         $.getJSON("/Evaluations/api/getEmployeesToGenerateEvalution", function (model) {
@@ -98,16 +104,19 @@
             });
         });
 
-        $('.generate-evaluations-btn').on('click', function () {
+        $('button.generar-evaluacion').on('click', function () {
             var model = viewmodel.toJs();
-
+            var modelFiltered = _.filter(model, function (e) {
+                if (e.responsible() && !e.creationDate) {
+                    return e.toJs();
+                }
+            });
             $.ajax("/Evaluations/api/GenerateEvalutions", {
                 type: "POST",
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
-                data: JSON.stringify(model),
+                data: JSON.stringify(modelFiltered),
                 error: function (jqXHR) {
-                    alert("Error saving MenuDefinition");
                     debugger;
                 },
                 success: function () {
