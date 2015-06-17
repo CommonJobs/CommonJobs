@@ -13,6 +13,7 @@ using System.Web.Mvc;
 using CommonJobs.Utilities;
 using CommonJobs.Domain.Evaluations;
 using CommonJobs.Mvc.UI.Areas.Evaluations.Models;
+using CommonJobs.Application.Evaluations;
 
 namespace CommonJobs.Mvc.UI.Areas.Evaluations
 {
@@ -52,6 +53,13 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
             //2. Check if the current user has to evaluate someone
             //2.a. If not, redirect to /Evaluations/{period}/{username}
             //2.b. If so, fetch the users to evaluate
+
+            /// GK TESTING, PLEASE DELETE
+            var employees = ExecuteCommand(new GetEmployeesForEvaluationCommand());
+            ExecuteCommand(new GenerateEvaluationsCommand(employees));
+
+            ExecuteCommand(new AddEvaluatorsCommand(employees[0], new List<string>() { "Users/gkolocsar" }));
+            /// GK TESTING, PLEASE DELETE
 
             return View();
         }

@@ -9,9 +9,9 @@ namespace CommonJobs.Application.Evaluations
 {
     public class ProcessGenerateEvaluations : Command
     {
-        public List<EmployeeToEval> EmployeesToEval { get; private set; }
+        public List<EmployeeEvaluation> EmployeesToEval { get; private set; }
 
-        public ProcessGenerateEvaluations(List<EmployeeToEval> employeesToEval)
+        public ProcessGenerateEvaluations(List<EmployeeEvaluation> employeesToEval)
         {
             EmployeesToEval = employeesToEval;
         }
