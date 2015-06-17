@@ -68,6 +68,7 @@
     <Compile Include="AddEvaluatorsCommand.cs" />
     <Compile Include="Common.cs" />
     <Compile Include="EmployeeSearching\Employee_Search.cs" />
+    <Compile Include="GenerateCalificationCommand.cs" />
     <Compile Include="GenerateEvaluationsCommand.cs" />
     <Compile Include="GetEmployeesForEvaluationCommand.cs" />
     <Compile Include="GetTemplateCommand.cs" />

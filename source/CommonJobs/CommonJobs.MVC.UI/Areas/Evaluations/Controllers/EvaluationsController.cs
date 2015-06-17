@@ -55,10 +55,10 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
             //2.b. If so, fetch the users to evaluate
 
             /// GK TESTING, PLEASE DELETE
-            var employees = ExecuteCommand(new GetEmployeesForEvaluationCommand());
-            ExecuteCommand(new GenerateEvaluationsCommand(employees));
+            var employees = ExecuteCommand(new GetEmployeesForEvaluationCommand("2015-06"));
+            ExecuteCommand(new GenerateEvaluationsCommand("2015-06", employees));
 
-            ExecuteCommand(new AddEvaluatorsCommand(employees[0], new List<string>() { "Users/gkolocsar" }));
+            ExecuteCommand(new AddEvaluatorsCommand("2015-06", employees[0], new List<string>() { "Users/gkolocsar" }));
             /// GK TESTING, PLEASE DELETE
 
             return View();

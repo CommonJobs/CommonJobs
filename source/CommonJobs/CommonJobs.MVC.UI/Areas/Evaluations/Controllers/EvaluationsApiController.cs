@@ -12,7 +12,7 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations.Controllers
 {
     public class EvaluationsApiController : CommonJobsController
     {
-        
+
         [AcceptVerbs(HttpVerbs.Get)]
         public JsonNetResult GetEmployeesToGenerateEvalution(string period)
         {
@@ -22,7 +22,7 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations.Controllers
             //2.b. If so, fetch the users to evaluate
 
             PeriodCreation periodCreation = new PeriodCreation();
-            periodCreation.Employees = ExecuteCommand(new GetEmployeesForEvaluationCommand());
+            periodCreation.Employees = ExecuteCommand(new GetEmployeesForEvaluationCommand(period));
             return Json(periodCreation);
         }
 
