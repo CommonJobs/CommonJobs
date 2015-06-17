@@ -141,6 +141,15 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Evaluations\evaluations.css" />
+    <Content Include="Content\Images\Evaluations\1-02.svg" />
+    <Content Include="Content\Images\Evaluations\2-02.svg" />
+    <Content Include="Content\Images\Evaluations\3-02.svg" />
+    <Content Include="Content\Images\Evaluations\4-02.svg" />
+    <Content Include="Content\Images\Evaluations\5-02.svg" />
+    <Content Include="Content\Images\Evaluations\6-02.svg" />
+    <Content Include="Content\Images\Evaluations\7-02.svg" />
+    <Content Include="Content\Images\Evaluations\8-02.svg" />
+    <Content Include="Content\Images\Evaluations\9-01.svg" />
     <Content Include="Scripts\evaluations-admin.js" />
     <Content Include="Scripts\evaluations-common.js" />
     <Content Include="Content\Home\absence.png" />
