@@ -1,4 +1,4 @@
-﻿/**
+/**
  * 
  * Define mixins, functions, 
  * animations, placeholders, 
@@ -134,82 +134,294 @@ header {
   padding: 10px 0px;
 }
 
-/* line 26, ../sass/_base.scss */
+/* line 27, ../sass/_base.scss */
 .content {
   min-width: 1024px;
   width: 100%;
   padding: 60px 50px 0;
 }
 
-/* line 5, ../sass/_generar_evaluacion.scss */
+/* line 33, ../sass/_base.scss */
+li {
+  list-style: none;
+  padding-left: 20px;
+}
+
+/* line 6, ../sass/_generar_evaluacion.scss */
 h1 {
   margin: 0;
   padding-left: 50px;
 }
 
-/* line 10, ../sass/_generar_evaluacion.scss */
+/* line 11, ../sass/_generar_evaluacion.scss */
 table {
   border-spacing: 0;
   width: 100%;
+  margin-bottom: 20px;
 }
 
-/* line 15, ../sass/_generar_evaluacion.scss */
+/* line 16, ../sass/_generar_evaluacion.scss */
 .title {
-  background-color: #888;
-  color: white;
+  background-color: #FFFFFF;
+  color: #000000;
   width: 100%;
   padding: 10px 0px;
   margin: 0;
+  height: 60px;
 }
 
-/* line 24, ../sass/_generar_evaluacion.scss */
+/* line 26, ../sass/_generar_evaluacion.scss */
 tr:nth-child(even) {
-  background-color: #ddd;
+  background-color: #FFFFFF;
 }
 
-/* line 28, ../sass/_generar_evaluacion.scss */
+/* line 30, ../sass/_generar_evaluacion.scss */
 tr:nth-child(odd) {
-  background-color: #fff;
+  background-color: #F2F4F5;
 }
 
-/* line 32, ../sass/_generar_evaluacion.scss */
+/* line 34, ../sass/_generar_evaluacion.scss */
+tr {
+  height: 45px;
+}
+
+/* line 38, ../sass/_generar_evaluacion.scss */
 th, td {
   text-align: left;
 }
 
-/* line 36, ../sass/_generar_evaluacion.scss */
+/* line 42, ../sass/_generar_evaluacion.scss */
 th {
-  background-color: #aaa;
-  color: white;
+  background-color: #FFFFFF;
+  color: #AAAAAA;
   padding: 10px;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
 }
 
-/* line 42, ../sass/_generar_evaluacion.scss */
+/* line 50, ../sass/_generar_evaluacion.scss */
 td {
   padding: 5px 10px;
+  font-size: 0.85em;
+  color: #777777;
 }
 
-/* line 46, ../sass/_generar_evaluacion.scss */
-button {
+/* line 56, ../sass/_generar_evaluacion.scss */
+.generar-evaluacion {
+  background-color: black;
   padding: 20px;
   float: right;
-  background-color: black;
   color: white;
   margin-top: 20px;
   border: none;
 }
 
-/* line 55, ../sass/_generar_evaluacion.scss */
+/* line 65, ../sass/_generar_evaluacion.scss */
 input {
   width: 100%;
 }
 
-/* line 2, ../sass/_responsable.scss */
-.button {
-  padding: 10px;
+/* line 69, ../sass/_generar_evaluacion.scss */
+th.selected {
+  color: #000000;
 }
 
-/* line 6, ../sass/_responsable.scss */
+/* line 73, ../sass/_generar_evaluacion.scss */
+td.selected {
+  color: #000000;
+}
+
+/* line 4, ../sass/_responsable.scss */
 .rol {
   text-align: center;
+}
+
+/* line 8, ../sass/_responsable.scss */
+a.calification-links {
+  text-decoration: none;
+  color: black;
+}
+
+/* line 13, ../sass/_responsable.scss */
+.calification-links.disable {
+  color: #777777;
+}
+
+/* line 17, ../sass/_responsable.scss */
+.link-responsable {
+  border: none;
+  padding: 10px;
+  text-decoration: underline;
+  cursor: pointer;
+  color: #777777;
+}
+
+/* line 25, ../sass/_responsable.scss */
+i {
+  padding-left: 20px;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+/* line 31, ../sass/_responsable.scss */
+i.add {
+  background-image: url("images/1-02.svg");
+}
+
+/* line 35, ../sass/_responsable.scss */
+i.edit {
+  background-image: url("images/6-02.svg");
+}
+
+/* line 39, ../sass/_responsable.scss */
+i.user {
+  background-image: url("images/3-02.svg");
+}
+
+/* line 43, ../sass/_responsable.scss */
+i.empresa {
+  background-image: url("images/7-02.svg");
+}
+
+/* line 47, ../sass/_responsable.scss */
+i.view {
+  background-image: url("images/4-02.svg");
+}
+
+/* line 51, ../sass/_responsable.scss */
+.devolucion {
+  background-color: #4499F4;
+  color: white;
+  border: none;
+  padding: 5px;
+  border-radius: 5px;
+  width: 90px;
+}
+
+/* line 60, ../sass/_responsable.scss */
+li.green:before {
+  /* For a round bullet */
+  content: '\2022';
+  display: block;
+  position: relative;
+  max-width: 0;
+  max-height: 0;
+  left: -15px;
+  top: -15px;
+  color: #6DC32E;
+  font-size: 36px;
+}
+
+/* line 73, ../sass/_responsable.scss */
+li.blue:before {
+  /* For a round bullet */
+  content: '\2022';
+  display: block;
+  position: relative;
+  max-width: 0;
+  max-height: 0;
+  left: -15px;
+  top: -15px;
+  color: #4499F4;
+  font-size: 36px;
+}
+
+/* line 86, ../sass/_responsable.scss */
+li.red:before {
+  /* For a round bullet */
+  content: '\2022';
+  display: block;
+  position: relative;
+  max-width: 0;
+  max-height: 0;
+  left: -15px;
+  top: -15px;
+  color: #EB4A2F;
+  font-size: 36px;
+}
+
+/* line 1, ../sass/_agregar_calificador.scss */
+.content-modal {
+  width: 200px;
+  border: 1px solid #D9D9D9;
+  padding: 8px;
+  height: 245px;
+  border-radius: 5px;
+}
+
+/* line 9, ../sass/_agregar_calificador.scss */
+.modal-title {
+  position: relative;
+  height: 22px;
+  border-bottom: 1px solid #D9D9D9;
+}
+
+/* line 15, ../sass/_agregar_calificador.scss */
+.modal-title h4 {
+  color: #7F7F7F;
+  width: auto;
+  float: left;
+  padding: 0;
+  margin: 0;
+}
+
+/* line 23, ../sass/_agregar_calificador.scss */
+.modal-title i.delete {
+  background-image: url("images/2-02.svg");
+  float: right;
+  padding: 9px;
+  margin-right: 10px;
+}
+
+/* line 30, ../sass/_agregar_calificador.scss */
+input[type="search"] {
+  height: 30px;
+  margin: 15px 0px;
+  background-color: #ECECFB;
+  border: none;
+  border-radius: 5px;
+  background-image: url("images/8-02.svg");
+  background-repeat: no-repeat;
+  background-position-x: 154px;
+  background-size: 18px;
+  background-position-y: 4px;
+}
+
+/* line 43, ../sass/_agregar_calificador.scss */
+.content-add-calificadores {
+  height: 100px;
+  padding: 0;
+  margin-bottom: 10px;
+}
+
+/* line 49, ../sass/_agregar_calificador.scss */
+.content-add-calificadores ul {
+  padding: 0;
+  margin: 0;
+}
+
+/* line 54, ../sass/_agregar_calificador.scss */
+.content-add-calificadores li {
+  padding: 0px;
+  color: #777777;
+  border-bottom: 1px solid #D9D9D9;
+  padding-bottom: 5px;
+  padding-top: 5px;
+}
+
+/* line 62, ../sass/_agregar_calificador.scss */
+a.cancelar {
+  float: left;
+  padding: 5px 0px;
+  text-decoration: underline;
+  color: #777777;
+}
+
+/* line 69, ../sass/_agregar_calificador.scss */
+a.guardar {
+  float: right;
+  padding: 5px 15px;
+  background-color: #4499F4;
+  color: white;
+  border-radius: 5px;
 }

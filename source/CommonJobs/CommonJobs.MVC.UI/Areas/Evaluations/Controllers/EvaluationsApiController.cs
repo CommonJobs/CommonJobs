@@ -27,14 +27,9 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public JsonNetResult GenerateEvalutions(PeriodCreation model)
+        public void GenerateEvalutions(PeriodCreation model)
         {
-            //1. Check if period exists by querying Evaluations collection.
-            //2. Check if the current user has to evaluate someone
-            //2.a. If not, redirect to /Evaluations/{period}/{username}
-            //2.b. If so, fetch the users to evaluate
-
-            return Json("ok");
+            ExecuteCommand(new GenerateEvaluationsCommand(model.Employees));
         }
     }
 }
