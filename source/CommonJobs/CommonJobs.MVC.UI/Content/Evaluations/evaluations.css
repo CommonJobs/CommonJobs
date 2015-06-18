@@ -272,37 +272,31 @@ tr:nth-child(even) {
 }
 
 /* line 72, ../../sass/Evaluations/_base.scss */
-tr:nth-child(odd) td {
-  color: #828282;
-}
-
-/* line 76, ../../sass/Evaluations/_base.scss */
-tr:nth-child(even) tb {
-  color: #444;
-}
-
-/* line 80, ../../sass/Evaluations/_base.scss */
 tr {
   height: 45px;
 }
 
-/* line 84, ../../sass/Evaluations/_base.scss */
+/* line 76, ../../sass/Evaluations/_base.scss */
 th, td {
   text-align: left;
-  color: #444;
+  color: #777;
 }
 
 /* line 1, ../../sass/Evaluations/_pop-up.scss */
 .content-pop-up {
-  width: 400px;
+  width: 480px;
   border: 1px solid #D9D9D9;
-  padding: 8px;
-  height: 200px;
+  padding: 30px 40px;
   border-radius: 5px;
   display: none;
 }
 
-/* line 9, ../../sass/Evaluations/_pop-up.scss */
+/* line 10, ../../sass/Evaluations/_pop-up.scss */
+.content-pop-up .modal-header {
+  padding: 0px;
+}
+
+/* line 14, ../../sass/Evaluations/_pop-up.scss */
 .content-pop-up button.close {
   float: right;
   position: relative;
@@ -311,21 +305,22 @@ th, td {
   zoom: 2;
 }
 
-/* line 17, ../../sass/Evaluations/_pop-up.scss */
+/* line 22, ../../sass/Evaluations/_pop-up.scss */
 .content-pop-up .modal-title {
-  border-bottom: 1px solid #D9D9D9;
   padding: 5px;
   height: auto;
   color: #444;
-}
-
-/* line 24, ../../sass/Evaluations/_pop-up.scss */
-.content-pop-up p {
-  color: #666;
-  padding: 0px 5px;
+  font-size: 16px;
 }
 
 /* line 29, ../../sass/Evaluations/_pop-up.scss */
+.content-pop-up p {
+  color: #666;
+  padding: 15px 0px;
+  margin: 0;
+}
+
+/* line 35, ../../sass/Evaluations/_pop-up.scss */
 .model-footer button {
   position: relative;
   padding: 10px;
@@ -335,11 +330,12 @@ th, td {
   border: none;
 }
 
-/* line 38, ../../sass/Evaluations/_pop-up.scss */
-.model-footer button.ok {
-  float: right;
-  margin-right: 10%;
-  margin-top: 5%;
+/* line 44, ../../sass/Evaluations/_pop-up.scss */
+.model-footer button {
+  float: left;
+  padding: 5px 25px;
+  height: 40px;
+  margin-right: 10px;
 }
 
 /* line 3, ../../sass/Evaluations/_generate-evaluation.scss */

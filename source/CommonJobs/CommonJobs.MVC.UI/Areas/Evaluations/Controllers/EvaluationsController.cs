@@ -14,6 +14,7 @@ using CommonJobs.Utilities;
 using CommonJobs.Domain.Evaluations;
 using CommonJobs.Mvc.UI.Areas.Evaluations.Models;
 using CommonJobs.Application.Evaluations;
+using CommonJobs.Application.EvalForm.Commands;
 
 namespace CommonJobs.Mvc.UI.Areas.Evaluations
 {
@@ -56,10 +57,24 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
             //2.b. If so, fetch the users to evaluate
 
             /// GK TESTING, PLEASE DELETE
-            var employees = ExecuteCommand(new GetEmployeesForEvaluationCommand("2015-06"));
-            ExecuteCommand(new GenerateEvaluationsCommand(employees));
+            //var employees = ExecuteCommand(new GetEmployeesForEvaluationCommand("2015-06"));
+            //ExecuteCommand(new GenerateEvaluationsCommand(employees));
 
-            ExecuteCommand(new AddEvaluatorsCommand(employees[0], new List<string>() { "Users/gkolocsar" }));
+            //ExecuteCommand(new AddEvaluatorsCommand(employees[0], new List<string>() { "Users/gkolocsar" }));
+
+            List<EmployeeEvaluation> list = new List<EmployeeEvaluation>();
+            list.Add(new EmployeeEvaluation()
+            {
+                UserName = "alavigne",
+                Responsible = "mjackson",
+                Period = "2015-06",
+                Template = ""
+            });
+
+            ExecuteCommand(new GenerateEvaluationsCommand(list, "2015-06"));
+
+            var employees = ExecuteCommand(new GetEvaluatorEmployeesCommand("mjackson"));
+
             /// GK TESTING, PLEASE DELETE
 
             return View();

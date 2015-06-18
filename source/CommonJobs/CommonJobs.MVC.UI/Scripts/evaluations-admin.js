@@ -33,7 +33,7 @@
         this.id = '';
         this.userName = '';
         this.responsible = ko.observable('');
-        this.employeeName = '';
+        this.fullName = '';
         this.currentPosition = '';
         this.seniority = '';
         this.period = '';
@@ -46,7 +46,7 @@
         this.id = data.Id;
         this.userName = data.UserName;
         this.responsible(data.Responsible || '');
-        this.employeeName = data.EmployeeName;
+        this.fullName = data.FullName;
         this.currentPosition = data.CurrentPosition;
         this.seniority = data.Seniority;
         this.period = data.Period;
@@ -58,7 +58,7 @@
             Responsible: this.responsible(),
             CurrentPosition: this.currentPosition,
             Seniority: this.seniority,
-            EmployeeName: this.employeeName,
+            FullName: this.fullName,
             Period: this.period
         };
     }
@@ -84,8 +84,8 @@
             data: JSON.stringify(modelFiltered),
             complete: function (response) {
                 var modalContainer = $('#evaluations-generated-confirm');
-                var countText = (response.responseText == '1') ? "1 evaluación" : response.responseText + " evaluaciones";
-                modalContainer.children().find('#count').text(response.responseText);
+                var countText = (response.responseText == '1') ? "Se ha generado 1 evaluación correctamente" : "Se han generado " + response.responseText + " evaluaciones correctamente";
+                modalContainer.children().find('#count').text(countText);
                 modalContainer.modal('show');
             }
         });

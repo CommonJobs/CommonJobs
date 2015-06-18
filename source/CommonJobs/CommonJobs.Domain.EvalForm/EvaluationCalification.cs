@@ -6,18 +6,36 @@ using System.Text;
 
 namespace CommonJobs.Domain.Evaluations
 {
+    /// <summary>
+    /// There are four types of califications:
+    /// Auto: The auto-evaluation
+    /// Responsible: The responsible's evaluation
+    /// Evaluator: The added evaluators evaluations
+    /// Company: The company evaluation
+    /// </summary>
+    public enum CalificationType
+    {
+        Auto,
+        Responsible,
+        Evaluator,
+        Company
+    }
+
     public class EvaluationCalification
     {
         public string Id { get; set; }
 
-        //TODO: It's necessary? We have it in the EmployeeEvaluation object
+        public CalificationType Owner { get; set; }
+
+        public string EvaluationId { get; set; }
+
         public string Period { get; set; }
+
+        public string Template { get; set; }
 
         public string EvaluatedEmployee { get; set; }
 
         public string EvaluatorEmployee { get; set; }
-
-        /// Evaluation fields
 
         public string StrengthsComment { get; set; }
 
@@ -25,9 +43,10 @@ namespace CommonJobs.Domain.Evaluations
 
         public string ActionPlanComment { get; set; }
 
-        //Won't be always used
         public string EvaluatedEmployeeComment { get; set; }
 
-        public List<KeyValuePair<string, decimal>> Califications { get; set; }        
+        public List<KeyValuePair<string, decimal>> Califications { get; set; }
+
+        public bool Finished { get; set; }
     }
 }
