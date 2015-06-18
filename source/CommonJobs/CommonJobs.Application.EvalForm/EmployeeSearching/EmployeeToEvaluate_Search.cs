@@ -13,7 +13,6 @@ namespace CommonJobs.Application.EvalForm.EmployeeSearching
         {
             public bool IsResponsible { get; set; }
             public string UserName { get; set; }
-            public string FullName { get; set; }
         }
 
         public class Projection
@@ -48,8 +47,8 @@ namespace CommonJobs.Application.EvalForm.EmployeeSearching
                     AutoEvaluationDone = false,
                     ResponsibleEvaluationDone = false,
                     CompanyEvaluationDone = false,
-                    OpenToDevolution = false,
-                    Finished = false
+                    OpenToDevolution = evaluation.OpenToDevolution,
+                    Finished = evaluation.Finished
                 });
 
             AddMap<EvaluationCalification>(califications =>
@@ -57,66 +56,39 @@ namespace CommonJobs.Application.EvalForm.EmployeeSearching
                 select new
                 {
                     Id = calification.EvaluationId,
-                    UserName = calification.EvaluatedEmployee,
+                    UserName = (string)null,
                     FullName = (string)null,
                     CurrentPosition = (string)null,
                     Seniority = (string)null,
                     Period = (string)null,
-
-                    Evaluators = new dynamic[0],
-                    AutoEvaluationDone = false,
-                    ResponsibleEvaluationDone = false,
-                    CompanyEvaluationDone = false,
+                    Evaluators = (calification.Owner != CalificationType.Auto && calification.Owner != CalificationType.Company)
+                        ? new[] { new { IsResponsible = calification.Owner == CalificationType.Responsible, UserName = calification.EvaluatorEmployee } }
+                        : new dynamic[0],
+                    AutoEvaluationDone = calification.Owner == CalificationType.Auto && calification.Finished,
+                    ResponsibleEvaluationDone = calification.Owner == CalificationType.Responsible && calification.Finished,
+                    CompanyEvaluationDone = calification.Owner == CalificationType.Company && calification.Finished,
                     OpenToDevolution = false,
                     Finished = false
                 });
 
-            //AddMap<Employee>(employees =>
-            //    from employee in employees
-            //    select new
-            //    {
-            //        Id = employee.Id,
-            //        UserName = employee.UserName,
-            //        IsActive = employee.TerminationDate == null,
-            //        FirstName = employee.FirstName,
-            //        LastName = employee.LastName,
-            //        CurrentPosition = employee.CurrentPosition,
-            //        Seniority = employee.Seniority,
-            //        Project = (string)null,
-            //        EvaluationPeriods = new dynamic[0]
-            //    });
-
-
-            //AddMap<EmployeeEvaluation>(evaluations =>
-            //    from evaluation in evaluations
-            //    select new
-            //    {
-            //        Id = (string)null,
-            //        UserName = evaluation.UserName,
-            //        IsActive = false,
-            //        FirstName = (string)null,
-            //        LastName = (string)null,
-            //        CurrentPosition = (string)null,
-            //        Seniority = (string)null,
-            //        Project = (string)null,
-            //        EvaluationPeriods = new[] { new { Period = evaluation.Period, Responsible = evaluation.Responsible } }
-            //    });
-
-            //Reduce = docs =>
-            //    from doc in docs
-            //    group doc by doc.UserName into g
-            //    select new
-            //    {
-            //        Id = g.Where(x => x.Id != null).Select(x => x.Id).FirstOrDefault(),
-            //        UserName = g.Key,
-            //        IsActive = g.Any(x => x.IsActive),
-            //        FirstName = g.Where(x => x.FirstName != null).Select(x => x.FirstName).FirstOrDefault(),
-            //        LastName = g.Where(x => x.LastName != null).Select(x => x.LastName).FirstOrDefault(),
-            //        CurrentPosition = g.Where(x => x.CurrentPosition != null).Select(x => x.CurrentPosition).FirstOrDefault(),
-            //        Seniority = g.Where(x => x.Seniority != null).Select(x => x.Seniority).FirstOrDefault(),
-            //        Project = g.Where(x => x.Project != null).Select(x => x.Project).FirstOrDefault(),
-            //        EvaluationPeriods = g.SelectMany(x => x.EvaluationPeriods).Where(x => x != null).ToArray(),
-            //    };
+            Reduce = docs =>
+                from doc in docs
+                group doc by doc.UserName into g
+                select new
+                {
+                    Id = g.Where(x => x.Id != null).Select(x => x.Id).FirstOrDefault(),
+                    UserName = g.Key,
+                    FullName = g.Where(x => x.FullName != null).Select(x => x.FullName).FirstOrDefault(),
+                    CurrentPosition = g.Where(x => x.CurrentPosition != null).Select(x => x.CurrentPosition).FirstOrDefault(),
+                    Seniority = g.Where(x => x.Seniority != null).Select(x => x.Seniority).FirstOrDefault(),
+                    Period = g.Where(x => x.Period != null).Select(x => x.Period).FirstOrDefault(),
+                    Evaluators = g.SelectMany(x => x.Evaluators).ToArray(),
+                    AutoEvaluationDone = g.Any(x => x.AutoEvaluationDone),
+                    ResponsibleEvaluationDone = g.Any(x => x.ResponsibleEvaluationDone),
+                    CompanyEvaluationDone = g.Any(x => x.CompanyEvaluationDone),
+                    OpenToDevolution = g.Any(x => x.OpenToDevolution),
+                    Finished = g.Any(x => x.Finished)
+                };
         }
     }
 }

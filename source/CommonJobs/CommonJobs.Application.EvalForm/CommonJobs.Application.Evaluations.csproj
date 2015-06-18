@@ -66,7 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AddEvaluatorsCommand.cs" />
-    <Compile Include="Commands\GetEmployeesToEvaluateCommand.cs" />
+    <Compile Include="Commands\GetEvaluatorEmployeesCommand.cs" />
     <Compile Include="Common.cs" />
     <Compile Include="EmployeeEvaluationDTO.cs" />
     <Compile Include="EmployeeSearching\EmployeeToEvaluate_Search.cs" />

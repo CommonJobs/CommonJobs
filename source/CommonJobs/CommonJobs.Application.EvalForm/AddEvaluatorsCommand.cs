@@ -28,7 +28,7 @@ namespace CommonJobs.Application.Evaluations
 
             foreach (var e in _evaluators)
             {
-                ExecuteCommand(new GenerateCalificationCommand(_employeeEvaluation.Period, _employeeEvaluation.UserName, e, _employeeEvaluation.Template));
+                ExecuteCommand(new GenerateCalificationCommand(_employeeEvaluation.Period, _employeeEvaluation.UserName, e, _employeeEvaluation.Template, CalificationType.Evaluator, _employeeEvaluation.Id));
             }
         }
     }

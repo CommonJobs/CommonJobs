@@ -24,8 +24,8 @@ namespace CommonJobs.Application.Evaluations
                 e.Id = Common.GenerateEvaluationId(e.UserName, e.Period);
                 RavenSession.Store(e);
                 //After we create the evaluation, we create the calification document for the auto-evaluation and the responsible
-                ExecuteCommand(new GenerateCalificationCommand(e.Period, e.UserName, e.UserName, e.Template));
-                ExecuteCommand(new GenerateCalificationCommand(e.Period, e.UserName, e.Responsible, e.Template));
+                ExecuteCommand(new GenerateCalificationCommand(e.Period, e.UserName, e.UserName, e.Template, CalificationType.Auto, e.Id));
+                ExecuteCommand(new GenerateCalificationCommand(e.Period, e.UserName, e.Responsible, e.Template, CalificationType.Responsible, e.Id));
             }
         }
     }

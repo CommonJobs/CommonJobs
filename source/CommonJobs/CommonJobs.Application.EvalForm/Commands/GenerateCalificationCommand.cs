@@ -14,13 +14,17 @@ namespace CommonJobs.Application.EvalForm
         private string _evaluated { get; set; }
         private string _evaluator { get; set; }
         private string _template { get; set; }
+        private CalificationType _owner { get; set; }
+        private string _evaluationId { get; set; }
 
-        public GenerateCalificationCommand(string period, string evaluated, string evaluator, string template)
+        public GenerateCalificationCommand(string period, string evaluated, string evaluator, string template, CalificationType owner, string evaluationId)
         {
             _period = period;
             _evaluated = evaluated;
             _evaluator = evaluator;
             _template = template;
+            _owner = owner;
+            _evaluationId = evaluationId;
         }
 
         public override void Execute()
@@ -28,6 +32,8 @@ namespace CommonJobs.Application.EvalForm
             var calification = new EvaluationCalification()
             {
                 Id = Common.GenerateCalificationId(_period, _evaluated, _evaluator),
+                Owner = _owner,
+                EvaluationId = _evaluationId,
                 Period = _period,
                 EvaluatedEmployee = _evaluated,
                 EvaluatorEmployee = _evaluator,

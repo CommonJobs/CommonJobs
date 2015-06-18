@@ -27,6 +27,10 @@ namespace CommonJobs.Domain.Evaluations
         public string Template { get; set; }
 
         public string Period { get; set; }
+
+        public bool OpenToDevolution { get; set; }
+
+        public bool Finished { get; set; }
     }
 }
-;
+
