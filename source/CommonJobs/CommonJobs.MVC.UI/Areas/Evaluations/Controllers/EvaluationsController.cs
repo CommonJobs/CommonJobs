@@ -62,6 +62,17 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
 
             //ExecuteCommand(new AddEvaluatorsCommand(employees[0], new List<string>() { "Users/gkolocsar" }));
 
+            List<EmployeeEvaluation> list = new List<EmployeeEvaluation>();
+            list.Add(new EmployeeEvaluation()
+            {
+                UserName = "alavigne",
+                Responsible = "mjackson",
+                Period = "2015-06",
+                Template = ""
+            });
+
+            ExecuteCommand(new GenerateEvaluationsCommand(list));
+
             var employees = ExecuteCommand(new GetEvaluatorEmployeesCommand("mjackson"));
 
             /// GK TESTING, PLEASE DELETE

@@ -1,4 +1,5 @@
 ﻿using CommonJobs.Domain.Evaluations;
+using Raven.Abstractions.Indexing;
 using Raven.Client.Indexes;
 using System;
 using System.Collections.Generic;
@@ -9,11 +10,6 @@ namespace CommonJobs.Application.EvalForm.EmployeeSearching
 {
     public class EmployeeToEvaluate_Search : AbstractMultiMapIndexCreationTask<EmployeeToEvaluate_Search.Projection>
     {
-        public class Evaluator
-        {
-            public bool IsResponsible { get; set; }
-            public string UserName { get; set; }
-        }
 
         public class Projection
         {
@@ -23,7 +19,8 @@ namespace CommonJobs.Application.EvalForm.EmployeeSearching
             public string CurrentPosition { get; set; }
             public string Seniority { get; set; }
             public string Period { get; set; }
-            public Evaluator[] Evaluators { get; set; }
+            public string[] Evaluators { get; set; }
+            public string Responsible { get; set; }
             public bool AutoEvaluationDone { get; set; }
             public bool ResponsibleEvaluationDone { get; set; }
             public bool CompanyEvaluationDone { get; set; }
@@ -44,6 +41,7 @@ namespace CommonJobs.Application.EvalForm.EmployeeSearching
                     Seniority = evaluation.Seniority,
                     Period = evaluation.Period,
                     Evaluators = new dynamic[0],
+                    Responsible = evaluation.Responsible,
                     AutoEvaluationDone = false,
                     ResponsibleEvaluationDone = false,
                     CompanyEvaluationDone = false,
@@ -56,14 +54,15 @@ namespace CommonJobs.Application.EvalForm.EmployeeSearching
                 select new
                 {
                     Id = calification.EvaluationId,
-                    UserName = (string)null,
+                    UserName = calification.EvaluatedEmployee,
                     FullName = (string)null,
                     CurrentPosition = (string)null,
                     Seniority = (string)null,
                     Period = (string)null,
                     Evaluators = (calification.Owner != CalificationType.Auto && calification.Owner != CalificationType.Company)
-                        ? new[] { new { IsResponsible = calification.Owner == CalificationType.Responsible, UserName = calification.EvaluatorEmployee } }
+                        ? new [] { calification.EvaluatorEmployee }
                         : new dynamic[0],
+                    Responsible = (string)null,
                     AutoEvaluationDone = calification.Owner == CalificationType.Auto && calification.Finished,
                     ResponsibleEvaluationDone = calification.Owner == CalificationType.Responsible && calification.Finished,
                     CompanyEvaluationDone = calification.Owner == CalificationType.Company && calification.Finished,
@@ -82,13 +81,16 @@ namespace CommonJobs.Application.EvalForm.EmployeeSearching
                     CurrentPosition = g.Where(x => x.CurrentPosition != null).Select(x => x.CurrentPosition).FirstOrDefault(),
                     Seniority = g.Where(x => x.Seniority != null).Select(x => x.Seniority).FirstOrDefault(),
                     Period = g.Where(x => x.Period != null).Select(x => x.Period).FirstOrDefault(),
-                    Evaluators = g.SelectMany(x => x.Evaluators).ToArray(),
+                    Evaluators = g.SelectMany(x => x.Evaluators).Where(x => x != null).ToArray(),
+                    Responsible = g.Where(x => x.Responsible != null).Select(x => x.Responsible).FirstOrDefault(),
                     AutoEvaluationDone = g.Any(x => x.AutoEvaluationDone),
                     ResponsibleEvaluationDone = g.Any(x => x.ResponsibleEvaluationDone),
                     CompanyEvaluationDone = g.Any(x => x.CompanyEvaluationDone),
                     OpenToDevolution = g.Any(x => x.OpenToDevolution),
                     Finished = g.Any(x => x.Finished)
                 };
+
+            Indexes.Add(x => x.Evaluators, FieldIndexing.Analyzed);
         }
     }
 }

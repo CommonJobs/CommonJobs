@@ -23,7 +23,7 @@ namespace CommonJobs.Application.EvalForm.Commands
             IQueryable<EmployeeToEvaluate_Search.Projection> query = RavenSession
                 .Query<EmployeeToEvaluate_Search.Projection, EmployeeToEvaluate_Search>()
                 .Statistics(out stats)
-                .Where(e => e.Evaluators.Any(ev => ev.UserName == _responsible))
+                .Where(e => e.Evaluators.Any(ev => ev == _responsible))
                 .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite());
 
             var employeesProjection = query.ToList();
@@ -32,7 +32,7 @@ namespace CommonJobs.Application.EvalForm.Commands
             {
                 return new EmployeeEvaluationDTO()
                 {
-                    IsResponsible = e.Evaluators.Any(ev => ev.IsResponsible = true && ev.UserName == _responsible),
+                    IsResponsible = e.Responsible == _responsible,
                     FullName = e.FullName,
                     CurrentPosition = e.CurrentPosition,
                     Seniority = e.Seniority,
