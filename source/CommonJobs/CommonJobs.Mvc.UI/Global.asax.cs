@@ -44,7 +44,7 @@ namespace CommonJobs.Mvc.UI
 
         protected override System.Reflection.Assembly[] GetIndexAssemblies()
         {
-            return new[] { typeof(NullIndex).Assembly };
+            return new[] { typeof(NullIndex).Assembly, typeof(CommonJobs.Application.Evaluations.EmployeeSearching.Employee_Search).Assembly };
         }
 
         protected override IEnumerable<IDocumentStoreListener> GetDocumentStoreListeners()
@@ -55,7 +55,7 @@ namespace CommonJobs.Mvc.UI
         protected void Application_Start()
         {
             //TODO: acá se podrían invocar las migraciones automáticas
-            
+
             //TODO: hacer esto con algo mejor que un singleton
             ContentExtractionConfiguration.Current.Clear();
             ContentExtractionConfiguration.Current.AddRange(new IContentExtractor[] {

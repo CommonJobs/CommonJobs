@@ -9,17 +9,20 @@ namespace CommonJobs.Application.Evaluations
 {
     public class GenerateEvaluationsCommand : Command
     {
-        public List<EmployeeToEval> EmployeesToEval { get; private set; }
+        public List<EmployeeEvaluation> _employeesEvaluations { get; private set; }
 
-        public GenerateEvaluationsCommand(List<EmployeeToEval> employeesToEval)
+        public GenerateEvaluationsCommand(List<EmployeeEvaluation> employeesEvaluations)
         {
-            EmployeesToEval = employeesToEval;
+            _employeesEvaluations = employeesEvaluations;
         }
 
         public override void Execute()
         {
-            //EmployeeMenu.Id = Common.GenerateEmployeeMenuId(EmployeeMenu.UserName);
-            //RavenSession.Store(EmployeeMenu);
+            foreach (var e in _employeesEvaluations)
+            {
+                e.Id = Common.GenerateEvaluationId(e.UserName);
+                RavenSession.Store(e);
+            }
         }
     }
 }

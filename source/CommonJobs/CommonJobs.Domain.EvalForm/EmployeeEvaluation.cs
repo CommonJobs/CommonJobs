@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CommonJobs.Domain.Evaluations
 {
-    public class EmployeeToEval
+    public class EmployeeEvaluation
     {
         public string Id { get; set; }
 
@@ -17,16 +17,15 @@ namespace CommonJobs.Domain.Evaluations
 
         public string Seniority { get; set; }
 
-        //An Id
-        public string Responsible { get; set; }
+        public string Project { get; set; }
 
-        //List of Ids
-        public List<string> Evaluators { get; set; }
+        //An Id
+        public string Responsible { get; set; }        
 
         //An Id
         public string Template { get; set; }
 
-        public DateTime Date { get; set; }
+        public string Period { get; set; }        
     }
 }
 ;

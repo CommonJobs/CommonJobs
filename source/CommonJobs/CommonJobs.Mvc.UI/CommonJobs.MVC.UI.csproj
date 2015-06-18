@@ -141,7 +141,17 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Evaluations\evaluations.css" />
-    <Content Include="Scripts\evaluations.js" />
+    <Content Include="Content\Images\Evaluations\1-02.svg" />
+    <Content Include="Content\Images\Evaluations\2-02.svg" />
+    <Content Include="Content\Images\Evaluations\3-02.svg" />
+    <Content Include="Content\Images\Evaluations\4-02.svg" />
+    <Content Include="Content\Images\Evaluations\5-02.svg" />
+    <Content Include="Content\Images\Evaluations\6-02.svg" />
+    <Content Include="Content\Images\Evaluations\7-02.svg" />
+    <Content Include="Content\Images\Evaluations\8-02.svg" />
+    <Content Include="Content\Images\Evaluations\9-01.svg" />
+    <Content Include="Scripts\evaluations-admin.js" />
+    <Content Include="Scripts\evaluations-common.js" />
     <Content Include="Content\Home\absence.png" />
     <Content Include="Content\Home\applicant.png" />
     <Content Include="Content\Home\attach.png" />
@@ -181,8 +191,10 @@
     <Content Include="Content\EditCommon\Suggest.js" />
     <Content Include="Content\EmployeeFiles\EmployeeFiles.js" />
     <Content Include="Content\FilesListing\FilesListing.js" />
+    <Compile Include="Areas\Evaluations\Controllers\EvaluationsApiController.cs" />
     <Compile Include="Areas\Evaluations\Controllers\EvaluationsController.cs" />
     <Compile Include="Areas\Evaluations\EvaluationsAreaRegistration.cs" />
+    <Compile Include="Areas\Evaluations\Models\PeriodCreation.cs" />
     <Compile Include="Areas\MyMenu\MyMenuAreaRegistration.cs" />
     <Compile Include="Areas\Profiles\Controllers\ProfilesController.cs" />
     <Compile Include="Areas\Profiles\ProfilesAreaRegistration.cs" />
@@ -335,9 +347,9 @@
     <Content Include="Content\markdown-styles.less" />
     <Content Include="Areas\Evaluations\Views\Evaluations\PeriodEvaluation.cshtml" />
     <Content Include="Areas\Evaluations\Views\Web.config" />
-    <Content Include="Areas\Evaluations\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Evaluations\Views\Evaluations\PeriodCreation.cshtml" />
     <Content Include="Areas\Evaluations\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Evaluations\Views\Shared\_Layout.cshtml" />
     <None Include="Properties\PublishProfiles\DEVProfile.pubxml" />
     <None Include="_bin_deployableAssemblies\FSharp.Core.dll" />
   </ItemGroup>

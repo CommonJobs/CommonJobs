@@ -11,7 +11,7 @@ namespace CommonJobs.Application.EmployeeSearching
 {
     public class Employee_QuickSearch : AbstractMultiMapIndexCreationTask<Employee_QuickSearch.Projection>
     {
-        //TODO: Mejorar esto. Está realmente feo y llena el indice con archivos repetidos, 
+        //TODO: Mejorar esto. Está realmente feo y llena el indice con archivos repetidos,
         //pero es la única forma de hacerlo funcionar que encontré hasta ahora
 
         public class OrphanAttachment
@@ -36,7 +36,7 @@ namespace CommonJobs.Application.EmployeeSearching
             public string CurrentPosition { get; set; }
             public string CurrentProject { get; set; }
             public string Notes { get; set; }
-            public ImageAttachment Photo { get; set; } 
+            public ImageAttachment Photo { get; set; }
 
             public string[] AttachmentIds { get; set; }
             public string[] AttachmentNames { get; set; }
@@ -50,12 +50,12 @@ namespace CommonJobs.Application.EmployeeSearching
             public DateTime HiringDate { get; set; }
             public DateTime TerminationDate { get; set; }
         }
-        
+
         public Employee_QuickSearch()
 		{
-            AddMap<Employee>(employees => 
+            AddMap<Employee>(employees =>
                 from employee in employees
-                select new 
+                select new
                 {
                     Id = employee.Id,
                     IsActive = employee.TerminationDate == null,
@@ -70,7 +70,7 @@ namespace CommonJobs.Application.EmployeeSearching
                     AttachmentContent = new string[0],
                     AttachmentsBySlot = employee.AttachmentsBySlot,
                     IsEmployee = true,
-                    OrphanAttachments = new dynamic[0], 
+                    OrphanAttachments = new dynamic[0],
                     FileId = employee.FileId,
                     Platform = employee.Platform,
                     CurrentPosition = employee.CurrentPosition,
@@ -127,7 +127,7 @@ namespace CommonJobs.Application.EmployeeSearching
                     HiringDate = DateTime.MinValue,
                     TerminationDate = DateTime.MaxValue
                 });
-            
+
             Reduce = docs =>
                 from doc in docs
                 group doc by doc.Id into g
@@ -164,7 +164,7 @@ namespace CommonJobs.Application.EmployeeSearching
                     HiringDate = g.Max(x => x.HiringDate),
                     TerminationDate = g.Min(x => x.TerminationDate)
                 };
-            
+
             Indexes.Add(x => x.FullName1, FieldIndexing.Analyzed);
             Indexes.Add(x => x.FullName2, FieldIndexing.Analyzed);
             Indexes.Add(x => x.Skills, FieldIndexing.Analyzed);

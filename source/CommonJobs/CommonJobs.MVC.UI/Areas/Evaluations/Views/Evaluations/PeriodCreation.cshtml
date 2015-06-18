@@ -1,48 +1,56 @@
-﻿@model List<CommonJobs.Domain.Evaluations.EmployeeToEval>
-
+﻿@model CommonJobs.Mvc.UI.Areas.Evaluations.Models.PeriodCreation
 @{
     ViewBag.Title = "Generate Evaluations";
     Layout = "~/Areas/Evaluations/Views/Shared/_Layout.cshtml";
     ScriptManager.RegisterCss(Url.Content("~/Content/twitter-bootstrap/less/bootstrap.less"), priority: 900);
     ScriptManager.RegisterCss(Url.Content("~/Content/twitter-bootstrap/less/responsive.less"), priority: 900);
-    ScriptManager.RegisterJs(Url.Content("~/Scripts/underscore.js"), priority: 900);
-    ScriptManager.RegisterJs(Url.Content("~/Scripts/jquery-1.7.2.min.js"), priority: 900);
-    ScriptManager.RegisterJs(Url.Content("~/Content/twitter-bootstrap/js/bootstrap-typeahead.js"), priority: 900);
-    ScriptManager.RegisterGlobalJavascript("baseUrl", Url.Content("~"), priority: 900);
-    ScriptManager.RegisterJs(Url.Content("~/Scripts/url-generator.js"), priority: 900);    
-    
     ScriptManager.RegisterCss(Url.Content("~/Content/Evaluations/evaluations.css"));
-    ScriptManager.RegisterJs(Url.Content("~/Scripts/evaluations.js"));
+    ScriptManager.RegisterGlobalJavascript("baseUrl", Url.Content("~"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/jquery-1.7.2.min.js"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/underscore.js"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Content/twitter-bootstrap/js/bootstrap-typeahead.js"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Content/twitter-bootstrap/js/bootstrap-modal.js"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/url-generator.js"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/knockout-2.2.0.js"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/evaluations-common.js"));
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/evaluations-admin.js"));
 }
 
 <div class="content">
-    <h2>Generar Evaluación</h2>
+    <h2 class="title">Generar Evaluación</h2>
     <table>
-	    <tr>
-	        <th>EMPLEADO</th>
-	        <th>PUESTO</th>
-	        <th>SENIORITY</th>
-	        <th>RESPONSABLE</th>
-	    </tr>
-        @{int i = 1;}
-
-        @foreach (var Employee in Model)
-        {
-        <tr>
-            <td>@Employee.EmployeeName</td>
-            <td>@Employee.CurrentPosition</td>
-            <td>@Employee.Seniority</td>
-            <td><input id="EvaluationOwner_@(i)" name="EvaluationOwner" class="evaluation-owner-field" type="text" placeholder="Owner" value="@Employee.Responsible" autocomplete="off"/></td>
-        </tr>
-        i++;
-        }
+        <thead>
+            <tr>
+                <th>Empleado</th>
+                <th>Posición</th>
+                <th>Seniority</th>
+                <th>Responsable</th>
+            </tr>
+        </thead>
+        <tbody data-bind="foreach: employees">
+            <tr data-bind="css: { 'evaluation-generated': period }">
+                <td data-bind="text: employeeName"></td>
+                <td data-bind="text: currentPosition"></td>
+                <td data-bind="text: seniority"></td>
+                <td>
+                    <span data-bind="visible: period, text:responsible"></span>
+                    <input class="evaluation-owner-field" data-bind="visible: !period, value: responsible" autocomplete="off"/>
+                </td>
+            </tr>
+        </tbody>
     </table>
-    <button>GENERAR EVALUACION</button>
+    <button type="submit" id="generate-evaluation-button" class="generate-evaluation-button" data-bind="enable: generateButtonEnable">GENERAR EVALUACIONES</button>
     <script type="text/javascript">
-        $(document).ready(function () {
-            $('.evaluation-owner-field').each(function (index, elem) {
-                commonSuggest(elem, 'UserName');
-            });
-        });
+        var evaluationPeriod = "@ViewBag.Period";
     </script>
+</div>
+
+<div id="evaluations-generated-confirm" class="modal content-pop-up clearfix">
+    <div class="modal-header">
+        <h3 class="modal-title">EVALUACIONES GENERADAS!</h3>
+    </div>
+    <p>Se han generado <span id="count"></span> correctamente</p>
+    <div class="model-footer">      
+        <button class="confirm">OK</button>
+    </div>
 </div>
