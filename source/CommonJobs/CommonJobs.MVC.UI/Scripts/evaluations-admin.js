@@ -14,7 +14,6 @@
             ko.utils.arrayForEach(self.employees(), function (item) {
                 item.responsible.subscribe(function (i) {
                     self.generateButtonEnable(i || _.some(self.employees(), function (e) { return !!e.responsible() }));
-                    item.period = evaluationPeriod;
                 });
             });
         });
@@ -85,8 +84,8 @@
             data: JSON.stringify(modelFiltered),
             complete: function (response) {
                 var modalContainer = $('#evaluations-generated-confirm');
-                var countText = (response.responseText == '1') ? "1 evaluación" : response.responseText + " evaluaciones";
-                modalContainer.children().find('#count').text(response.responseText);
+                var countText = (response.responseText == '1') ? "Se ha generado 1 evaluación correctamente" : "Se han generado " + response.responseText + " evaluaciones correctamente";
+                modalContainer.children().find('#count').text(countText);
                 modalContainer.modal('show');
             }
         });
