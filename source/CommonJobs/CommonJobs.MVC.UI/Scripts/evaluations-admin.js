@@ -14,6 +14,7 @@
             ko.utils.arrayForEach(self.employees(), function (item) {
                 item.responsible.subscribe(function (i) {
                     self.generateButtonEnable(i || _.some(self.employees(), function (e) { return !!e.responsible() }));
+                    item.period = evaluationPeriod;
                 });
             });
         });
@@ -33,7 +34,7 @@
         this.id = '';
         this.userName = '';
         this.responsible = ko.observable('');
-        this.employeeName = '';
+        this.fullName = '';
         this.currentPosition = '';
         this.seniority = '';
         this.period = '';
@@ -46,7 +47,7 @@
         this.id = data.Id;
         this.userName = data.UserName;
         this.responsible(data.Responsible || '');
-        this.employeeName = data.EmployeeName;
+        this.fullName = data.FullName;
         this.currentPosition = data.CurrentPosition;
         this.seniority = data.Seniority;
         this.period = data.Period;
@@ -58,7 +59,7 @@
             Responsible: this.responsible(),
             CurrentPosition: this.currentPosition,
             Seniority: this.seniority,
-            EmployeeName: this.employeeName,
+            FullName: this.fullName,
             Period: this.period
         };
     }
