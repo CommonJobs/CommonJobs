@@ -43,7 +43,6 @@ namespace CommonJobs.Domain.Evaluations
 
         public string ActionPlanComment { get; set; }
 
-        //Won't be always used
         public string EvaluatedEmployeeComment { get; set; }
 
         public List<KeyValuePair<string, decimal>> Califications { get; set; }
