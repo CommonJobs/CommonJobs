@@ -85,7 +85,7 @@
             complete: function (response) {
                 var modalContainer = $('#evaluations-generated-confirm');
                 var countText = (response.responseText == '1') ? "Se ha generado 1 evaluación correctamente" : "Se han generado " + response.responseText + " evaluaciones correctamente";
-                modalContainer.children().find('#count').text(countText);
+                modalContainer.find('#textCount').text(countText);
                 modalContainer.modal('show');
             }
         });
