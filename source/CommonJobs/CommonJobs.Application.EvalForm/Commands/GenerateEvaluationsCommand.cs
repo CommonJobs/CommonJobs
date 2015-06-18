@@ -11,16 +11,19 @@ namespace CommonJobs.Application.Evaluations
     public class GenerateEvaluationsCommand : Command
     {
         private List<EmployeeEvaluation> _employeesEvaluations { get; set; }
+        private string _period { get; set; }
 
-        public GenerateEvaluationsCommand(List<EmployeeEvaluation> employeesEvaluations)
+        public GenerateEvaluationsCommand(List<EmployeeEvaluation> employeesEvaluations, string period)
         {
             _employeesEvaluations = employeesEvaluations;
+            _period = period;
         }
 
         public override void Execute()
         {
             foreach (var e in _employeesEvaluations)
             {
+                e.Period = _period;
                 e.Id = Common.GenerateEvaluationId(e.Period, e.UserName);
                 RavenSession.Store(e);
                 //After we create the evaluation, we create the calification document for the auto-evaluation and the responsible

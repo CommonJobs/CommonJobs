@@ -71,7 +71,7 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
                 Template = ""
             });
 
-            ExecuteCommand(new GenerateEvaluationsCommand(list));
+            ExecuteCommand(new GenerateEvaluationsCommand(list, "2015-06"));
 
             var employees = ExecuteCommand(new GetEvaluatorEmployeesCommand("mjackson"));
 
