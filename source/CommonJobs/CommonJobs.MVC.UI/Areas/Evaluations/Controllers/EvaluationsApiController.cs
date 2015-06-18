@@ -27,9 +27,10 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public void GenerateEvalutions(PeriodCreation model)
+        public JsonNetResult GenerateEvalutions(PeriodCreation model, string period)
         {
             ExecuteCommand(new GenerateEvaluationsCommand(model.Employees));
+            return Json(model.Employees.Count);
         }
     }
 }
