@@ -12,7 +12,7 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations.Controllers
 {
     public class EvaluationsApiController : CommonJobsController
     {
-        
+
         [AcceptVerbs(HttpVerbs.Get)]
         public JsonNetResult GetEmployeesToGenerateEvalution(string period)
         {

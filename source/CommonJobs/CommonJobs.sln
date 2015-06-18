@@ -85,7 +85,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonJobs.Application.Prof
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonJobs.Domain.Profiles", "CommonJobs.Domain.Profiles\CommonJobs.Domain.Profiles.csproj", "{A897B065-2207-4FAF-897A-31449B95F3FE}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EvalForm", "EvalForm", "{8385A9A7-1E68-4190-A262-9F3D4D3173E0}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Evaluations", "Evaluations", "{8385A9A7-1E68-4190-A262-9F3D4D3173E0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonJobs.Application.Evaluations", "CommonJobs.Application.EvalForm\CommonJobs.Application.Evaluations.csproj", "{AC3B3FCE-3611-4085-B58F-EF533E81B26E}"
 EndProject
