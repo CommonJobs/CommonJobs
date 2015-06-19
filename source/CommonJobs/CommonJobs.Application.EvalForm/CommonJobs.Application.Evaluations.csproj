@@ -65,10 +65,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AddEvaluatorsCommand.cs" />
+    <Compile Include="Commands\UpdateEvaluatorsCommand.cs" />
     <Compile Include="Commands\GetEvaluatorEmployeesCommand.cs" />
     <Compile Include="Common.cs" />
-    <Compile Include="EmployeeEvaluationDTO.cs" />
+    <Compile Include="DTOs\EmployeeEvaluationDTO.cs" />
+    <Compile Include="DTOs\EvaluatorInfoDTO.cs" />
+    <Compile Include="DTOs\EvaluatorsUpdateDTO.cs" />
     <Compile Include="EmployeeSearching\EmployeeToEvaluate_Search.cs" />
     <Compile Include="EmployeeSearching\Employee_Search.cs" />
     <Compile Include="Commands\GenerateCalificationCommand.cs" />
