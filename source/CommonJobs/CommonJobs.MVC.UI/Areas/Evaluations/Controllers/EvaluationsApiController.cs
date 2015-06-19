@@ -1,4 +1,5 @@
-﻿using CommonJobs.Application.Evaluations;
+﻿using CommonJobs.Application.EvalForm.Commands;
+using CommonJobs.Application.Evaluations;
 using CommonJobs.Domain.Evaluations;
 using CommonJobs.Infrastructure.Mvc;
 using CommonJobs.Mvc.UI.Areas.Evaluations.Models;
@@ -31,6 +32,12 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations.Controllers
         {
             ExecuteCommand(new GenerateEvaluationsCommand(model.Employees, period));
             return Json(model.Employees.Count);
+        }
+
+        public JsonNetResult GetDashboardEvaluations(string period) {
+            PeriodEvaluation periodEvaluation = new PeriodEvaluation();
+            periodEvaluation.Evaluations = ExecuteCommand(new GetEvaluatorEmployeesCommand("abanderas"));
+            return Json(periodEvaluation);
         }
     }
 }
