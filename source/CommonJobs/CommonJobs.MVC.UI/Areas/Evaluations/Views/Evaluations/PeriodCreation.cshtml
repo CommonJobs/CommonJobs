@@ -16,9 +16,9 @@
     ScriptManager.RegisterJs(Url.Content("~/Scripts/evaluations-admin.js"));
 }
 
-<div class="content">
-    <h2 class="title">Generar Evaluación</h2>
-    <table>
+<div class="content-evaluation generate-evaluation">
+    <h2 class="title">Generar Evaluaciones</h2>
+    <table class="table">
         <thead>
             <tr>
                 <th>Empleado</th>
@@ -39,7 +39,7 @@
             </tr>
         </tbody>
     </table>
-    <button type="submit" id="generate-evaluation-button" class="generate-evaluation-button" data-bind="enable: generateButtonEnable">GENERAR EVALUACIONES</button>
+    <button type="submit" id="generate-evaluation-button" class="button-evaluations generate-evaluation" data-bind="enable: generateButtonEnable">GENERAR EVALUACIONES</button>
     <script type="text/javascript">
         var evaluationPeriod = "@ViewBag.Period";
     </script>

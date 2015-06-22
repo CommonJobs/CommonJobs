@@ -16,9 +16,9 @@
     ScriptManager.RegisterJs(Url.Content("~/Scripts/evaluations-dashboard.js"));
 }
 
-<div class="content">
-    <h2 class="title">Resposable y Calificador de las siguiente evaluaciones</h2>
-    <table>
+<div class="content-evaluation responsible">
+    <h2 class="title">Responsable y Calificador de las siguiente evaluaciones</h2>
+    <table class="table">
         <thead>
             <tr>
                 <th>Rol</th>
@@ -29,41 +29,37 @@
                 <th colspan="3">Estado</th>
             </tr>
         </thead>
-        <tbody data-bind="test: console.log($data), foreach: evaluations">
+        <tbody data-bind="foreach: evaluations">
             <tr>
                 <td data-bind="visible: !isResponsible"><span class="top-tip rol" data-tips="Calificador">C</span></td>
                 <td data-bind="visible: isResponsible"><span class="top-tip rol" data-tips="Responsable">R</span></td>
                 <td data-bind="text: fullName"></td>
                 <td data-bind="text: currentPosition"></td>      
                 <td data-bind="text: seniority"></td>
-                <td><i class="add"></i><a class="calification-links" href="">Agregar</a></td>
-                <td><span class="" data-bind="text: stateName"></span></td>
-                <td><i class="user"></i><a class="link-responsable" href="">Calificar</a></td>
+                <td><i class="icon add"></i><a class="calification-links add" data-bind="click: showCalificatorsManager">Agregar</a></td>
+                <td><span class="state-doc state-0" data-bind="text: stateName"></span></td>
+                <td><i class="icon user"></i><a class="link-responsable top-tip rol" data-tips="Calificar como responsable">Calificar</a></td>
                 <td></td>
             </tr>
         </tbody>
     </table>
-    <button type="submit" id="generate-evaluation-button" class="generate-evaluation-button" >VOLVER</button>
+    <button type="submit" id="generate-evaluation-button" class="button-evaluations generate-evaluation" >VOLVER</button>
 </div>
-
-
-<div class="calificators-modal">
+<div class="content-modal modal clearfix">
     <div class="modal-title">
-        <h4>Agregar Calificadores</h4><i class="delete"></i>
+        <h4>Agregar Calificadores</h4>
     </div>
     <input type="search" placeholder="Buscar">
     <div class="content-add-calificadores">
         <ul>
-            <li>sromero<i class="delete"></i></li>
-            <li>fflores<i class="delete"></i></li>
-            <li>mmassimino<i class="delete"></i></li>
+            <li>sromero<a class="delete"></a></li>
+            <li>fflores<a class="delete"></a></li>
+            <li>mmassimino<a class="delete"></a></li>
         </ul>
     </div>
-    <a class="cancelar">Cancelar</a>
-    <a class="guardar">Guardar</a>
+    <a class="cancelar" data-bind="click: cancelCalificatorsManager">Cancelar</a>
+    <a class="guardar"data-bind="click: saveCalificatorsManager">Guardar</a>
 </div>
-
-
 
 @*<div class="content">
     <h2 class="title">Generar Evaluación</h2>

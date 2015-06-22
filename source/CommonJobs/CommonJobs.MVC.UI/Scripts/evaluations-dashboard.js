@@ -5,6 +5,15 @@
         if (data) {
             this.fromJS(data);
         }
+        showCalificatorsManager = function(){
+            $('.content-modal').modal('show');
+        }
+        cancelCalificatorsManager = function () {
+            $('.content-modal').modal('hide');
+        }
+        saveCalificatorsManager = function () {
+            $('.content-modal').modal('hide');
+        }
     }
 
     Dashboard.prototype.fromJS = function (data) {
@@ -33,6 +42,7 @@
         this.evaluatorsAmount = '';
         this.state = '';
         this.currentState = '';
+        this.calificators = ko.observableArray();
         if (data) {
             this.fromJs(data);
         }
@@ -43,7 +53,10 @@
         this.fullName = data.FullName;
         this.currentPosition= data.CurrentPosition;
         this.seniority = data.Seniority;
-        this.evaluatorsAmount = data.EvaluatorsAmount;
+        this.calificators(data.Calificators);
+        this.evaluatorsAmount = ko.computed(function () {
+            return this.calificators().length;
+        });
         this.state = data.State;
         this.stateName = evaluationStates[data.State];
     }
@@ -54,7 +67,8 @@
             FullName: this.fullName,
             CurrentPosition: this.currentPosition,
             Seniority: this.seniority,
-            EvaluatorsAmount: this.evaluatorsAmount,
+            EvaluatorsAmount: this.evaluatorsAmount(),
+            Calificators: this.calificators,
             State: this.state
         };
     }
