@@ -36,7 +36,7 @@ namespace CommonJobs.Application.EvalForm.Commands
                     FullName = e.FullName,
                     CurrentPosition = e.CurrentPosition,
                     Seniority = e.Seniority,
-                    EvaluatorsAmount = e.Evaluators.Count(),
+                    Evaluators = e.Evaluators.ToList(),
                     State = getEvaluationState(e)
                 };
             }).ToList();

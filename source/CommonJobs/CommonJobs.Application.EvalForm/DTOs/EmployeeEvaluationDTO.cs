@@ -15,7 +15,7 @@ namespace CommonJobs.Application.EvalForm
 
         public string Seniority { get; set; }
 
-        public int EvaluatorsAmount { get; set; }
+        public List<string> Evaluators { get; set; }
 
         public EvaluationState State { get; set; }
     }
