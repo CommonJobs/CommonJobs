@@ -59,7 +59,7 @@ namespace CommonJobs.Application.EvalForm.EmployeeSearching
                     CurrentPosition = (string)null,
                     Seniority = (string)null,
                     Period = (string)null,
-                    Evaluators = (calification.Owner != CalificationType.Auto && calification.Owner != CalificationType.Company)
+                    Evaluators = (calification.Owner != CalificationType.Auto && calification.Owner != CalificationType.Company && calification.Owner != CalificationType.Responsible)
                         ? new [] { calification.EvaluatorEmployee }
                         : new dynamic[0],
                     Responsible = (string)null,

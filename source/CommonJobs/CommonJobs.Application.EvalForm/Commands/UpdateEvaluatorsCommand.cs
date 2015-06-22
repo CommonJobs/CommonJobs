@@ -25,9 +25,17 @@ namespace CommonJobs.Application.Evaluations
         {
             foreach (var e in _evaluators)
             {
-                ExecuteCommand(new GenerateCalificationCommand(_employeeEvaluation.Period, _employeeEvaluation.UserName, e.UserName, _employeeEvaluation.Template, CalificationType.Evaluator, _employeeEvaluation.Id));
+                if (e.Action == EvaluatorAction.Add)
+                {
+                    ExecuteCommand(new GenerateCalificationCommand(_employeeEvaluation.Period, _employeeEvaluation.UserName, e.UserName, _employeeEvaluation.Template, CalificationType.Evaluator, _employeeEvaluation.Id));
+                }
+                else
+                {
+                    var id = Common.GenerateCalificationId(_employeeEvaluation.Period, _employeeEvaluation.UserName, e.UserName);
+                    var calification = RavenSession.Load<EvaluationCalification>(id);
+                    RavenSession.Delete(calification);
+                }
             }
-            //TODO: Add the removal of evaluators
         }
     }
 }
