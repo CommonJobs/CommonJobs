@@ -1,4 +1,6 @@
-﻿using CommonJobs.Application.Evaluations;
+﻿using CommonJobs.Application.EvalForm.Commands;
+using CommonJobs.Application.EvalForm.DTOs;
+using CommonJobs.Application.Evaluations;
 using CommonJobs.Domain.Evaluations;
 using CommonJobs.Infrastructure.Mvc;
 using CommonJobs.Mvc.UI.Areas.Evaluations.Models;
@@ -32,5 +34,28 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations.Controllers
             ExecuteCommand(new GenerateEvaluationsCommand(model.Employees, period));
             return Json(model.Employees.Count);
         }
+
+        [AcceptVerbs(HttpVerbs.Get)]
+        public JsonNetResult GetDashboardEvaluations(string period) {
+            PeriodEvaluation periodEvaluation = new PeriodEvaluation();
+            periodEvaluation.Evaluations = ExecuteCommand(new GetEvaluatorEmployeesCommand("abanderas"));
+            return Json(periodEvaluation);
+        }
+
+        [AcceptVerbs(HttpVerbs.Get)]
+        public JsonNetResult GetCalificatorsForEvaluation(string username)
+        {
+            PeriodEvaluation periodEvaluation = new PeriodEvaluation();
+            periodEvaluation.Evaluations = ExecuteCommand(new GetEvaluatorEmployeesCommand("abanderas"));
+            return Json(periodEvaluation);
+        }
+
+        [AcceptVerbs(HttpVerbs.Get)]
+        public JsonNetResult UpdateEvaluators(EmployeeEvaluation evaluation, List<EvaluatorsUpdateDTO> evaluatorsUpdate)
+        {
+            ExecuteCommand(new UpdateEvaluatorsCommand(evaluation, evaluatorsUpdate));
+            return Json("ok");
+        }
+        
     }
 }

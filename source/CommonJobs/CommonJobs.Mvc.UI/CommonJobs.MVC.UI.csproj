@@ -150,6 +150,7 @@
     <Content Include="Content\Images\Evaluations\7-02.svg" />
     <Content Include="Content\Images\Evaluations\8-02.svg" />
     <Content Include="Content\Images\Evaluations\9-01.svg" />
+    <Content Include="Scripts\evaluations-dashboard.js" />
     <Content Include="Scripts\evaluations-admin.js" />
     <Content Include="Scripts\evaluations-common.js" />
     <Content Include="Content\Home\absence.png" />
@@ -195,6 +196,7 @@
     <Compile Include="Areas\Evaluations\Controllers\EvaluationsController.cs" />
     <Compile Include="Areas\Evaluations\EvaluationsAreaRegistration.cs" />
     <Compile Include="Areas\Evaluations\Models\PeriodCreation.cs" />
+    <Compile Include="Areas\Evaluations\Models\PeriodEvaluation.cs" />
     <Compile Include="Areas\MyMenu\MyMenuAreaRegistration.cs" />
     <Compile Include="Areas\Profiles\Controllers\ProfilesController.cs" />
     <Compile Include="Areas\Profiles\ProfilesAreaRegistration.cs" />
