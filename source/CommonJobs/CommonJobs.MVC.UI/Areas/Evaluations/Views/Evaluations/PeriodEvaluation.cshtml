@@ -31,12 +31,23 @@
         </thead>
         <tbody data-bind="foreach: evaluations">
             <tr>
-                <td data-bind="visible: !isResponsible"><span class="top-tip rol" data-tips="Calificador">C</span></td>
-                <td data-bind="visible: isResponsible"><span class="top-tip rol" data-tips="Responsable">R</span></td>
+                <td >
+                    <span data-bind="if: !isResponsible"><span class="top-tip rol" data-tips="Calificador">C</span></span>
+                    <span data-bind="if: isResponsible"><span class="top-tip rol" data-tips="Responsable">R</span></span>
+                </td>
                 <td data-bind="text: fullName"></td>
                 <td data-bind="text: currentPosition"></td>      
                 <td data-bind="text: seniority"></td>
-                <td><i class="icon add"></i><a class="calification-links add" data-bind="click: showCalificatorsManager">Agregar</a></td>
+                <td>
+                    <span data-bind="if: evaluatorsAmount() > 0, attr: { 'data-tips': evaluatorsString()}" class="top-tip rol">
+                        <i class="icon edit"></i>
+                        <a class="calification-links edit" data-bind="click: showCalificatorsManager">
+                            <span data-bind="if: evaluatorsAmount() == 1"><span data-bind="text: evaluatorsAmount"></span> calificador</span>
+                            <span data-bind="if: evaluatorsAmount() > 1"><span data-bind="text: evaluatorsAmount"></span> calificadores</span>
+                        </a>
+                    </span>
+                    <span data-bind="if: !evaluatorsAmount()"><i class="icon add"></i><a class="calification-links add" data-bind="click: showCalificatorsManager">Agregar</a></span>
+                </td>
                 <td><span class="state-doc state-0" data-bind="text: stateName"></span></td>
                 <td><i class="icon user"></i><a class="link-responsable top-tip rol" data-tips="Calificar como responsable">Calificar</a></td>
                 <td></td>
@@ -45,16 +56,16 @@
     </table>
     <button type="submit" id="generate-evaluation-button" class="button-evaluations generate-evaluation" >VOLVER</button>
 </div>
-<div class="content-modal modal clearfix">
+
+
+<div class="content-modal clearfix">
     <div class="modal-title">
         <h4>Agregar Calificadores</h4>
     </div>
-    <input type="search" placeholder="Buscar">
+    <input type="text" class="search" name="calificatorNew" autocomplete="off" />
     <div class="content-add-calificadores">
-        <ul>
-            <li>sromero<a class="delete"></a></li>
-            <li>fflores<a class="delete"></a></li>
-            <li>mmassimino<a class="delete"></a></li>
+        <ul data-bind="foreach: calificatorsManagerModel.calificators">
+            <li><span data-bind="text: userName"></span> <a data-bind="click: $parent.calificatorsManagerModel.removeCalificator"><i class="icon delete"></i></a></li>
         </ul>
     </div>
     <a class="cancelar" data-bind="click: cancelCalificatorsManager">Cancelar</a>
