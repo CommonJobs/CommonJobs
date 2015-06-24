@@ -5,14 +5,40 @@
         var self = this;
         this.evaluation = '';
         this.calificators = ko.observableArray();
+        this.newCalificator = ko.observable();
+        this.activeCalificators = ko.computed(function () {
+            return _.filter(this.calificators(), function (e) {
+                return e.action() !== 1;
+            });
+        }, this);
         if (data) {
             this.fromJs(data);
         }
-        this.addCalificator = function (data) {
-            self.calificators.push(new Calificator(data));
-        }
+        this.addCalificator = ko.computed(function () {
+            var pepe = this.newCalificator();
+        }, this);
         this.removeCalificator = function () {
-            self.calificators.remove(this);
+            if (this.action() === 0) {
+                self.calificators.remove(this);
+            } else {
+                this.action(1);
+            }
+        }
+        this.cancel = function () {
+            $('.content-modal').hide();
+        }
+        this.save = function () {
+            var self = this;
+            var updateCalificators = self.calificatorsManagerModel.toJs();
+            $.ajax("/Evaluations/api/UpdateCalificators/", {
+                type: "POST",
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(updateCalificators),
+                complete: function (response) {
+                    debugger;
+                }
+            });
         }
     }
 
@@ -22,6 +48,20 @@
         this.calificators(_.map(data.calificators, function (e) {
             return new Calificator(e);
         }));
+    }
+
+    CalificatorsManager.prototype.toJs = function () {
+        var calificators = _.map(this.calificators(), function (e) {
+            return e.toJs();
+        });
+        var calificatorsFiltered = _.filter(calificators, function (e) {
+            return e.Action !== '';
+        });
+
+        return {
+            Evaluation: this.evaluation.toJs(),
+            Calificators: calificatorsFiltered
+        };
     }
 
     var Calificator = function (data) {
@@ -34,7 +74,7 @@
 
     Calificator.prototype.fromJs = function (data) {
         this.userName = data;
-        this.action(0);
+        this.action('');
     }
 
     Calificator.prototype.add = function (data) {
@@ -46,10 +86,10 @@
         this.action(1);
     }
 
-    Calificator.prototype.toJs = function (data) {
+    Calificator.prototype.toJs = function () {
         return {
-            UserName: data.userName,
-            Action: data.action()
+            UserName: this.userName,
+            Action: this.action()
         };
     }
 
@@ -58,12 +98,6 @@
         this.calificatorsManagerModel = new CalificatorsManager();
         if (data) {
             this.fromJS(data);
-        }
-        cancelCalificatorsManager = function () {
-            $('.content-modal').hide();
-        }
-        saveCalificatorsManager = function () {
-            $('.content-modal').modal('hide');
         }
     }
 
@@ -88,6 +122,8 @@
     var Evaluation = function (data) {
         this.idResponsible = '';
         this.fullName = '';
+        this.userName = '';
+        this.period = '';
         this.currentPosition = '';
         this.seniority = '';
         this.evaluatorsAmount = '';
@@ -103,6 +139,8 @@
     Evaluation.prototype.fromJs = function (data) {
         this.isResponsible = data.IsResponsible;
         this.fullName = data.FullName;
+        this.userName = data.UserName;
+        this.period = data.Period;
         this.currentPosition= data.CurrentPosition;
         this.seniority = data.Seniority;
         this.evaluators = data.Evaluators;
@@ -127,23 +165,10 @@
             CurrentPosition: this.currentPosition,
             Seniority: this.seniority,
             Evaluators: this.evaluators,
-            State: this.state
+            State: this.state,
+            UserName: this.userName,
+            Period: this.period
         };
-    }
-
-    Evaluation.prototype.evaluatorsUpdate = function () {
-        /*$.ajax("/Evaluations/api/UpdateEvaluators/" + evaluationPeriod + "/", {
-            type: "POST",
-            dataType: 'json',
-            contentType: 'application/json; charset=utf-8',
-            data: JSON.stringify(modelFiltered),
-            complete: function (response) {
-                var modalContainer = $('#evaluations-generated-confirm');
-                var countText = (response.responseText == '1') ? "Se ha generado 1 evaluación correctamente" : "Se han generado " + response.responseText + " evaluaciones correctamente";
-                modalContainer.find('#textCount').text(countText);
-                modalContainer.modal('show');
-            }
-        });*/
     }
 
     var viewmodel = new Dashboard();

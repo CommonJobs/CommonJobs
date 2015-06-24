@@ -12,10 +12,10 @@ namespace CommonJobs.Application.Evaluations
 {
     public class UpdateEvaluatorsCommand : Command
     {
-        private EmployeeEvaluation _employeeEvaluation { get; set; }
+        private EmployeeEvaluationDTO _employeeEvaluation { get; set; }
         private List<EvaluatorsUpdateDTO> _evaluators { get; set; }
 
-        public UpdateEvaluatorsCommand(EmployeeEvaluation employeeEvaluation, List<EvaluatorsUpdateDTO> evaluators)
+        public UpdateEvaluatorsCommand(EmployeeEvaluationDTO employeeEvaluation, List<EvaluatorsUpdateDTO> evaluators)
         {
             _employeeEvaluation = employeeEvaluation;
             _evaluators = evaluators;
@@ -27,7 +27,7 @@ namespace CommonJobs.Application.Evaluations
             {
                 if (e.Action == EvaluatorAction.Add)
                 {
-                    ExecuteCommand(new GenerateCalificationCommand(_employeeEvaluation.Period, _employeeEvaluation.UserName, e.UserName, _employeeEvaluation.Template, CalificationType.Evaluator, _employeeEvaluation.Id));
+                    ExecuteCommand(new GenerateCalificationCommand(_employeeEvaluation.Period, _employeeEvaluation.UserName, e.UserName, _employeeEvaluation.TemplateId, CalificationType.Evaluator, _employeeEvaluation.Id));
                 }
                 else
                 {

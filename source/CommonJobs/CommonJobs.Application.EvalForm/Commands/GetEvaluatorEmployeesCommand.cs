@@ -1,4 +1,5 @@
 ﻿using CommonJobs.Application.EvalForm.EmployeeSearching;
+using CommonJobs.Application.Evaluations;
 using CommonJobs.Infrastructure.RavenDb;
 using Raven.Client.Linq;
 using System;
@@ -35,10 +36,15 @@ namespace CommonJobs.Application.EvalForm.Commands
                 {
                     IsResponsible = e.Responsible == _responsible,
                     FullName = e.FullName,
+                    UserName = e.UserName,
+                    Period = e.Period,
                     CurrentPosition = e.CurrentPosition,
                     Seniority = e.Seniority,
                     Evaluators = e.Evaluators != null ? e.Evaluators.ToList() : new List<string>(),
-                    State = getEvaluationState(e)
+                    State = getEvaluationState(e),
+                    Id = e.Id,
+                    //TODO: In the current version this property is set with a default template id
+                    TemplateId = Common.DefaultTemplateId
                 };
             }).ToList();
 

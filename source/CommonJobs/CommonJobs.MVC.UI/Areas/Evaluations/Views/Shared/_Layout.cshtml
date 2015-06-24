@@ -26,12 +26,15 @@
                     <ul class="nav nav-right">
                         @if (Request.IsAuthenticated && User != null && User.Identity != null && User.Identity.Name != null) 
 				        {
-                            <li class="username"><small style="display: block; float: none; padding: 10px 15px;">@User.Identity.Name
-                            @if (User.Identity.AuthenticationType == "Forms")
-                            {
-                                <text>[<a href="@Url.Content("~/Account/LogOff")">LogOff</a>]</text>
-                            }
-                            </small></li>
+                            @*//TODO: We need improve the navigation bar styles. So, I removed these inline styles in this moment*@
+                            <li class="username">
+                                <small>@User.Identity.Name
+                                @if (User.Identity.AuthenticationType == "Forms")
+                                {
+                                    <text>[<a href="@Url.Content("~/Account/LogOff")">LogOff</a>]</text>
+                                }
+                                </small>
+                            </li>
 				        }
                     </ul>
                 </form>

@@ -18,6 +18,14 @@ namespace CommonJobs.Application.EvalForm
         public List<string> Evaluators { get; set; }
 
         public EvaluationState State { get; set; }
+
+        public string UserName { get; set; }
+
+        public string Period { get; set; }
+
+        public string TemplateId { get; set; }
+
+        public string Id { get; set; }
     }
 
     public enum EvaluationState
