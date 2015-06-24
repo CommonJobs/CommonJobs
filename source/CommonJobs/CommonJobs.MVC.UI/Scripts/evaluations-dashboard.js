@@ -5,7 +5,7 @@
         var self = this;
         this.evaluation = '';
         this.calificators = ko.observableArray();
-        this.newCalificator = ko.observable();
+        this.newCalificator = ko.observable('');
         this.activeCalificators = ko.computed(function () {
             return _.filter(this.calificators(), function (e) {
                 return e.action() !== 1;
@@ -14,9 +14,28 @@
         if (data) {
             this.fromJs(data);
         }
-        this.addCalificator = ko.computed(function () {
-            var pepe = this.newCalificator();
-        }, this);
+        this.onEnter = function (d, e) {
+            if (e.keyCode === 13) {
+                self.addCalificator();
+            }
+            return true;
+        };
+        this.addCalificator = function () {
+            var userName = self.newCalificator();
+            if (userName) {
+                var calificator = _.find(self.calificators(), function (e) {
+                    return e.userName == userName;
+                }, this);
+                if (calificator) {
+                    calificator.action(0);
+                } else {
+                    var calificator = new Calificator();
+                    calificator.add(userName);
+                    self.calificators.push(calificator);
+                }
+            }
+            self.newCalificator('');
+        }
         this.removeCalificator = function () {
             if (this.action() === 0) {
                 self.calificators.remove(this);
@@ -36,7 +55,8 @@
                 contentType: 'application/json; charset=utf-8',
                 data: JSON.stringify(updateCalificators),
                 complete: function (response) {
-                    debugger;
+                    $('.content-modal').hide();
+                    getDashboardEvaluations();
                 }
             });
         }
@@ -145,7 +165,7 @@
         this.seniority = data.Seniority;
         this.evaluators = data.Evaluators;
         this.evaluatorsString = ko.computed(function () {
-            return this.evaluators.toString().replace(',', ', ');
+            return this.evaluators.toString().replace(/,/g, ', ');
         }, this);
         this.evaluatorsAmount = ko.computed(function () {
             return this.evaluators.length;
@@ -183,28 +203,4 @@
             viewmodel.fromJS(model);
         });
     }
-
-    /*$('#generate-evaluation-button').on('click', function () {
-        var model = viewmodel.toJs();
-        var modelFiltered = { Employees: _.filter(model.Employees, function (e) { return e.Responsible && !e.Period; }) };
-        $.ajax("/Evaluations/api/GenerateEvalutions/" + evaluationPeriod + "/", {
-            type: "POST",
-            dataType: 'json',
-            contentType: 'application/json; charset=utf-8',
-            data: JSON.stringify(modelFiltered),
-            complete: function (response) {
-                var modalContainer = $('#evaluations-generated-confirm');
-                var countText = (response.responseText == '1') ? "Se ha generado 1 evaluación correctamente" : "Se han generado " + response.responseText + " evaluaciones correctamente";
-                modalContainer.find('#textCount').text(countText);
-                modalContainer.modal('show');
-            }
-        });
-    });*/
-
-    //var modalContainer = $('#evaluations-generated-confirm');
-    //modalContainer.modal({ show: false });
-    //modalContainer.find('.confirm').on('click', function () {
-    //    modalContainer.modal('hide');
-    //    getEmployeesToGenerateEvalution();
-    //});
 });

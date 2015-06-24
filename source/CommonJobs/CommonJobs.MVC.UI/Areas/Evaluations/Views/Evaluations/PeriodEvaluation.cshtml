@@ -62,7 +62,7 @@
     <div class="modal-title">
         <h4>Agregar Calificadores</h4>
     </div>
-    <input type="text" class="search" autocomplete="off" data-bind="value: calificatorsManagerModel.newCalificator"/>
+    <input type="text" class="search" autocomplete="off" data-bind="value: calificatorsManagerModel.newCalificator, event: {keypress: calificatorsManagerModel.onEnter}"/><button data-bind="click: calificatorsManagerModel.addCalificator">Add</button>
     <div class="content-add-calificadores">
         <ul data-bind="foreach: calificatorsManagerModel.activeCalificators">
             <li><span data-bind="text: userName"></span> <a data-bind="click: $parent.calificatorsManagerModel.removeCalificator"><i class="icon delete"></i></a></li>
