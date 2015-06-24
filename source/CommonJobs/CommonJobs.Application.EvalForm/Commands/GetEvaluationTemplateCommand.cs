@@ -7,15 +7,15 @@ using System.Text;
 
 namespace CommonJobs.Application.Evaluations
 {
-    public class GetTemplateCommand : Command<Template>
+    public class GetEvaluationTemplateCommand : Command<Template>
     {
         public string Id { get; set; }
         private string IdOrDefault
         {
-            get { return string.IsNullOrWhiteSpace(Id) ? Common.DefaultTemplateId : Id; }
+            get { return string.IsNullOrWhiteSpace(Id) ? Template.DefaultTemplateId : Id; }
         }
 
-        public GetTemplateCommand(string id = null)
+        public GetEvaluationTemplateCommand(string id = null)
         {
             this.Id = id;
         }
@@ -23,7 +23,7 @@ namespace CommonJobs.Application.Evaluations
         public override Template ExecuteWithResult()
         {
             var template = RavenSession.Load<Template>(IdOrDefault);
-            if (template == null && IdOrDefault == Common.DefaultTemplateId)
+            if (template == null && IdOrDefault == Template.DefaultTemplateId)
             {
                 template = CreateDefaultTemplate(IdOrDefault);
                 ExecuteCommand(new UpdateTemplateCommand(template));
@@ -35,8 +35,6 @@ namespace CommonJobs.Application.Evaluations
         private static Template CreateDefaultTemplate(string id)
         {
             var template = new Template();
-
-            template.Id = Common.DefaultTemplateId;
 
             template.Items.AddRange(
                 new List<TemplateItem>()

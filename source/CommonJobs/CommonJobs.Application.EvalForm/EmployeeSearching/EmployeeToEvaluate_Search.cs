@@ -19,8 +19,9 @@ namespace CommonJobs.Application.EvalForm.EmployeeSearching
             public string CurrentPosition { get; set; }
             public string Seniority { get; set; }
             public string Period { get; set; }
+            public string TemplateId { get; set; }
             public string[] Evaluators { get; set; }
-            public string Responsible { get; set; }
+            public string ResponsibleId { get; set; }
             public bool AutoEvaluationDone { get; set; }
             public bool ResponsibleEvaluationDone { get; set; }
             public bool CompanyEvaluationDone { get; set; }
@@ -40,8 +41,9 @@ namespace CommonJobs.Application.EvalForm.EmployeeSearching
                     CurrentPosition = evaluation.CurrentPosition,
                     Seniority = evaluation.Seniority,
                     Period = evaluation.Period,
+                    TemplateId = evaluation.TemplateId,
                     Evaluators = new dynamic[0],
-                    Responsible = evaluation.Responsible,
+                    ResponsibleId = evaluation.ResponsibleId,
                     AutoEvaluationDone = false,
                     ResponsibleEvaluationDone = false,
                     CompanyEvaluationDone = false,
@@ -59,10 +61,11 @@ namespace CommonJobs.Application.EvalForm.EmployeeSearching
                     CurrentPosition = (string)null,
                     Seniority = (string)null,
                     Period = (string)null,
+                    TemplateId = (string)null,
                     Evaluators = (calification.Owner != CalificationType.Auto && calification.Owner != CalificationType.Company && calification.Owner != CalificationType.Responsible)
                         ? new [] { calification.EvaluatorEmployee }
                         : new dynamic[0],
-                    Responsible = (string)null,
+                    ResponsibleId = (string)null,
                     AutoEvaluationDone = calification.Owner == CalificationType.Auto && calification.Finished,
                     ResponsibleEvaluationDone = calification.Owner == CalificationType.Responsible && calification.Finished,
                     CompanyEvaluationDone = calification.Owner == CalificationType.Company && calification.Finished,
@@ -81,8 +84,9 @@ namespace CommonJobs.Application.EvalForm.EmployeeSearching
                     CurrentPosition = g.Where(x => x.CurrentPosition != null).Select(x => x.CurrentPosition).FirstOrDefault(),
                     Seniority = g.Where(x => x.Seniority != null).Select(x => x.Seniority).FirstOrDefault(),
                     Period = g.Where(x => x.Period != null).Select(x => x.Period).FirstOrDefault(),
+                    TemplateId = g.Where(x => x.TemplateId != null).Select(x => x.TemplateId).FirstOrDefault(),
                     Evaluators = g.SelectMany(x => x.Evaluators).Where(x => x != null).ToArray(),
-                    Responsible = g.Where(x => x.Responsible != null).Select(x => x.Responsible).FirstOrDefault(),
+                    ResponsibleId = g.Where(x => x.ResponsibleId != null).Select(x => x.ResponsibleId).FirstOrDefault(),
                     AutoEvaluationDone = g.Any(x => x.AutoEvaluationDone),
                     ResponsibleEvaluationDone = g.Any(x => x.ResponsibleEvaluationDone),
                     CompanyEvaluationDone = g.Any(x => x.CompanyEvaluationDone),

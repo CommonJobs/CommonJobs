@@ -31,13 +31,12 @@ namespace CommonJobs.Application.EvalForm
         {
             var calification = new EvaluationCalification()
             {
-                Id = Common.GenerateCalificationId(_period, _evaluated, _evaluator),
                 Owner = _owner,
                 EvaluationId = _evaluationId,
                 Period = _period,
                 EvaluatedEmployee = _evaluated,
                 EvaluatorEmployee = _evaluator,
-                Template = _template
+                TemplateId = _template
             };
 
             RavenSession.Store(calification);

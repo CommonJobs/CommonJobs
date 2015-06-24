@@ -31,7 +31,7 @@ namespace CommonJobs.Application.Evaluations
                 }
                 else
                 {
-                    var id = Common.GenerateCalificationId(_employeeEvaluation.Period, _employeeEvaluation.UserName, e.UserName);
+                    var id = EvaluationCalification.GenerateCalificationId(_employeeEvaluation.Period, _employeeEvaluation.UserName, e.UserName);
                     var calification = RavenSession.Load<EvaluationCalification>(id);
                     RavenSession.Delete(calification);
                 }

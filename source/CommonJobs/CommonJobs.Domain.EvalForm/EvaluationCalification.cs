@@ -23,7 +23,10 @@ namespace CommonJobs.Domain.Evaluations
 
     public class EvaluationCalification
     {
-        public string Id { get; set; }
+        public string Id
+        {
+            get { return GenerateCalificationId(Period, EvaluatedEmployee, EvaluatorEmployee); }
+        }
 
         public CalificationType Owner { get; set; }
 
@@ -31,7 +34,7 @@ namespace CommonJobs.Domain.Evaluations
 
         public string Period { get; set; }
 
-        public string Template { get; set; }
+        public string TemplateId { get; set; }
 
         public string EvaluatedEmployee { get; set; }
 
@@ -48,5 +51,10 @@ namespace CommonJobs.Domain.Evaluations
         public List<KeyValuePair<string, decimal>> Califications { get; set; }
 
         public bool Finished { get; set; }
+
+        public static string GenerateCalificationId(string period, string userName, string evaluator)
+        {
+            return string.Format("Evaluations/{0}/{1}/{2}", period, userName, evaluator);
+        }
     }
 }
