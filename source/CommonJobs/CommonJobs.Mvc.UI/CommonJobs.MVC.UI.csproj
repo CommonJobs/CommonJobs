@@ -140,6 +140,19 @@
     <Content Include="Content\bootstrap-responsive.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Evaluations\evaluations.css" />
+    <Content Include="Content\Images\Evaluations\1-02.svg" />
+    <Content Include="Content\Images\Evaluations\2-02.svg" />
+    <Content Include="Content\Images\Evaluations\3-02.svg" />
+    <Content Include="Content\Images\Evaluations\4-02.svg" />
+    <Content Include="Content\Images\Evaluations\5-02.svg" />
+    <Content Include="Content\Images\Evaluations\6-02.svg" />
+    <Content Include="Content\Images\Evaluations\7-02.svg" />
+    <Content Include="Content\Images\Evaluations\8-02.svg" />
+    <Content Include="Content\Images\Evaluations\9-01.svg" />
+    <Content Include="Scripts\evaluations-dashboard.js" />
+    <Content Include="Scripts\evaluations-admin.js" />
+    <Content Include="Scripts\evaluations-common.js" />
     <Content Include="Content\Home\absence.png" />
     <Content Include="Content\Home\applicant.png" />
     <Content Include="Content\Home\attach.png" />
@@ -179,8 +192,11 @@
     <Content Include="Content\EditCommon\Suggest.js" />
     <Content Include="Content\EmployeeFiles\EmployeeFiles.js" />
     <Content Include="Content\FilesListing\FilesListing.js" />
-    <Compile Include="Areas\EvalForm\Controllers\EvalFormController.cs" />
-    <Compile Include="Areas\EvalForm\EvalFormAreaRegistration.cs" />
+    <Compile Include="Areas\Evaluations\Controllers\EvaluationsApiController.cs" />
+    <Compile Include="Areas\Evaluations\Controllers\EvaluationsController.cs" />
+    <Compile Include="Areas\Evaluations\EvaluationsAreaRegistration.cs" />
+    <Compile Include="Areas\Evaluations\Models\PeriodCreation.cs" />
+    <Compile Include="Areas\Evaluations\Models\PeriodEvaluation.cs" />
     <Compile Include="Areas\MyMenu\MyMenuAreaRegistration.cs" />
     <Compile Include="Areas\Profiles\Controllers\ProfilesController.cs" />
     <Compile Include="Areas\Profiles\ProfilesAreaRegistration.cs" />
@@ -331,6 +347,11 @@
     <Content Include="Views\Account\LogOn.cshtml" />
     <Content Include="Views\GoogleAuthentication\Error.cshtml" />
     <Content Include="Content\markdown-styles.less" />
+    <Content Include="Areas\Evaluations\Views\Evaluations\PeriodEvaluation.cshtml" />
+    <Content Include="Areas\Evaluations\Views\Web.config" />
+    <Content Include="Areas\Evaluations\Views\Evaluations\PeriodCreation.cshtml" />
+    <Content Include="Areas\Evaluations\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Evaluations\Views\Shared\_Layout.cshtml" />
     <None Include="Properties\PublishProfiles\DEVProfile.pubxml" />
     <None Include="_bin_deployableAssemblies\FSharp.Core.dll" />
   </ItemGroup>
@@ -1077,6 +1098,10 @@
     <Content Include="Views\Employees\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CommonJobs.Application.EvalForm\CommonJobs.Application.Evaluations.csproj">
+      <Project>{ac3b3fce-3611-4085-b58f-ef533e81b26e}</Project>
+      <Name>CommonJobs.Application.Evaluations</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CommonJobs.Application.MyMenu\CommonJobs.Application.MyMenu.csproj">
       <Project>{16534ba4-8f5c-4214-8840-8062090bf7a2}</Project>
       <Name>CommonJobs.Application.MyMenu</Name>
@@ -1096,6 +1121,10 @@
     <ProjectReference Include="..\CommonJobs.ContentExtraction\CommonJobs.ContentExtraction.csproj">
       <Project>{FCF0DC4A-8A75-499D-AE7D-25D2F5174E38}</Project>
       <Name>CommonJobs.ContentExtraction</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CommonJobs.Domain.EvalForm\CommonJobs.Domain.Evaluations.csproj">
+      <Project>{abb4b6e5-fbeb-4e60-a190-2acaf9efae13}</Project>
+      <Name>CommonJobs.Domain.Evaluations</Name>
     </ProjectReference>
     <ProjectReference Include="..\CommonJobs.Domain.MyMenu\CommonJobs.Domain.MyMenu.csproj">
       <Project>{962ee4f4-0045-42d2-9941-18d9ca184abe}</Project>
@@ -1139,8 +1168,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Areas\EvalForm\Models\" />
-    <Folder Include="Areas\EvalForm\Views\" />
     <Folder Include="Areas\MyMenu\Models\" />
     <Folder Include="Areas\Profiles\Models\" />
   </ItemGroup>

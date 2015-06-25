@@ -1,0 +1,53 @@
+﻿@using CommonJobs.Infrastructure.Mvc.SecurityTrimming
+@using CommonJobs.Mvc.UI.HtmlHelpers
+@{
+    ScriptManager.RegisterCss(Url.Content("~/Content/mymenu.css"), priority: 900);
+}
+
+<!DOCTYPE html>
+<html class="bootstrap-scope">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title</title>
+    @Html.RenderScriptManagerEntries(ScriptManager)
+    <link rel="shortcut icon" href="@Url.Content("~/Content/Images/favicon.ico")" />
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top ">
+        <div class="navbar-inner">
+            <a class="brand" href="@Url.Content("~")">CommonJobs</a>
+            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>            
+            <div class="pull-right">
+                <form class="form-inline" id="persistenceForm">
+                    <ul class="nav nav-right">
+                        @if (Request.IsAuthenticated && User != null && User.Identity != null && User.Identity.Name != null) 
+				        {
+                            @*//TODO: We need improve the navigation bar styles. So, I removed these inline styles in this moment*@
+                            <li class="username">
+                                <small>@User.Identity.Name
+                                @if (User.Identity.AuthenticationType == "Forms")
+                                {
+                                    <text>[<a href="@Url.Content("~/Account/LogOff")">LogOff</a>]</text>
+                                }
+                                </small>
+                            </li>
+				        }
+                    </ul>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="body-container">
+        @RenderBody()
+    </div>
+    <footer>
+        <div class="container">
+            <p><strong>Evaluations</strong> es un desarrollo <em>OpenSource</em> realizado en ratos libres. Cualquier mejora es bienvenida, descargá el <a href="https://github.com/CommonJobs/CommonJobs">código fuente de GitHub</a> y hacé tu <em>Pull Request</em>.</p>
+        </div>
+    </footer>
+</body>
+</html>
