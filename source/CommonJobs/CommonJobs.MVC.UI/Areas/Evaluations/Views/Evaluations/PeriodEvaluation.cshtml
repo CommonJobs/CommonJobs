@@ -38,7 +38,7 @@
                 <td data-bind="text: fullName"></td>
                 <td data-bind="text: currentPosition"></td>      
                 <td data-bind="text: seniority"></td>
-                <td>
+                <td class="calificators-column">
                     <span data-bind="if: evaluatorsAmount() > 0, attr: { 'data-tips': evaluatorsString()}" class="top-tip rol">
                         <i class="icon edit"></i>
                         <a class="calification-links edit" data-bind="click: showCalificatorsManager">
@@ -47,6 +47,7 @@
                         </a>
                     </span>
                     <span data-bind="if: !evaluatorsAmount()"><i class="icon add"></i><a class="calification-links add" data-bind="click: showCalificatorsManager">Agregar</a></span>
+
                 </td>
                 <td><span class="state-doc state-0" data-bind="text: stateName"></span></td>
                 <td><i class="icon user"></i><a class="link-responsable top-tip rol" data-tips="Calificar como responsable">Calificar</a></td>
@@ -54,7 +55,7 @@
             </tr>
         </tbody>
     </table>
-    <button type="submit" id="generate-evaluation-button" class="button-evaluations generate-evaluation" >VOLVER</button>
+    <button type="submit" id="back-button" class="primary-btn button-evaluations" >Volver</button>
 </div>
 
 
@@ -62,49 +63,15 @@
     <div class="modal-title">
         <h4>Agregar Calificadores</h4>
     </div>
-    <input type="text" class="search" autocomplete="off" data-bind="value: calificatorsManagerModel.newCalificator, event: {keypress: calificatorsManagerModel.onEnter}"/><button data-bind="click: calificatorsManagerModel.addCalificator">Add</button>
+    <div class="search-container">
+        <input type="text" class="search" autocomplete="off" data-bind="value: calificatorsManagerModel.newCalificator, event: {keypress: calificatorsManagerModel.onEnter}"/>
+        <button class="add-calificator-btn" data-bind="click: calificatorsManagerModel.addCalificator"></button>
+    </div>
     <div class="content-add-calificadores">
         <ul data-bind="foreach: calificatorsManagerModel.activeCalificators">
             <li><span data-bind="text: userName"></span> <a data-bind="click: $parent.calificatorsManagerModel.removeCalificator"><i class="icon delete"></i></a></li>
         </ul>
     </div>
-    <a class="cancelar" data-bind="click: calificatorsManagerModel.cancel">Cancelar</a>
+    <a class="cancelar" data-bind="click: calificatorsManagerModel.close">Cancelar</a>
     <a class="guardar"data-bind="click: calificatorsManagerModel.save">Guardar</a>
 </div>
-
-@*<div class="content">
-    <h2 class="title">Generar Evaluación</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Empleado</th>
-                <th>Posición</th>
-                <th>Seniority</th>
-                <th>Responsable</th>
-            </tr>
-        </thead>
-        <tbody data-bind="foreach: employees">
-            <tr data-bind="css: { 'evaluation-generated': period }">
-                <td data-bind="text: fullName"></td>
-                <td data-bind="text: currentPosition"></td>
-                <td data-bind="text: seniority"></td>
-                <td>
-                    <span data-bind="visible: period, text:responsible"></span>
-                    <input class="evaluation-owner-field" data-bind="visible: !period, value: responsible" autocomplete="off"/>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <button type="submit" id="generate-evaluation-button" class="generate-evaluation-button" data-bind="enable: generateButtonEnable">GENERAR EVALUACIONES</button>
-    
-</div>
-
-<div id="evaluations-generated-confirm" class="modal content-pop-up clearfix">
-    <div class="modal-header">
-        <h3 class="modal-title">EVALUACIONES GENERADAS!</h3>
-    </div>
-    <p id="textCount"></p>
-    <div class="model-footer">      
-        <button class="confirm">OK</button>
-    </div>
-</div>*@
