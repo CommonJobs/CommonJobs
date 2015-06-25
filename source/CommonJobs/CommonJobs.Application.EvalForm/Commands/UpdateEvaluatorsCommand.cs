@@ -27,8 +27,11 @@ namespace CommonJobs.Application.Evaluations
             {
                 if (e.Action == EvaluatorAction.Add)
                 {
-                    //TODO: Check if e.UserName exists in the DB
-                    var employee = RavenSession.Load<Employee>(e.UserName);
+                    var employee = RavenSession
+                        .Query<Employee>()
+                        .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite())
+                        .Where(x => x.UserName == e.UserName)
+                        .FirstOrDefault();
                     if (employee != null)
                     {
                         ExecuteCommand(new GenerateCalificationCommand(_employeeEvaluation.Period, _employeeEvaluation.UserName, e.UserName, _employeeEvaluation.TemplateId, CalificationType.Evaluator, _employeeEvaluation.Id));
