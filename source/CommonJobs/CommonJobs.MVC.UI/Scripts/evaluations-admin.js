@@ -45,7 +45,7 @@
     Employee.prototype.fromJs = function (data) {
         this.id = data.Id;
         this.userName = data.UserName;
-        this.responsible(data.Responsible || '');
+        this.responsible(data.ResponsibleId || '');
         this.fullName = data.FullName;
         this.currentPosition = data.CurrentPosition;
         this.seniority = data.Seniority;
@@ -55,7 +55,7 @@
     Employee.prototype.toJs = function () {
         return {
             UserName: this.userName,
-            Responsible: this.responsible(),
+            ResponsibleId: this.responsible(),
             CurrentPosition: this.currentPosition,
             Seniority: this.seniority,
             FullName: this.fullName,
@@ -76,7 +76,7 @@
 
     $('#generate-evaluation-button').on('click', function () {
         var model = viewmodel.toJs();
-        var modelFiltered = { Employees: _.filter(model.Employees, function (e) { return e.Responsible && !e.Period; }) };
+        var modelFiltered = { Employees: _.filter(model.Employees, function (e) { return e.ResponsibleId && !e.Period; }) };
         $.ajax("/Evaluations/api/GenerateEvalutions/" + evaluationPeriod + "/", {
             type: "POST",
             dataType: 'json',
