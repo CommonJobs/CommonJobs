@@ -27,13 +27,27 @@ namespace CommonJobs.Application.Evaluations
             {
                 if (e.Action == EvaluatorAction.Add)
                 {
-                    ExecuteCommand(new GenerateCalificationCommand(_employeeEvaluation.Period, _employeeEvaluation.UserName, e.UserName, _employeeEvaluation.TemplateId, CalificationType.Evaluator, _employeeEvaluation.Id));
+                    var employee = RavenSession
+                        .Query<Employee>()
+                        .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite())
+                        .Where(x => x.UserName == e.UserName)
+                        .FirstOrDefault();
+                    if (employee != null)
+                    {
+                        ExecuteCommand(new GenerateCalificationCommand(_employeeEvaluation.Period, _employeeEvaluation.UserName, e.UserName, _employeeEvaluation.TemplateId, CalificationType.Evaluator, _employeeEvaluation.Id));
+                    }
+                    else
+                    {
+                        throw new ApplicationException(string.Format("Error: Evaluador no valido: {0}.", e.UserName));
+                    }
                 }
                 else
                 {
-                    var id = Common.GenerateCalificationId(_employeeEvaluation.Period, _employeeEvaluation.UserName, e.UserName);
+                    var id = EvaluationCalification.GenerateCalificationId(_employeeEvaluation.Period, _employeeEvaluation.UserName, e.UserName);
                     var calification = RavenSession.Load<EvaluationCalification>(id);
-                    RavenSession.Delete(calification);
+                    if (calification != null) {
+                        RavenSession.Delete(calification);
+                    }
                 }
             }
         }

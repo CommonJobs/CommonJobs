@@ -15,6 +15,22 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations.Controllers
 {
     public class EvaluationsApiController : CommonJobsController
     {
+        private string DetectUser()
+        {
+            //TODO: remove hardcoded "CS\\"
+            //TODO: move to an AuthorizeAttribute or something more elegant
+            if (User != null && User.Identity != null && User.Identity.Name != null)
+            {
+                var user = User.Identity.Name;
+                if (user.StartsWith("CS\\"))
+                    user = user.Substring(3);
+                return user;
+            }
+            else
+            {
+                throw new ApplicationException("User cannot be detected");
+            }
+        }
 
         [AcceptVerbs(HttpVerbs.Get)]
         public JsonNetResult GetEmployeesToGenerateEvalution(string period)
@@ -30,16 +46,16 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public JsonNetResult GenerateEvalutions(PeriodCreation model, string period)
+        public JsonNetResult GenerateEvalutions(PeriodCreation model)
         {
-            ExecuteCommand(new GenerateEvaluationsCommand(model.Employees, period));
+            ExecuteCommand(new GenerateEvaluationsCommand(model.Employees));
             return Json(model.Employees.Count);
         }
 
         [AcceptVerbs(HttpVerbs.Get)]
         public JsonNetResult GetDashboardEvaluations(string period) {
             PeriodEvaluation periodEvaluation = new PeriodEvaluation();
-            periodEvaluation.Evaluations = ExecuteCommand(new GetEvaluatorEmployeesCommand("abanderas"));
+            periodEvaluation.Evaluations = ExecuteCommand(new GetEvaluatorEmployeesCommand(DetectUser()));
             return Json(periodEvaluation);
         }
 
@@ -47,7 +63,7 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations.Controllers
         public JsonNetResult GetCalificatorsForEvaluation(string username)
         {
             PeriodEvaluation periodEvaluation = new PeriodEvaluation();
-            periodEvaluation.Evaluations = ExecuteCommand(new GetEvaluatorEmployeesCommand("abanderas"));
+            periodEvaluation.Evaluations = ExecuteCommand(new GetEvaluatorEmployeesCommand(username));
             return Json(periodEvaluation);
         }
 
@@ -57,6 +73,6 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations.Controllers
             ExecuteCommand(new UpdateEvaluatorsCommand(evaluation, calificators));
             return Json("ok");
         }
-        
+
     }
 }

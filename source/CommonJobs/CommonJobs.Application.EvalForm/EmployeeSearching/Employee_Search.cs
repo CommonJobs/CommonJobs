@@ -62,7 +62,7 @@ namespace CommonJobs.Application.Evaluations.EmployeeSearching
                     CurrentPosition = (string)null,
                     Seniority = (string)null,
                     Project = (string)null,
-                    EvaluationPeriods = new[] { new { Period = evaluation.Period, Responsible = evaluation.Responsible }}
+                    EvaluationPeriods = new[] { new { Period = evaluation.Period, Responsible = evaluation.ResponsibleId }}
                 });
 
             Reduce = docs =>

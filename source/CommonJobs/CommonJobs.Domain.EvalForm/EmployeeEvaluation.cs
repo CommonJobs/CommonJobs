@@ -7,7 +7,10 @@ namespace CommonJobs.Domain.Evaluations
 {
     public class EmployeeEvaluation
     {
-        public string Id { get; set; }
+        public string Id
+        {
+            get { return GenerateEvaluationId(Period, UserName); }
+        }
 
         public string UserName { get; set; }
 
@@ -20,17 +23,20 @@ namespace CommonJobs.Domain.Evaluations
 
         public string Project { get; set; }
 
-        //An Id
-        public string Responsible { get; set; }
+        public string ResponsibleId { get; set; }
 
-        //An Id
-        public string Template { get; set; }
+        public string TemplateId { get; set; }
 
         public string Period { get; set; }
 
         public bool OpenToDevolution { get; set; }
 
         public bool Finished { get; set; }
+
+        public static string GenerateEvaluationId(string period, string userName)
+        {
+            return string.Format("Evaluations/{0}/{1}", period, userName);
+        }
     }
 }
 

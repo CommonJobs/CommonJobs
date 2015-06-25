@@ -1,5 +1,6 @@
 ﻿using CommonJobs.Application.EvalForm.EmployeeSearching;
 using CommonJobs.Application.Evaluations;
+using CommonJobs.Domain.Evaluations;
 using CommonJobs.Infrastructure.RavenDb;
 using Raven.Client.Linq;
 using System;
@@ -11,11 +12,11 @@ namespace CommonJobs.Application.EvalForm.Commands
 {
     public class GetEvaluatorEmployeesCommand : Command<List<EmployeeEvaluationDTO>>
     {
-        private string _responsible { get; set; }
+        private string _responsibleId { get; set; }
 
         public GetEvaluatorEmployeesCommand(string responsible)
         {
-            _responsible = responsible;
+            _responsibleId = responsible;
         }
 
         public override List<EmployeeEvaluationDTO> ExecuteWithResult()
@@ -24,8 +25,7 @@ namespace CommonJobs.Application.EvalForm.Commands
             IQueryable<EmployeeToEvaluate_Search.Projection> query = RavenSession
                 .Query<EmployeeToEvaluate_Search.Projection, EmployeeToEvaluate_Search>()
                 .Statistics(out stats)
-                //.Where(e => e.Evaluators.Any(ev => ev == _responsible))
-                .Where(e => e.Responsible == _responsible)
+                .Where(e => e.ResponsibleId == _responsibleId)
                 .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite());
 
             var employeesProjection = query.ToList();
@@ -34,7 +34,7 @@ namespace CommonJobs.Application.EvalForm.Commands
             {
                 return new EmployeeEvaluationDTO()
                 {
-                    IsResponsible = e.Responsible == _responsible,
+                    IsResponsible = e.ResponsibleId == _responsibleId,
                     FullName = e.FullName,
                     UserName = e.UserName,
                     Period = e.Period,
@@ -43,8 +43,7 @@ namespace CommonJobs.Application.EvalForm.Commands
                     Evaluators = e.Evaluators != null ? e.Evaluators.ToList() : new List<string>(),
                     State = getEvaluationState(e),
                     Id = e.Id,
-                    //TODO: In the current version this property is set with a default template id
-                    TemplateId = Common.DefaultTemplateId
+                    TemplateId = e.TemplateId
                 };
             }).ToList();
 
@@ -71,7 +70,7 @@ namespace CommonJobs.Application.EvalForm.Commands
 
             // (auto && comp) cannot happen since comp comes strictly after resp is done.
 
-            if (resp) return EvaluationState.InProgress;
+            if (resp) return EvaluationState.WaitingAuto;
 
             if (auto) return EvaluationState.WaitingResponsible;
 
