@@ -1,9 +1,36 @@
 ﻿$(document).ready(function () {
     var PeriodCreation = function (data) {
+        var self = this;
         this.employees = ko.observableArray();
         this.generateButtonEnable = ko.observable(false);
         if (data) {
             this.fromJS(data);
+        }
+        this.headers = [
+        { title: 'Empleado', sortPropertyName: 'fullName', asc: true},
+        { title: 'Puesto', sortPropertyName: 'currentPosition', asc: true},
+        { title: 'Seniority', sortPropertyName: 'seniority', asc: true},
+        { title: 'Responsable', sortPropertyName: 'responsible', asc: true}
+        ];
+        this.activeSort;
+        this.sort = function (header, event) {
+            if (self.activeSort === header) {
+                header.asc = !header.asc;
+            } else {
+                self.activeSort = header;
+            }
+            var prop = self.activeSort.sortPropertyName;
+            var ascSort = function (a, b) {
+                return a[prop] < b[prop] ? -1 : a[prop] > b[prop] ? 1 : a[prop] == b[prop] ? 0 : 0;
+            };
+            var descSort = function (a, b) {
+                return ascSort(b, a);
+            };
+            var sortFunc = self.activeSort.asc ? ascSort : descSort;
+            self.employees.sort(sortFunc);
+        };
+        this.defaultSort = function () {
+            this.sort(this.headers[0]);
         }
     }
 
@@ -48,7 +75,7 @@
         this.responsible(data.ResponsibleId || '');
         this.fullName = data.FullName;
         this.currentPosition = data.CurrentPosition;
-        this.seniority = data.Seniority;
+        this.seniority = data.Seniority || '';
         this.period = data.Period;
     }
 
@@ -68,6 +95,7 @@
     function getEmployeesToGenerateEvalution() {
         $.getJSON("/Evaluations/api/getEmployeesToGenerateEvalution/" + evaluationPeriod + "/", function (model) {
             viewmodel.fromJS(model);
+            viewmodel.defaultSort();
             $('.evaluation-owner-field').each(function (index, elem) {
                 commonSuggest(elem, 'UserName');
             });
@@ -93,7 +121,6 @@
 
     getEmployeesToGenerateEvalution();
     ko.applyBindings(viewmodel);
-
     var modalContainer = $('#evaluations-generated-confirm');
     modalContainer.modal({ show: false });
     modalContainer.find('.confirm').on('click', function () {

@@ -114,10 +114,39 @@
     }
 
     var Dashboard = function (data) {
+        var self = this;
         this.evaluations = ko.observableArray();
         this.calificatorsManagerModel = new CalificatorsManager();
         if (data) {
             this.fromJS(data);
+        }
+        this.headers = [
+        { title: 'Rol', sortPropertyName: 'idResponsible', asc: true },
+        { title: 'Empleado', sortPropertyName: 'fullName', asc: true },
+        { title: 'Puesto', sortPropertyName: 'currentPosition', asc: true },
+        { title: 'Seniority', sortPropertyName: 'seniority', asc: true },
+        { title: 'Calificadores', sortPropertyName: 'evaluators', asc: true },
+        { title: 'Estado', sortPropertyName: 'state', asc: true }
+        ];
+        this.activeSort;
+        this.sort = function (header, event) {
+            if (self.activeSort === header) {
+                header.asc = !header.asc; //toggle the direction of the sort
+            } else {
+                self.activeSort = header; //first click, remember it
+            }
+            var prop = self.activeSort.sortPropertyName;
+            var ascSort = function (a, b) {
+                return a[prop] < b[prop] ? -1 : a[prop] > b[prop] ? 1 : a[prop] == b[prop] ? 0 : 0;
+            };
+            var descSort = function (a, b) {
+                return ascSort(b, a);
+            };
+            var sortFunc = self.activeSort.asc ? ascSort : descSort;
+            self.evaluations.sort(sortFunc);
+        };
+        this.defaultSort = function () {
+            this.sort(this.headers[1]);
         }
     }
 
@@ -161,8 +190,8 @@
         this.fullName = data.FullName;
         this.userName = data.UserName;
         this.period = data.Period;
-        this.currentPosition= data.CurrentPosition;
-        this.seniority = data.Seniority;
+        this.currentPosition= data.CurrentPosition || '';
+        this.seniority = data.Seniority || '';
         this.evaluators = data.Evaluators;
         this.evaluatorsString = ko.computed(function () {
             return this.evaluators.toString().replace(/,/g, ', ');
@@ -204,6 +233,7 @@
     function getDashboardEvaluations() {
         $.getJSON("/Evaluations/api/getDashboardEvaluations/", function (model) {
             viewmodel.fromJS(model);
+            viewmodel.defaultSort();
         });
     }
 
