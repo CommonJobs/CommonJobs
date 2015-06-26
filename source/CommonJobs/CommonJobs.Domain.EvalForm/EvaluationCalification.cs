@@ -40,12 +40,6 @@ namespace CommonJobs.Domain.Evaluations
 
         public string EvaluatorEmployee { get; set; }
 
-        //public string StrengthsComment { get; set; }
-
-        //public string ImproveComment { get; set; }
-
-        //public string ActionPlanComment { get; set; }
-
         public string Comments { get; set; }
 
         public List<KeyValuePair<string, decimal>> Califications { get; set; }
