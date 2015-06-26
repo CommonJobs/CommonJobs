@@ -43,19 +43,19 @@
                 this.action(1);
             }
         }
-        this.cancel = function () {
+        this.close = function () {
+            $('.content-evaluation').append($('.content-modal'));
             $('.content-modal').hide();
         }
         this.save = function () {
-            var self = this;
-            var updateCalificators = self.calificatorsManagerModel.toJs();
+            var updateCalificators = this.calificatorsManagerModel.toJs();
             $.ajax("/Evaluations/api/UpdateCalificators/", {
                 type: "POST",
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
                 data: JSON.stringify(updateCalificators),
                 complete: function (response) {
-                    $('.content-modal').hide();
+                    self.close();
                     getDashboardEvaluations();
                 }
             });
@@ -172,9 +172,12 @@
         }, this);
         this.state = data.State;
         this.stateName = evaluationStates[data.State];
-        this.showCalificatorsManager = function () {
+        this.showCalificatorsManager = function (data, event) {
             viewmodel.calificatorsManagerModel.fromJs({ evaluation: this, calificators: this.evaluators });
+            var popupContainer = $(event.target).parents('.calificators-column');
+            popupContainer.append($('.content-modal'));
             $('.content-modal').show();
+            return true;
         }
     }
 
@@ -203,4 +206,5 @@
             viewmodel.fromJS(model);
         });
     }
+
 });
