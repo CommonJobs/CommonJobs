@@ -2,6 +2,7 @@
 using CommonJobs.Application.EvalForm.Commands;
 using CommonJobs.Application.EvalForm.DTOs;
 using CommonJobs.Application.Evaluations;
+using CommonJobs.Domain;
 using CommonJobs.Domain.Evaluations;
 using CommonJobs.Infrastructure.Mvc;
 using CommonJobs.Mvc.UI.Areas.Evaluations.Models;
@@ -74,5 +75,79 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations.Controllers
             return Json("ok");
         }
 
+        [AcceptVerbs(HttpVerbs.Get)]
+        public JsonNetResult GetEvaluation (string username)
+        {
+            Calification calification = new Calification();
+            calification.Employee = new EmployeeEvaluation();
+            calification.Employee.FullName = "Sofia Pacifico";
+            calification.Employee.ResponsibleId = "spacifico";
+            calification.Employee.Seniority = "Junior";
+            calification.Employee.CurrentPosition = "Developer";
+            Template template = new Template();
+            template.Items = new List<TemplateItem>();
+            template.Items.AddRange(
+                new List<TemplateItem>()
+                {
+                    ///JOB PERFORMANCE
+                    new TemplateItem(){
+                        GroupKey = "jobperformance",
+                        Key = "responsibility",
+                        Text = "Responsabilidad",
+                        Description = "Responsabilidad"
+                    },
+                    new TemplateItem(){
+                        GroupKey = "jobperformance",
+                        Key = "accuracy",
+                        Text = "Exactitud y claridad de trabajo",
+                        Description = ""
+                    },
+                    new TemplateItem(){
+                        GroupKey = "jobperformance",
+                        Key = "datecompliance",
+                        Text = "Cumplimiento de fechas",
+                        Description = ""
+                    },
+                    new TemplateItem(){
+                        GroupKey = "jobperformance",
+                        Key = "productivity",
+                        Text = "Productividad",
+                        Description = ""
+                    },
+                    new TemplateItem(){
+                        GroupKey = "jobperformance",
+                        Key = "workorder",
+                        Text = "Orden y claridad del trabajo",
+                        Description = ""
+                    },
+                    new TemplateItem(){
+                        GroupKey = "jobperformance",
+                        Key = "workplanification",
+                        Text = "Planificación del trabajo",
+                        Description = ""
+                    },
+                    new TemplateItem(){
+                        GroupKey = "jobperformance",
+                        Key = "documentation",
+                        Text = "Documentación que genera",
+                        Description = ""
+                    },
+                    new TemplateItem(){
+                        GroupKey = "jobperformance",
+                        Key = "taskreport",
+                        Text = "Reporta avances de tareas",
+                        Description = ""
+                    },
+                    new TemplateItem(){
+                        GroupKey = "jobperformance",
+                        Key = "accomplishment",
+                        Text = "Capacidad de realización",
+                        Description = ""
+                    }
+                }
+            );
+            calification.Template = template;
+            return Json(calification);
+        }
     }
 }

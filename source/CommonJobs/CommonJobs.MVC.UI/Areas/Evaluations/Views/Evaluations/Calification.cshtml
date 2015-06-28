@@ -1,0 +1,71 @@
+﻿@{
+    ViewBag.Title = "Califications";
+    Layout = "~/Areas/Evaluations/Views/Shared/_Layout.cshtml";
+    ScriptManager.RegisterCss(Url.Content("~/Content/twitter-bootstrap/less/bootstrap.less"), priority: 900);
+    ScriptManager.RegisterCss(Url.Content("~/Content/twitter-bootstrap/less/responsive.less"), priority: 900);
+    ScriptManager.RegisterCss(Url.Content("~/Content/Evaluations/evaluations.css"));
+    ScriptManager.RegisterGlobalJavascript("baseUrl", Url.Content("~"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/jquery-1.7.2.min.js"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/underscore.js"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Content/twitter-bootstrap/js/bootstrap-typeahead.js"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Content/twitter-bootstrap/js/bootstrap-modal.js"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/url-generator.js"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/knockout-2.2.0.js"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/Evaluations/calification.js"));
+}
+
+<div class="content-evaluation evaluation">
+    <h2 class="title-evaluations">Devolucion de <strong>Making Sense</strong> a <strong data-bind="text: employee.fullName()"></strong></h2>
+    <div class="top-evaluation">
+        <div class="top-left">
+            <h4>Informacion Personal</h4>
+            <h5 class="inf-personal">Puesto: <span data-bind="text: employee.currentPosition()"></span></h5>
+            <h5 class="inf-personal">Evaluadores: <span data-bind="text: employee.fullName()"></span></h5>
+            <h5 class="inf-personal">Seniority: <span data-bind="text: employee.seniority()"></span></h5>
+            <h5 class="inf-personal">Responsable: <span data-bind="text: employee.responsibleId()"></span></h5>
+            <h5 class="inf-personal">Fecha: <span>18/07/2015</span></h5>
+            <h5 class="inf-personal">Proyecto: <span>Marketing</span></h5>
+            <h4>Metricas de Evaluacion</h4>
+            <h5>1.<span>No alcanza las Expectativas  </span>2.<span>Necesita Mejorar </span></br>3.<span>Cumple con Expectativas </span>4.<span>Excede Expectativas</span></h5>
+            <p class="explication-text">*Si no tenes conocimientos para calificar un campo puedes dejarlo vacio</p>
+        </div>
+        <div class="top-right">
+            <h4>Comentarios Generales</h4>
+            <textarea class="comentarios-generales" placeholder="Deja tu comentario aqui..."></textarea>
+            <button class="button-evaluations comentar">Comentar</button>
+        </div>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="evaluadores"></th>
+                <th class="evaluadores"><i class="icon hide top-tip" data-tips="Ocultar"></i>Auto Evaluacion</th>
+                <th class="evaluadores"><i class="icon hide top-tip" data-tips="Ocultar"></i>Calentey</th>
+                <th class="evaluadores"><i class="icon hide top-tip" data-tips="Ocultar"></i>Empresa</th>
+            </tr>
+            <tr>
+                <th class="title-evaluacion">CALIFICACION FINAL</th>
+                <th class="title-evaluacion">3.5</th>
+                <th class="title-evaluacion">4</th>
+                <th class="title-evaluacion">4</th>
+            </tr>
+            <tr>
+                <th class="sub-title-evaluacion">DESEMPE&Ntilde;O LABORAL</th>
+                <th class="sub-title-evaluacion"><span>3.5</span></th>
+                <th class="sub-title-evaluacion">4</th>
+                <th class="sub-title-evaluacion">4</th>
+            </tr>
+        </thead>
+        <tbody data-bind="testing:console.log($data), foreach: template.items">
+            <tr>
+                <td><span data-bind="text: templateItem.text(), attr:{'data-tips': description()}" class="top-tip rol"></span></td>
+                <td class="col-hide">3.5</td>
+                <td><span>4</span></td>
+                <td><input class="calificacion" type="text"></td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="footer-evaluation">
+        <button class="button-evaluations finalizar">Finalizar Devolucion</button>
+    </div>
+</div>
