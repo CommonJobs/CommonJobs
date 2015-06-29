@@ -200,39 +200,28 @@
         this.isCalificatorsEditable = ko.computed(function () {
             return this.isResponsible && this.state != 6;
         }, this);
-        this.calificationActionTooltip = ko.computed(function () {
+        this.calificationActionTooltip = ko.observable('');
+        this.calificationActionText = ko.observable('');
+        this.calificationActionClass = ko.observable('');
+        this.calificationAction = ko.computed(function () {
             switch (this.state) {
                 case 0:
                 case 2:
-                    return "Calificar como responsable";
+                    this.calificationActionTooltip("Calificar como responsable");
+                    this.calificationActionClass("icon user");
+                    this.calificationActionText("Calificar");
+                    break;
                 case 1:
                 case 3:
-                    return "Calificar como empresa";
+                    this.calificationActionText("Calificar");
+                    this.calificationActionClass("icon empresa");
+                    this.calificationActionTooltip("Calificar como empresa");
+                    break;
                 default:
-                    return "Ver Calificación";
-            }
-        }, this);
-        this.calificationActionText = ko.computed(function () {
-            switch (this.state) {
-                case 0:
-                case 1:
-                case 2:
-                case 3:
-                    return "Calificar";
-                default:
-                    return "Ver Calificación";
-            }
-        }, this);
-        this.calificationActionClass = ko.computed(function () {
-            switch (this.state) {
-                case 0:
-                case 2:
-                    return "icon user";
-                case 1:
-                case 3:
-                    return "icon empresa";
-                default:
-                    return "icon view";
+                    this.calificationActionText("Ver Calificación");
+                    this.calificationActionClass("icon view");
+                    this.calificationActionTooltip("Ver Calificación");
+                    break;
             }
         }, this);
         this.showCalificatorsManager = function (data, event) {
@@ -263,12 +252,10 @@
     ko.applyBindings(viewmodel);
     commonSuggest($('.content-modal .search'), 'UserName');
     
-
     function getDashboardEvaluations() {
         $.getJSON("/Evaluations/api/getDashboardEvaluations/", function (model) {
             viewmodel.fromJS(model);
             viewmodel.defaultSort();
         });
     }
-
 });
