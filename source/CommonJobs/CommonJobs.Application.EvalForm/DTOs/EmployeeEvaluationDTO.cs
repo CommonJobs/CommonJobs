@@ -9,6 +9,8 @@ namespace CommonJobs.Application.EvalForm
     {
         public bool IsResponsible { get; set; }
 
+        public string ResponsibleId { get; set; }
+
         public string FullName { get; set; }
 
         public string CurrentPosition { get; set; }

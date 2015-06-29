@@ -1,4 +1,5 @@
-﻿using CommonJobs.Domain.Evaluations;
+﻿using CommonJobs.Domain;
+using CommonJobs.Domain.Evaluations;
 using Raven.Abstractions.Indexing;
 using Raven.Client.Indexes;
 using System;
@@ -31,6 +32,27 @@ namespace CommonJobs.Application.EvalForm.EmployeeSearching
 
         public EmployeeToEvaluate_Search()
         {
+            AddMap<Employee>(employees =>
+                from employee in employees
+                select new
+                {
+                    Id = (string)null,
+                    UserName = employee.UserName,
+                    FullName = (string)null,
+                    CurrentPosition = employee.CurrentPosition,
+                    Seniority = employee.Seniority,
+                    Period = (string)null,
+                    TemplateId = (string)null,
+                    Evaluators = new dynamic[0],
+                    ResponsibleId = (string)null,
+                    AutoEvaluationDone = false,
+                    ResponsibleEvaluationDone = false,
+                    CompanyEvaluationDone = false,
+                    OpenToDevolution = false,
+                    Finished = false
+
+                });
+
             AddMap<EmployeeEvaluation>(evaluations =>
                 from evaluation in evaluations
                 select new
@@ -38,8 +60,8 @@ namespace CommonJobs.Application.EvalForm.EmployeeSearching
                     Id = evaluation.Id,
                     UserName = evaluation.UserName,
                     FullName = evaluation.FullName,
-                    CurrentPosition = evaluation.CurrentPosition,
-                    Seniority = evaluation.Seniority,
+                    CurrentPosition = (string)null,
+                    Seniority = (string)null,
                     Period = evaluation.Period,
                     TemplateId = evaluation.TemplateId,
                     Evaluators = new dynamic[0],

@@ -1,8 +1,6 @@
-﻿using CommonJobs.Domain.Evaluations;
-using System;
+﻿using CommonJobs.Application.EvalForm;
+using CommonJobs.Domain.Evaluations;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace CommonJobs.Mvc.UI.Areas.Evaluations.Models
 {
@@ -10,9 +8,9 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations.Models
     {
         public PeriodCreation()
         {
-            Employees = new List<EmployeeEvaluation>();
+            Employees = new List<EmployeeEvaluationDTO>();
         }
-        public List<EmployeeEvaluation> Employees { get; set; }
+        public List<EmployeeEvaluationDTO> Employees { get; set; }
 
     }
 }

@@ -35,6 +35,7 @@ namespace CommonJobs.Application.EvalForm.Commands
                 return new EmployeeEvaluationDTO()
                 {
                     IsResponsible = e.ResponsibleId == _responsibleId,
+                    ResponsibleId = e.ResponsibleId,
                     FullName = e.FullName,
                     UserName = e.UserName,
                     Period = e.Period,

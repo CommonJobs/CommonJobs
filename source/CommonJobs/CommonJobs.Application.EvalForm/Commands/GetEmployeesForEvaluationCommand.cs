@@ -1,20 +1,17 @@
 ﻿using CommonJobs.Application.Evaluations.EmployeeSearching;
 using CommonJobs.Utilities;
-using CommonJobs.Domain;
-using CommonJobs.Domain.Evaluations;
 using CommonJobs.Infrastructure.RavenDb;
 using Raven.Client.Linq;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using CommonJobs.Application.EvalForm;
 
 namespace CommonJobs.Application.Evaluations
 {
     /// <summary>
     /// Command for getting the list of employees to populate the evaluation generation screen
     /// </summary>
-    public class GetEmployeesForEvaluationCommand : Command<List<EmployeeEvaluation>>
+    public class GetEmployeesForEvaluationCommand : Command<List<EmployeeEvaluationDTO>>
     {
         private string _period;
 
@@ -23,7 +20,7 @@ namespace CommonJobs.Application.Evaluations
             _period = period;
         }
 
-        public override List<EmployeeEvaluation> ExecuteWithResult()
+        public override List<EmployeeEvaluationDTO> ExecuteWithResult()
         {
             RavenQueryStatistics stats;
             IQueryable<Employee_Search.Projection> query = RavenSession
@@ -38,7 +35,7 @@ namespace CommonJobs.Application.Evaluations
             var employeesToEval = employeesProjection.Select(e =>
             {
                 var period = e.EvaluationPeriods.EmptyIfNull().Where(x => x.Period == _period).FirstOrDefault();
-                return new EmployeeEvaluation()
+                return new EmployeeEvaluationDTO()
                 {
                     UserName = e.UserName,
                     Period = period == null ? null : period.Period,
