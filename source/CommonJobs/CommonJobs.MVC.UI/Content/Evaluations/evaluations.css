@@ -302,7 +302,7 @@ h1 {
   color: #000000;
 }
 /* line 105, ../../sass/Evaluations/_base.scss */
-.content-evaluation td.selected {
+.content-evaluation .selected {
   color: #000000;
 }
 /* line 109, ../../sass/Evaluations/_base.scss */
