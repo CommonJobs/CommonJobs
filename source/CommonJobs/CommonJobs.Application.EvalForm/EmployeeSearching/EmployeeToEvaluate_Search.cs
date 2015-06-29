@@ -18,7 +18,7 @@ namespace CommonJobs.Application.EvalForm.EmployeeSearching
             public string UserName { get; set; }
             public string FullName { get; set; }
             public string CurrentPosition { get; set; }
-            public string Seniority { get; set; }
+            public string CurrentSeniority { get; set; }
             public string Period { get; set; }
             public string TemplateId { get; set; }
             public string[] Evaluators { get; set; }
@@ -104,7 +104,7 @@ namespace CommonJobs.Application.EvalForm.EmployeeSearching
                     UserName = g.Key,
                     FullName = g.Where(x => x.FullName != null).Select(x => x.FullName).FirstOrDefault(),
                     CurrentPosition = g.Where(x => x.CurrentPosition != null).Select(x => x.CurrentPosition).FirstOrDefault(),
-                    Seniority = g.Where(x => x.Seniority != null).Select(x => x.Seniority).FirstOrDefault(),
+                    Seniority = g.Where(x => x.CurrentSeniority != null).Select(x => x.CurrentSeniority).FirstOrDefault(),
                     Period = g.Where(x => x.Period != null).Select(x => x.Period).FirstOrDefault(),
                     TemplateId = g.Where(x => x.TemplateId != null).Select(x => x.TemplateId).FirstOrDefault(),
                     Evaluators = g.SelectMany(x => x.Evaluators).Where(x => x != null).ToArray(),
