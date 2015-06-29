@@ -21,10 +21,10 @@
     <table class="table">
         <thead>
             <tr data-bind="foreach: headers">
-                <th data-bind="click: $parent.sort, text: title"></th>
+                <th data-bind="click: $parent.sort, text: title, css: { selected: activeSort}"></th>
             </tr>
         </thead>
-        <tbody data-bind="foreach: employees">
+        <tbody data-bind="foreach: items">
             <tr data-bind="css: { 'evaluation-generated': period }">
                 <td data-bind="text: fullName"></td>
                 <td data-bind="text: currentPosition"></td>

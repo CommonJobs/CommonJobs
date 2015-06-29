@@ -115,36 +115,20 @@
 
     var Dashboard = function (data) {
         var self = this;
-        this.evaluations = ko.observableArray();
+        this.items = ko.observableArray();
         this.calificatorsManagerModel = new CalificatorsManager();
         if (data) {
             this.fromJS(data);
         }
         this.headers = [
-        { title: 'Rol', sortPropertyName: 'idResponsible', asc: true },
-        { title: 'Empleado', sortPropertyName: 'fullName', asc: true },
-        { title: 'Puesto', sortPropertyName: 'currentPosition', asc: true },
-        { title: 'Seniority', sortPropertyName: 'seniority', asc: true },
-        { title: 'Calificadores', sortPropertyName: 'evaluators', asc: true },
-        { title: 'Estado', sortPropertyName: 'state', asc: true }
+        { title: 'Rol', sortPropertyName: 'idResponsible', asc: true, activeSort: ko.observable(false) },
+        { title: 'Empleado', sortPropertyName: 'fullName', asc: true, activeSort: ko.observable(false) },
+        { title: 'Puesto', sortPropertyName: 'currentPosition', asc: true, activeSort: ko.observable(false) },
+        { title: 'Seniority', sortPropertyName: 'seniority', asc: true, activeSort: ko.observable(false) },
+        { title: 'Calificadores', sortPropertyName: 'evaluators', asc: true, activeSort: ko.observable(false) },
+        { title: 'Estado', sortPropertyName: 'state', asc: true, activeSort: ko.observable(false) }
         ];
-        this.activeSort;
-        this.sort = function (header, event) {
-            if (self.activeSort === header) {
-                header.asc = !header.asc; //toggle the direction of the sort
-            } else {
-                self.activeSort = header; //first click, remember it
-            }
-            var prop = self.activeSort.sortPropertyName;
-            var ascSort = function (a, b) {
-                return a[prop] < b[prop] ? -1 : a[prop] > b[prop] ? 1 : a[prop] == b[prop] ? 0 : 0;
-            };
-            var descSort = function (a, b) {
-                return ascSort(b, a);
-            };
-            var sortFunc = self.activeSort.asc ? ascSort : descSort;
-            self.evaluations.sort(sortFunc);
-        };
+        this.sort = commonSort.bind(this);
         this.defaultSort = function () {
             this.sort(this.headers[1]);
         }
@@ -152,14 +136,14 @@
 
     Dashboard.prototype.fromJS = function (data) {
         var self = this;
-        this.evaluations(_.map(data.Evaluations, function (e) {
+        this.items(_.map(data.Evaluations, function (e) {
             return new Evaluation(e);
         }));
     }
 
     Dashboard.prototype.toJs = function () {
         return {
-            Evaluations: _.map(this.evaluations(), function (e) {
+            Evaluations: _.map(this.items(), function (e) {
                 return e.toJs();
             })
         }

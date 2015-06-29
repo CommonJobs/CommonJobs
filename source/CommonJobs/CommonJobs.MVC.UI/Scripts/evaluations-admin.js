@@ -1,34 +1,18 @@
 ﻿$(document).ready(function () {
     var PeriodCreation = function (data) {
         var self = this;
-        this.employees = ko.observableArray();
+        this.items = ko.observableArray();
         this.generateButtonEnable = ko.observable(false);
         if (data) {
             this.fromJS(data);
         }
         this.headers = [
-        { title: 'Empleado', sortPropertyName: 'fullName', asc: true},
-        { title: 'Puesto', sortPropertyName: 'currentPosition', asc: true},
-        { title: 'Seniority', sortPropertyName: 'seniority', asc: true},
-        { title: 'Responsable', sortPropertyName: 'responsible', asc: true}
+        { title: 'Empleado', sortPropertyName: 'fullName', asc: true, activeSort: ko.observable(false) },
+        { title: 'Puesto', sortPropertyName: 'currentPosition', asc: true, activeSort: ko.observable(false) },
+        { title: 'Seniority', sortPropertyName: 'seniority', asc: true, activeSort: ko.observable(false) },
+        { title: 'Responsable', sortPropertyName: 'responsible', asc: true, activeSort: ko.observable(false) }
         ];
-        this.activeSort;
-        this.sort = function (header, event) {
-            if (self.activeSort === header) {
-                header.asc = !header.asc;
-            } else {
-                self.activeSort = header;
-            }
-            var prop = self.activeSort.sortPropertyName;
-            var ascSort = function (a, b) {
-                return a[prop] < b[prop] ? -1 : a[prop] > b[prop] ? 1 : a[prop] == b[prop] ? 0 : 0;
-            };
-            var descSort = function (a, b) {
-                return ascSort(b, a);
-            };
-            var sortFunc = self.activeSort.asc ? ascSort : descSort;
-            self.employees.sort(sortFunc);
-        };
+        this.sort = commonSort.bind(this);
         this.defaultSort = function () {
             this.sort(this.headers[0]);
         }
@@ -37,20 +21,20 @@
     PeriodCreation.prototype.fromJS = function (data) {
         var self = this;
         this.generateButtonEnable(false);
-        this.employees.subscribe(function () {
-            ko.utils.arrayForEach(self.employees(), function (item) {
+        this.items.subscribe(function () {
+            ko.utils.arrayForEach(self.items(), function (item) {
                 item.responsible.subscribe(function (i) {
-                    self.generateButtonEnable(i || _.some(self.employees(), function (e) { return !!e.responsible() }));
+                    self.generateButtonEnable(i || _.some(self.items(), function (e) { return !!e.responsible() }));
                 });
             });
         });
-        this.employees(_.map(data.Employees, function (e) {
+        this.items(_.map(data.Employees, function (e) {
             return new Employee(e);
         }));
     }
     PeriodCreation.prototype.toJs = function () {
         return {
-            Employees: _.map(this.employees(), function (e) {
+            Employees: _.map(this.items(), function (e) {
                 return e.toJs();
             })
         }
