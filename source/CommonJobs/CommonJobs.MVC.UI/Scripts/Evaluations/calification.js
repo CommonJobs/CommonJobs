@@ -62,7 +62,7 @@
     }
 
     var Template = function (data) {
-        this.items = '';
+        this.items = ko.observableArray();
         if (data) {
             this.fromJs(data);
         }
@@ -84,20 +84,20 @@
 
 
     var TemplateItem = function(data) {
-        this.groupKey = '';
-        this.key = '';
-        this.text = '';
-        this.description = '';
+        this.groupKey = ko.observable('');
+        this.key = ko.observable('');
+        this.text = ko.observable('');
+        this.description = ko.observable('');
         if (data) {
             this.fromJs(data);
         }
     }
 
     TemplateItem.prototype.fromJs = function (data) {
-        this.groupKey = data.GroupKey;
-        this.key = data.Key;
-        this.text = data.Text;
-        this.description = data.Description;
+        this.groupKey(data.GroupKey);
+        this.key(data.Key);
+        this.text(data.Text);
+        this.description(data.Description);
     }
 
     TemplateItem.prototype.toJs = function (data) {

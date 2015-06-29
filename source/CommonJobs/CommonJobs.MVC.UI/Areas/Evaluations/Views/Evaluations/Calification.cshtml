@@ -1,4 +1,5 @@
-﻿@{
+﻿@model CommonJobs.Mvc.UI.Areas.Evaluations.Models.Calification
+@{
     ViewBag.Title = "Califications";
     Layout = "~/Areas/Evaluations/Views/Shared/_Layout.cshtml";
     ScriptManager.RegisterCss(Url.Content("~/Content/twitter-bootstrap/less/bootstrap.less"), priority: 900);
@@ -26,7 +27,7 @@
             <h5 class="inf-personal">Fecha: <span>18/07/2015</span></h5>
             <h5 class="inf-personal">Proyecto: <span>Marketing</span></h5>
             <h4>Metricas de Evaluacion</h4>
-            <h5>1.<span>No alcanza las Expectativas  </span>2.<span>Necesita Mejorar </span></br>3.<span>Cumple con Expectativas </span>4.<span>Excede Expectativas</span></h5>
+            <h5>1.<span>No alcanza las Expectativas  </span>2.<span>Necesita Mejorar </span><br>3.<span>Cumple con Expectativas </span>4.<span>Excede Expectativas</span></h5>
             <p class="explication-text">*Si no tenes conocimientos para calificar un campo puedes dejarlo vacio</p>
         </div>
         <div class="top-right">
@@ -56,9 +57,9 @@
                 <th class="sub-title-evaluacion">4</th>
             </tr>
         </thead>
-        <tbody data-bind="testing:console.log($data), foreach: template.items">
+        <tbody data-bind="foreach: template.items">
             <tr>
-                <td><span data-bind="text: templateItem.text(), attr:{'data-tips': description()}" class="top-tip rol"></span></td>
+                <td><span data-bind="text: text(), attr:{'data-tips': description()}" class="top-tip rol"></span></td>
                 <td class="col-hide">3.5</td>
                 <td><span>4</span></td>
                 <td><input class="calificacion" type="text"></td>
