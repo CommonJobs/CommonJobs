@@ -11,6 +11,10 @@
                 return e.action() !== 1;
             });
         }, this);
+        this.saveButtonEnable = ko.observable(false);
+        this.title = ko.computed(function () {
+            return this.activeCalificators().length > 0 ? 'Editar Calificadores' : 'Agregar Calificadores';
+        }, this);
         if (data) {
             this.fromJs(data);
         }
@@ -33,6 +37,7 @@
                     calificator.add(userName);
                     self.calificators.push(calificator);
                 }
+                self.saveButtonEnable(true);
             }
             self.newCalificator('');
         }
@@ -42,10 +47,12 @@
             } else {
                 this.action(1);
             }
+            self.saveButtonEnable(true);
         }
         this.close = function () {
             $('.content-evaluation').append($('.content-modal'));
             $('.content-modal').hide();
+            self.saveButtonEnable(false);
         }
         this.save = function () {
             var updateCalificators = this.calificatorsManagerModel.toJs();
@@ -56,6 +63,7 @@
                 data: JSON.stringify(updateCalificators),
                 complete: function (response) {
                     self.close();
+                    self.saveButtonEnable(false);
                     getDashboardEvaluations();
                 }
             });
@@ -183,8 +191,50 @@
         this.evaluatorsAmount = ko.computed(function () {
             return this.evaluators.length;
         }, this);
+        this.evaluatorsTextLink = ko.computed(function () {
+            return (this.evaluatorsAmount() === 1) ? this.evaluatorsAmount() + " calificador" : this.evaluatorsAmount() + " calificadores";
+        }, this);
         this.state = data.State;
-        this.stateName = evaluationStates[data.State];
+        this.stateName = evaluationStates[this.state];
+        this.stateClasses = "state-doc state-" + this.state;
+        this.isCalificatorsEditable = ko.computed(function () {
+            return this.isResponsible && this.state != 6;
+        }, this);
+        this.calificationActionTooltip = ko.computed(function () {
+            switch (this.state) {
+                case 0:
+                case 2:
+                    return "Calificar como responsable";
+                case 1:
+                case 3:
+                    return "Calificar como empresa";
+                default:
+                    return "Ver Calificación";
+            }
+        }, this);
+        this.calificationActionText = ko.computed(function () {
+            switch (this.state) {
+                case 0:
+                case 1:
+                case 2:
+                case 3:
+                    return "Calificar";
+                default:
+                    return "Ver Calificación";
+            }
+        }, this);
+        this.calificationActionClass = ko.computed(function () {
+            switch (this.state) {
+                case 0:
+                case 2:
+                    return "icon user";
+                case 1:
+                case 3:
+                    return "icon empresa";
+                default:
+                    return "icon view";
+            }
+        }, this);
         this.showCalificatorsManager = function (data, event) {
             viewmodel.calificatorsManagerModel.fromJs({ evaluation: this, calificators: this.evaluators });
             var popupContainer = $(event.target).parents('.calificators-column');

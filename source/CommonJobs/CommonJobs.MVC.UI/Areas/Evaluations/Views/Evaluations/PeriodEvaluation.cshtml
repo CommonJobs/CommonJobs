@@ -17,7 +17,7 @@
 }
 
 <div class="content-evaluation responsible">
-    <h2 class="title">Responsable y Calificador de las siguiente evaluaciones</h2>
+    <h2 class="title">Responsable y Calificador de las siguientes evaluaciones</h2>
     <table class="table">
         <thead>
             <tr data-bind="foreach: headers">
@@ -26,7 +26,7 @@
         </thead>
         <tbody data-bind="foreach: items">
             <tr>
-                <td >
+                <td>
                     <span data-bind="if: !isResponsible"><span class="top-tip rol" data-tips="Calificador">C</span></span>
                     <span data-bind="if: isResponsible"><span class="top-tip rol" data-tips="Responsable">R</span></span>
                 </td>
@@ -34,29 +34,29 @@
                 <td data-bind="text: currentPosition"></td>      
                 <td data-bind="text: seniority"></td>
                 <td class="calificators-column">
-                    <span data-bind="if: evaluatorsAmount() > 0, attr: { 'data-tips': evaluatorsString()}" class="top-tip rol">
+                    <span data-bind="if: isCalificatorsEditable() && evaluatorsAmount() > 0, attr: { 'data-tips': evaluatorsString()}" class="top-tip rol">
                         <i class="icon edit"></i>
                         <a class="calification-links edit" data-bind="click: showCalificatorsManager">
-                            <span data-bind="if: evaluatorsAmount() == 1"><span data-bind="text: evaluatorsAmount"></span> calificador</span>
-                            <span data-bind="if: evaluatorsAmount() > 1"><span data-bind="text: evaluatorsAmount"></span> calificadores</span>
+                            <span data-bind="text: evaluatorsTextLink()"></span>
                         </a>
                     </span>
-                    <span data-bind="if: !evaluatorsAmount()"><i class="icon add"></i><a class="calification-links add" data-bind="click: showCalificatorsManager">Agregar</a></span>
-
+                    <span data-bind="if: isCalificatorsEditable() && !evaluatorsAmount()"><i class="icon add"></i><a class="calification-links add" data-bind="click: showCalificatorsManager">Agregar</a></span>
+                    <span data-bind="if: !isCalificatorsEditable()">
+                        <span data-bind="text: evaluatorsTextLink()"></span>
+                    </span>
                 </td>
-                <td><span class="state-doc state-0" data-bind="text: stateName"></span></td>
-                <td><i class="icon user"></i><a class="link-responsable top-tip rol" data-tips="Calificar como responsable">Calificar</a></td>
-                <td></td>
+                <td><span class="state-doc" data-bind="text: stateName, attr: { 'class': stateClasses }"></span></td>
+                <td><i data-bind="attr: { class: calificationActionClass }"></i><a class="link-responsable top-tip rol" data-bind="text: calificationActionText, attr: {'data-tips': calificationActionTooltip}"></a></td>
+                <td><span data-bind="if: state == 4"><button class="button-evaluations feedback-start">Iniciar Devolución</button></span></td>
             </tr>
         </tbody>
     </table>
-    <button type="submit" id="back-button" class="primary-btn button-evaluations" >Volver</button>
 </div>
 
 
 <div class="content-modal clearfix">
     <div class="modal-title">
-        <h4>Agregar Calificadores</h4>
+        <h4 data-bind="text: calificatorsManagerModel.title"></h4>
     </div>
     <div class="search-container">
         <input type="text" class="search" autocomplete="off" data-bind="value: calificatorsManagerModel.newCalificator, event: {keypress: calificatorsManagerModel.onEnter}"/>
@@ -68,5 +68,5 @@
         </ul>
     </div>
     <a class="cancelar" data-bind="click: calificatorsManagerModel.close">Cancelar</a>
-    <a class="guardar"data-bind="click: calificatorsManagerModel.save">Guardar</a>
+    <button class="guardar"data-bind="enable: calificatorsManagerModel.saveButtonEnable, click: calificatorsManagerModel.save">Guardar</button>
 </div>
