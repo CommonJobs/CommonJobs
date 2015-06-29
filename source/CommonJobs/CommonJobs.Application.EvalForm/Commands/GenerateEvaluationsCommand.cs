@@ -10,9 +10,9 @@ namespace CommonJobs.Application.Evaluations
 {
     public class GenerateEvaluationsCommand : Command
     {
-        private List<EmployeeEvaluation> _employeesEvaluations { get; set; }
+        private List<EmployeeEvaluationDTO> _employeesEvaluations { get; set; }
 
-        public GenerateEvaluationsCommand(List<EmployeeEvaluation> employeesEvaluations)
+        public GenerateEvaluationsCommand(List<EmployeeEvaluationDTO> employeesEvaluations)
         {
             _employeesEvaluations = employeesEvaluations;
         }
@@ -21,15 +21,23 @@ namespace CommonJobs.Application.Evaluations
         {
             foreach (var e in _employeesEvaluations)
             {
+                EmployeeEvaluation employeeEvaluation = new EmployeeEvaluation();
+
                 //Both Period and TemplateId will be fixed for this release
-                e.Period = "2015-06";
-                e.TemplateId = Template.DefaultTemplateId;
+                employeeEvaluation.Period = "2015-06";
+                employeeEvaluation.TemplateId = Template.DefaultTemplateId;
                 //---
+                employeeEvaluation.UserName = e.UserName;
+                employeeEvaluation.ResponsibleId = e.ResponsibleId;
+                employeeEvaluation.FullName = e.FullName;
+                //employeeEvaluation.Seniority will not be stored at this point
+                //employeeEvaluation.CurrentPosition will not be stored at this point
 
                 RavenSession.Store(e);
+
                 //After we create the evaluation, we create the calification document for the auto-evaluation and the responsible
-                ExecuteCommand(new GenerateCalificationCommand(e.Period, e.UserName, e.UserName, e.TemplateId, CalificationType.Auto, e.Id));
-                ExecuteCommand(new GenerateCalificationCommand(e.Period, e.UserName, e.ResponsibleId, e.TemplateId, CalificationType.Responsible, e.Id));
+                ExecuteCommand(new GenerateCalificationCommand(employeeEvaluation.Period, employeeEvaluation.UserName, employeeEvaluation.UserName, employeeEvaluation.TemplateId, CalificationType.Auto, employeeEvaluation.Id));
+                ExecuteCommand(new GenerateCalificationCommand(employeeEvaluation.Period, employeeEvaluation.UserName, employeeEvaluation.ResponsibleId, employeeEvaluation.TemplateId, CalificationType.Responsible, employeeEvaluation.Id));
             }
         }
     }
