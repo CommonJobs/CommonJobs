@@ -134,7 +134,9 @@
         { title: 'Puesto', sortPropertyName: 'currentPosition', asc: true, activeSort: ko.observable(false) },
         { title: 'Seniority', sortPropertyName: 'seniority', asc: true, activeSort: ko.observable(false) },
         { title: 'Calificadores', sortPropertyName: 'evaluators', asc: true, activeSort: ko.observable(false) },
-        { title: 'Estado', sortPropertyName: 'state', asc: true, activeSort: ko.observable(false) }
+        { title: 'Estado', sortPropertyName: 'state', asc: true, activeSort: ko.observable(false) },
+        { title: '', sortPropertyName: '', asc: true, activeSort: ko.observable(false) },
+        { title: '', sortPropertyName: '', asc: true, activeSort: ko.observable(false) }
         ];
         this.sort = commonSort.bind(this);
         this.defaultSort = function () {
@@ -169,7 +171,7 @@
         this.seniority = '';
         this.evaluatorsAmount = '';
         this.evaluatorsString = '';
-        this.state = '';
+        this.state = ko.observable('');
         this.currentState = '';
         this.evaluators = '';
         if (data) {
@@ -194,17 +196,11 @@
         this.evaluatorsTextLink = ko.computed(function () {
             return (this.evaluatorsAmount() === 1) ? this.evaluatorsAmount() + " calificador" : this.evaluatorsAmount() + " calificadores";
         }, this);
-        this.state = data.State;
-        this.stateName = evaluationStates[this.state];
-        this.stateClasses = "state-doc state-" + this.state;
-        this.isCalificatorsEditable = ko.computed(function () {
-            return this.isResponsible && this.state != 6;
-        }, this);
         this.calificationActionTooltip = ko.observable('');
         this.calificationActionText = ko.observable('');
         this.calificationActionClass = ko.observable('');
-        this.calificationAction = ko.computed(function () {
-            switch (this.state) {
+        this.state.subscribe(function () {
+            switch (this.state()) {
                 case 0:
                 case 2:
                     this.calificationActionTooltip("Calificar como responsable");
@@ -224,6 +220,12 @@
                     break;
             }
         }, this);
+        this.state(data.State);
+        this.stateName = evaluationStates[this.state()];
+        this.stateClasses = "state-doc state-" + this.state();
+        this.isCalificatorsEditable = ko.computed(function () {
+            return this.isResponsible && this.state() != 6;
+        }, this);
         this.showCalificatorsManager = function (data, event) {
             viewmodel.calificatorsManagerModel.fromJs({ evaluation: this, calificators: this.evaluators });
             var popupContainer = $(event.target).parents('.calificators-column');
@@ -240,7 +242,7 @@
             CurrentPosition: this.currentPosition,
             Seniority: this.seniority,
             Evaluators: this.evaluators,
-            State: this.state,
+            State: this.state(),
             UserName: this.userName,
             Period: this.period
         };
