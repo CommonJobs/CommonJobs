@@ -69,9 +69,9 @@
     }
 
     Template.prototype.fromJs = function (data) {
-        this.items = _.map(data.Items, function (e) {
+        this.items( _.map(data.Items, function (e) {
             return new TemplateItem(e);
-        });
+        }));
     }
 
     Template.prototype.toJs = function (data) {
@@ -81,7 +81,6 @@
             })
         }
     }
-
 
     var TemplateItem = function(data) {
         this.groupKey = ko.observable('');
@@ -112,5 +111,4 @@
     viewmodel = new Calification();
     ko.applyBindings(viewmodel);
     viewmodel.load();
-
 });
