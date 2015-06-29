@@ -11,6 +11,10 @@
                 return e.action() !== 1;
             });
         }, this);
+        this.saveButtonEnable = ko.observable(false);
+        this.title = ko.computed(function () {
+            return this.activeCalificators().length > 0 ? 'Editar Calificadores' : 'Agregar Calificadores';
+        }, this);
         if (data) {
             this.fromJs(data);
         }
@@ -33,6 +37,7 @@
                     calificator.add(userName);
                     self.calificators.push(calificator);
                 }
+                self.saveButtonEnable(true);
             }
             self.newCalificator('');
         }
@@ -42,10 +47,12 @@
             } else {
                 this.action(1);
             }
+            self.saveButtonEnable(true);
         }
         this.close = function () {
             $('.content-evaluation').append($('.content-modal'));
             $('.content-modal').hide();
+            self.saveButtonEnable(false);
         }
         this.save = function () {
             var updateCalificators = this.calificatorsManagerModel.toJs();
@@ -56,6 +63,7 @@
                 data: JSON.stringify(updateCalificators),
                 complete: function (response) {
                     self.close();
+                    self.saveButtonEnable(false);
                     getDashboardEvaluations();
                 }
             });
@@ -126,7 +134,9 @@
         { title: 'Puesto', sortPropertyName: 'currentPosition', asc: true, activeSort: ko.observable(false) },
         { title: 'Seniority', sortPropertyName: 'seniority', asc: true, activeSort: ko.observable(false) },
         { title: 'Calificadores', sortPropertyName: 'evaluators', asc: true, activeSort: ko.observable(false) },
-        { title: 'Estado', sortPropertyName: 'state', asc: true, activeSort: ko.observable(false) }
+        { title: 'Estado', sortPropertyName: 'state', asc: true, activeSort: ko.observable(false) },
+        { title: '', sortPropertyName: '', asc: true, activeSort: ko.observable(false) },
+        { title: '', sortPropertyName: '', asc: true, activeSort: ko.observable(false) }
         ];
         this.sort = commonSort.bind(this);
         this.defaultSort = function () {
@@ -161,7 +171,7 @@
         this.seniority = '';
         this.evaluatorsAmount = '';
         this.evaluatorsString = '';
-        this.state = '';
+        this.state = ko.observable('');
         this.currentState = '';
         this.evaluators = '';
         if (data) {
@@ -183,8 +193,39 @@
         this.evaluatorsAmount = ko.computed(function () {
             return this.evaluators.length;
         }, this);
-        this.state = data.State;
-        this.stateName = evaluationStates[data.State];
+        this.evaluatorsTextLink = ko.computed(function () {
+            return (this.evaluatorsAmount() === 1) ? this.evaluatorsAmount() + " calificador" : this.evaluatorsAmount() + " calificadores";
+        }, this);
+        this.calificationActionTooltip = ko.observable('');
+        this.calificationActionText = ko.observable('');
+        this.calificationActionClass = ko.observable('');
+        this.state.subscribe(function () {
+            switch (this.state()) {
+                case 0:
+                case 2:
+                    this.calificationActionTooltip("Calificar como responsable");
+                    this.calificationActionClass("icon user");
+                    this.calificationActionText("Calificar");
+                    break;
+                case 1:
+                case 3:
+                    this.calificationActionText("Calificar");
+                    this.calificationActionClass("icon empresa");
+                    this.calificationActionTooltip("Calificar como empresa");
+                    break;
+                default:
+                    this.calificationActionText("Ver Calificación");
+                    this.calificationActionClass("icon view");
+                    this.calificationActionTooltip("Ver Calificación");
+                    break;
+            }
+        }, this);
+        this.state(data.State);
+        this.stateName = evaluationStates[this.state()];
+        this.stateClasses = "state-doc state-" + this.state();
+        this.isCalificatorsEditable = ko.computed(function () {
+            return this.isResponsible && this.state() != 6;
+        }, this);
         this.showCalificatorsManager = function (data, event) {
             viewmodel.calificatorsManagerModel.fromJs({ evaluation: this, calificators: this.evaluators });
             var popupContainer = $(event.target).parents('.calificators-column');
@@ -201,7 +242,7 @@
             CurrentPosition: this.currentPosition,
             Seniority: this.seniority,
             Evaluators: this.evaluators,
-            State: this.state,
+            State: this.state(),
             UserName: this.userName,
             Period: this.period
         };
@@ -213,12 +254,10 @@
     ko.applyBindings(viewmodel);
     commonSuggest($('.content-modal .search'), 'UserName');
     
-
     function getDashboardEvaluations() {
         $.getJSON("/Evaluations/api/getDashboardEvaluations/", function (model) {
             viewmodel.fromJS(model);
             viewmodel.defaultSort();
         });
     }
-
 });

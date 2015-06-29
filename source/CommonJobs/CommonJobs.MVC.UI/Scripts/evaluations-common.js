@@ -23,7 +23,7 @@
 }
 
 function commonSort(header) {
-    if (header) {
+    if (header && header.sortPropertyName) {
         if (header.activeSort()) {
             header.asc = !header.asc;
         } else {
