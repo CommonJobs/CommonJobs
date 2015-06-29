@@ -21,3 +21,25 @@
             _previousXHR.abort();
     });
 }
+
+function commonSort(header) {
+    if (header) {
+        if (header.activeSort()) {
+            header.asc = !header.asc;
+        } else {
+            $.each(this.headers, function (i, e) {
+                e.activeSort(false);
+            });
+            header.activeSort(true);
+        }
+        var prop = header.sortPropertyName;
+        var ascSort = function (a, b) {
+            return a[prop] < b[prop] ? -1 : a[prop] > b[prop] ? 1 : a[prop] == b[prop] ? 0 : 0;
+        };
+        var descSort = function (a, b) {
+            return ascSort(b, a);
+        };
+        var sortFunc = header.asc ? ascSort : descSort;
+        this.items.sort(sortFunc);
+    }
+};

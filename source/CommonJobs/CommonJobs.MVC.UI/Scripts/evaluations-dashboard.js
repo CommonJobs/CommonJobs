@@ -114,23 +114,36 @@
     }
 
     var Dashboard = function (data) {
-        this.evaluations = ko.observableArray();
+        var self = this;
+        this.items = ko.observableArray();
         this.calificatorsManagerModel = new CalificatorsManager();
         if (data) {
             this.fromJS(data);
+        }
+        this.headers = [
+        { title: 'Rol', sortPropertyName: 'idResponsible', asc: true, activeSort: ko.observable(false) },
+        { title: 'Empleado', sortPropertyName: 'fullName', asc: true, activeSort: ko.observable(false) },
+        { title: 'Puesto', sortPropertyName: 'currentPosition', asc: true, activeSort: ko.observable(false) },
+        { title: 'Seniority', sortPropertyName: 'seniority', asc: true, activeSort: ko.observable(false) },
+        { title: 'Calificadores', sortPropertyName: 'evaluators', asc: true, activeSort: ko.observable(false) },
+        { title: 'Estado', sortPropertyName: 'state', asc: true, activeSort: ko.observable(false) }
+        ];
+        this.sort = commonSort.bind(this);
+        this.defaultSort = function () {
+            this.sort(this.headers[1]);
         }
     }
 
     Dashboard.prototype.fromJS = function (data) {
         var self = this;
-        this.evaluations(_.map(data.Evaluations, function (e) {
+        this.items(_.map(data.Evaluations, function (e) {
             return new Evaluation(e);
         }));
     }
 
     Dashboard.prototype.toJs = function () {
         return {
-            Evaluations: _.map(this.evaluations(), function (e) {
+            Evaluations: _.map(this.items(), function (e) {
                 return e.toJs();
             })
         }
@@ -161,8 +174,8 @@
         this.fullName = data.FullName;
         this.userName = data.UserName;
         this.period = data.Period;
-        this.currentPosition= data.CurrentPosition;
-        this.seniority = data.Seniority;
+        this.currentPosition= data.CurrentPosition || '';
+        this.seniority = data.Seniority || '';
         this.evaluators = data.Evaluators;
         this.evaluatorsString = ko.computed(function () {
             return this.evaluators.toString().replace(/,/g, ', ');
@@ -204,6 +217,7 @@
     function getDashboardEvaluations() {
         $.getJSON("/Evaluations/api/getDashboardEvaluations/", function (model) {
             viewmodel.fromJS(model);
+            viewmodel.defaultSort();
         });
     }
 

@@ -1,29 +1,40 @@
 ﻿$(document).ready(function () {
     var PeriodCreation = function (data) {
-        this.employees = ko.observableArray();
+        var self = this;
+        this.items = ko.observableArray();
         this.generateButtonEnable = ko.observable(false);
         if (data) {
             this.fromJS(data);
+        }
+        this.headers = [
+        { title: 'Empleado', sortPropertyName: 'fullName', asc: true, activeSort: ko.observable(false) },
+        { title: 'Puesto', sortPropertyName: 'currentPosition', asc: true, activeSort: ko.observable(false) },
+        { title: 'Seniority', sortPropertyName: 'seniority', asc: true, activeSort: ko.observable(false) },
+        { title: 'Responsable', sortPropertyName: 'responsible', asc: true, activeSort: ko.observable(false) }
+        ];
+        this.sort = commonSort.bind(this);
+        this.defaultSort = function () {
+            this.sort(this.headers[0]);
         }
     }
 
     PeriodCreation.prototype.fromJS = function (data) {
         var self = this;
         this.generateButtonEnable(false);
-        this.employees.subscribe(function () {
-            ko.utils.arrayForEach(self.employees(), function (item) {
+        this.items.subscribe(function () {
+            ko.utils.arrayForEach(self.items(), function (item) {
                 item.responsible.subscribe(function (i) {
-                    self.generateButtonEnable(i || _.some(self.employees(), function (e) { return !!e.responsible() }));
+                    self.generateButtonEnable(i || _.some(self.items(), function (e) { return !!e.responsible() }));
                 });
             });
         });
-        this.employees(_.map(data.Employees, function (e) {
+        this.items(_.map(data.Employees, function (e) {
             return new Employee(e);
         }));
     }
     PeriodCreation.prototype.toJs = function () {
         return {
-            Employees: _.map(this.employees(), function (e) {
+            Employees: _.map(this.items(), function (e) {
                 return e.toJs();
             })
         }
@@ -48,7 +59,7 @@
         this.responsible(data.ResponsibleId || '');
         this.fullName = data.FullName;
         this.currentPosition = data.CurrentPosition;
-        this.seniority = data.Seniority;
+        this.seniority = data.Seniority || '';
         this.period = data.Period;
     }
 
@@ -68,6 +79,7 @@
     function getEmployeesToGenerateEvalution() {
         $.getJSON("/Evaluations/api/getEmployeesToGenerateEvalution/" + evaluationPeriod + "/", function (model) {
             viewmodel.fromJS(model);
+            viewmodel.defaultSort();
             $('.evaluation-owner-field').each(function (index, elem) {
                 commonSuggest(elem, 'UserName');
             });
@@ -93,7 +105,6 @@
 
     getEmployeesToGenerateEvalution();
     ko.applyBindings(viewmodel);
-
     var modalContainer = $('#evaluations-generated-confirm');
     modalContainer.modal({ show: false });
     modalContainer.find('.confirm').on('click', function () {
