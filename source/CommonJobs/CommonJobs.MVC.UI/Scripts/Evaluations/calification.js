@@ -5,6 +5,11 @@
         var self = this;
         this.evaluation = new Evaluation();
         this.template = new Template();
+        this.toggleVisiblityColumn = function (data, event) {
+            var i = $(event.target).data('calificator-col');
+            var className = "hide-column-" + (i + 1);
+            $('.calification-items').toggleClass(className);
+        }
         if (data) {
             this.fromJs(data);
         }
@@ -44,6 +49,20 @@
                 contentType: 'application/json; charset=utf-8',
                 data: JSON.stringify(project)
             });
+        }
+        this.onFocusInProject = function (data, event) {
+            $(event.target).parent().addClass('edition-enabled');
+            return true;
+        }
+        this.onBlurProject = function (data, event) {
+            this.evaluation.updateProject();
+            $(event.target).parent().removeClass('edition-enabled');
+            return true;
+        }
+        this.onKeyUpProject = function (data, event) {
+            if (event.keyCode === 13) {
+                $(event.target).blur();
+            }
         }
         if (data) {
             this.fromJs(data);
@@ -123,22 +142,4 @@
     viewmodel = new Calification();
     viewmodel.load();
     ko.applyBindings(viewmodel);
-
-    $('.icon').on('click', function () {
-        var i = $(this).data('calificator-col');
-        var className = "hide-column-" + (i + 1);
-        $('.calification-items').toggleClass(className);
-    });
-    $('.editable-projects input')
-        .on('focusin', function () {
-            $('.editable-projects').addClass('edition-enabled');
-        })
-        .on('blur', function () {
-            viewmodel.evaluation.updateProject();
-            $('.editable-projects').removeClass('edition-enabled');
-        }).on('keyup', function (e) {
-            if (e.keyCode === 13) {
-                $('.editable-projects input').blur();
-            }
-        });
 });

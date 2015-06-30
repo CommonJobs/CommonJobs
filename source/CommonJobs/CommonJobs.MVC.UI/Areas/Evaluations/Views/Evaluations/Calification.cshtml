@@ -29,7 +29,7 @@
                 <li>
                     <span class="item">Proyectos:</span>
                     <div class="editable-projects" data-bind="css: { edition: evaluation.project()}">
-                        <input type="text" placeholder="Ingrese los proyectos" data-bind="value: evaluation.project"/><span class="pencil"></span>
+                        <input type="text" placeholder="Ingrese los proyectos" data-bind="value: evaluation.project, event: { keyup: evaluation.onKeyUpProject, focusin: evaluation.onFocusInProject, blur: evaluation.onBlurProject}"/><span class="pencil"></span>
                     </div>
                 </li>
             </ul>
@@ -50,8 +50,8 @@
         <thead>
             <tr>
                 <th class="calificators"></th>
-                <th class="calificators"><i class="icon top-tip" data-tips="" data-calificator-col="1"></i>Auto Evaluacion</th>
-                <th class="calificators"><i class="icon top-tip" data-tips="" data-calificator-col="2"></i>Calentey</th>
+                <th class="calificators"><i class="icon top-tip" data-tips="" data-calificator-col="1" data-bind="click: toggleVisiblityColumn"></i>Auto Evaluacion</th>
+                <th class="calificators"><i class="icon top-tip" data-tips="" data-calificator-col="2" data-bind="click: toggleVisiblityColumn"></i>Calentey</th>
                 <th class="calificators">Empresa</th>
             </tr>
             <tr>
