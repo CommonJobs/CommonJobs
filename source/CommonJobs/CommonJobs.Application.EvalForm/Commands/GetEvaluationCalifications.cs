@@ -45,11 +45,15 @@ namespace CommonJobs.Application.EvalForm.Commands
 
             var calificationsToReturn = new List<EvaluationCalification>();
 
-            if (_evaluatedUser == _loggedUser) // Auto-evaluation
+            if (evaluation.OpenToDevolution) // Ready to devolution
+            {
+                calificationsToReturn.AddRange(califications.Where(c => (_loggedUser == c.EvaluatorEmployee && c.EvaluatorEmployee == c.EvaluatedEmployee) || c.Owner == CalificationType.Company));
+            }
+            else if (_evaluatedUser == _loggedUser) // Auto-evaluation
             {
                 calificationsToReturn.Add(califications.Single(c => _loggedUser == c.EvaluatorEmployee && c.EvaluatorEmployee == c.EvaluatedEmployee));
             }
-            else if (evaluation.ResponsibleId == _loggedUser) // Responsible
+            else if (evaluation.ResponsibleId == _loggedUser) // Responsible & Company (responsible && finished)
             {
                 calificationsToReturn = califications;
             }
@@ -58,18 +62,10 @@ namespace CommonJobs.Application.EvalForm.Commands
                 calificationsToReturn.AddRange(califications.Where(c => _loggedUser == c.EvaluatorEmployee || c.Owner == CalificationType.Auto));
             }
 
-            // Company
-            //// Responsible Finished
-
-            // Final
-            //// Company Finished == Evaluation OpenToDevolution = true
-
-
             return new CalificationsDTO()
                 {
                     Evaluation = evaluation,
                     Califications = calificationsToReturn
-                    //TODO: What about comments? Strengths, Improve, Action plan...
                 };
         }
     }

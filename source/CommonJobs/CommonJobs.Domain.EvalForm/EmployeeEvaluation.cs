@@ -33,6 +33,12 @@ namespace CommonJobs.Domain.Evaluations
 
         public bool Finished { get; set; }
 
+        public string StrengthsComment { get; set; }
+
+        public string ImproveComment { get; set; }
+
+        public string ActionPlanComment { get; set; }
+
         public static string GenerateEvaluationId(string period, string userName)
         {
             return string.Format("Evaluations/{0}/{1}", period, userName);
