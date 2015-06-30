@@ -79,11 +79,13 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations.Controllers
         public JsonNetResult GetEvaluation (string username)
         {
             Calification calification = new Calification();
+            //TODO: Remove this testing code when completed the service method
             calification.Evaluation = new EmployeeEvaluation();
             calification.Evaluation.FullName = "Sofia Pacifico";
             calification.Evaluation.ResponsibleId = "spacifico";
             calification.Evaluation.Seniority = "Junior";
             calification.Evaluation.CurrentPosition = "Developer";
+            //
             calification.Template = ExecuteCommand(new GetEvaluationTemplateCommand());
             return Json(calification);
         }
