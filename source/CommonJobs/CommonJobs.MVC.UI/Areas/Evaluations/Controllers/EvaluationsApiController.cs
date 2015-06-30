@@ -79,13 +79,19 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations.Controllers
         public JsonNetResult GetEvaluation (string username)
         {
             Calification calification = new Calification();
-            calification.Employee = new EmployeeEvaluation();
-            calification.Employee.FullName = "Sofia Pacifico";
-            calification.Employee.ResponsibleId = "spacifico";
-            calification.Employee.Seniority = "Junior";
-            calification.Employee.CurrentPosition = "Developer";
+            calification.Evaluation = new EmployeeEvaluation();
+            calification.Evaluation.FullName = "Sofia Pacifico";
+            calification.Evaluation.ResponsibleId = "spacifico";
+            calification.Evaluation.Seniority = "Junior";
+            calification.Evaluation.CurrentPosition = "Developer";
             calification.Template = ExecuteCommand(new GetEvaluationTemplateCommand());
             return Json(calification);
+        }
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        public JsonNetResult UpdateProject(String Project)
+        {
+            return Json("ok");
         }
     }
 }

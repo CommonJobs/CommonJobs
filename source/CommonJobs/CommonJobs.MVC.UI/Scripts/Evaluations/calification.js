@@ -3,7 +3,7 @@
 
     var Calification = function (data) {
         var self = this;
-        this.employee = new Employee();
+        this.evaluation = new Evaluation();
         this.template = new Template();
         if (data) {
             this.fromJs(data);
@@ -11,13 +11,13 @@
     }
 
     Calification.prototype.fromJs = function (data) {
-        this.employee.fromJs(data.Employee);
+        this.evaluation.fromJs(data.Evaluation);
         this.template.fromJs(data.Template);
     }
 
     Calification.prototype.toJs = function () {
         return {
-            Employee: this.employee.toJs(),
+            Evaluation: this.evaluation.toJs(),
             Template: this.template.toJs()
         };
     }
@@ -27,7 +27,7 @@
         });
     }
 
-    var Employee = function (data) {
+    var Evaluation = function (data) {
         this.id = ko.observable('');
         this.userName = ko.observable('');
         this.responsibleId = ko.observable('');
@@ -35,12 +35,22 @@
         this.currentPosition = ko.observable('');
         this.seniority = ko.observable('');
         this.period = ko.observable('');
+        this.project = ko.observable('');
+        this.updateProject = function () {
+            var project = { Project: this.project() };
+            $.ajax("/Evaluations/api/UpdateProject/", {
+                type: "POST",
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(project)
+            });
+        }
         if (data) {
             this.fromJs(data);
         }
     }
 
-    Employee.prototype.fromJs = function (data) {
+    Evaluation.prototype.fromJs = function (data) {
         this.id(data.Id);
         this.userName(data.UserName);
         this.responsibleId(data.ResponsibleId);
@@ -48,15 +58,17 @@
         this.currentPosition(data.CurrentPosition);
         this.seniority(data.Seniority);
         this.period(data.Period);
+        this.project(data.Project);
     }
 
-    Employee.prototype.toJs = function () {
+    Evaluation.prototype.toJs = function () {
         return {
             UserName: this.userName,
             ResponsibleId: this.responsibleId,
             CurrentPosition: this.currentPosition,
             Seniority: this.seniority,
             FullName: this.fullName,
+            Project: this.project,
             Period: this.period
         };
     }
@@ -109,6 +121,24 @@
     }
 
     viewmodel = new Calification();
-    ko.applyBindings(viewmodel);
     viewmodel.load();
+    ko.applyBindings(viewmodel);
+
+    $('.icon').on('click', function () {
+        var i = $(this).data('calificator-col');
+        var className = "hide-column-" + (i + 1);
+        $('.calification-items').toggleClass(className);
+    });
+    $('.editable-projects input')
+        .on('focusin', function () {
+            $('.editable-projects').addClass('edition-enabled');
+        })
+        .on('blur', function () {
+            viewmodel.evaluation.updateProject();
+            $('.editable-projects').removeClass('edition-enabled');
+        }).on('keyup', function (e) {
+            if (e.keyCode === 13) {
+                $('.editable-projects input').blur();
+            }
+        });
 });

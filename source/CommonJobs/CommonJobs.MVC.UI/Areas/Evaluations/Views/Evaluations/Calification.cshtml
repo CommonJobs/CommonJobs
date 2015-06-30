@@ -16,57 +16,68 @@
 }
 
 <div class="content-evaluation evaluation">
-    <h2 class="title-evaluations">Devolucion de <strong>Making Sense</strong> a <strong data-bind="text: employee.fullName()"></strong></h2>
+    <h2 class="title-evaluations">Devolución de <strong>Making Sense</strong> a <strong data-bind="text: evaluation.fullName()"></strong></h2>
     <div class="top-evaluation">
         <div class="top-left">
-            <h4>Informacion Personal</h4>
-            <h5 class="inf-personal">Puesto: <span data-bind="text: employee.currentPosition()"></span></h5>
-            <h5 class="inf-personal">Evaluadores: <span data-bind="text: employee.fullName()"></span></h5>
-            <h5 class="inf-personal">Seniority: <span data-bind="text: employee.seniority()"></span></h5>
-            <h5 class="inf-personal">Responsable: <span data-bind="text: employee.responsibleId()"></span></h5>
-            <h5 class="inf-personal">Fecha: <span>18/07/2015</span></h5>
-            <h5 class="inf-personal">Proyecto: <span>Marketing</span></h5>
-            <h4>Metricas de Evaluacion</h4>
-            <h5>1.<span>No alcanza las Expectativas  </span>2.<span>Necesita Mejorar </span><br>3.<span>Cumple con Expectativas </span>4.<span>Excede Expectativas</span></h5>
-            <p class="explication-text">*Si no tenes conocimientos para calificar un campo puedes dejarlo vacio</p>
+            <h4>Información Personal</h4>
+            <ul class="personal-info-container clearfix">
+                <li><span class="item">Puesto:</span><span class="item-info" data-bind="text: evaluation.currentPosition()"></span></li>
+                <li><span class="item">Evaluadores:</span><span class="item-info" data-bind="text: evaluation.fullName()"></span></li>
+                <li><span class="item">Seniority:</span><span class="item-info" data-bind="text: evaluation.seniority()"></span></li>
+                <li><span class="item">Responsable:</span><span class="item-info" data-bind="text: evaluation.responsibleId()"></span></li>
+                <li><span class="item">Fecha:</span><span class="item-info">18/07/2015</span></li>
+                <li>
+                    <span class="item">Proyectos:</span>
+                    <div class="editable-projects" data-bind="css: { edition: evaluation.project()}">
+                        <input type="text" placeholder="Ingrese los proyectos" data-bind="value: evaluation.project"/><span class="pencil"></span>
+                    </div>
+                </li>
+            </ul>
+            <h4>Métricas de Evaluación</h4>
+            <div class="metrics-container">
+                <span>1</span> No alcanza las Expectativas - <span>2</span> Necesita Mejorar<br/>
+                <span>3</span> Cumple con Expectativas - <span>4</span> Excede Expectativas
+            </div>
+            <p class="explanatory-text">*Si no tenes conocimientos para calificar un campo puedes dejarlo vacio</p>
         </div>
         <div class="top-right">
             <h4>Comentarios Generales</h4>
-            <textarea class="comentarios-generales" placeholder="Deja tu comentario aqui..."></textarea>
-            <button class="button-evaluations comentar">Comentar</button>
+            <textarea class="comentarios-generales" placeholder="Dejá tu comentario aquí..."></textarea>
+            <button class="button-evaluations comment-btn">Comentar</button>
         </div>
     </div>
-    <table class="table">
+    <table class="table calification-items table-3-columns hide-column-2">
         <thead>
             <tr>
-                <th class="evaluadores"></th>
-                <th class="evaluadores"><i class="icon hide top-tip" data-tips="Ocultar"></i>Auto Evaluacion</th>
-                <th class="evaluadores"><i class="icon hide top-tip" data-tips="Ocultar"></i>Calentey</th>
-                <th class="evaluadores"><i class="icon hide top-tip" data-tips="Ocultar"></i>Empresa</th>
+                <th class="calificators"></th>
+                <th class="calificators"><i class="icon top-tip" data-tips="" data-calificator-col="1"></i>Auto Evaluacion</th>
+                <th class="calificators"><i class="icon top-tip" data-tips="" data-calificator-col="2"></i>Calentey</th>
+                <th class="calificators">Empresa</th>
             </tr>
             <tr>
-                <th class="title-evaluacion">CALIFICACION FINAL</th>
-                <th class="title-evaluacion">3.5</th>
-                <th class="title-evaluacion">4</th>
-                <th class="title-evaluacion">4</th>
+                <th class="title-evaluation">Calificación Final</th>
+                <th class="title-evaluation"><span>3.5</span></th>
+                <th class="title-evaluation"><span>4</span></th>
+                <th class="title-evaluation">4</th>
             </tr>
             <tr>
-                <th class="sub-title-evaluacion">DESEMPE&Ntilde;O LABORAL</th>
-                <th class="sub-title-evaluacion"><span>3.5</span></th>
-                <th class="sub-title-evaluacion">4</th>
-                <th class="sub-title-evaluacion">4</th>
+                <th class="sub-title-evaluation">Desempeño Laboral</th>
+                <th class="sub-title-evaluation"><span>3.5</span></th>
+                <th class="sub-title-evaluation"><span>4</span></th>
+                <th class="sub-title-evaluation">4</th>
             </tr>
         </thead>
         <tbody data-bind="foreach: template.items">
             <tr>
                 <td><span data-bind="text: $index() + 1 + '- ' + text(), attr:{'data-tips': description()}" class="top-tip rol"></span></td>
-                <td class="col-hide">3.5</td>
+                <td><span>3.5</span></td>
                 <td><span>4</span></td>
-                <td><input class="calificacion" type="text"></td>
+                <td><input class="calification-input" type="text"></td>
             </tr>
         </tbody>
     </table>
     <div class="footer-evaluation">
-        <button class="button-evaluations finalizar">Finalizar Devolucion</button>
+        <button class="button-evaluations primary-btn finish-btn">Finalizar Devolución</button>
+        <p class="explanatory-text">Recuerda que una vez finalizada tu evaluación no podrás volver a editarla.</p>
     </div>
 </div>
