@@ -8,7 +8,7 @@ namespace CommonJobs.Application.EvalForm.DTOs
 {
     public class CalificationsDTO
     {
-        public EmployeeEvaluationDTO Evaluation { get; set; }
+        public EmployeeEvaluation Evaluation { get; set; }
 
         public List<EvaluationCalification> Califications { get; set; }
 
