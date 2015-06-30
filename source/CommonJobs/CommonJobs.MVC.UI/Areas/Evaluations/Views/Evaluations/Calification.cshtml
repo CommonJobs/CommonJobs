@@ -1,0 +1,83 @@
+﻿@model CommonJobs.Mvc.UI.Areas.Evaluations.Models.Calification
+@{
+    ViewBag.Title = "Califications";
+    Layout = "~/Areas/Evaluations/Views/Shared/_Layout.cshtml";
+    ScriptManager.RegisterCss(Url.Content("~/Content/twitter-bootstrap/less/bootstrap.less"), priority: 900);
+    ScriptManager.RegisterCss(Url.Content("~/Content/twitter-bootstrap/less/responsive.less"), priority: 900);
+    ScriptManager.RegisterCss(Url.Content("~/Content/Evaluations/evaluations.css"));
+    ScriptManager.RegisterGlobalJavascript("baseUrl", Url.Content("~"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/jquery-1.7.2.min.js"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/underscore.js"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Content/twitter-bootstrap/js/bootstrap-typeahead.js"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Content/twitter-bootstrap/js/bootstrap-modal.js"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/url-generator.js"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/knockout-2.2.0.js"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/Evaluations/calification.js"));
+}
+
+<div class="content-evaluation evaluation">
+    <h2 class="title-evaluations">Devolución de <strong>Making Sense</strong> a <strong data-bind="text: evaluation.fullName()"></strong></h2>
+    <div class="top-evaluation">
+        <div class="top-left">
+            <h4>Información Personal</h4>
+            <ul class="personal-info-container clearfix">
+                <li><span class="item">Puesto:</span><span class="item-info" data-bind="text: evaluation.currentPosition()"></span></li>
+                <li><span class="item">Evaluadores:</span><span class="item-info" data-bind="text: evaluation.fullName()"></span></li>
+                <li><span class="item">Seniority:</span><span class="item-info" data-bind="text: evaluation.seniority()"></span></li>
+                <li><span class="item">Responsable:</span><span class="item-info" data-bind="text: evaluation.responsibleId()"></span></li>
+                <li><span class="item">Fecha:</span><span class="item-info">18/07/2015</span></li>
+                <li>
+                    <span class="item">Proyectos:</span>
+                    <div class="editable-projects" data-bind="css: { edition: evaluation.project()}">
+                        <input type="text" placeholder="Ingrese los proyectos" data-bind="value: evaluation.project, event: { keyup: evaluation.onKeyUpProject, focusin: evaluation.onFocusInProject, blur: evaluation.onBlurProject}"/><span class="pencil"></span>
+                    </div>
+                </li>
+            </ul>
+            <h4>Métricas de Evaluación</h4>
+            <div class="metrics-container">
+                <span>1</span> No alcanza las Expectativas - <span>2</span> Necesita Mejorar<br/>
+                <span>3</span> Cumple con Expectativas - <span>4</span> Excede Expectativas
+            </div>
+            <p class="explanatory-text">*Si no tenes conocimientos para calificar un campo puedes dejarlo vacio</p>
+        </div>
+        <div class="top-right">
+            <h4>Comentarios Generales</h4>
+            <textarea class="comentarios-generales" placeholder="Dejá tu comentario aquí..."></textarea>
+            <button class="button-evaluations comment-btn">Comentar</button>
+        </div>
+    </div>
+    <table class="table calification-items table-3-columns hide-column-2">
+        <thead>
+            <tr>
+                <th class="calificators"></th>
+                <th class="calificators"><i class="icon top-tip" data-tips="" data-calificator-col="1" data-bind="click: toggleVisiblityColumn"></i>Auto Evaluacion</th>
+                <th class="calificators"><i class="icon top-tip" data-tips="" data-calificator-col="2" data-bind="click: toggleVisiblityColumn"></i>Calentey</th>
+                <th class="calificators">Empresa</th>
+            </tr>
+            <tr>
+                <th class="title-evaluation">Calificación Final</th>
+                <th class="title-evaluation"><span>3.5</span></th>
+                <th class="title-evaluation"><span>4</span></th>
+                <th class="title-evaluation">4</th>
+            </tr>
+            <tr>
+                <th class="sub-title-evaluation">Desempeño Laboral</th>
+                <th class="sub-title-evaluation"><span>3.5</span></th>
+                <th class="sub-title-evaluation"><span>4</span></th>
+                <th class="sub-title-evaluation">4</th>
+            </tr>
+        </thead>
+        <tbody data-bind="foreach: template.items">
+            <tr>
+                <td><span data-bind="text: $index() + 1 + '- ' + text(), attr:{'data-tips': description()}" class="top-tip rol"></span></td>
+                <td><span>3.5</span></td>
+                <td><span>4</span></td>
+                <td><input class="calification-input" type="text"></td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="footer-evaluation">
+        <button class="button-evaluations primary-btn finish-btn">Finalizar Devolución</button>
+        <p class="explanatory-text">Recuerda que una vez finalizada tu evaluación no podrás volver a editarla.</p>
+    </div>
+</div>

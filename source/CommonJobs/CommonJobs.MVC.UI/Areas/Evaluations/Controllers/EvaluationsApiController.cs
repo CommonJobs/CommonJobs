@@ -2,6 +2,7 @@
 using CommonJobs.Application.EvalForm.Commands;
 using CommonJobs.Application.EvalForm.DTOs;
 using CommonJobs.Application.Evaluations;
+using CommonJobs.Domain;
 using CommonJobs.Domain.Evaluations;
 using CommonJobs.Infrastructure.Mvc;
 using CommonJobs.Mvc.UI.Areas.Evaluations.Models;
@@ -74,5 +75,25 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations.Controllers
             return Json("ok");
         }
 
+        [AcceptVerbs(HttpVerbs.Get)]
+        public JsonNetResult GetEvaluation (string username)
+        {
+            Calification calification = new Calification();
+            //TODO: Remove this testing code when completed the service method
+            calification.Evaluation = new EmployeeEvaluation();
+            calification.Evaluation.FullName = "Sofia Pacifico";
+            calification.Evaluation.ResponsibleId = "spacifico";
+            calification.Evaluation.Seniority = "Junior";
+            calification.Evaluation.CurrentPosition = "Developer";
+            //
+            calification.Template = ExecuteCommand(new GetEvaluationTemplateCommand());
+            return Json(calification);
+        }
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        public JsonNetResult UpdateProject(String Project)
+        {
+            return Json("ok");
+        }
     }
 }
