@@ -16,19 +16,20 @@
 }
 
 <div class="content-evaluation evaluation">
-    <h2 class="title-evaluations">Devolución de <strong>Making Sense</strong> a <strong data-bind="text: evaluation.fullName()"></strong></h2>
+    <div data-bind="if: view == 1"><h2 class="title-evaluations">Evaluación de <strong data-bind="text: evaluation.fullName()"></strong></h2></div>
+    <div data-bind="if: view != 1"><h2 class="title-evaluations">Calificación de <strong data-bind="text: userLogged()"></strong> a <strong data-bind="text: evaluation.fullName()"></strong></h2></div>
     <div class="top-evaluation">
         <div class="top-left">
             <h4>Información Personal</h4>
             <ul class="personal-info-container clearfix">
                 <li><span class="item">Puesto:</span><span class="item-info" data-bind="text: evaluation.currentPosition()"></span></li>
-                <li><span class="item">Evaluadores:</span><span class="item-info" data-bind="text: evaluation.fullName()"></span></li>
+                <li><span class="item">Evaluadores:</span><span class="top-tip" data-bind="attr: { 'data-tips': evaluation.evaluatorsString()}"><span class="item-info" data-bind="text: evaluation.evaluatorsString()"></span></span></li>
                 <li><span class="item">Seniority:</span><span class="item-info" data-bind="text: evaluation.seniority()"></span></li>
                 <li><span class="item">Responsable:</span><span class="item-info" data-bind="text: evaluation.responsibleId()"></span></li>
                 <li><span class="item">Fecha:</span><span class="item-info">18/07/2015</span></li>
                 <li>
                     <span class="item">Proyectos:</span>
-                    <div class="editable-projects" data-bind="css: { edition: evaluation.project()}">
+                    <div class="editable-projects" data-bind="css: { edition: evaluation.project(), 'top-tip': evaluation.project()}, attr: {'data-tips': evaluation.project()}">
                         <input type="text" placeholder="Ingrese los proyectos" data-bind="value: evaluation.project, event: { keyup: evaluation.onKeyUpProject, focusin: evaluation.onFocusInProject, blur: evaluation.onBlurProject}"/><span class="pencil"></span>
                     </div>
                 </li>
