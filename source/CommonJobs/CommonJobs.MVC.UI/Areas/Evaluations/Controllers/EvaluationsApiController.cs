@@ -80,12 +80,15 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations.Controllers
         {
             Calification calification = new Calification();
             //TODO: Remove this testing code when completed the service method
-            calification.Evaluation = new EmployeeEvaluation();
+            calification.Evaluation = new EmployeeEvaluationDTO();
             calification.Evaluation.FullName = "Sofia Pacifico";
             calification.Evaluation.ResponsibleId = "spacifico";
             calification.Evaluation.Seniority = "Junior";
             calification.Evaluation.CurrentPosition = "Developer";
+            calification.Evaluation.Evaluators = new List<string>() { "dnoya", "smarchetti", "jraimondi", "svassolo", "icaldentey", "bcastro"};
             //
+            calification.View = Calification.UserView.Responsible;
+            calification.UserLogged = DetectUser();
             calification.Template = ExecuteCommand(new GetEvaluationTemplateCommand());
             return Json(calification);
         }

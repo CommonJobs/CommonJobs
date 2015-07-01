@@ -5,6 +5,8 @@
         var self = this;
         this.evaluation = new Evaluation();
         this.template = new Template();
+        this.view = ko.observable('');
+        this.userLogged = ko.observable('');
         this.toggleVisiblityColumn = function (data, event) {
             var i = $(event.target).data('calificator-col');
             var className = "hide-column-" + (i + 1);
@@ -16,6 +18,8 @@
     }
 
     Calification.prototype.fromJs = function (data) {
+        this.view(data.View);
+        this.userLogged(data.UserLogged);
         this.evaluation.fromJs(data.Evaluation);
         this.template.fromJs(data.Template);
     }
@@ -40,6 +44,7 @@
         this.currentPosition = ko.observable('');
         this.seniority = ko.observable('');
         this.period = ko.observable('');
+        this.evaluators = ko.observable('');
         this.project = ko.observable('');
         this.updateProject = function () {
             var project = { Project: this.project() };
@@ -57,6 +62,8 @@
         this.onBlurProject = function (data, event) {
             this.evaluation.updateProject();
             $(event.target).parent().removeClass('edition-enabled');
+            if (!this.evaluation.project())
+                $(event.target).parent().removeAttr('data-tips');
             return true;
         }
         this.onKeyUpProject = function (data, event) {
@@ -64,6 +71,9 @@
                 $(event.target).blur();
             }
         }
+        this.evaluatorsString = ko.computed(function () {
+            return this.evaluators().toString().replace(/,/g, ', ');
+        }, this);
         if (data) {
             this.fromJs(data);
         }
@@ -77,6 +87,7 @@
         this.currentPosition(data.CurrentPosition);
         this.seniority(data.Seniority);
         this.period(data.Period);
+        this.evaluators(data.Evaluators);
         this.project(data.Project);
     }
 
@@ -128,6 +139,19 @@
         this.key(data.Key);
         this.text(data.Text);
         this.description(data.Description);
+        this.califications(getAllCalifications(this.key()));
+    }
+
+    function getAllCalifications(key) {
+        return _.map(viewmodel.califications(), function (notes) {
+            return getCalificationByKey(key, notes);
+        });
+    }
+
+    function getCalificationByKey(key, calificator) {
+        return _.find(califications, function (item) {
+            item.key == key;
+        })
     }
 
     TemplateItem.prototype.toJs = function (data) {

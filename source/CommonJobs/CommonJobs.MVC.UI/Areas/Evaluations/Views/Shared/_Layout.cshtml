@@ -24,6 +24,7 @@
             <div class="pull-right">
                 <form class="form-inline" id="persistenceForm">
                     <ul class="nav nav-right">
+                        <li>@Html.DocumentationLink("Ayuda")</li>
                         @if (Request.IsAuthenticated && User != null && User.Identity != null && User.Identity.Name != null) 
 				        {
                             @*//TODO: We need improve the navigation bar styles. So, I removed these inline styles in this moment*@
