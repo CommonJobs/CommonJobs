@@ -69,7 +69,7 @@ namespace CommonJobs.Application.EvalForm.EmployeeSearching
                     AutoEvaluationDone = false,
                     ResponsibleEvaluationDone = false,
                     CompanyEvaluationDone = false,
-                    OpenToDevolution = evaluation.OpenToDevolution,
+                    OpenToDevolution = evaluation.ReadyForDevolution,
                     Finished = evaluation.Finished
                 });
 

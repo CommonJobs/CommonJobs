@@ -29,9 +29,15 @@ namespace CommonJobs.Domain.Evaluations
 
         public string Period { get; set; }
 
-        public bool OpenToDevolution { get; set; }
+        public bool ReadyForDevolution { get; set; }
 
         public bool Finished { get; set; }
+
+        public string StrengthsComment { get; set; }
+
+        public string ToImproveComment { get; set; }
+
+        public string ActionPlanComment { get; set; }
 
         public static string GenerateEvaluationId(string period, string userName)
         {
