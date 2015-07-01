@@ -16,8 +16,8 @@
 }
 
 <div class="content-evaluation evaluation">
-    <div data-bind="if: view == 1"><h2 class="title-evaluations">Evaluación de <strong data-bind="text: evaluation.fullName()"></strong></h2></div>
-    <div data-bind="if: view != 1"><h2 class="title-evaluations">Calificación de <strong data-bind="text: userLogged()"></strong> a <strong data-bind="text: evaluation.fullName()"></strong></h2></div>
+    <div data-bind="if: userView == 1"><h2 class="title-evaluations">Evaluación de <strong data-bind="text: evaluation.fullName()"></strong></h2></div>
+    <div data-bind="if: userView != 1"><h2 class="title-evaluations">Calificación de <strong data-bind="text: userLogged()"></strong> a <strong data-bind="text: evaluation.fullName()"></strong></h2></div>
     <div class="top-evaluation">
         <div class="top-left">
             <h4>Información Personal</h4>
@@ -26,7 +26,7 @@
                 <li><span class="item">Evaluadores:</span><span class="top-tip" data-bind="attr: { 'data-tips': evaluation.evaluatorsString()}"><span class="item-info" data-bind="text: evaluation.evaluatorsString()"></span></span></li>
                 <li><span class="item">Seniority:</span><span class="item-info" data-bind="text: evaluation.seniority()"></span></li>
                 <li><span class="item">Responsable:</span><span class="item-info" data-bind="text: evaluation.responsibleId()"></span></li>
-                <li><span class="item">Fecha:</span><span class="item-info">18/07/2015</span></li>
+                <li><span class="item">Periodo:</span><span class="item-info" data-bind="text: evaluation.period()"></span></li>
                 <li>
                     <span class="item">Proyectos:</span>
                     <div class="editable-projects" data-bind="css: { edition: evaluation.project(), 'top-tip': evaluation.project()}, attr: {'data-tips': evaluation.project()}">
@@ -51,29 +51,27 @@
         <thead>
             <tr>
                 <th class="calificators"></th>
-                <th class="calificators"><i class="icon top-tip" data-tips="" data-calificator-col="1" data-bind="click: toggleVisiblityColumn"></i>Auto Evaluacion</th>
-                <th class="calificators"><i class="icon top-tip" data-tips="" data-calificator-col="2" data-bind="click: toggleVisiblityColumn"></i>Calentey</th>
-                <th class="calificators">Empresa</th>
+                <!-- ko foreach: calificatorsHeaderTable -->
+                <th class="calificators"><i class="icon top-tip" data-tips="" data-bind="click: $parent.toggleVisiblityColumn, attr: { 'data-calificator-col': $index() + 1 }"></i><div data-bind="text: headerName"></div></th>
+                <!-- /ko -->
             </tr>
             <tr>
                 <th class="title-evaluation">Calificación Final</th>
                 <th class="title-evaluation"><span>3.5</span></th>
                 <th class="title-evaluation"><span>4</span></th>
-                <th class="title-evaluation">4</th>
             </tr>
             <tr>
-                <th class="sub-title-evaluation">Desempeño Laboral</th>
-                <th class="sub-title-evaluation"><span>3.5</span></th>
-                <th class="sub-title-evaluation"><span>4</span></th>
-                <th class="sub-title-evaluation">4</th>
+                <th class="sub-title-evaluation"><span>DESEMPEÑO LABORAL</span></th>
+                <th class="sub-title-evaluation"><span></span></th>
+                <th class="sub-title-evaluation"><span></span></th>                
             </tr>
         </thead>
         <tbody data-bind="foreach: template.items">
             <tr>
                 <td><span data-bind="text: $index() + 1 + '- ' + text(), attr:{'data-tips': description()}" class="top-tip rol"></span></td>
-                <td><span>3.5</span></td>
-                <td><span>4</span></td>
-                <td><input class="calification-input" type="text"></td>
+                <!-- ko foreach: calificationsByItem -->
+                <td data-bind="text: value"></td>
+                <!-- /ko -->
             </tr>
         </tbody>
     </table>
@@ -81,4 +79,11 @@
         <button class="button-evaluations primary-btn finish-btn">Finalizar Devolución</button>
         <p class="explanatory-text">Recuerda que una vez finalizada tu evaluación no podrás volver a editarla.</p>
     </div>
+    <script type="text/javascript">
+        var calificationPeriod = "@ViewBag.Period";
+        var calificationUserName = "@ViewBag.UserName";
+    </script>
 </div>
+
+@*<td><span>3.5</span></td>
+                <td><input class="calification-input" type="text"></td>*@
