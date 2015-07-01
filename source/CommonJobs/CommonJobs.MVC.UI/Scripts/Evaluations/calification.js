@@ -1,11 +1,12 @@
 ﻿$(document).ready(function () {
     var viewmodel;
 
-    var Calification = function (data) {
+    var CalificationViewModel = function (data) {
         var self = this;
         this.evaluation = new Evaluation();
         this.template = new Template();
-        this.view = ko.observable('');
+        this.califications = ko.observableArray();
+        this.userView = ko.observable('');
         this.userLogged = ko.observable('');
         this.toggleVisiblityColumn = function (data, event) {
             var i = $(event.target).data('calificator-col');
@@ -15,26 +16,101 @@
         if (data) {
             this.fromJs(data);
         }
+        this.getAllCalificationsByKey = function (key) {
+            return _.map(this.califications(), function (calification) {
+                return calification.getCalificationByKey(key);
+            });
+        }
+        this.calificatorsHeaderTable = ko.computed(function () {
+            return _.map(this.califications(), function (calification) {
+                var userName = calification.evaluatorEmployee();
+                if (calification.evaluatorEmployee() == calification.evaluatedEmployee()) {
+                    userName = "Auto Evaluación";
+                }
+                return {
+                    headerName: userName
+                }
+            });
+        }, this);
     }
 
-    Calification.prototype.fromJs = function (data) {
-        this.view(data.View);
+    CalificationViewModel.prototype.fromJs = function (data) {
+        this.userView(data.UserView);
         this.userLogged(data.UserLogged);
         this.evaluation.fromJs(data.Evaluation);
+        this.califications(_.map(data.Califications, function (calification) {
+            return new Calification(calification);
+        }));
         this.template.fromJs(data.Template);
     }
 
-    Calification.prototype.toJs = function () {
+    CalificationViewModel.prototype.toJs = function () {
         return {
             Evaluation: this.evaluation.toJs(),
             Template: this.template.toJs()
         };
     }
-    Calification.prototype.load = function () {
-        $.getJSON("/Evaluations/api/getEvaluation/", function (model) {
+    CalificationViewModel.prototype.load = function () {
+        $.getJSON("/Evaluations/api/getEvaluation/" + calificationPeriod + "/" + calificationUserName + "/", function (model) {
             viewmodel.fromJs(model);
         });
     }
+
+    var Calification = function (data) {
+        this.id = ko.observable('');
+        this.owner = ko.observable('');
+        this.evaluationId = ko.observable('');
+        this.period = ko.observable('');
+        this.templateId = ko.observable('');
+        this.evaluatedEmployee = ko.observable('');
+        this.evaluatorEmployee = ko.observable('');
+        this.comments = ko.observable('');
+        this.califications = ko.observableArray();
+        this.finished = ko.observable('');
+        if (data) {
+            this.fromJs(data);
+        }
+    }
+
+    Calification.prototype.fromJs = function (data) {
+        this.id(data.Id);
+        this.owner(data.Owner);
+        this.evaluationId(data.EvaluationId);
+        this.period(data.Period);
+        this.templateId(data.TemplateId);
+        this.evaluatedEmployee(data.EvaluatedEmployee);
+        this.evaluatorEmployee(data.EvaluatorEmployee);
+        this.comments(data.Comments);
+        if (data.Calification) {
+            this.califications(_.map(data.Califications, function (item) {
+                return {
+                    key: item[0],
+                    value: item[1]
+                }
+            }));
+        }
+    }
+
+    Calification.prototype.getCalificationByKey = function (key) {
+        var value = _.find(this.califications(), function (item) {
+            return item.key == key;
+        });
+        return {
+            evaluatorEmployee: this.evaluatorEmployee(),
+            value: value || ''
+        }
+    }
+
+
+    //Calification.prototype.toJs = function (data) {
+    //    return {
+    //        Period: this.period,
+    //        Evaluated: this.evaluated,
+    //        Template: this.template,
+    //        Owner: this.owner,
+    //        EvaluationId: this.evaluationId,
+    //    }
+    //}
 
     var Evaluation = function (data) {
         this.id = ko.observable('');
@@ -46,6 +122,9 @@
         this.period = ko.observable('');
         this.evaluators = ko.observable('');
         this.project = ko.observable('');
+        this.strengthsComment = ko.observable('');
+        this.improveComment = ko.observable('');
+        this.actionPlanComment = ko.observable('');
         this.updateProject = function () {
             var project = { Project: this.project() };
             $.ajax("/Evaluations/api/UpdateProject/", {
@@ -87,8 +166,11 @@
         this.currentPosition(data.CurrentPosition);
         this.seniority(data.Seniority);
         this.period(data.Period);
-        this.evaluators(data.Evaluators);
+        //this.evaluators(data.Evaluators);
         this.project(data.Project);
+        this.strengthsComment(data.StrengthsComment);
+        this.improveComment(data.ImproveComment);
+        this.actionPlanComment(data.ActionPlanComment);
     }
 
     Evaluation.prototype.toJs = function () {
@@ -108,6 +190,11 @@
         if (data) {
             this.fromJs(data);
         }
+        //this.groupedItems = ko.computed(function () {
+        //    return _.groupBy(this.items(), function (e) {
+        //        return e.groupKey();
+        //    })
+        //}, this);
     }
 
     Template.prototype.fromJs = function (data) {
@@ -129,6 +216,7 @@
         this.key = ko.observable('');
         this.text = ko.observable('');
         this.description = ko.observable('');
+        this.calificationsByItem = ko.observableArray();
         if (data) {
             this.fromJs(data);
         }
@@ -139,19 +227,7 @@
         this.key(data.Key);
         this.text(data.Text);
         this.description(data.Description);
-        this.califications(getAllCalifications(this.key()));
-    }
-
-    function getAllCalifications(key) {
-        return _.map(viewmodel.califications(), function (notes) {
-            return getCalificationByKey(key, notes);
-        });
-    }
-
-    function getCalificationByKey(key, calificator) {
-        return _.find(califications, function (item) {
-            item.key == key;
-        })
+        this.calificationsByItem(viewmodel.getAllCalificationsByKey(this.key()));
     }
 
     TemplateItem.prototype.toJs = function (data) {
@@ -163,7 +239,7 @@
         }
     }
 
-    viewmodel = new Calification();
+    viewmodel = new CalificationViewModel();
     viewmodel.load();
     ko.applyBindings(viewmodel);
 });
