@@ -43,30 +43,42 @@ namespace CommonJobs.Application.EvalForm.Commands
                 .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite())
                 .Where(x => x.EvaluationId == _period).ToList();
 
-            var calificationsToReturn = new List<EvaluationCalification>();
-
-            if (evaluation.ReadyForDevolution) // Ready to devolution
+            if (evaluation.ReadyForDevolution) // Ready for devolution
             {
-                calificationsToReturn.AddRange(califications.Where(c => (_loggedUser == c.EvaluatorEmployee && c.EvaluatorEmployee == c.EvaluatedEmployee) || c.Owner == CalificationType.Company));
+                return new CalificationsDTO()
+                {
+                    View = UserView.Responsible,
+                    Evaluation = evaluation,
+                    Califications = califications.Where(c => (_loggedUser == c.EvaluatorEmployee && c.EvaluatorEmployee == c.EvaluatedEmployee) || c.Owner == CalificationType.Company).ToList()
+                };
             }
             else if (_evaluatedUser == _loggedUser) // Auto-evaluation
             {
-                calificationsToReturn.Add(califications.Single(c => _loggedUser == c.EvaluatorEmployee && c.EvaluatorEmployee == c.EvaluatedEmployee));
+                return new CalificationsDTO()
+                {
+                    View = UserView.Auto,
+                    Evaluation = evaluation,
+                    Califications = new List<EvaluationCalification>() { califications.Single(c => _loggedUser == c.EvaluatorEmployee && c.EvaluatorEmployee == c.EvaluatedEmployee) }
+                };
             }
             else if (evaluation.ResponsibleId == _loggedUser) // Responsible & Company (responsible && finished)
             {
-                calificationsToReturn = califications;
+                return new CalificationsDTO()
+                {
+                    View = UserView.Responsible,
+                    Evaluation = evaluation,
+                    Califications = califications
+                };
             }
             else // Evaluator
             {
-                calificationsToReturn.AddRange(califications.Where(c => _loggedUser == c.EvaluatorEmployee || c.Owner == CalificationType.Auto));
-            }
-
-            return new CalificationsDTO()
+                return new CalificationsDTO()
                 {
+                    View = UserView.Evaluation,
                     Evaluation = evaluation,
-                    Califications = calificationsToReturn
+                    Califications = califications.Where(c => _loggedUser == c.EvaluatorEmployee || c.Owner == CalificationType.Auto).ToList()
                 };
+            }
         }
     }
 }

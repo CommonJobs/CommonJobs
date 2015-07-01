@@ -35,7 +35,7 @@ namespace CommonJobs.Domain.Evaluations
 
         public string StrengthsComment { get; set; }
 
-        public string ImproveComment { get; set; }
+        public string ToImproveComment { get; set; }
 
         public string ActionPlanComment { get; set; }
 
