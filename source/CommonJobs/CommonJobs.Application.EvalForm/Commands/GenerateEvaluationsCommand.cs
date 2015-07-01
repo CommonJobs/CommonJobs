@@ -33,7 +33,7 @@ namespace CommonJobs.Application.Evaluations
                 //employeeEvaluation.Seniority will not be stored at this point
                 //employeeEvaluation.CurrentPosition will not be stored at this point
 
-                RavenSession.Store(e);
+                RavenSession.Store(employeeEvaluation);
 
                 //After we create the evaluation, we create the calification document for the auto-evaluation and the responsible
                 ExecuteCommand(new GenerateCalificationCommand(employeeEvaluation.Period, employeeEvaluation.UserName, employeeEvaluation.UserName, employeeEvaluation.TemplateId, CalificationType.Auto, employeeEvaluation.Id));

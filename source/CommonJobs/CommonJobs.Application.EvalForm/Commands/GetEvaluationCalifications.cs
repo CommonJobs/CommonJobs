@@ -28,7 +28,7 @@ namespace CommonJobs.Application.EvalForm.Commands
 
         public override CalificationsDTO ExecuteWithResult()
         {
-            var evId = EmployeeEvaluation.GenerateEvaluationId(_period, _loggedUser);
+            var evId = EmployeeEvaluation.GenerateEvaluationId(_period, _evaluatedUser);
             var evaluation = RavenSession.Load<EmployeeEvaluation>(evId);
 
             if (evaluation == null)
@@ -41,7 +41,7 @@ namespace CommonJobs.Application.EvalForm.Commands
                 .Query<EvaluationCalification>()
                 .Statistics(out stats)
                 .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite())
-                .Where(x => x.EvaluationId == _period).ToList();
+                .Where(x => x.EvaluationId == evId).ToList();
 
             if (evaluation.ReadyForDevolution) // Ready for devolution
             {
