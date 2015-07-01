@@ -11,11 +11,11 @@ namespace CommonJobs.Application.EvalForm.Commands
 {
     public class GetEvaluationCalifications : Command<CalificationsDTO>
     {
-        private string _period { get; set; }
+        private string _period;
 
-        private string _evaluatedUser { get; set; }
+        private string _evaluatedUser;
 
-        private string _loggedUser { get; set; }
+        private string _loggedUser;
 
         public GetEvaluationCalifications(string period, string evaluatedUser, string loggedUser)
         {
