@@ -29,7 +29,7 @@ namespace CommonJobs.Domain.Evaluations
 
         public string Period { get; set; }
 
-        public bool OpenToDevolution { get; set; }
+        public bool ReadyForDevolution { get; set; }
 
         public bool Finished { get; set; }
 

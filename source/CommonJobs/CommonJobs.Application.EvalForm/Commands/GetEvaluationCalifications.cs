@@ -45,7 +45,7 @@ namespace CommonJobs.Application.EvalForm.Commands
 
             var calificationsToReturn = new List<EvaluationCalification>();
 
-            if (evaluation.OpenToDevolution) // Ready to devolution
+            if (evaluation.ReadyForDevolution) // Ready to devolution
             {
                 calificationsToReturn.AddRange(califications.Where(c => (_loggedUser == c.EvaluatorEmployee && c.EvaluatorEmployee == c.EvaluatedEmployee) || c.Owner == CalificationType.Company));
             }
