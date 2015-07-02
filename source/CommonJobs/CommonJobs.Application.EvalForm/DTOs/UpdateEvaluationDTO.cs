@@ -18,6 +18,8 @@ namespace CommonJobs.Application.EvalForm.DTOs
         public string ActionPlan { get; set; }
 
         public List<UpdateCalificationDTO> Califications { get; set; }
+
+        public bool Finished { get; set; }
     }
 
     public class UpdateCalificationDTO

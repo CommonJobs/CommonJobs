@@ -47,7 +47,7 @@ namespace CommonJobs.Application.EvalForm.Commands
                 // Checks if the user trying to update the califications can actually do it
                 if (CanUpdate(_loggedUser, storedEvaluation, storedCalification))
                 {
-                    UpdateCalification(calification, storedCalification);
+                    UpdateCalification(calification, storedCalification, _updateEvaluation.Finished);
 
                     // If it's the responsible's or the company's calification, then the evaluation project should be updated [ TODO: Improvement - Check if the project has changed before updating it ]
                     updateEvaluationProject = (storedCalification.Owner == CalificationType.Responsible || storedCalification.Owner == CalificationType.Company);
@@ -63,11 +63,12 @@ namespace CommonJobs.Application.EvalForm.Commands
             UpdateEvaluation(updateEvaluationComments, updateEvaluationProject, storedEvaluation);
         }
 
-        private void UpdateCalification(UpdateCalificationDTO calification, EvaluationCalification storedCalification)
+        private void UpdateCalification(UpdateCalificationDTO calification, EvaluationCalification storedCalification, bool finished)
         {
             // Update the calification comments and values
             storedCalification.Comments = calification.Comments;
             storedCalification.Califications = calification.Items;
+            storedCalification.Finished = finished;
 
             // Update the EvaluationCalification document in the collection (DB)
             RavenSession.Store(storedCalification);
