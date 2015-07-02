@@ -1,5 +1,6 @@
 ﻿$(document).ready(function () {
     var viewmodel;
+    var positionItem = 1;
 
     var CalificationViewModel = function (data) {
         var self = this;
@@ -97,9 +98,14 @@
         });
         return {
             evaluatorEmployee: this.evaluatorEmployee(),
-            value: value || ''
+            value: value || '',
+            editable: this.isCalificationEditable()
         }
     }
+
+    Calification.prototype.isCalificationEditable = function () {
+        return viewmodel.userLogged() == this.evaluatorEmployee() && !this.finished();
+    };
 
 
     //Calification.prototype.toJs = function (data) {
@@ -187,29 +193,49 @@
 
     var Template = function (data) {
         this.items = ko.observableArray();
+        this.groups = ko.observableArray();
+        this.groupedItems = ko.computed(function () {
+            var groupedItems = _.groupBy(this.items(), function (item) {
+                return item.groupKey();
+            });
+            var items = [];
+            for (var key in groupedItems) {
+                items.push({
+                    group: this.getGroupByKey(key),
+                    items: groupedItems[key]
+                })
+            }
+            return items;
+        }, this);
+        this.getGroupByKey = function (key) {
+            return _.find(this.groups(), function (e) {
+                return (e.key == key) ? e.value : '';
+            });
+        };
         if (data) {
             this.fromJs(data);
         }
-        //this.groupedItems = ko.computed(function () {
-        //    return _.groupBy(this.items(), function (e) {
-        //        return e.groupKey();
-        //    })
-        //}, this);
     }
 
     Template.prototype.fromJs = function (data) {
-        this.items( _.map(data.Items, function (e) {
+        this.groups(_.map(data.Groups, function (e) {
+            return {
+                key: e.Key,
+                value: e.Value
+            };
+        }));
+        this.items(_.map(data.Items, function (e) {
             return new TemplateItem(e);
         }));
     }
 
-    Template.prototype.toJs = function (data) {
-        return {
-            Items: _.map(this.items, function (e) {
-                return e.toJs();
-            })
-        }
-    }
+    //Template.prototype.toJs = function (data) {
+    //    return {
+    //        Items: _.map(this.items, function (e) {
+    //            return e.toJs();
+    //        })
+    //    }
+    //}
 
     var TemplateItem = function(data) {
         this.groupKey = ko.observable('');
@@ -225,9 +251,10 @@
     TemplateItem.prototype.fromJs = function (data) {
         this.groupKey(data.GroupKey);
         this.key(data.Key);
-        this.text(data.Text);
+        this.text(positionItem + '- ' + data.Text);
         this.description(data.Description);
         this.calificationsByItem(viewmodel.getAllCalificationsByKey(this.key()));
+        positionItem++;
     }
 
     TemplateItem.prototype.toJs = function (data) {

@@ -35,7 +35,13 @@ namespace CommonJobs.Application.Evaluations
         private static Template CreateDefaultTemplate(string id)
         {
             var template = new Template();
-
+            template.Groups.AddRange(
+                new List<KeyValuePair<string, string>>(){
+                    new KeyValuePair<string, string>( "jobperformance", "Desempeño Laboral"),
+                    new KeyValuePair<string, string>( "humanfactor", "Factor Humano / Actitud"),
+                    new KeyValuePair<string, string>( "skills", "Habilidades"),
+                }                    
+            );
             template.Items.AddRange(
                 new List<TemplateItem>()
                 {
