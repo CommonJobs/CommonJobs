@@ -25,8 +25,6 @@ namespace CommonJobs.Application.EvalForm.Commands
 
         public override void Execute()
         {
-            //TODO: Security -> Check the logged user, is he able to perform this action?
-
             bool updateEvaluationComments = false;
             bool updateEvaluationProject = false;
 
