@@ -72,6 +72,7 @@
     <Compile Include="DTOs\CalificationsDTO.cs" />
     <Compile Include="DTOs\EmployeeEvaluationDTO.cs" />
     <Compile Include="DTOs\EvaluatorsUpdateDTO.cs" />
+    <Compile Include="DTOs\UpdateEvaluationDTO.cs" />
     <Compile Include="EmployeeSearching\EmployeeToEvaluate_Search.cs" />
     <Compile Include="EmployeeSearching\Employee_Search.cs" />
     <Compile Include="Commands\GenerateCalificationCommand.cs" />
