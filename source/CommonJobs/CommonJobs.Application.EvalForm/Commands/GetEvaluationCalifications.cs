@@ -1,4 +1,4 @@
-﻿using CommonJobs.Application.EvalForm.DTOs;
+﻿using CommonJobs.Application.EvalForm.Dtos;
 using CommonJobs.Domain.Evaluations;
 using CommonJobs.Infrastructure.RavenDb;
 using Raven.Client.Linq;
@@ -9,7 +9,7 @@ using System.Text;
 
 namespace CommonJobs.Application.EvalForm.Commands
 {
-    public class GetEvaluationCalifications : Command<CalificationsDTO>
+    public class GetEvaluationCalifications : Command<CalificationsDto>
     {
         private string _period;
 
@@ -26,7 +26,7 @@ namespace CommonJobs.Application.EvalForm.Commands
             _evaluatedUser = evaluatedUser;
         }
 
-        public override CalificationsDTO ExecuteWithResult()
+        public override CalificationsDto ExecuteWithResult()
         {
             var evId = EmployeeEvaluation.GenerateEvaluationId(_period, _evaluatedUser);
             var evaluation = RavenSession.Load<EmployeeEvaluation>(evId);
@@ -45,16 +45,16 @@ namespace CommonJobs.Application.EvalForm.Commands
 
             if (evaluation.ReadyForDevolution) // Ready for devolution
             {
-                return new CalificationsDTO()
+                return new CalificationsDto()
                 {
-                    View = UserView.Responsible,
+                    View = UserView.Company,
                     Evaluation = evaluation,
                     Califications = califications.Where(c => (_loggedUser == c.EvaluatorEmployee && c.EvaluatorEmployee == c.EvaluatedEmployee) || c.Owner == CalificationType.Company).ToList()
                 };
             }
             else if (_evaluatedUser == _loggedUser) // Auto-evaluation
             {
-                return new CalificationsDTO()
+                return new CalificationsDto()
                 {
                     View = UserView.Auto,
                     Evaluation = evaluation,
@@ -63,16 +63,16 @@ namespace CommonJobs.Application.EvalForm.Commands
             }
             else if (evaluation.ResponsibleId == _loggedUser) // Responsible & Company (responsible && finished)
             {
-                return new CalificationsDTO()
+                return new CalificationsDto()
                 {
-                    View = UserView.Responsible,
+                    View = califications.Any(c => c.Owner == CalificationType.Company) ? UserView.Company : UserView.Responsible,
                     Evaluation = evaluation,
                     Califications = califications
                 };
             }
             else // Evaluator
             {
-                return new CalificationsDTO()
+                return new CalificationsDto()
                 {
                     View = UserView.Evaluation,
                     Evaluation = evaluation,

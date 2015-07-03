@@ -1,5 +1,5 @@
 ﻿using CommonJobs.Application.EvalForm;
-using CommonJobs.Application.EvalForm.DTOs;
+using CommonJobs.Application.EvalForm.Dtos;
 using CommonJobs.Domain;
 using CommonJobs.Domain.Evaluations;
 using CommonJobs.Infrastructure.RavenDb;
@@ -13,9 +13,9 @@ namespace CommonJobs.Application.Evaluations
     public class UpdateEvaluatorsCommand : Command
     {
         private EmployeeEvaluationDTO _employeeEvaluation { get; set; }
-        private List<EvaluatorsUpdateDTO> _evaluators { get; set; }
+        private List<EvaluatorsUpdateDto> _evaluators { get; set; }
 
-        public UpdateEvaluatorsCommand(EmployeeEvaluationDTO employeeEvaluation, List<EvaluatorsUpdateDTO> evaluators)
+        public UpdateEvaluatorsCommand(EmployeeEvaluationDTO employeeEvaluation, List<EvaluatorsUpdateDto> evaluators)
         {
             _employeeEvaluation = employeeEvaluation;
             _evaluators = evaluators;

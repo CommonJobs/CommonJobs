@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace CommonJobs.Application.EvalForm.DTOs
+namespace CommonJobs.Application.EvalForm.Dtos
 {
-    public class CalificationsDTO
+    public class CalificationsDto
     {
         public UserView View { get; set; }
 
@@ -19,6 +19,7 @@ namespace CommonJobs.Application.EvalForm.DTOs
     {
         Auto,
         Responsible,
-        Evaluation
+        Evaluation,
+        Company
     }
 }
