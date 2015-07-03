@@ -48,9 +48,9 @@ namespace CommonJobs.Application.EvalForm.Commands
                     UpdateCalification(calification, storedCalification, _updateEvaluation.Finished);
 
                     // If it's the responsible's or the company's calification, then the evaluation project should be updated [ TODO: Improvement - Check if the project has changed before updating it ]
-                    updateEvaluationProject = (storedCalification.Owner == CalificationType.Responsible || storedCalification.Owner == CalificationType.Company);
+                    updateEvaluationProject |= (storedCalification.Owner == CalificationType.Responsible || storedCalification.Owner == CalificationType.Company);
                     // If it's the company's calification (or devolution), then the evaluation comments should be updated [ TODO: Improvement - Check if the comments have changed before updating it ]
-                    updateEvaluationComments = storedCalification.Owner == CalificationType.Company;
+                    updateEvaluationComments |= storedCalification.Owner == CalificationType.Company;
 
                     // If it's the responsible's calification and it's finished, then the company calification should be created
                     if (storedCalification.Owner == CalificationType.Responsible && storedCalification.Finished)
