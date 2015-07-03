@@ -26,7 +26,7 @@
 
     EvaluationViewModel.prototype.onFinish = function () {
     }
-    
+
     EvaluationViewModel.prototype.isValueEditable = function (calification) {
         return this.userLogged == calification.calificationColumn.evaluatorEmployee && !calification.calificationColumn.finished;
     }
@@ -36,7 +36,7 @@
         this.userView = data.UserView;
         this.userLogged = data.UserLogged;
         this.evaluation.fromJs(data.Evaluation);
-
+        this.numberOfColumns = "table-" + (data.Califications.length + 1) + "-columns";
         this.califications = _.map(data.Califications, function (calification) {
             return {
                 id: calification.Id,

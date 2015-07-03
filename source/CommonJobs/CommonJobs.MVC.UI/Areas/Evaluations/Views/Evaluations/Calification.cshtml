@@ -24,7 +24,7 @@
             <h4>Información Personal</h4>
             <ul class="personal-info-container clearfix">
                 <li><span class="item">Puesto:</span><span class="item-info" data-bind="text: evaluation.currentPosition"></span></li>
-                <li><span class="item">Evaluadores:</span><span class="top-tip" data-bind="attr: { 'data-tips': evaluation.evaluatorsString}"><span class="item-info" data-bind="text: evaluation.evaluatorsString"></span></span></li>
+                <li><span class="item">Evaluadores:</span><span class="top-tip" data-bind="if: evaluation.evaluatorsString, attr: { 'data-tips': evaluation.evaluatorsString}"><span class="item-info" data-bind="text: evaluation.evaluatorsString"></span></span></li>
                 <li><span class="item">Seniority:</span><span class="item-info" data-bind="text: evaluation.seniority"></span></li>
                 <li><span class="item">Responsable:</span><span class="item-info" data-bind="text: evaluation.responsibleId"></span></li>
                 <li><span class="item">Periodo:</span><span class="item-info" data-bind="text: evaluation.period"></span></li>
@@ -47,7 +47,7 @@
             <div class="comments-container" contenteditable="true"></div>
         </div>
     </div>
-    <table class="table calification-items table-3-columns hide-column-2">
+    <table data-bind="attr: {class: numberOfColumns}, css: {table: true, 'calification-items': true}">
         <thead>
             <tr>
                 <th class="calificators"></th>
