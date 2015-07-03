@@ -12,21 +12,22 @@
     ScriptManager.RegisterJs(Url.Content("~/Content/twitter-bootstrap/js/bootstrap-modal.js"), priority: 900);
     ScriptManager.RegisterJs(Url.Content("~/Scripts/url-generator.js"), priority: 900);
     ScriptManager.RegisterJs(Url.Content("~/Scripts/knockout-2.2.0.js"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/Evaluations/common.js"));
     ScriptManager.RegisterJs(Url.Content("~/Scripts/Evaluations/calification.js"));
 }
 
 <div class="content-evaluation evaluation">
-    <div data-bind="if: userView == 1"><h2 class="title-evaluations">Evaluación de <strong data-bind="text: evaluation.fullName()"></strong></h2></div>
-    <div data-bind="if: userView != 1"><h2 class="title-evaluations">Calificación de <strong data-bind="text: userLogged()"></strong> a <strong data-bind="text: evaluation.fullName()"></strong></h2></div>
+    <div data-bind="if: userView == 1"><h2 class="title-evaluations">Evaluación de <strong data-bind="text: evaluation.fullName"></strong></h2></div>
+    <div data-bind="if: userView != 1"><h2 class="title-evaluations">Calificación de <strong data-bind="text: userLogged"></strong> a <strong data-bind="text: evaluation.fullName"></strong></h2></div>
     <div class="top-evaluation">
         <div class="top-left">
             <h4>Información Personal</h4>
             <ul class="personal-info-container clearfix">
-                <li><span class="item">Puesto:</span><span class="item-info" data-bind="text: evaluation.currentPosition()"></span></li>
-                <li><span class="item">Evaluadores:</span><span class="top-tip" data-bind="attr: { 'data-tips': evaluation.evaluatorsString()}"><span class="item-info" data-bind="text: evaluation.evaluatorsString()"></span></span></li>
-                <li><span class="item">Seniority:</span><span class="item-info" data-bind="text: evaluation.seniority()"></span></li>
-                <li><span class="item">Responsable:</span><span class="item-info" data-bind="text: evaluation.responsibleId()"></span></li>
-                <li><span class="item">Periodo:</span><span class="item-info" data-bind="text: evaluation.period()"></span></li>
+                <li><span class="item">Puesto:</span><span class="item-info" data-bind="text: evaluation.currentPosition"></span></li>
+                <li><span class="item">Evaluadores:</span><span class="top-tip" data-bind="attr: { 'data-tips': evaluation.evaluatorsString}"><span class="item-info" data-bind="text: evaluation.evaluatorsString"></span></span></li>
+                <li><span class="item">Seniority:</span><span class="item-info" data-bind="text: evaluation.seniority"></span></li>
+                <li><span class="item">Responsable:</span><span class="item-info" data-bind="text: evaluation.responsibleId"></span></li>
+                <li><span class="item">Periodo:</span><span class="item-info" data-bind="text: evaluation.period"></span></li>
                 <li>
                     <span class="item">Proyectos:</span>
                     <div class="editable-projects" data-bind="css: { edition: evaluation.project(), 'top-tip': evaluation.project()}, attr: {'data-tips': evaluation.project()}">
@@ -43,37 +44,42 @@
         </div>
         <div class="top-right">
             <h4>Comentarios Generales</h4>
-            <textarea class="comentarios-generales" placeholder="Dejá tu comentario aquí..."></textarea>
-            <button class="button-evaluations comment-btn">Comentar</button>
+            <div class="comments-container" contenteditable="true"></div>
         </div>
     </div>
     <table class="table calification-items table-3-columns hide-column-2">
         <thead>
             <tr>
                 <th class="calificators"></th>
-                <!-- ko foreach: calificatorsHeaderTable -->
-                <th class="calificators"><i class="icon top-tip" data-tips="" data-bind="click: $parent.toggleVisiblityColumn, attr: { 'data-calificator-col': $index() + 1 }"></i><div data-bind="text: headerName"></div></th>
+                <!-- ko foreach: califications -->
+                <th class="calificators" data-bind="click: $root.toggleVisiblityColumn">
+                    <span data-bind="if: $data.evaluatorEmployee != $root.userLogged"><i data-tips="" data-bind="attr: { 'data-calificator-col': $index() + 1 }, css: { icon: true, 'top-tip': true, 'hide-column': !show()}"></i></span>
+                    <span data-bind="text: evaluatorEmployee"></span>
+                </th>
                 <!-- /ko -->
             </tr>
             <tr>
                 <th class="title-evaluation">Calificación Final</th>
-                <th class="title-evaluation"><span>3.5</span></th>
-                <th class="title-evaluation"><span>4</span></th>
+                <!-- ko foreach: calificationsAverages -->
+                <th class="title-evaluation"><span data-bind="visible: show(), text: value"></span></th>
+                <!-- /ko -->
             </tr>
         </thead>
-        <tbody data-bind="foreach: template.groupedItems">
+        <tbody data-bind="foreach: groups">
             <tr>
-                <td class="sub-title-evaluation"><span data-bind="text: group.value"></span></td>
-                <td class="sub-title-evaluation"><span></span></td>
-                <td class="sub-title-evaluation"><span></span></td>                
+                <td class="sub-title-evaluation"><span data-bind="text: name"></span></td>
+                <!-- ko foreach: averages -->
+                <td class="sub-title-evaluation"><span data-bind="visible: show(), text: value"></span></td>
+                <!-- /ko -->
             </tr>
             <!-- ko foreach: items -->
             <tr>
-                <td><span data-bind="text: text(), attr:{'data-tips': description()}" class="top-tip rol"></span></td>
-                <!-- ko foreach: calificationsByItem -->
+                <td><span data-bind="text: text, attr:{'data-tips': description}" class="top-tip rol"></span></td>
+                <!-- ko foreach: values -->
                 <td>
-                    <span data-bind="if: !editable, text: value"></span>
-                    <span data-bind="if: editable"><input class="calification-input" data-bind="value: value"/></span>
+                    <span data-bind="if: !editable"><span data-bind="text: value, visible: showValue()"></span></span>
+                    <span data-bind="if: editable == true"><input class="calification-input" data-bind="value: value"/></span>
+                    
                 </td>
                 <!-- /ko -->
             </tr>
@@ -81,7 +87,7 @@
         </tbody>
     </table>
     <div class="footer-evaluation">
-        <button class="button-evaluations primary-btn finish-btn">Finalizar Devolución</button>
+        <button class="button-evaluations primary-btn finish-btn" data-bind="click: onFinish, enable: isDirty()">Finalizar Devolución</button>
         <p class="explanatory-text">Recuerda que una vez finalizada tu evaluación no podrás volver a editarla.</p>
     </div>
     <script type="text/javascript">
@@ -89,6 +95,3 @@
         var calificationUserName = "@ViewBag.UserName";
     </script>
 </div>
-
-@*<td><span>3.5</span></td>
-                <td><input class="calification-input" type="text"></td>*@
