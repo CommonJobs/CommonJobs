@@ -40,7 +40,7 @@ namespace CommonJobs.Application.EvalForm.Commands
                     UserName = e.UserName,
                     Period = e.Period,
                     CurrentPosition = e.CurrentPosition,
-                    Seniority = e.CurrentSeniority,
+                    Seniority = e.Seniority,
                     Evaluators = e.Evaluators != null ? e.Evaluators.ToList() : new List<string>(),
                     State = getEvaluationState(e),
                     Id = e.Id,
