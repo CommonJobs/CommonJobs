@@ -47,7 +47,7 @@ namespace CommonJobs.Application.EvalForm.Commands
             {
                 return new CalificationsDto()
                 {
-                    View = UserView.Responsible,
+                    View = UserView.Company,
                     Evaluation = evaluation,
                     Califications = califications.Where(c => (_loggedUser == c.EvaluatorEmployee && c.EvaluatorEmployee == c.EvaluatedEmployee) || c.Owner == CalificationType.Company).ToList()
                 };
@@ -65,7 +65,7 @@ namespace CommonJobs.Application.EvalForm.Commands
             {
                 return new CalificationsDto()
                 {
-                    View = UserView.Responsible,
+                    View = califications.Any(c => c.Owner == CalificationType.Company) ? UserView.Company : UserView.Responsible,
                     Evaluation = evaluation,
                     Califications = califications
                 };

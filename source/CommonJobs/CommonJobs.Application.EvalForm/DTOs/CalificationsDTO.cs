@@ -19,6 +19,7 @@ namespace CommonJobs.Application.EvalForm.Dtos
     {
         Auto,
         Responsible,
-        Evaluation
+        Evaluation,
+        Company
     }
 }
