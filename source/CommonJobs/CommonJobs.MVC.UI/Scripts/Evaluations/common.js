@@ -43,3 +43,16 @@ function commonSort(header) {
         this.items.sort(sortFunc);
     }
 };
+
+function dirtyFlag() {
+    var observable = ko.observable(false);
+    observable.register = function (anotherObservable) {
+        anotherObservable.subscribe(function () {
+            observable(true);
+        });
+    };
+    observable.reset = function () {
+        return observable(false);
+    };
+    return observable;
+}

@@ -16,8 +16,8 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
         {
             context.MapRoute(
                 "Evaluations_default",
-                "Evaluations/api/{action}/{period}/",
-                new { controller = "EvaluationsApi", period = UrlParameter.Optional}
+                "Evaluations/api/{action}/{period}/{username}/",
+                new { controller = "EvaluationsApi", period = UrlParameter.Optional, username = UrlParameter.Optional }
             );
 
             context.MapRoute(

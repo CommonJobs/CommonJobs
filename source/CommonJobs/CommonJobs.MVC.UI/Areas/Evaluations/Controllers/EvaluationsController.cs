@@ -82,6 +82,8 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
             //2.c. Evaluator with evaluation done, show evaluation done
             //2.d. Responsible with evaluation done, show company evaluation to complete
             //2.e. Responsible with company evaluation done, show every evaluation including auto
+            ViewBag.Period = period;
+            ViewBag.UserName = username;
             return View("Calification");
         }
     }
