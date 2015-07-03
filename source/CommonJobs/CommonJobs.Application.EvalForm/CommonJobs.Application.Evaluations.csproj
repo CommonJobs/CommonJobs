@@ -69,10 +69,11 @@
     <Compile Include="Commands\UpdateCalificationsCommand.cs" />
     <Compile Include="Commands\UpdateEvaluatorsCommand.cs" />
     <Compile Include="Commands\GetEvaluatorEmployeesCommand.cs" />
-    <Compile Include="DTOs\CalificationsDTO.cs" />
-    <Compile Include="DTOs\EmployeeEvaluationDTO.cs" />
-    <Compile Include="DTOs\EvaluatorsUpdateDTO.cs" />
-    <Compile Include="DTOs\UpdateEvaluationDTO.cs" />
+    <Compile Include="Dtos\CalificationsDto.cs" />
+    <Compile Include="Dtos\EmployeeEvaluationDto.cs" />
+    <Compile Include="Dtos\EvaluatorsUpdateDto.cs" />
+    <Compile Include="Dtos\UpdateCalificationDto.cs" />
+    <Compile Include="Dtos\UpdateEvaluationDto.cs" />
     <Compile Include="EmployeeSearching\EmployeeToEvaluate_Search.cs" />
     <Compile Include="EmployeeSearching\Employee_Search.cs" />
     <Compile Include="Commands\GenerateCalificationCommand.cs" />

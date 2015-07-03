@@ -1,6 +1,6 @@
 ﻿using CommonJobs.Application.EvalForm;
 using CommonJobs.Application.EvalForm.Commands;
-using CommonJobs.Application.EvalForm.DTOs;
+using CommonJobs.Application.EvalForm.Dtos;
 using CommonJobs.Application.Evaluations;
 using CommonJobs.Domain;
 using CommonJobs.Domain.Evaluations;
@@ -69,7 +69,7 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public JsonNetResult UpdateCalificators(EmployeeEvaluationDTO evaluation, List<EvaluatorsUpdateDTO> calificators)
+        public JsonNetResult UpdateCalificators(EmployeeEvaluationDTO evaluation, List<EvaluatorsUpdateDto> calificators)
         {
             ExecuteCommand(new UpdateEvaluatorsCommand(evaluation, calificators));
             return Json("ok");

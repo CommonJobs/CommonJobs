@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace CommonJobs.Application.EvalForm.DTOs
+namespace CommonJobs.Application.EvalForm.Dtos
 {
-    public class UpdateEvaluationDTO
+    public class UpdateEvaluationDto
     {
         public string EvaluationId { get; set; }
 
@@ -17,17 +17,8 @@ namespace CommonJobs.Application.EvalForm.DTOs
 
         public string ActionPlan { get; set; }
 
-        public List<UpdateCalificationDTO> Califications { get; set; }
+        public List<UpdateCalificationDto> Califications { get; set; }
 
         public bool Finished { get; set; }
-    }
-
-    public class UpdateCalificationDTO
-    {
-        public string CalificationId { get; set; }
-
-        public List<KeyValuePair<string, decimal>> Items { get; set; }
-
-        public string Comments { get; set; }
     }
 }

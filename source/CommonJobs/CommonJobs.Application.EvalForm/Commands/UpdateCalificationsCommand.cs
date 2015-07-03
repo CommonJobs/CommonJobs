@@ -1,4 +1,4 @@
-﻿using CommonJobs.Application.EvalForm.DTOs;
+﻿using CommonJobs.Application.EvalForm.Dtos;
 using CommonJobs.Domain.Evaluations;
 using CommonJobs.Infrastructure.RavenDb;
 using System;
@@ -12,11 +12,11 @@ namespace CommonJobs.Application.EvalForm.Commands
     {
         private const string COMPANY = "_company";
 
-        private UpdateEvaluationDTO _updateEvaluation;
+        private UpdateEvaluationDto _updateEvaluation;
 
         private string _loggedUser;
 
-        public UpdateCalificationsCommand(UpdateEvaluationDTO updateEvaluation, string loggedUser)
+        public UpdateCalificationsCommand(UpdateEvaluationDto updateEvaluation, string loggedUser)
         {
             _updateEvaluation = updateEvaluation;
 
@@ -67,7 +67,7 @@ namespace CommonJobs.Application.EvalForm.Commands
             }
         }
 
-        private void UpdateCalification(UpdateCalificationDTO calification, EvaluationCalification storedCalification, bool finished)
+        private void UpdateCalification(UpdateCalificationDto calification, EvaluationCalification storedCalification, bool finished)
         {
             // Update the calification comments and values
             storedCalification.Comments = calification.Comments;
