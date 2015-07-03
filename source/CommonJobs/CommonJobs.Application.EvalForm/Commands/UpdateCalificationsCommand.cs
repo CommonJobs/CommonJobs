@@ -53,12 +53,18 @@ namespace CommonJobs.Application.EvalForm.Commands
                     updateEvaluationComments = storedCalification.Owner == CalificationType.Company;
 
                     // If it's the responsible's calification and it's finished, then the company calification should be created
-                    CreateCompanyEvaluation(storedCalification);
+                    if (storedCalification.Owner == CalificationType.Responsible && storedCalification.Finished)
+                    {
+                        CreateCompanyEvaluation(storedCalification);
+                    }
                 }
             }
 
-            // The evaluation gets updated only if the calification being updated is the company or the final one (devolution)
-            UpdateEvaluation(updateEvaluationComments, updateEvaluationProject, storedEvaluation);
+            if (updateEvaluationProject || updateEvaluationComments)
+            {
+                // The evaluation gets updated only if the calification being updated is the company or the final one (devolution)
+                UpdateEvaluation(updateEvaluationComments, updateEvaluationProject, storedEvaluation);
+            }
         }
 
         private void UpdateCalification(UpdateCalificationDTO calification, EvaluationCalification storedCalification, bool finished)
@@ -74,29 +80,26 @@ namespace CommonJobs.Application.EvalForm.Commands
 
         private void CreateCompanyEvaluation(EvaluationCalification storedCalification)
         {
-            if (storedCalification.Owner == CalificationType.Responsible && storedCalification.Finished)
-            {
-                ExecuteCommand(new GenerateCalificationCommand(storedCalification.Period, storedCalification.EvaluatedEmployee, COMPANY, storedCalification.TemplateId, CalificationType.Company,
-                    storedCalification.EvaluationId));
-            }
+            ExecuteCommand(new GenerateCalificationCommand(storedCalification.Period, storedCalification.EvaluatedEmployee, COMPANY, storedCalification.TemplateId, CalificationType.Company,
+                storedCalification.EvaluationId));
         }
 
         private void UpdateEvaluation(bool updateEvaluationComments, bool updateEvaluationProject, EmployeeEvaluation storedEvaluation)
         {
+            if (updateEvaluationProject)
+            {
+                storedEvaluation.Project = _updateEvaluation.Project;
+            }
+
             if (updateEvaluationComments)
             {
                 storedEvaluation.StrengthsComment = _updateEvaluation.Strengths;
                 storedEvaluation.ToImproveComment = _updateEvaluation.ToImprove;
                 storedEvaluation.ActionPlanComment = _updateEvaluation.ActionPlan;
-
-                if (updateEvaluationProject)
-                {
-                    storedEvaluation.Project = _updateEvaluation.Project;
-                }
-
-                // Update the EmployeeEvaluation document in the collection (DB)
-                RavenSession.Store(storedEvaluation);
             }
+
+            // Update the EmployeeEvaluation document in the collection (DB)
+            RavenSession.Store(storedEvaluation);
         }
 
         private bool CanUpdate(string loggedUser, EmployeeEvaluation evaluation, EvaluationCalification calification)
