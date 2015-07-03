@@ -79,7 +79,7 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations.Controllers
         public JsonNetResult GetEvaluation (string username, string period)
         {
             Calification calification = new Calification();
-            CalificationsDTO calificationsDTO = ExecuteCommand(new GetEvaluationCalifications(period, username, DetectUser()));
+            CalificationsDto calificationsDTO = ExecuteCommand(new GetEvaluationCalifications(period, username, DetectUser()));
             calification.UserView = (int)calificationsDTO.View;
             calification.Evaluation = calificationsDTO.Evaluation;
             calification.Califications = calificationsDTO.Califications;
@@ -89,8 +89,9 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public JsonNetResult UpdateProject(String Project)
+        public JsonNetResult SaveEvaluationCalifications(UpdateEvaluationDto updateEvaluationDto)
         {
+            ExecuteCommand(new UpdateCalificationsCommand(updateEvaluationDto, DetectUser()));
             return Json("ok");
         }
     }

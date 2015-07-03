@@ -34,7 +34,8 @@ namespace CommonJobs.Application.Evaluations
                         .FirstOrDefault();
                     if (employee != null)
                     {
-                        ExecuteCommand(new GenerateCalificationCommand(_employeeEvaluation.Period, _employeeEvaluation.UserName, e.UserName, _employeeEvaluation.TemplateId, CalificationType.Evaluator, _employeeEvaluation.Id));
+                        var evId = _employeeEvaluation.Id ?? EmployeeEvaluation.GenerateEvaluationId(_employeeEvaluation.Period, _employeeEvaluation.UserName);
+                        ExecuteCommand(new GenerateCalificationCommand(_employeeEvaluation.Period, _employeeEvaluation.UserName, e.UserName, _employeeEvaluation.TemplateId, CalificationType.Evaluator, evId));
                     }
                     else
                     {

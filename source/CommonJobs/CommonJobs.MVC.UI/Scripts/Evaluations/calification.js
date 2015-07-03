@@ -22,6 +22,16 @@
     EvaluationViewModel.prototype.isDirty = dirtyFlag();
 
     EvaluationViewModel.prototype.onSave = function () {
+        var dto = this.toDto();
+        $.ajax("/Evaluations/api/SaveEvaluationCalifications/", {
+            type: "POST",
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(dto),
+            complete: function (response) {
+                debugger;
+            }
+        });
     }
 
     EvaluationViewModel.prototype.onFinish = function () {
@@ -156,27 +166,44 @@
     };
 
     EvaluationViewModel.prototype.toDto = function (data) {
-        return {
-            EvalutionId: this.evaluation.evaluationId,
+        var self = this;
+        var response = {
+            EvaluationId: this.evaluation.id,
             Project: this.evaluation.project(),
-            ToImprove: this.evaluation.toImproveComment(),
-            Strengths: this.evaluation.StrengthsComment(),
-            ActionPlan: this.evaluation.ActionPlanComment(),
-            Califications: _.map(this.califications, function(calification) {
-                return _(this.groups)
+            ToImprove: this.evaluation.improveComment(),
+            Strengths: this.evaluation.strengthsComment(),
+            ActionPlan: this.evaluation.actionPlanComment(),
+            Califications: _.map(self.califications, function(calification) {
+                var calificationItems = _(_(_(self.groups)
                     .map(function(group) {
-                        return _.map(group.items, function(item) {
-                            var value = _.findWhere(item.values, { calificationId: calification.calificationId });
-                            return {
-                                Key: item.key,
-                                Value: value.value()
+                        var itemsList = _.map(group.items, function(item) {
+                            var value = _.find(item.values, function (element) {
+                                return element.calificationId == calification.id
+                            });
+                            if (value.value()) {
+                                return {
+                                    Key: item.key,
+                                    Value: value.value()
+                                }
                             }
+                            return;
                         });
-                    })
-                    .flatten()
+                        return _.filter(itemsList, function (item) { return item});
+                    }))
+                    .flatten())
                     .value();
-            })
+                return {
+                    CalificationId: calification.id,
+                    Items: calificationItems,
+                    Comments: calification.comments()
+                }
+            }),
+            Finished: false
         };
+        response.Califications = _.filter(response.Califications, function (calification) {
+            return calification.Items.length;
+        });
+        return response;
     }
 
     EvaluationViewModel.prototype.toggleVisiblityColumn = function (data, event) {
@@ -212,7 +239,7 @@
         this.evaluators = data.Evaluators;
         this.project(data.Project);
         this.strengthsComment(data.StrengthsComment);
-        this.improveComment(data.ImproveComment);
+        this.improveComment(data.ToImproveComment);
         this.actionPlanComment(data.ActionPlanComment);
         this.evaluatorsString = (this.evaluators) ? this.evaluators.toString().replace(/,/g, ', ') : '';
     }
