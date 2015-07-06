@@ -823,6 +823,8 @@ tr.evaluation-generated td {
   float: left;
   min-height: 50px;
   width: 100%;
+  border: none;
+  box-shadow: none;
 }
 /* line 191, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .explanatory-text {

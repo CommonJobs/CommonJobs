@@ -46,18 +46,18 @@
         <div class="top-right">
             <h4>Comentarios Generales</h4>
             <div class="comments-container">
-                <div class="title">Fortalezas </div><div class="content-editable" contenteditable="true" data-bind="text: evaluation.strengthsComment(), event: {keyup: onKeyUpComment.bind($data, evaluation.strengthsComment)}"></div>
-                <div class="title">Aspectos a mejorar </div><div class="content-editable" contenteditable="true" data-bind="text: evaluation.improveComment(), event: {keyup: onKeyUpComment.bind($data, evaluation.improveComment)}"></div>
-                <div class="title">Plan de acción </div><div class="content-editable" contenteditable="true" data-bind="text: evaluation.actionPlanComment(), event: {keyup: onKeyUpComment.bind($data, evaluation.actionPlanComment)}"></div>
+                <div class="title">Fortalezas </div><textarea class="content-editable" data-bind="value: evaluation.strengthsComment()"></textarea>
+                <div class="title">Aspectos a mejorar </div><textarea class="content-editable" data-bind="value: evaluation.improveComment()"></textarea>
+                <div class="title">Plan de acción </div><textarea class="content-editable" data-bind="value: evaluation.actionPlanComment()"></textarea>
             </div>
         </div>
         <h4>Comentarios de la empresa</h4>
-        <div class="comments-container comments-company" contenteditable="true" data-bind="text: generalComment(), event: {keyup: onKeyUpComment.bind($data, generalComment)}"></div>
+        <textarea class="comments-container comments-company" data-bind="value: generalComment()"></textarea>
         <!-- /ko -->
-        <!--ko if: userView != 3 -->
+        <!--ko if: userView != 3-->
         <div class="top-right">
             <h4>Comentarios Generales</h4>
-            <div class="comments-container" contenteditable="true" data-bind="text: generalComment(), event: {keyup: onKeyUpComment.bind($data, generalComment)}"></div>
+            <textarea class="comments-container" data-bind="value: generalComment()"></textarea>
         </div>
         <!-- /ko -->
     </div>
