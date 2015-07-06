@@ -42,7 +42,7 @@
             </div>
             <p class="explanatory-text">*Si no tenes conocimientos para calificar un campo puedes dejarlo vacio</p>
         </div>
-        <!--ko if: userView == 1-->
+        <!--ko if: userView == 3-->
         <div class="top-right">
             <h4>Comentarios Generales</h4>
             <div class="comments-container">
@@ -54,7 +54,7 @@
         <h4>Comentarios de la empresa</h4>
         <div class="comments-container comments-company" contenteditable="true" data-bind="event: {keyup: onKeyUpComment.bind($data, generalComment)}"></div>
         <!-- /ko -->
-        <!--ko if: userView != 1 -->
+        <!--ko if: userView != 3 -->
         <div class="top-right">
             <h4>Comentarios Generales</h4>
             <div class="comments-container" contenteditable="true" data-bind="event: {keyup: onKeyUpComment.bind($data, generalComment)}"></div>
