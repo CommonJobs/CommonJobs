@@ -76,23 +76,22 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Get)]
-        public JsonNetResult GetEvaluation (string username)
+        public JsonNetResult GetEvaluation (string username, string period)
         {
             Calification calification = new Calification();
-            //TODO: Remove this testing code when completed the service method
-            calification.Evaluation = new EmployeeEvaluation();
-            calification.Evaluation.FullName = "Sofia Pacifico";
-            calification.Evaluation.ResponsibleId = "spacifico";
-            calification.Evaluation.Seniority = "Junior";
-            calification.Evaluation.CurrentPosition = "Developer";
-            //
+            CalificationsDto calificationsDTO = ExecuteCommand(new GetEvaluationCalifications(period, username, DetectUser()));
+            calification.UserView = calificationsDTO.View;
+            calification.Evaluation = calificationsDTO.Evaluation;
+            calification.Califications = calificationsDTO.Califications;
+            calification.UserLogged = DetectUser();
             calification.Template = ExecuteCommand(new GetEvaluationTemplateCommand());
             return Json(calification);
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public JsonNetResult UpdateProject(String Project)
+        public JsonNetResult SaveEvaluationCalifications(UpdateEvaluationDto updateEvaluationDto)
         {
+            ExecuteCommand(new UpdateCalificationsCommand(updateEvaluationDto, DetectUser()));
             return Json("ok");
         }
     }

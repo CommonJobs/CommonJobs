@@ -42,7 +42,7 @@ namespace CommonJobs.Domain.Evaluations
 
         public string Comments { get; set; }
 
-        public List<KeyValuePair<string, decimal>> Califications { get; set; }
+        public List<CalificationItem> Califications { get; set; }
 
         public bool Finished { get; set; }
 
@@ -50,5 +50,5 @@ namespace CommonJobs.Domain.Evaluations
         {
             return string.Format("Evaluations/{0}/{1}/{2}", period, userName, evaluator);
         }
-    }
+    }    
 }

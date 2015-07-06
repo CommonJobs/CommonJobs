@@ -24,6 +24,11 @@
             <div class="pull-right">
                 <form class="form-inline" id="persistenceForm">
                     <ul class="nav nav-right">
+                        @if (ViewBag.IsCalification != null && ViewBag.IsCalification)
+                        {
+                        <li><button class="btn btn-primary" disabled="disabled" data-bind="click: onSave, enable: isDirty()">Guardar</button></li>
+                        }
+                        <li>@Html.DocumentationLink("Ayuda")</li>
                         @if (Request.IsAuthenticated && User != null && User.Identity != null && User.Identity.Name != null) 
 				        {
                             @*//TODO: We need improve the navigation bar styles. So, I removed these inline styles in this moment*@
