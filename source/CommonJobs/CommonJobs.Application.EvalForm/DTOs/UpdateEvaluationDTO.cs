@@ -19,6 +19,6 @@ namespace CommonJobs.Application.EvalForm.Dtos
 
         public List<UpdateCalificationDto> Califications { get; set; }
 
-        public bool Finished { get; set; }
+        public bool CalificationFinished { get; set; }
     }
 }

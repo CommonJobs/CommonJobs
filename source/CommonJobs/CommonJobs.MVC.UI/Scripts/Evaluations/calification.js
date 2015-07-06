@@ -21,20 +21,53 @@
 
     EvaluationViewModel.prototype.isDirty = dirtyFlag();
 
-    EvaluationViewModel.prototype.onSave = function () {
-        var dto = this.toDto();
-        $.ajax("/Evaluations/api/SaveEvaluationCalifications/", {
-            type: "POST",
-            dataType: 'json',
-            contentType: 'application/json; charset=utf-8',
-            data: JSON.stringify(dto),
-            complete: function (response) {
-                debugger;
-            }
+    EvaluationViewModel.prototype.isValid = function () {
+        return !_.some(this.groups, function (group) {
+            return _.some(group.items, function (item) {
+                return _.some(item.values, function (value) {
+                    return !value.isValid()
+                });
+            });
         });
     }
 
+    EvaluationViewModel.prototype.hasEmptyValues = function () {
+        return _.some(this.groups, function (group) {
+            return _.some(group.items, function (item) {
+                return _.some(item.values, function (value) {
+                    return value.value() === ""
+                });
+            });
+        });
+    }
+
+    EvaluationViewModel.prototype.onSave = function () {
+        if(this.isValid()){
+            var dto = this.toDto();
+            if (this.calificationFinished) {
+                dto.CalificationFinished = true;
+            }
+            $.ajax("/Evaluations/api/SaveEvaluationCalifications/", {
+                type: "POST",
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(dto),
+                complete: function (response) {
+                    debugger;
+                }
+            });
+        } else {
+            //TODO: show alert popup
+            alert("HAY CALIFICACIONES INVÁLIDAS");
+        }
+    }
+
     EvaluationViewModel.prototype.onFinish = function () {
+        //TODO: show alert popup
+        if (!this.hasEmptyValues() || (this.hasEmptyValues() && confirm("HAY CALIFICACIONES VACÍAS"))) {
+            this.calificationFinished = true;
+            this.onSave(true);
+        }
     }
 
     EvaluationViewModel.prototype.isValueEditable = function (calification) {
@@ -45,7 +78,7 @@
         var self = this;
         this.userView = data.UserView;
         this.userLogged = data.UserLogged;
-        this.evaluation.fromJs(data.Evaluation);
+        this.evaluation.fromJs(data.Evaluation, this);
         this.numberOfColumns = "table-" + (data.Califications.length + 1) + "-columns";
         this.califications = _.map(data.Califications, function (calification) {           
             var comment = ko.observable(calification.Comments);
@@ -121,8 +154,11 @@
                                     editable: self.isValueEditable(valuesByKey),
                                     showValue: _.find(self.califications, function (calification) {
                                             return calification.id == valuesByKey.calificationColumn.calificationId;
-                                        }).show
+                                    }).show,
                                 };
+                                valueItem.isValid = ko.computed(function () {
+                                    return valueItem.value() === "" || (valueItem.value() >= 1 && valueItem.value() <= 4);
+                                })
                                 self.isDirty.register(valueItem.value);
                                 return valueItem;
                             })
@@ -248,7 +284,7 @@
         }
     }
     
-    Evaluation.prototype.fromJs = function (data) {
+    Evaluation.prototype.fromJs = function (data, self) {
         this.id = data.Id;
         this.userName = data.UserName;
         this.responsibleId = data.ResponsibleId;
@@ -262,6 +298,7 @@
         this.improveComment(data.ToImproveComment);
         this.actionPlanComment(data.ActionPlanComment);
         this.evaluatorsString = (this.evaluators) ? this.evaluators.toString().replace(/,/g, ', ') : '';
+        self.isDirty.register(this.project);
     }
 
     Evaluation.prototype.onFocusInProject = function (data, event) {

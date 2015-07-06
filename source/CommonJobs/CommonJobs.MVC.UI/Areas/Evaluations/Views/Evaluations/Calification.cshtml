@@ -30,17 +30,22 @@
                 <li><span class="item">Periodo:</span><span class="item-info" data-bind="text: evaluation.period"></span></li>
                 <li>
                     <span class="item">Proyectos:</span>
+                    <!--ko if: userView == 1 || userView == 3 -->
                     <div class="editable-projects" data-bind="css: { edition: evaluation.project(), 'top-tip': evaluation.project()}, attr: {'data-tips': evaluation.project()}">
-                        <input type="text" placeholder="Ingrese los proyectos" data-bind="value: evaluation.project, event: { keyup: evaluation.onKeyUpProject, focusin: evaluation.onFocusInProject, blur: evaluation.onBlurProject}"/><span class="pencil"></span>
+                        <input type="text" placeholder="Agregá los proyectos" data-bind="value: evaluation.project, event: { keyup: evaluation.onKeyUpProject, focusin: evaluation.onFocusInProject, blur: evaluation.onBlurProject}"/><span class="pencil"></span>
                     </div>
+                    <!-- /ko -->
+                    <!--ko if: userView != 1 && userView != 3 -->
+                    <span class="item-info" data-bind="text: evaluation.project()"></span>
+                    <!-- /ko -->
                 </li>
             </ul>
             <h4>Métricas de Evaluación</h4>
             <div class="metrics-container">
-                <span>1</span> No alcanza las Expectativas - <span>2</span> Necesita Mejorar<br/>
-                <span>3</span> Cumple con Expectativas - <span>4</span> Excede Expectativas
+                <span>1</span> No Alcanza las Expectativas - <span>2</span> Necesita Mejorar<br/>
+                <span>3</span> Cumple con Expectativas - <span>4</span> Excede las Expectativas
             </div>
-            <p class="explanatory-text">*Si no tenes conocimientos para calificar un campo puedes dejarlo vacio</p>
+            <p class="explanatory-text">*Si no tenés conocimientos para calificar algún campo dejalo vacío</p>
         </div>
         <!--ko if: userView == 3-->
         <div class="top-right">
@@ -75,7 +80,7 @@
             <tr>
                 <th class="title-evaluation">Calificación Final</th>
                 <!-- ko foreach: calificationsAverages -->
-                <th class="title-evaluation"><span data-bind="visible: show(), text: value"></span></th>
+                <th class="title-evaluation"><span data-bind="visible: show(), text: value || '-'"></span></th>
                 <!-- /ko -->
             </tr>
         </thead>
@@ -83,7 +88,7 @@
             <tr>
                 <td class="sub-title-evaluation"><span data-bind="text: name"></span></td>
                 <!-- ko foreach: averages -->
-                <td class="sub-title-evaluation"><span data-bind="visible: show(), text: value"></span></td>
+                <td class="sub-title-evaluation"><span data-bind="visible: show(), text: value || '-'"></span></td>
                 <!-- /ko -->
             </tr>
             <!-- ko foreach: items -->
@@ -92,7 +97,7 @@
                 <!-- ko foreach: values -->
                 <td>
                     <span data-bind="if: !editable"><span data-bind="text: value, visible: showValue()"></span></span>
-                    <span data-bind="if: editable == true"><input class="calification-input" data-bind="value: value"/></span>
+                    <span data-bind="if: editable == true"><input class="calification-input" data-bind="value: value, css: { invalid: !isValid()}"/></span>
                     
                 </td>
                 <!-- /ko -->
