@@ -182,8 +182,8 @@
                             });
                             if (value.value()) {
                                 return {
-                                    Key: item.key,
-                                    Value: value.value()
+                                    Key: item.key.toString(),
+                                    Value: parseFloat(value.value())
                                 }
                             }
                             return;
