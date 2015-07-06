@@ -15,6 +15,7 @@ using CommonJobs.Domain.Evaluations;
 using CommonJobs.Mvc.UI.Areas.Evaluations.Models;
 using CommonJobs.Application.Evaluations;
 using CommonJobs.Application.EvalForm.Commands;
+using CommonJobs.Application.EvalForm.EmployeeSearching;
 
 namespace CommonJobs.Mvc.UI.Areas.Evaluations
 {
@@ -57,11 +58,36 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
             //2.a. If not, redirect to /Evaluations/{period}/{username}
             //2.b. If so, fetch the users to evaluate
 
-            /// GK TESTING, PLEASE DELETE
-            //var employees = ExecuteCommand(new GetEmployeesForEvaluationCommand("2015-06"));
-            //ExecuteCommand(new GenerateEvaluationsCommand(employees));
+            var loggedUser = DetectUser();
 
-            //ExecuteCommand(new AddEvaluatorsCommand(employees[0], new List<string>() { "Users/gkolocsar" }));
+            RavenQueryStatistics stats;
+            IQueryable<EmployeeToEvaluate_Search.Projection> query = RavenSession
+                .Query<EmployeeToEvaluate_Search.Projection, EmployeeToEvaluate_Search>()
+                .Statistics(out stats)
+                .Where(e => e.Period == period)
+                .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite());
+
+            var projection = query.ToList();
+
+            if (projection.Count == 0)
+            {
+                return HttpNotFound();
+            }
+
+            var isEvaluated = projection.Any(p => p.UserName == loggedUser);
+            var isEvaluator = projection.Any(p => p.ResponsibleId == loggedUser || (p.Evaluators != null && p.Evaluators.Contains(loggedUser)));
+
+            if (!isEvaluator)
+            {
+                if (isEvaluated)
+                {
+                    return RedirectToAction("Calification", new { period, loggedUser });
+                }
+                else
+                {
+                    return HttpNotFound();
+                }
+            }
 
             return View();
         }
@@ -83,6 +109,35 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
             //2.c. Evaluator with evaluation done, show evaluation done
             //2.d. Responsible with evaluation done, show company evaluation to complete
             //2.e. Responsible with company evaluation done, show every evaluation including auto
+
+            //var evId = EmployeeEvaluation.GenerateEvaluationId(period, username);
+            var loggedUser = DetectUser();
+
+            RavenQueryStatistics stats;
+            EmployeeToEvaluate_Search.Projection projection = RavenSession
+                .Query<EmployeeToEvaluate_Search.Projection, EmployeeToEvaluate_Search>()
+                .Statistics(out stats)
+                .Where(e => e.UserName == username && e.Period == period)
+                .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite()).FirstOrDefault();
+
+            // The evaluation doesn't exist
+            if (projection == null)
+            {
+                return HttpNotFound();
+            }
+
+            // If it's not the user, it must validate that it's responsible or evaluator
+            if (loggedUser != username)
+            {
+                if (projection.ResponsibleId != loggedUser)
+                {
+                    if (!(projection.Evaluators != null && projection.Evaluators.Contains(loggedUser)))
+                    {
+                        return HttpNotFound();
+                    }
+                }
+            }
+
             ViewBag.Period = period;
             ViewBag.UserName = username;
             ViewBag.IsCalification = true;
