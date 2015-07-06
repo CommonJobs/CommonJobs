@@ -43,7 +43,6 @@
 
     EvaluationViewModel.prototype.onKeyUpComment = function (observer, data, event) {
         observer($(event.target).text());
-        this.isDirty.register(observer);
     }
 
     EvaluationViewModel.prototype.fromJs = function (data) {
@@ -52,12 +51,14 @@
         this.userLogged = data.UserLogged;
         this.evaluation.fromJs(data.Evaluation);
         this.numberOfColumns = "table-" + (data.Califications.length + 1) + "-columns";
-        this.califications = _.map(data.Califications, function (calification) {
+        this.califications = _.map(data.Califications, function (calification) {           
+            var comment = ko.observable(calification.Comments);
+            self.isDirty.register(comment);
             return {
                 id: calification.Id,
                 owner: calification.Owner,
                 evaluatorEmployee: calification.EvaluatorEmployee,
-                comments: ko.observable(calification.Comments),
+                comments: comment,
                 finished: calification.Finished,
                 show: ko.observable(true) //TODO: we need a logic to know if the calification column is visible
             }
