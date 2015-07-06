@@ -34,6 +34,7 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Get)]
+        [CommonJobsAuthorize(Roles = "EmployeeManagers")]
         public JsonNetResult GetEmployeesToGenerateEvalution(string period)
         {
             //1. Check if period exists by querying Evaluations collection.
@@ -47,6 +48,7 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
+        [CommonJobsAuthorize(Roles = "EmployeeManagers")]
         public JsonNetResult GenerateEvalutions(PeriodCreation model)
         {
             ExecuteCommand(new GenerateEvaluationsCommand(model.Employees));
