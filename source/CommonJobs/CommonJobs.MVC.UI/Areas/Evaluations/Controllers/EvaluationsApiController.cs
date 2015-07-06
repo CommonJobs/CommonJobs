@@ -80,7 +80,7 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations.Controllers
         {
             Calification calification = new Calification();
             CalificationsDto calificationsDTO = ExecuteCommand(new GetEvaluationCalifications(period, username, DetectUser()));
-            calification.UserView = (int)calificationsDTO.View;
+            calification.UserView = calificationsDTO.View;
             calification.Evaluation = calificationsDTO.Evaluation;
             calification.Califications = calificationsDTO.Califications;
             calification.UserLogged = DetectUser();

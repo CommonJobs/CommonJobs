@@ -1,4 +1,5 @@
 ﻿using CommonJobs.Application.EvalForm;
+using CommonJobs.Application.EvalForm.Dtos;
 using CommonJobs.Domain.Evaluations;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations.Models
 {
     public class Calification
     {
-        public int UserView { get; set; } 
+        public UserView UserView { get; set; } 
 
         public EmployeeEvaluation Evaluation { get; set; }
         

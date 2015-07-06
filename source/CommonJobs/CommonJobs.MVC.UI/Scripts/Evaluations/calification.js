@@ -206,7 +206,7 @@
         return response;
     }
 
-    EvaluationViewModel.prototype.toggleVisiblityColumn = function (data, event) {
+    EvaluationViewModel.prototype.toggleVisibilityColumn = function (data, event) {
         data.show(!data.show());
     }
 
