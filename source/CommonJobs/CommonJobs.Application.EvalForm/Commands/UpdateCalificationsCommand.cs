@@ -104,6 +104,9 @@ namespace CommonJobs.Application.EvalForm.Commands
 
         private bool CanUpdate(string loggedUser, EmployeeEvaluation evaluation, EvaluationCalification calification)
         {
+            // This should not happen since the UI shouldn't allow a user to edit a finished calification's values.
+            if (evaluation.Finished || calification.Finished) return false;
+
             //Auto evaluator
             if (loggedUser == evaluation.UserName)
             {
