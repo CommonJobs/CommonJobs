@@ -41,6 +41,11 @@
         return this.userLogged == calification.calificationColumn.evaluatorEmployee && !calification.calificationColumn.finished;
     }
 
+    EvaluationViewModel.prototype.onKeyUpComment = function (observer, data, event) {
+        observer($(event.target).text());
+        this.isDirty.register(observer);
+    }
+
     EvaluationViewModel.prototype.fromJs = function (data) {
         var self = this;
         this.userView = data.UserView;
@@ -57,6 +62,10 @@
                 show: ko.observable(true) //TODO: we need a logic to know if the calification column is visible
             }
         });
+
+        this.generalComment = _.find(self.califications, function (calification) {
+            return  calification.evaluatorEmployee == self.userLogged;
+        }).comments;
 
         var groupNames = {};
         for (var i in data.Template.Groups) {
