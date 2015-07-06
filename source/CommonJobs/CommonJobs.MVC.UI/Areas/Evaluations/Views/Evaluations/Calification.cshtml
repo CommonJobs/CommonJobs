@@ -46,18 +46,18 @@
         <div class="top-right">
             <h4>Comentarios Generales</h4>
             <div class="comments-container">
-                <div class="title">Fortalezas </div><div class="content-editable" contenteditable="true" data-bind="event: {keyup: onKeyUpComment.bind($data, evaluation.strengthsComment)}"></div>
-                <div class="title">Aspectos a mejorar </div><div class="content-editable" contenteditable="true" data-bind="event: {keyup: onKeyUpComment.bind($data, evaluation.improveComment)}"></div>
-                <div class="title">Plan de acción </div><div class="content-editable" contenteditable="true" data-bind="event: {keyup: onKeyUpComment.bind($data, evaluation.actionPlanComment)}"></div>
+                <div class="title">Fortalezas </div><div class="content-editable" contenteditable="true" data-bind="text: evaluation.strengthsComment(), event: {keyup: onKeyUpComment.bind($data, evaluation.strengthsComment)}"></div>
+                <div class="title">Aspectos a mejorar </div><div class="content-editable" contenteditable="true" data-bind="text: evaluation.improveComment(), event: {keyup: onKeyUpComment.bind($data, evaluation.improveComment)}"></div>
+                <div class="title">Plan de acción </div><div class="content-editable" contenteditable="true" data-bind="text: evaluation.actionPlanComment(), event: {keyup: onKeyUpComment.bind($data, evaluation.actionPlanComment)}"></div>
             </div>
         </div>
         <h4>Comentarios de la empresa</h4>
-        <div class="comments-container comments-company" contenteditable="true" data-bind="event: {keyup: onKeyUpComment.bind($data, generalComment)}"></div>
+        <div class="comments-container comments-company" contenteditable="true" data-bind="text: generalComment(), event: {keyup: onKeyUpComment.bind($data, generalComment)}"></div>
         <!-- /ko -->
         <!--ko if: userView != 3 -->
         <div class="top-right">
             <h4>Comentarios Generales</h4>
-            <div class="comments-container" contenteditable="true" data-bind="event: {keyup: onKeyUpComment.bind($data, generalComment)}"></div>
+            <div class="comments-container" contenteditable="true" data-bind="text: generalComment(), event: {keyup: onKeyUpComment.bind($data, generalComment)}"></div>
         </div>
         <!-- /ko -->
     </div>
