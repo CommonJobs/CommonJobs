@@ -83,9 +83,24 @@
         var self = this;
         this.userView = data.UserView;
         this.userLogged = data.UserLogged;
-        this.evaluation.fromJs(data.Evaluation);
         this.numberOfColumns = "table-" + (data.Califications.length + 1) + "-columns";
-        this.califications = _.map(data.Califications, function (calification) {           
+        var calificationsSorted = data.Califications.sort(function (a, b) {
+            if (a.Owner == 0)
+                return -1;
+            if (a.Owner == 1 && b.Owner == 2) {
+                return 1;
+            }
+            if (a.Owner == 1 && b.Owner == 3) {
+                return -1;
+            }
+            if (a.Owner == 2) {
+                return -1;
+            }
+            if (a.Owner == 3) {
+                return 1;
+            }
+        })
+        this.califications = _.map(calificationsSorted, function (calification) {
             var comment = ko.observable(calification.Comments);
             self.isDirty.register(comment);
             return {
@@ -94,10 +109,10 @@
                 evaluatorEmployee: calification.EvaluatorEmployee,
                 comments: comment,
                 finished: calification.Finished,
-                show: ko.observable(true) //TODO: we need a logic to know if the calification column is visible
+                show: ko.observable(calification.Owner != 0)
             }
         });
-
+        this.evaluation.fromJs(data.Evaluation);
         this.generalComment = _.find(self.califications, function (calification) {
             return  calification.evaluatorEmployee == self.userLogged;
         }).comments;
@@ -296,12 +311,21 @@
         this.currentPosition = data.CurrentPosition;
         this.seniority = data.Seniority;
         this.period = data.Period;
-        this.evaluators = data.Evaluators;
         this.project(data.Project);
         this.strengthsComment(data.StrengthsComment);
         this.improveComment(data.ToImproveComment);
         this.actionPlanComment(data.ActionPlanComment);
-        this.evaluatorsString = (this.evaluators) ? this.evaluators.toString().replace(/,/g, ', ') : '';
+        this.evaluators = function () {
+            return _.chain(viewmodel.califications)
+                .filter(function (calification) {
+                    return calification.owner == 2;
+                })
+                .map(function (calification) {
+                    return calification.evaluatorEmployee;
+                })
+                .value();
+        };
+        this.evaluatorsString = this.evaluators().join(', ');
         viewmodel.isDirty.register(this.project);
     }
 
