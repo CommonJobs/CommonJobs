@@ -103,17 +103,15 @@
         }).comments;
 
         if (this.userView == 3) {
-            var comments = "";
-            for (var i in self.califications) {
-                var calification = self.califications[i];
-                if ((calification.owner == 1 || calification.owner == 2) && calification.comments() != null) {
-                    if (comments) {
-                        comments += "\n\n";
-                    }
-                    comments += calification.evaluatorEmployee + ': ' + calification.comments();
-                }
-            }
-            this.generalComment(comments);
+            var comments = _.chain(self.califications)
+                .filter(function (calification) {
+                    return (calification.owner == 1 || calification.owner == 2) && calification.comments() != null;
+                })
+                .map(function (comment) {
+                    return comment.evaluatorEmployee + ": " + comment.comments();
+                })
+                .value();
+            this.generalComment(comments.join("\n\n"));
         };
 
         var groupNames = {};
@@ -140,10 +138,11 @@
             return valuesByKey;
         });
 
-        this.groups =_(_(_(data.Template.Items)
+        this.groups =_.chain(data.Template.Items)
             .groupBy(function (item) {
                 return item.GroupKey;
-            })).map(function (items, key) {
+            })
+            .map(function (items, key) {
                 var result = {
                     groupKey: key,
                     name: groupNames[key],
@@ -196,7 +195,7 @@
                     });
                 });
                 return result;
-            }))
+            })
             .value();
 
         this.calificationsAverages = ko.computed(function () {
@@ -235,7 +234,7 @@
             Strengths: this.evaluation.strengthsComment(),
             ActionPlan: this.evaluation.actionPlanComment(),
             Califications: _.map(self.califications, function(calification) {
-                var calificationItems = _(_(_(self.groups)
+                var calificationItems = _.chain(self.groups)
                     .map(function(group) {
                         var itemsList = _.map(group.items, function(item) {
                             var value = _.find(item.values, function (element) {
@@ -250,8 +249,8 @@
                             return;
                         });
                         return _.filter(itemsList, function (item) { return item});
-                    }))
-                    .flatten())
+                    })
+                    .flatten()
                     .value();
                 return {
                     CalificationId: calification.id,
