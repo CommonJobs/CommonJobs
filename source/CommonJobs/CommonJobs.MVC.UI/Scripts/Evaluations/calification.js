@@ -25,7 +25,7 @@
         return !_.some(this.groups, function (group) {
             return _.some(group.items, function (item) {
                 return _.some(item.values, function (value) {
-                    return !value.isValid()
+                    return value.editable && !value.isValid()
                 });
             });
         });
@@ -35,13 +35,14 @@
         return _.some(this.groups, function (group) {
             return _.some(group.items, function (item) {
                 return _.some(item.values, function (value) {
-                    return value.value() === ""
+                    return value.editable && value.value() === ""
                 });
             });
         });
     }
 
     EvaluationViewModel.prototype.onSave = function () {
+        var self = this;
         if(this.isValid()){
             var dto = this.toDto();
             if (this.calificationFinished) {
@@ -52,8 +53,11 @@
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
                 data: JSON.stringify(dto),
-                complete: function (response) {
-                    debugger;
+                success: function (response) {
+                    self.isDirty(false);
+                    if (self.calificationFinished) {
+                        window.location = urlGenerator.action("Index", "Home");
+                    }
                 }
             });
         } else {
@@ -71,7 +75,8 @@
     }
 
     EvaluationViewModel.prototype.isValueEditable = function (calification) {
-        return this.userLogged == calification.calificationColumn.evaluatorEmployee && !calification.calificationColumn.finished;
+        return ((this.userLogged == calification.calificationColumn.evaluatorEmployee) ||
+            (this.userView == 3 && calification.calificationColumn.evaluatorEmployee == "_company")) && !calification.calificationColumn.finished;
     }
 
     EvaluationViewModel.prototype.fromJs = function (data) {

@@ -17,8 +17,9 @@
 }
 
 <div class="content-evaluation evaluation">
-    <div data-bind="if: userView == 1"><h2 class="title-evaluations">Evaluación de <strong data-bind="text: evaluation.fullName"></strong></h2></div>
-    <div data-bind="if: userView != 1"><h2 class="title-evaluations">Calificación de <strong data-bind="text: userLogged"></strong> a <strong data-bind="text: evaluation.fullName"></strong></h2></div>
+    <div data-bind="if: userView == 0"><h2 class="title-evaluations">Evaluación de <strong data-bind="text: evaluation.fullName"></strong></h2></div>
+    <div data-bind="if: userView == 1 || userView == 2 "><h2 class="title-evaluations">Calificación de <strong data-bind="text: userLogged"></strong> a <strong data-bind="text: evaluation.fullName"></strong></h2></div>
+    <div data-bind="if: userView == 3 "><h2 class="title-evaluations">Calificación de <strong>Making Sense</strong> a <strong data-bind="text: evaluation.fullName"></strong></h2></div>
     <div class="top-evaluation">
         <div class="top-left">
             <h4>Información Personal</h4>
@@ -106,7 +107,7 @@
         </tbody>
     </table>
     <div class="footer-evaluation">
-        <button class="button-evaluations primary-btn finish-btn" data-bind="click: onFinish, enable: isDirty()">Finalizar Devolución</button>
+        <button class="button-evaluations primary-btn finish-btn" data-bind="click: onFinish">Finalizar Devolución</button>
         <p class="explanatory-text">Recuerda que una vez finalizada tu evaluación no podrás volver a editarla.</p>
     </div>
     <script type="text/javascript">

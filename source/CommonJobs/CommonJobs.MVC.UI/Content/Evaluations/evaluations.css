@@ -849,6 +849,13 @@ tr.evaluation-generated td {
   padding-left: 40px !important;
 }
 /* line 216, ../../sass/Evaluations/_evaluation.scss */
+.evaluation .calification-items.table-2-columns th:first-child,
+.evaluation .calification-items.table-2-columns td:first-child {
+  width: -moz-calc(100% - (1 * 100px));
+  width: -webkit-calc(100% - (1 * 100px));
+  width: calc(100% - (1 * 100px));
+}
+/* line 216, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .calification-items.table-3-columns th:first-child,
 .evaluation .calification-items.table-3-columns td:first-child {
   width: -moz-calc(100% - (2 * 100px));
