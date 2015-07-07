@@ -70,6 +70,7 @@
     <Compile Include="Commands\UpdateEvaluatorsCommand.cs" />
     <Compile Include="Commands\GetEvaluatorEmployeesCommand.cs" />
     <Compile Include="Dtos\CalificationsDto.cs" />
+    <Compile Include="Dtos\CalificationsEvaluationDto.cs" />
     <Compile Include="Dtos\EmployeeEvaluationDto.cs" />
     <Compile Include="Dtos\EvaluatorsUpdateDto.cs" />
     <Compile Include="Dtos\UpdateCalificationDto.cs" />

@@ -1,4 +1,5 @@
 ﻿using CommonJobs.Application.EvalForm.Dtos;
+using CommonJobs.Application.Evaluations.EmployeeSearching;
 using CommonJobs.Domain.Evaluations;
 using CommonJobs.Infrastructure.RavenDb;
 using Raven.Client.Linq;
@@ -36,10 +37,15 @@ namespace CommonJobs.Application.EvalForm.Commands
                 throw new ApplicationException(string.Format("Error: Evaluación inexistente: {0}.", evId));
             }
 
-            RavenQueryStatistics stats;
+            Employee_Search.Projection employee = RavenSession
+                .Query<Employee_Search.Projection, Employee_Search>()
+                .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite())
+                .Where(x => x.IsActive && x.UserName == evaluation.UserName).FirstOrDefault();
+
+            var evaluationDto = CalificationsEvaluationDto.Create(evaluation, employee.CurrentPosition, employee.Seniority);
+
             var califications = RavenSession
                 .Query<EvaluationCalification>()
-                .Statistics(out stats)
                 .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite())
                 .Where(x => x.EvaluationId == evId).ToList();
 
@@ -48,7 +54,7 @@ namespace CommonJobs.Application.EvalForm.Commands
                 return new CalificationsDto()
                 {
                     View = UserView.Company,
-                    Evaluation = evaluation,
+                    Evaluation = evaluationDto,
                     Califications = califications.Where(c => (_loggedUser == c.EvaluatorEmployee && c.EvaluatorEmployee == c.EvaluatedEmployee) || c.Owner == CalificationType.Company).ToList()
                 };
             }
@@ -57,7 +63,7 @@ namespace CommonJobs.Application.EvalForm.Commands
                 return new CalificationsDto()
                 {
                     View = UserView.Auto,
-                    Evaluation = evaluation,
+                    Evaluation = evaluationDto,
                     Califications = new List<EvaluationCalification>() { califications.Single(c => _loggedUser == c.EvaluatorEmployee && c.EvaluatorEmployee == c.EvaluatedEmployee) }
                 };
             }
@@ -66,7 +72,7 @@ namespace CommonJobs.Application.EvalForm.Commands
                 return new CalificationsDto()
                 {
                     View = califications.Any(c => c.Owner == CalificationType.Company) ? UserView.Company : UserView.Responsible,
-                    Evaluation = evaluation,
+                    Evaluation = evaluationDto,
                     Califications = califications
                 };
             }
@@ -75,7 +81,7 @@ namespace CommonJobs.Application.EvalForm.Commands
                 return new CalificationsDto()
                 {
                     View = UserView.Evaluation,
-                    Evaluation = evaluation,
+                    Evaluation = evaluationDto,
                     Califications = califications.Where(c => _loggedUser == c.EvaluatorEmployee || c.Owner == CalificationType.Auto).ToList()
                 };
             }
