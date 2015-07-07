@@ -849,6 +849,13 @@ tr.evaluation-generated td {
   padding-left: 40px !important;
 }
 /* line 216, ../../sass/Evaluations/_evaluation.scss */
+.evaluation .calification-items.table-2-columns th:first-child,
+.evaluation .calification-items.table-2-columns td:first-child {
+  width: -moz-calc(100% - (1 * 100px));
+  width: -webkit-calc(100% - (1 * 100px));
+  width: calc(100% - (1 * 100px));
+}
+/* line 216, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .calification-items.table-3-columns th:first-child,
 .evaluation .calification-items.table-3-columns td:first-child {
   width: -moz-calc(100% - (2 * 100px));
@@ -1020,11 +1027,15 @@ tr.evaluation-generated td {
   padding: 0 5px;
   text-align: center;
 }
-/* line 340, ../../sass/Evaluations/_evaluation.scss */
+/* line 337, ../../sass/Evaluations/_evaluation.scss */
+.evaluation .calification-items tbody .calification-input.invalid {
+  border-color: #EE6048 !important;
+}
+/* line 344, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .footer-evaluation {
   margin: 35px 0;
 }
-/* line 344, ../../sass/Evaluations/_evaluation.scss */
+/* line 348, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .footer-evaluation .finish-btn {
   border-radius: 8px;
   width: 315px;
@@ -1033,9 +1044,74 @@ tr.evaluation-generated td {
   margin-left: 25px;
   font-size: 20px;
 }
-/* line 353, ../../sass/Evaluations/_evaluation.scss */
+/* line 357, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .footer-evaluation .explanatory-text {
   float: right;
   font-size: 16px;
   margin-top: 25px;
+}
+
+/* line 1, ../../sass/Evaluations/_mymenu.scss */
+.mymenu {
+  min-width: 1024px;
+  width: 100%;
+  padding: 60px 50px 0;
+}
+/* line 6, ../../sass/Evaluations/_mymenu.scss */
+.mymenu h2 {
+  margin: 20px 0;
+  font-size: 31px;
+  text-align: center;
+}
+/* line 11, ../../sass/Evaluations/_mymenu.scss */
+.mymenu .menuContainer {
+  width: 630px;
+  margin: auto;
+  text-align: center;
+  font-size: 0;
+}
+/* line 17, ../../sass/Evaluations/_mymenu.scss */
+.mymenu .menuContainer h3 {
+  font-size: 24.5px;
+}
+/* line 21, ../../sass/Evaluations/_mymenu.scss */
+.mymenu .menuContainer .menuItem {
+  border: 1px solid #cccccc;
+  display: inline-block;
+  width: 115px;
+  margin: 5px;
+  padding: 10px;
+  text-align: center;
+  font-size: 14px;
+  box-shadow: -3px 3px 5px 0px #cccccc;
+  -webkit-box-shadow: -3px 3px 5px 0px #cccccc;
+  cursor: pointer;
+  text-decoration: none;
+  color: black;
+}
+/* line 35, ../../sass/Evaluations/_mymenu.scss */
+.mymenu .menuContainer .menuItem.disabled {
+  background-color: #ddd;
+}
+/* line 39, ../../sass/Evaluations/_mymenu.scss */
+.mymenu .menuContainer .menuItem img {
+  max-width: 100%;
+  height: auto;
+  vertical-align: middle;
+  border: 0;
+}
+/* line 46, ../../sass/Evaluations/_mymenu.scss */
+.mymenu .menuContainer .menuItem p {
+  font-size: 18px;
+  margin-top: 0;
+}
+/* line 52, ../../sass/Evaluations/_mymenu.scss */
+.mymenu .menuContainer h3 {
+  font-size: 24.5px;
+}
+/* line 56, ../../sass/Evaluations/_mymenu.scss */
+.mymenu .menuContainer .menuItem.large {
+  width: 192px;
+  margin: 5px;
+  padding: 0;
 }

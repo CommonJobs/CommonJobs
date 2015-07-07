@@ -21,24 +21,62 @@
 
     EvaluationViewModel.prototype.isDirty = dirtyFlag();
 
-    EvaluationViewModel.prototype.onSave = function () {
-        var dto = this.toDto();
-        $.ajax("/Evaluations/api/SaveEvaluationCalifications/", {
-            type: "POST",
-            dataType: 'json',
-            contentType: 'application/json; charset=utf-8',
-            data: JSON.stringify(dto),
-            complete: function (response) {
-                debugger;
-            }
+    EvaluationViewModel.prototype.isValid = function () {
+        return !_.some(this.groups, function (group) {
+            return _.some(group.items, function (item) {
+                return _.some(item.values, function (value) {
+                    return value.editable && !value.isValid()
+                });
+            });
         });
     }
 
+    EvaluationViewModel.prototype.hasEmptyValues = function () {
+        return _.some(this.groups, function (group) {
+            return _.some(group.items, function (item) {
+                return _.some(item.values, function (value) {
+                    return value.editable && value.value() === ""
+                });
+            });
+        });
+    }
+
+    EvaluationViewModel.prototype.onSave = function () {
+        var self = this;
+        if(this.isValid()){
+            var dto = this.toDto();
+            if (this.calificationFinished) {
+                dto.CalificationFinished = true;
+            }
+            $.ajax("/Evaluations/api/SaveEvaluationCalifications/", {
+                type: "POST",
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(dto),
+                success: function (response) {
+                    self.isDirty(false);
+                    if (self.calificationFinished) {
+                        window.location = urlGenerator.action("Index", "Home");
+                    }
+                }
+            });
+        } else {
+            //TODO: show alert popup
+            alert("HAY CALIFICACIONES INVÁLIDAS");
+        }
+    }
+
     EvaluationViewModel.prototype.onFinish = function () {
+        //TODO: show alert popup
+        if (!this.hasEmptyValues() || (this.hasEmptyValues() && confirm("HAY CALIFICACIONES VACÍAS"))) {
+            this.calificationFinished = true;
+            this.onSave(true);
+        }
     }
 
     EvaluationViewModel.prototype.isValueEditable = function (calification) {
-        return this.userLogged == calification.calificationColumn.evaluatorEmployee && !calification.calificationColumn.finished;
+        return ((this.userLogged == calification.calificationColumn.evaluatorEmployee) ||
+            (this.userView == 3 && calification.calificationColumn.evaluatorEmployee == "_company")) && !calification.calificationColumn.finished;
     }
 
     EvaluationViewModel.prototype.fromJs = function (data) {
@@ -65,17 +103,15 @@
         }).comments;
 
         if (this.userView == 3) {
-            var comments = "";
-            for (var i in self.califications) {
-                var calification = self.califications[i];
-                if ((calification.owner == 1 || calification.owner == 2) && calification.comments() != null) {
-                    if (comments) {
-                        comments += "\n\n";
-                    }
-                    comments += calification.evaluatorEmployee + ': ' + calification.comments();
-                }
-            }
-            this.generalComment(comments);
+            var comments = _.chain(self.califications)
+                .filter(function (calification) {
+                    return (calification.owner == 1 || calification.owner == 2) && calification.comments() != null;
+                })
+                .map(function (comment) {
+                    return comment.evaluatorEmployee + ": " + comment.comments();
+                })
+                .value();
+            this.generalComment(comments.join("\n\n"));
         };
 
         var groupNames = {};
@@ -102,10 +138,11 @@
             return valuesByKey;
         });
 
-        this.groups =_(_(_(data.Template.Items)
+        this.groups =_.chain(data.Template.Items)
             .groupBy(function (item) {
                 return item.GroupKey;
-            })).map(function (items, key) {
+            })
+            .map(function (items, key) {
                 var result = {
                     groupKey: key,
                     name: groupNames[key],
@@ -121,8 +158,11 @@
                                     editable: self.isValueEditable(valuesByKey),
                                     showValue: _.find(self.califications, function (calification) {
                                             return calification.id == valuesByKey.calificationColumn.calificationId;
-                                        }).show
+                                    }).show,
                                 };
+                                valueItem.isValid = ko.computed(function () {
+                                    return valueItem.value() === "" || (valueItem.value() >= 1 && valueItem.value() <= 4);
+                                })
                                 self.isDirty.register(valueItem.value);
                                 return valueItem;
                             })
@@ -155,7 +195,7 @@
                     });
                 });
                 return result;
-            }))
+            })
             .value();
 
         this.calificationsAverages = ko.computed(function () {
@@ -194,7 +234,7 @@
             Strengths: this.evaluation.strengthsComment(),
             ActionPlan: this.evaluation.actionPlanComment(),
             Califications: _.map(self.califications, function(calification) {
-                var calificationItems = _(_(_(self.groups)
+                var calificationItems = _.chain(self.groups)
                     .map(function(group) {
                         var itemsList = _.map(group.items, function(item) {
                             var value = _.find(item.values, function (element) {
@@ -209,8 +249,8 @@
                             return;
                         });
                         return _.filter(itemsList, function (item) { return item});
-                    }))
-                    .flatten())
+                    })
+                    .flatten()
                     .value();
                 return {
                     CalificationId: calification.id,
@@ -262,6 +302,7 @@
         this.improveComment(data.ToImproveComment);
         this.actionPlanComment(data.ActionPlanComment);
         this.evaluatorsString = (this.evaluators) ? this.evaluators.toString().replace(/,/g, ', ') : '';
+        viewmodel.isDirty.register(this.project);
     }
 
     Evaluation.prototype.onFocusInProject = function (data, event) {
