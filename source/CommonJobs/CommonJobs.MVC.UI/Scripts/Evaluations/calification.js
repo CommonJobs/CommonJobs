@@ -83,7 +83,7 @@
         var self = this;
         this.userView = data.UserView;
         this.userLogged = data.UserLogged;
-        this.evaluation.fromJs(data.Evaluation, this);
+        this.evaluation.fromJs(data.Evaluation);
         this.numberOfColumns = "table-" + (data.Califications.length + 1) + "-columns";
         this.califications = _.map(data.Califications, function (calification) {           
             var comment = ko.observable(calification.Comments);
@@ -288,7 +288,7 @@
         }
     }
     
-    Evaluation.prototype.fromJs = function (data, self) {
+    Evaluation.prototype.fromJs = function (data) {
         this.id = data.Id;
         this.userName = data.UserName;
         this.responsibleId = data.ResponsibleId;
@@ -302,7 +302,7 @@
         this.improveComment(data.ToImproveComment);
         this.actionPlanComment(data.ActionPlanComment);
         this.evaluatorsString = (this.evaluators) ? this.evaluators.toString().replace(/,/g, ', ') : '';
-        self.isDirty.register(this.project);
+        viewmodel.isDirty.register(this.project);
     }
 
     Evaluation.prototype.onFocusInProject = function (data, event) {
