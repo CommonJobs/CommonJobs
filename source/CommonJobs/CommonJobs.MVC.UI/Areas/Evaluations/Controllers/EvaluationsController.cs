@@ -85,7 +85,7 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
                 }
                 else
                 {
-                    return HttpNotFound();
+                    return new HttpStatusCodeResult(403, "Access Denied");
                 }
             }
 
@@ -133,7 +133,7 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
                 {
                     if (!(evaluation.Evaluators != null && evaluation.Evaluators.Contains(loggedUser)))
                     {
-                        return HttpNotFound();
+                        return new HttpStatusCodeResult(403, "Access Denied");
                     }
                 }
             }
