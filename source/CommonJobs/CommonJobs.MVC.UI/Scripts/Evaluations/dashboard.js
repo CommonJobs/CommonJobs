@@ -199,6 +199,7 @@
         this.calificationActionTooltip = ko.observable('');
         this.calificationActionText = ko.observable('');
         this.calificationActionClass = ko.observable('');
+        this.calificationUrl = urlGenerator.action(this.period + "/" + this.userName + "/", "Evaluations");
         this.state.subscribe(function () {
             switch (this.state()) {
                 case 0:

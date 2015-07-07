@@ -45,7 +45,7 @@ namespace CommonJobs.Application.EvalForm.Commands
                 // Checks if the user trying to update the califications can actually do it
                 if (CanUpdate(_loggedUser, storedEvaluation, storedCalification))
                 {
-                    UpdateCalification(calification, storedCalification, _updateEvaluation.Finished);
+                    UpdateCalification(calification, storedCalification, _updateEvaluation.CalificationFinished);
 
                     // If it's the responsible's or the company's calification, then the evaluation project should be updated [ TODO: Improvement - Check if the project has changed before updating it ]
                     updateEvaluationProject |= (storedCalification.Owner == CalificationType.Responsible || storedCalification.Owner == CalificationType.Company);
