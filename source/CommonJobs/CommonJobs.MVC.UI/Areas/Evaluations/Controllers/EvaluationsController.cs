@@ -64,14 +64,14 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
             IQueryable<EmployeeToEvaluate_Search.Projection> query = RavenSession
                 .Query<EmployeeToEvaluate_Search.Projection, EmployeeToEvaluate_Search>()
                 .Statistics(out stats)
-                .Where(e => e.Period == period)
+                .Where(e => e.Period == period && (e.UserName == loggedUser || e.ResponsibleId == loggedUser || (e.Evaluators != null && e.Evaluators.Contains(loggedUser))))
                 .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite());
 
             var evaluation = query.ToList();
 
             if (evaluation.Count == 0)
             {
-                return HttpNotFound();
+                return new HttpStatusCodeResult(403, "Access Denied");
             }
 
             var isEvaluated = evaluation.Any(p => p.UserName == loggedUser);
@@ -82,10 +82,6 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
                 if (isEvaluated)
                 {
                     return RedirectToAction("Calification", new { period, loggedUser });
-                }
-                else
-                {
-                    return new HttpStatusCodeResult(403, "Access Denied");
                 }
             }
 
