@@ -67,15 +67,15 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
                 .Where(e => e.Period == period)
                 .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite());
 
-            var projection = query.ToList();
+            var evaluation = query.ToList();
 
-            if (projection.Count == 0)
+            if (evaluation.Count == 0)
             {
                 return HttpNotFound();
             }
 
-            var isEvaluated = projection.Any(p => p.UserName == loggedUser);
-            var isEvaluator = projection.Any(p => p.ResponsibleId == loggedUser || (p.Evaluators != null && p.Evaluators.Contains(loggedUser)));
+            var isEvaluated = evaluation.Any(p => p.UserName == loggedUser);
+            var isEvaluator = evaluation.Any(p => p.ResponsibleId == loggedUser || (p.Evaluators != null && p.Evaluators.Contains(loggedUser)));
 
             if (!isEvaluator)
             {
@@ -114,14 +114,14 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
             var loggedUser = DetectUser();
 
             RavenQueryStatistics stats;
-            EmployeeToEvaluate_Search.Projection projection = RavenSession
+            EmployeeToEvaluate_Search.Projection evaluation = RavenSession
                 .Query<EmployeeToEvaluate_Search.Projection, EmployeeToEvaluate_Search>()
                 .Statistics(out stats)
                 .Where(e => e.UserName == username && e.Period == period)
                 .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite()).FirstOrDefault();
 
             // The evaluation doesn't exist
-            if (projection == null)
+            if (evaluation == null)
             {
                 return HttpNotFound();
             }
@@ -129,9 +129,9 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
             // If it's not the user, it must validate that it's responsible or evaluator
             if (loggedUser != username)
             {
-                if (projection.ResponsibleId != loggedUser)
+                if (evaluation.ResponsibleId != loggedUser)
                 {
-                    if (!(projection.Evaluators != null && projection.Evaluators.Contains(loggedUser)))
+                    if (!(evaluation.Evaluators != null && evaluation.Evaluators.Contains(loggedUser)))
                     {
                         return HttpNotFound();
                     }
