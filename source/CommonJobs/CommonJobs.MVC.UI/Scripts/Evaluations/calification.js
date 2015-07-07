@@ -41,10 +41,6 @@
         return this.userLogged == calification.calificationColumn.evaluatorEmployee && !calification.calificationColumn.finished;
     }
 
-    EvaluationViewModel.prototype.onKeyUpComment = function (observer, data, event) {
-        observer($(event.target).text());
-    }
-
     EvaluationViewModel.prototype.fromJs = function (data) {
         var self = this;
         this.userView = data.UserView;
@@ -67,6 +63,20 @@
         this.generalComment = _.find(self.califications, function (calification) {
             return  calification.evaluatorEmployee == self.userLogged;
         }).comments;
+
+        if (this.userView == 3) {
+            var comments = "";
+            for (var i in self.califications) {
+                var calification = self.califications[i];
+                if ((calification.owner == 1 || calification.owner == 2) && calification.comments() != null) {
+                    if (comments) {
+                        comments += "\n\n";
+                    }
+                    comments += calification.evaluatorEmployee + ': ' + calification.comments();
+                }
+            }
+            this.generalComment(comments);
+        };
 
         var groupNames = {};
         for (var i in data.Template.Groups) {
