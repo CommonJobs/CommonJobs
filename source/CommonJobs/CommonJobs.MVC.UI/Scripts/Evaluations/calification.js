@@ -56,7 +56,11 @@
                 success: function (response) {
                     self.isDirty(false);
                     if (self.calificationFinished) {
-                        window.location = urlGenerator.action("Index", "Home");
+                        if (self.userView == 0) {
+                            window.location = urlGenerator.action("Index", "Home");
+                        } else {
+                            window.location = urlGenerator.action(calificationPeriod, "Evaluations");
+                        }
                     }
                 }
             });
@@ -110,10 +114,15 @@
                 comments: comment,
                 finished: calification.Finished,
                 show: ko.observable(calification.Owner != 0),
-                hasShowIcon: (calification.EvaluatorEmployee != self.userLogged && calification.Owner != self.userView)
+                hasShowIcon: calification.Finished || (calification.EvaluatorEmployee != self.userLogged && calification.Owner != self.userView)
             }
         });
         this.evaluation.fromJs(data.Evaluation);
+
+        this.isEvaluationEditable = _.some(this.califications, function (calification) {
+            return calification.owner == self.userView && !calification.finished;
+        });
+
         this.generalComment = _.find(self.califications, function (calification) {
             return (self.userView == 3 && calification.owner == 3) || (self.userView != 3 && calification.evaluatorEmployee == self.userLogged);
         }).comments;
@@ -258,7 +267,7 @@
                         .map(function(group) {
                             var itemsList = _.map(group.items, function(item) {
                                 var value = _.find(item.values, function (element) {
-                                    return element.calificationId == calification.id && calification.editable;
+                                    return element.calificationId == calification.id;
                                 });
                                 if (value && value.value()) {
                                     return {
