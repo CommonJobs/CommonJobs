@@ -49,7 +49,7 @@
                 </td>
                 <td><span class="state-doc" data-bind="text: stateName, attr: { 'class': stateClasses }"></span></td>
                 <td><i data-bind="attr: { class: calificationActionClass() }"></i><a class="link-responsable top-tip rol" data-bind="text: calificationActionText(), attr: {'data-tips': calificationActionTooltip(), href: calificationUrl}"></a></td>
-                <td><span data-bind="if: state() == 4"><button class="button-evaluations feedback-start">Iniciar Devolución</button></span></td>
+                <td><span data-bind="if: state() == 4"><button class="button-evaluations feedback-start" data-bind="click: startDevolutionUrl">Iniciar Devolución</button></span></td>
             </tr>
         </tbody>
     </table>

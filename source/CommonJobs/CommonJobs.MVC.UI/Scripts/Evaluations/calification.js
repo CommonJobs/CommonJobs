@@ -119,7 +119,7 @@
         });
         this.evaluation.fromJs(data.Evaluation);
 
-        this.isEvaluationEditable = _.some(this.califications, function (calification) {
+        this.isEvaluationEditable = !this.evaluation.finished && _.some(this.califications, function (calification) {
             return calification.owner == self.userView && !calification.finished;
         });
 
@@ -305,6 +305,7 @@
         this.seniority = '';
         this.period = '';
         this.evaluators = '';
+        this.finished = '';
         this.project = ko.observable('');
         this.strengthsComment = ko.observable('');
         this.improveComment = ko.observable('');
@@ -322,6 +323,7 @@
         this.currentPosition = data.CurrentPosition;
         this.seniority = data.Seniority;
         this.period = data.Period;
+        this.finished = data.Finished;
         this.project(data.Project);
         this.strengthsComment(data.StrengthsComment);
         this.improveComment(data.ToImproveComment);
