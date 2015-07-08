@@ -28,7 +28,7 @@
                 <li><span class="item">Evaluadores:</span><span class="top-tip" data-bind="if: evaluation.evaluatorsString, attr: { 'data-tips': evaluation.evaluatorsString}"><span class="item-info" data-bind="text: evaluation.evaluatorsString"></span></span></li>
                 <li><span class="item">Seniority:</span><span class="item-info" data-bind="text: evaluation.seniority"></span></li>
                 <li><span class="item">Responsable:</span><span class="item-info" data-bind="text: evaluation.responsibleId"></span></li>
-                <li><span class="item">Periodo:</span><span class="item-info" data-bind="text: evaluation.period"></span></li>
+                <li><span class="item">Período:</span><span class="item-info" data-bind="text: evaluation.period"></span></li>
                 <li>
                     <span class="item">Proyectos:</span>
                     <!--ko if: userView == 1 || userView == 3 -->
@@ -52,18 +52,18 @@
         <div class="top-right">
             <h4>Comentarios Generales</h4>
             <div class="comments-container">
-                <div class="title">Fortalezas </div><textarea class="content-editable" data-bind="value: evaluation.strengthsComment()"></textarea>
-                <div class="title">Aspectos a mejorar </div><textarea class="content-editable" data-bind="value: evaluation.improveComment()"></textarea>
-                <div class="title">Plan de acción </div><textarea class="content-editable" data-bind="value: evaluation.actionPlanComment()"></textarea>
+                <div class="title">Fortalezas </div><textarea class="content-editable" data-bind="value: evaluation.strengthsComment"></textarea>
+                <div class="title">Aspectos a mejorar </div><textarea class="content-editable" data-bind="value: evaluation.improveComment"></textarea>
+                <div class="title">Plan de acción </div><textarea class="content-editable" data-bind="value: evaluation.actionPlanComment"></textarea>
             </div>
         </div>
         <h4>Comentarios de la empresa</h4>
-        <textarea class="comments-container comments-company" data-bind="value: generalComment()"></textarea>
+        <textarea class="comments-container comments-company" data-bind="value: generalComment"></textarea>
         <!-- /ko -->
         <!--ko if: userView != 3-->
         <div class="top-right">
             <h4>Comentarios Generales</h4>
-            <textarea class="comments-container" data-bind="value: generalComment()"></textarea>
+            <textarea class="comments-container" data-bind="value: generalComment"></textarea>
         </div>
         <!-- /ko -->
     </div>
@@ -73,7 +73,7 @@
                 <th class="calificators"></th>
                 <!-- ko foreach: califications -->
                 <th class="calificators">
-                    <span data-bind="if: $data.evaluatorEmployee != $root.userLogged"><i data-tips="" data-bind="css: { icon: true, 'top-tip': true, 'hide-column': !show()}, click: $root.toggleVisibilityColumn"></i></span>
+                    <span data-bind="if: hasShowIcon"><i data-tips="" data-bind="css: { icon: true, 'top-tip': true, 'hide-column': !show()}, click: $root.toggleVisibilityColumn"></i></span>
                     <span data-bind="text: evaluatorEmployee"></span>
                 </th>
                 <!-- /ko -->

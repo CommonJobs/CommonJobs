@@ -109,15 +109,16 @@
                 evaluatorEmployee: calification.EvaluatorEmployee,
                 comments: comment,
                 finished: calification.Finished,
-                show: ko.observable(calification.Owner != 0)
+                show: ko.observable(calification.Owner != 0),
+                hasShowIcon: (calification.EvaluatorEmployee != self.userLogged && calification.Owner != self.userView)
             }
         });
         this.evaluation.fromJs(data.Evaluation);
         this.generalComment = _.find(self.califications, function (calification) {
-            return  calification.evaluatorEmployee == self.userLogged;
+            return (self.userView == 3 && calification.owner == 3) || (self.userView != 3 && calification.evaluatorEmployee == self.userLogged);
         }).comments;
 
-        if (this.userView == 3) {
+        if (!this.generalComment() && this.userView == 3) {
             var comments = _.chain(self.califications)
                 .filter(function (calification) {
                     return (calification.owner == 1 || calification.owner == 2) && calification.comments() != null;
@@ -242,43 +243,44 @@
 
     EvaluationViewModel.prototype.toDto = function (data) {
         var self = this;
-        var response = {
+        return {
             EvaluationId: this.evaluation.id,
             Project: this.evaluation.project(),
             ToImprove: this.evaluation.improveComment(),
             Strengths: this.evaluation.strengthsComment(),
             ActionPlan: this.evaluation.actionPlanComment(),
-            Califications: _.map(self.califications, function(calification) {
-                var calificationItems = _.chain(self.groups)
-                    .map(function(group) {
-                        var itemsList = _.map(group.items, function(item) {
-                            var value = _.find(item.values, function (element) {
-                                return element.calificationId == calification.id
-                            });
-                            if (value.value()) {
-                                return {
-                                    Key: item.key.toString(),
-                                    Value: parseFloat(value.value())
+            Califications: _.chain(self.califications)
+                .filter(function (calification) {
+                    return calification.owner == self.userView;
+                })
+                .map(function(calification) {
+                    var calificationItems = _.chain(self.groups)
+                        .map(function(group) {
+                            var itemsList = _.map(group.items, function(item) {
+                                var value = _.find(item.values, function (element) {
+                                    return element.calificationId == calification.id && calification.editable;
+                                });
+                                if (value && value.value()) {
+                                    return {
+                                        Key: item.key.toString(),
+                                        Value: parseFloat(value.value())
+                                    }
                                 }
-                            }
-                            return;
-                        });
-                        return _.filter(itemsList, function (item) { return item});
-                    })
-                    .flatten()
-                    .value();
-                return {
-                    CalificationId: calification.id,
-                    Items: calificationItems,
-                    Comments: calification.comments()
-                }
-            }),
+                                return;
+                            });
+                            return _.filter(itemsList, function (item) { return item});
+                        })
+                        .flatten()
+                        .value();
+                    return {
+                        CalificationId: calification.id,
+                        Items: calificationItems,
+                        Comments: calification.comments()
+                    }
+                })
+                .value(),
             Finished: false
-        };
-        response.Califications = _.filter(response.Califications, function (calification) {
-            return calification.Items.length;
-        });
-        return response;
+        }
     }
 
     EvaluationViewModel.prototype.toggleVisibilityColumn = function (data, event) {
@@ -327,6 +329,9 @@
         };
         this.evaluatorsString = this.evaluators().join(', ');
         viewmodel.isDirty.register(this.project);
+        viewmodel.isDirty.register(this.strengthsComment);
+        viewmodel.isDirty.register(this.improveComment);
+        viewmodel.isDirty.register(this.actionPlanComment);
     }
 
     Evaluation.prototype.onFocusInProject = function (data, event) {
