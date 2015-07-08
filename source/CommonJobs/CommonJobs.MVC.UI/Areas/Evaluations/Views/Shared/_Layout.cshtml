@@ -26,7 +26,9 @@
                     <ul class="nav nav-right">
                         @if (ViewBag.IsCalification != null && ViewBag.IsCalification)
                         {
+                        <!--ko if: isEvaluationEditable -->
                         <li><button class="btn btn-primary" disabled="disabled" data-bind="click: onSave, enable: isDirty()">Guardar</button></li>
+                        <!--/ko -->
                         }
                         <li>@Html.DocumentationLink("Ayuda")</li>
                         @if (Request.IsAuthenticated && User != null && User.Identity != null && User.Identity.Name != null) 

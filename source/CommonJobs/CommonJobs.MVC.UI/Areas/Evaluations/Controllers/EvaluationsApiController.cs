@@ -37,11 +37,6 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations.Controllers
         [CommonJobsAuthorize(Roles = "EmployeeManagers")]
         public JsonNetResult GetEmployeesToGenerateEvalution(string period)
         {
-            //1. Check if period exists by querying Evaluations collection.
-            //2. Check if the current user has to evaluate someone
-            //2.a. If not, redirect to /Evaluations/{period}/{username}
-            //2.b. If so, fetch the users to evaluate
-
             PeriodCreation periodCreation = new PeriodCreation();
             periodCreation.Employees = ExecuteCommand(new GetEmployeesForEvaluationCommand(period));
             return Json(periodCreation);
@@ -95,6 +90,13 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations.Controllers
         {
             ExecuteCommand(new UpdateCalificationsCommand(updateEvaluationDto, DetectUser()));
             return Json("ok");
+        }
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        public JsonNetResult StartDevolution(string evaluationId)
+        {
+            ExecuteCommand(new StartDevolutionCommand(evaluationId, DetectUser()));
+            return Json("OK");
         }
     }
 }
