@@ -49,42 +49,113 @@ namespace CommonJobs.Application.EvalForm.Commands
                 .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite())
                 .Where(x => x.EvaluationId == evId).ToList();
 
-            if (evaluation.ReadyForDevolution) // Ready for devolution
+            if (!CanViewEvaluation(evaluationDto, califications))
             {
-                return new CalificationsDto()
-                {
-                    View = UserView.Company,
-                    Evaluation = evaluationDto,
-                    Califications = califications.Where(c => (_loggedUser == c.EvaluatorEmployee && c.EvaluatorEmployee == c.EvaluatedEmployee) || c.Owner == CalificationType.Company).ToList()
-                };
+                throw new ApplicationException(string.Format("Error: Usuario {0} no tiene permiso para ver la evaluación {1}", _loggedUser, evId));
             }
-            else if (_evaluatedUser == _loggedUser) // Auto-evaluation
+
+            // If evaluation is finished
+            // - Show ALWAYS company & auto
+
+            if (evaluation.Finished)
+            {
+                return GetFinishedEvaluation(evaluationDto, califications);
+            }
+
+            // If loggedUser is the evaluated
+            // - Show auto-eval if not RFD
+            // - Show auto-eval & company if RFD
+
+            if (_loggedUser == _evaluatedUser)
+            {
+                return GetAutoEvaluation(evaluationDto, califications);
+            }
+
+            // If loggedUser is responsible
+            // - Show all
+
+            if (_loggedUser == evaluationDto.ResponsibleId)
+            {
+                return GetEvaluation(evaluationDto, califications);
+            }
+
+            // If loggedUser is evaluator
+            // - Show evluator eval
+
+            return GetEvaluatorEvaluation(evaluationDto, califications);
+        }
+
+        private CalificationsDto GetEvaluatorEvaluation(CalificationsEvaluationDto evaluationDto, List<EvaluationCalification> califications)
+        {
+            return new CalificationsDto()
+            {
+                View = UserView.Evaluation,
+                Evaluation = evaluationDto,
+                Califications = califications.Where(c => _loggedUser == c.EvaluatorEmployee || c.Owner == CalificationType.Auto).ToList()
+            };
+        }
+
+        private CalificationsDto GetEvaluation(CalificationsEvaluationDto evaluationDto, List<EvaluationCalification> califications)
+        {
+            return new CalificationsDto()
+            {
+                View = califications.Any(c => c.Owner == CalificationType.Company) ? UserView.Company : UserView.Responsible,
+                Evaluation = evaluationDto,
+                Califications = califications
+            };
+        }
+
+        private CalificationsDto GetAutoEvaluation(CalificationsEvaluationDto evaluationDto, List<EvaluationCalification> califications)
+        {
+            if (evaluationDto.ReadyForDevolution)
             {
                 return new CalificationsDto()
                 {
                     View = UserView.Auto,
                     Evaluation = evaluationDto,
-                    Califications = new List<EvaluationCalification>() { califications.Single(c => _loggedUser == c.EvaluatorEmployee && c.EvaluatorEmployee == c.EvaluatedEmployee) }
+                    Califications = califications.Where(c => _evaluatedUser == c.EvaluatedEmployee && (c.Owner == CalificationType.Auto || c.Owner == CalificationType.Company)).ToList()
                 };
             }
-            else if (evaluation.ResponsibleId == _loggedUser) // Responsible & Company (responsible && finished)
+            else
             {
                 return new CalificationsDto()
                 {
-                    View = califications.Any(c => c.Owner == CalificationType.Company) ? UserView.Company : UserView.Responsible,
+                    View = UserView.Auto,
                     Evaluation = evaluationDto,
-                    Califications = califications
+                    Califications = new List<EvaluationCalification>() { califications.Single(c => _evaluatedUser == c.EvaluatedEmployee && c.Owner == CalificationType.Auto) }
                 };
             }
-            else // Evaluator
+        }
+
+        private CalificationsDto GetFinishedEvaluation(CalificationsEvaluationDto evaluationDto, List<EvaluationCalification> califications)
+        {
+            return new CalificationsDto()
             {
-                return new CalificationsDto()
-                {
-                    View = UserView.Evaluation,
-                    Evaluation = evaluationDto,
-                    Califications = califications.Where(c => _loggedUser == c.EvaluatorEmployee || c.Owner == CalificationType.Auto).ToList()
-                };
-            }
+                View = (_loggedUser == evaluationDto.ResponsibleId)
+                ? UserView.Company
+                    : (_loggedUser == _evaluatedUser)
+                        ? UserView.Auto
+                        : UserView.Evaluation,
+                Evaluation = evaluationDto,
+                Califications = califications.Where(c => _evaluatedUser == c.EvaluatedEmployee && (c.Owner == CalificationType.Auto || c.Owner == CalificationType.Company)).ToList()
+            };
+        }
+
+        /// <summary>
+        /// Returns true if the logged user is the one being evaluated, the responsible or an additional evaluator
+        /// </summary>
+        /// <param name="evaluationDto"></param>
+        /// <param name="califications"></param>
+        /// <returns></returns>
+        private bool CanViewEvaluation(CalificationsEvaluationDto evaluationDto, List<EvaluationCalification> califications)
+        {
+            if (_loggedUser == evaluationDto.UserName) return true;
+
+            if (_loggedUser == evaluationDto.ResponsibleId) return true;
+
+            if (califications.Any(c => c.EvaluatorEmployee == _loggedUser)) return true;
+
+            return false;
         }
     }
 }
