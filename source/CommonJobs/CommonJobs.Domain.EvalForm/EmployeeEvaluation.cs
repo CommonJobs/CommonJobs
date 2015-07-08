@@ -14,12 +14,7 @@ namespace CommonJobs.Domain.Evaluations
 
         public string UserName { get; set; }
 
-        //TODO: Remove from here and use directly the Employee
         public string FullName { get; set; }
-
-        public string CurrentPosition { get; set; }
-
-        public string Seniority { get; set; }
 
         public string Project { get; set; }
 
