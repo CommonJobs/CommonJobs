@@ -1,6 +1,17 @@
 ﻿$(document).ready(function () {
     var viewmodel;
 
+    var sortCalificationColumns = function (a, b) {
+        if (a.Owner == b.Owner)
+            return 0;
+        if ((a.Owner == 0 && b.Owner > 0) ||
+            (a.Owner == 1 && b.Owner == 3) ||
+            (a.Owner == 2 && b.Owner == 1) ||
+            (a.Owner == 2 && b.Owner == 3))
+            return -1;
+        return 1;
+    }
+
     var EvaluationViewModel = function (data) {
         this.userView = '';
         this.userLogged = '';
@@ -88,22 +99,7 @@
         this.userView = data.UserView;
         this.userLogged = data.UserLogged;
         this.numberOfColumns = "table-" + (data.Califications.length + 1) + "-columns";
-        var calificationsSorted = data.Califications.sort(function (a, b) {
-            if (a.Owner == 0)
-                return -1;
-            if (a.Owner == 1 && b.Owner == 2) {
-                return 1;
-            }
-            if (a.Owner == 1 && b.Owner == 3) {
-                return -1;
-            }
-            if (a.Owner == 2) {
-                return -1;
-            }
-            if (a.Owner == 3) {
-                return 1;
-            }
-        })
+        var calificationsSorted = data.Califications.sort(sortCalificationColumns);
         this.califications = _.map(calificationsSorted, function (calification) {
             var comment = ko.observable(calification.Comments);
             self.isDirty.register(comment);
