@@ -12,11 +12,11 @@ namespace CommonJobs.Application.EvalForm.Commands
 {
     public class GetEvaluatorEmployeesCommand : Command<List<EmployeeEvaluationDTO>>
     {
-        private string _responsibleId { get; set; }
+        private string _loggedUser { get; set; }
 
-        public GetEvaluatorEmployeesCommand(string responsible)
+        public GetEvaluatorEmployeesCommand(string loggedUser)
         {
-            _responsibleId = responsible;
+            _loggedUser = loggedUser;
         }
 
         public override List<EmployeeEvaluationDTO> ExecuteWithResult()
@@ -25,7 +25,7 @@ namespace CommonJobs.Application.EvalForm.Commands
             IQueryable<EmployeeToEvaluate_Search.Projection> query = RavenSession
                 .Query<EmployeeToEvaluate_Search.Projection, EmployeeToEvaluate_Search>()
                 .Statistics(out stats)
-                .Where(e => e.ResponsibleId == _responsibleId)
+                .Where(e => e.ResponsibleId == _loggedUser || e.Evaluators.Any(ev => ev == _loggedUser))
                 .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite());
 
             var employeesProjection = query.ToList();
@@ -34,7 +34,7 @@ namespace CommonJobs.Application.EvalForm.Commands
             {
                 return new EmployeeEvaluationDTO()
                 {
-                    IsResponsible = e.ResponsibleId == _responsibleId,
+                    IsResponsible = e.ResponsibleId == _loggedUser,
                     ResponsibleId = e.ResponsibleId,
                     FullName = e.FullName,
                     UserName = e.UserName,
