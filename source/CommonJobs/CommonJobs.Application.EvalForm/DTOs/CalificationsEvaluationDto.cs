@@ -1,8 +1,5 @@
 ﻿using CommonJobs.Domain.Evaluations;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace CommonJobs.Application.EvalForm.Dtos
 {
@@ -36,7 +33,9 @@ namespace CommonJobs.Application.EvalForm.Dtos
 
         public string ActionPlanComment { get; set; }
 
-        public static CalificationsEvaluationDto Create(EmployeeEvaluation evaluation, string currentPosition, string seniority)
+        public List<string> Evaluators { get; set; }
+
+        public static CalificationsEvaluationDto Create(EmployeeEvaluation evaluation, List<string> evaluators, string currentPosition, string seniority)
         {
             return new CalificationsEvaluationDto()
             {
@@ -53,7 +52,8 @@ namespace CommonJobs.Application.EvalForm.Dtos
                 Finished = evaluation.Finished,
                 StrengthsComment = evaluation.StrengthsComment,
                 ToImproveComment = evaluation.ToImproveComment,
-                ActionPlanComment = evaluation.ActionPlanComment
+                ActionPlanComment = evaluation.ActionPlanComment,
+                Evaluators = evaluators
             };
         }
     }

@@ -42,12 +42,14 @@ namespace CommonJobs.Application.EvalForm.Commands
                 .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite())
                 .Where(x => x.IsActive && x.UserName == evaluation.UserName).FirstOrDefault();
 
-            var evaluationDto = CalificationsEvaluationDto.Create(evaluation, evaluation.CurrentPosition ?? employee.CurrentPosition, evaluation.Seniority ?? employee.Seniority);
-
             var califications = RavenSession
                 .Query<EvaluationCalification>()
                 .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite())
                 .Where(x => x.EvaluationId == evId).ToList();
+
+            var evaluators = califications.Where(c => c.Owner == CalificationType.Evaluator).Select(c => c.EvaluatorEmployee).ToList();
+
+            var evaluationDto = CalificationsEvaluationDto.Create(evaluation, evaluators, evaluation.CurrentPosition ?? employee.CurrentPosition, evaluation.Seniority ?? employee.Seniority);
 
             if (!CanViewEvaluation(evaluationDto, califications))
             {
