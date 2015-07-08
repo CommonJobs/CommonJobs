@@ -95,8 +95,7 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public JsonNetResult StartDevolution(string evaluationId)
         {
-            //TODO: I will enable the next line when the StartDevolutionCommand is create
-            //ExecuteCommand(new StartDevolutionCommand(evaluationId, DetectUser()));
+            ExecuteCommand(new StartDevolutionCommand(evaluationId, DetectUser()));
             return Json("OK");
         }
     }
