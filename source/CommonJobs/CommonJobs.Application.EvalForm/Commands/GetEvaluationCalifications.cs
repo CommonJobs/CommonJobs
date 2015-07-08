@@ -42,7 +42,7 @@ namespace CommonJobs.Application.EvalForm.Commands
                 .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite())
                 .Where(x => x.IsActive && x.UserName == evaluation.UserName).FirstOrDefault();
 
-            var evaluationDto = CalificationsEvaluationDto.Create(evaluation, employee.CurrentPosition, employee.Seniority);
+            var evaluationDto = CalificationsEvaluationDto.Create(evaluation, evaluation.CurrentPosition ?? employee.CurrentPosition, evaluation.Seniority ?? employee.Seniority);
 
             var califications = RavenSession
                 .Query<EvaluationCalification>()
