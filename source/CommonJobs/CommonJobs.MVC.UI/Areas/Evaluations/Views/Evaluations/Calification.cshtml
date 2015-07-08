@@ -17,7 +17,7 @@
 }
 
 <div class="content-evaluation evaluation">
-    <div data-bind="if: userView == 0"><h2 class="title-evaluations">Evaluación de <strong data-bind="text: evaluation.fullName"></strong></h2></div>
+    <div data-bind="if: userView == 0"><h2 class="title-evaluations">AutoCalificación de <strong data-bind="text: evaluation.fullName"></strong></h2></div>
     <div data-bind="if: userView == 1 || userView == 2 "><h2 class="title-evaluations">Calificación de <strong data-bind="text: userLogged"></strong> a <strong data-bind="text: evaluation.fullName"></strong></h2></div>
     <div data-bind="if: userView == 3 "><h2 class="title-evaluations">Calificación de <strong>Making Sense</strong> a <strong data-bind="text: evaluation.fullName"></strong></h2></div>
     <div class="top-evaluation">
