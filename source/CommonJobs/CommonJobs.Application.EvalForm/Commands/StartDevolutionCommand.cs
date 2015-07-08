@@ -1,4 +1,5 @@
-﻿using CommonJobs.Domain.Evaluations;
+﻿using CommonJobs.Application.Evaluations.EmployeeSearching;
+using CommonJobs.Domain.Evaluations;
 using CommonJobs.Infrastructure.RavenDb;
 using System;
 using System.Collections.Generic;
@@ -29,7 +30,14 @@ namespace CommonJobs.Application.EvalForm.Commands
                 throw new ApplicationException(string.Format("Error: Solo el responsable de la evaluación ({0}) puede iniciar su devolución", evaluation.ResponsibleId));
             }
 
+            Employee_Search.Projection employee = RavenSession
+            .Query<Employee_Search.Projection, Employee_Search>()
+            .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite())
+            .Where(x => x.IsActive && x.UserName == evaluation.UserName).FirstOrDefault();
+
             evaluation.ReadyForDevolution = true;
+            evaluation.CurrentPosition = employee.CurrentPosition;
+            evaluation.Seniority = employee.Seniority;
 
             RavenSession.Store(evaluation);
         }
