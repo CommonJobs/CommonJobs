@@ -76,7 +76,7 @@ namespace CommonJobs.Application.EvalForm.Commands
 
             if (_loggedUser == evaluationDto.ResponsibleId)
             {
-                return GetEvaluation(evaluationDto, califications);
+                return GetFullEvaluation(evaluationDto, califications);
             }
 
             // If loggedUser is evaluator
@@ -95,7 +95,7 @@ namespace CommonJobs.Application.EvalForm.Commands
             };
         }
 
-        private CalificationsDto GetEvaluation(CalificationsEvaluationDto evaluationDto, List<EvaluationCalification> califications)
+        private CalificationsDto GetFullEvaluation(CalificationsEvaluationDto evaluationDto, List<EvaluationCalification> califications)
         {
             return new CalificationsDto()
             {
@@ -122,7 +122,7 @@ namespace CommonJobs.Application.EvalForm.Commands
                 {
                     View = UserView.Auto,
                     Evaluation = evaluationDto,
-                    Califications = new List<EvaluationCalification>() { califications.Single(c => _evaluatedUser == c.EvaluatedEmployee && c.Owner == CalificationType.Auto) }
+                    Califications = califications.Where(c => _evaluatedUser == c.EvaluatedEmployee && c.Owner == CalificationType.Auto).ToList()
                 };
             }
         }
@@ -149,13 +149,9 @@ namespace CommonJobs.Application.EvalForm.Commands
         /// <returns></returns>
         private bool CanViewEvaluation(CalificationsEvaluationDto evaluationDto, List<EvaluationCalification> califications)
         {
-            if (_loggedUser == evaluationDto.UserName) return true;
-
-            if (_loggedUser == evaluationDto.ResponsibleId) return true;
-
-            if (califications.Any(c => c.EvaluatorEmployee == _loggedUser)) return true;
-
-            return false;
+            return _loggedUser == evaluationDto.UserName
+                || _loggedUser == evaluationDto.ResponsibleId
+                || califications.Any(c => c.EvaluatorEmployee == _loggedUser);
         }
     }
 }
