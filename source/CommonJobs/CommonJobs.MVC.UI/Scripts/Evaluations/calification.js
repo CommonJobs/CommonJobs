@@ -324,17 +324,7 @@
         this.strengthsComment(data.StrengthsComment);
         this.improveComment(data.ToImproveComment);
         this.actionPlanComment(data.ActionPlanComment);
-        this.evaluators = function () {
-            return _.chain(viewmodel.califications)
-                .filter(function (calification) {
-                    return calification.owner == 2;
-                })
-                .map(function (calification) {
-                    return calification.evaluatorEmployee;
-                })
-                .value();
-        };
-        this.evaluatorsString = this.evaluators().join(', ');
+        this.evaluators = data.Evaluators.join(', ');
         viewmodel.isDirty.register(this.project);
         viewmodel.isDirty.register(this.strengthsComment);
         viewmodel.isDirty.register(this.improveComment);
