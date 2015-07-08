@@ -10,6 +10,7 @@
         if (data) {
             this.fromJs(data);
         }
+        this.saveButtonEnable = ko.observable('');
     }
 
     EvaluationViewModel.prototype.load = function () {
@@ -43,7 +44,7 @@
 
     EvaluationViewModel.prototype.onSave = function () {
         var self = this;
-        if(this.isValid()){
+        if (this.isValid()) {
             var dto = this.toDto();
             if (this.calificationFinished) {
                 dto.CalificationFinished = true;
@@ -61,14 +62,39 @@
                 }
             });
         } else {
-            //TODO: show alert popup
-            alert("HAY CALIFICACIONES INVÁLIDAS");
+            var modalContainer = $('#evaluations-generated-confirm');
+            var titleText = "GUARDAR EVALUACION";
+            modalContainer.find('#title').text(titleText);
+            var text = "No se puede guardar la evaluacion porque hay calificaciones INVALIDAS";
+            modalContainer.find('#text').text(text);
+            modalContainer.modal('show');
+            this.saveButtonEnable(false);
+            modalContainer.find('#button-back').on('click', function () {
+                modalContainer.modal('hide');
+            });
         }
     }
 
     EvaluationViewModel.prototype.onFinish = function () {
-        //TODO: show alert popup
-        if (!this.hasEmptyValues() || (this.hasEmptyValues() && confirm("HAY CALIFICACIONES VACÍAS"))) {
+        if (this.hasEmptyValues()) {
+            var modalContainer = $('#evaluations-generated-confirm');
+            modalContainer.find('#title').text("FINALIZAR EVALUACION");
+            var text = "¿Desea finalizar evaluacion con calificaciones vacias?";
+            modalContainer.find('#text').text(text);
+            modalContainer.modal('show');
+            this.saveButtonEnable(true);
+            var self = this;
+            modalContainer.find('#button-back').on('click', function () {
+                modalContainer.modal('hide');
+            });
+            modalContainer.find('#button-confirm').on('click', function () {
+                modalContainer.modal('hide');
+                self.calificationFinished = true;
+                self.onSave(true);
+            });
+            
+        } 
+        else {
             this.calificationFinished = true;
             this.onSave(true);
         }
