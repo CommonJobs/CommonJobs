@@ -163,6 +163,7 @@
     }
 
     var Evaluation = function (data) {
+        this.id = '';
         this.idResponsible = '';
         this.fullName = '';
         this.userName = '';
@@ -180,6 +181,7 @@
     }
 
     Evaluation.prototype.fromJs = function (data) {
+        this.id = data.Id;
         this.isResponsible = data.IsResponsible;
         this.fullName = data.FullName;
         this.userName = data.UserName;
@@ -200,6 +202,17 @@
         this.calificationActionText = ko.observable('');
         this.calificationActionClass = ko.observable('');
         this.calificationUrl = urlGenerator.action(this.period + "/" + this.userName + "/", "Evaluations");
+        this.startDevolutionUrl = function () {
+            $.ajax(urlGenerator.action("api/StartDevolution", "Evaluations"), {
+                type: "POST",
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify({ evaluationId: this.id }),
+                success: function (response) {
+                    getDashboardEvaluations();
+                }
+            });
+        };
         this.state.subscribe(function () {
             switch (this.state()) {
                 case 0:

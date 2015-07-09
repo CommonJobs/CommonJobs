@@ -18,6 +18,10 @@ namespace CommonJobs.Domain.Evaluations
 
         public string Project { get; set; }
 
+        public string Seniority { get; set; }
+
+        public string CurrentPosition { get; set; }
+
         public string ResponsibleId { get; set; }
 
         public string TemplateId { get; set; }

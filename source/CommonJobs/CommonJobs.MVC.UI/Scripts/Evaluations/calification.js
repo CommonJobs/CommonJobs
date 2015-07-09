@@ -1,6 +1,17 @@
 ﻿$(document).ready(function () {
     var viewmodel;
 
+    var sortCalificationColumns = function (a, b) {
+        if (a.Owner == b.Owner)
+            return 0;
+        if ((a.Owner == 0 && b.Owner > 0) ||
+            (a.Owner == 1 && b.Owner == 3) ||
+            (a.Owner == 2 && b.Owner == 1) ||
+            (a.Owner == 2 && b.Owner == 3))
+            return -1;
+        return 1;
+    }
+
     var EvaluationViewModel = function (data) {
         this.userView = '';
         this.userLogged = '';
@@ -57,7 +68,11 @@
                 success: function (response) {
                     self.isDirty(false);
                     if (self.calificationFinished) {
-                        window.location = urlGenerator.action("Index", "Home");
+                        if (self.userView == 0) {
+                            window.location = urlGenerator.action("Index", "Home");
+                        } else {
+                            window.location = urlGenerator.action(calificationPeriod, "Evaluations");
+                        }
                     }
                 }
             });
@@ -108,9 +123,9 @@
         var self = this;
         this.userView = data.UserView;
         this.userLogged = data.UserLogged;
-        this.evaluation.fromJs(data.Evaluation);
         this.numberOfColumns = "table-" + (data.Califications.length + 1) + "-columns";
-        this.califications = _.map(data.Califications, function (calification) {           
+        var calificationsSorted = data.Califications.sort(sortCalificationColumns);
+        this.califications = _.map(calificationsSorted, function (calification) {
             var comment = ko.observable(calification.Comments);
             self.isDirty.register(comment);
             return {
@@ -119,15 +134,21 @@
                 evaluatorEmployee: calification.EvaluatorEmployee,
                 comments: comment,
                 finished: calification.Finished,
-                show: ko.observable(true) //TODO: we need a logic to know if the calification column is visible
+                show: ko.observable(calification.Owner != 0),
+                hasShowIcon: calification.Finished || (calification.EvaluatorEmployee != self.userLogged && calification.Owner != self.userView)
             }
+        });
+        this.evaluation.fromJs(data.Evaluation);
+
+        this.isEvaluationEditable = !this.evaluation.finished && _.some(this.califications, function (calification) {
+            return calification.owner == self.userView && !calification.finished;
         });
 
         this.generalComment = _.find(self.califications, function (calification) {
-            return  calification.evaluatorEmployee == self.userLogged;
+            return (self.userView == 3 && calification.owner == 3) || (self.userView != 3 && calification.evaluatorEmployee == self.userLogged);
         }).comments;
 
-        if (this.userView == 3) {
+        if (!this.generalComment() && this.userView == 3) {
             var comments = _.chain(self.califications)
                 .filter(function (calification) {
                     return (calification.owner == 1 || calification.owner == 2) && calification.comments() != null;
@@ -252,43 +273,44 @@
 
     EvaluationViewModel.prototype.toDto = function (data) {
         var self = this;
-        var response = {
+        return {
             EvaluationId: this.evaluation.id,
             Project: this.evaluation.project(),
             ToImprove: this.evaluation.improveComment(),
             Strengths: this.evaluation.strengthsComment(),
             ActionPlan: this.evaluation.actionPlanComment(),
-            Califications: _.map(self.califications, function(calification) {
-                var calificationItems = _.chain(self.groups)
-                    .map(function(group) {
-                        var itemsList = _.map(group.items, function(item) {
-                            var value = _.find(item.values, function (element) {
-                                return element.calificationId == calification.id
-                            });
-                            if (value.value()) {
-                                return {
-                                    Key: item.key.toString(),
-                                    Value: parseFloat(value.value())
+            Califications: _.chain(self.califications)
+                .filter(function (calification) {
+                    return calification.owner == self.userView;
+                })
+                .map(function(calification) {
+                    var calificationItems = _.chain(self.groups)
+                        .map(function(group) {
+                            var itemsList = _.map(group.items, function(item) {
+                                var value = _.find(item.values, function (element) {
+                                    return element.calificationId == calification.id;
+                                });
+                                if (value && value.value()) {
+                                    return {
+                                        Key: item.key.toString(),
+                                        Value: parseFloat(value.value())
+                                    }
                                 }
-                            }
-                            return;
-                        });
-                        return _.filter(itemsList, function (item) { return item});
-                    })
-                    .flatten()
-                    .value();
-                return {
-                    CalificationId: calification.id,
-                    Items: calificationItems,
-                    Comments: calification.comments()
-                }
-            }),
+                                return;
+                            });
+                            return _.filter(itemsList, function (item) { return item});
+                        })
+                        .flatten()
+                        .value();
+                    return {
+                        CalificationId: calification.id,
+                        Items: calificationItems,
+                        Comments: calification.comments()
+                    }
+                })
+                .value(),
             Finished: false
-        };
-        response.Califications = _.filter(response.Califications, function (calification) {
-            return calification.Items.length;
-        });
-        return response;
+        }
     }
 
     EvaluationViewModel.prototype.toggleVisibilityColumn = function (data, event) {
@@ -304,6 +326,7 @@
         this.seniority = '';
         this.period = '';
         this.evaluators = '';
+        this.finished = '';
         this.project = ko.observable('');
         this.strengthsComment = ko.observable('');
         this.improveComment = ko.observable('');
@@ -321,13 +344,16 @@
         this.currentPosition = data.CurrentPosition;
         this.seniority = data.Seniority;
         this.period = data.Period;
-        this.evaluators = data.Evaluators;
+        this.finished = data.Finished;
         this.project(data.Project);
         this.strengthsComment(data.StrengthsComment);
         this.improveComment(data.ToImproveComment);
         this.actionPlanComment(data.ActionPlanComment);
-        this.evaluatorsString = (this.evaluators) ? this.evaluators.toString().replace(/,/g, ', ') : '';
+        this.evaluators = data.Evaluators.join(', ');
         viewmodel.isDirty.register(this.project);
+        viewmodel.isDirty.register(this.strengthsComment);
+        viewmodel.isDirty.register(this.improveComment);
+        viewmodel.isDirty.register(this.actionPlanComment);
     }
 
     Evaluation.prototype.onFocusInProject = function (data, event) {
