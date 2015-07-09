@@ -1,5 +1,6 @@
 ﻿$(document).ready(function () {
     var viewmodel;
+    var modalViewModel;
 
     var sortCalificationColumns = function (a, b) {
         if (a.Owner == b.Owner)
@@ -21,13 +22,12 @@
         if (data) {
             this.fromJs(data);
         }
-        this.saveButtonEnable = ko.observable(false);
     }
 
     EvaluationViewModel.prototype.load = function () {
         $.getJSON("/Evaluations/api/getEvaluation/" + calificationPeriod + "/" + calificationUserName + "/", function (model) {
             viewmodel.fromJs(model);
-            ko.applyBindings(viewmodel);
+            ko.applyBindings(viewmodel, document.getElementById('evaluation-view'));
         });
     }
 
@@ -77,37 +77,20 @@
                 }
             });
         } else {
-            var modalContainer = $('#evaluations-generated-confirm');
-            modalContainer.find('#title').text("Guardar evaluacion");
-            var text = "No se puede guardar la evaluacion porque hay calificaciones INVALIDAS";
-            modalContainer.find('#text').text(text);
-            modalContainer.modal('show');
-            this.saveButtonEnable(false);
-            modalContainer.find('#button-back').on('click', function () {
-                modalContainer.modal('hide');
-            });
+            modalViewModel.title("Guardar evaluación");
+            modalViewModel.text("No se puede guardar la evaluación porque hay calificaciones INVÁLIDAS");
+            modalViewModel.show(true);
+            modalViewModel.isConfirmButtonVisible(false);
         }
     }
-
+    
     EvaluationViewModel.prototype.onFinish = function () {
         if (this.hasEmptyValues()) {
-            var modalContainer = $('#evaluations-generated-confirm');
-            modalContainer.find('#title').text("Finalizar evaluacion");
-            var text = "¿Desea finalizar evaluacion con calificaciones vacias?";
-            modalContainer.find('#text').text(text);
-            this.saveButtonEnable(true);
-            modalContainer.modal('show');
-            var self = this;
-            modalContainer.find('#button-back').on('click', function () {
-                modalContainer.modal('hide');
-            });
-            modalContainer.find('#button-confirm').on('click', function () {
-                modalContainer.modal('hide');
-                self.calificationFinished = true;
-                self.onSave(true);
-            });
-            
-        } 
+            modalViewModel.title("Finalizar evaluación");
+            modalViewModel.text("¿Desea finalizar evaluación con calificaciones vacías?");
+            modalViewModel.show(true);
+            modalViewModel.isConfirmButtonVisible(true);
+        }
         else {
             this.calificationFinished = true;
             this.onSave(true);
@@ -371,6 +354,26 @@
             $(event.target).blur();
         }
     }
+    
+    var ModalViewModel = function () {
+        this.show = ko.observable(false);
+        this.title = ko.observable('');
+        this.text = ko.observable('');
+        this.isConfirmButtonVisible = ko.observable(false);
+    };
+
+    ModalViewModel.prototype.backAction = function () {
+        this.show(false);
+    }
+
+    ModalViewModel.prototype.confirmAction = function () {
+        this.show(false);
+        viewmodel.calificationFinished = true;
+        viewmodel.onSave(true);
+    }
+
+    modalViewModel = new ModalViewModel();
+    ko.applyBindings(modalViewModel, document.getElementById('evaluations-generated-confirm'));
 
     viewmodel = new EvaluationViewModel();
     viewmodel.load();

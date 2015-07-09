@@ -339,11 +339,16 @@ h1 {
 }
 
 /* line 9, ../../sass/Evaluations/_pop-up.scss */
+.content-pop-up-evaluation {
+  display: inline;
+}
+
+/* line 12, ../../sass/Evaluations/_pop-up.scss */
 .content-pop-up .modal-header {
   padding: 0px;
 }
 
-/* line 13, ../../sass/Evaluations/_pop-up.scss */
+/* line 16, ../../sass/Evaluations/_pop-up.scss */
 .content-pop-up button.close {
   float: right;
   position: relative;
@@ -352,23 +357,22 @@ h1 {
   zoom: 2;
 }
 
-/* line 21, ../../sass/Evaluations/_pop-up.scss */
+/* line 24, ../../sass/Evaluations/_pop-up.scss */
 .content-pop-up .modal-title {
   padding: 5px;
   height: auto;
   color: #444;
   font-size: 16px;
-  text-transform:uppercase;
 }
 
-/* line 28, ../../sass/Evaluations/_pop-up.scss */
+/* line 31, ../../sass/Evaluations/_pop-up.scss */
 .content-pop-up p {
   color: #666;
   padding: 15px 0px;
   margin: 0;
 }
 
-/* line 34, ../../sass/Evaluations/_pop-up.scss */
+/* line 37, ../../sass/Evaluations/_pop-up.scss */
 .model-footer button {
   position: relative;
   padding: 10px;
@@ -376,10 +380,9 @@ h1 {
   color: white;
   border-radius: 5px;
   border: none;
-  text-transform:uppercase;
 }
 
-/* line 43, ../../sass/Evaluations/_pop-up.scss */
+/* line 46, ../../sass/Evaluations/_pop-up.scss */
 .model-footer button {
   float: left;
   padding: 5px 25px;

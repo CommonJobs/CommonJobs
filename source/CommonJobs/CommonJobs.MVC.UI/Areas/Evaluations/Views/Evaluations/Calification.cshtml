@@ -16,7 +16,7 @@
     ScriptManager.RegisterJs(Url.Content("~/Scripts/Evaluations/calification.js"));
 }
 
-<div class="content-evaluation evaluation">
+<div id="evaluation-view" class="content-evaluation evaluation">
     <div data-bind="if: userView == 0"><h2 class="title-evaluations">AutoCalificación de <strong data-bind="text: evaluation.fullName"></strong></h2></div>
     <div data-bind="if: userView == 1 || userView == 2 "><h2 class="title-evaluations">Calificación de <strong data-bind="text: userLogged"></strong> a <strong data-bind="text: evaluation.fullName"></strong></h2></div>
     <div data-bind="if: userView == 3 "><h2 class="title-evaluations">Calificación de <strong>Making Sense</strong> a <strong data-bind="text: evaluation.fullName"></strong></h2></div>
@@ -120,13 +120,13 @@
     </script>
 </div>
 
-<div id="evaluations-generated-confirm" class="modal content-pop-up clearfix">
+<div id="evaluations-generated-confirm" data-bind="visible: show()" class="modal content-pop-up clearfix content-pop-up-evaluation">
     <div class="modal-header">
-        <h3 class="modal-title" id="title"></h3>
+        <h3 class="modal-title" id="title" data-bind="text: title()"></h3>
     </div>
-    <p id="text"></p>
+    <p id="text" data-bind="text: text()"></p>
     <div class="model-footer">
-        <button class="back" id="button-back">volver</button>
-        <button class="confirm" id="button-confirm" data-bind="enable: saveButtonEnable()">confirmar</button>
+        <button class="back" id="button-back" data-bind="click: backAction">volver</button>
+        <button class="confirm" id="button-confirm" data-bind="visible: isConfirmButtonVisible(), click: confirmAction">confirmar</button>
     </div>
 </div>
