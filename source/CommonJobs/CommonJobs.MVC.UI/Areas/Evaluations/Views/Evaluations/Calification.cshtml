@@ -78,7 +78,7 @@
                 <!-- ko foreach: califications -->
                 <th class="calificators">
                     <span data-bind="if: hasShowIcon"><i data-tips="" data-bind="css: { icon: true, 'top-tip': true, 'hide-column': !show()}, click: $root.toggleVisibilityColumn"></i></span>
-                    <span data-bind="text: evaluatorEmployee"></span>
+                    <span data-bind="text: evaluatorEmployee.replace('_company', 'Empresa')"></span>
                 </th>
                 <!-- /ko -->
             </tr>
