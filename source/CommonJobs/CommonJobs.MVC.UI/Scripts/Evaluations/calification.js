@@ -10,7 +10,7 @@
         if (data) {
             this.fromJs(data);
         }
-        this.saveButtonEnable = ko.observable('');
+        this.saveButtonEnable = ko.observable(false);
     }
 
     EvaluationViewModel.prototype.load = function () {
@@ -63,8 +63,7 @@
             });
         } else {
             var modalContainer = $('#evaluations-generated-confirm');
-            var titleText = "GUARDAR EVALUACION";
-            modalContainer.find('#title').text(titleText);
+            modalContainer.find('#title').text("Guardar evaluacion");
             var text = "No se puede guardar la evaluacion porque hay calificaciones INVALIDAS";
             modalContainer.find('#text').text(text);
             modalContainer.modal('show');
@@ -78,11 +77,11 @@
     EvaluationViewModel.prototype.onFinish = function () {
         if (this.hasEmptyValues()) {
             var modalContainer = $('#evaluations-generated-confirm');
-            modalContainer.find('#title').text("FINALIZAR EVALUACION");
+            modalContainer.find('#title').text("Finalizar evaluacion");
             var text = "¿Desea finalizar evaluacion con calificaciones vacias?";
             modalContainer.find('#text').text(text);
-            modalContainer.modal('show');
             this.saveButtonEnable(true);
+            modalContainer.modal('show');
             var self = this;
             modalContainer.find('#button-back').on('click', function () {
                 modalContainer.modal('hide');

@@ -358,6 +358,7 @@ h1 {
   height: auto;
   color: #444;
   font-size: 16px;
+  text-transform:uppercase;
 }
 
 /* line 28, ../../sass/Evaluations/_pop-up.scss */
@@ -375,6 +376,7 @@ h1 {
   color: white;
   border-radius: 5px;
   border: none;
+  text-transform:uppercase;
 }
 
 /* line 43, ../../sass/Evaluations/_pop-up.scss */
