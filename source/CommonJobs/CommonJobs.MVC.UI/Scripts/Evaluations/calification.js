@@ -1,5 +1,6 @@
 ﻿$(document).ready(function () {
     var viewmodel;
+    var modalViewModel;
 
     var sortCalificationColumns = function (a, b) {
         if (a.Owner == b.Owner)
@@ -26,7 +27,7 @@
     EvaluationViewModel.prototype.load = function () {
         $.getJSON("/Evaluations/api/getEvaluation/" + calificationPeriod + "/" + calificationUserName + "/", function (model) {
             viewmodel.fromJs(model);
-            ko.applyBindings(viewmodel);
+            ko.applyBindings(viewmodel, document.getElementById('evaluation-view'));
         });
     }
 
@@ -54,7 +55,7 @@
 
     EvaluationViewModel.prototype.onSave = function () {
         var self = this;
-        if(this.isValid()){
+        if (this.isValid()) {
             var dto = this.toDto();
             if (this.calificationFinished) {
                 dto.CalificationFinished = true;
@@ -76,14 +77,21 @@
                 }
             });
         } else {
-            //TODO: show alert popup
-            alert("HAY CALIFICACIONES INVÁLIDAS");
+            modalViewModel.title("Guardar evaluación");
+            modalViewModel.text("No se puede guardar la evaluación porque hay calificaciones INVÁLIDAS");
+            modalViewModel.show(true);
+            modalViewModel.isConfirmButtonVisible(false);
         }
     }
-
+    
     EvaluationViewModel.prototype.onFinish = function () {
-        //TODO: show alert popup
-        if (!this.hasEmptyValues() || (this.hasEmptyValues() && confirm("HAY CALIFICACIONES VACÍAS"))) {
+        if (this.hasEmptyValues()) {
+            modalViewModel.title("Finalizar evaluación");
+            modalViewModel.text("¿Desea finalizar evaluación con calificaciones vacías?");
+            modalViewModel.show(true);
+            modalViewModel.isConfirmButtonVisible(true);
+        }
+        else {
             this.calificationFinished = true;
             this.onSave(true);
         }
@@ -346,6 +354,26 @@
             $(event.target).blur();
         }
     }
+    
+    var ModalViewModel = function () {
+        this.show = ko.observable(false);
+        this.title = ko.observable('');
+        this.text = ko.observable('');
+        this.isConfirmButtonVisible = ko.observable(false);
+    };
+
+    ModalViewModel.prototype.backAction = function () {
+        this.show(false);
+    }
+
+    ModalViewModel.prototype.confirmAction = function () {
+        this.show(false);
+        viewmodel.calificationFinished = true;
+        viewmodel.onSave(true);
+    }
+
+    modalViewModel = new ModalViewModel();
+    ko.applyBindings(modalViewModel, document.getElementById('evaluations-generated-confirm'));
 
     viewmodel = new EvaluationViewModel();
     viewmodel.load();
