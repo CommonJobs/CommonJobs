@@ -217,15 +217,25 @@
             switch (this.state()) {
                 case 0:
                 case 2:
-                    this.calificationActionTooltip("Calificar como responsable");
+                    if (this.isResponsible) {
+                        this.calificationActionTooltip("Calificar como responsable");
+                    } else {
+                        this.calificationActionTooltip("Calificar como calificador");
+                    }
                     this.calificationActionClass("icon user");
                     this.calificationActionText("Calificar");
                     break;
                 case 1:
                 case 3:
-                    this.calificationActionText("Calificar");
-                    this.calificationActionClass("icon empresa");
-                    this.calificationActionTooltip("Calificar como empresa");
+                    if (this.isResponsible) {
+                        this.calificationActionText("Calificar");
+                        this.calificationActionClass("icon empresa");
+                        this.calificationActionTooltip("Calificar como empresa");
+                    } else {
+                        this.calificationActionText("Ver Calificación");
+                        this.calificationActionClass("icon view");
+                        this.calificationActionTooltip("Ver Calificación");
+                    }
                     break;
                 default:
                     this.calificationActionText("Ver Calificación");

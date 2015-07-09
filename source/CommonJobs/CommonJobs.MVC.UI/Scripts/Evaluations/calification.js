@@ -1,6 +1,7 @@
 ﻿$(document).ready(function () {
     var viewmodel;
     var modalViewModel;
+    var layoutViewModel;
 
     var sortCalificationColumns = function (a, b) {
         if (a.Owner == b.Owner)
@@ -19,6 +20,7 @@
         this.evaluation = new Evaluation();
         this.califications = [];
         this.groups = [];
+        this.isEvaluationEditable = ko.observable(false);
         if (data) {
             this.fromJs(data);
         }
@@ -128,9 +130,9 @@
         
         this.evaluation.fromJs(data.Evaluation);
 
-        this.isEvaluationEditable = !this.evaluation.finished && _.some(this.califications, function (calification) {
+        this.isEvaluationEditable(!this.evaluation.finished && _.some(this.califications, function (calification) {
             return calification.owner == self.userView && !calification.finished;
-        });
+        }));
 
         this.generalComment = _.find(self.califications, function (calification) {
             return (self.userView == 3 && calification.owner == 3) || (self.userView != 3 && calification.evaluatorEmployee == self.userLogged);
@@ -443,4 +445,18 @@
 
     viewmodel = new EvaluationViewModel();
     viewmodel.load();
+
+    var LayoutViewModel = function () {
+        this.isEvaluationEditable = viewmodel.isEvaluationEditable;
+    }
+
+    LayoutViewModel.prototype.isDirty = viewmodel.isDirty;
+
+    LayoutViewModel.prototype.onSave = function () {
+        viewmodel.onSave();
+    };
+
+    layoutViewModel = new LayoutViewModel();
+    ko.applyBindings(layoutViewModel, document.getElementById('header-evaluation'));
+
 });

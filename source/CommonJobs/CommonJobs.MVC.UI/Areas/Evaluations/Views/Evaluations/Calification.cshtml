@@ -31,12 +31,12 @@
                 <li><span class="item">Período:</span><span class="item-info" data-bind="text: evaluation.period"></span></li>
                 <li>
                     <span class="item">Proyectos:</span>
-                    <!--ko if: isEvaluationEditable && (userView == 1 || userView == 3) -->
+                    <!--ko if: isEvaluationEditable() && (userView == 1 || userView == 3) -->
                     <div class="editable-projects" data-bind="css: { edition: evaluation.project(), 'top-tip': evaluation.project()}, attr: {'data-tips': evaluation.project()}">
                         <input type="text" placeholder="Agregá los proyectos" data-bind="value: evaluation.project, event: { keyup: evaluation.onKeyUpProject, focusin: evaluation.onFocusInProject, blur: evaluation.onBlurProject}"/><span class="pencil"></span>
                     </div>
                     <!-- /ko -->
-                    <!--ko if: !isEvaluationEditable || (userView != 1 && userView != 3) -->
+                    <!--ko if: !isEvaluationEditable() || (userView != 1 && userView != 3) -->
                     <span class="top-tip" data-bind="if: evaluation.project(), attr: { 'data-tips': evaluation.project()}"><span class="item-info" data-bind="text: evaluation.project()"></span></span>
                     <!-- /ko -->
                 </li>
@@ -52,21 +52,21 @@
         <div class="top-right">
             <h4>Comentarios Generales</h4>
             <div class="comments-container">
-                <div class="title">Fortalezas </div><textarea class="content-editable" data-bind="value: evaluation.strengthsComment, enable: isEvaluationEditable"></textarea>
-                <div class="title">Aspectos a mejorar </div><textarea class="content-editable" data-bind="value: evaluation.improveComment, enable: isEvaluationEditable"></textarea>
-                <div class="title">Plan de acción </div><textarea class="content-editable" data-bind="value: evaluation.actionPlanComment, enable: isEvaluationEditable"></textarea>
+                <div class="title">Fortalezas </div><textarea class="content-editable" data-bind="value: evaluation.strengthsComment, enable: isEvaluationEditable()"></textarea>
+                <div class="title">Aspectos a mejorar </div><textarea class="content-editable" data-bind="value: evaluation.improveComment, enable: isEvaluationEditable()"></textarea>
+                <div class="title">Plan de acción </div><textarea class="content-editable" data-bind="value: evaluation.actionPlanComment, enable: isEvaluationEditable()"></textarea>
             </div>
         </div>
         <h4>Comentarios de la empresa</h4>
         <div class="comments-container comments-company-container">
-            <textarea class="content-editable big-comment" data-bind="value: generalComment, enable: isEvaluationEditable"></textarea>
+            <textarea class="content-editable big-comment" data-bind="value: generalComment, enable: isEvaluationEditable()"></textarea>
         </div>
         <!-- /ko -->
         <!--ko if: userView != 3-->
         <div class="top-right">
             <h4>Comentarios Generales</h4>
             <div class="comments-container">
-                <textarea class="content-editable big-comment" data-bind="value: generalComment, enable: isEvaluationEditable"></textarea>
+                <textarea class="content-editable big-comment" data-bind="value: generalComment, enable: isEvaluationEditable()"></textarea>
             </div>
         </div>
         <!-- /ko -->
@@ -110,7 +110,7 @@
             <!-- /ko -->
         </tbody>
     </table>
-    <div class="footer-evaluation" data-bind="if: isEvaluationEditable">
+    <div class="footer-evaluation" data-bind="if: isEvaluationEditable()">
         <button class="button-evaluations primary-btn finish-btn" data-bind="click: onFinish">Finalizar Devolución</button>
         <p class="explanatory-text">Recuerda que una vez finalizada tu evaluación no podrás volver a editarla.</p>
     </div>
