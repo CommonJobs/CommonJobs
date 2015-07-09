@@ -13,7 +13,7 @@
     <link rel="shortcut icon" href="@Url.Content("~/Content/Images/favicon.ico")" />
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top ">
+    <div id="header-evaluation" class="navbar navbar-inverse navbar-fixed-top ">
         <div class="navbar-inner">
             <a class="brand" href="@Url.Content("~")">CommonJobs</a>
             <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
@@ -23,7 +23,7 @@
             </button>            
             <div class="pull-right">
                 <form class="form-inline" id="persistenceForm">
-                    <ul class="nav nav-right">
+                    <ul class="nav nav-right" data-bind="testing: console.log($data)">
                         @if (ViewBag.IsCalification != null && ViewBag.IsCalification)
                         {
                         <!--ko if: isEvaluationEditable -->
