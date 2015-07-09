@@ -34,7 +34,11 @@ function commonSort(header) {
         }
         var prop = header.sortPropertyName;
         var ascSort = function (a, b) {
-            return a[prop] < b[prop] ? -1 : a[prop] > b[prop] ? 1 : a[prop] == b[prop] ? 0 : 0;
+            if (prop == "responsible") {
+                return a[prop]() < b[prop]() ? -1 : a[prop]() > b[prop]() ? 1 : a[prop]() == b[prop]() ? 0 : 0;
+            } else {
+                return a[prop] < b[prop] ? -1 : a[prop] > b[prop] ? 1 : a[prop] == b[prop] ? 0 : 0;
+            }
         };
         var descSort = function (a, b) {
             return ascSort(b, a);
