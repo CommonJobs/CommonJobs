@@ -940,7 +940,7 @@ tr.evaluation-generated td {
 }
 /* line 249, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .calification-items .calificators .icon {
-  background-image: url(../Images/Evaluations/10-02.png);
+  background-image: url(../Images/Evaluations/11-02.png);
   position: absolute;
   width: 21px;
   height: 21px;
@@ -962,7 +962,7 @@ tr.evaluation-generated td {
 }
 /* line 269, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .calification-items .calificators .icon.hide-column {
-  background-image: url(../Images/Evaluations/11-02.png);
+  background-image: url(../Images/Evaluations/10-02.png);
 }
 /* line 272, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .calification-items .calificators .icon.hide-column:after {

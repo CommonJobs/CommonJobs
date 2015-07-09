@@ -98,21 +98,26 @@
         var self = this;
         this.userView = data.UserView;
         this.userLogged = data.UserLogged;
-        this.numberOfColumns = "table-" + (data.Califications.length + 1) + "-columns";
+        this.hasAverageColumn = this.userView == 1 || this.userView == 3;
+        this.numberOfColumns = "table-" + ((this.hasAverageColumn) ? (data.Califications.length + 2) : (data.Califications.length + 1)) + "-columns";
         var calificationsSorted = data.Califications.sort(sortCalificationColumns);
         this.califications = _.map(calificationsSorted, function (calification) {
             var comment = ko.observable(calification.Comments);
             self.isDirty.register(comment);
+            if (calification.Owner == 3 && !calification.Califications.length) {
+                self.isCompanyCalificationsEmpty = true;
+            }
             return {
                 id: calification.Id,
                 owner: calification.Owner,
                 evaluatorEmployee: calification.EvaluatorEmployee,
                 comments: comment,
                 finished: calification.Finished,
-                show: ko.observable(calification.Owner != 0),
+                show: ko.observable(self.userView == 0 || (self.userView != 0 && calification.Owner != 0)),
                 hasShowIcon: calification.Finished || (calification.EvaluatorEmployee != self.userLogged && calification.Owner != self.userView)
             }
         });
+        
         this.evaluation.fromJs(data.Evaluation);
 
         this.isEvaluationEditable = !this.evaluation.finished && _.some(this.califications, function (calification) {
@@ -146,7 +151,8 @@
                 calificationColumn: {
                     calificationId: calification.Id,
                     evaluatorEmployee: calification.EvaluatorEmployee,
-                    finished: calification.Finished
+                    finished: calification.Finished,
+                    owner: calification.Owner
                 }
             };
             if (calification.Califications) {
@@ -159,6 +165,21 @@
             return valuesByKey;
         });
 
+        if (this.hasAverageColumn) {
+            this.averageCalificationId = "average_column";
+            var averageCalificationsColumn = {
+                id: this.averageCalificationId,
+                owner: 4,
+                evaluatorEmployee: "promedio",
+                comments: ko.observable(''),
+                finished: false,
+                show: ko.observable(true),
+                hasShowIcon: true
+            }
+
+            this.califications.splice(1, 0, averageCalificationsColumn);
+        }
+
         this.groups =_.chain(data.Template.Items)
             .groupBy(function (item) {
                 return item.GroupKey;
@@ -168,7 +189,7 @@
                     groupKey: key,
                     name: groupNames[key],
                     items: _.map(items, function (item) {
-                        return {
+                        var valuesByItem = {
                             key: item.Key,
                             text: item.Text,
                             description: item.Description,
@@ -177,8 +198,9 @@
                                     calificationId: valuesByKey.calificationColumn.calificationId,
                                     value: ko.observable(valuesByKey[item.Key] || ""),
                                     editable: self.isValueEditable(valuesByKey),
+                                    owner: valuesByKey.calificationColumn.owner,
                                     showValue: _.find(self.califications, function (calification) {
-                                            return calification.id == valuesByKey.calificationColumn.calificationId;
+                                        return calification.id == valuesByKey.calificationColumn.calificationId;
                                     }).show,
                                 };
                                 valueItem.isValid = ko.computed(function () {
@@ -188,6 +210,50 @@
                                 return valueItem;
                             })
                         };
+                        if (self.hasAverageColumn) {
+                            var averageValue = {
+                                calificationId: self.averageCalificationId,
+                                value: ko.computed(function () {
+                                    var count, total;
+                                    var values = _.filter(valuesByItem.values, function (value) {
+                                        return value.owner == 1 || value.owner == 2;
+                                    });
+                                    for (var i in values) {
+                                        if (i == 0) {
+                                            count = 0;
+                                            total = 0;
+                                        }
+                                        var value = parseFloat(values[i].value());
+                                        if (value) {
+                                            count++;
+                                            total += value;
+                                        }
+                                    }
+                                    if(total){
+                                        return (total / count).toFixed(1);
+                                    }
+                                    return 0;
+                                }),
+                                editable: false,
+                                showValue: _.find(self.califications, function (calification) {
+                                    return calification.id == self.averageCalificationId;
+                                }).show,
+                            };
+                            averageValue.isValid = true;
+
+                            valuesByItem.values.splice(1, 0, averageValue);
+
+                            if (self.isCompanyCalificationsEmpty) {
+                                    var companyCalification = _.find(valuesByItem.values, function (calification) {
+                                        return calification.owner == 3;
+                                    });
+
+                                if (companyCalification) {
+                                    companyCalification.value(averageValue.value());
+                                }
+                            }
+                        }
+                        return valuesByItem;
                     })
                 }
                 result.averages = ko.computed(function () {
