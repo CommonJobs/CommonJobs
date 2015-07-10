@@ -155,7 +155,7 @@ Este sector es tanto para responsables como calificadores.  Al presionar en “C
 
 - **Proyecto**: Muestra el área al que pertenece o el/los proyectos en los que participó y por los que se lo evalúa.  Lo carga el Responsable en este mismo formulario.
 
-Ver el significado de cada campo en la sección: LINK.
+Ver [el significado de cada campo en la sección](#significado-de-cada-concepto).
 
 #### Comentarios Generales ####
 
