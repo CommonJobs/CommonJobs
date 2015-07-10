@@ -51,6 +51,7 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
         }
 
         [AcceptVerbs(HttpVerbs.Get)]
+        [Documentation("docs/manual-de-usuario/evaluaciones#Herramienta_para_Responsables_y_Calificadores")]
         public ActionResult PeriodEvaluation(string period)
         {
             //1. Check if period exists by querying Evaluations collection.
