@@ -8,7 +8,7 @@ La evaluación se realiza mediante dos caminos paralelos:
 
 - Cada persona se autoevalúa (tomando esta guía como base)
 
-- Cada responsable del área de la persona o gerente de un proyecto evalúa a las personas que tuvo a cargo en el último período (para ver la herramienta ir a la sección de [Herramienta para Responsables y Calificadores](#herramienta-para-responsables-y-calificadores).
+- Cada responsable del área de la persona o gerente de un proyecto evalúa a las personas que tuvo a cargo en el último período (para ver la herramienta ir a la sección de [Herramienta para Responsables y Calificadores](#Herramienta_para_Responsables_y_Calificadores).
 
 - Por último, se revisan en forma conjunta enriqueciendo la evaluación con los diferentes puntos de vista y logrando entre todos acordar pasos a seguir para el continuo desarrollo profesional.
 
@@ -157,7 +157,7 @@ Este sector es tanto para responsables como calificadores.  Al presionar en “C
 
 - **Proyecto**: Muestra el área al que pertenece o el/los proyectos en los que participó y por los que se lo evalúa.  Lo carga el Responsable en este mismo formulario.
 
-Ver la descripción de cada campo en la sección ["Información Profesional"](#información-profesional).
+Ver la descripción de cada campo en la sección ["Información Profesional"](#Informaci%c3%b3n_Profesional).
 
 #### Comentarios Generales ####
 
@@ -172,7 +172,7 @@ Aquí se muestra la lista de conceptos para calificar con varias columnas.
 Una columna más por cada Calificador y la última para el Responsable, que por defecto se muestran pero se pueden ocultar.
 - Cada uno completa la columna que le corresponde.  Se puede “Guardar” la evaluación en forma parcial sin cambiar el estado.  Una vez finalizada, se presiona el botón de “Finalizar Calificación” para dar por terminada la misma.
 
-La descripción de cada uno está en la sección ["Significado de cada Concepto"](#significado-de-cada-concepto)
+La descripción de cada uno está en la sección ["Significado de cada Concepto"](#Significado_de_cada_Concepto)
 
 ### Calificar como Empresa ###
 
