@@ -114,7 +114,7 @@
         this.califications = _.map(calificationsSorted, function (calification) {
             var comment = ko.observable(calification.Comments);
             self.isDirty.register(comment);
-            if (calification.Owner == 3 && !calification.Califications.length) {
+            if (calification.Owner == 3 && (!calification.Califications || !calification.Califications.length)) {
                 self.isCompanyCalificationsEmpty = true;
             }
             return {
