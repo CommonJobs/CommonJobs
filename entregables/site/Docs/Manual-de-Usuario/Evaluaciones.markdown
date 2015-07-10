@@ -7,7 +7,9 @@ El objetivo de las evaluaciones del personal es revisar en forma periódica (cad
 La evaluación se realiza mediante dos caminos paralelos: 
 
 - Cada persona se autoevalúa (tomando esta guía como base)
-- Cada responsable del área de la persona o gerente de un proyecto evalúa a las personas que tuvo a cargo en el último período (ir a LINK)
+
+- Cada responsable del área de la persona o gerente de un proyecto evalúa a las personas que tuvo a cargo en el último período (para ver la herramienta ir a la sección de [Herramienta para Responsables y Calificadores](#herramienta-para-responsables-y-calificadores).
+
 - Por último, se revisan en forma conjunta enriqueciendo la evaluación con los diferentes puntos de vista y logrando entre todos acordar pasos a seguir para el continuo desarrollo profesional.
 
 ## Métricas ##
