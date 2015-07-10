@@ -10,7 +10,7 @@
         { title: 'Empleado', sortPropertyName: 'fullName', asc: true, activeSort: ko.observable(false) },
         { title: 'Puesto', sortPropertyName: 'currentPosition', asc: true, activeSort: ko.observable(false) },
         { title: 'Seniority', sortPropertyName: 'seniority', asc: true, activeSort: ko.observable(false) },
-        { title: 'Responsable', sortPropertyName: 'responsible', asc: true, activeSort: ko.observable(false) }
+        { title: 'Responsable', sortPropertyName: 'responsible', asc: true, activeSort: ko.observable(false), observable: true }
         ];
         this.sort = commonSort.bind(this);
         this.defaultSort = function () {

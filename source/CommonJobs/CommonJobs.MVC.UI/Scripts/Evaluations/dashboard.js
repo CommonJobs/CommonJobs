@@ -133,8 +133,8 @@
         { title: 'Empleado', sortPropertyName: 'fullName', asc: true, activeSort: ko.observable(false) },
         { title: 'Puesto', sortPropertyName: 'currentPosition', asc: true, activeSort: ko.observable(false) },
         { title: 'Seniority', sortPropertyName: 'seniority', asc: true, activeSort: ko.observable(false) },
-        { title: 'Calificadores', sortPropertyName: 'evaluators', asc: true, activeSort: ko.observable(false) },
-        { title: 'Estado', sortPropertyName: 'state', asc: true, activeSort: ko.observable(false) },
+        { title: 'Calificadores', sortPropertyName: 'evaluators', asc: true, activeSort: ko.observable(false)},
+        { title: 'Estado', sortPropertyName: 'state', asc: true, activeSort: ko.observable(false), observable: true },
         { title: '', sortPropertyName: '', asc: true, activeSort: ko.observable(false) },
         { title: '', sortPropertyName: '', asc: true, activeSort: ko.observable(false) }
         ];
