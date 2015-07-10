@@ -16,6 +16,7 @@ using CommonJobs.Mvc.UI.Areas.Evaluations.Models;
 using CommonJobs.Application.Evaluations;
 using CommonJobs.Application.EvalForm.Commands;
 using CommonJobs.Application.EvalForm.EmployeeSearching;
+using System.Web.Routing;
 
 namespace CommonJobs.Mvc.UI.Areas.Evaluations
 {
@@ -82,10 +83,12 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
             {
                 if (isEvaluated)
                 {
-                    return RedirectToAction("Calification", new { period, loggedUser });
+                    return RedirectToAction("Calification", new RouteValueDictionary( 
+                        new { controller = "Evaluations", action = "Calification", period = period, username = loggedUser } ));
                 }
             }
-
+            ViewBag.Period = period;
+            ViewBag.hasAutoCalification = true;
             return View();
         }
 
@@ -135,8 +138,24 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
                 }
             }
 
+            
+            IQueryable<EmployeeToEvaluate_Search.Projection> query = RavenSession
+                .Query<EmployeeToEvaluate_Search.Projection, EmployeeToEvaluate_Search>()
+                .Statistics(out stats)
+                .Where(e => e.Period == period && (e.UserName == loggedUser || e.ResponsibleId == loggedUser || (e.Evaluators != null && e.Evaluators.Any(x => x == loggedUser))))
+                .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite());
+
+            var evaluations = query.ToList();
+
+            if (evaluations.Count != 0) {
+                var isEvaluator = evaluations.Any(p => p.ResponsibleId == loggedUser || (p.Evaluators != null && p.Evaluators.Contains(loggedUser)));
+                if (isEvaluator)
+                {
+                    ViewBag.IsUserEvaluator = true;
+                }
+            }
+
             ViewBag.Period = period;
-            ViewBag.UserName = username;
             ViewBag.IsCalification = true;
             return View("Calification");
         }

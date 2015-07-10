@@ -401,7 +401,7 @@
         this.strengthsComment(data.StrengthsComment);
         this.improveComment(data.ToImproveComment);
         this.actionPlanComment(data.ActionPlanComment);
-        this.evaluators = data.Evaluators.join(', ');
+        this.evaluators = data.Evaluators.join(', ') || '-';
         viewmodel.isDirty.register(this.project);
         viewmodel.isDirty.register(this.strengthsComment);
         viewmodel.isDirty.register(this.improveComment);
