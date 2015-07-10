@@ -157,7 +157,7 @@ Este sector es tanto para responsables como calificadores.  Al presionar en “C
 
 - **Proyecto**: Muestra el área al que pertenece o el/los proyectos en los que participó y por los que se lo evalúa.  Lo carga el Responsable en este mismo formulario.
 
-Ver la descripción de cada campo en la sección ["Información Profesional"](#informacion-profesional).
+Ver la descripción de cada campo en la sección ["Información Profesional"](#información-profesional).
 
 #### Comentarios Generales ####
 
