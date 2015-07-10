@@ -33,12 +33,15 @@ function commonSort(header) {
             header.activeSort(true);
         }
         var prop = header.sortPropertyName;
+        var isObservable = header.observable || false;
         var ascSort = function (a, b) {
-            if (prop == "responsible") {
-                return a[prop]() < b[prop]() ? -1 : a[prop]() > b[prop]() ? 1 : a[prop]() == b[prop]() ? 0 : 0;
-            } else {
-                return a[prop] < b[prop] ? -1 : a[prop] > b[prop] ? 1 : a[prop] == b[prop] ? 0 : 0;
+            var propertyA = a[prop];
+            var propertyB = b[prop];
+            if (isObservable) {
+                propertyA = propertyA();
+                propertyB = propertyB();
             }
+            return propertyA < propertyB ? -1 : propertyA > propertyB ? 1 : propertyA == propertyB ? 0 : 0;
         };
         var descSort = function (a, b) {
             return ascSort(b, a);
