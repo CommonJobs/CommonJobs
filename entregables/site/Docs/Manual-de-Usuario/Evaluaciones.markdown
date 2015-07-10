@@ -55,68 +55,68 @@ Se obtiene una calificación final como promedio de todas las calificaciones rea
 ## Significado de cada Concepto ##
 
 ### Desempeño Laboral ###
-**Responsabilidad**: Grado de compromiso que asume para el cumplimiento de las metas. Grado de tranquilidad que el nivel de compromiso le genera a sus supervisores directos (ya sea responsable de un área, project manager y/o líder técnico) y a los involucrados en la tarea o equipo de trabajo.
+- **Responsabilidad**: Grado de compromiso que asume para el cumplimiento de las metas. Grado de tranquilidad que el nivel de compromiso le genera a sus supervisores directos (ya sea responsable de un área, project manager y/o líder técnico) y a los involucrados en la tarea o equipo de trabajo.
 
-**Exactitud y calidad de trabajo**: Coherencia entre el trabajo solicitado y el efectivamente realizado. Grado de efectividad que demuestra en el trabajo. El trabajo realizado cumple con lo requerido y es de buena calidad.
+- **Exactitud y calidad de trabajo**: Coherencia entre el trabajo solicitado y el efectivamente realizado. Grado de efectividad que demuestra en el trabajo. El trabajo realizado cumple con lo requerido y es de buena calidad.
 
-**Cumplimiento de fechas**: Cumplimiento de las fechas de entrega pautadas. Se aplica al análisis, desarrollo, documentación, reporte y demás actividades relacionadas al cumplimiento de la tarea.
+- **Cumplimiento de fechas**: Cumplimiento de las fechas de entrega pautadas. Se aplica al análisis, desarrollo, documentación, reporte y demás actividades relacionadas al cumplimiento de la tarea.
 
-**Productividad**: Volumen de trabajo que realiza por unidad de tiempo. Proporción del tiempo dedicado al trabajo exclusivamente. Eficiencia.
+- **Productividad**: Volumen de trabajo que realiza por unidad de tiempo. Proporción del tiempo dedicado al trabajo exclusivamente. Eficiencia.
 
-**Orden y claridad del trabajo**: Sus trabajos pueden ser abordados con facilidad por otras personas. (Por ejemplo, para un desarrollador: los nombres de las variables son claros, el código es ordenado y legible, de ser necesario modificar su código es posible hacerlo; para un diseñador: dejar documentados estilos, formatos de texto, colores. Para ambos documentación en Jira, el repositorio).
+- **Orden y claridad del trabajo**: Sus trabajos pueden ser abordados con facilidad por otras personas. (Por ejemplo, para un desarrollador: los nombres de las variables son claros, el código es ordenado y legible, de ser necesario modificar su código es posible hacerlo; para un diseñador: dejar documentados estilos, formatos de texto, colores. Para ambos documentación en Jira, el repositorio).
 
-**Planificación del trabajo**: Planificación de sus tareas. Conocimiento exacto del estado de sus tareas. Analiza sus tareas contemplando el tiempo que requiere para llevarlas adelante y sabe estimar lo que falta.
+- **Planificación del trabajo**: Planificación de sus tareas. Conocimiento exacto del estado de sus tareas. Analiza sus tareas contemplando el tiempo que requiere para llevarlas adelante y sabe estimar lo que falta.
 
-**Documentación que genera**: Documentación relacionada a la tarea, como del código, del diseño, de la estrategia, campaña, minutas, documentación de alcances. Aplica metodologías coherentes de documentación. Validez y calidad de la misma.
+- **Documentación que genera**: Documentación relacionada a la tarea, como del código, del diseño, de la estrategia, campaña, minutas, documentación de alcances. Aplica metodologías coherentes de documentación. Validez y calidad de la misma.
 
-**Reporta avance de tareas**: Frecuencia, constancia, exactitud y calidad en los reportes (por email, orales, informes escritos, etc.). Capacidad de extraer la información relevante al elevar un informe.
+- **Reporta avance de tareas**: Frecuencia, constancia, exactitud y calidad en los reportes (por email, orales, informes escritos, etc.). Capacidad de extraer la información relevante al elevar un informe.
 
-**Capacidad de realización**: Practicidad, autonomía, pragmatismo. Posibilidad de llegar a la última instancia de una meta superando los obstáculos. Capacidad de interactuar con otros en búsqueda de alcanzar las metas.
+- **Capacidad de realización**: Practicidad, autonomía, pragmatismo. Posibilidad de llegar a la última instancia de una meta superando los obstáculos. Capacidad de interactuar con otros en búsqueda de alcanzar las metas.
 
-**Comprensión de situaciones**: Capacidad de entender conceptos y situaciones rápidamente.  Capacidad de adaptarse a los cambios y comprender objetivos globales.
+- **Comprensión de situaciones**: Capacidad de entender conceptos y situaciones rápidamente.  Capacidad de adaptarse a los cambios y comprender objetivos globales.
 
-**Sentido común**: Capacidad para ubicarse en las situaciones de manera coherente. Capacidad de elegir alternativas convenientes con visión estratégica a futuro y siendo realista.
+- **Sentido común**: Capacidad para ubicarse en las situaciones de manera coherente. Capacidad de elegir alternativas convenientes con visión estratégica a futuro y siendo realista.
 
-**Cumplimiento de los procedimientos existentes**: Grado de cumplimiento de los procedimientos generales de trabajo, y pasos de cada tarea en particular.  Cumplimiento de las normas de la empresa cuando aplica.
+- **Cumplimiento de los procedimientos existentes**: Grado de cumplimiento de los procedimientos generales de trabajo, y pasos de cada tarea en particular.  Cumplimiento de las normas de la empresa cuando aplica.
 
-**Grado de conocimiento técnico**: Conocimiento de las distintas herramientas necesarias para desarrollar sus labores.
+- **Grado de conocimiento técnico**: Conocimiento de las distintas herramientas necesarias para desarrollar sus labores.
 
-**Comunicación**: Eficacia de la comunicación con otros integrantes del equipo de trabajo, la empresa y el cliente.
+- **Comunicación**: Eficacia de la comunicación con otros integrantes del equipo de trabajo, la empresa y el cliente.
 
-**Grado de conocimiento de Inglés**: a) Oral / b) Escrito
+- **Grado de conocimiento de Inglés**: a) Oral / b) Escrito
 
 ### Factor Humano / Actitud ###
 
-**Actitud hacia la Empresa**: Capacidad de defender los intereses de la Empresa y adherirse a sus lineamientos. Lealtad para con la Empresa. Voluntad y flexibilidad para extender el horario de trabajo ante una necesidad puntual.
+- **Actitud hacia la Empresa**: Capacidad de defender los intereses de la Empresa y adherirse a sus lineamientos. Lealtad para con la Empresa. Voluntad y flexibilidad para extender el horario de trabajo ante una necesidad puntual.
 
-**Actitud hacia los compañeros**: Forma en la que se maneja con sus compañeros inmediatos. Camaradería.
+- **Actitud hacia los compañeros**: Forma en la que se maneja con sus compañeros inmediatos. Camaradería.
 
-**Actitud hacia el cliente**: Claridad en la comunicación con el cliente (interno y externo). Respeto, cooperación y cordialidad. Manejo de situaciones conflictivas, tanto en reuniones como por mail o telefónicamente.
+- **Actitud hacia el cliente**: Claridad en la comunicación con el cliente (interno y externo). Respeto, cooperación y cordialidad. Manejo de situaciones conflictivas, tanto en reuniones como por mail o telefónicamente.
 
-**Cooperación con el equipo**: Colaboración en el desarrollo de trabajos de integrantes de otros grupos. Trabajo en equipo. Capacidad de compartir conocimiento y habilidades.
+- **Cooperación con el equipo**: Colaboración en el desarrollo de trabajos de integrantes de otros grupos. Trabajo en equipo. Capacidad de compartir conocimiento y habilidades.
 
-**Capacidad de aceptar críticas**: Capacidad de recibir críticas constructivas en forma abierta. Grado de adaptación a las mismas. Capacidad de no ofenderse y aprovechar las críticas para mejorar.
+- **Capacidad de aceptar críticas**: Capacidad de recibir críticas constructivas en forma abierta. Grado de adaptación a las mismas. Capacidad de no ofenderse y aprovechar las críticas para mejorar.
 
-**Capacidad de generar sugerencias constructivas**: Cantidad de sugerencias que realiza para mejorar el trabajo. Calidad de las mismas. Capacidad de elevar las sugerencias oportunamente a quien corresponde.
+- **Capacidad de generar sugerencias constructivas**: Cantidad de sugerencias que realiza para mejorar el trabajo. Calidad de las mismas. Capacidad de elevar las sugerencias oportunamente a quien corresponde.
 
-**Pautas de convivencia**: Mantenimiento del área de trabajo en orden, consideración para con sus compañeros de área (por ejemplo volumen de la música, tono de voz, vocabulario, ruidos molestos).
+- **Pautas de convivencia**: Mantenimiento del área de trabajo en orden, consideración para con sus compañeros de área (por ejemplo volumen de la música, tono de voz, vocabulario, ruidos molestos).
 
-**Predisposición**: Se muestra predispuesto hacia la tarea. Manifestación de una actitud positiva frente a los diferentes requerimientos. Entusiasmo y Motivación.
+- **Predisposición**: Se muestra predispuesto hacia la tarea. Manifestación de una actitud positiva frente a los diferentes requerimientos. Entusiasmo y Motivación.
 
-**Puntualidad**: Puntualidad en reuniones. Aviso con tiempo si no se puede ser puntual.
+- **Puntualidad**: Puntualidad en reuniones. Aviso con tiempo si no se puede ser puntual.
 
 ### Habilidades ###
-**Iniciativa / Proactividad**: Inquietud por avanzar y mejorar. Facilidad para ofrecerse como ejecutor de sus propuestas. Tiene empuje.
+- **Iniciativa / Proactividad**: Inquietud por avanzar y mejorar. Facilidad para ofrecerse como ejecutor de sus propuestas. Tiene empuje.
 
-**Creatividad**: Ofrece alternativas innovadoras para solucionar problemas. Capacidad de vincular distintos conocimientos para una nueva aplicación de los mismos.
+- **Creatividad**: Ofrece alternativas innovadoras para solucionar problemas. Capacidad de vincular distintos conocimientos para una nueva aplicación de los mismos.
 
-**Respuesta bajo presión**: Capacidad de mantener la calma y transmitirla a sus compañeros. Capacidad de tomar decisiones correctas bajo presión. Capacidad de sacar provecho de situaciones adversas. Capacidad de realización en estos casos.
+- **Respuesta bajo presión**: Capacidad de mantener la calma y transmitirla a sus compañeros. Capacidad de tomar decisiones correctas bajo presión. Capacidad de sacar provecho de situaciones adversas. Capacidad de realización en estos casos.
 
-**Capacidad de manejar múltiples tareas**: Mantiene en orden sus tareas incluso cuando maneja múltiples temas.  Sabe priorizar. Tiempo que le insume la conmutación entre un tema y el otro. Capacidad de realización en estos casos.
+- **Capacidad de manejar múltiples tareas**: Mantiene en orden sus tareas incluso cuando maneja múltiples temas.  Sabe priorizar. Tiempo que le insume la conmutación entre un tema y el otro. Capacidad de realización en estos casos.
 
-**Coordinación y liderazgo**: Carisma, liderazgo natural, capacidad de mediar en los conflictos internos y capacidad de mediar en los conflictos con pares, clientes y/o proveedores.
+- **Coordinación y liderazgo**: Carisma, liderazgo natural, capacidad de mediar en los conflictos internos y capacidad de mediar en los conflictos con pares, clientes y/o proveedores.
 
-**Potencialidad – capacidad de aprendizaje**: Inquietud y capacidad para conocer, adquirir y aplicar distintas habilidades necesarias para el trabajo.
+- **Potencialidad – capacidad de aprendizaje**: Inquietud y capacidad para conocer, adquirir y aplicar distintas habilidades necesarias para el trabajo.
 
 ## Herramienta para Responsables y Calificadores ##
 
@@ -133,19 +133,19 @@ El responsable puede agregar calificadores para cada evaluado seleccionando el B
 
 #### Estados y Acciones Posibles ####
 
-**En Curso**: Evaluación generada y lista para calificar.  Se puede "Calificar como Responsable".
+- **En Curso**: Evaluación generada y lista para calificar.  Se puede "Calificar como Responsable".
 
-**Esperando Cal Responsable**: Está esperando la calificación del responsable y la autoevaluación ya está hecha. Se puede "Calificar como Responsable".
+- **Esperando Cal Responsable**: Está esperando la calificación del responsable y la autoevaluación ya está hecha. Se puede "Calificar como Responsable".
 
-**Esperando Cal Empleado**: Está esperando la calificación del empleado (o la autoevaluación) y la evaluación ya está hecha por el responsable.  Las evaluaciones de los calificadores no cambian el estado.  Se puede "Calificar como Empresa".
+- **Esperando Cal Empleado**: Está esperando la calificación del empleado (o la autoevaluación) y la evaluación ya está hecha por el responsable.  Las evaluaciones de los calificadores no cambian el estado.  Se puede "Calificar como Empresa".
 
-**Esperando Cal Empresa**: Ya está terminada la autoevaluación y la evaluación del responsable.  Se puede "Calificar como Empresa".
+- **Esperando Cal Empresa**: Ya está terminada la autoevaluación y la evaluación del responsable.  Se puede "Calificar como Empresa".
 
-**Lista para Devolución**: Todas las evaluaciones están terminadas y ahora se puede realizar la devolución al empleado.  Se puede "Ver Calificación" o "Iniciar Devolución".
+- **Lista para Devolución**: Todas las evaluaciones están terminadas y ahora se puede realizar la devolución al empleado.  Se puede "Ver Calificación" o "Iniciar Devolución".
 
-**Abierta para Devolución**: Al presionar en el botón de “Iniciar Devolución” se encuentra disponible para poder editar los campos finales para el cierre de la evaluación.  Se puede "Ver Calificación".
+- **Abierta para Devolución**: Al presionar en el botón de “Iniciar Devolución” se encuentra disponible para poder editar los campos finales para el cierre de la evaluación.  Se puede "Ver Calificación".
 
-**Finalizada**: Se da por finalizada una vez hecha la devolución y acordado los próximo pasos.  Se cierra la misma y ya solo se puede visualizar.  Se puede "Ver Calificación".
+- **Finalizada**: Se da por finalizada una vez hecha la devolución y acordado los próximo pasos.  Se cierra la misma y ya solo se puede visualizar.  Se puede "Ver Calificación".
 
 ### Calificar como Responsable ###
 
