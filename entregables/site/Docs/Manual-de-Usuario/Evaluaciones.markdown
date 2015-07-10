@@ -32,17 +32,17 @@ En forma semestral, recursos humanos enviará un link a cada evaluado para comen
 
 ### Información Profesional ###
 
-**Puesto**: es el puesto o rol dentro de la empresa, como desarrollador, QA, analista de marketing.
+- **Puesto**: es el puesto o rol dentro de la empresa, como desarrollador, QA, analista de marketing.
 
-**Seniority**: la categoría dentro del puesto, como junior, semi senior, senior, etc.  Se muestra lo formal según la categoría de recursos humanos, pues pudo haber desempeñado otro rol en un proyecto particular.
+- **Seniority**: la categoría dentro del puesto, como junior, semi senior, senior, etc.  Se muestra lo formal según la categoría de recursos humanos, pues pudo haber desempeñado otro rol en un proyecto particular.
 
-**Evaluadores**: son las personas asignadas para evaluar ya que han trabajado con el evaluado y tienen un rol de líder, project manager o responsable de área (puede estar en blanco o incompleta la lista, si el responsable aún no los asignó).
+- **Evaluadores**: son las personas asignadas para evaluar ya que han trabajado con el evaluado y tienen un rol de líder, project manager o responsable de área (puede estar en blanco o incompleta la lista, si el responsable aún no los asignó).
 
-**Responsable**: Es la persona responsable por el proceso de evaluación del evaluado, el responsable de evaluar, de acordar la reunión de feedback y de obtener el resultado final.  Por lo general es el responsable del área del puesto o el project manager con el que más trabajó en el último período.
+- **Responsable**: Es la persona responsable por el proceso de evaluación del evaluado, el responsable de evaluar, de acordar la reunión de feedback y de obtener el resultado final.  Por lo general es el responsable del área del puesto o el project manager con el que más trabajó en el último período.
 
-**Período**: es el período que se está evaluando y se representa con el mes-año en que termina el período (por ejemplo 06/2015 es para el primer semestre).
+- **Período**: es el período que se está evaluando y se representa con el mes-año en que termina el período (por ejemplo 06/2015 es para el primer semestre).
 
-**Proyecto**: Muestra el área al que pertenece o el/los proyectos en los que participó y por los que se lo evalúa (puede estar vacío en caso que el responsable aún no lo completó).
+- **Proyecto**: Muestra el área al que pertenece o el/los proyectos en los que participó y por los que se lo evalúa (puede estar vacío en caso que el responsable aún no lo completó).
 
 ### Comentarios Personales ###
 
