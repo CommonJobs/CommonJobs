@@ -157,7 +157,7 @@ Este sector es tanto para responsables como calificadores.  Al presionar en “C
 
 - **Proyecto**: Muestra el área al que pertenece o el/los proyectos en los que participó y por los que se lo evalúa.  Lo carga el Responsable en este mismo formulario.
 
-Ver [el significado de cada campo en la sección](#significado-de-cada-concepto).
+Ver la descripción de cada campo en la sección ["Información Profesional"](#informacion-profesional).
 
 #### Comentarios Generales ####
 
@@ -172,7 +172,7 @@ Aquí se muestra la lista de conceptos para calificar con varias columnas.
 Una columna más por cada Calificador y la última para el Responsable, que por defecto se muestran pero se pueden ocultar.
 - Cada uno completa la columna que le corresponde.  Se puede “Guardar” la evaluación en forma parcial sin cambiar el estado.  Una vez finalizada, se presiona el botón de “Finalizar Calificación” para dar por terminada la misma.
 
-Para ver el significado de cada Concepto, ir a la sección: LINK
+La descripción de cada uno está en la sección ["Significado de cada Concepto"](#significado-de-cada-concepto)
 
 ### Calificar como Empresa ###
 
