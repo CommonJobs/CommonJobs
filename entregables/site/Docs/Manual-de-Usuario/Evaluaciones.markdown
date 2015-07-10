@@ -151,8 +151,9 @@ El responsable puede agregar calificadores para cada evaluado seleccionando el B
 
 Este sector es tanto para responsables como calificadores.  Al presionar en “Calificar” se abre un formulario de evaluación con los mismos sectores de la autoevaluación.  Al principio del mismo se encuentra la Información Profesional, que viene en su mayoría pre-cargado, salvo los siguientes que deben ser ingresado por el Responsable: 
 
-**Evaluadores**: Lo carga el Responsable desde el Dashboard.
-**Proyecto**: Muestra el área al que pertenece o el/los proyectos en los que participó y por los que se lo evalúa.  Lo carga el Responsable en este mismo formulario.
+- **Evaluadores**: Lo carga el Responsable desde el Dashboard.
+
+- **Proyecto**: Muestra el área al que pertenece o el/los proyectos en los que participó y por los que se lo evalúa.  Lo carga el Responsable en este mismo formulario.
 
 Ver el significado de cada campo en la sección: LINK.
 
