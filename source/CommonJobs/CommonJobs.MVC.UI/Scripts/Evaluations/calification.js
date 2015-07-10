@@ -134,9 +134,10 @@
             return calification.owner == self.userView && !calification.finished;
         }));
 
-        this.generalComment = _.find(self.califications, function (calification) {
+        var userLoggedCalifiction = _.find(self.califications, function (calification) {
             return (self.userView == 3 && calification.owner == 3) || (self.userView != 3 && calification.evaluatorEmployee == self.userLogged);
-        }).comments;
+        })
+        this.generalComment = (userLoggedCalifiction) ? userLoggedCalifiction.comments : ko.observable('');
 
         if (!this.generalComment() && this.userView == 3) {
             var comments = _.chain(self.califications)
