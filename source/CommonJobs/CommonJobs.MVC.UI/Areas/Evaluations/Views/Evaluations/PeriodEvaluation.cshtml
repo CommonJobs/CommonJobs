@@ -22,6 +22,7 @@
         <thead>
             <tr data-bind="foreach: headers">
                 <th data-bind="attr: { class: 'col-' + ($index()+1) }">
+                    <i class="icon arrow" data-bind="click: $parent.sort, css: { selected: activeSort}"></i>
                     <span data-bind="click: $parent.sort, text: title, css: { selected: activeSort}"></span>
                 </th>
             </tr>
