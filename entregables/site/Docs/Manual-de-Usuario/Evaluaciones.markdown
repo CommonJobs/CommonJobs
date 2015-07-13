@@ -30,7 +30,7 @@ Se puede usar “medio punto” cuando es necesario, por ejemplo 2.5 indicaría 
 
 ## Herramienta para Autoevaluación ##
 
-En forma semestral, recursos humanos enviará un link a cada evaluado para comenzar a realizar la autoevaluación a través de una herramienta de CommonJobs.  También puede acceder a través del menú principal en la opción “Calificaciones”.  El link los llevará a una pantalla con los datos del evaluado y los campos que deberá completar para auto-calificarse.  Las áreas del formulario son las siguientes:
+En forma semestral, cada evaluado recibirá instrucciones de entrar a la herramienta Commonjobs para comenzar el proceso de autoevaluación.  En la home de Commonjobs se accede seleccionando la opción “Evaluaciones”.  Esto los llevará a una pantalla con los datos del evaluado y los campos que deberá completar para auto-calificarse.  Las áreas del formulario son las siguientes:
 
 ### Información Profesional ###
 
@@ -49,8 +49,12 @@ En forma semestral, recursos humanos enviará un link a cada evaluado para comen
 ### Comentarios Personales ###
 
 Es un campo de texto libre para que tanto el evaluado como los evaluadores puedan realizar cualquier comentario o aclaración que crean conveniente dejar asentado.
-Calificación de Conceptos
-A continuación se deben ir completando los puntajes para cada concepto.  Se puede “Guardar” la evaluación en forma parcial sin cambiar el estado.  Una vez finalizada, se presiona el botón de “Finalizar Calificación” para dar por terminada la misma.
+
+### Calificación de Conceptos ###
+
+A continuación se deben ir completando los puntajes para cada concepto.  Se puede “Guardar” la evaluación en forma parcial sin cambiar el estado.  Una vez finalizada, se presiona el botón de “Finalizar” para dar por terminada la misma.
+
+NOTA: se puede guardar cuantas veces sea necesario, pero una vez que se “Finaliza” no se podrá volver a editar (solo en el momento de la devolución y por parte del Responsable).
 
 Se obtiene una calificación final como promedio de todas las calificaciones realizadas.  A su vez se obtiene un total por cada subcategoría que son: Desempeño Laboral, Factor Humano / Actitud y Habilidades.  A continuación se presenta una guía de lo que significa cada concepto.
 
@@ -124,12 +128,16 @@ Se obtiene una calificación final como promedio de todas las calificaciones rea
 
 ### Proceso del Administrador de RRHH ###
 
-El administrador de Recursos Humanos (con rol "EmployeeManagers") accede a la pantalla de Nómina y completa la columna de “Responsable” para cada empleado a ser evaluado.  Al presionar el botón de “Generar Evaluaciones” se generan los formularios y links de autoevaluación para cada empleado y las evaluaciones quedan en estado “En Curso”.
+El administrador de Recursos Humanos (con rol "EmployeeManagers") accede a la pantalla de Nómina y completa la columna de “Responsable” para cada empleado a ser evaluado.  Al presionar el botón de “Generar Evaluaciones” se generan los formularios para cada empleado y las evaluaciones quedan en estado “En Curso”.
+
 Una vez generadas, ya no se puede cambiar el responsable desde esta pantalla.  No es necesario completar todos los responsables sino que se pueden ir generando las evaluaciones en forma incremental.
+
+De manera opcional, cada Responsable podrá notificar a cada evaluado que debe iniciar su autoevaluación enviándole un link directo a la misma que se construye de la siguiente manera:
+http://commonjobs.makingsense.com/Evaluations/*2015-06/napellido (donde 2015-06 es el período y napellido el usuario a evaluar).*
 
 ### Dashboard ###
 
-Se accede desde el menú principal de CommonJobs, opción "Calificadores”.  Ahora los responsables de realizar evaluaciones y los asignados como calificadores, ven en el Dashboard de CommonJobs la lista de evaluados asignados, donde se muestra para cada uno: si es Responsable o Calificador (R o C), los datos de cada evaluado (nombre, puesto y seniority), los calificadores agregados con un botón para agregar más, y por último el estado de cada evaluación y la acciones que puede realizar con cada una según el estado.
+Se accede desde el menú principal de CommonJobs, opción "Evaluaciones”.  Ahora los responsables de realizar evaluaciones y los asignados como calificadores, ven en el Dashboard de CommonJobs la lista de evaluados asignados, donde se muestra para cada uno: si es Responsable o Calificador (R o C), los datos de cada evaluado (nombre, puesto y seniority), los calificadores agregados con un botón para agregar más, y por último el estado de cada evaluación y la acciones que puede realizar con cada una según el estado.
 
 El responsable puede agregar calificadores para cada evaluado seleccionando el Botón de “Agregar” o el ícono con el lápiz de la columna Calificadores.  Se puede agregar la cantidad deseada (no se recomienda más de 5 para no abrumar al evaluado) y de cualquier rol o seniority.  El Responsable se debe hacer cargo de revisar que las completen y hacer seguimiento manual ya que el estado de las evaluaciones NO cambia si los Calificadores las han terminado o no.
 
@@ -168,9 +176,12 @@ Es un campo de texto libre para que los evaluadores puedan realizar cualquier co
 Aquí se muestra la lista de conceptos para calificar con varias columnas.
 
 - Autoevaluación: La primer columna es la calificación del propio evaluado.  Por defecto está oculta pero se puede visualizar.
-- Promedio: contiene el promedio por cada concepto de cada Calificador y Responsable que completó la evaluación.  
-Una columna más por cada Calificador y la última para el Responsable, que por defecto se muestran pero se pueden ocultar.
-- Cada uno completa la columna que le corresponde.  Se puede “Guardar” la evaluación en forma parcial sin cambiar el estado.  Una vez finalizada, se presiona el botón de “Finalizar Calificación” para dar por terminada la misma.
+- Promedio: contiene el promedio por cada concepto de cada Calificador y Responsable que completó la evaluación.
+- Una columna más por cada Calificador y la última para el Responsable, que por defecto se muestran pero se pueden ocultar.
+
+Cada uno completa la columna que le corresponde.  Se puede “Guardar” la evaluación en forma parcial sin cambiar el estado.  Una vez finalizada, se presiona el botón de “Finalizar” para dar por terminada la misma.
+
+NOTA: se puede guardar cuantas veces sea necesario, pero una vez que se “Finaliza” no se podrá volver a editar (solo en el momento de la devolución y por parte del Responsable).
 
 La descripción de cada uno está en la sección ["Significado de cada Concepto"](#Significado_de_cada_Concepto)
 
@@ -188,7 +199,7 @@ En esta etapa, en base al feedback obtenido de todos los calificadores (tanto po
 
 Luego se completan los puntajes finales en la columna “Empresa” que puede coincidir con el promedio o no.  El responsable debe evaluar el mejor puntaje final en base al feedback.  Esta columna es la que verá el evaluado durante la devolución.
 
-Al finalizar se presiona en “Finalizar Evaluación” para dar por terminada la evaluación de empresa.
+Al finalizar se presiona en “Finalizar” para dar por terminada la evaluación de empresa.
 
 ### Proceso de Devolución ###
 
