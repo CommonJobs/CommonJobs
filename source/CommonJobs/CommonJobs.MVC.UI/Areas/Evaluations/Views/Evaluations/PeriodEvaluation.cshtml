@@ -21,8 +21,11 @@
     <table class="table">
         <thead>
             <tr data-bind="foreach: headers">
-                <th data-bind="attr: { class: 'col-' + ($index()+1) }">
-                    <span data-bind="click: $parent.sort, text: title, css: { selected: activeSort}"></span>
+                <th data-bind="attr: { class: 'col-' + ($index()+1) }, click: $parent.sort, css: { selected: activeSort}">
+                    <!-- ko if: title != ''-->
+                        <i class="icon arrow"></i>
+                    <!-- /ko -->
+                    <span data-bind="text: title"></span>
                 </th>
             </tr>
         </thead>
@@ -36,7 +39,7 @@
                 <td data-bind="text: currentPosition"></td>      
                 <td data-bind="text: seniority"></td>
                 <td class="calificators-column">
-                    <span data-bind="if: isCalificatorsEditable() && evaluatorsAmount() > 0, attr: { 'data-tips': evaluatorsString()}" class="top-tip rol">
+                    <span data-bind="if: isCalificatorsEditable() && evaluatorsAmount() > 0, attr: { 'data-tips': evaluatorsString()}" class="top-tip">
                         <i class="icon edit"></i>
                         <a class="calification-links edit" data-bind="click: showCalificatorsManager">
                             <span data-bind="text: evaluatorsTextLink()"></span>
@@ -48,7 +51,7 @@
                     </span>
                 </td>
                 <td><span class="state-doc" data-bind="text: stateName, attr: { 'class': stateClasses }"></span></td>
-                <td><i data-bind="attr: { class: calificationActionClass() }"></i><a class="link-responsable top-tip rol" data-bind="text: calificationActionText(), attr: {'data-tips': calificationActionTooltip(), href: calificationUrl}"></a></td>
+                <td><i data-bind="attr: { class: calificationActionClass() }"></i><a class="link-responsable top-tip" data-bind="text: calificationActionText(), attr: {'data-tips': calificationActionTooltip(), href: calificationUrl}"></a></td>
                 <td><span data-bind="if: state() == 4"><button class="button-evaluations feedback-start" data-bind="click: startDevolutionUrl">Iniciar Devolución</button></span></td>
             </tr>
         </tbody>
