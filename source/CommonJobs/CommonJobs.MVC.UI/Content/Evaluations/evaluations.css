@@ -495,30 +495,38 @@ tr.evaluation-generated td {
   width: 150px;
 }
 /* line 30, ../../sass/Evaluations/_responsible.scss */
+.responsible table th.col-7 .icon.arrow {
+  display: none;
+}
+/* line 34, ../../sass/Evaluations/_responsible.scss */
 .responsible table th.col-8 {
   width: 110px;
 }
-/* line 36, ../../sass/Evaluations/_responsible.scss */
-.responsible .rol {
-  text-align: center;
+/* line 37, ../../sass/Evaluations/_responsible.scss */
+.responsible table th.col-8 .icon.arrow {
+  display: none;
 }
-/* line 40, ../../sass/Evaluations/_responsible.scss */
+/* line 44, ../../sass/Evaluations/_responsible.scss */
+.responsible .rol {
+  padding-left: 17px;
+}
+/* line 48, ../../sass/Evaluations/_responsible.scss */
 .responsible a {
   text-decoration: none;
   color: inherit;
   cursor: pointer;
   padding-left: 3px;
 }
-/* line 46, ../../sass/Evaluations/_responsible.scss */
+/* line 54, ../../sass/Evaluations/_responsible.scss */
 .responsible a .calification-links.disable {
   color: #777;
 }
-/* line 50, ../../sass/Evaluations/_responsible.scss */
+/* line 58, ../../sass/Evaluations/_responsible.scss */
 .responsible a .link-responsable {
   padding: 10px;
   text-decoration: underline;
 }
-/* line 57, ../../sass/Evaluations/_responsible.scss */
+/* line 65, ../../sass/Evaluations/_responsible.scss */
 .responsible .button-evaluations.feedback-start {
   float: none;
   padding: 0;
@@ -528,12 +536,12 @@ tr.evaluation-generated td {
   width: 90px;
   margin: 0;
 }
-/* line 68, ../../sass/Evaluations/_responsible.scss */
+/* line 76, ../../sass/Evaluations/_responsible.scss */
 .responsible .state-doc {
   display: inline-block;
   padding-left: 15px;
 }
-/* line 72, ../../sass/Evaluations/_responsible.scss */
+/* line 80, ../../sass/Evaluations/_responsible.scss */
 .responsible .state-doc:before {
   /* For a round bullet */
   content: '\2022';
@@ -545,19 +553,19 @@ tr.evaluation-generated td {
   font-size: 34px;
   line-height: 20px;
 }
-/* line 85, ../../sass/Evaluations/_responsible.scss */
+/* line 93, ../../sass/Evaluations/_responsible.scss */
 .responsible .state-doc.state-0:before, .responsible .state-doc.state-5:before {
   color: #6DC32E;
 }
-/* line 91, ../../sass/Evaluations/_responsible.scss */
+/* line 99, ../../sass/Evaluations/_responsible.scss */
 .responsible .state-doc.state-1:before, .responsible .state-doc.state-2:before {
   color: #4499F4;
 }
-/* line 97, ../../sass/Evaluations/_responsible.scss */
+/* line 105, ../../sass/Evaluations/_responsible.scss */
 .responsible .state-doc.state-4:before, .responsible .state-doc.state-3:before {
   color: #F7EC4D;
 }
-/* line 103, ../../sass/Evaluations/_responsible.scss */
+/* line 111, ../../sass/Evaluations/_responsible.scss */
 .responsible .state-doc.state-7:before {
   color: #EB4A2F;
 }
@@ -976,41 +984,6 @@ tr.evaluation-generated td {
   width: -moz-calc(100% - (9 * 100px));
   width: -webkit-calc(100% - (9 * 100px));
   width: calc(100% - (9 * 100px));
-}
-/* line 228, ../../sass/Evaluations/_evaluation.scss */
-.evaluation .calification-items.table-11-columns th:first-child,
-.evaluation .calification-items.table-11-columns td:first-child {
-  width: -moz-calc(100% - (10 * 100px));
-  width: -webkit-calc(100% - (10 * 100px));
-  width: calc(100% - (10 * 100px));
-}
-/* line 228, ../../sass/Evaluations/_evaluation.scss */
-.evaluation .calification-items.table-12-columns th:first-child,
-.evaluation .calification-items.table-12-columns td:first-child {
-  width: -moz-calc(100% - (11 * 100px));
-  width: -webkit-calc(100% - (11 * 100px));
-  width: calc(100% - (11 * 100px));
-}
-/* line 228, ../../sass/Evaluations/_evaluation.scss */
-.evaluation .calification-items.table-13-columns th:first-child,
-.evaluation .calification-items.table-13-columns td:first-child {
-  width: -moz-calc(100% - (12 * 100px));
-  width: -webkit-calc(100% - (12 * 100px));
-  width: calc(100% - (12 * 100px));
-}
-/* line 228, ../../sass/Evaluations/_evaluation.scss */
-.evaluation .calification-items.table-14-columns th:first-child,
-.evaluation .calification-items.table-14-columns td:first-child {
-  width: -moz-calc(100% - (13 * 100px));
-  width: -webkit-calc(100% - (13 * 100px));
-  width: calc(100% - (13 * 100px));
-}
-/* line 228, ../../sass/Evaluations/_evaluation.scss */
-.evaluation .calification-items.table-15-columns th:first-child,
-.evaluation .calification-items.table-15-columns td:first-child {
-  width: -moz-calc(100% - (14 * 100px));
-  width: -webkit-calc(100% - (14 * 100px));
-  width: calc(100% - (14 * 100px));
 }
 /* line 235, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .calification-items .calificators {
