@@ -59,9 +59,6 @@
         var self = this;
         if (this.isValid()) {
             var dto = this.toDto();
-            if (this.calificationFinished) {
-                dto.CalificationFinished = true;
-            }
             $.ajax("/Evaluations/api/SaveEvaluationCalifications/", {
                 type: "POST",
                 dataType: 'json',
@@ -104,16 +101,16 @@
     }
 
     EvaluationViewModel.prototype.isValueEditable = function (calification) {
-        return (((this.userLogged == calification.calificationColumn.evaluatorEmployee) ||
+        return !this.evaluation.finished && ((((this.userLogged == calification.calificationColumn.evaluatorEmployee) ||
             (this.userView == 3 && calification.calificationColumn.evaluatorEmployee == "_company")) && !calification.calificationColumn.finished) ||
-            this.evaluation.readyForDevolution && this.userView == 3 && (calification.calificationColumn.owner == 3 || calification.calificationColumn.owner == 0);
+            this.evaluation.readyForDevolution && this.userView == 3 && (calification.calificationColumn.owner == 3 || calification.calificationColumn.owner == 0))
     }
 
     EvaluationViewModel.prototype.fromJs = function (data) {
         var self = this;
         this.userView = data.UserView;
         this.userLogged = data.UserLogged;
-        this.hasAverageColumn = this.userView == 1 || this.userView == 3;
+        this.hasAverageColumn = !data.Evaluation.Finished && (this.userView == 1 || this.userView == 3);
         this.numberOfColumns = "table-" + ((this.hasAverageColumn) ? (data.Califications.length + 2) : (data.Califications.length + 1)) + "-columns";
         var calificationsSorted = data.Califications.sort(sortCalificationColumns);
         this.califications = _.map(calificationsSorted, function (calification) {
@@ -151,10 +148,10 @@
         if (!this.generalComment() && this.userView == 3) {
             var comments = _.chain(self.califications)
                 .filter(function (calification) {
-                    return (calification.owner == 1 || calification.owner == 2) && calification.comments() != null;
+                    return calification.comments() != null;
                 })
                 .map(function (comment) {
-                    return comment.evaluatorEmployee + ": " + comment.comments();
+                    return comment.evaluatorEmployee.replace('_company', "Empresa") + ": " + comment.comments();
                 })
                 .value();
             this.generalComment(comments.join("\n\n"));
@@ -335,6 +332,8 @@
     EvaluationViewModel.prototype.toDto = function (data) {
         var self = this;
         return {
+            EvaluationFinished: this.evaluationFinished,
+            CalificationFinished: this.calificationFinished,
             EvaluationId: this.evaluation.id,
             Project: this.evaluation.project(),
             ToImprove: this.evaluation.improveComment(),
@@ -342,19 +341,21 @@
             ActionPlan: this.evaluation.actionPlanComment(),
             Califications: _.chain(self.califications)
                 .filter(function (calification) {
-                    return calification.owner == self.userView;
+                    return calification.owner == self.userView || (self.evaluation.readyForDevolution && calification.owner == 0);
                 })
                 .map(function(calification) {
                     var calificationItems = _.chain(self.groups)
                         .map(function(group) {
                             var itemsList = _.map(group.items, function(item) {
-                                var value = _.find(item.values, function (element) {
-                                    return element.calificationId == calification.id;
+                                var values = _.filter(item.values, function (element) {
+                                    return element.editable;
                                 });
-                                if (value && value.value()) {
-                                    return {
-                                        Key: item.key.toString(),
-                                        Value: parseFloat(value.value())
+                                for (var key in values) {
+                                    if (values[key].value()) {
+                                        return {
+                                            Key: item.key.toString(),
+                                            Value: parseFloat(values[key].value())
+                                        }
                                     }
                                 }
                                 return;
