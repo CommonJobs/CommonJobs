@@ -66,7 +66,7 @@
                 data: JSON.stringify(dto),
                 success: function (response) {
                     self.isDirty(false);
-                    if (self.calificationFinished) {
+                    if (self.calificationFinished || self.evaluationFinished) {
                         if (self.userView == 0) {
                             window.location = urlGenerator.action("Index", "Home");
                         } else {
