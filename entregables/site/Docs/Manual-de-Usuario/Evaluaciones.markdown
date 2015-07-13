@@ -132,7 +132,7 @@ El administrador de Recursos Humanos (con rol "EmployeeManagers") accede a la pa
 
 Una vez generadas, ya no se puede cambiar el responsable desde esta pantalla.  No es necesario completar todos los responsables sino que se pueden ir generando las evaluaciones en forma incremental.
 
-De manera opcional, cada Responsable podrá notificar a cada evaluado que debe iniciar su autoevaluación enviándole un link directo a la misma que se construye de la siguiente manera:
+De manera opcional, cada Responsable podrá notificar a cada evaluado que debe iniciar su autoevaluación enviándole un link directo al formulario, que se construye de la siguiente manera:
 http://commonjobs.makingsense.com/Evaluations/*2015-06/napellido (donde 2015-06 es el período y napellido el usuario a evaluar).*
 
 ### Dashboard ###
