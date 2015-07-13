@@ -119,7 +119,7 @@
             if (calification.Owner == 3 && (!calification.Califications || !calification.Califications.length)) {
                 self.isCompanyCalificationsEmpty = true;
             }
-            var show = self.userView == 0 || (self.userView != 0 && calification.Owner != 0) || (self.userView == 3 && (calification.Owner == 0 || calification.Owner == 3));
+            var show = self.userView == 0 || (self.userView != 0 && calification.Owner != 0);
             var hasShowIcon = calification.Finished || (calification.EvaluatorEmployee != self.userLogged && calification.Owner != self.userView);
             return {
                 id: calification.Id,
@@ -134,6 +134,17 @@
         
         this.evaluation.fromJs(data.Evaluation);
 
+        if (this.evaluation.readyForDevolution) {
+            _.chain(self.califications)
+            .filter(function (calification) {
+                return calification.owner == 0 || calification.owner == 3;
+            })
+            .map(function(calificationEditable){
+                calificationEditable.hasShowIcon = false;
+                calificationEditable.show(true);
+            });
+        }
+        
         this.isEvaluationEditable(!this.evaluation.finished &&
             (_.some(this.califications, function (calification) {
                 return calification.owner == self.userView && !calification.finished;
@@ -143,15 +154,22 @@
         var userLoggedCalifiction = _.find(self.califications, function (calification) {
             return (self.userView == 3 && calification.owner == 3) || (self.userView != 3 && calification.evaluatorEmployee == self.userLogged);
         })
+
+        var userLoggedEvaluated = _.find(self.califications, function (calification) {
+            return (self.userView == 3 && calification.owner == 0) || (self.userView == 0 && calification.evaluatorEmployee == self.userLogged);
+        })
+
+        this.evaluatedComment = (userLoggedEvaluated) ? userLoggedEvaluated.comments : ko.observable('');
+
         this.generalComment = (userLoggedCalifiction) ? userLoggedCalifiction.comments : ko.observable('');
 
         if (!this.generalComment() && this.userView == 3) {
             var comments = _.chain(self.califications)
                 .filter(function (calification) {
-                    return calification.comments() != null;
+                    return (calification.owner == 1 || calification.owner == 2) && calification.comments() != null;
                 })
                 .map(function (comment) {
-                    return comment.evaluatorEmployee.replace('_company', "Empresa") + ": " + comment.comments();
+                    return comment.evaluatorEmployee + ": " + comment.comments();
                 })
                 .value();
             this.generalComment(comments.join("\n\n"));
@@ -175,7 +193,7 @@
             if (calification.Califications) {
                 for (var i in calification.Califications) {
                     var cal = calification.Califications[i];
-                    valuesByKey[cal.Key] = cal.Value;
+                    valuesByKey[cal.Key] = cal.Value.toFixed(1);
                 }
             }
             
@@ -387,8 +405,8 @@
         this.seniority = '';
         this.period = '';
         this.evaluators = '';
-        this.finished = '';
-        this.readyForDevolution = '';
+        this.finished = false;
+        this.readyForDevolution = false;
         this.project = ko.observable('');
         this.strengthsComment = ko.observable('');
         this.improveComment = ko.observable('');
