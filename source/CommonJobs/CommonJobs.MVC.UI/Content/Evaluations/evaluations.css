@@ -341,6 +341,10 @@ h1 {
 .content-evaluation th.selected {
   color: #000000;
 }
+/* line 175, ../../sass/Evaluations/_base.scss */
+.content-evaluation th.selected .icon.arrow {
+  background-image: url(../Images/Evaluations/3.png);
+}
 /* line 144, ../../sass/Evaluations/_base.scss */
 .content-evaluation .selected {
   color: #000000;
@@ -373,10 +377,6 @@ h1 {
 /* line 172, ../../sass/Evaluations/_base.scss */
 .icon.arrow {
   background-image: url(../Images/Evaluations/2.png);
-}
-/* line 175, ../../sass/Evaluations/_base.scss */
-.icon.arrow.selected {
-  background-image: url(../Images/Evaluations/3.png);
 }
 /* line 178, ../../sass/Evaluations/_base.scss */
 .icon.add {
@@ -494,17 +494,12 @@ tr.evaluation-generated td {
 .responsible table th.col-7 {
   width: 150px;
 }
-/* line 30, ../../sass/Evaluations/_responsible.scss */
-.responsible table th.col-7 .icon.arrow {
-  display: none;
-}
 /* line 34, ../../sass/Evaluations/_responsible.scss */
 .responsible table th.col-8 {
   width: 110px;
 }
-/* line 37, ../../sass/Evaluations/_responsible.scss */
-.responsible table th.col-8 .icon.arrow {
-  display: none;
+.responsible table th.selected .icon.arrow {
+  background-image: url(../Images/Evaluations/3.png);
 }
 /* line 44, ../../sass/Evaluations/_responsible.scss */
 .responsible .rol {
