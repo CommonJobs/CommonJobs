@@ -30,7 +30,7 @@ Se puede usar “medio punto” cuando es necesario, por ejemplo 2.5 indicaría 
 
 ## Herramienta para Autoevaluación ##
 
-En forma semestral, cada evaluado recibirá instrucciones de entrar a la herramienta Commonjobs para comenzar el proceso de autoevaluación.  En la home de Commonjobs se accede seleccionando la opción “Evaluaciones”.  Esto los llevará a una pantalla con los datos del evaluado y los campos que deberá completar para auto-calificarse.  Las áreas del formulario son las siguientes:
+En forma semestral, cada evaluado recibirá instrucciones de entrar a la herramienta Commonjobs para comenzar el proceso de autoevaluación.  En la home de Commonjobs se accede seleccionando la opción “Evaluaciones”.  Esto los llevará a una pantalla con los datos del evaluado y los campos que deberá completar para auto-evaluarse.  Las áreas del formulario son las siguientes:
 
 ### Información Profesional ###
 
@@ -124,7 +124,7 @@ Se obtiene una calificación final como promedio de todas las calificaciones rea
 
 - **Potencialidad – capacidad de aprendizaje**: Inquietud y capacidad para conocer, adquirir y aplicar distintas habilidades necesarias para el trabajo.
 
-## Herramienta para Responsables y Calificadores ##
+## Herramienta para Responsables y Evaluadores ##
 
 ### Proceso del Administrador de RRHH ###
 
@@ -137,9 +137,9 @@ http://commonjobs.makingsense.com/Evaluations/*2015-06/napellido (donde 2015-06 
 
 ### Dashboard ###
 
-Se accede desde el menú principal de CommonJobs, opción "Evaluaciones”.  Ahora los responsables de realizar evaluaciones y los asignados como calificadores, ven en el Dashboard de CommonJobs la lista de evaluados asignados, donde se muestra para cada uno: si es Responsable o Calificador (R o C), los datos de cada evaluado (nombre, puesto y seniority), los calificadores agregados con un botón para agregar más, y por último el estado de cada evaluación y la acciones que puede realizar con cada una según el estado.
+Se accede desde el menú principal de CommonJobs, opción "Evaluaciones”.  Ahora los responsables de realizar evaluaciones y los asignados como evaluadores, ven en el Dashboard de CommonJobs la lista de evaluados asignados, donde se muestra para cada uno: si es Responsable o Evaluador (R o E), los datos de cada evaluado (nombre, puesto y seniority), los evaluadores agregados con un botón para agregar más, y por último el estado de cada evaluación y la acciones que puede realizar con cada una según el estado.
 
-El responsable puede agregar calificadores para cada evaluado seleccionando el Botón de “Agregar” o el ícono con el lápiz de la columna Calificadores.  Se puede agregar la cantidad deseada (no se recomienda más de 5 para no abrumar al evaluado) y de cualquier rol o seniority.  El Responsable se debe hacer cargo de revisar que las completen y hacer seguimiento manual ya que el estado de las evaluaciones NO cambia si los Calificadores las han terminado o no.
+El responsable puede agregar evaluadores para cada evaluado seleccionando el Botón de “Agregar” o el ícono con el lápiz de la columna Evaluadores.  Se puede agregar la cantidad deseada (no se recomienda más de 5 para no abrumar al evaluado) y de cualquier rol o seniority.  El Responsable se debe hacer cargo de revisar que las completen y hacer seguimiento manual ya que el estado de las evaluaciones NO cambia si los Evaluadores las han terminado o no.
 
 #### Estados y Acciones Posibles ####
 
