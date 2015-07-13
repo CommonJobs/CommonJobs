@@ -143,23 +143,23 @@ El responsable puede agregar evaluadores para cada evaluado seleccionando el Bot
 
 #### Estados y Acciones Posibles ####
 
-- **En Curso**: Evaluación generada y lista para calificar.  Se puede "Calificar como Responsable".
+- **En Curso**: Evaluación generada y lista para evaluar.  Se puede "Evaluar como Responsable".
 
-- **Esperando Cal Responsable**: Está esperando la calificación del responsable y la autoevaluación ya está hecha. Se puede "Calificar como Responsable".
+- **Esperando Eval Responsable**: Está esperando la evaluación del responsable y la autoevaluación ya está hecha. Se puede "Evaluar como Responsable".
 
-- **Esperando Cal Empleado**: Está esperando la calificación del empleado (o la autoevaluación) y la evaluación ya está hecha por el responsable.  Las evaluaciones de los calificadores no cambian el estado.  Se puede "Calificar como Empresa".
+- **Esperando Eval Empleado**: Está esperando la autoevaluación del empleado y la evaluación ya está hecha por el responsable.  Los evaluadores no cambian el estado.  Se puede "Evaluar como Empresa".
 
-- **Esperando Cal Empresa**: Ya está terminada la autoevaluación y la evaluación del responsable.  Se puede "Calificar como Empresa".
+- **Esperando Eval Empresa**: Ya está terminada la autoevaluación y la evaluación del responsable.  Se puede "Evaluar como Empresa".
 
-- **Lista para Devolución**: Todas las evaluaciones están terminadas y ahora se puede realizar la devolución al empleado.  Se puede "Ver Calificación" o "Iniciar Devolución".
+- **Lista para Devolución**: Todas las evaluaciones están terminadas y ahora se puede realizar la devolución al empleado.  Se puede "Ver Evaluación" o "Iniciar Devolución".
 
-- **Abierta para Devolución**: Al presionar en el botón de “Iniciar Devolución” se encuentra disponible para poder editar los campos finales para el cierre de la evaluación.  Se puede "Ver Calificación".
+- **Abierta para Devolución**: Al presionar en el botón de “Iniciar Devolución” se encuentra disponible para poder editar los campos finales para el cierre de la evaluación.  Se puede "Ver Evaluación".
 
-- **Finalizada**: Se da por finalizada una vez hecha la devolución y acordado los próximo pasos.  Se cierra la misma y ya solo se puede visualizar.  Se puede "Ver Calificación".
+- **Finalizada**: Se da por finalizada una vez hecha la devolución y acordado los próximo pasos.  Se cierra la misma y ya solo se puede visualizar.  Se puede "Ver Evaluación".
 
-### Calificar como Responsable ###
+### Evaluar como Responsable ###
 
-Este sector es tanto para responsables como calificadores.  Al presionar en “Calificar” se abre un formulario de evaluación con los mismos sectores de la autoevaluación.  Al principio del mismo se encuentra la Información Profesional, que viene en su mayoría pre-cargado, salvo los siguientes que deben ser ingresado por el Responsable: 
+Este sector es tanto para responsables como evaluadores.  Al presionar en “Evaluar” se abre un formulario de evaluación con los mismos sectores de la autoevaluación.  Al principio del mismo se encuentra la Información Profesional, que viene en su mayoría pre-cargado, salvo los siguientes que deben ser ingresado por el Responsable: 
 
 - **Evaluadores**: Lo carga el Responsable desde el Dashboard.
 
@@ -176,8 +176,8 @@ Es un campo de texto libre para que los evaluadores puedan realizar cualquier co
 Aquí se muestra la lista de conceptos para calificar con varias columnas.
 
 - Autoevaluación: La primer columna es la calificación del propio evaluado.  Por defecto está oculta pero se puede visualizar.
-- Promedio: contiene el promedio por cada concepto de cada Calificador y Responsable que completó la evaluación.
-- Una columna más por cada Calificador y la última para el Responsable, que por defecto se muestran pero se pueden ocultar.
+- Promedio: contiene el promedio por cada concepto de cada Evaluador y Responsable que completó la evaluación.
+- Una columna más por cada Evaluador y la última para el Responsable, que por defecto se muestran pero se pueden ocultar.
 
 Cada uno completa la columna que le corresponde.  Se puede “Guardar” la evaluación en forma parcial sin cambiar el estado.  Una vez finalizada, se presiona el botón de “Finalizar” para dar por terminada la misma.
 
@@ -185,11 +185,11 @@ NOTA: se puede guardar cuantas veces sea necesario, pero una vez que se “Final
 
 La descripción de cada uno está en la sección ["Significado de cada Concepto"](#Significado_de_cada_Concepto)
 
-### Calificar como Empresa ###
+### Evaluar como Empresa ###
 
-Una vez que el responsable hizo la evaluación, ya se encuentra disponible la opción de Calificar como Empresa.  Se recomienda que antes de hacerla, se verifique que estén terminadas las de los calificadores y la autoevaluación.
+Una vez que el responsable hizo la evaluación, ya se encuentra disponible la opción de Evaluar como Empresa.  Se recomienda que antes de hacerla, se verifique que estén terminadas las de los evaluadores y la autoevaluación.
 
-En esta etapa, en base al feedback obtenido de todos los calificadores (tanto por los puntajes como los comentarios que se muestran bajo el encabezado del formulario), se elaboran y completan los siguientes campos:
+En esta etapa, en base al feedback obtenido de todos los evaluadores (tanto por los puntajes como los comentarios que se muestran bajo el encabezado del formulario), se elaboran y completan los siguientes campos:
 
 - **Fortalezas**: lo que más se destaca de la persona como favorable.  Típicamente estaría relacionado a los aspectos calificados con mayor puntaje.
 
@@ -203,9 +203,9 @@ Al finalizar se presiona en “Finalizar” para dar por terminada la evaluació
 
 ### Proceso de Devolución ###
 
-Una vez que se han hecho todas las evaluaciones (como mínimo: la auto-evaluación, la calificación del responsable y la calificación como empresa), el estado pasa a ser “Lista para Devolución”.
+Una vez que se han hecho todas las evaluaciones (como mínimo: la auto-evaluación, la evaluación del responsable y la evaluación como empresa), el estado pasa a ser “Lista para Devolución”.
 
-El responsable coordina una reunión con el evaluado y los calificadores que cree conveniente.  También pueden participar personas que no hayan trabajado en forma directa con el evaluado pero que estén interesadas en su plan de acción y crecimiento, por ejemplo por ser el responsable de un área.  
+El responsable coordina una reunión con el evaluado y los evaluadores que cree conveniente.  También pueden participar personas que no hayan trabajado en forma directa con el evaluado pero que estén interesadas en su plan de acción y crecimiento, por ejemplo por ser el responsable de un área.  
 
 NOTA: El espíritu de la charla debe centrarse en la actitud de aprendizaje contínuo y ser lo más exacta y ejemplificada posible.  De haber incumplimiento de expectativas, explicar claramente el por qué, dar ejemplos de hechos observables (no opiniones al respecto) y explicar el efecto negativo que tuvo o puede tener y/o el efecto positivo que tendría de hacerlo de otra forma.  No se deben hacer críticas sobre aspectos de la personalidad o comentarios despectivos ya que es una evaluación de aspectos profesionales desde el punto de vista de diferentes personas con diferentes formas de pensar.
 
@@ -223,7 +223,7 @@ Una vez que acuerdan que la evaluación está de acuerdo a lo conversado, se da 
 
 ### Proceso de Recategorización ###
 
-Es para los casos en que se considera que una persona debe ser promovida.  Para ello, se plantea durante el proceso de evaluación con los demás Calificadores y se acuerda si proponer a la persona o no.  Puede dejarse asentado como comentario en la evaluación.
+Es para los casos en que se considera que una persona debe ser promovida.  Para ello, se plantea durante el proceso de evaluación con los demás Evaluadores y se acuerda si proponer a la persona o no.  Puede dejarse asentado como comentario en la evaluación.
 
 Los casos a proponer se cargan en la planilla donde actualmente se está cargando la nómina de empleados y el estado de las evaluaciones (solicitar el link a Silvia o a RRHH de no tenerlo).  
 
