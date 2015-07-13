@@ -93,28 +93,27 @@ namespace CommonJobs.Application.EvalForm.Commands
         }        
 
         private bool CanUpdate(string loggedUser, EmployeeEvaluation evaluation, EvaluationCalification calification)
-        {
-            // This should not happen since the UI shouldn't allow a user to edit a finished calification's values.
-            if (calification.Finished) return false;
-
+        {            
             //Auto evaluator
             if (loggedUser == evaluation.UserName)
             {
-                if (calification.Owner == CalificationType.Auto && calification.EvaluatorEmployee == loggedUser) return true;
+                if (calification.Owner == CalificationType.Auto && calification.EvaluatorEmployee == loggedUser && !calification.Finished) return true;
             }
 
             //Responsible
             if (loggedUser == evaluation.ResponsibleId)
             {
-                if (calification.Owner == CalificationType.Responsible && calification.EvaluatorEmployee == loggedUser) return true;
+                if (calification.Owner == CalificationType.Responsible && calification.EvaluatorEmployee == loggedUser && !calification.Finished) return true;
 
+                // Auto calification can be edited (by the responsible) once finished (at the devolution)
                 if (calification.Owner == CalificationType.Auto && evaluation.ReadyForDevolution) return true;
 
+                // Company calification can be edited (by the responsible) once finished (at the devolution)
                 if (calification.Owner == CalificationType.Company && calification.EvaluatorEmployee == COMPANY) return true;
             }
 
             //Evaluator
-            if (calification.Owner == CalificationType.Evaluator && calification.EvaluatorEmployee == loggedUser) return true;
+            if (calification.Owner == CalificationType.Evaluator && calification.EvaluatorEmployee == loggedUser && !calification.Finished) return true;
 
             return false;
         }
