@@ -977,6 +977,41 @@ tr.evaluation-generated td {
   width: -webkit-calc(100% - (9 * 100px));
   width: calc(100% - (9 * 100px));
 }
+/* line 228, ../../sass/Evaluations/_evaluation.scss */
+.evaluation .calification-items.table-11-columns th:first-child,
+.evaluation .calification-items.table-11-columns td:first-child {
+  width: -moz-calc(100% - (10 * 100px));
+  width: -webkit-calc(100% - (10 * 100px));
+  width: calc(100% - (10 * 100px));
+}
+/* line 228, ../../sass/Evaluations/_evaluation.scss */
+.evaluation .calification-items.table-12-columns th:first-child,
+.evaluation .calification-items.table-12-columns td:first-child {
+  width: -moz-calc(100% - (11 * 100px));
+  width: -webkit-calc(100% - (11 * 100px));
+  width: calc(100% - (11 * 100px));
+}
+/* line 228, ../../sass/Evaluations/_evaluation.scss */
+.evaluation .calification-items.table-13-columns th:first-child,
+.evaluation .calification-items.table-13-columns td:first-child {
+  width: -moz-calc(100% - (12 * 100px));
+  width: -webkit-calc(100% - (12 * 100px));
+  width: calc(100% - (12 * 100px));
+}
+/* line 228, ../../sass/Evaluations/_evaluation.scss */
+.evaluation .calification-items.table-14-columns th:first-child,
+.evaluation .calification-items.table-14-columns td:first-child {
+  width: -moz-calc(100% - (13 * 100px));
+  width: -webkit-calc(100% - (13 * 100px));
+  width: calc(100% - (13 * 100px));
+}
+/* line 228, ../../sass/Evaluations/_evaluation.scss */
+.evaluation .calification-items.table-15-columns th:first-child,
+.evaluation .calification-items.table-15-columns td:first-child {
+  width: -moz-calc(100% - (14 * 100px));
+  width: -webkit-calc(100% - (14 * 100px));
+  width: calc(100% - (14 * 100px));
+}
 /* line 235, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .calification-items .calificators {
   position: relative;

@@ -88,7 +88,7 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
                 }
             }
             ViewBag.Period = period;
-            ViewBag.hasAutoCalification = true;
+            ViewBag.hasAutoCalification = isEvaluated;
             return View();
         }
 
@@ -136,26 +136,11 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
                         return new HttpStatusCodeResult(403, "Access Denied");
                     }
                 }
-            }
-
-            
-            IQueryable<EmployeeToEvaluate_Search.Projection> query = RavenSession
-                .Query<EmployeeToEvaluate_Search.Projection, EmployeeToEvaluate_Search>()
-                .Statistics(out stats)
-                .Where(e => e.Period == period && (e.UserName == loggedUser || e.ResponsibleId == loggedUser || (e.Evaluators != null && e.Evaluators.Any(x => x == loggedUser))))
-                .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite());
-
-            var evaluations = query.ToList();
-
-            if (evaluations.Count != 0) {
-                var isEvaluator = evaluations.Any(p => p.ResponsibleId == loggedUser || (p.Evaluators != null && p.Evaluators.Contains(loggedUser)));
-                if (isEvaluator)
-                {
-                    ViewBag.IsUserEvaluator = true;
-                }
-            }
+                ViewBag.IsUserEvaluator = true;
+            }         
 
             ViewBag.Period = period;
+            ViewBag.UserName = username;
             ViewBag.IsCalification = true;
             return View("Calification");
         }
