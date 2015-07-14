@@ -479,7 +479,7 @@
         this.title("Finalizar evaluación");
         this.text("¿Desea finalizar la evaluación? Recuerde que una vez finalizada tu evaluación no podrás volver a editarla");
         this.buttonBackText("Cancelar");
-        this.buttonFinalText("Finzalizar");
+        this.buttonFinalText("Finalizar");
         this.show(true);
         this.isConfirmButtonVisible(false);
         this.isFinalButtonVisible(true);
