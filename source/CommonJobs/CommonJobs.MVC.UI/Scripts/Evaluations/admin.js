@@ -7,10 +7,10 @@
             this.fromJS(data);
         }
         this.headers = [
-        { title: 'Empleado', sortPropertyName: 'fullName', asc: true, activeSort: ko.observable(false) },
-        { title: 'Puesto', sortPropertyName: 'currentPosition', asc: true, activeSort: ko.observable(false) },
-        { title: 'Seniority', sortPropertyName: 'seniority', asc: true, activeSort: ko.observable(false) },
-        { title: 'Responsable', sortPropertyName: 'responsible', asc: true, activeSort: ko.observable(false), observable: true }
+        { title: 'Empleado', sortable: true, sortPropertyName: 'fullName', defaultPropertyName: 'fullName', asc: true, activeSort: ko.observable(false) },
+        { title: 'Puesto', sortable: true, sortPropertyName: 'currentPosition', defaultPropertyName: 'fullName', asc: true, activeSort: ko.observable(false) },
+        { title: 'Seniority', sortable: true, sortPropertyName: 'seniority', defaultPropertyName: 'fullName', asc: true, activeSort: ko.observable(false) },
+        { title: 'Responsable', sortable: true, sortPropertyName: 'responsible', defaultPropertyName: 'fullName', asc: true, activeSort: ko.observable(false), observable: true }
         ];
         this.sort = commonSort.bind(this);
         this.defaultSort = function () {

@@ -48,7 +48,7 @@
             </div>
             <p class="explanatory-text">*Si no tenés conocimientos para calificar algún campo dejalo vacío</p>
         </div>
-        <!--ko if: userView == 3-->
+        <!--ko if: userView == 3 || (userView == 0 && evaluation.readyForDevolution) -->
         <div class="top-right">
             <h4>Comentarios Generales</h4>
             <div class="comments-container">
@@ -61,12 +61,12 @@
         <div class="comments-container comments-company-container">
             <textarea class="content-editable big-comment" data-bind="value: generalComment, enable: isEvaluationEditable()"></textarea>
         </div>
-        <h4>Comentarios del evaluado</h4>
+        <h4>Comentarios del Evaluado</h4>
         <div class="comments-container comments-company-container">
             <textarea class="content-editable big-comment" data-bind="value: evaluatedComment, enable: isEvaluationEditable()"></textarea>
         </div>
         <!-- /ko -->
-        <!--ko if: userView != 3-->
+        <!--ko if: userView != 3 && !(userView == 0 && evaluation.readyForDevolution) -->
         <div class="top-right">
             <h4>Comentarios Generales</h4>
             <div class="comments-container">

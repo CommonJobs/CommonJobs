@@ -28,20 +28,26 @@ function commonSort(header) {
             header.asc = !header.asc;
         } else {
             $.each(this.headers, function (i, e) {
-                e.activeSort(false);
+                if (e.sortable) {
+                    e.activeSort(false);
+                }
             });
             header.activeSort(true);
         }
         var prop = header.sortPropertyName;
-        var isObservable = header.observable || false;
+        var defaultProp = header.defaultPropertyName;
+        var isPropObservable = header.observable || false;
         var ascSort = function (a, b) {
-            var propertyA = a[prop];
-            var propertyB = b[prop];
-            if (isObservable) {
+            var propertyA = a[prop].toString().trim();
+            var propertyB = b[prop].toString().trim();
+            var propertyDefaultA = a[defaultProp].toString().trim();
+            var propertyDefaultB = b[defaultProp].toString().trim();
+            if (isPropObservable) {
                 propertyA = propertyA();
                 propertyB = propertyB();
             }
-            return propertyA < propertyB ? -1 : propertyA > propertyB ? 1 : propertyA == propertyB ? 0 : 0;
+            var result = propertyA < propertyB ? -1 : propertyA > propertyB ? 1 : propertyDefaultA < propertyDefaultB ? -1 : propertyDefaultA > propertyDefaultB ? 1 : 0;
+            return result;
         };
         var descSort = function (a, b) {
             return ascSort(b, a);

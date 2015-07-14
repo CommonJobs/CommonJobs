@@ -21,12 +21,15 @@
     <table class="table">
         <thead>
             <tr data-bind="foreach: headers">
+                <!-- ko if: sortable -->
                 <th data-bind="attr: { class: 'col-' + ($index()+1) }, click: $parent.sort, css: { selected: activeSort}">
-                    <!-- ko if: title != ''-->
-                        <i class="icon arrow"></i>
-                    <!-- /ko -->
+                    <i class="icon arrow"></i>
                     <span data-bind="text: title"></span>
                 </th>
+                <!-- /ko -->
+                <!-- ko if: !sortable -->
+                <th data-bind="attr: { class: 'col-' + ($index()+1) }"><span data-bind="text: title"></span></th>
+                <!-- /ko -->
             </tr>
         </thead>
         <tbody data-bind="foreach: items">
@@ -52,7 +55,7 @@
                 </td>
                 <td><span class="state-doc" data-bind="text: stateName, attr: { 'class': stateClasses }"></span></td>
                 <td><a class="link-responsable top-tip" data-bind="attr: {'data-tips': calificationActionTooltip(), href: calificationUrl}"><i data-bind="attr: { class: calificationActionClass() }"></i><span data-bind="text: calificationActionText()"></span></a></td>
-                <td><span data-bind="if: state() == 4"><button class="button-evaluations feedback-start" data-bind="click: startDevolutionUrl">Iniciar Devolución</button></span></td>
+                <td><span data-bind="if: state() == 4 && isResponsible"><button class="button-evaluations feedback-start" data-bind="click: startDevolutionUrl">Iniciar Devolución</button></span></td>
             </tr>
         </tbody>
     </table>

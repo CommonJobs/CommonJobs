@@ -129,18 +129,19 @@
             this.fromJS(data);
         }
         this.headers = [
-        { title: 'Rol', sortPropertyName: 'idResponsible', asc: true, activeSort: ko.observable(false) },
-        { title: 'Empleado', sortPropertyName: 'fullName', asc: true, activeSort: ko.observable(false) },
-        { title: 'Puesto', sortPropertyName: 'currentPosition', asc: true, activeSort: ko.observable(false) },
-        { title: 'Seniority', sortPropertyName: 'seniority', asc: true, activeSort: ko.observable(false) },
-        { title: 'Evaluadores', sortPropertyName: 'evaluators', asc: true, activeSort: ko.observable(false) },
-        { title: 'Estado', sortPropertyName: 'state', asc: true, activeSort: ko.observable(false), observable: true },
-        { title: '', sortPropertyName: '', asc: true, activeSort: ko.observable(false) },
-        { title: '', sortPropertyName: '', asc: true, activeSort: ko.observable(false) }
+        { title: 'Rol', sortable: true, sortPropertyName: 'isResponsible', defaultPropertyName: 'fullName', asc: true, activeSort: ko.observable(false) },
+        { title: 'Empleado', sortable: true, sortPropertyName: 'fullName', defaultPropertyName: 'fullName', asc: true, activeSort: ko.observable(false) },
+        { title: 'Puesto', sortable: true, sortPropertyName: 'currentPosition', defaultPropertyName: 'fullName', asc: true, activeSort: ko.observable(false) },
+        { title: 'Seniority', sortable: true, sortPropertyName: 'seniority', defaultPropertyName: 'fullName', asc: true, activeSort: ko.observable(false) },
+        { title: 'Evaluadores', sortable: false},
+        { title: 'Estado', sortable: true, sortPropertyName: 'state', defaultPropertyName: 'fullName', asc: true, activeSort: ko.observable(false), observable: true },
+        { title: '', sortable: false },
+        { title: '', sortable: false }
         ];
         this.sort = commonSort.bind(this);
         this.defaultSort = function () {
-            this.sort(this.headers[1]);
+            this.headers[0].activeSort(false);
+            this.sort(this.headers[0]);
         }
     }
 
