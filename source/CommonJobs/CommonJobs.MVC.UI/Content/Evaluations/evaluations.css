@@ -120,22 +120,24 @@
 [data-tips] {
   position: relative;
   text-decoration: none;
+  /* Top tips */
 }
-
 /* line 15, ../../sass/Evaluations/_tooltip.scss */
-[data-tips]:after,
-[data-tips]:before {
+[data-tips].wrap-text {
+  display: inline-block;
+  width: 100%;
+}
+/* line 20, ../../sass/Evaluations/_tooltip.scss */
+[data-tips]:after, [data-tips]:before {
   position: absolute;
   z-index: 100;
   opacity: 0;
 }
-
-/* line 21, ../../sass/Evaluations/_tooltip.scss */
+/* line 27, ../../sass/Evaluations/_tooltip.scss */
 [data-tips]:after {
   content: attr(data-tips);
-  height: 25px;
-  line-height: 25px;
-  padding: 0 10px;
+  line-height: 20px;
+  padding: 5px 10px;
   font-size: 12px;
   text-align: center;
   color: #fff;
@@ -145,13 +147,17 @@
   -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
   -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-  white-space: nowrap;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
+  white-space: nowrap;
 }
-
-/* line 40, ../../sass/Evaluations/_tooltip.scss */
+/* line 42, ../../sass/Evaluations/_tooltip.scss */
+[data-tips].wrap-text:after {
+  white-space: normal;
+  text-align: left;
+}
+/* line 47, ../../sass/Evaluations/_tooltip.scss */
 [data-tips]:before {
   content: "";
   width: 0;
@@ -159,39 +165,35 @@
   border-width: 6px;
   border-style: solid;
 }
-
-/* line 47, ../../sass/Evaluations/_tooltip.scss */
-[data-tips]:hover:after,
-[data-tips]:hover:before {
+/* line 55, ../../sass/Evaluations/_tooltip.scss */
+[data-tips]:hover:after, [data-tips]:hover:before {
   opacity: 1;
 }
-
-/* Top tips */
-/* line 52, ../../sass/Evaluations/_tooltip.scss */
-[data-tips].top-tip:after,
-[data-tips].top-tip:before {
-  -webkit-transition: bottom 0.25s ease-in-out, opacity 0.25s ease-in-out;
-  -moz-transition: bottom 0.25s ease-in-out, opacity 0.25s ease-in-out;
-  transition: bottom 0.25s ease-in-out, opacity 0.25s ease-in-out;
-  bottom: 90%;
+/* line 61, ../../sass/Evaluations/_tooltip.scss */
+[data-tips].top-tip:after, [data-tips].top-tip:before {
+  bottom: 0%;
   left: -9999px;
   margin-bottom: 12px;
+  -moz-transition: bottom 0.25s ease-in-out;
+  -o-transition: bottom 0.25s ease-in-out;
+  -webkit-transition: bottom 0.25s ease-in-out;
+  transition: bottom 0.25s ease-in-out;
+  -moz-transition: opacity 0.25s ease-in-out;
+  -o-transition: opacity 0.25s ease-in-out;
+  -webkit-transition: opacity 0.25s ease-in-out;
+  transition: opacity 0.25s ease-in-out;
 }
-
-/* line 61, ../../sass/Evaluations/_tooltip.scss */
+/* line 70, ../../sass/Evaluations/_tooltip.scss */
 [data-tips].top-tip:before {
   border-color: #222 transparent transparent transparent;
   margin-bottom: 0;
 }
-
-/* line 65, ../../sass/Evaluations/_tooltip.scss */
-[data-tips].top-tip:hover:after,
-[data-tips].top-tip:hover:before {
+/* line 75, ../../sass/Evaluations/_tooltip.scss */
+[data-tips].top-tip:hover:after, [data-tips].top-tip:hover:before {
   bottom: 100%;
   left: 0;
 }
-
-/* line 70, ../../sass/Evaluations/_tooltip.scss */
+/* line 81, ../../sass/Evaluations/_tooltip.scss */
 [data-tips].top-tip:hover:before {
   left: 15px;
 }
@@ -367,34 +369,36 @@ h1 {
 /* line 167, ../../sass/Evaluations/_base.scss */
 .icon {
   padding-left: 20px;
+  padding-right: 5px;
   background-size: contain;
   background-repeat: no-repeat;
+  background-position: center;
 }
-/* line 172, ../../sass/Evaluations/_base.scss */
+/* line 174, ../../sass/Evaluations/_base.scss */
 .icon.arrow {
   background-image: url(../Images/Evaluations/2.png);
 }
-/* line 175, ../../sass/Evaluations/_base.scss */
+/* line 177, ../../sass/Evaluations/_base.scss */
 .icon.arrow.selected {
   background-image: url(../Images/Evaluations/3.png);
 }
-/* line 178, ../../sass/Evaluations/_base.scss */
+/* line 180, ../../sass/Evaluations/_base.scss */
 .icon.add {
   background-image: url(../Images/Evaluations/1-02.png);
 }
-/* line 182, ../../sass/Evaluations/_base.scss */
+/* line 184, ../../sass/Evaluations/_base.scss */
 .icon.edit {
   background-image: url(../Images/Evaluations/6-02.png);
 }
-/* line 186, ../../sass/Evaluations/_base.scss */
+/* line 188, ../../sass/Evaluations/_base.scss */
 .icon.user {
   background-image: url(../Images/Evaluations/3-02.png);
 }
-/* line 190, ../../sass/Evaluations/_base.scss */
+/* line 192, ../../sass/Evaluations/_base.scss */
 .icon.empresa {
   background-image: url(../Images/Evaluations/7-02.png);
 }
-/* line 194, ../../sass/Evaluations/_base.scss */
+/* line 196, ../../sass/Evaluations/_base.scss */
 .icon.view {
   background-image: url(../Images/Evaluations/4-02.png);
 }
