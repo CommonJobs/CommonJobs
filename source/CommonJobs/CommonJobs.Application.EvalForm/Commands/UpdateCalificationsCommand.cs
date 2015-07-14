@@ -33,6 +33,10 @@ namespace CommonJobs.Application.EvalForm.Commands
             {
                 throw new ApplicationException(string.Format("Error: Evaluación {0} inexistente", _updateEvaluation.EvaluationId));
             }
+            else if (storedEvaluation.Finished)
+            {
+                throw new ApplicationException(string.Format("Error: Evaluación {0} cerrada", _updateEvaluation.EvaluationId));
+            }
 
             foreach (var calification in _updateEvaluation.Califications)
             {
@@ -60,12 +64,16 @@ namespace CommonJobs.Application.EvalForm.Commands
                 }
             }
 
-            if (updateEvaluationProject || updateEvaluationComments)
+            if (updateEvaluationProject || updateEvaluationComments || (_loggedUser == storedEvaluation.ResponsibleId && storedEvaluation.ReadyForDevolution))
             {
-                // The evaluation gets updated only if the calification being updated is the company or the final one (devolution)
-                UpdateEvaluation(updateEvaluationComments, updateEvaluationProject, storedEvaluation);
+                storedEvaluation.Project = updateEvaluationProject ? _updateEvaluation.Project : storedEvaluation.Project;
+                storedEvaluation.StrengthsComment = updateEvaluationComments ? _updateEvaluation.Strengths : storedEvaluation.StrengthsComment;
+                storedEvaluation.ToImproveComment = updateEvaluationComments ? _updateEvaluation.ToImprove : storedEvaluation.ToImproveComment;
+                storedEvaluation.ActionPlanComment = updateEvaluationComments ? _updateEvaluation.ActionPlan : storedEvaluation.ActionPlanComment;
+                storedEvaluation.Finished = (_loggedUser == storedEvaluation.ResponsibleId && storedEvaluation.ReadyForDevolution) ? _updateEvaluation.EvaluationFinished : storedEvaluation.Finished;
+                RavenSession.Store(storedEvaluation);
             }
-        }
+        }        
 
         private void UpdateCalification(UpdateCalificationDto calification, EvaluationCalification storedCalification, bool finished)
         {
@@ -82,30 +90,12 @@ namespace CommonJobs.Application.EvalForm.Commands
         {
             ExecuteCommand(new GenerateCalificationCommand(storedCalification.Period, storedCalification.EvaluatedEmployee, COMPANY, storedCalification.TemplateId, CalificationType.Company,
                 storedCalification.EvaluationId));
-        }
-
-        private void UpdateEvaluation(bool updateEvaluationComments, bool updateEvaluationProject, EmployeeEvaluation storedEvaluation)
-        {
-            if (updateEvaluationProject)
-            {
-                storedEvaluation.Project = _updateEvaluation.Project;
-            }
-
-            if (updateEvaluationComments)
-            {
-                storedEvaluation.StrengthsComment = _updateEvaluation.Strengths;
-                storedEvaluation.ToImproveComment = _updateEvaluation.ToImprove;
-                storedEvaluation.ActionPlanComment = _updateEvaluation.ActionPlan;
-            }
-
-            // Update the EmployeeEvaluation document in the collection (DB)
-            RavenSession.Store(storedEvaluation);
-        }
+        }        
 
         private bool CanUpdate(string loggedUser, EmployeeEvaluation evaluation, EvaluationCalification calification)
         {
             // This should not happen since the UI shouldn't allow a user to edit a finished calification's values.
-            if (evaluation.Finished || calification.Finished) return false;
+            if (calification.Finished) return false;
 
             //Auto evaluator
             if (loggedUser == evaluation.UserName)
