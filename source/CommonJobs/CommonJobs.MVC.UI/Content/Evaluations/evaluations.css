@@ -460,12 +460,12 @@ h1 {
   margin-right: 10px;
 }
 
-/* line 1, ../../sass/Evaluations/_generate-evaluation.scss */
-thead th span {
-  padding-right: 15px;
+/* line 3, ../../sass/Evaluations/_generate-evaluation.scss */
+thead th.selected .icon.arrow {
+  background-image: url(../Images/Evaluations/3.png);
 }
 
-/* line 4, ../../sass/Evaluations/_generate-evaluation.scss */
+/* line 7, ../../sass/Evaluations/_generate-evaluation.scss */
 tr.evaluation-generated td {
   color: #b2b2b2;
 }
@@ -498,27 +498,31 @@ tr.evaluation-generated td {
 .responsible table th.col-8 {
   width: 110px;
 }
-/* line 37, ../../sass/Evaluations/_responsible.scss */
-.responsible .rol {
-  text-align: center;
+/* line 34, ../../sass/Evaluations/_responsible.scss */
+.responsible table th.selected .icon.arrow {
+  background-image: url(../Images/Evaluations/3.png);
 }
-/* line 41, ../../sass/Evaluations/_responsible.scss */
+/* line 40, ../../sass/Evaluations/_responsible.scss */
+.responsible .rol {
+  padding-left: 17px;
+}
+/* line 44, ../../sass/Evaluations/_responsible.scss */
 .responsible a {
   text-decoration: none;
   color: inherit;
   cursor: pointer;
   padding-left: 3px;
 }
-/* line 47, ../../sass/Evaluations/_responsible.scss */
+/* line 50, ../../sass/Evaluations/_responsible.scss */
 .responsible a .calification-links.disable {
   color: #777;
 }
-/* line 51, ../../sass/Evaluations/_responsible.scss */
+/* line 54, ../../sass/Evaluations/_responsible.scss */
 .responsible a .link-responsable {
   padding: 10px;
   text-decoration: underline;
 }
-/* line 58, ../../sass/Evaluations/_responsible.scss */
+/* line 61, ../../sass/Evaluations/_responsible.scss */
 .responsible .button-evaluations.feedback-start {
   float: none;
   padding: 0;
@@ -528,12 +532,12 @@ tr.evaluation-generated td {
   width: 90px;
   margin: 0;
 }
-/* line 69, ../../sass/Evaluations/_responsible.scss */
+/* line 72, ../../sass/Evaluations/_responsible.scss */
 .responsible .state-doc {
   display: inline-block;
   padding-left: 15px;
 }
-/* line 73, ../../sass/Evaluations/_responsible.scss */
+/* line 76, ../../sass/Evaluations/_responsible.scss */
 .responsible .state-doc:before {
   /* For a round bullet */
   content: '\2022';
@@ -545,23 +549,23 @@ tr.evaluation-generated td {
   font-size: 34px;
   line-height: 20px;
 }
-/* line 86, ../../sass/Evaluations/_responsible.scss */
+/* line 89, ../../sass/Evaluations/_responsible.scss */
 .responsible .state-doc.state-0:before, .responsible .state-doc.state-5:before {
   color: #6DC32E;
 }
-/* line 92, ../../sass/Evaluations/_responsible.scss */
+/* line 95, ../../sass/Evaluations/_responsible.scss */
 .responsible .state-doc.state-1:before {
   color: #E94830;
 }
-/* line 98, ../../sass/Evaluations/_responsible.scss */
+/* line 101, ../../sass/Evaluations/_responsible.scss */
 .responsible .state-doc.state-2:before, .responsible .state-doc.state-3:before {
   color: #F7EC4D;
 }
-/* line 104, ../../sass/Evaluations/_responsible.scss */
+/* line 107, ../../sass/Evaluations/_responsible.scss */
 .responsible .state-doc.state-4:before {
   color: #419BF7;
 }
-/* line 110, ../../sass/Evaluations/_responsible.scss */
+/* line 113, ../../sass/Evaluations/_responsible.scss */
 .responsible .state-doc.state-6:before {
   color: #888;
 }
