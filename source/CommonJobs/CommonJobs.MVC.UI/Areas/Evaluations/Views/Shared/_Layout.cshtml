@@ -23,7 +23,7 @@
             </button>    
             @if (ViewBag.IsUserEvaluator != null && ViewBag.IsUserEvaluator)
             {
-                <div class="breadcrum"><a href="@Url.Content("~/Evaluations/" + ViewBag.Period)" >Dashboard</a> > Calificación</div>        
+                <div class="breadcrum"><a href="@Url.Content("~/Evaluations/" + ViewBag.Period)" >Dashboard</a> > Evaluación</div>        
             }
             <div class="pull-right">
                 <form class="form-inline" id="persistenceForm">
@@ -36,7 +36,7 @@
                         }
                         @if (ViewBag.hasAutoCalification != null && ViewBag.hasAutoCalification)
                         {
-                        <li><a class="btn btn-primary" href="@Url.Content("~/Evaluations/" + ViewBag.Period + "/" + User.Identity.Name)" >AutoCalificación</a></li>
+                        <li><a class="btn btn-primary" href="@Url.Content("~/Evaluations/" + ViewBag.Period + "/" + User.Identity.Name)" >AutoEvaluación</a></li>
                         }
                         <li>@Html.DocumentationLink("Ayuda")</li>
                         @if (Request.IsAuthenticated && User != null && User.Identity != null && User.Identity.Name != null) 
