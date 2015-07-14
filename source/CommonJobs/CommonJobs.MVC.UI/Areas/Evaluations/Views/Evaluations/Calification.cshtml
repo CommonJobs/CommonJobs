@@ -102,7 +102,7 @@
             </tr>
             <!-- ko foreach: items -->
             <tr>
-                <td><span data-bind="text: text, attr:{'data-tips': description}" class="top-tip rol"></span></td>
+                <td><span data-bind="text: text, attr:{'data-tips': description}" class="top-tip rol wrap-text"></span></td>
                 <!-- ko foreach: values -->
                 <td>
                     <span data-bind="if: !editable"><span data-bind="text: value, visible: showValue()"></span></span>
