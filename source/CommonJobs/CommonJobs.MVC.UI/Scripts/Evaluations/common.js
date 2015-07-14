@@ -38,14 +38,16 @@ function commonSort(header) {
         var defaultProp = header.defaultPropertyName;
         var isPropObservable = header.observable || false;
         var ascSort = function (a, b) {
-            var propertyA = a[prop].toString().trim();
-            var propertyB = b[prop].toString().trim();
+            var propertyA = a[prop];
+            var propertyB = b[prop];
             var propertyDefaultA = a[defaultProp].toString().trim();
             var propertyDefaultB = b[defaultProp].toString().trim();
             if (isPropObservable) {
                 propertyA = propertyA();
                 propertyB = propertyB();
             }
+            propertyA = propertyA.toString().trim();
+            propertyB = propertyB.toString().trim();
             var result = propertyA < propertyB ? -1 : propertyA > propertyB ? 1 : propertyDefaultA < propertyDefaultB ? -1 : propertyDefaultA > propertyDefaultB ? 1 : 0;
             return result;
         };

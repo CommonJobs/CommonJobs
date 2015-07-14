@@ -155,11 +155,12 @@
         );
 
         var userLoggedCalifiction = _.find(self.califications, function (calification) {
-            return (self.userView == 3 && calification.owner == 3) || (self.userView != 3 && calification.evaluatorEmployee == self.userLogged);
+            return (calification.owner == 3 && (self.userView == 3 || (self.userView == 0 && self.evaluation.readyForDevolution)))
+                || (self.userView != 3 && !(self.userView == 0 && self.evaluation.readyForDevolution) && calification.evaluatorEmployee == self.userLogged);
         })
 
         var userLoggedEvaluated = _.find(self.califications, function (calification) {
-            return (self.userView == 3 && calification.owner == 0) || (self.userView == 0 && calification.evaluatorEmployee == self.userLogged);
+            return calification.owner == 0;
         })
 
         this.evaluatedComment = (userLoggedEvaluated) ? userLoggedEvaluated.comments : ko.observable('');
@@ -433,7 +434,7 @@
         this.strengthsComment(data.StrengthsComment);
         this.improveComment(data.ToImproveComment);
         this.actionPlanComment(data.ActionPlanComment);
-        this.evaluators = data.Evaluators.join(', ') || '-';
+        this.evaluators = data.Evaluators.join(', ');
         viewmodel.isDirty.register(this.project);
         viewmodel.isDirty.register(this.strengthsComment);
         viewmodel.isDirty.register(this.improveComment);
