@@ -61,6 +61,10 @@
         <div class="comments-container comments-company-container">
             <textarea class="content-editable big-comment" data-bind="value: generalComment, enable: isEvaluationEditable()"></textarea>
         </div>
+        <h4>Comentarios del evaluado</h4>
+        <div class="comments-container comments-company-container">
+            <textarea class="content-editable big-comment" data-bind="value: evaluatedComment, enable: isEvaluationEditable()"></textarea>
+        </div>
         <!-- /ko -->
         <!--ko if: userView != 3-->
         <div class="top-right">

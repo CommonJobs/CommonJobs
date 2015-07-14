@@ -59,9 +59,6 @@
         var self = this;
         if (this.isValid()) {
             var dto = this.toDto();
-            if (this.calificationFinished) {
-                dto.CalificationFinished = true;
-            }
             $.ajax("/Evaluations/api/SaveEvaluationCalifications/", {
                 type: "POST",
                 dataType: 'json',
@@ -69,7 +66,7 @@
                 data: JSON.stringify(dto),
                 success: function (response) {
                     self.isDirty(false);
-                    if (self.calificationFinished) {
+                    if (self.calificationFinished || self.evaluationFinished) {
                         if (self.userView == 0) {
                             window.location = urlGenerator.action("Index", "Home");
                         } else {
@@ -94,21 +91,26 @@
             modalViewModel.isConfirmButtonVisible(true);
         }
         else {
-            this.calificationFinished = true;
-            this.onSave(true);
+            if (this.evaluation.readyForDevolution) {
+                this.evaluationFinished = true;
+            } else {
+                this.calificationFinished = true;
+            }
+            this.onSave();
         }
     }
 
     EvaluationViewModel.prototype.isValueEditable = function (calification) {
-        return ((this.userLogged == calification.calificationColumn.evaluatorEmployee) ||
-            (this.userView == 3 && calification.calificationColumn.evaluatorEmployee == "_company")) && !calification.calificationColumn.finished;
+        return !this.evaluation.finished && ((((this.userLogged == calification.calificationColumn.evaluatorEmployee) ||
+            (this.userView == 3 && calification.calificationColumn.evaluatorEmployee == "_company")) && !calification.calificationColumn.finished) ||
+            this.evaluation.readyForDevolution && this.userView == 3 && (calification.calificationColumn.owner == 3 || calification.calificationColumn.owner == 0))
     }
 
     EvaluationViewModel.prototype.fromJs = function (data) {
         var self = this;
         this.userView = data.UserView;
         this.userLogged = data.UserLogged;
-        this.hasAverageColumn = this.userView == 1 || this.userView == 3;
+        this.hasAverageColumn = !data.Evaluation.Finished && (this.userView == 1 || this.userView == 3);
         this.numberOfColumns = "table-" + ((this.hasAverageColumn) ? (data.Califications.length + 2) : (data.Califications.length + 1)) + "-columns";
         var calificationsSorted = data.Califications.sort(sortCalificationColumns);
         this.califications = _.map(calificationsSorted, function (calification) {
@@ -117,26 +119,48 @@
             if (calification.Owner == 3 && (!calification.Califications || !calification.Califications.length)) {
                 self.isCompanyCalificationsEmpty = true;
             }
+            var show = self.userView == 0 || (self.userView != 0 && calification.Owner != 0);
+            var hasShowIcon = calification.Finished || (calification.EvaluatorEmployee != self.userLogged && calification.Owner != self.userView);
             return {
                 id: calification.Id,
                 owner: calification.Owner,
                 evaluatorEmployee: calification.EvaluatorEmployee,
                 comments: comment,
                 finished: calification.Finished,
-                show: ko.observable(self.userView == 0 || (self.userView != 0 && calification.Owner != 0)),
-                hasShowIcon: calification.Finished || (calification.EvaluatorEmployee != self.userLogged && calification.Owner != self.userView)
+                show: ko.observable(show),
+                hasShowIcon: hasShowIcon
             }
         });
         
         this.evaluation.fromJs(data.Evaluation);
 
-        this.isEvaluationEditable(!this.evaluation.finished && _.some(this.califications, function (calification) {
-            return calification.owner == self.userView && !calification.finished;
-        }));
+        if (this.evaluation.readyForDevolution) {
+            _.chain(self.califications)
+            .filter(function (calification) {
+                return calification.owner == 0 || calification.owner == 3;
+            })
+            .map(function(calificationEditable){
+                calificationEditable.hasShowIcon = false;
+                calificationEditable.show(true);
+            });
+        }
+        
+        this.isEvaluationEditable(!this.evaluation.finished &&
+            (_.some(this.califications, function (calification) {
+                return calification.owner == self.userView && !calification.finished;
+            }) || this.evaluation.readyForDevolution && this.userView == 3)
+        );
 
         var userLoggedCalifiction = _.find(self.califications, function (calification) {
             return (self.userView == 3 && calification.owner == 3) || (self.userView != 3 && calification.evaluatorEmployee == self.userLogged);
         })
+
+        var userLoggedEvaluated = _.find(self.califications, function (calification) {
+            return (self.userView == 3 && calification.owner == 0) || (self.userView == 0 && calification.evaluatorEmployee == self.userLogged);
+        })
+
+        this.evaluatedComment = (userLoggedEvaluated) ? userLoggedEvaluated.comments : ko.observable('');
+
         this.generalComment = (userLoggedCalifiction) ? userLoggedCalifiction.comments : ko.observable('');
 
         if (!this.generalComment() && this.userView == 3) {
@@ -169,7 +193,7 @@
             if (calification.Califications) {
                 for (var i in calification.Califications) {
                     var cal = calification.Califications[i];
-                    valuesByKey[cal.Key] = cal.Value;
+                    valuesByKey[cal.Key] = cal.Value.toFixed(1);
                 }
             }
             
@@ -326,6 +350,8 @@
     EvaluationViewModel.prototype.toDto = function (data) {
         var self = this;
         return {
+            EvaluationFinished: this.evaluationFinished,
+            CalificationFinished: this.calificationFinished,
             EvaluationId: this.evaluation.id,
             Project: this.evaluation.project(),
             ToImprove: this.evaluation.improveComment(),
@@ -333,19 +359,21 @@
             ActionPlan: this.evaluation.actionPlanComment(),
             Califications: _.chain(self.califications)
                 .filter(function (calification) {
-                    return calification.owner == self.userView;
+                    return calification.owner == self.userView || (self.evaluation.readyForDevolution && calification.owner == 0);
                 })
                 .map(function(calification) {
                     var calificationItems = _.chain(self.groups)
                         .map(function(group) {
                             var itemsList = _.map(group.items, function(item) {
-                                var value = _.find(item.values, function (element) {
-                                    return element.calificationId == calification.id;
+                                var values = _.filter(item.values, function (element) {
+                                    return element.editable;
                                 });
-                                if (value && value.value()) {
-                                    return {
-                                        Key: item.key.toString(),
-                                        Value: parseFloat(value.value())
+                                for (var key in values) {
+                                    if (values[key].value()) {
+                                        return {
+                                            Key: item.key.toString(),
+                                            Value: parseFloat(values[key].value())
+                                        }
                                     }
                                 }
                                 return;
@@ -360,8 +388,7 @@
                         Comments: calification.comments()
                     }
                 })
-                .value(),
-            Finished: false
+                .value()
         }
     }
 
@@ -378,7 +405,8 @@
         this.seniority = '';
         this.period = '';
         this.evaluators = '';
-        this.finished = '';
+        this.finished = false;
+        this.readyForDevolution = false;
         this.project = ko.observable('');
         this.strengthsComment = ko.observable('');
         this.improveComment = ko.observable('');
@@ -397,6 +425,7 @@
         this.seniority = data.Seniority;
         this.period = data.Period;
         this.finished = data.Finished;
+        this.readyForDevolution = data.ReadyForDevolution;
         this.project(data.Project);
         this.strengthsComment(data.StrengthsComment);
         this.improveComment(data.ToImproveComment);
