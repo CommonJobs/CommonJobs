@@ -86,20 +86,29 @@
     }
     
     EvaluationViewModel.prototype.onFinish = function () {
-        if (this.hasEmptyValues()) {
-            modalViewModel.title("Finalizar evaluación");
-            modalViewModel.text("¿Desea finalizar la evaluación con calificaciones vacías?");
-            modalViewModel.buttonBackText("Cancelar");
-            modalViewModel.buttonConfirmText("Confirmar");
-            modalViewModel.show(true);
-            modalViewModel.isConfirmButtonVisible(true);
-            modalViewModel.isFinalButtonVisible(false);
-        }
-        else {
+        if (!this.isValid() || this.hasEmptyValues()) {
+            if (!this.isValid()) {
+                modalViewModel.title("Guardar evaluación");
+                modalViewModel.text("No se puede guardar la evaluación porque hay calificaciones INVÁLIDAS");
+                modalViewModel.buttonBackText("Volver");
+                modalViewModel.show(true);
+                modalViewModel.isConfirmButtonVisible(false);
+                modalViewModel.isFinalButtonVisible(false);
+            } else {
+                modalViewModel.title("Finalizar evaluación");
+                modalViewModel.text("¿Desea finalizar la evaluación con calificaciones vacías?");
+                modalViewModel.buttonBackText("Cancelar");
+                modalViewModel.buttonConfirmText("Confirmar");
+                modalViewModel.show(true);
+                modalViewModel.isConfirmButtonVisible(true);
+                modalViewModel.isFinalButtonVisible(false);
+            }
+            
+        } else {
             modalViewModel.title("Finalizar evaluación");
             modalViewModel.text("¿Desea finalizar la evaluación? Recuerde que una vez finalizada tu evaluación no podrás volver a editarla");
             modalViewModel.buttonBackText("Cancelar");
-            modalViewModel.buttonFinalText("Finzalizar");
+            modalViewModel.buttonFinalText("Finalizar");
             modalViewModel.show(true);
             modalViewModel.isConfirmButtonVisible(false);
             modalViewModel.isFinalButtonVisible(true);
