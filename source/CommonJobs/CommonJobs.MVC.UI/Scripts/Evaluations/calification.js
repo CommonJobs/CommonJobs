@@ -81,26 +81,30 @@
             modalViewModel.buttonBackText("Volver");
             modalViewModel.show(true);
             modalViewModel.isConfirmButtonVisible(false);
+            modalViewModel.isFinalButtonVisible(false);
         }
     }
     
     EvaluationViewModel.prototype.onFinish = function () {
         if (this.hasEmptyValues()) {
             modalViewModel.title("Finalizar evaluación");
-            modalViewModel.text("¿Desea finalizar evaluación con calificaciones vacías?");
+            modalViewModel.text("¿Desea finalizar la evaluación con calificaciones vacías?");
             modalViewModel.buttonBackText("Cancelar");
             modalViewModel.buttonConfirmText("Confirmar");
             modalViewModel.show(true);
             modalViewModel.isConfirmButtonVisible(true);
+            modalViewModel.isFinalButtonVisible(false);
         }
         else {
-            if (this.evaluation.readyForDevolution) {
-                this.evaluationFinished = true;
-            } else {
-                this.calificationFinished = true;
-            }
-            this.onSave();
+            modalViewModel.title("Finalizar evaluación");
+            modalViewModel.text("¿Desea finalizar la evaluación? Recuerde que una vez finalizada tu evaluación no podrás volver a editarla");
+            modalViewModel.buttonBackText("Cancelar");
+            modalViewModel.buttonFinalText("Finzalizar");
+            modalViewModel.show(true);
+            modalViewModel.isConfirmButtonVisible(false);
+            modalViewModel.isFinalButtonVisible(true);
         }
+        
     }
 
     EvaluationViewModel.prototype.isValueEditable = function (calification) {
@@ -462,16 +466,32 @@
         this.text = ko.observable('');
         this.buttonBackText = ko.observable('');
         this.buttonConfirmText = ko.observable('');
+        this.buttonFinalText = ko.observable('');
         this.isConfirmButtonVisible = ko.observable(false);
+        this.isFinalButtonVisible = ko.observable(false);
     };
 
     ModalViewModel.prototype.backAction = function () {
         this.show(false);
     }
-
     ModalViewModel.prototype.confirmAction = function () {
         this.show(false);
-        viewmodel.calificationFinished = true;
+        this.title("Finalizar evaluación");
+        this.text("¿Desea finalizar la evaluación? Recuerde que una vez finalizada tu evaluación no podrás volver a editarla");
+        this.buttonBackText("Cancelar");
+        this.buttonFinalText("Finzalizar");
+        this.show(true);
+        this.isConfirmButtonVisible(false);
+        this.isFinalButtonVisible(true);
+    }
+
+    ModalViewModel.prototype.finalAction = function () {
+        this.show(false);
+        if (viewmodel.evaluation.readyForDevolution) {
+            viewmodel.evaluationFinished = true;
+        } else {
+            viewmodel.calificationFinished = true;
+        }
         viewmodel.onSave(true);
     }
 
