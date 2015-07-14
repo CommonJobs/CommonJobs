@@ -17,7 +17,7 @@
 }
 
 <div class="content-evaluation responsible">
-    <h2 class="title">Responsable y Calificador de las siguientes evaluaciones</h2>
+    <h2 class="title">Responsable y/o Calificador de las siguientes evaluaciones</h2>
     <table class="table">
         <thead>
             <tr data-bind="foreach: headers">
@@ -32,7 +32,7 @@
         <tbody data-bind="foreach: items">
             <tr>
                 <td>
-                    <span data-bind="if: !isResponsible"><span class="top-tip rol" data-tips="Calificador">C</span></span>
+                    <span data-bind="if: !isResponsible"><span class="top-tip rol" data-tips="Evaluador">E</span></span>
                     <span data-bind="if: isResponsible"><span class="top-tip rol" data-tips="Responsable">R</span></span>
                 </td>
                 <td data-bind="text: fullName"></td>

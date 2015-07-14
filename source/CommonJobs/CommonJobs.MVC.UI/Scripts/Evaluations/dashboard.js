@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-    var evaluationStates = ['En curso', 'Esperando Cal Empleado', 'Esperando Cal Responsable', 'Esperando Cal Empresa', 'Lista para devolución', 'Abierta para devolución', 'Finalizada'];
+    var evaluationStates = ['En curso', 'Esperando Eval Empleado', 'Esperando Eval Responsable', 'Esperando Eval Empresa', 'Lista para devolución', 'Abierta para devolución', 'Finalizada'];
 
     var CalificatorsManager = function (data) {
         var self = this;
@@ -13,7 +13,7 @@
         }, this);
         this.saveButtonEnable = ko.observable(false);
         this.title = ko.computed(function () {
-            return this.activeCalificators().length > 0 ? 'Editar Calificadores' : 'Agregar Calificadores';
+            return this.activeCalificators().length > 0 ? 'Editar Evaluadores' : 'Agregar Evaluadores';
         }, this);
         if (data) {
             this.fromJs(data);
@@ -133,7 +133,7 @@
         { title: 'Empleado', sortPropertyName: 'fullName', asc: true, activeSort: ko.observable(false) },
         { title: 'Puesto', sortPropertyName: 'currentPosition', asc: true, activeSort: ko.observable(false) },
         { title: 'Seniority', sortPropertyName: 'seniority', asc: true, activeSort: ko.observable(false) },
-        { title: 'Calificadores', sortPropertyName: 'evaluators', asc: true, activeSort: ko.observable(false)},
+        { title: 'Evaluadores', sortPropertyName: 'evaluators', asc: true, activeSort: ko.observable(false) },
         { title: 'Estado', sortPropertyName: 'state', asc: true, activeSort: ko.observable(false), observable: true },
         { title: '', sortPropertyName: '', asc: true, activeSort: ko.observable(false) },
         { title: '', sortPropertyName: '', asc: true, activeSort: ko.observable(false) }
@@ -196,7 +196,7 @@
             return this.evaluators.length;
         }, this);
         this.evaluatorsTextLink = ko.computed(function () {
-            return (this.evaluatorsAmount() === 1) ? this.evaluatorsAmount() + " calificador" : this.evaluatorsAmount() + " calificadores";
+            return (this.evaluatorsAmount() === 1) ? this.evaluatorsAmount() + " evaluador" : this.evaluatorsAmount() + " evaluadores";
         }, this);
         this.calificationActionTooltip = ko.observable('');
         this.calificationActionText = ko.observable('');
@@ -218,29 +218,29 @@
                 case 0:
                 case 2:
                     if (this.isResponsible) {
-                        this.calificationActionTooltip("Calificar como responsable");
+                        this.calificationActionTooltip("Evaluar como responsable");
                     } else {
-                        this.calificationActionTooltip("Calificar como calificador");
+                        this.calificationActionTooltip("Evaluar como evaluador");
                     }
                     this.calificationActionClass("icon user");
-                    this.calificationActionText("Calificar");
+                    this.calificationActionText("Evaluar");
                     break;
                 case 1:
                 case 3:
                     if (this.isResponsible) {
-                        this.calificationActionText("Calificar");
+                        this.calificationActionText("Evaluar");
                         this.calificationActionClass("icon empresa");
-                        this.calificationActionTooltip("Calificar como empresa");
+                        this.calificationActionTooltip("Evaluar como empresa");
                     } else {
-                        this.calificationActionText("Ver Calificación");
+                        this.calificationActionText("Ver Evaluación");
                         this.calificationActionClass("icon view");
-                        this.calificationActionTooltip("Ver Calificación");
+                        this.calificationActionTooltip("Ver Evaluación");
                     }
                     break;
                 default:
-                    this.calificationActionText("Ver Calificación");
+                    this.calificationActionText("Ver Evaluación");
                     this.calificationActionClass("icon view");
-                    this.calificationActionTooltip("Ver Calificación");
+                    this.calificationActionTooltip("Ver Evaluación");
                     break;
             }
         }, this);

@@ -78,6 +78,7 @@
         } else {
             modalViewModel.title("Guardar evaluación");
             modalViewModel.text("No se puede guardar la evaluación porque hay calificaciones INVÁLIDAS");
+            modalViewModel.buttonBackText("Volver");
             modalViewModel.show(true);
             modalViewModel.isConfirmButtonVisible(false);
         }
@@ -87,6 +88,8 @@
         if (this.hasEmptyValues()) {
             modalViewModel.title("Finalizar evaluación");
             modalViewModel.text("¿Desea finalizar evaluación con calificaciones vacías?");
+            modalViewModel.buttonBackText("Cancelar");
+            modalViewModel.buttonConfirmText("Confirmar");
             modalViewModel.show(true);
             modalViewModel.isConfirmButtonVisible(true);
         }
@@ -457,6 +460,8 @@
         this.show = ko.observable(false);
         this.title = ko.observable('');
         this.text = ko.observable('');
+        this.buttonBackText = ko.observable('');
+        this.buttonConfirmText = ko.observable('');
         this.isConfirmButtonVisible = ko.observable(false);
     };
 
