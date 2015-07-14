@@ -25,7 +25,7 @@
             <h4>Información Personal</h4>
             <ul class="personal-info-container clearfix">
                 <li><span class="item">Puesto:</span><span class="item-info" data-bind="text: evaluation.currentPosition"></span></li>
-                <li><span class="item">Evaluadores:</span><span class="top-tip" data-bind="if: evaluation.evaluators, attr: { 'data-tips': evaluation.evaluators }"><span class="item-info" data-bind="text: evaluation.evaluators"></span></span></li>
+                <li><span class="item">Evaluadores:</span><span class="top-tip" data-bind="if: evaluation.evaluators, attr: { 'data-tips': evaluation.evaluators }"><span class="item-info" data-bind="text: evaluation.evaluators"></span></span><span class="item-info" data-bind="if: !evaluation.evaluators">-</span></li>
                 <li><span class="item">Seniority:</span><span class="item-info" data-bind="text: evaluation.seniority"></span></li>
                 <li><span class="item">Responsable:</span><span class="item-info" data-bind="text: evaluation.responsibleId"></span></li>
                 <li><span class="item">Período:</span><span class="item-info" data-bind="text: evaluation.period"></span></li>
@@ -63,7 +63,7 @@
         </div>
         <h4>Comentarios del Evaluado</h4>
         <div class="comments-container comments-company-container">
-            <textarea class="content-editable big-comment" data-bind="value: evaluatedComment, enable: isEvaluationEditable()"></textarea>
+            <textarea class="content-editable big-comment" data-bind="value: evaluatedComment, enable: evaluation.readyForDevolution && !evaluation.finished && userView == 3"></textarea>
         </div>
         <!-- /ko -->
         <!--ko if: userView != 3 && !(userView == 0 && evaluation.readyForDevolution) -->
