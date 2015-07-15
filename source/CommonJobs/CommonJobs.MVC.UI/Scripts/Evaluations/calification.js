@@ -57,7 +57,7 @@
 
     EvaluationViewModel.prototype.onSave = function () {
         var self = this;
-        if (this.isValid()) {
+        if (this.calificationFinished || this.evaluationFinished || this.isValid()) {
             var dto = this.toDto();
             $.ajax("/Evaluations/api/SaveEvaluationCalifications/", {
                 type: "POST",
@@ -76,39 +76,17 @@
                 }
             });
         } else {
-            modalViewModel.title("Guardar evaluación");
-            modalViewModel.text("No se puede guardar la evaluación porque hay calificaciones INVÁLIDAS");
-            modalViewModel.buttonBackText("Volver");
-            modalViewModel.show(true);
-            modalViewModel.isConfirmButtonVisible(false);
-            modalViewModel.isFinalButtonVisible(false);
+            modalViewModel.showInvalidModal();
         }
     }
     
     EvaluationViewModel.prototype.onFinish = function () {
         if (!this.isValid()) {
-            modalViewModel.title("Guardar evaluación");
-            modalViewModel.text("No se puede guardar la evaluación porque hay calificaciones INVÁLIDAS");
-            modalViewModel.buttonBackText("Volver");
-            modalViewModel.show(true);
-            modalViewModel.isConfirmButtonVisible(false);
-            modalViewModel.isFinalButtonVisible(false);
+            modalViewModel.showInvalidModal();
         } else if (this.hasEmptyValues()) {
-            modalViewModel.title("Finalizar evaluación");
-            modalViewModel.text("¿Desea finalizar la evaluación con calificaciones vacías?");
-            modalViewModel.buttonBackText("Cancelar");
-            modalViewModel.buttonConfirmText("Confirmar");
-            modalViewModel.show(true);
-            modalViewModel.isConfirmButtonVisible(true);
-            modalViewModel.isFinalButtonVisible(false);
+            modalViewModel.showConfirmationModal();
         } else {
-            modalViewModel.title("Finalizar evaluación");
-            modalViewModel.text("¿Desea finalizar la evaluación? Recuerde que una vez finalizada tu evaluación no podrás volver a editarla");
-            modalViewModel.buttonBackText("Cancelar");
-            modalViewModel.buttonFinalText("Finalizar");
-            modalViewModel.show(true);
-            modalViewModel.isConfirmButtonVisible(false);
-            modalViewModel.isFinalButtonVisible(true);
+            modalViewModel.showFinishModal();
         }
         
     }
@@ -478,11 +456,26 @@
         this.isFinalButtonVisible = ko.observable(false);
     };
 
-    ModalViewModel.prototype.backAction = function () {
-        this.show(false);
+    ModalViewModel.prototype.showInvalidModal = function () {
+        this.title("Guardar evaluación");
+        this.text("No se puede guardar la evaluación porque hay calificaciones INVÁLIDAS");
+        this.buttonBackText("Volver");
+        this.show(true);
+        this.isConfirmButtonVisible(false);
+        this.isFinalButtonVisible(false);
     }
-    ModalViewModel.prototype.confirmAction = function () {
-        this.show(false);
+
+    ModalViewModel.prototype.showConfirmationModal = function () {
+        this.title("Finalizar evaluación");
+        this.text("¿Desea finalizar la evaluación con calificaciones vacías?");
+        this.buttonBackText("Cancelar");
+        this.buttonConfirmText("Confirmar");
+        this.show(true);
+        this.isConfirmButtonVisible(true);
+        this.isFinalButtonVisible(false);
+    }
+
+    ModalViewModel.prototype.showFinishModal = function () {
         this.title("Finalizar evaluación");
         this.text("¿Desea finalizar la evaluación? Recuerde que una vez finalizada tu evaluación no podrás volver a editarla");
         this.buttonBackText("Cancelar");
@@ -490,6 +483,13 @@
         this.show(true);
         this.isConfirmButtonVisible(false);
         this.isFinalButtonVisible(true);
+    }
+
+    ModalViewModel.prototype.backAction = function () {
+        this.show(false);
+    }
+    ModalViewModel.prototype.confirmAction = function () {
+        this.showFinishModal();
     }
 
     ModalViewModel.prototype.finalAction = function () {
