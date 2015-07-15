@@ -5,6 +5,7 @@ using Raven.Client.Linq;
 using System.Collections.Generic;
 using System.Linq;
 using CommonJobs.Application.EvalForm;
+using System;
 
 namespace CommonJobs.Application.Evaluations
 {
@@ -24,9 +25,15 @@ namespace CommonJobs.Application.Evaluations
         {
             RavenQueryStatistics stats;
             IQueryable<Employee_Search.Projection> query = RavenSession
-                .Query<Employee_Search.Projection, Employee_Search>()
+                .Query<Employee_Search.Projection, Employee_Search>()                
                 .Statistics(out stats)
-                .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite());
+                .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite())
+                .Take(1024);
+
+            if (stats.TotalResults > 1024)
+            {
+                throw new ApplicationException(string.Format("Error: Número demasiado elevado de empleados: {0}. Póngase en contacto con HelpDesk.", stats.TotalResults));
+            }
 
             query = query.Where(x => x.IsActive);
 
