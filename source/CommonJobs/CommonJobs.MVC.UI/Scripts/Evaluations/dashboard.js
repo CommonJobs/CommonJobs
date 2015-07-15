@@ -26,7 +26,7 @@
         };
         this.addCalificator = function () {
             var userName = self.newCalificator();
-            if (userName) {
+            if (userName && userName != self.evaluation.userName) {
                 var calificator = _.find(self.calificators(), function (e) {
                     return e.userName == userName;
                 }, this);
