@@ -27,19 +27,22 @@ namespace CommonJobs.Application.Evaluations
             {
                 if (e.Action == EvaluatorAction.Add)
                 {
-                    var employee = RavenSession
-                        .Query<Employee>()
-                        .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite())
-                        .Where(x => x.UserName == e.UserName)
-                        .FirstOrDefault();
-                    if (employee != null)
+                    if (_employeeEvaluation.UserName != e.UserName)
                     {
-                        var evId = _employeeEvaluation.Id ?? EmployeeEvaluation.GenerateEvaluationId(_employeeEvaluation.Period, _employeeEvaluation.UserName);
-                        ExecuteCommand(new GenerateCalificationCommand(_employeeEvaluation.Period, _employeeEvaluation.UserName, e.UserName, _employeeEvaluation.TemplateId, CalificationType.Evaluator, evId));
-                    }
-                    else
-                    {
-                        throw new ApplicationException(string.Format("Error: Evaluador no valido: {0}.", e.UserName));
+                        var employee = RavenSession
+                            .Query<Employee>()
+                            .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite())
+                            .Where(x => x.UserName == e.UserName)
+                            .FirstOrDefault();
+                        if (employee != null)
+                        {
+                            var evId = _employeeEvaluation.Id ?? EmployeeEvaluation.GenerateEvaluationId(_employeeEvaluation.Period, _employeeEvaluation.UserName);
+                            ExecuteCommand(new GenerateCalificationCommand(_employeeEvaluation.Period, _employeeEvaluation.UserName, e.UserName, _employeeEvaluation.TemplateId, CalificationType.Evaluator, evId));
+                        }
+                        else
+                        {
+                            throw new ApplicationException(string.Format("Error: Evaluador no valido: {0}.", e.UserName));
+                        }
                     }
                 }
                 else
