@@ -26,20 +26,18 @@
         };
         this.addCalificator = function () {
             var userName = self.newCalificator();
-            if (userName){
-                if (userName != self.evaluation.userName) {
-                    var calificator = _.find(self.calificators(), function (e) {
-                        return e.userName == userName;
-                    }, this);
-                    if (calificator) {
-                        calificator.action(0);
-                    } else {
-                        var calificator = new Calificator();
-                        calificator.add(userName);
-                        self.calificators.push(calificator);
-                    }
-                    self.saveButtonEnable(true);
+            if (userName && userName != self.evaluation.userName) {
+                var calificator = _.find(self.calificators(), function (e) {
+                    return e.userName == userName;
+                }, this);
+                if (calificator) {
+                    calificator.action(0);
+                } else {
+                    var calificator = new Calificator();
+                    calificator.add(userName);
+                    self.calificators.push(calificator);
                 }
+                self.saveButtonEnable(true);
             }
             self.newCalificator('');
         }
