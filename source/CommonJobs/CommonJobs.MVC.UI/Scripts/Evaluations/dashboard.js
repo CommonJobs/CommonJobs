@@ -165,7 +165,8 @@
 
     var Evaluation = function (data) {
         this.id = '';
-        this.idResponsible = '';
+        this.isResponsible = false;
+        this.isEditable = false;
         this.fullName = '';
         this.userName = '';
         this.period = '';
@@ -184,6 +185,7 @@
     Evaluation.prototype.fromJs = function (data) {
         this.id = data.Id;
         this.isResponsible = data.IsResponsible;
+        this.isEditable = data.IsEditable;
         this.fullName = data.FullName;
         this.userName = data.UserName;
         this.period = data.Period;
@@ -220,11 +222,17 @@
                 case 2:
                     if (this.isResponsible) {
                         this.calificationActionTooltip("Evaluar como responsable");
-                    } else {
+                        this.calificationActionClass("icon user");
+                        this.calificationActionText("Evaluar");
+                    } else if (!this.isResponsible && this.isEditable) {
                         this.calificationActionTooltip("Evaluar como evaluador");
+                        this.calificationActionClass("icon user");
+                        this.calificationActionText("Evaluar");
+                    } else {
+                        this.calificationActionText("Ver Evaluación");
+                        this.calificationActionClass("icon view");
+                        this.calificationActionTooltip("Ver Evaluación");
                     }
-                    this.calificationActionClass("icon user");
-                    this.calificationActionText("Evaluar");
                     break;
                 case 1:
                 case 3:
@@ -232,6 +240,10 @@
                         this.calificationActionText("Evaluar");
                         this.calificationActionClass("icon empresa");
                         this.calificationActionTooltip("Evaluar como empresa");
+                    } else if (!this.isResponsible && this.isEditable) {
+                        this.calificationActionTooltip("Evaluar como evaluador");
+                        this.calificationActionClass("icon user");
+                        this.calificationActionText("Evaluar");
                     } else {
                         this.calificationActionText("Ver Evaluación");
                         this.calificationActionClass("icon view");

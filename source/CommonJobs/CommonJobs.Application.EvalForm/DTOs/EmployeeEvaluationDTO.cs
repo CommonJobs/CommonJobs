@@ -28,6 +28,8 @@ namespace CommonJobs.Application.EvalForm
         public string TemplateId { get; set; }
 
         public string Id { get; set; }
+
+        public bool IsEditable { get; set; }
     }
 
     public enum EvaluationState

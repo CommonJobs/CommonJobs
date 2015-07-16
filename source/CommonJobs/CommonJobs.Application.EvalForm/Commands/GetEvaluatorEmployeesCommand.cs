@@ -44,13 +44,23 @@ namespace CommonJobs.Application.EvalForm.Commands
                     Evaluators = e.Evaluators != null ? e.Evaluators.ToList() : new List<string>(),
                     State = getEvaluationState(e),
                     Id = e.Id,
-                    TemplateId = e.TemplateId
+                    TemplateId = e.TemplateId,
+                    IsEditable = getEvaluationEditable(e)
                 };
             }).ToList();
 
             return employeesForResponsible;
         }
 
+        private bool getEvaluationEditable(EmployeeToEvaluate_Search.Projection projection)
+        {
+            if (projection.ResponsibleId == _loggedUser)
+            {
+                return !projection.Finished;
+            }
+            return projection.CalificationsState.Any(e => e.UserName == _loggedUser && !e.Finished);
+        }
+        
         private EvaluationState getEvaluationState(EmployeeToEvaluate_Search.Projection projection)
         {
             var auto = projection.AutoEvaluationDone;
