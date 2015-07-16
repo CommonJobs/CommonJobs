@@ -9,8 +9,15 @@ using System.Text;
 
 namespace CommonJobs.Application.EvalForm.EmployeeSearching
 {
+
     public class EmployeeToEvaluate_Search : AbstractMultiMapIndexCreationTask<EmployeeToEvaluate_Search.Projection>
     {
+
+        public class CalificationState
+        {
+            public string UserName;
+            public bool Finished;
+        }
 
         public class Projection
         {
@@ -28,6 +35,7 @@ namespace CommonJobs.Application.EvalForm.EmployeeSearching
             public bool CompanyEvaluationDone { get; set; }
             public bool OpenToDevolution { get; set; }
             public bool Finished { get; set; }
+            public List<CalificationState> CalificationsState { get; set; }
         }
 
         public EmployeeToEvaluate_Search()
@@ -49,8 +57,8 @@ namespace CommonJobs.Application.EvalForm.EmployeeSearching
                     ResponsibleEvaluationDone = false,
                     CompanyEvaluationDone = false,
                     OpenToDevolution = false,
-                    Finished = false
-
+                    Finished = false,
+                    CalificationsState = new dynamic[0]
                 });
 
             AddMap<EmployeeEvaluation>(evaluations =>
@@ -70,7 +78,8 @@ namespace CommonJobs.Application.EvalForm.EmployeeSearching
                     ResponsibleEvaluationDone = false,
                     CompanyEvaluationDone = false,
                     OpenToDevolution = evaluation.ReadyForDevolution,
-                    Finished = evaluation.Finished
+                    Finished = evaluation.Finished,
+                    CalificationsState = new dynamic[0]
                 });
 
             AddMap<EvaluationCalification>(califications =>
@@ -92,7 +101,10 @@ namespace CommonJobs.Application.EvalForm.EmployeeSearching
                     ResponsibleEvaluationDone = calification.Owner == CalificationType.Responsible && calification.Finished,
                     CompanyEvaluationDone = calification.Owner == CalificationType.Company && calification.Finished,
                     OpenToDevolution = false,
-                    Finished = false
+                    Finished = false,
+                    CalificationsState = (calification.Owner != CalificationType.Auto && calification.Owner != CalificationType.Company && calification.Owner != CalificationType.Responsible)
+                        ? new[] { new { UserName = calification.EvaluatorEmployee, Finished = calification.Finished } }
+                        : new dynamic[0],
                 });
 
             Reduce = docs =>
@@ -113,7 +125,8 @@ namespace CommonJobs.Application.EvalForm.EmployeeSearching
                     ResponsibleEvaluationDone = g.Any(x => x.ResponsibleEvaluationDone),
                     CompanyEvaluationDone = g.Any(x => x.CompanyEvaluationDone),
                     OpenToDevolution = g.Any(x => x.OpenToDevolution),
-                    Finished = g.Any(x => x.Finished)
+                    Finished = g.Any(x => x.Finished),
+                    CalificationsState = g.SelectMany(x => x.CalificationsState).Where(x => x != null).ToArray(),
                 };
 
             Indexes.Add(x => x.Evaluators, FieldIndexing.Analyzed);
