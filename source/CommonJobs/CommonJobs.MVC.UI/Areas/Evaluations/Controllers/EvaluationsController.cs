@@ -89,6 +89,7 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
             }
             ViewBag.Period = period;
             ViewBag.hasAutoCalification = isEvaluated;
+            ViewBag.IsDashboard = true;
             return View();
         }
 

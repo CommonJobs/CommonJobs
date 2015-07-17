@@ -104,7 +104,7 @@
             <tr>
                 <td><span data-bind="text: text, attr:{'data-tips': description}" class="top-tip rol wrap-text"></span></td>
                 <!-- ko foreach: values -->
-                <td data-bind="css: { 'exceeds-expectations': value() > 3 && value() <= 4 , 'poor': value() < 3 && value() >= 1}">
+                <td data-bind="css: { 'exceeds-expectations': showValue() && value() > 3 && value() <= 4 , 'poor': showValue() && value() < 3 && value() >= 1}">
                     <span data-bind="if: !editable"><span data-bind="text: value, visible: showValue()"></span></span>
                     <span data-bind="if: editable == true"><input class="calification-input" data-bind="value: value, css: { invalid: !isValid()}"/></span>
                 </td>
