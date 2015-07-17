@@ -217,7 +217,7 @@
             });
         };
         this.state.subscribe(function () {
-            if (this.isResponsible) {
+            if (this.isResponsible && this.state() != 6) {
                 if (this.state() == 0 || this.state() == 2) {
                     this.calificationActionTooltip("Evaluar como responsable");
                     this.calificationActionClass("icon user");
@@ -234,7 +234,7 @@
                     this.calificationActionTooltip("Hacer la devolución con el evaluado");
                     return;
                 }
-            } else if (!this.isResponsible && this.isEditable) {
+            } else if (!this.isResponsible && this.isEditable && this.state() != 6) {
                 this.calificationActionTooltip("Evaluar como evaluador");
                 this.calificationActionClass("icon user");
                 this.calificationActionText("Evaluar");
