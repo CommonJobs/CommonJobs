@@ -455,6 +455,13 @@
         this.buttonFinalText = ko.observable('');
         this.isConfirmButtonVisible = ko.observable(false);
         this.isFinalButtonVisible = ko.observable(false);
+        this.showModal = ko.computed(function () {
+            if (this.show()) {
+                $('#evaluations-generated-confirm').modal('show');
+            } else {
+                $('#evaluations-generated-confirm').modal('hide');
+            }
+        },this);
     };
 
     ModalViewModel.prototype.showInvalidModal = function () {
