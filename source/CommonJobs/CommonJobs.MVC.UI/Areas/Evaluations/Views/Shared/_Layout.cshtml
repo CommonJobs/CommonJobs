@@ -25,6 +25,10 @@
             {
                 <div class="breadcrum"><a href="@Url.Content("~/Evaluations/" + ViewBag.Period)" >Dashboard</a> > Evaluación</div>        
             }
+            else if (ViewBag.IsDashboard != null && ViewBag.IsDashboard) 
+            { 
+                <div class="breadcrum">Dashboard</div>
+            }
             <div class="pull-right">
                 <form class="form-inline" id="persistenceForm">
                     <ul class="nav nav-right">
