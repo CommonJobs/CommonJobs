@@ -217,45 +217,32 @@
             });
         };
         this.state.subscribe(function () {
-            switch (this.state()) {
-                case 0:
-                case 2:
-                    if (this.isResponsible) {
-                        this.calificationActionTooltip("Evaluar como responsable");
-                        this.calificationActionClass("icon user");
-                        this.calificationActionText("Evaluar");
-                    } else if (!this.isResponsible && this.isEditable) {
-                        this.calificationActionTooltip("Evaluar como evaluador");
-                        this.calificationActionClass("icon user");
-                        this.calificationActionText("Evaluar");
-                    } else {
-                        this.calificationActionText("Ver Evaluación");
-                        this.calificationActionClass("icon view");
-                        this.calificationActionTooltip("Ver Evaluación");
-                    }
-                    break;
-                case 1:
-                case 3:
-                    if (this.isResponsible) {
-                        this.calificationActionText("Evaluar");
-                        this.calificationActionClass("icon empresa");
-                        this.calificationActionTooltip("Evaluar como empresa");
-                    } else if (!this.isResponsible && this.isEditable) {
-                        this.calificationActionTooltip("Evaluar como evaluador");
-                        this.calificationActionClass("icon user");
-                        this.calificationActionText("Evaluar");
-                    } else {
-                        this.calificationActionText("Ver Evaluación");
-                        this.calificationActionClass("icon view");
-                        this.calificationActionTooltip("Ver Evaluación");
-                    }
-                    break;
-                default:
-                    this.calificationActionText("Ver Evaluación");
-                    this.calificationActionClass("icon view");
-                    this.calificationActionTooltip("Ver Evaluación");
-                    break;
+            if (this.isResponsible) {
+                if (this.state() == 0 || this.state() == 2) {
+                    this.calificationActionTooltip("Evaluar como responsable");
+                    this.calificationActionClass("icon user");
+                    this.calificationActionText("Evaluar");
+                    return;
+                } else if (this.state() == 1 || this.state() == 3) {
+                    this.calificationActionText("Evaluar");
+                    this.calificationActionClass("icon empresa");
+                    this.calificationActionTooltip("Evaluar como empresa");
+                    return;
+                } else if (this.state() == 5) {
+                    this.calificationActionText("Devolución");
+                    this.calificationActionClass("icon user");
+                    this.calificationActionTooltip("Hacer la devolución con el evaluado");
+                    return;
+                }
+            } else if (!this.isResponsible && this.isEditable) {
+                this.calificationActionTooltip("Evaluar como evaluador");
+                this.calificationActionClass("icon user");
+                this.calificationActionText("Evaluar");
+                return;
             }
+            this.calificationActionText("Ver Evaluación");
+            this.calificationActionClass("icon view");
+            this.calificationActionTooltip("Ver Evaluación");
         }, this);
         this.state(data.State);
         this.stateName = evaluationStates[this.state()];

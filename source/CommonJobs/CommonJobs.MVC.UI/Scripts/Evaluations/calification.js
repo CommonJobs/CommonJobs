@@ -185,7 +185,7 @@
             if (calification.Califications) {
                 for (var i in calification.Califications) {
                     var cal = calification.Califications[i];
-                    valuesByKey[cal.Key] = cal.Value.toFixed(1);
+                    valuesByKey[cal.Key] = parseFloat(cal.Value.toFixed(1));
                 }
             }
             
@@ -206,7 +206,7 @@
 
             this.califications.splice(1, 0, averageCalificationsColumn);
         }
-
+        var itemNumber = 0;
         this.groups =_.chain(data.Template.Items)
             .groupBy(function (item) {
                 return item.GroupKey;
@@ -216,9 +216,10 @@
                     groupKey: key,
                     name: groupNames[key],
                     items: _.map(items, function (item) {
+                        itemNumber++;
                         var valuesByItem = {
                             key: item.Key,
-                            text: item.Text,
+                            text: itemNumber + " - " + item.Text,
                             description: item.Description,
                             values: _.map(valuesByKeyCollection, function (valuesByKey) {
                                 var valueItem = {
@@ -257,7 +258,7 @@
                                         }
                                     }
                                     if(total){
-                                        return (total / count).toFixed(1);
+                                        return parseFloat((total / count).toFixed(1));
                                     }
                                     return 0;
                                 }),
@@ -303,7 +304,7 @@
                     }
                     return _.map(averages, function (column) {
                         return {
-                            value: (column.total) ? (column.total / column.count).toFixed(1) : 0,
+                            value: (column.total) ? parseFloat((column.total / column.count).toFixed(1)) : 0,
                             show: column.show
                         };
                     });
@@ -332,7 +333,7 @@
             }
             return _.map(averages, function (column) {
                 return {
-                    value: (column.total) ? (column.total / column.count).toFixed(1) : 0,
+                    value: (column.total) ? parseFloat((column.total / column.count).toFixed(1)) : 0,
                     show: column.show
                 };
             });
