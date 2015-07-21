@@ -102,7 +102,7 @@
             </tr>
             <!-- ko foreach: items -->
             <tr>
-                <td><span data-bind="text: text, attr:{'data-tips': description}" class="top-tip rol wrap-text"></span></td>
+                <td><span data-bind="attr:{'data-tips': description}" class="top-tip rol wrap-text"><i class="icon info"></i><span data-bind="text: text"></span></span></td>
                 <!-- ko foreach: values -->
                 <td data-bind="css: { 'exceeds-expectations': showValue() && value() > 3 && value() <= 4 , 'poor': showValue() && value() < 3 && value() >= 1}">
                     <span data-bind="if: !editable"><span data-bind="text: value, visible: showValue()"></span></span>
