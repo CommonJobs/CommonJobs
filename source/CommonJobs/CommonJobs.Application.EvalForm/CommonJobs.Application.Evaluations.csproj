@@ -65,6 +65,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\GetEvaluatedEmployees.cs" />
     <Compile Include="Commands\GetEvaluationCalifications.cs" />
     <Compile Include="Commands\StartDevolutionCommand.cs" />
     <Compile Include="Commands\UpdateCalificationsCommand.cs" />
