@@ -31,7 +31,6 @@ namespace CommonJobs.Application.Evaluations
                     {
                         var employee = RavenSession
                             .Query<Employee>()
-                            .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite())
                             .Where(x => x.UserName == e.UserName)
                             .FirstOrDefault();
                         if (employee != null)

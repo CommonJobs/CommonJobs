@@ -29,7 +29,6 @@ namespace CommonJobs.Application.MyMenu
             var employee = RavenSession
                 .Query<Employee>()
                 .Statistics(out stats)
-                .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite())
                 .Where(x => x.UserName == UserName)
                 .FirstOrDefault();
 
@@ -47,13 +46,13 @@ namespace CommonJobs.Application.MyMenu
             }
 
             var menuDefinition = ExecuteCommand(new GetMenuDefinitionCommand(employeeMenu.MenuId));
-            
+
             var lastOrder = RavenSession.Load<MenuOrder>(MenuOrder.GenerateId(employeeMenu.MenuId, menuDefinition.LastOrderDate));
             if (lastOrder != null)
             {
                 lastOrder.IsOrdered = true;
             }
-            
+
             return EmployeeMenuDTO.Create(employee, menuDefinition, employeeMenu, lastOrder);
         }
 

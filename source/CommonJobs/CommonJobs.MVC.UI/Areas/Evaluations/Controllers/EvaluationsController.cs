@@ -66,8 +66,7 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
             IQueryable<EmployeeToEvaluate_Search.Projection> query = RavenSession
                 .Query<EmployeeToEvaluate_Search.Projection, EmployeeToEvaluate_Search>()
                 .Statistics(out stats)
-                .Where(e => e.Period == period && (e.UserName == loggedUser || e.ResponsibleId == loggedUser || (e.Evaluators != null && e.Evaluators.Any(x => x == loggedUser))))
-                .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite());
+                .Where(e => e.Period == period && (e.UserName == loggedUser || e.ResponsibleId == loggedUser || (e.Evaluators != null && e.Evaluators.Any(x => x == loggedUser))));
 
             var evaluation = query.ToList();
 
@@ -83,7 +82,7 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
             {
                 if (isEvaluated)
                 {
-                    return RedirectToAction("Calification", new RouteValueDictionary( 
+                    return RedirectToAction("Calification", new RouteValueDictionary(
                         new { controller = "Evaluations", action = "Calification", period = period, username = loggedUser } ));
                 }
             }
@@ -118,8 +117,7 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
             EmployeeToEvaluate_Search.Projection evaluation = RavenSession
                 .Query<EmployeeToEvaluate_Search.Projection, EmployeeToEvaluate_Search>()
                 .Statistics(out stats)
-                .Where(e => e.UserName == username && e.Period == period)
-                .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite()).FirstOrDefault();
+                .Where(e => e.UserName == username && e.Period == period).FirstOrDefault();
 
             // The evaluation doesn't exist
             if (evaluation == null)
@@ -138,7 +136,7 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
                     }
                 }
                 ViewBag.IsUserEvaluator = true;
-            }         
+            }
 
             ViewBag.Period = period;
             ViewBag.UserName = username;

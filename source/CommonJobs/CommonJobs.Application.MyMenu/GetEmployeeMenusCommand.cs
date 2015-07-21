@@ -23,7 +23,6 @@ namespace CommonJobs.Application.MyMenu
             {
                 var qry = RavenSession
                     .Query<EmployeeMenu>()
-                    .Customize(x => x.WaitForNonStaleResultsAsOfNow())
                     .Statistics(out stats)
                     .Where(x => x.MenuId == MenuDefinitionId)
                     .Skip(skip)
