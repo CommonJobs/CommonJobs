@@ -33,7 +33,7 @@
                     <span class="item">Proyectos:</span>
                     <!--ko if: isEvaluationEditable() && (userView == 1 || userView == 3) -->
                     <div class="editable-projects" data-bind="css: { edition: evaluation.project(), 'top-tip': evaluation.project()}, attr: {'data-tips': evaluation.project()}">
-                        <input type="text" placeholder="Agregá los proyectos" data-bind="value: evaluation.project, event: { keyup: evaluation.onKeyUpProject, focusin: evaluation.onFocusInProject, blur: evaluation.onBlurProject}"/><span class="pencil"></span>
+                        <input type="text" placeholder="Agregá los proyectos" data-bind="value: evaluation.project, event: { keyup: evaluation.onKeyUpProject, focusin: evaluation.onFocusInProject, blur: evaluation.onBlurProject}" /><span class="pencil"></span>
                     </div>
                     <!-- /ko -->
                     <!--ko if: !isEvaluationEditable() || (userView != 1 && userView != 3) -->
@@ -43,7 +43,7 @@
             </ul>
             <h4>Métricas de Evaluación</h4>
             <div class="metrics-container">
-                <span>1</span> No Alcanza las Expectativas - <span>2</span> Necesita Mejorar<br/>
+                <span>1</span> No Alcanza las Expectativas - <span>2</span> Necesita Mejorar<br />
                 <span>3</span> Cumple con Expectativas - <span>4</span> Excede las Expectativas
             </div>
             <p class="explanatory-text">*Si no tenés conocimientos para calificar algún campo dejalo vacío</p>
@@ -106,7 +106,7 @@
                 <!-- ko foreach: values -->
                 <td data-bind="css: { 'exceeds-expectations': showValue() && value() > 3 && value() <= 4 , 'poor': showValue() && value() < 3 && value() >= 1}">
                     <span data-bind="if: !editable"><span data-bind="text: value, visible: showValue()"></span></span>
-                    <span data-bind="if: editable == true"><input class="calification-input" data-bind="value: value, css: { invalid: !isValid()}"/></span>
+                    <span data-bind="if: editable == true"><input class="calification-input" data-bind="value: value, css: { invalid: !isValid()}" /></span>
                 </td>
                 <!-- /ko -->
             </tr>
@@ -116,6 +116,9 @@
     <div class="footer-evaluation" data-bind="if: isEvaluationEditable()">
         <button class="button-evaluations primary-btn finish-btn" data-bind="click: onFinish">Finalizar</button>
         <p class="explanatory-text">Recuerda que una vez finalizada tu evaluación no podrás volver a editarla.</p>
+    </div>
+    <div id="loader-id" class="loader-container" data-bind="visible: isLoading()">
+        <div class="loader"></div>
     </div>
     <script type="text/javascript">
         var calificationPeriod = "@ViewBag.Period";
@@ -133,8 +136,4 @@
         <button class="confirm" id="button-confirm" data-bind="visible: isConfirmButtonVisible(), click: confirmAction, text: buttonConfirmText()"></button>
         <button class="finish" id="button-finish" data-bind="visible: isFinalButtonVisible(), click: finalAction, text: buttonFinalText()"></button>
     </div>
-</div>
-
-<div id="loader-id" class="loader-container" data-bind="visible: isLoading()">
-    <div class="loader"></div>
 </div>

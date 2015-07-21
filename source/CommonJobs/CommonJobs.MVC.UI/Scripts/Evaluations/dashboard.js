@@ -65,7 +65,10 @@
                     self.close();
                     self.saveButtonEnable(false);
                     getDashboardEvaluations();
-                }
+                },
+                error: function () {
+                    alert('Fallo');
+                } 
             });
         }
     }
@@ -143,14 +146,7 @@
             this.headers[0].activeSort(false);
             this.sort(this.headers[0]);
         }
-        this.isLoading = ko.observable(true);
-        this.loaderModal = ko.computed(function () {
-            if (this.isLoading()) {
-                $('#loader-id').show();
-            } else {
-                $('#loader-id').hide();
-            }
-        }, this);
+        this.isLoading = ko.observable(false);
     }
 
     Dashboard.prototype.fromJS = function (data) {
@@ -288,10 +284,16 @@
     
     function getDashboardEvaluations() {
         viewmodel.isLoading(true);
-        $.getJSON("/Evaluations/api/getDashboardEvaluations/", function (model) {
+        var ajax = $.getJSON("/Evaluations/api/getDashboardEvaluations/", function (model) {
             viewmodel.fromJS(model);
             viewmodel.defaultSort();
+            
         });
-        viewmodel.isLoading(false);
+        ajax.always(function () {
+            viewmodel.isLoading(false);
+        });
+        ajax.fail(function () {
+            alert('Fallo');
+        });
     }
 });

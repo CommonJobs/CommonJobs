@@ -21,23 +21,22 @@
         this.califications = [];
         this.groups = [];
         this.isEvaluationEditable = ko.observable(false);
-        this.isLoading = ko.observable('');
-        this.loaderModal = ko.computed(function () {
-            if (this.isLoading()) {
-                $('#loader-id').show();
-            } else {
-                $('#loader-id').hide();
-            }
-        }, this);
+        this.isLoading = ko.observable(false);
     }
 
     EvaluationViewModel.prototype.load = function () {
         viewmodel.isLoading(true);
-        $.getJSON("/Evaluations/api/getEvaluation/" + calificationPeriod + "/" + calificationUserName + "/", function (model) {
+        var ajax = $.getJSON("/Evaluations/api/getEvaluation/" + calificationPeriod + "/" + calificationUserName + "/", function (model) {
             viewmodel.fromJs(model);
             ko.applyBindings(viewmodel, document.getElementById('evaluation-view'));
         });
-        viewmodel.isLoading(false);
+        ajax.always(function () {
+            viewmodel.isLoading(false);
+        });
+        ajax.fail(function () {
+            alert('Fallo');
+        });
+        
     }
 
     EvaluationViewModel.prototype.isDirty = dirtyFlag();
@@ -80,6 +79,9 @@
                             window.location = urlGenerator.action(calificationPeriod, "Evaluations");
                         }
                     }
+                },
+                error: function () {
+                    alert: ('Fallo');
                 }
             });
         } else {
