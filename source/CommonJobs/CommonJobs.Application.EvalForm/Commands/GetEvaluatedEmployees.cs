@@ -1,6 +1,4 @@
 ﻿using CommonJobs.Application.EvalForm.EmployeeSearching;
-using CommonJobs.Application.Evaluations;
-using CommonJobs.Domain.Evaluations;
 using CommonJobs.Infrastructure.RavenDb;
 using Raven.Client.Linq;
 using System;
@@ -10,13 +8,13 @@ using System.Text;
 
 namespace CommonJobs.Application.EvalForm.Commands
 {
-    public class GetEvaluatorEmployeesCommand : Command<List<EmployeeEvaluationDTO>>
+    public class GetEvaluatedEmployees : Command<List<EmployeeEvaluationDTO>>
     {
-        private string _loggedUser { get; set; }
+        private string _period;
 
-        public GetEvaluatorEmployeesCommand(string loggedUser)
+        public GetEvaluatedEmployees(string period)
         {
-            _loggedUser = loggedUser;
+            _period = period;
         }
 
         public override List<EmployeeEvaluationDTO> ExecuteWithResult()
@@ -25,8 +23,8 @@ namespace CommonJobs.Application.EvalForm.Commands
             IQueryable<EmployeeToEvaluate_Search.Projection> query = RavenSession
                 .Query<EmployeeToEvaluate_Search.Projection, EmployeeToEvaluate_Search>()
                 .Statistics(out stats)
-                .Where(e => e.ResponsibleId == _loggedUser || e.Evaluators.Any(ev => ev == _loggedUser))
-                .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite());
+                .Where(e => e.Period == _period);
+                //.Customize(x => x.WaitForNonStaleResultsAsOfLastWrite());
 
             var employeesProjection = query.ToList();
 
@@ -34,7 +32,6 @@ namespace CommonJobs.Application.EvalForm.Commands
             {
                 return new EmployeeEvaluationDTO()
                 {
-                    IsResponsible = e.ResponsibleId == _loggedUser,
                     ResponsibleId = e.ResponsibleId,
                     FullName = e.FullName,
                     UserName = e.UserName,
@@ -44,21 +41,11 @@ namespace CommonJobs.Application.EvalForm.Commands
                     Evaluators = e.Evaluators != null ? e.Evaluators.ToList() : new List<string>(),
                     State = EmployeeEvaluationDTO.GetEvaluationState(e.AutoEvaluationDone, e.ResponsibleEvaluationDone, e.CompanyEvaluationDone, e.OpenToDevolution, e.Finished),
                     Id = e.Id,
-                    TemplateId = e.TemplateId,
-                    IsEditable = getEvaluationEditable(e)
+                    TemplateId = e.TemplateId
                 };
             }).ToList();
 
             return employeesForResponsible;
-        }
-
-        private bool getEvaluationEditable(EmployeeToEvaluate_Search.Projection projection)
-        {
-            if (projection.ResponsibleId == _loggedUser)
-            {
-                return !projection.Finished;
-            }
-            return projection.CalificationsState.Any(e => e.UserName == _loggedUser && !e.Finished);
         }
     }
 }
