@@ -78,3 +78,7 @@
     <a class="cancelar" data-bind="click: calificatorsManagerModel.close">Cancelar</a>
     <button class="guardar"data-bind="enable: calificatorsManagerModel.saveButtonEnable, click: calificatorsManagerModel.save">Guardar</button>
 </div>
+
+<div id="loader-id" class="loader-container" data-bind="visible: isLoading()">
+    <div class="loader"></div>
+</div>

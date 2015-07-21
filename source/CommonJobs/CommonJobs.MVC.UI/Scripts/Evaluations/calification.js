@@ -21,16 +21,22 @@
         this.califications = [];
         this.groups = [];
         this.isEvaluationEditable = ko.observable(false);
-        if (data) {
-            this.fromJs(data);
-        }
+        this.isLoading = ko.observable(false);
     }
 
     EvaluationViewModel.prototype.load = function () {
-        $.getJSON("/Evaluations/api/getEvaluation/" + calificationPeriod + "/" + calificationUserName + "/", function (model) {
+        viewmodel.isLoading(true);
+        var ajax = $.getJSON("/Evaluations/api/getEvaluation/" + calificationPeriod + "/" + calificationUserName + "/", function (model) {
             viewmodel.fromJs(model);
             ko.applyBindings(viewmodel, document.getElementById('evaluation-view'));
         });
+        ajax.always(function () {
+            viewmodel.isLoading(false);
+        });
+        ajax.fail(function () {
+            alert('Fallo');
+        });
+        
     }
 
     EvaluationViewModel.prototype.isDirty = dirtyFlag();
@@ -73,6 +79,9 @@
                             window.location = urlGenerator.action(calificationPeriod, "Evaluations");
                         }
                     }
+                },
+                error: function () {
+                    alert: ('Fallo');
                 }
             });
         } else {

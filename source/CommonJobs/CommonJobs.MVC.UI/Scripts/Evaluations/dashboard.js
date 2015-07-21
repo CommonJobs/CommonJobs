@@ -65,7 +65,10 @@
                     self.close();
                     self.saveButtonEnable(false);
                     getDashboardEvaluations();
-                }
+                },
+                error: function () {
+                    alert('Fallo');
+                } 
             });
         }
     }
@@ -143,6 +146,7 @@
             this.headers[0].activeSort(false);
             this.sort(this.headers[0]);
         }
+        this.isLoading = ko.observable(false);
     }
 
     Dashboard.prototype.fromJS = function (data) {
@@ -279,9 +283,17 @@
     commonSuggest($('.content-modal .search'), 'UserName');
     
     function getDashboardEvaluations() {
-        $.getJSON("/Evaluations/api/getDashboardEvaluations/", function (model) {
+        viewmodel.isLoading(true);
+        var ajax = $.getJSON("/Evaluations/api/getDashboardEvaluations/", function (model) {
             viewmodel.fromJS(model);
             viewmodel.defaultSort();
+            
+        });
+        ajax.always(function () {
+            viewmodel.isLoading(false);
+        });
+        ajax.fail(function () {
+            alert('Fallo');
         });
     }
 });
