@@ -322,6 +322,14 @@
             })
             .value();
 
+        this.isRowSelected = ko.observable(function () {
+            if ($(".calification-input").is(":focus")) {
+                $('#row').addClass('.row-selected');
+            } else {
+                $('#row').removeClass('.row-selected');
+            }
+        });
+
         this.calificationsAverages = ko.computed(function () {
             var averages = []
             for (var i = 0; i < self.califications.length; i++) {

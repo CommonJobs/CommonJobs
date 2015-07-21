@@ -101,7 +101,7 @@
                 <!-- /ko -->
             </tr>
             <!-- ko foreach: items -->
-            <tr>
+            <tr id="row" data-bind="css: isRowSelected">
                 <td><span data-bind="attr:{'data-tips': description}" class="top-tip rol wrap-text"><span data-bind="text: text"></span><i class="icon info"></i></span></td>
                 <!-- ko foreach: values -->
                 <td data-bind="css: { 'exceeds-expectations': showValue() && value() > 3 && value() <= 4 , 'poor': showValue() && value() < 3 && value() >= 1}">

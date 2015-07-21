@@ -1146,7 +1146,10 @@ tr.evaluation-generated td {
 .evaluation .calification-items tbody .calification-input.invalid {
   border-color: #EE6048 !important;
 }
-/* line 357, ../../sass/Evaluations/_evaluation.scss */
+.evaluation .calification-items tbody .row-selected{
+  background-color: #BBBBBB;
+}
+/* line 359, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .calification-items tbody .exceeds-expectations {
   background: #CEE9AC;
 }
