@@ -24,7 +24,6 @@ namespace CommonJobs.Application.EvalForm.Commands
                 .Query<EmployeeToEvaluate_Search.Projection, EmployeeToEvaluate_Search>()
                 .Statistics(out stats)
                 .Where(e => e.Period == _period);
-                //.Customize(x => x.WaitForNonStaleResultsAsOfLastWrite());
 
             var employeesProjection = query.ToList();
 
