@@ -39,12 +39,10 @@ namespace CommonJobs.Application.EvalForm.Commands
 
             Employee_Search.Projection employee = RavenSession
                 .Query<Employee_Search.Projection, Employee_Search>()
-                .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite())
                 .Where(x => x.IsActive && x.UserName == evaluation.UserName).FirstOrDefault();
 
             var califications = RavenSession
                 .Query<EvaluationCalification>()
-                .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite())
                 .Where(x => x.EvaluationId == evId).ToList();
 
             var evaluators = califications.Where(c => c.Owner == CalificationType.Evaluator).Select(c => c.EvaluatorEmployee).ToList();

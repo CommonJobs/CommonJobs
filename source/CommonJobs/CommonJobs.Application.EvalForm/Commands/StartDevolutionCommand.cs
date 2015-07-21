@@ -32,7 +32,6 @@ namespace CommonJobs.Application.EvalForm.Commands
 
             Employee_Search.Projection employee = RavenSession
             .Query<Employee_Search.Projection, Employee_Search>()
-            .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite())
             .Where(x => x.IsActive && x.UserName == evaluation.UserName).FirstOrDefault();
 
             evaluation.ReadyForDevolution = true;
