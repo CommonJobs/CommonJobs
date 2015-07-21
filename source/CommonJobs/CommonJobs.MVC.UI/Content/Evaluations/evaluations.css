@@ -1095,7 +1095,7 @@ tr.evaluation-generated td {
 }
 /* line 304, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .calification-items tbody .icon.info {
-  background: url(../Images/Evaluations/13-02.png) no-repeat center center;
+  background: url(../Images/Evaluations/information.png) no-repeat center center;
   height: 16px;
   width: 16px;
   position: absolute;
