@@ -21,7 +21,7 @@
         this.califications = [];
         this.groups = [];
         this.isEvaluationEditable = ko.observable(false);
-        this.isLoading = ko.observable(false);
+        this.isLoading = ko.observable('');
         this.loaderModal = ko.computed(function () {
             if (this.isLoading()) {
                 $('#loader-id').show();
@@ -29,9 +29,6 @@
                 $('#loader-id').hide();
             }
         }, this);
-        if (data) {
-            this.fromJs(data);
-        }
     }
 
     EvaluationViewModel.prototype.load = function () {

@@ -1175,6 +1175,7 @@ tr.evaluation-generated td {
   margin-top: 25px;
 }
 /*Loader*/
+/* line 2, ../../sass/Evaluations/_loader.scss */
 .loader-container {
   background-color: black;
   width: 100%;
@@ -1184,8 +1185,9 @@ tr.evaluation-generated td {
   position: fixed;
   right: 0;
   left: 0;
-  display: none;
 }
+
+/* line 13, ../../sass/Evaluations/_loader.scss */
 .loader {
   font-size: 10px;
   margin: 50px auto;
@@ -1208,6 +1210,8 @@ tr.evaluation-generated td {
   -ms-transform: translateZ(0);
   transform: translateZ(0);
 }
+
+/* line 35, ../../sass/Evaluations/_loader.scss */
 .loader:before {
   width: 50%;
   height: 50%;
@@ -1218,6 +1222,8 @@ tr.evaluation-generated td {
   left: 0;
   content: '';
 }
+
+/* line 45, ../../sass/Evaluations/_loader.scss */
 .loader:after {
   background: #000000;
   width: 75%;
@@ -1231,6 +1237,7 @@ tr.evaluation-generated td {
   bottom: 0;
   right: 0;
 }
+
 @-webkit-keyframes load3 {
   0% {
     -webkit-transform: rotate(0deg);

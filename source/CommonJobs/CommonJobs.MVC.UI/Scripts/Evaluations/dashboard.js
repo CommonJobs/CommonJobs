@@ -143,7 +143,7 @@
             this.headers[0].activeSort(false);
             this.sort(this.headers[0]);
         }
-        this.isLoading = ko.observable(false);
+        this.isLoading = ko.observable(true);
         this.loaderModal = ko.computed(function () {
             if (this.isLoading()) {
                 $('#loader-id').show();
