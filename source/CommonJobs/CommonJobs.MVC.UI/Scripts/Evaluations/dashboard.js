@@ -143,6 +143,14 @@
             this.headers[0].activeSort(false);
             this.sort(this.headers[0]);
         }
+        this.isLoading = ko.observable(false);
+        this.loaderModal = ko.computed(function () {
+            if (this.isLoading()) {
+                $('#loader-id').show();
+            } else {
+                $('#loader-id').hide();
+            }
+        }, this);
     }
 
     Dashboard.prototype.fromJS = function (data) {
@@ -279,9 +287,11 @@
     commonSuggest($('.content-modal .search'), 'UserName');
     
     function getDashboardEvaluations() {
+        viewmodel.isLoading(true);
         $.getJSON("/Evaluations/api/getDashboardEvaluations/", function (model) {
             viewmodel.fromJS(model);
             viewmodel.defaultSort();
         });
+        viewmodel.isLoading(false);
     }
 });
