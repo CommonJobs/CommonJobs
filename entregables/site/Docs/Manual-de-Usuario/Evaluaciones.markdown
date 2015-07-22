@@ -231,3 +231,38 @@ A las dos o tres semanas de finalizado el proceso de evaluaciones, se juntan tod
 
 Cabe aclarar que proponer a una persona en una categoría nueva no quiere decir que vaya a suceder, por lo que es importante manejar las expectativas de la persona.
 
+# Definición de Seniority #
+
+## Introducción ##
+
+Esta sección incluye:
+- la guía general de seniority para todos los roles, los aspectos a tomar en cuenta para determinar las categorías o seniority de cada puesto de trabajo.
+- y luego con mayor detalle los aspectos a tener en cuenta para los desarrolladores
+
+## Categorías o Seniorities ##
+- Trainee o Principiante
+- Junior
+- Jr Advanced
+- Semi Senior
+- SSr Advanced
+- Senior
+
+Al ser Senior, podrá desempeñar en forma adicional, los siguientes roles:
+- Tech Lead
+- Arquitecto (para developers)
+
+### Trainee o Principiante ###
+
+**General**:Es típicamente su primera experiencia laboral, pudiendo tener experiencia previa en trabajos prácticos o experimentar con herramientas, pero sin experiencia con clientes y objetivos de negocio.
+
+### Junior ###
+
+**General**: Tiene entre 6 meses y 2 años de experiencia.  Para desempeñarse suele requerir acompañamiento.  Probablemente no maneja todas las herramientas o conocimientos que se necesitan para la tarea.”
+
+**Developers**: Un programador junior va logrando producir código que funciona bien, pero aún requieren supervisión y guía, no conocen bien los frameworks pero dependen mucho de ellos, generan bugs, generan código duplicado, piden recetas y necesitan definiciones detalladas de lo que se les pide lograr, están más cómodos partiendo de cosas ya hechas sin entender muy bien como funciona todo.  
+
+Desde el punto de vista del Líder, sabe que debe darle tareas más sencillas, que debe hacer un seguimiento detallado, diario y que debe hacer Code Reviews buscando hacer mentoring al mismo tiempo.  
+
+Sus características generales son:
+
+
