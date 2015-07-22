@@ -1100,39 +1100,43 @@ tr.evaluation-generated td {
   width: 16px;
   margin-left: 5px;
 }
-/* line 312, ../../sass/Evaluations/_evaluation.scss */
+/* line 313, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .calification-items tbody tr {
   height: 50px;
 }
-/* line 315, ../../sass/Evaluations/_evaluation.scss */
+/* line 316, ../../sass/Evaluations/_evaluation.scss */
+.evaluation .calification-items tbody tr.row-selected {
+  background-color: #B4B4B4 !important;
+}
+/* line 320, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .calification-items tbody tr:nth-child(odd) {
   background: #EDF0F1;
 }
-/* line 318, ../../sass/Evaluations/_evaluation.scss */
+/* line 323, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .calification-items tbody tr:nth-child(odd) td {
   color: #444;
 }
-/* line 323, ../../sass/Evaluations/_evaluation.scss */
+/* line 328, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .calification-items tbody tr:nth-child(even) {
   background: #FFF;
 }
-/* line 326, ../../sass/Evaluations/_evaluation.scss */
+/* line 331, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .calification-items tbody tr:nth-child(even) td {
   color: #666;
 }
-/* line 330, ../../sass/Evaluations/_evaluation.scss */
+/* line 335, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .calification-items tbody tr:nth-child(even) .calification-input {
   border: solid 1px #999;
 }
-/* line 335, ../../sass/Evaluations/_evaluation.scss */
+/* line 340, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .calification-items tbody td {
   font-size: 20px;
 }
-/* line 339, ../../sass/Evaluations/_evaluation.scss */
+/* line 344, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .calification-items tbody td:first-child {
   font-size: 16px;
 }
-/* line 343, ../../sass/Evaluations/_evaluation.scss */
+/* line 348, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .calification-items tbody .calification-input {
   border: solid 1px #BBB;
   width: 50px;
@@ -1142,26 +1146,23 @@ tr.evaluation-generated td {
   padding: 0 5px;
   text-align: center;
 }
-/* line 352, ../../sass/Evaluations/_evaluation.scss */
+/* line 357, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .calification-items tbody .calification-input.invalid {
   border-color: #EE6048 !important;
 }
-.evaluation .calification-items tbody .row-selected{
-  background-color: #BBBBBB;
-}
-/* line 359, ../../sass/Evaluations/_evaluation.scss */
+/* line 362, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .calification-items tbody .exceeds-expectations {
   background: #CEE9AC;
 }
-/* line 361, ../../sass/Evaluations/_evaluation.scss */
+/* line 366, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .calification-items tbody .poor {
   background: #FDF7C5;
 }
-/* line 367, ../../sass/Evaluations/_evaluation.scss */
+/* line 372, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .footer-evaluation {
   margin: 35px 0;
 }
-/* line 371, ../../sass/Evaluations/_evaluation.scss */
+/* line 376, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .footer-evaluation .finish-btn {
   border-radius: 8px;
   width: 315px;
@@ -1170,12 +1171,13 @@ tr.evaluation-generated td {
   margin-left: 25px;
   font-size: 20px;
 }
-/* line 380, ../../sass/Evaluations/_evaluation.scss */
+/* line 385, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .footer-evaluation .explanatory-text {
   float: right;
   font-size: 16px;
   margin-top: 25px;
 }
+
 /*Loader*/
 /* line 2, ../../sass/Evaluations/_loader.scss */
 .loader-container {
@@ -1187,6 +1189,7 @@ tr.evaluation-generated td {
   position: fixed;
   right: 0;
   left: 0;
+  display: none;
 }
 
 /* line 13, ../../sass/Evaluations/_loader.scss */

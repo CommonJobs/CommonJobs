@@ -33,7 +33,7 @@
                     <span class="item">Proyectos:</span>
                     <!--ko if: isEvaluationEditable() && (userView == 1 || userView == 3) -->
                     <div class="editable-projects" data-bind="css: { edition: evaluation.project(), 'top-tip': evaluation.project()}, attr: {'data-tips': evaluation.project()}">
-                        <input type="text" placeholder="Agregá los proyectos" data-bind="value: evaluation.project, event: { keyup: evaluation.onKeyUpProject, focusin: evaluation.onFocusInProject, blur: evaluation.onBlurProject}" /><span class="pencil"></span>
+                        <input type="text" placeholder="Agregá los proyectos" data-bind="value: evaluation.project, event: {keyup: evaluation.onKeyUpProject, focusin: evaluation.onFocusInProject, blur: evaluation.onBlurProject}" /><span class="pencil"></span>
                     </div>
                     <!-- /ko -->
                     <!--ko if: !isEvaluationEditable() || (userView != 1 && userView != 3) -->
@@ -101,12 +101,12 @@
                 <!-- /ko -->
             </tr>
             <!-- ko foreach: items -->
-            <tr id="row" data-bind="css: isRowSelected">
+            <tr data-bind="css : {'row-selected' : isRowSelected()}">
                 <td><span data-bind="attr:{'data-tips': description}" class="top-tip rol wrap-text"><span data-bind="text: text"></span><i class="icon info"></i></span></td>
                 <!-- ko foreach: values -->
                 <td data-bind="css: { 'exceeds-expectations': showValue() && value() > 3 && value() <= 4 , 'poor': showValue() && value() < 3 && value() >= 1}">
                     <span data-bind="if: !editable"><span data-bind="text: value, visible: showValue()"></span></span>
-                    <span data-bind="if: editable == true"><input class="calification-input" data-bind="value: value, css: { invalid: !isValid()}" /></span>
+                    <span data-bind="if: editable == true"><input class="calification-input" data-bind="value: value, css: { invalid: !isValid()}, event: { focusin: onFocus, blur: onBlur} " /></span>
                 </td>
                 <!-- /ko -->
             </tr>
