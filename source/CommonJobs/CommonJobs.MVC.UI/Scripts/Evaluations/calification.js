@@ -61,15 +61,6 @@
         });
     }
 
-    /*EvaluationViewModel.prototype.isRowSelected = function () {
-        if ($(".calification-input").is(":focus")) {
-            $('#row').addClass('.row-selected');
-        } else {
-            $('#row').removeClass('.row-selected');
-        }
-    }*/
-
-
     EvaluationViewModel.prototype.onSave = function () {
         var self = this;
         if (this.calificationFinished || this.evaluationFinished || this.isValid()) {
