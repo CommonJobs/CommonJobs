@@ -248,7 +248,7 @@ Esta sección incluye:
 - Senior
 
 Al ser Senior, podrá desempeñar en forma adicional, los siguientes roles:
-- Tech Lead
+- Team Lead
 - Arquitecto (para developers)
 
 ### Trainee o Principiante ###
@@ -351,7 +351,7 @@ Sus características generales son:
 
 Además de desempeñar tareas de su nivel, los Senior podrán tener oportunidad de llevar a cabo roles de mayor responsabilidad que se detallan a continuación.
 
-#### Rol de Tech Lead: ####
+#### Rol de Team Lead: ####
 - Su principal función es estar disponible en todo momento y donde sea, ya sea para el equipo, cuando surgen imprevistos, problemas en producción, problemas con un diseño, discusiones de arquitectura, etc.
 - Se requieren soft skills necesarios para lograr sacar lo mejor de cada developer del equipo, conocer sus limitaciones, sus habilidades, sus motivaciones, etc para lograr ser un buen coach.
 - Deben ser facilitadores para crear acciones y próximos pasos, sabiendo delegar en los miembros del equipo y realizando seguimiento.
