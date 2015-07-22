@@ -1098,8 +1098,7 @@ tr.evaluation-generated td {
   background: url(../Images/Evaluations/information.png) no-repeat center center;
   height: 16px;
   width: 16px;
-  position: absolute;
-  margin-left: -30px;
+  margin-left: 5px;
 }
 /* line 312, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .calification-items tbody tr {
