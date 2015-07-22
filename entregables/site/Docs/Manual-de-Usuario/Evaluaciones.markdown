@@ -264,5 +264,53 @@ Al ser Senior, podrá desempeñar en forma adicional, los siguientes roles:
 Desde el punto de vista del Líder, sabe que debe darle tareas más sencillas, que debe hacer un seguimiento detallado, diario y que debe hacer Code Reviews buscando hacer mentoring al mismo tiempo.  
 
 Sus características generales son:
+- Conoce el lenguaje de programación primario
+- Puede entender el código escrito por otros
+- Puede implementar código y librerías open source en su código
+- Puede utilizar correctamente un software de control de versiones
+- Puede hacer unit tests y probar el software
+- Cuando algo se rompe o surgen errores, por lo general no encuentra la causa en forma rápida y quizá no sabe bien cómo googlearlo para resolverlo. 
+- Sabe al menos escribir lo básico de código orientado a objetos y entiende los beneficios.
+- Se maneja encontrando información en blogs y sitios especializados.
+- Como actitud general aún necesita recetas y repite código, de a poco se van dando cuenta que pueden mejorar las prácticas de programación y para qué sirven.
+- Si no pide recetas, usa la primera solución que se le ocurre sin pensar en un diseño, en alternativas y en las consecuencias.
+- En web, conocen los problemas comunes de los browsers pero se les complica resolver temas con browsers más antiguos.
+- En FE conocen HTML, CSS y Javascript, usa jquery pero no entiende todo lo que sucede.
+- En la planning participa de las estimaciones, pero por lo general puede estimar por encima: por no conocer formas más simples o cosas disponibles para reutilizar.  En cambio también suele estimar de menos: ya que no conoce el impacto que puede generar o las complejidades asociadas.  Suele no cumplir con las estimaciones ni ver más allá de la tarea específica.
+- No conoce todos los procesos o metodologías, ni los estándares. 
+- No es experto en los temas propios del negocio ni muestra interés (o cree que no es su incumbencia)
+- Cuando tiene tiempo libre no sabe con qué seguir. Depende de otros para avanzar con sus tareas.
+
+### Jr Advanced ###
+
+**General**: No hay un tiempo estipulado entre que se es Junior y Jr Advanced, sino que se toma en cuenta la capacidad de aprendizaje, la motivación personal, el compromiso y el rendimiento que demuestra.  En esta categoría se lo reconoce como más que un Junior, pero por falta de experiencia y de algunos conocimientos faltantes, no se lo considera aún como Semi senior.
+
+**Developers**: Se deberá evaluar si el developer supera varios de los aspectos esperados para un junior, pero que en la solvencia, independencia y actitud, aún no alcanza para ser considerado semi senior.  Para ellos, ver a continuación lo que se requiere.
+
+### Semi Senior ###
+
+**General**: “Su experiencia ya ronda entre los 3 y 6 años. Ya es técnicamente autosuficiente aunque aún requiere cierta supervisión y continuar aprendiendo. Puede desarrollar tareas más complejas y participar de proyectos más desafiantes o importantes.  Comienza a ser referente entre sus compañeros sobre algunos temas.
+
+**Developers**: Desde el punto de vista del líder, tomará su trabajo como solvente pero sabrá que debe revisarlo buscando posibles mejoras.  Algunos ejemplos de sus capacidades son:
+- Son la masa crítica y productiva del equipo
+- Conoce varios lenguajes de programación y se considera que comprende muy bien su lenguaje primario, apunta cada vez más a encontrar la mejor forma de utilizarlo, de forma eficiente y clara y sin cometer errores evitables.  Tiene conocimientos adicionales en patrones reusables, conceptos de buenas prácticas, algoritmos de búsqueda.
+- Tiene conocimientos generales sobre seguridad, headers y protocolo HTTP y web browsers
+- Trabaja bien con browsers web modernos, browsers para móbiles y screen readers.
+- En FE se siente cómodo con los layers múltiples, ya conoce las ventajas e implicancias de usar Jquery, frameworks y javascript.
+- Comienza a escribir el código en forma más modular, pensando en no volver a duplicar código (SMACSS, Sass, mixins, jerarquías de clases)
+- Ya maneja y usa MVC, puede pensar las soluciones en forma modular.  
+- Conoce las buenas prácticas de código y las aplica.
+- Puede escribir librerías y clases que son útiles a otros.  Puede hacerlo desde cero, pueden rápidamente aprender adaptarse a nuevos frameworks.
+- Ya comienza a preocuparse por la performance de sus diseños y código.
+- Puede tomar las acciones para mantener un proyecto en un controlador de versiones, entender y proponer las mejores prácticas utilizadas y realizar tareas para el equipo como branches, tags, etc.
+- Es responsable de testear su propio código, de escribir tests, de conocer el proceso de integración contínua y cobertura de UT.
+- Cuando algo se rompe o surgen errores, por lo general encuentra la causa y lo puede arreglar (a veces con una simple búsqueda en Google)
+- Es bueno trabajando en equipo y puede asistir y enseñar a los más junior, aunque aún puede no sentirse solvente en explicar por qué lo haría de otra forma, aunque confía en sus diseños.
+- Puede hacer code review a pares y juniors.  Para procesos críticos o complejos requiere que el CR sea además revisado por un Senior.
+- En la planning puede ver cosas o impactos que los más junior no ven, puede rápidamente entender el impacto y estimar más certeramente.  Sin embargo aún tiene una visión acotada a la tarea específica y no a todo el contexto o solución como para cuestionar los pedidos o proponer soluciones que cree mejores.
+- Respeta los estándares y metodologías, conoce y tiene experiencia en Scrum y/o XP.
+- Conoce buena parte de los procesos del negocio.
+- Se preocupa por aprovechar mejor su tiempo. Pide nuevas asignaciones cuando tiene tiempo disponible y es autosuficiente para llevar adelante una gran parte de sus tareas.
+
 
 
