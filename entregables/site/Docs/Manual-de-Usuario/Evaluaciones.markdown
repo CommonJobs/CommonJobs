@@ -289,7 +289,7 @@ Sus características generales son:
 
 ### Semi Senior ###
 
-**General**: “Su experiencia ya ronda entre los 3 y 6 años. Ya es técnicamente autosuficiente aunque aún requiere cierta supervisión y continuar aprendiendo. Puede desarrollar tareas más complejas y participar de proyectos más desafiantes o importantes.  Comienza a ser referente entre sus compañeros sobre algunos temas.
+**General**: Su experiencia ya ronda entre los 3 y 6 años. Ya es técnicamente autosuficiente aunque aún requiere cierta supervisión y continuar aprendiendo. Puede desarrollar tareas más complejas y participar de proyectos más desafiantes o importantes.  Comienza a ser referente entre sus compañeros sobre algunos temas.
 
 **Developers**: Desde el punto de vista del líder, tomará su trabajo como solvente pero sabrá que debe revisarlo buscando posibles mejoras.  Algunos ejemplos de sus capacidades son:
 - Son la masa crítica y productiva del equipo
@@ -311,6 +311,57 @@ Sus características generales son:
 - Respeta los estándares y metodologías, conoce y tiene experiencia en Scrum y/o XP.
 - Conoce buena parte de los procesos del negocio.
 - Se preocupa por aprovechar mejor su tiempo. Pide nuevas asignaciones cuando tiene tiempo disponible y es autosuficiente para llevar adelante una gran parte de sus tareas.
+ 
+### SSr Advanced ###
 
+**General**: En la medida en que va demostrando conocimientos cada vez más sólidos y comienza a tomar mayor responsabilidad, se lo reconoce como más que un Semi Senior, pero aún requiere de mayores skills para ser un Senior.  Un profesional que es excelente en su trabajo y con conocimientos solventes puede permanecer en este nivel ya que quizá no tenga otras características o interés necesario para tomar mayor responsabilidad o abordar mayores desafíos como Senior.
 
+**Developers**: Al igual que se mencionó antes, esta categoría para un developer es mostrar que ya es casi un Senior pero que aún no es lo suficientemente solvente o se recomienda que no está listo para asumir mayores responsabilidades.  Supera muchos de los puntos de un Semi Senior pero aún no cumple en forma constante la suficiente cantidad de características de un Senior.
 
+### Senior ###
+**General**: Tiene más de 6 a 10 años de experiencia, pero tenerlos no siempre conlleva este seniority ya que comienzan a contar otras características que a veces no se llegan a obtener con la experiencia.  Su conocimiento le permite tomar decisiones importantes dentro de su área y participar de las tareas más desafiantes.  Es a su vez mentor y referente dentro del equipo.  Ya no solo le preocupa y se ocupa de sus propias tareas y responsabilidades, sino que se preocupa por las del equipo, entiende el negocio de la empresa y de los clientes, puede hablar directamente con los clientes y representar a la empresa como experto en su área.  Para ello, tiene además muy buenas capacidades de comunicación tanto con el equipo, como con la gerencia y los clientes.
+
+**Developers**: Desde el punto de vista de un Tech Lead, tomará su trabajo como el de un par, lo revisará para sacar ideas y con el enfoque de desafiar sus diseños para ver si juntos logran mejorarlo.  Confía en sus resultados y que hará lo que se pidió o definió, o que lo mejorará.  Ya más que estar aprendiendo, está experimentando.
+
+Sus características generales son:
+- Son los pilares de los equipos
+- Debe ser capaz de realizar los diseños y cuando es necesario, arquitecturas sobre partes de una solución global, o de complejidad baja o media.  De ser capaz de revisar los diseños de los más junior.
+- Conoce varios lenguajes de programación pero además ya conoce de otras cosas como arquitectura de bases de datos, sobre hardware y escalabilidad, sobre redes, etc.
+- Conoce sobre servidores web, puede crearlos y mantenerlos.  Conoce herramientas de monitoreo.
+- Conoce en profundidad cómo funcionan los browsers, protocolo HTTP y headers.
+- Conoce sobre caching y optimizaciones de código por performance.
+- Su código funciona más rápido en los browsers más complejos con mínimos trucos que conoce.
+- Conoce sobre seguridad web y vectores de ataque y puede testear el código bajo dichos ataques.
+- En FE ha escrito quizá un plugin en jQuery, no le asusta el vanilla javascript, conoce otros frameworks como angular, ember, etc.   
+- No solo cumple con los procesos, metodologías y estándares, sino que ayuda a definirlos o adaptarlos a los diferentes contextos.
+- Le preocupa la calidad de su código, producen código fácil de leer y mantener.  Documenta bien.
+- No solamente recibe requerimientos, sino que los busca y genera. En muchas oportunidades es él quien le genera asignaciones nuevas a su líder técnico o PM.
+- En caso de productos propios, es capaz de marcar el roadmap y priorizar las tareas para obtener el producto deseado, nuevos features o mejoras.
+- Puede liderar proyectos que no sean críticos y/o de equipos pequeños.
+- Es buen comunicador y mentor ya que sabe lo que hace, comprende todo y sabe explicarlo y justificarlo.
+- No solo se ocupa de su código sino que toma en cuenta lo que está haciendo el equipo y le interesa el resultado final.
+- Hace coaching en forma constante a los de menos experiencia.
+- Hace los Code Reviews, o al menos los más críticos o complejos (si los SSRs también hacen CRs) y se preocupa por que sigan las mejores prácticas.
+- En las estimaciones de las planning, no intenta imponer su visión sino que escucha, vota y se da cuenta si debe corregir y enseñar para que el equipo entienda mejor.  Sus estimaciones son más certeras y si no las cumple, avisa y se da cuenta con anticipación.
+- Conoce sus limitaciones y pide refuerzos cuando los necesita, ya que confía en su capacidad y no tiene la necesidad de que crean que sabe todo.
+- Son los que por lo general resuelven los problemas complejos, los errores inesperados en forma rápida ya que tienen experiencia en saber por dónde se encuentra la causa, y por lo que generalmente se dice que hacen “magia”.
+- Puede comunicarse directamente con el cliente representando al equipo desde el punto de vista técnico, escuchar lo que necesita pero no solo centrarse en lo que pide sino que puede mostrarle alternativas o soluciones que cree más convenientes, para ello entiende también las necesidades del negocio, las prioridades y conoce que hay por lo general presupuestos limitados.
+
+### Roles para Senior ###
+
+Además de desempeñar tareas de su nivel, los Senior podrán tener oportunidad de llevar a cabo roles de mayor responsabilidad que se detallan a continuación.
+
+#### Rol de Tech Lead: ####
+- Su principal función es estar disponible en todo momento y donde sea, ya sea para el equipo, cuando surgen imprevistos, problemas en producción, problemas con un diseño, discusiones de arquitectura, etc.
+- Se requieren soft skills necesarios para lograr sacar lo mejor de cada developer del equipo, conocer sus limitaciones, sus habilidades, sus motivaciones, etc para lograr ser un buen coach.
+- Deben ser facilitadores para crear acciones y próximos pasos, sabiendo delegar en los miembros del equipo y realizando seguimiento.
+- Es el responsable de las estimaciones del equipo y de su cumplimiento, de corregir desvíos y de avisar con anticipación de no poder remediarlos
+- Debe conocer las metodologías de desarrollo, principalmente scrum.  Además ser siempre un mediador, un facilitador, que no impone ideas sino que escucha y guía para que los miembros de su equipo aprendan y experimenten.
+- Debe conoce las capacidades individuales y sus motivaciones y saber cuándo debe intervenir en las asignaciones de tareas para equilibrar la eficiencia del equipo con las necesidades del negocio.
+- Se requiere que sea un excelente comunicador dentro del equipo y fuera del mismo, con el cliente y todo stakeholder.  Que entienda muy bien las necesidades del cliente y saber traducirlas en lenguaje técnico, en diseños y en las mejores soluciones posibles.
+- Su rol también es actuar como el primer contacto del cliente, gerencia u otros actores como para mantener al equipo “protegido” de ruido externo y propiciar su eficiencia y motivación.
+
+#### Rol de Arquitecto (solo para Developers): ####
+- Su principal función es resolver los problemas más complejos, definir arquitecturas y diseños complejos, además de programar cuando se requiere.  Para lograrlo, debe tener buenos conocimientos sobre arquitectura y diseño.
+- Pueden estar en este rol por un tiempo en los proyectos hasta que el estado del mismo permita que pasen a resolver otros desafíos.  Ya sea al inicio de los proyectos o cuando hay problemas de performance, de robustez, escalabilidad, etc.
+- Su rol también es hablar directamente con el cliente para resolver y tomar decisiones sobre cuestiones complejas de tecnología, sugerir y dar consultoría sobre opciones que haya en el mercado, sobre estimaciones de alto nivel para soluciones a medida, ventajas y desventajas, etc.
