@@ -253,11 +253,11 @@ Al ser Senior, podrá desempeñar en forma adicional, los siguientes roles:
 
 ### Trainee o Principiante ###
 
-**General**:Es típicamente su primera experiencia laboral, pudiendo tener experiencia previa en trabajos prácticos o experimentar con herramientas, pero sin experiencia con clientes y objetivos de negocio.
+**General**: Es típicamente su primera experiencia laboral, pudiendo tener experiencia previa en trabajos prácticos o experimentar con herramientas, pero sin experiencia con clientes y objetivos de negocio.
 
 ### Junior ###
 
-**General**: Tiene entre 6 meses y 2 años de experiencia.  Para desempeñarse suele requerir acompañamiento.  Probablemente no maneja todas las herramientas o conocimientos que se necesitan para la tarea.”
+**General**: Tiene entre 6 meses y 2 años de experiencia.  Para desempeñarse suele requerir acompañamiento.  Probablemente no maneja todas las herramientas o conocimientos que se necesitan para la tarea.
 
 **Developers**: Un programador junior va logrando producir código que funciona bien, pero aún requieren supervisión y guía, no conocen bien los frameworks pero dependen mucho de ellos, generan bugs, generan código duplicado, piden recetas y necesitan definiciones detalladas de lo que se les pide lograr, están más cómodos partiendo de cosas ya hechas sin entender muy bien como funciona todo.  
 
