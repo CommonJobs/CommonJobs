@@ -56,6 +56,7 @@
         }
         this.save = function () {
             var updateCalificators = this.calificatorsManagerModel.toJs();
+            var updateEvaluators = this.calificatorsManagerModel.toEvaluators();
             $.ajax("/Evaluations/api/UpdateCalificators/", {
                 type: "POST",
                 dataType: 'json',
@@ -64,6 +65,9 @@
                 complete: function (response) {
                     self.close();
                     self.saveButtonEnable(false);
+                },
+                success: function () {
+                    self.evaluation.evaluators(updateEvaluators);
                 },
                 error: function () {
                     alert('Fallo');
@@ -92,6 +96,18 @@
             Evaluation: this.evaluation.toJs(),
             Calificators: calificatorsFiltered
         };
+    }
+
+    CalificatorsManager.prototype.toEvaluators = function () {
+        var calificators = _.map(this.calificators(), function (e) {
+            return e.toJs();
+        });
+        var calificatorsFiltered = _.filter(calificators, function (e) {
+            return e.Action !== 1;
+        });
+        return _.map(calificatorsFiltered, function (e) {
+            return e.UserName;
+        });
     }
 
     var Calificator = function (data) {
