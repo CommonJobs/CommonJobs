@@ -1189,7 +1189,6 @@ tr.evaluation-generated td {
   position: fixed;
   right: 0;
   left: 0;
-  display: none;
 }
 
 /* line 13, ../../sass/Evaluations/_loader.scss */
