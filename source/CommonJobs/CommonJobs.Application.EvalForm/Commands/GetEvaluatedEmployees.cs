@@ -19,6 +19,12 @@ namespace CommonJobs.Application.EvalForm.Commands
 
         public override List<EmployeeEvaluationDTO> ExecuteWithResult()
         {
+            //3. If user is EmployeeManager
+
+            //var sessionRoles = (string[])HttpContext.Session[CommonJobs.Mvc.UI.Controllers.AccountController.SessionRolesKey] ?? new string[] { };
+            //var required = new List<string>() { "EmployeeManagers" };
+            //var isManager = sessionRoles.Intersect(required).Any();
+
             RavenQueryStatistics stats;
             IQueryable<EmployeeToEvaluate_Search.Projection> query = RavenSession
                 .Query<EmployeeToEvaluate_Search.Projection, EmployeeToEvaluate_Search>()

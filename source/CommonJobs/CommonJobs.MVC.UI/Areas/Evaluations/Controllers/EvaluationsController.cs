@@ -110,7 +110,6 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
             //2.d. Responsible with evaluation done, show company evaluation to complete
             //2.e. Responsible with company evaluation done, show every evaluation including auto
 
-            //var evId = EmployeeEvaluation.GenerateEvaluationId(period, username);
             var loggedUser = DetectUser();
 
             RavenQueryStatistics stats;
