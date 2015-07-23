@@ -64,11 +64,10 @@
                 complete: function (response) {
                     self.close();
                     self.saveButtonEnable(false);
-                    getDashboardEvaluations();
                 },
                 error: function () {
                     alert('Fallo');
-                } 
+                }
             });
         }
     }
@@ -180,7 +179,7 @@
         this.evaluatorsString = '';
         this.state = ko.observable('');
         this.currentState = '';
-        this.evaluators = '';
+        this.evaluators = ko.observableArray();
         if (data) {
             this.fromJs(data);
         }
@@ -195,12 +194,12 @@
         this.period = data.Period;
         this.currentPosition= data.CurrentPosition || '';
         this.seniority = data.Seniority || '';
-        this.evaluators = data.Evaluators;
+        this.evaluators(data.Evaluators);
         this.evaluatorsString = ko.computed(function () {
-            return this.evaluators.toString().replace(/,/g, ', ');
+            return this.evaluators().toString().replace(/,/g, ', ');
         }, this);
         this.evaluatorsAmount = ko.computed(function () {
-            return this.evaluators.length;
+            return this.evaluators().length;
         }, this);
         this.evaluatorsTextLink = ko.computed(function () {
             return (this.evaluatorsAmount() === 1) ? this.evaluatorsAmount() + " evaluador" : this.evaluatorsAmount() + " evaluadores";
@@ -255,7 +254,7 @@
             return this.isResponsible && this.state() != 6;
         }, this);
         this.showCalificatorsManager = function (data, event) {
-            viewmodel.calificatorsManagerModel.fromJs({ evaluation: this, calificators: this.evaluators });
+            viewmodel.calificatorsManagerModel.fromJs({ evaluation: this, calificators: this.evaluators() });
             var popupContainer = $(event.target).parents('.calificators-column');
             popupContainer.append($('.content-modal'));
             $('.content-modal').show();
