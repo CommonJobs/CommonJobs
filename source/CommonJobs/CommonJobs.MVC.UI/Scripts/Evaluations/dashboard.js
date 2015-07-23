@@ -55,23 +55,25 @@
             self.saveButtonEnable(false);
         }
         this.save = function () {
+            this.calificatorsManagerModel.close();
+            this.calificatorsManagerModel.saveButtonEnable(false);
+            viewmodel.isLoading(true);
             var updateCalificators = this.calificatorsManagerModel.toJs();
-            var updateEvaluators = this.calificatorsManagerModel.toEvaluators();
-            $.ajax("/Evaluations/api/UpdateCalificators/", {
+            var updateEvaluators = this.calificatorsManagerModel.getEvaluatorNames();
+            var ajax = $.ajax("/Evaluations/api/UpdateCalificators/", {
                 type: "POST",
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
-                data: JSON.stringify(updateCalificators),
-                complete: function (response) {
-                    self.close();
-                    self.saveButtonEnable(false);
-                },
-                success: function () {
-                    self.evaluation.evaluators(updateEvaluators);
-                },
-                error: function () {
-                    alert('Fallo');
-                }
+                data: JSON.stringify(updateCalificators)
+            });
+            ajax.success(function () {
+                self.evaluation.evaluators(updateEvaluators);
+            });
+            ajax.always(function (response) {
+                viewmodel.isLoading(false);
+            });
+            ajax.fail(function () {
+                alert('Fallo');
             });
         }
     }
@@ -98,15 +100,12 @@
         };
     }
 
-    CalificatorsManager.prototype.toEvaluators = function () {
-        var calificators = _.map(this.calificators(), function (e) {
-            return e.toJs();
-        });
-        var calificatorsFiltered = _.filter(calificators, function (e) {
-            return e.Action !== 1;
+    CalificatorsManager.prototype.getEvaluatorNames = function () {
+        var calificatorsFiltered = _.filter(this.calificators(), function (e) {
+            return e.action() !== 1;
         });
         return _.map(calificatorsFiltered, function (e) {
-            return e.UserName;
+            return e.userName;
         });
     }
 
