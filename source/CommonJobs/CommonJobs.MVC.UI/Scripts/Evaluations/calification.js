@@ -226,19 +226,28 @@
                     name: groupNames[key],
                     items: _.map(items, function (item) {
                         itemNumber++;
+                        var rowSelected = ko.observable(false);
                         var valuesByItem = {
                             key: item.Key,
                             text: itemNumber + " - " + item.Text,
                             description: item.Description,
+                            isRowSelected: rowSelected,
                             values: _.map(valuesByKeyCollection, function (valuesByKey) {
                                 var valueItem = {
                                     calificationId: valuesByKey.calificationColumn.calificationId,
                                     value: ko.observable(valuesByKey[item.Key] || ""),
                                     editable: self.isValueEditable(valuesByKey),
+                                    isSelected: rowSelected,
                                     owner: valuesByKey.calificationColumn.owner,
                                     showValue: _.find(self.califications, function (calification) {
                                         return calification.id == valuesByKey.calificationColumn.calificationId;
                                     }).show,
+                                    onBlur: function (data, event) {
+                                        data.isSelected(false);
+                                    },
+                                    onFocus: function (data, event) {
+                                        data.isSelected(true);
+                                    }
                                 };
                                 valueItem.isValid = ko.computed(function () {
                                     return valueItem.value() === "" || (valueItem.value() >= 1 && valueItem.value() <= 4);
