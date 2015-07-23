@@ -55,20 +55,25 @@
             self.saveButtonEnable(false);
         }
         this.save = function () {
+            this.calificatorsManagerModel.close();
+            this.calificatorsManagerModel.saveButtonEnable(false);
+            viewmodel.isLoading(true);
             var updateCalificators = this.calificatorsManagerModel.toJs();
-            $.ajax("/Evaluations/api/UpdateCalificators/", {
+            var updateEvaluators = this.calificatorsManagerModel.getEvaluatorNames();
+            var ajax = $.ajax("/Evaluations/api/UpdateCalificators/", {
                 type: "POST",
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
-                data: JSON.stringify(updateCalificators),
-                complete: function (response) {
-                    self.close();
-                    self.saveButtonEnable(false);
-                    getDashboardEvaluations();
-                },
-                error: function () {
-                    alert('Fallo');
-                } 
+                data: JSON.stringify(updateCalificators)
+            });
+            ajax.success(function () {
+                self.evaluation.evaluators(updateEvaluators);
+            });
+            ajax.always(function (response) {
+                viewmodel.isLoading(false);
+            });
+            ajax.fail(function () {
+                alert('Fallo');
             });
         }
     }
@@ -93,6 +98,15 @@
             Evaluation: this.evaluation.toJs(),
             Calificators: calificatorsFiltered
         };
+    }
+
+    CalificatorsManager.prototype.getEvaluatorNames = function () {
+        var calificatorsFiltered = _.filter(this.calificators(), function (e) {
+            return e.action() !== 1;
+        });
+        return _.map(calificatorsFiltered, function (e) {
+            return e.userName;
+        });
     }
 
     var Calificator = function (data) {
@@ -180,7 +194,7 @@
         this.evaluatorsString = '';
         this.state = ko.observable('');
         this.currentState = '';
-        this.evaluators = '';
+        this.evaluators = ko.observableArray();
         if (data) {
             this.fromJs(data);
         }
@@ -195,12 +209,12 @@
         this.period = data.Period;
         this.currentPosition= data.CurrentPosition || '';
         this.seniority = data.Seniority || '';
-        this.evaluators = data.Evaluators;
+        this.evaluators(data.Evaluators);
         this.evaluatorsString = ko.computed(function () {
-            return this.evaluators.toString().replace(/,/g, ', ');
+            return this.evaluators().toString().replace(/,/g, ', ');
         }, this);
         this.evaluatorsAmount = ko.computed(function () {
-            return this.evaluators.length;
+            return this.evaluators().length;
         }, this);
         this.evaluatorsTextLink = ko.computed(function () {
             return (this.evaluatorsAmount() === 1) ? this.evaluatorsAmount() + " evaluador" : this.evaluatorsAmount() + " evaluadores";
@@ -255,7 +269,7 @@
             return this.isResponsible && this.state() != 6;
         }, this);
         this.showCalificatorsManager = function (data, event) {
-            viewmodel.calificatorsManagerModel.fromJs({ evaluation: this, calificators: this.evaluators });
+            viewmodel.calificatorsManagerModel.fromJs({ evaluation: this, calificators: this.evaluators() });
             var popupContainer = $(event.target).parents('.calificators-column');
             popupContainer.append($('.content-modal'));
             $('.content-modal').show();
