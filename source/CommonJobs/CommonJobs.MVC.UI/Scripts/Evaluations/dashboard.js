@@ -73,7 +73,7 @@
                 viewmodel.isLoading(false);
             });
             ajax.fail(function () {
-                alert('Fallo');
+                alert('Fallo interno. Por favor recargue la página.');
             });
         }
     }
@@ -231,6 +231,9 @@
                 data: JSON.stringify({ evaluationId: this.id }),
                 success: function (response) {
                     getDashboardEvaluations();
+                },
+                error: function () {
+                    alert('Fallo interno. Por favor recargue la página.');
                 }
             });
         };
@@ -295,19 +298,19 @@
     getDashboardEvaluations();
     ko.applyBindings(viewmodel);
     commonSuggest($('.content-modal .search'), 'UserName');
-    
+
     function getDashboardEvaluations() {
         viewmodel.isLoading(true);
         var ajax = $.getJSON("/Evaluations/api/getDashboardEvaluations/", function (model) {
             viewmodel.fromJS(model);
             viewmodel.defaultSort();
-            
+
         });
         ajax.always(function () {
             viewmodel.isLoading(false);
         });
         ajax.fail(function () {
-            alert('Fallo');
+            alert('Fallo interno. Por favor recargue la página.');
         });
     }
 });
