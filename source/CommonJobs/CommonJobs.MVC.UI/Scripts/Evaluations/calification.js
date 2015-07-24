@@ -372,19 +372,17 @@
                 .filter(function (calification) {
                     return calification.owner == self.userView || (self.evaluation.readyForDevolution && calification.owner == 0);
                 })
-                .map(function(calification) {
+                .map(function (calification) {
                     var calificationItems = _.chain(self.groups)
                         .map(function(group) {
                             var itemsList = _.map(group.items, function(item) {
-                                var values = _.filter(item.values, function (element) {
-                                    return element.editable;
+                                var ownerValue = _.find(item.values, function (element) {
+                                    return element.owner == calification.owner;
                                 });
-                                for (var key in values) {
-                                    if (values[key].value()) {
-                                        return {
-                                            Key: item.key.toString(),
-                                            Value: parseFloat(values[key].value())
-                                        }
+                                if (ownerValue && ownerValue.value()) {
+                                    return {
+                                        Key: item.key.toString(),
+                                        Value: parseFloat(ownerValue.value())
                                     }
                                 }
                                 return;
