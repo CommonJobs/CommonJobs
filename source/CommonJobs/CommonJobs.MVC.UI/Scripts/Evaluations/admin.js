@@ -99,6 +99,9 @@
                 var countText = (response.responseText == '1') ? "Se ha generado 1 evaluación correctamente" : "Se han generado " + response.responseText + " evaluaciones correctamente";
                 modalContainer.find('#textCount').text(countText);
                 modalContainer.modal('show');
+            },
+            error: function () {
+                alert('Fallo interno. Por favor recargue la página.');
             }
         });
     });

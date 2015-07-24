@@ -34,9 +34,9 @@
             viewmodel.isLoading(false);
         });
         ajax.fail(function () {
-            alert('Fallo');
+            alert('Fallo interno. Por favor recargue la página.');
         });
-        
+
     }
 
     EvaluationViewModel.prototype.isDirty = dirtyFlag();
@@ -81,14 +81,14 @@
                     }
                 },
                 error: function () {
-                    alert: ('Fallo');
+                    alert('Fallo interno. Por favor recargue la página.');
                 }
             });
         } else {
             modalViewModel.showInvalidModal();
         }
     }
-    
+
     EvaluationViewModel.prototype.onFinish = function () {
         if (!this.isValid()) {
             modalViewModel.showInvalidModal();
@@ -97,7 +97,7 @@
         } else {
             modalViewModel.showFinishModal();
         }
-        
+
     }
 
     EvaluationViewModel.prototype.isValueEditable = function (calification) {
@@ -131,7 +131,7 @@
                 hasShowIcon: hasShowIcon
             }
         });
-        
+
         this.evaluation.fromJs(data.Evaluation);
 
         if (this.evaluation.readyForDevolution) {
@@ -144,7 +144,7 @@
                 calificationEditable.show(true);
             });
         }
-        
+
         this.isEvaluationEditable(!this.evaluation.finished &&
             (_.some(this.califications, function (calification) {
                 return calification.owner == self.userView && !calification.finished;
@@ -197,7 +197,7 @@
                     valuesByKey[cal.Key] = parseFloat(cal.Value.toFixed(1));
                 }
             }
-            
+
             return valuesByKey;
         });
 
@@ -424,7 +424,7 @@
             this.fromJs(data);
         }
     }
-    
+
     Evaluation.prototype.fromJs = function (data) {
         this.id = data.Id;
         this.userName = data.UserName;
@@ -461,7 +461,7 @@
             $(event.target).blur();
         }
     }
-    
+
     var ModalViewModel = function () {
         this.show = ko.observable(false);
         this.title = ko.observable('');
