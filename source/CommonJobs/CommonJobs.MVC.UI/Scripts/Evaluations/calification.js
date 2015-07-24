@@ -26,17 +26,16 @@
 
     EvaluationViewModel.prototype.load = function () {
         viewmodel.isLoading(true);
-        var ajax = $.getJSON("/Evaluations/api/getEvaluation/" + calificationPeriod + "/" + calificationUserName + "/", function (model) {
+        $.getJSON("/Evaluations/api/getEvaluation/" + calificationPeriod + "/" + calificationUserName + "/", function (model) {
             viewmodel.fromJs(model);
             ko.applyBindings(viewmodel, document.getElementById('evaluation-view'));
-        });
-        ajax.always(function () {
+        })
+        .fail(function () {
+            alert('Fallo interno. Por favor recargue la página.');
+        })
+        .always(function () {
             viewmodel.isLoading(false);
         });
-        ajax.fail(function () {
-            alert('Fallo interno. Por favor recargue la página.');
-        });
-
     }
 
     EvaluationViewModel.prototype.isDirty = dirtyFlag();
@@ -64,6 +63,7 @@
     EvaluationViewModel.prototype.onSave = function () {
         var self = this;
         if (this.calificationFinished || this.evaluationFinished || this.isValid()) {
+            viewmodel.isLoading(true);
             var dto = this.toDto();
             $.ajax("/Evaluations/api/SaveEvaluationCalifications/", {
                 type: "POST",
@@ -79,10 +79,13 @@
                             window.location = urlGenerator.action(calificationPeriod, "Evaluations");
                         }
                     }
-                },
-                error: function () {
-                    alert('Fallo interno. Por favor recargue la página.');
                 }
+            })
+            .fail(function () {
+                alert('Fallo interno. Por favor recargue la página.');
+            })
+            .always(function () {
+                viewmodel.isLoading(false);
             });
         } else {
             modalViewModel.showInvalidModal();
