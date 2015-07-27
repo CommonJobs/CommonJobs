@@ -20,11 +20,11 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
                 new { controller = "EvaluationsApi", period = UrlParameter.Optional, username = UrlParameter.Optional }
             );
 
-            //context.MapRoute(
-            //    "Evaluations_report",
-            //    "Evaluations/report",
-            //    new { controller = "Evaluations", action = "ReportDashboard", period = UrlParameter.Optional }
-            //);
+            context.MapRoute(
+                "Evaluations_report",
+                "Evaluations/report",
+                new { controller = "Evaluations", action = "ReportDashboard" }
+            );
 
             context.MapRoute(
                 "Evaluations_creation",
