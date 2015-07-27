@@ -157,6 +157,7 @@
     <Content Include="Content\Images\Evaluations\7-02.png" />
     <Content Include="Content\Images\Evaluations\8-02.png" />
     <Content Include="Content\Images\Evaluations\9-01.png" />
+    <Content Include="Content\Images\Evaluations\information-black.png" />
     <Content Include="Content\Images\Evaluations\information.png" />
     <Content Include="Scripts\Evaluations\calification.js" />
     <Content Include="Scripts\Evaluations\dashboard.js" />
