@@ -54,7 +54,12 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations.Controllers
         public JsonNetResult GetDashboardEvaluationsForEmployeeManagers(string period)
         {
             PeriodEvaluation periodEvaluation = new PeriodEvaluation();
-            periodEvaluation.Evaluations = ExecuteCommand(new GetEvaluatedEmployees(period));
+            var command = new GetEvaluatedEmployees();
+            if (period != null)
+            {
+                command.Period = period;
+            }
+            periodEvaluation.Evaluations = ExecuteCommand(command);
             return Json(periodEvaluation);
         }
 
