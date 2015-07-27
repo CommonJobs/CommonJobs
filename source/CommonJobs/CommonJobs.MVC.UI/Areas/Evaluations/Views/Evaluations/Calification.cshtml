@@ -12,6 +12,7 @@
     ScriptManager.RegisterJs(Url.Content("~/Content/twitter-bootstrap/js/bootstrap-modal.js"), priority: 900);
     ScriptManager.RegisterJs(Url.Content("~/Scripts/url-generator.js"), priority: 900);
     ScriptManager.RegisterJs(Url.Content("~/Scripts/knockout-2.2.0.js"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/jquery-scrolltofixed.js"), priority: 900);
     ScriptManager.RegisterJs(Url.Content("~/Scripts/Evaluations/common.js"));
     ScriptManager.RegisterJs(Url.Content("~/Scripts/Evaluations/calification.js"));
 }
@@ -76,7 +77,7 @@
         <!-- /ko -->
     </div>
     <table data-bind="attr: {class: numberOfColumns}, css: {table: true, 'calification-items': true}">
-        <thead>
+        <thead id="header-fixed">
             <tr>
                 <th class="calificators"><h1>EVALUADORES</h1></th>
                 <!-- ko foreach: califications -->

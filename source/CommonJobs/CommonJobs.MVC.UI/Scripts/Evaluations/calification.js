@@ -3,6 +3,16 @@
     var modalViewModel;
     var layoutViewModel;
 
+    $('#header-fixed').scrollToFixed({
+        marginTop: 90,
+        fixed: function () {
+            $(this).css('display', 'table');
+        },
+        unfixed: function () {
+            $(this).css('display', 'table-header-group');
+        }
+    });
+
     var sortCalificationColumns = function (a, b) {
         if (a.Owner == b.Owner)
             return 0;

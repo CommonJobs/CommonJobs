@@ -269,6 +269,8 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\DataTables\dataTables.bootstrap.js" />
+    <Content Include="Scripts\jquery-scrolltofixed-min.js" />
+    <Content Include="Scripts\jquery-scrolltofixed.js" />
     <Content Include="Scripts\knockout.activity.js" />
     <Content Include="Scripts\knockout.asyncCommand.js" />
     <Content Include="Scripts\knockout.dirtyFlag.js" />
