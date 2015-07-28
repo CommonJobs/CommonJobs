@@ -67,7 +67,6 @@
   <ItemGroup>
     <Compile Include="Commands\GetEvaluatedEmployees.cs" />
     <Compile Include="Commands\GetEvaluationCalifications.cs" />
-    <Compile Include="Commands\GetEvaluationCalificationsForEmployeeManager.cs" />
     <Compile Include="Commands\StartDevolutionCommand.cs" />
     <Compile Include="Commands\UpdateCalificationsCommand.cs" />
     <Compile Include="Commands\UpdateEvaluatorsCommand.cs" />
