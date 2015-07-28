@@ -135,7 +135,7 @@ namespace CommonJobs.Application.EvalForm.Commands
         {
             return new CalificationsDto()
             {
-                View = (_loggedUser == evaluationDto.ResponsibleId)
+                View = (_loggedUser == evaluationDto.ResponsibleId || _isEmployeeManager)
                 ? UserView.Company
                     : (_loggedUser == _evaluatedUser)
                         ? UserView.Auto
