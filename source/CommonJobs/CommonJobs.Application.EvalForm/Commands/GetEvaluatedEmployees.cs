@@ -10,11 +10,15 @@ namespace CommonJobs.Application.EvalForm.Commands
 {
     public class GetEvaluatedEmployees : Command<List<EmployeeEvaluationDTO>>
     {
-        private string _period;
+        /// <summary>
+        /// This will be an optional field. It represents the Period to filter the results.
+        /// If null will not be used.
+        /// </summary>
+        public string Period { get; set; }
 
-        public GetEvaluatedEmployees(string period)
+        public GetEvaluatedEmployees()
         {
-            _period = period;
+
         }
 
         public override List<EmployeeEvaluationDTO> ExecuteWithResult()
@@ -22,8 +26,12 @@ namespace CommonJobs.Application.EvalForm.Commands
             RavenQueryStatistics stats;
             IQueryable<EmployeeToEvaluate_Search.Projection> query = RavenSession
                 .Query<EmployeeToEvaluate_Search.Projection, EmployeeToEvaluate_Search>()
-                .Statistics(out stats)
-                .Where(e => e.Period == _period);
+                .Statistics(out stats);
+
+            if (Period != null)
+            {
+                query.Where(e => e.Period == Period);
+            }
 
             var employeesProjection = query.ToList();
 

@@ -21,6 +21,12 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
             );
 
             context.MapRoute(
+                "Evaluations_report",
+                "Evaluations/report",
+                new { controller = "Evaluations", action = "ReportDashboard" }
+            );
+
+            context.MapRoute(
                 "Evaluations_creation",
                 "Evaluations/create/{period}",
                 new { controller = "Evaluations", action = "PeriodCreation", period = UrlParameter.Optional}
