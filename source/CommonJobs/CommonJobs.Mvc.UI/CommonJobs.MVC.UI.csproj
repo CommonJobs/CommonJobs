@@ -366,6 +366,7 @@
     <Content Include="Areas\Evaluations\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Evaluations\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Evaluations\Views\Evaluations\Calification.cshtml" />
+    <Content Include="Areas\Evaluations\Views\Evaluations\DashboardRecursosHumanos.cshtml" />
     <None Include="Properties\PublishProfiles\DEVProfile.pubxml" />
     <None Include="_bin_deployableAssemblies\FSharp.Core.dll" />
   </ItemGroup>
