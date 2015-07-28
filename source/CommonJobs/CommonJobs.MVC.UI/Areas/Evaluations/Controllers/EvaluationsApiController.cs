@@ -86,10 +86,14 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Get)]
-        public JsonNetResult GetEvaluation (string username, string period)
+        public JsonNetResult GetEvaluation(string username, string period)
         {
+            var sessionRoles = (string[])HttpContext.Session[CommonJobs.Mvc.UI.Controllers.AccountController.SessionRolesKey] ?? new string[] { };
+            var required = new List<string>() { "EmployeeManagers" };
+            var isManager = sessionRoles.Intersect(required).Any();
+
             Calification calification = new Calification();
-            CalificationsDto calificationsDTO = ExecuteCommand(new GetEvaluationCalifications(period, username, DetectUser()));
+            CalificationsDto calificationsDTO = ExecuteCommand(new GetEvaluationCalifications(period, username, DetectUser(), isManager));
             calification.UserView = calificationsDTO.View;
             calification.Evaluation = calificationsDTO.Evaluation;
             calification.Califications = calificationsDTO.Califications;

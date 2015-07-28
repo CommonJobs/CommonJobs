@@ -18,13 +18,17 @@ namespace CommonJobs.Application.EvalForm.Commands
 
         private string _loggedUser;
 
-        public GetEvaluationCalifications(string period, string evaluatedUser, string loggedUser)
+        private bool _isEmployeeManager;
+
+        public GetEvaluationCalifications(string period, string evaluatedUser, string loggedUser, bool isEmployeeManager = false)
         {
             _period = period;
 
             _loggedUser = loggedUser;
 
             _evaluatedUser = evaluatedUser;
+
+            _isEmployeeManager = isEmployeeManager;
         }
 
         public override CalificationsDto ExecuteWithResult()
@@ -131,7 +135,7 @@ namespace CommonJobs.Application.EvalForm.Commands
         {
             return new CalificationsDto()
             {
-                View = (_loggedUser == evaluationDto.ResponsibleId)
+                View = (_loggedUser == evaluationDto.ResponsibleId || _isEmployeeManager)
                 ? UserView.Company
                     : (_loggedUser == _evaluatedUser)
                         ? UserView.Auto
@@ -149,7 +153,8 @@ namespace CommonJobs.Application.EvalForm.Commands
         /// <returns></returns>
         private bool CanViewEvaluation(CalificationsEvaluationDto evaluationDto, List<EvaluationCalification> califications)
         {
-            return _loggedUser == evaluationDto.UserName
+            return evaluationDto.Finished && _isEmployeeManager
+                || _loggedUser == evaluationDto.UserName
                 || _loggedUser == evaluationDto.ResponsibleId
                 || califications.Any(c => c.EvaluatorEmployee == _loggedUser);
         }
