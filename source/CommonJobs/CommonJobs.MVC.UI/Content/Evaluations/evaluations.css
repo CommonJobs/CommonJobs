@@ -1036,8 +1036,9 @@ tr.evaluation-generated td {
   font-size: 34px;
   padding: 0;
   font-weight: normal;
+  text-transform: uppercase;
 }
-/* line 248, ../../sass/Evaluations/_evaluation.scss */
+/* line 249, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .calification-items .calificators .icon {
   background-image: url(../Images/Evaluations/11-02.png);
   position: absolute;
@@ -1047,27 +1048,27 @@ tr.evaluation-generated td {
   top: 5px;
   cursor: pointer;
 }
-/* line 257, ../../sass/Evaluations/_evaluation.scss */
+/* line 258, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .calification-items .calificators .icon.top-tip:hover:after {
   left: -20px;
 }
-/* line 260, ../../sass/Evaluations/_evaluation.scss */
+/* line 261, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .calification-items .calificators .icon.top-tip:hover:before {
   left: 5px;
 }
-/* line 264, ../../sass/Evaluations/_evaluation.scss */
+/* line 265, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .calification-items .calificators .icon:after {
   content: 'Ocultar';
 }
-/* line 268, ../../sass/Evaluations/_evaluation.scss */
+/* line 269, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .calification-items .calificators .icon.hide-column {
   background-image: url(../Images/Evaluations/10-02.png);
 }
-/* line 271, ../../sass/Evaluations/_evaluation.scss */
+/* line 272, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .calification-items .calificators .icon.hide-column:after {
   content: "Mostrar";
 }
-/* line 278, ../../sass/Evaluations/_evaluation.scss */
+/* line 279, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .calification-items .title-evaluation {
   background-color: #888888;
   color: white;
@@ -1077,11 +1078,11 @@ tr.evaluation-generated td {
   text-transform: uppercase;
   border-top: none;
 }
-/* line 287, ../../sass/Evaluations/_evaluation.scss */
+/* line 288, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .calification-items .title-evaluation:last-child {
   border-right: none;
 }
-/* line 293, ../../sass/Evaluations/_evaluation.scss */
+/* line 294, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .calification-items tbody .sub-title-evaluation {
   background-color: #656565;
   color: white !important;
@@ -1090,57 +1091,57 @@ tr.evaluation-generated td {
   text-transform: uppercase;
   border-top: none;
 }
-/* line 301, ../../sass/Evaluations/_evaluation.scss */
+/* line 302, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .calification-items tbody .sub-title-evaluation:first-child {
   font-size: 26px;
 }
-/* line 306, ../../sass/Evaluations/_evaluation.scss */
+/* line 307, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .calification-items tbody .icon.info {
   background: url(../Images/Evaluations/information.png) no-repeat center center;
   height: 16px;
   width: 16px;
   margin-left: 5px;
 }
-/* line 314, ../../sass/Evaluations/_evaluation.scss */
+/* line 315, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .calification-items tbody tr {
   height: 50px;
   background-color: #FFF;
   color: #666;
 }
-/* line 319, ../../sass/Evaluations/_evaluation.scss */
+/* line 320, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .calification-items tbody tr.row-selected {
   background-color: #EDF0F1;
 }
-/* line 322, ../../sass/Evaluations/_evaluation.scss */
+/* line 323, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .calification-items tbody tr.row-selected td span {
   color: #000;
 }
-/* line 326, ../../sass/Evaluations/_evaluation.scss */
+/* line 327, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .calification-items tbody tr.row-selected .icon.info {
   background: url(../Images/Evaluations/information-black.png) no-repeat center center;
   height: 16px;
   width: 16px;
   margin-left: 5px;
 }
-/* line 333, ../../sass/Evaluations/_evaluation.scss */
+/* line 334, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .calification-items tbody tr.row-selected .calification-input {
   border: 1px solid #439CFD;
 }
-/* line 338, ../../sass/Evaluations/_evaluation.scss */
+/* line 339, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .calification-items tbody tr td {
   font-size: 20px;
   border-bottom: 1px solid #DDD;
   border-right: 1px solid #DDD;
 }
-/* line 343, ../../sass/Evaluations/_evaluation.scss */
+/* line 344, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .calification-items tbody tr td:first-child {
   font-size: 16px;
 }
-/* line 347, ../../sass/Evaluations/_evaluation.scss */
+/* line 348, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .calification-items tbody tr td:last-child {
   border-right: none;
 }
-/* line 352, ../../sass/Evaluations/_evaluation.scss */
+/* line 353, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .calification-items tbody tr .calification-input {
   border: solid 1px #BBB;
   width: 50px;
@@ -1150,23 +1151,23 @@ tr.evaluation-generated td {
   padding: 0 5px;
   text-align: center;
 }
-/* line 361, ../../sass/Evaluations/_evaluation.scss */
+/* line 362, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .calification-items tbody tr .calification-input.invalid {
   border-color: #EE6048 !important;
 }
-/* line 366, ../../sass/Evaluations/_evaluation.scss */
+/* line 367, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .calification-items tbody tr .exceeds-expectations {
   background: #CEE9AC;
 }
-/* line 370, ../../sass/Evaluations/_evaluation.scss */
+/* line 371, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .calification-items tbody tr .poor {
   background: #FDF7C5;
 }
-/* line 377, ../../sass/Evaluations/_evaluation.scss */
+/* line 378, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .footer-evaluation {
   margin: 35px 0;
 }
-/* line 381, ../../sass/Evaluations/_evaluation.scss */
+/* line 382, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .footer-evaluation .finish-btn {
   border-radius: 8px;
   width: 315px;
@@ -1175,7 +1176,7 @@ tr.evaluation-generated td {
   margin-left: 25px;
   font-size: 20px;
 }
-/* line 390, ../../sass/Evaluations/_evaluation.scss */
+/* line 391, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .footer-evaluation .explanatory-text {
   float: right;
   font-size: 16px;
