@@ -1,4 +1,5 @@
 ﻿using CommonJobs.Application.EvalForm.Dtos;
+using CommonJobs.Application.EvalForm.EmployeeSearching;
 using CommonJobs.Application.Evaluations.EmployeeSearching;
 using CommonJobs.Domain.Evaluations;
 using CommonJobs.Infrastructure.RavenDb;
@@ -45,9 +46,11 @@ namespace CommonJobs.Application.EvalForm.Commands
                 .Query<Employee_Search.Projection, Employee_Search>()
                 .Where(x => x.IsActive && x.UserName == evaluation.UserName).FirstOrDefault();
 
-            var califications = RavenSession
-                .Query<EvaluationCalification>()
-                .Where(x => x.EvaluationId == evId).ToList();
+            var califications = RavenSession.Advanced.LoadStartingWith<EvaluationCalification>(evId + "/").ToList();
+
+            //var califications = RavenSession
+            //    .Query<EvaluationCalification, EvaluationCalifications_Search>()
+            //    .Where(x => x.EvaluationId == evId).ToList();
 
             var evaluators = califications.Where(c => c.Owner == CalificationType.Evaluator).Select(c => c.EvaluatorEmployee).ToList();
 
