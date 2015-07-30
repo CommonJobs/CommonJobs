@@ -26,7 +26,6 @@
 
     ReportDashboard.prototype.fromJS = function (data) {
         var self = this;
-        debugger;
         this.items(_.map(data.Evaluations, function (e) {
             return new Evaluation(e);
         }));
@@ -40,7 +39,7 @@
         this.id = '';
         this.isResponsible = false;
         this.isEditable = false;
-        this.responsableId = '';
+        this.responsibleId = '';
         this.fullName = '';
         this.userName = '';
         this.period = '';
@@ -57,7 +56,7 @@
         this.id = data.Id;
         this.isResponsible = data.IsResponsible;
         this.isEditable = data.IsEditable;
-        this.responsibleId = data.ResponsableId;
+        this.responsibleId = data.ResponsibleId;
         this.fullName = data.FullName;
         this.userName = data.UserName;
         this.period = data.Period;
@@ -85,10 +84,11 @@
 
     var viewmodel = new ReportDashboard();
 
-    getDashboardEvaluations();
+    getReportDashboard();
     ko.applyBindings(viewmodel);
 
-    function getDashboardEvaluations() {
+    function getReportDashboard() {
+        viewmodel.isLoading(true);
         var ajax = $.getJSON("/Evaluations/api/GetDashboardEvaluationsForEmployeeManagers/" + employeePeriod + "/", function (model) {
             viewmodel.fromJS(model);
             viewmodel.defaultSort();

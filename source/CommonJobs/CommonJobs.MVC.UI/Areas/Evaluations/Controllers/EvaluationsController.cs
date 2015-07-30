@@ -53,9 +53,10 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
 
         [AcceptVerbs(HttpVerbs.Get)]
         [CommonJobsAuthorize(Roles = "EmployeeManagers")]
-        public ActionResult ReportDashboard(string period)
+        public ActionResult ReportDashboard()
         {
-            ViewBag.Period = period;
+            //Future: delete this line and bring the period dynamically
+            ViewBag.Period = "2015-06";
             return View();
         }
 

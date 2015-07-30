@@ -21,7 +21,15 @@
     <table class="table">
         <thead>
             <tr data-bind="foreach: headers">
+                <!-- ko if: sortable -->
+                <th data-bind="attr: { class: 'col-' + ($index()+1) }, click: $parent.sort, css: { selected: activeSort}">
+                    <i class="icon arrow"></i>
+                    <span data-bind="text: title"></span>
+                </th>
+                <!-- /ko -->
+                <!-- ko if: !sortable -->
                 <th data-bind="attr: { class: 'col-' + ($index()+1) }"><span data-bind="text: title"></span></th>
+                <!-- /ko -->
             </tr>
         </thead>
         <tbody data-bind="foreach: items">
