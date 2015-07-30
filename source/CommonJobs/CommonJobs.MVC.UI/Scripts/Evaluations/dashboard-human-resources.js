@@ -2,7 +2,6 @@
     var evaluationStates = ['En curso', 'Esperando Eval Empleado', 'Esperando Eval Responsable', 'Esperando Eval Empresa', 'Lista para devolución', 'Abierta para devolución', 'Finalizada'];
 
     var ReportDashboard = function (data) {
-        var self = this;
         this.items = ko.observableArray();
         if (data) {
             this.fromJS(data);
@@ -25,9 +24,8 @@
     }
 
     ReportDashboard.prototype.fromJS = function (data) {
-        var self = this;
         this.items(_.map(data.Evaluations, function (e) {
-            return new Evaluation(e);
+            return new EvaluationReport(e);
         }));
     }
 
@@ -35,7 +33,7 @@
         return this.evaluationStates[state];
     }
 
-    var Evaluation = function (data) {
+    var EvaluationReport = function (data) {
         this.id = '';
         this.isResponsible = false;
         this.isEditable = false;
@@ -52,7 +50,7 @@
         }
     }
 
-    Evaluation.prototype.fromJs = function (data) {
+    EvaluationReport.prototype.fromJs = function (data) {
         this.id = data.Id;
         this.isResponsible = data.IsResponsible;
         this.isEditable = data.IsEditable;
@@ -68,7 +66,7 @@
         this.calificationUrl = urlGenerator.action(this.period + "/" + this.userName + "/", "Evaluations");
     }
 
-    Evaluation.prototype.toJs = function () {
+    EvaluationReport.prototype.toJs = function () {
         return {
             IsResponsible: this.isResponsible,
             ResponsibleId: this.responsibleId,

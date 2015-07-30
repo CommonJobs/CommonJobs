@@ -11,8 +11,8 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations.Models
     {
         public ReportDashboard()
         {
-            Evaluations = new List<EmployeeEvaluationDTO>();
+            EvaluationsReport = new List<EmployeeEvaluationDTO>();
         }
-        public List<EmployeeEvaluationDTO> Evaluations { get; set; }
+        public List<EmployeeEvaluationDTO> EvaluationsReport { get; set; }
     }
 }
