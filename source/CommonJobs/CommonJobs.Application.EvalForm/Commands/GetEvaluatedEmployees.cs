@@ -23,14 +23,12 @@ namespace CommonJobs.Application.EvalForm.Commands
 
         public override List<EmployeeEvaluationDTO> ExecuteWithResult()
         {
-            RavenQueryStatistics stats;
-            IQueryable<EmployeeToEvaluate_Search.Projection> query = RavenSession
-                .Query<EmployeeToEvaluate_Search.Projection, EmployeeToEvaluate_Search>()
-                .Statistics(out stats);
+            IRavenQueryable<EmployeeToEvaluate_Search.Projection> query = RavenSession
+                .Query<EmployeeToEvaluate_Search.Projection, EmployeeToEvaluate_Search>();
 
             if (Period != null)
             {
-                query.Where(e => e.Period == Period);
+                query = query.Where(e => e.Period == Period);
             }
 
             var employeesProjection = query.ToList();
