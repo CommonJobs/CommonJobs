@@ -160,6 +160,7 @@
     <Content Include="Content\Images\Evaluations\information-black.png" />
     <Content Include="Content\Images\Evaluations\information.png" />
     <Content Include="Scripts\Evaluations\calification.js" />
+    <Content Include="Scripts\Evaluations\dashboard-human-resources.js" />
     <Content Include="Scripts\Evaluations\dashboard.js" />
     <Content Include="Scripts\Evaluations\admin.js" />
     <Content Include="Scripts\Evaluations\common.js" />
@@ -206,6 +207,7 @@
     <Compile Include="Areas\Evaluations\Controllers\EvaluationsController.cs" />
     <Compile Include="Areas\Evaluations\EvaluationsAreaRegistration.cs" />
     <Compile Include="Areas\Evaluations\Models\Calification.cs" />
+    <Compile Include="Areas\Evaluations\Models\ReportDashboard.cs" />
     <Compile Include="Areas\Evaluations\Models\PeriodCreation.cs" />
     <Compile Include="Areas\Evaluations\Models\PeriodEvaluation.cs" />
     <Compile Include="Areas\MyMenu\MyMenuAreaRegistration.cs" />
@@ -366,6 +368,7 @@
     <Content Include="Areas\Evaluations\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Evaluations\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Evaluations\Views\Evaluations\Calification.cshtml" />
+    <Content Include="Areas\Evaluations\Views\Evaluations\ReportDashboard.cshtml" />
     <None Include="Properties\PublishProfiles\DEVProfile.pubxml" />
     <None Include="_bin_deployableAssemblies\FSharp.Core.dll" />
   </ItemGroup>

@@ -377,28 +377,30 @@ h1 {
 /* line 174, ../../sass/Evaluations/_base.scss */
 .icon.arrow {
   background-image: url(../Images/Evaluations/2.png);
+  margin-left: -10px;
 }
-/* line 177, ../../sass/Evaluations/_base.scss */
+/* line 178, ../../sass/Evaluations/_base.scss */
 .icon.arrow.selected {
   background-image: url(../Images/Evaluations/3.png);
+  margin-left: -10px;
 }
-/* line 180, ../../sass/Evaluations/_base.scss */
+/* line 182, ../../sass/Evaluations/_base.scss */
 .icon.add {
   background-image: url(../Images/Evaluations/1-02.png);
 }
-/* line 184, ../../sass/Evaluations/_base.scss */
+/* line 186, ../../sass/Evaluations/_base.scss */
 .icon.edit {
   background-image: url(../Images/Evaluations/6-02.png);
 }
-/* line 188, ../../sass/Evaluations/_base.scss */
+/* line 190, ../../sass/Evaluations/_base.scss */
 .icon.user {
   background-image: url(../Images/Evaluations/3-02.png);
 }
-/* line 192, ../../sass/Evaluations/_base.scss */
+/* line 194, ../../sass/Evaluations/_base.scss */
 .icon.empresa {
   background-image: url(../Images/Evaluations/7-02.png);
 }
-/* line 196, ../../sass/Evaluations/_base.scss */
+/* line 198, ../../sass/Evaluations/_base.scss */
 .icon.view {
   background-image: url(../Images/Evaluations/4-02.png);
 }
@@ -469,60 +471,64 @@ tr.evaluation-generated td {
   color: #b2b2b2;
 }
 
-/* line 9, ../../sass/Evaluations/_responsible.scss */
-.responsible table td {
+/* line 8, ../../sass/Evaluations/_dashboard.scss */
+.dashboard.recursos-humanos table td:first-child {
+  text-align: center;
+}
+/* line 12, ../../sass/Evaluations/_dashboard.scss */
+.dashboard table td {
   position: relative;
 }
-/* line 14, ../../sass/Evaluations/_responsible.scss */
-.responsible table th.col-1 {
+/* line 17, ../../sass/Evaluations/_dashboard.scss */
+.dashboard table th.col-1 {
   width: 60px;
 }
-/* line 17, ../../sass/Evaluations/_responsible.scss */
-.responsible table th.col-2, .responsible table th.col-3, .responsible table th.col-4 {
+/* line 20, ../../sass/Evaluations/_dashboard.scss */
+.dashboard table th.col-2, .dashboard table th.col-3, .dashboard table th.col-4 {
   width: auto;
 }
-/* line 22, ../../sass/Evaluations/_responsible.scss */
-.responsible table th.col-5 {
+/* line 25, ../../sass/Evaluations/_dashboard.scss */
+.dashboard table th.col-5 {
   width: 150px;
 }
-/* line 25, ../../sass/Evaluations/_responsible.scss */
-.responsible table th.col-6 {
+/* line 28, ../../sass/Evaluations/_dashboard.scss */
+.dashboard table th.col-6 {
   width: 220px;
 }
-/* line 28, ../../sass/Evaluations/_responsible.scss */
-.responsible table th.col-7 {
+/* line 31, ../../sass/Evaluations/_dashboard.scss */
+.dashboard table th.col-7 {
   width: 150px;
 }
-/* line 31, ../../sass/Evaluations/_responsible.scss */
-.responsible table th.col-8 {
+/* line 34, ../../sass/Evaluations/_dashboard.scss */
+.dashboard table th.col-8 {
   width: 110px;
 }
-/* line 34, ../../sass/Evaluations/_responsible.scss */
-.responsible table th.selected .icon.arrow {
+/* line 37, ../../sass/Evaluations/_dashboard.scss */
+.dashboard table th.selected .icon.arrow {
   background-image: url(../Images/Evaluations/3.png);
 }
-/* line 40, ../../sass/Evaluations/_responsible.scss */
-.responsible .rol {
+/* line 42, ../../sass/Evaluations/_dashboard.scss */
+.dashboard .rol {
   padding-left: 17px;
 }
-/* line 44, ../../sass/Evaluations/_responsible.scss */
-.responsible a {
+/* line 46, ../../sass/Evaluations/_dashboard.scss */
+.dashboard a {
   text-decoration: none;
   color: inherit;
   cursor: pointer;
   padding-left: 3px;
 }
-/* line 50, ../../sass/Evaluations/_responsible.scss */
-.responsible a .calification-links.disable {
+/* line 52, ../../sass/Evaluations/_dashboard.scss */
+.dashboard a .calification-links.disable {
   color: #777;
 }
-/* line 54, ../../sass/Evaluations/_responsible.scss */
-.responsible a .link-responsable {
+/* line 56, ../../sass/Evaluations/_dashboard.scss */
+.dashboard a .link-responsable {
   padding: 10px;
   text-decoration: underline;
 }
-/* line 61, ../../sass/Evaluations/_responsible.scss */
-.responsible .button-evaluations.feedback-start {
+/* line 63, ../../sass/Evaluations/_dashboard.scss */
+.dashboard .button-evaluations.feedback-start {
   float: none;
   padding: 0;
   font-size: 12px;
@@ -531,13 +537,13 @@ tr.evaluation-generated td {
   width: 90px;
   margin: 0;
 }
-/* line 72, ../../sass/Evaluations/_responsible.scss */
-.responsible .state-doc {
+/* line 74, ../../sass/Evaluations/_dashboard.scss */
+.dashboard .state-doc {
   display: inline-block;
   padding-left: 15px;
 }
-/* line 76, ../../sass/Evaluations/_responsible.scss */
-.responsible .state-doc:before {
+/* line 78, ../../sass/Evaluations/_dashboard.scss */
+.dashboard .state-doc:before {
   /* For a round bullet */
   content: '\2022';
   display: block;
@@ -548,24 +554,24 @@ tr.evaluation-generated td {
   font-size: 34px;
   line-height: 20px;
 }
-/* line 89, ../../sass/Evaluations/_responsible.scss */
-.responsible .state-doc.state-0:before, .responsible .state-doc.state-5:before {
+/* line 91, ../../sass/Evaluations/_dashboard.scss */
+.dashboard .state-doc.state-0:before, .dashboard .state-doc.state-5:before {
   color: #6DC32E;
 }
-/* line 95, ../../sass/Evaluations/_responsible.scss */
-.responsible .state-doc.state-1:before {
+/* line 97, ../../sass/Evaluations/_dashboard.scss */
+.dashboard .state-doc.state-1:before {
   color: #E94830;
 }
-/* line 101, ../../sass/Evaluations/_responsible.scss */
-.responsible .state-doc.state-2:before, .responsible .state-doc.state-3:before {
+/* line 103, ../../sass/Evaluations/_dashboard.scss */
+.dashboard .state-doc.state-2:before, .dashboard .state-doc.state-3:before {
   color: #F7EC4D;
 }
-/* line 107, ../../sass/Evaluations/_responsible.scss */
-.responsible .state-doc.state-4:before {
+/* line 109, ../../sass/Evaluations/_dashboard.scss */
+.dashboard .state-doc.state-4:before {
   color: #419BF7;
 }
-/* line 113, ../../sass/Evaluations/_responsible.scss */
-.responsible .state-doc.state-6:before {
+/* line 115, ../../sass/Evaluations/_dashboard.scss */
+.dashboard .state-doc.state-6:before {
   color: #888;
 }
 

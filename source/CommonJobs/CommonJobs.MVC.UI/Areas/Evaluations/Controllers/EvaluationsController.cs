@@ -55,7 +55,8 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
         [CommonJobsAuthorize(Roles = "EmployeeManagers")]
         public ActionResult ReportDashboard()
         {
-            //TODO: Needs UI. Will call the API for the list (GetEvaluatedEmployees)
+            //TODO: delete this line and bring the period dynamically
+            ViewBag.Period = "2015-06";
             return View();
         }
 
