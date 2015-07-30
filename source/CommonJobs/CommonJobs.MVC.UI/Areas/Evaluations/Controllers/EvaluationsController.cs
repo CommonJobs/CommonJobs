@@ -53,9 +53,9 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
 
         [AcceptVerbs(HttpVerbs.Get)]
         [CommonJobsAuthorize(Roles = "EmployeeManagers")]
-        public ActionResult ReportDashboard()
+        public ActionResult ReportDashboard(string period)
         {
-            //TODO: Needs UI. Will call the API for the list (GetEvaluatedEmployees)
+            ViewBag.Period = period;
             return View();
         }
 
