@@ -30,13 +30,13 @@ namespace CommonJobs.Mvc.UI.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = RavenSession.Query<User>().Where(u => u.UserName == model.UserName).FirstOrDefault();
+                var user = RavenSession.Load<User>("Users/" + model.UserName);
 
                 if (user != null && user.ValidatePassword(model.Password))
                 {
                     FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
                     Session[SessionRolesKey] = user.Roles ?? new string[0];
-                    
+
                     if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
                         && !returnUrl.StartsWith("//") && !returnUrl.StartsWith("/\\"))
                     {
@@ -64,7 +64,7 @@ namespace CommonJobs.Mvc.UI.Controllers
         {
             Session.Remove(SessionRolesKey);
             FormsAuthentication.SignOut();
-            
+
             return RedirectToAction("Index", "Home");
         }
 
@@ -90,7 +90,7 @@ namespace CommonJobs.Mvc.UI.Controllers
                 try
                 {
                     var currentUserName = User.Identity.Name;
-                    var user = RavenSession.Query<User>().Where(u => u.UserName == currentUserName).FirstOrDefault();
+                    var user = RavenSession.Load<User>("Users/" + currentUserName);
 
                     if (user != null && user.ValidatePassword(model.OldPassword))
                     {
