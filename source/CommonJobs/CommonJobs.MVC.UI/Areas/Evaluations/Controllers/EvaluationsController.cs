@@ -57,6 +57,7 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
         {
             //TODO: delete this line and bring the period dynamically
             ViewBag.Period = "2015-06";
+            ViewBag.IsReportDashboard = true;
             return View();
         }
 
