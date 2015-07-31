@@ -1,4 +1,5 @@
-﻿using CommonJobs.Application.EvalForm;
+﻿using CommonJobs.Application.EmployeeSearching;
+using CommonJobs.Application.EvalForm;
 using CommonJobs.Application.EvalForm.Dtos;
 using CommonJobs.Domain;
 using CommonJobs.Domain.Evaluations;
@@ -6,7 +7,6 @@ using CommonJobs.Infrastructure.RavenDb;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace CommonJobs.Application.Evaluations
 {
@@ -30,9 +30,10 @@ namespace CommonJobs.Application.Evaluations
                     if (_employeeEvaluation.UserName != e.UserName)
                     {
                         var employee = RavenSession
-                            .Query<Employee>()
+                            .Query<Employee, EmployeeByUserName_Search>()
                             .Where(x => x.UserName == e.UserName)
                             .FirstOrDefault();
+
                         if (employee != null)
                         {
                             var evId = _employeeEvaluation.Id ?? EmployeeEvaluation.GenerateEvaluationId(_employeeEvaluation.Period, _employeeEvaluation.UserName);

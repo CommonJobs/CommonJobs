@@ -93,6 +93,10 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CommonJobs.Application\CommonJobs.Application.csproj">
+      <Project>{4d58f500-cdc4-4697-8da5-15568e804317}</Project>
+      <Name>CommonJobs.Application</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CommonJobs.Domain.EvalForm\CommonJobs.Domain.Evaluations.csproj">
       <Project>{abb4b6e5-fbeb-4e60-a190-2acaf9efae13}</Project>
       <Name>CommonJobs.Domain.Evaluations</Name>

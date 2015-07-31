@@ -70,6 +70,10 @@
     <Compile Include="UpdateMenuDefinitionCommand.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CommonJobs.Application\CommonJobs.Application.csproj">
+      <Project>{4d58f500-cdc4-4697-8da5-15568e804317}</Project>
+      <Name>CommonJobs.Application</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CommonJobs.Domain.MyMenu\CommonJobs.Domain.MyMenu.csproj">
       <Project>{962ee4f4-0045-42d2-9941-18d9ca184abe}</Project>
       <Name>CommonJobs.Domain.MyMenu</Name>

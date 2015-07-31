@@ -44,7 +44,10 @@ namespace CommonJobs.Mvc.UI
 
         protected override System.Reflection.Assembly[] GetIndexAssemblies()
         {
-            return new[] { typeof(NullIndex).Assembly, typeof(CommonJobs.Application.Evaluations.EmployeeSearching.Employee_Search).Assembly };
+            return new[] {
+                typeof(NullIndex).Assembly,
+                typeof(CommonJobs.Application.Evaluations.EmployeeSearching.Employee_Search).Assembly,
+                typeof(CommonJobs.Application.EmployeeSearching.EmployeeByUserName_Search).Assembly};
         }
 
         protected override IEnumerable<IDocumentStoreListener> GetDocumentStoreListeners()

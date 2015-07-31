@@ -1,4 +1,5 @@
-﻿using CommonJobs.Domain;
+﻿using CommonJobs.Application.EmployeeSearching;
+using CommonJobs.Domain;
 using CommonJobs.Domain.MyMenu;
 using CommonJobs.Infrastructure.RavenDb;
 using NLog;
@@ -6,7 +7,6 @@ using Raven.Client.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace CommonJobs.Application.MyMenu
 {
@@ -27,7 +27,7 @@ namespace CommonJobs.Application.MyMenu
 
             //TODO: tener en cuenta TerminationDate y si come o no
             var employee = RavenSession
-                .Query<Employee>()
+                .Query<Employee, EmployeeByUserName_Search>()
                 .Statistics(out stats)
                 .Where(x => x.UserName == UserName)
                 .FirstOrDefault();
