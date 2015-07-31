@@ -29,6 +29,10 @@
             { 
                 <div class="breadcrum">Dashboard</div>
             }
+            else if (ViewBag.IsReportDashboard != null && ViewBag.IsReportDashboard)
+            {
+                <div class="breadcrum">HR Dashboard</div>
+            }
             <div class="pull-right">
                 <form class="form-inline" id="persistenceForm">
                     <ul class="nav nav-right">
