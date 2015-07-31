@@ -133,23 +133,33 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
                 return HttpNotFound();
             }
 
-            // If it's not the user, it must validate that it's responsible or evaluator
-            if (loggedUser != username)
+            var isManager = IsEmployeeManager();
+            var isLoggedUserEvaluator = IsEvaluator(loggedUser, username, evaluation.ResponsibleId, evaluation.Evaluators);
+            var isLoggedUserEvaluated = loggedUser == username;
+
+            if (!isLoggedUserEvaluated && !isLoggedUserEvaluator && !isManager)
             {
-                if (evaluation.ResponsibleId != loggedUser)
-                {
-                    if (!(evaluation.Evaluators != null && evaluation.Evaluators.Contains(loggedUser)))
-                    {
-                        return new HttpStatusCodeResult(403, "Access Denied");
-                    }
-                }
-                ViewBag.IsUserEvaluator = true;
+                return new HttpStatusCodeResult(403, "Access Denied");
             }
+
+            ViewBag.IsUserEvaluator = isLoggedUserEvaluator;
 
             ViewBag.Period = period;
             ViewBag.UserName = username;
             ViewBag.IsCalification = true;
             return View("Calification");
+        }
+
+        private bool IsEmployeeManager()
+        {
+            var sessionRoles = (string[])HttpContext.Session[CommonJobs.Mvc.UI.Controllers.AccountController.SessionRolesKey] ?? new string[] { };
+            var required = new List<string>() { "EmployeeManagers" };
+            return sessionRoles.Intersect(required).Any();
+        }
+
+        private bool IsEvaluator(string loggedUser, string evaluatedUser, string responsibleId, string[] evaluators)
+        {
+            return responsibleId == loggedUser || (evaluators != null && evaluators.Contains(loggedUser));
         }
     }
 }
