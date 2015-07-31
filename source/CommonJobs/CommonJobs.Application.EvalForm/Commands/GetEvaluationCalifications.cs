@@ -48,10 +48,6 @@ namespace CommonJobs.Application.EvalForm.Commands
 
             var califications = RavenSession.Advanced.LoadStartingWith<EvaluationCalification>(evId + "/").ToList();
 
-            //var califications = RavenSession
-            //    .Query<EvaluationCalification, EvaluationCalifications_Search>()
-            //    .Where(x => x.EvaluationId == evId).ToList();
-
             var evaluators = califications.Where(c => c.Owner == CalificationType.Evaluator).Select(c => c.EvaluatorEmployee).ToList();
 
             var evaluationDto = CalificationsEvaluationDto.Create(evaluation, evaluators, evaluation.CurrentPosition ?? employee.CurrentPosition, evaluation.Seniority ?? employee.Seniority);

@@ -21,7 +21,7 @@ namespace CommonJobs.Infrastructure.RavenDb.Schedule
         public override void Execute()
         {
             var now = Now();
-            var tasks = RavenSession.Query<ScheduleTask>()
+            var tasks = RavenSession.Query<ScheduleTask, ScheduleTask_Search>()
                 .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite())
                 .Where(x => x.IsActive)
                 .Where(x => x.NextExecution <= now)
@@ -43,7 +43,7 @@ namespace CommonJobs.Infrastructure.RavenDb.Schedule
         }
 
         private static System.Threading.Timer timer;
-        public static void StartPeriodicTasks(IDocumentStore documentStore, int dueMinutes = 1, int periodMinutes = 4) 
+        public static void StartPeriodicTasks(IDocumentStore documentStore, int dueMinutes = 1, int periodMinutes = 4)
         {
             if (timer == null)
             {
