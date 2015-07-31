@@ -47,7 +47,8 @@ namespace CommonJobs.Mvc.UI
             return new[] {
                 typeof(NullIndex).Assembly,
                 typeof(CommonJobs.Application.Evaluations.EmployeeSearching.Employee_Search).Assembly,
-                typeof(CommonJobs.Application.EmployeeSearching.EmployeeByUserName_Search).Assembly};
+                typeof(CommonJobs.Application.EmployeeSearching.EmployeeByUserName_Search).Assembly,
+                typeof(CommonJobs.Application.MyMenu.EmployeeMenuByMenuId_Search).Assembly};
         }
 
         protected override IEnumerable<IDocumentStoreListener> GetDocumentStoreListeners()

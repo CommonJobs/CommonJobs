@@ -59,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common.cs" />
+    <Compile Include="EmployeeMenuByMenuId_Search.cs" />
     <Compile Include="EmployeeMenuDTO.cs" />
     <Compile Include="GetEmployeeMenuCommand.cs" />
     <Compile Include="GetEmployeeMenusCommand.cs" />
