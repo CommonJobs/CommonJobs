@@ -22,7 +22,7 @@ namespace CommonJobs.Application.MyMenu
             while (stats == null || skip < stats.TotalResults)
             {
                 var qry = RavenSession
-                    .Query<EmployeeMenu>()
+                    .Query<EmployeeMenu, EmployeeMenuByMenuId_Search>()
                     .Statistics(out stats)
                     .Where(x => x.MenuId == MenuDefinitionId)
                     .Skip(skip)

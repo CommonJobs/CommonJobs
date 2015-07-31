@@ -69,6 +69,7 @@
     <Compile Include="Schedule\ExecuteScheduledTasks.cs" />
     <Compile Include="Schedule\SchedulableCommand.cs" />
     <Compile Include="Schedule\ScheduleTask.cs" />
+    <Compile Include="Schedule\ScheduleTask_Search.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CommonJobs.Utilities\CommonJobs.Utilities.csproj">

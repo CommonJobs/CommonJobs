@@ -92,6 +92,7 @@
     <Compile Include="EmployeeAbsences\AbsencesSearchResult.cs" />
     <Compile Include="EmployeeFiles\EmployeeFileSearchResult.cs" />
     <Compile Include="EmployeeFiles\SearchEmployeeFiles.cs" />
+    <Compile Include="EmployeeSearching\EmployeeByUserName_Search.cs" />
     <Compile Include="EmployeeSearching\EmployeeSearchResult.cs" />
     <Compile Include="EmployeeSearching\EmployeeSearchParameters.cs" />
     <Compile Include="JobSearchSearching\Applicant_BySkills.cs" />

@@ -39,7 +39,7 @@ namespace CommonJobs.Mvc.UI.Controllers
         public ActionResult LogOnCallback(string state, string code)
         {
             var returnUrl = state;
-            
+
             if (string.IsNullOrEmpty(code))
             {
                 return RedirectToAction("Error", new { returnUrl = returnUrl, error = "Response status is not Authenticated" });
@@ -51,18 +51,18 @@ namespace CommonJobs.Mvc.UI.Controllers
             {
                 return RedirectToAction("Error", new { returnUrl = returnUrl, error = "Response Email is empty" });
             }
-            
+
             if (!email.EndsWith(EmailSuffix))
             {
                 return RedirectToAction("Error", new { returnUrl = returnUrl, error = "Only emails ended with " + EmailSuffix + " are allowed" });
             }
 
             var username = email.Substring(0, email.Length - EmailSuffix.Length);
-            
+
             FormsAuthentication.SetAuthCookie(username, true);
 
             Session[SessionRolesKey] = new string[0];
-            var user = RavenSession.Query<User>().Where(u => u.UserName == username).FirstOrDefault();
+            var user = RavenSession.Load<User>("Users/" + username);
 
             log.Debug("User {0} found: {1}", username, user != null);
 
