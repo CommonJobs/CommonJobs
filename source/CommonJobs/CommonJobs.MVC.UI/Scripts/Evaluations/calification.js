@@ -114,9 +114,12 @@
     }
 
     EvaluationViewModel.prototype.isValueEditable = function (calification) {
-        return !this.evaluation.finished && ((((this.userLogged == calification.calificationColumn.evaluatorEmployee) ||
-            (this.userView == 3 && calification.calificationColumn.evaluatorEmployee == "_company")) && !calification.calificationColumn.finished) ||
-            this.evaluation.readyForDevolution && this.userView == 3 && (calification.calificationColumn.owner == 3 || calification.calificationColumn.owner == 0))
+        return !this.evaluation.finished
+            && ((this.evaluation.readyForDevolution && this.userView == 3
+            && (calification.calificationColumn.owner == 3 || calification.calificationColumn.owner == 0))
+            || (((this.userLogged == calification.calificationColumn.evaluatorEmployee)
+            || (this.userView == 3 && calification.calificationColumn.evaluatorEmployee == "_company"))
+            && !calification.calificationColumn.finished))
     }
 
     EvaluationViewModel.prototype.fromJs = function (data) {
