@@ -244,7 +244,7 @@
                     this.calificationActionClass("icon user");
                     this.calificationActionText("Evaluar");
                     return;
-                } else if (this.state() == 1 || this.state() == 3 ) {
+                } else if (this.state() == 1 || this.state() == 3) {
                     this.calificationActionText("Evaluar");
                     this.calificationActionClass("icon empresa");
                     this.calificationActionTooltip("Evaluar como empresa");
