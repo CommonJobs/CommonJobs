@@ -238,13 +238,13 @@
             });
         };
         this.state.subscribe(function () {
-            if (this.isResponsible && this.state() != 6) {
+            if (this.isResponsible && this.state() != 6 && this.isEditable) {
                 if (this.state() == 0 || this.state() == 2) {
                     this.calificationActionTooltip("Evaluar como responsable");
                     this.calificationActionClass("icon user");
                     this.calificationActionText("Evaluar");
                     return;
-                } else if (this.state() == 1 || this.state() == 3) {
+                } else if (this.state() == 1 || this.state() == 3 ) {
                     this.calificationActionText("Evaluar");
                     this.calificationActionClass("icon empresa");
                     this.calificationActionTooltip("Evaluar como empresa");
@@ -255,6 +255,11 @@
                     this.calificationActionTooltip("Hacer la devolución con el evaluado");
                     return;
                 }
+            } else if (!this.isResponsible && (this.state() == 4 || this.state() == 5)) {
+                this.calificationActionTooltip("Lista para devolucion");
+                this.calificationActionClass("icon view");
+                this.calificationActionText("Ver Evaluación");
+                return;
             } else if (!this.isResponsible && this.isEditable && this.state() != 6) {
                 this.calificationActionTooltip("Evaluar como evaluador");
                 this.calificationActionClass("icon user");
