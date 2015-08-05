@@ -126,7 +126,7 @@
         var self = this;
         this.userView = data.UserView;
         this.userLogged = data.UserLogged;
-        this.hasAverageColumn = !data.Evaluation.Finished && (this.userView == 1 || this.userView == 3);
+        this.hasAverageColumn = !data.Evaluation.Finished && this.userView != 0;
         this.numberOfColumns = "table-" + ((this.hasAverageColumn) ? (data.Califications.length + 2) : (data.Califications.length + 1)) + "-columns";
         var calificationsSorted = data.Califications.sort(sortCalificationColumns);
         this.califications = _.map(calificationsSorted, function (calification) {
@@ -150,14 +150,19 @@
 
         this.evaluation.fromJs(data.Evaluation);
 
-        if (this.evaluation.readyForDevolution) {
+        if (this.evaluation.readyForDevolution && this.userView == 3) {
+            this.hasAverageColumn = false;
             _.chain(self.califications)
-            .filter(function (calification) {
-                return calification.owner == 0 || calification.owner == 3;
-            })
-            .map(function(calificationEditable){
-                calificationEditable.hasShowIcon = false;
-                calificationEditable.show(true);
+            .map(function (calification) {
+                if (calification.owner == 1 || calification.owner == 2) {
+                    calification.hasShowIcon = true;
+                    calification.show(false);
+                } else {
+                    calification.hasShowIcon = false;
+                    calification.show(true);
+                }
+                
+                
             });
         }
 
