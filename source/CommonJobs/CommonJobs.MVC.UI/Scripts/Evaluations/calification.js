@@ -126,7 +126,7 @@
         var self = this;
         this.userView = data.UserView;
         this.userLogged = data.UserLogged;
-        this.hasAverageColumn = !data.Evaluation.Finished && this.userView != 0;
+        this.hasAverageColumn = !data.Evaluation.Finished && (this.userView == 1 || this.userView == 3);
         this.numberOfColumns = "table-" + ((this.hasAverageColumn) ? (data.Califications.length + 2) : (data.Califications.length + 1)) + "-columns";
         var calificationsSorted = data.Califications.sort(sortCalificationColumns);
         this.califications = _.map(calificationsSorted, function (calification) {
@@ -161,8 +161,6 @@
                     calification.hasShowIcon = false;
                     calification.show(true);
                 }
-                
-                
             });
         }
 
