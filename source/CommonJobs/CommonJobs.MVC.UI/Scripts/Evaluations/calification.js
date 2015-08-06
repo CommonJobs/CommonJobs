@@ -150,14 +150,17 @@
 
         this.evaluation.fromJs(data.Evaluation);
 
-        if (this.evaluation.readyForDevolution) {
+        if (this.evaluation.readyForDevolution && this.userView == 3) {
+            this.hasAverageColumn = false;
             _.chain(self.califications)
-            .filter(function (calification) {
-                return calification.owner == 0 || calification.owner == 3;
-            })
-            .map(function(calificationEditable){
-                calificationEditable.hasShowIcon = false;
-                calificationEditable.show(true);
+            .map(function (calification) {
+                if (calification.owner == 1 || calification.owner == 2) {
+                    calification.hasShowIcon = true;
+                    calification.show(false);
+                } else {
+                    calification.hasShowIcon = false;
+                    calification.show(true);
+                }
             });
         }
 
@@ -180,8 +183,9 @@
 
         this.generalComment = (userLoggedCalifiction) ? userLoggedCalifiction.comments : ko.observable('');
 
-        if (!this.generalComment() && this.userView == 3) {
-            var comments = _.chain(self.califications)
+        if (!this.generalComment()) {
+            if (this.userView == 3) {
+                var comments = _.chain(self.califications)
                 .filter(function (calification) {
                     return (calification.owner == 1 || calification.owner == 2) && calification.comments() != null;
                 })
@@ -189,6 +193,16 @@
                     return comment.evaluatorEmployee + ": " + comment.comments();
                 })
                 .value();
+            } else if (this.userView == 2) {
+                var comments = _.chain(self.califications)
+                .filter(function (calification) {
+                    return calification.owner == 3 && calification.comments() != null;
+                })
+                .map(function (comment) {
+                    return comment.comments();
+                })
+                .value();
+            }
             this.generalComment(comments.join("\n\n"));
         };
 
