@@ -183,7 +183,7 @@
 
         this.generalComment = (userLoggedCalifiction) ? userLoggedCalifiction.comments : ko.observable('');
 
-        if (!this.generalComment()) {
+        if (!this.generalComment() && (this.userView == 3 || this.userView == 2)) {
             if (this.userView == 3) {
                 var comments = _.chain(self.califications)
                 .filter(function (calification) {
