@@ -22,7 +22,16 @@ namespace CommonJobs.Domain.MyMenu
         public StringKeyedCollection<Place> Places { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+        /// <summary>
+        /// The date the last order has been generated
+        /// (If we are generating the order for 02/01/15 on 01/01/15, this field will contain 01/01/15)
+        /// </summary>
         public DateTime LastOrderDate { get; set; }
+        /// <summary>
+        /// The date for the last generated order
+        /// (If we are generating the order for 02/01/15 on 01/01/15, this field will contain 02/01/15)
+        /// </summary>
+        public DateTime LastGeneratedOrderDate { get; set; }
         public string DeadlineTime { get; set; }
         public WeekDayOptionKeyedCollection<MenuItem> Foods { get; set; }
 
@@ -34,7 +43,9 @@ namespace CommonJobs.Domain.MyMenu
             //TODO: It will fail if the deadlineTime is near to 00:00
             var date = StartDate > now.Date ? StartDate : now.Date;
             if (LastOrderDate.Date >= date)
+            {
                 date = date.AddDays(1);
+            }
 
             var deadlineTS = TimeSpan.Zero;
             TimeSpan.TryParse(DeadlineTime, out deadlineTS);
