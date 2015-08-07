@@ -15,15 +15,20 @@ namespace CommonJobs.Application.MyMenu
         private static Logger log = LogManager.GetCurrentClassLogger();
 
         public string MenuDefinitionId { get; set; }
-        
+
         public override void Execute()
         {
+            var now = Now();
+            var tomorrow = now.AddDays(1);
+
             var menuDefinition = ExecuteCommand(new GetMenuDefinitionCommand(MenuDefinitionId));
             var employeeMenus = ExecuteCommand(new GetEmployeeMenusCommand() { MenuDefinitionId = menuDefinition.Id });
-            var order = new MenuOrder(menuDefinition, Now(), employeeMenus);
+            var order = new MenuOrder(menuDefinition, tomorrow, employeeMenus);
             order.IsOrdered = true;
             RavenSession.Store(order);
-            menuDefinition.LastOrderDate = Now();
+
+            menuDefinition.LastOrderDate = now;
+            menuDefinition.LastGeneratedOrderDate = tomorrow;
         }
 
         protected override DateTime CalculateNextExecutionTime(DateTime start, DateTime scheduled)

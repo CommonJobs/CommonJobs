@@ -11,17 +11,19 @@ namespace CommonJobs.Infrastructure.RavenDb.Schedule
     {
         [JsonIgnore]
         public Func<DateTime> Now { get; set; }
-        
+
         public DateTime ExecuteAndGetNext(IDocumentSession ravenSession, Func<DateTime> now, DateTime scheduled)
         {
             RavenSession = ravenSession;
             Now = now;
             var start = Now();
             if (IsExecutionRequired())
+            {
                 Execute();
+            }
             return CalculateNextExecutionTime(start, scheduled);
         }
-        
+
         protected abstract DateTime CalculateNextExecutionTime(DateTime start, DateTime scheduled);
 
         /// <summary>

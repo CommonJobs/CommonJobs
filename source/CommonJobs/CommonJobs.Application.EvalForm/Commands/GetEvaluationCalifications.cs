@@ -94,8 +94,9 @@ namespace CommonJobs.Application.EvalForm.Commands
             {
                 View = UserView.Evaluation,
                 Evaluation = evaluationDto,
-                Califications = califications.Where
-                (c => _loggedUser == c.EvaluatorEmployee || c.Owner == CalificationType.Auto || (evaluationDto.ReadyForDevolution && c.Owner == CalificationType.Company)).ToList()
+                Califications = califications.Where(c =>
+                    _loggedUser == c.EvaluatorEmployee || c.Owner == CalificationType.Auto || (evaluationDto.ReadyForDevolution && c.Owner == CalificationType.Company)
+                    ).ToList()
             };
         }
 
