@@ -114,13 +114,17 @@
     }
 
     EvaluationViewModel.prototype.isValueEditable = function (calification) {
-        return !this.evaluation.finished
-            && ((this.evaluation.readyForDevolution && this.userView == 3
-            && (calification.calificationColumn.owner == 3 || calification.calificationColumn.owner == 0))
-            || (((this.userLogged == calification.calificationColumn.evaluatorEmployee)
-            || (this.userView == 3 && calification.calificationColumn.evaluatorEmployee == "_company"))
-            && !calification.calificationColumn.finished))
+        if (!this.evaluation.finished) {
+            if (this.evaluation.readyForDevolution) {
+                return this.userView == 3 && (calification.calificationColumn.owner == 3 || calification.calificationColumn.owner == 0);
+            } else {
+                return (((this.userLogged == calification.calificationColumn.evaluatorEmployee)
+                || (this.userView == 3 && calification.calificationColumn.evaluatorEmployee == "_company"))
+                && !calification.calificationColumn.finished)
+            }
+        }
     }
+       
 
     EvaluationViewModel.prototype.fromJs = function (data) {
         var self = this;
@@ -165,9 +169,10 @@
         }
 
         this.isEvaluationEditable(!this.evaluation.finished &&
-            (_.some(this.califications, function (calification) {
+             (this.evaluation.readyForDevolution && this.userView == 3) || 
+             (_.some(this.califications, function (calification) {
                 return calification.owner == self.userView && !calification.finished;
-            }) || this.evaluation.readyForDevolution && this.userView == 3)
+            }) && !this.evaluation.readyForDevolution)
         );
 
         var userLoggedCalifiction = _.find(self.califications, function (calification) {
@@ -183,28 +188,29 @@
 
         this.generalComment = (userLoggedCalifiction) ? userLoggedCalifiction.comments : ko.observable('');
 
-        if (!this.generalComment() && (this.userView == 3 || this.userView == 2)) {
-            if (this.userView == 3) {
-                var comments = _.chain(self.califications)
-                .filter(function (calification) {
-                    return (calification.owner == 1 || calification.owner == 2) && calification.comments() != null;
-                })
-                .map(function (comment) {
-                    return comment.evaluatorEmployee + ": " + comment.comments();
-                })
-                .value();
-            } else if (this.userView == 2) {
-                var comments = _.chain(self.califications)
-                .filter(function (calification) {
-                    return calification.owner == 3 && calification.comments() != null;
-                })
-                .map(function (comment) {
-                    return comment.comments();
-                })
-                .value();
-            }
+        if (!this.generalComment() && this.userView == 3) {
+            var comments = _.chain(self.califications)
+            .filter(function (calification) {
+                return (calification.owner == 1 || calification.owner == 2) && calification.comments() != null;
+            })
+            .map(function (comment) {
+                return comment.evaluatorEmployee + ": " + comment.comments();
+            })
+            .value();
             this.generalComment(comments.join("\n\n"));
-        };
+        }
+
+        if (this.evaluation.readyForDevolution && this.userView == 2) {
+            var comments = _.chain(self.califications)
+            .filter(function (calification) {
+                return calification.owner == 3 && calification.comments() != null;
+            })
+            .map(function (comment) {
+                return comment.comments();
+            })
+            .value();
+            this.generalComment(comments); 
+        }
 
         var groupNames = {};
         for (var i in data.Template.Groups) {
