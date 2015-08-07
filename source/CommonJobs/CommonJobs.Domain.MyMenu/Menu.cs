@@ -24,12 +24,12 @@ namespace CommonJobs.Domain.MyMenu
         public DateTime EndDate { get; set; }
         /// <summary>
         /// The date the last order has been generated
-        /// (If we are generating the 01/01/15 the order for the 02/01/15, this field will contain 01/01/15)
+        /// (If we are generating the order for 02/01/15 on 01/01/15, this field will contain 01/01/15)
         /// </summary>
         public DateTime LastOrderDate { get; set; }
         /// <summary>
         /// The date for the last generated order
-        /// (If we are generating the 01/01/15 the order for the 02/01/15, this field will contain 02/01/15)
+        /// (If we are generating the order for 02/01/15 on 01/01/15, this field will contain 02/01/15)
         /// </summary>
         public DateTime LastGeneratedOrderDate { get; set; }
         public string DeadlineTime { get; set; }
