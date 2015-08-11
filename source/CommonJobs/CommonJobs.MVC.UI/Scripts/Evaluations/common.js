@@ -36,18 +36,15 @@ function commonSort(header) {
         }
         var prop = header.sortPropertyName;
         var defaultProp = header.defaultPropertyName;
-        var isPropObservable = header.observable || false;
         var ascSort = function (a, b) {
-            var propertyA = a[prop];
-            var propertyB = b[prop];
-            var propertyDefaultA = a[defaultProp].toString().trim();
-            var propertyDefaultB = b[defaultProp].toString().trim();
-            if (isPropObservable) {
-                propertyA = propertyA();
-                propertyB = propertyB();
-            }
+            var propertyA = (typeof a[prop] === "function") ? a[prop]() : a[prop];
+            var propertyB = (typeof b[prop] === "function") ? b[prop]() : b[prop];
+            var propertyDefaultA = (typeof a[defaultProp] === "function") ? a[defaultProp]() : a[defaultProp];
+            var propertyDefaultB = (typeof b[defaultProp] === "function") ? b[defaultProp]() : b[defaultProp];
             propertyA = propertyA.toString().trim();
             propertyB = propertyB.toString().trim();
+            propertyDefaultA = propertyDefaultA.toString().trim();
+            propertyDefaultB = propertyDefaultB.toString().trim();
             var result = propertyA < propertyB ? -1 : propertyA > propertyB ? 1 : propertyDefaultA < propertyDefaultB ? -1 : propertyDefaultA > propertyDefaultB ? 1 : 0;
             return result;
         };
