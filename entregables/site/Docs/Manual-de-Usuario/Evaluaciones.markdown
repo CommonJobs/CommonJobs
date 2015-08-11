@@ -264,21 +264,37 @@ Al ser Senior, podrá desempeñar en forma adicional, los siguientes roles:
 Desde el punto de vista del Líder, sabe que debe darle tareas más sencillas, que debe hacer un seguimiento detallado, diario y que debe hacer Code Reviews buscando hacer mentoring al mismo tiempo.  
 
 Sus características generales son:
+
 - Conoce el lenguaje de programación primario
+
 - Puede entender el código escrito por otros
+
 - Puede implementar código y librerías open source en su código
+
 - Puede utilizar correctamente un software de control de versiones
+
 - Puede hacer unit tests y probar el software
+
 - Cuando algo se rompe o surgen errores, por lo general no encuentra la causa en forma rápida y quizá no sabe bien cómo googlearlo para resolverlo. 
+
 - Sabe al menos escribir lo básico de código orientado a objetos y entiende los beneficios.
+
 - Se maneja encontrando información en blogs y sitios especializados.
+
 - Como actitud general aún necesita recetas y repite código, de a poco se van dando cuenta que pueden mejorar las prácticas de programación y para qué sirven.
+
 - Si no pide recetas, usa la primera solución que se le ocurre sin pensar en un diseño, en alternativas y en las consecuencias.
+
 - En web, conocen los problemas comunes de los browsers pero se les complica resolver temas con browsers más antiguos.
+
 - En FE conocen HTML, CSS y Javascript, usa jquery pero no entiende todo lo que sucede.
+
 - En la planning participa de las estimaciones, pero por lo general puede estimar por encima: por no conocer formas más simples o cosas disponibles para reutilizar.  En cambio también suele estimar de menos: ya que no conoce el impacto que puede generar o las complejidades asociadas.  Suele no cumplir con las estimaciones ni ver más allá de la tarea específica.
+
 - No conoce todos los procesos o metodologías, ni los estándares. 
+
 - No es experto en los temas propios del negocio ni muestra interés (o cree que no es su incumbencia)
+
 - Cuando tiene tiempo libre no sabe con qué seguir. Depende de otros para avanzar con sus tareas.
 
 ### Jr Advanced ###
@@ -292,6 +308,7 @@ Sus características generales son:
 **General**: Su experiencia ya ronda entre los 3 y 6 años. Ya es técnicamente autosuficiente aunque aún requiere cierta supervisión y continuar aprendiendo. Puede desarrollar tareas más complejas y participar de proyectos más desafiantes o importantes.  Comienza a ser referente entre sus compañeros sobre algunos temas.
 
 **Developers**: Desde el punto de vista del líder, tomará su trabajo como solvente pero sabrá que debe revisarlo buscando posibles mejoras.  Algunos ejemplos de sus capacidades son:
+
 - Son la masa crítica y productiva del equipo
 - Conoce varios lenguajes de programación y se considera que comprende muy bien su lenguaje primario, apunta cada vez más a encontrar la mejor forma de utilizarlo, de forma eficiente y clara y sin cometer errores evitables.  Tiene conocimientos adicionales en patrones reusables, conceptos de buenas prácticas, algoritmos de búsqueda.
 - Tiene conocimientos generales sobre seguridad, headers y protocolo HTTP y web browsers
