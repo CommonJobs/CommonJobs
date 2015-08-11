@@ -310,23 +310,41 @@ Sus características generales son:
 **Developers**: Desde el punto de vista del líder, tomará su trabajo como solvente pero sabrá que debe revisarlo buscando posibles mejoras.  Algunos ejemplos de sus capacidades son:
 
 - Son la masa crítica y productiva del equipo
+
 - Conoce varios lenguajes de programación y se considera que comprende muy bien su lenguaje primario, apunta cada vez más a encontrar la mejor forma de utilizarlo, de forma eficiente y clara y sin cometer errores evitables.  Tiene conocimientos adicionales en patrones reusables, conceptos de buenas prácticas, algoritmos de búsqueda.
+
 - Tiene conocimientos generales sobre seguridad, headers y protocolo HTTP y web browsers
+
 - Trabaja bien con browsers web modernos, browsers para móbiles y screen readers.
+
 - En FE se siente cómodo con los layers múltiples, ya conoce las ventajas e implicancias de usar Jquery, frameworks y javascript.
+
 - Comienza a escribir el código en forma más modular, pensando en no volver a duplicar código (SMACSS, Sass, mixins, jerarquías de clases)
+
 - Ya maneja y usa MVC, puede pensar las soluciones en forma modular.  
+
 - Conoce las buenas prácticas de código y las aplica.
+
 - Puede escribir librerías y clases que son útiles a otros.  Puede hacerlo desde cero, pueden rápidamente aprender adaptarse a nuevos frameworks.
+
 - Ya comienza a preocuparse por la performance de sus diseños y código.
+
 - Puede tomar las acciones para mantener un proyecto en un controlador de versiones, entender y proponer las mejores prácticas utilizadas y realizar tareas para el equipo como branches, tags, etc.
+
 - Es responsable de testear su propio código, de escribir tests, de conocer el proceso de integración contínua y cobertura de UT.
+
 - Cuando algo se rompe o surgen errores, por lo general encuentra la causa y lo puede arreglar (a veces con una simple búsqueda en Google)
+
 - Es bueno trabajando en equipo y puede asistir y enseñar a los más junior, aunque aún puede no sentirse solvente en explicar por qué lo haría de otra forma, aunque confía en sus diseños.
+
 - Puede hacer code review a pares y juniors.  Para procesos críticos o complejos requiere que el CR sea además revisado por un Senior.
+
 - En la planning puede ver cosas o impactos que los más junior no ven, puede rápidamente entender el impacto y estimar más certeramente.  Sin embargo aún tiene una visión acotada a la tarea específica y no a todo el contexto o solución como para cuestionar los pedidos o proponer soluciones que cree mejores.
+
 - Respeta los estándares y metodologías, conoce y tiene experiencia en Scrum y/o XP.
+
 - Conoce buena parte de los procesos del negocio.
+
 - Se preocupa por aprovechar mejor su tiempo. Pide nuevas asignaciones cuando tiene tiempo disponible y es autosuficiente para llevar adelante una gran parte de sus tareas.
  
 ### SSr Advanced ###
@@ -341,27 +359,49 @@ Sus características generales son:
 **Developers**: Desde el punto de vista de un Tech Lead, tomará su trabajo como el de un par, lo revisará para sacar ideas y con el enfoque de desafiar sus diseños para ver si juntos logran mejorarlo.  Confía en sus resultados y que hará lo que se pidió o definió, o que lo mejorará.  Ya más que estar aprendiendo, está experimentando.
 
 Sus características generales son:
+
 - Son los pilares de los equipos
+
 - Debe ser capaz de realizar los diseños y cuando es necesario, arquitecturas sobre partes de una solución global, o de complejidad baja o media.  De ser capaz de revisar los diseños de los más junior.
+
 - Conoce varios lenguajes de programación pero además ya conoce de otras cosas como arquitectura de bases de datos, sobre hardware y escalabilidad, sobre redes, etc.
+
 - Conoce sobre servidores web, puede crearlos y mantenerlos.  Conoce herramientas de monitoreo.
+
 - Conoce en profundidad cómo funcionan los browsers, protocolo HTTP y headers.
+
 - Conoce sobre caching y optimizaciones de código por performance.
+
 - Su código funciona más rápido en los browsers más complejos con mínimos trucos que conoce.
+
 - Conoce sobre seguridad web y vectores de ataque y puede testear el código bajo dichos ataques.
+
 - En FE ha escrito quizá un plugin en jQuery, no le asusta el vanilla javascript, conoce otros frameworks como angular, ember, etc.   
+
 - No solo cumple con los procesos, metodologías y estándares, sino que ayuda a definirlos o adaptarlos a los diferentes contextos.
+
 - Le preocupa la calidad de su código, producen código fácil de leer y mantener.  Documenta bien.
+
 - No solamente recibe requerimientos, sino que los busca y genera. En muchas oportunidades es él quien le genera asignaciones nuevas a su líder técnico o PM.
+
 - En caso de productos propios, es capaz de marcar el roadmap y priorizar las tareas para obtener el producto deseado, nuevos features o mejoras.
+
 - Puede liderar proyectos que no sean críticos y/o de equipos pequeños.
+
 - Es buen comunicador y mentor ya que sabe lo que hace, comprende todo y sabe explicarlo y justificarlo.
+
 - No solo se ocupa de su código sino que toma en cuenta lo que está haciendo el equipo y le interesa el resultado final.
+
 - Hace coaching en forma constante a los de menos experiencia.
+
 - Hace los Code Reviews, o al menos los más críticos o complejos (si los SSRs también hacen CRs) y se preocupa por que sigan las mejores prácticas.
+
 - En las estimaciones de las planning, no intenta imponer su visión sino que escucha, vota y se da cuenta si debe corregir y enseñar para que el equipo entienda mejor.  Sus estimaciones son más certeras y si no las cumple, avisa y se da cuenta con anticipación.
+
 - Conoce sus limitaciones y pide refuerzos cuando los necesita, ya que confía en su capacidad y no tiene la necesidad de que crean que sabe todo.
+
 - Son los que por lo general resuelven los problemas complejos, los errores inesperados en forma rápida ya que tienen experiencia en saber por dónde se encuentra la causa, y por lo que generalmente se dice que hacen “magia”.
+
 - Puede comunicarse directamente con el cliente representando al equipo desde el punto de vista técnico, escuchar lo que necesita pero no solo centrarse en lo que pide sino que puede mostrarle alternativas o soluciones que cree más convenientes, para ello entiende también las necesidades del negocio, las prioridades y conoce que hay por lo general presupuestos limitados.
 
 ### Roles para Senior ###
@@ -369,16 +409,27 @@ Sus características generales son:
 Además de desempeñar tareas de su nivel, los Senior podrán tener oportunidad de llevar a cabo roles de mayor responsabilidad que se detallan a continuación.
 
 #### Rol de Team Lead: ####
+
 - Su principal función es estar disponible en todo momento y donde sea, ya sea para el equipo, cuando surgen imprevistos, problemas en producción, problemas con un diseño, discusiones de arquitectura, etc.
+
 - Se requieren soft skills necesarios para lograr sacar lo mejor de cada developer del equipo, conocer sus limitaciones, sus habilidades, sus motivaciones, etc para lograr ser un buen coach.
+
 - Deben ser facilitadores para crear acciones y próximos pasos, sabiendo delegar en los miembros del equipo y realizando seguimiento.
+
 - Es el responsable de las estimaciones del equipo y de su cumplimiento, de corregir desvíos y de avisar con anticipación de no poder remediarlos
+
 - Debe conocer las metodologías de desarrollo, principalmente scrum.  Además ser siempre un mediador, un facilitador, que no impone ideas sino que escucha y guía para que los miembros de su equipo aprendan y experimenten.
+
 - Debe conoce las capacidades individuales y sus motivaciones y saber cuándo debe intervenir en las asignaciones de tareas para equilibrar la eficiencia del equipo con las necesidades del negocio.
+
 - Se requiere que sea un excelente comunicador dentro del equipo y fuera del mismo, con el cliente y todo stakeholder.  Que entienda muy bien las necesidades del cliente y saber traducirlas en lenguaje técnico, en diseños y en las mejores soluciones posibles.
+
 - Su rol también es actuar como el primer contacto del cliente, gerencia u otros actores como para mantener al equipo “protegido” de ruido externo y propiciar su eficiencia y motivación.
 
 #### Rol de Arquitecto (solo para Developers): ####
+
 - Su principal función es resolver los problemas más complejos, definir arquitecturas y diseños complejos, además de programar cuando se requiere.  Para lograrlo, debe tener buenos conocimientos sobre arquitectura y diseño.
+
 - Pueden estar en este rol por un tiempo en los proyectos hasta que el estado del mismo permita que pasen a resolver otros desafíos.  Ya sea al inicio de los proyectos o cuando hay problemas de performance, de robustez, escalabilidad, etc.
+
 - Su rol también es hablar directamente con el cliente para resolver y tomar decisiones sobre cuestiones complejas de tecnología, sugerir y dar consultoría sobre opciones que haya en el mercado, sobre estimaciones de alto nivel para soluciones a medida, ventajas y desventajas, etc.
