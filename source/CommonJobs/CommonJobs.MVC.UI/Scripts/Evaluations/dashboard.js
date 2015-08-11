@@ -152,7 +152,7 @@
         { title: 'Seniority', sortable: true, sortPropertyName: 'seniority', defaultPropertyName: 'fullName', asc: true, activeSort: ko.observable(false) },
         { title: 'Evaluadores', sortable: false},
         { title: 'Estado', sortable: true, sortPropertyName: 'state', defaultPropertyName: 'fullName', asc: true, activeSort: ko.observable(false), observable: true },
-        { title: '', sortable: false },
+        { title: '', sortable: true, sortPropertyName: 'state', defaultPropertyName: 'fullName', asc: true, activeSort: ko.observable(false), observable: true },
         { title: '', sortable: false }
         ];
         this.sort = commonSort.bind(this);
