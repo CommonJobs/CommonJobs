@@ -151,8 +151,8 @@
         { title: 'Puesto', sortable: true, sortPropertyName: 'currentPosition', defaultPropertyName: 'fullName', asc: true, activeSort: ko.observable(false) },
         { title: 'Seniority', sortable: true, sortPropertyName: 'seniority', defaultPropertyName: 'fullName', asc: true, activeSort: ko.observable(false) },
         { title: 'Evaluadores', sortable: false},
-        { title: 'Estado', sortable: true, sortPropertyName: 'state', defaultPropertyName: 'sortByPriority', asc: true, activeSort: ko.observable(false) },
-        { title: 'Acción', sortable: true, sortPropertyName: 'sortByPriority', defaultPropertyName: 'state', asc: true, activeSort: ko.observable(false) },
+        { title: 'Estado', sortable: true, sortPropertyName: 'state', defaultPropertyName: 'actionSortPosition', asc: true, activeSort: ko.observable(false) },
+        { title: 'Acción', sortable: true, sortPropertyName: 'actionSortPosition', defaultPropertyName: 'state', asc: true, activeSort: ko.observable(false) },
         { title: '', sortable: false }
         ];
         this.sort = commonSort.bind(this);
@@ -222,7 +222,7 @@
         this.calificationActionTooltip = ko.observable('');
         this.calificationActionText = ko.observable('');
         this.calificationActionClass = ko.observable('');
-        this.sortByPriority = ko.observable('');
+        this.actionSortPosition = ko.observable('');
         this.calificationUrl = urlGenerator.action(this.period + "/" + this.userName + "/", "Evaluations");
         this.startDevolutionUrl = function () {
             $.ajax(urlGenerator.action("api/StartDevolution", "Evaluations"), {
@@ -244,38 +244,38 @@
                     this.calificationActionTooltip("Evaluar como responsable");
                     this.calificationActionClass("icon user");
                     this.calificationActionText("Evaluar");
-                    this.sortByPriority(0);
+                    this.actionSortPosition(0);
                     return;
                 } else if (this.state() == 1 || this.state() == 3) {
                     this.calificationActionText("Evaluar");
                     this.calificationActionClass("icon empresa");
                     this.calificationActionTooltip("Evaluar como empresa");
-                    this.sortByPriority(2);
+                    this.actionSortPosition(2);
                     return
                 } else if (this.state() == 5) {
                     this.calificationActionText("Devolución");
                     this.calificationActionClass("icon user");
                     this.calificationActionTooltip("Hacer la devolución con el evaluado");
-                    this.sortByPriority(3);
+                    this.actionSortPosition(3);
                     return;
                 }
             } else if (!this.isResponsible && (this.state() == 4 || this.state() == 5)) {
                 this.calificationActionTooltip("Lista para devolucion");
                 this.calificationActionClass("icon view");
                 this.calificationActionText("Ver Evaluación");
-                this.sortByPriority(4);
+                this.actionSortPosition(4);
                 return;
             } else if (!this.isResponsible && this.isEditable && this.state() != 6) {
                 this.calificationActionTooltip("Evaluar como evaluador");
                 this.calificationActionClass("icon user");
                 this.calificationActionText("Evaluar");
-                this.sortByPriority(1);
+                this.actionSortPosition(1);
                 return;
             }
             this.calificationActionText("Ver Evaluación");
             this.calificationActionClass("icon view");
             this.calificationActionTooltip("Ver Evaluación");
-            this.sortByPriority(5);
+            this.actionSortPosition(5);
             return;
         }, this);
         this.state(data.State);
