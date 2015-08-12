@@ -41,11 +41,11 @@ namespace CommonJobs.Mvc.UI.Areas.MyMenu
         {
             return Edit(DetectUser(), true);
         }
-        
+
         [CommonJobsAuthorize(Roles = "Users,MenuManagers")]
         public ActionResult Edit(string id /*username*/, bool ownMenu = false)
         {
-            if (id == "") 
+            if (id == "")
                 ownMenu = true;
 
             ViewBag.AnotherMenuUser = ownMenu ? "" : id;
@@ -94,7 +94,7 @@ namespace CommonJobs.Mvc.UI.Areas.MyMenu
         [ActionName("EmployeeMenu")]
         public JsonNetResult GetEmployeeMenu(string id /*username*/)
         {
-            var employeeMenu = ExecuteCommand(new GetEmployeeMenuCommand(id));
+            var employeeMenu = ExecuteCommand(new GetEmployeeMenuCommand(id, DateTime.Now));
             return Json(employeeMenu);
         }
 
@@ -122,13 +122,13 @@ namespace CommonJobs.Mvc.UI.Areas.MyMenu
             ExecuteCommand(new UpdateMenuDefinitionCommand(menuDefinition, DateTime.Now));
             return Json(new { ok = true });
         }
-                
+
         [AcceptVerbs(HttpVerbs.Get)]
         [ActionName("MenuDefinition")]
         public JsonNetResult GetMenuDefinition(string id /*menuid*/)
         {
             var menu = ExecuteCommand(new GetMenuDefinitionCommand(id));
-            
+
             return Json(menu);
         }
 
@@ -139,7 +139,7 @@ namespace CommonJobs.Mvc.UI.Areas.MyMenu
             ViewBag.dateOffset = dateOffset;
 
             var orderDate = GenerateDate(date, dateOffset);
-            
+
             var order = ExecuteCommand(new GetOrderCommand() { Date = orderDate, MenuDefinitionId = id });
 
             ScriptManager.RegisterGlobalJavascript(
