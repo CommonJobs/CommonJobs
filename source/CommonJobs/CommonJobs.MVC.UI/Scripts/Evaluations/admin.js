@@ -10,7 +10,7 @@
         { title: 'Empleado', sortable: true, sortPropertyName: 'fullName', defaultPropertyName: 'fullName', asc: true, activeSort: ko.observable(false) },
         { title: 'Puesto', sortable: true, sortPropertyName: 'currentPosition', defaultPropertyName: 'fullName', asc: true, activeSort: ko.observable(false) },
         { title: 'Seniority', sortable: true, sortPropertyName: 'seniority', defaultPropertyName: 'fullName', asc: true, activeSort: ko.observable(false) },
-        { title: 'Responsable', sortable: true, sortPropertyName: 'responsible', defaultPropertyName: 'fullName', asc: true, activeSort: ko.observable(false), observable: true }
+        { title: 'Responsable', sortable: true, sortPropertyName: 'responsible', defaultPropertyName: 'fullName', asc: true, activeSort: ko.observable(false) }
         ];
         this.sort = commonSort.bind(this);
         this.defaultSort = function () {
