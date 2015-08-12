@@ -65,7 +65,7 @@ namespace CommonJobs.Domain.MyMenu
                 .Where(x => IsNotEmpty(x.PlaceKey) && IsNotEmpty(x.OptionKey))
                 .GroupBy(x => x.PlaceKey)
                 .ToDictionary(
-                    x => x.Key, 
+                    x => x.Key,
                     x => x.GroupBy(y => y.OptionKey).ToDictionary(y => y.Key, y => y.Count()));
         }
 

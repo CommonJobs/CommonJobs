@@ -46,7 +46,7 @@ var Utilities;
         };
         return IdGenerator;
     })();
-    Utilities.IdGenerator = IdGenerator;    
+    Utilities.IdGenerator = IdGenerator;
     Utilities.idGenerator = new IdGenerator();
     var HasCallbacks = (function () {
         function HasCallbacks() {
@@ -71,7 +71,7 @@ var Utilities;
         }
         return HasCallbacks;
     })();
-    Utilities.HasCallbacks = HasCallbacks;    
+    Utilities.HasCallbacks = HasCallbacks;
     (function (ObservableArrays) {
         function generateText(baseName, collection, name) {
             var texts = _.map(ko.toJS(collection), function (item) {
@@ -207,13 +207,13 @@ var MyMenu;
         };
         return CalendarHelper;
     })();
-    MyMenu.CalendarHelper = CalendarHelper;    
+    MyMenu.CalendarHelper = CalendarHelper;
     MyMenu.days = (function () {
         var DAYS = [
-            1, 
-            2, 
-            3, 
-            4, 
+            1,
+            2,
+            3,
+            4,
             5
         ];
         var def = function () {
@@ -297,7 +297,7 @@ var MyMenu;
         };
         return WeekStorage;
     })(Utilities.HasCallbacks);
-    MyMenu.WeekStorage = WeekStorage;    
+    MyMenu.WeekStorage = WeekStorage;
     var DayChoice = (function () {
         function DayChoice() {
             this.OptionKey = ko.observable("");
@@ -305,7 +305,7 @@ var MyMenu;
         }
         return DayChoice;
     })();
-    MyMenu.DayChoice = DayChoice;    
+    MyMenu.DayChoice = DayChoice;
     var Override = (function (_super) {
         __extends(Override, _super);
         function Override(data) {
@@ -322,7 +322,7 @@ var MyMenu;
             }
         }
         return Override;
-    })(DayChoice);    
+    })(DayChoice);
     var EmployeeMenuDefinition = (function (_super) {
         __extends(EmployeeMenuDefinition, _super);
         function EmployeeMenuDefinition(menu, data, now) {
@@ -468,7 +468,8 @@ var MyMenu;
                 Comment: comment,
                 WeekIdx: weekIdx,
                 DayIdx: dayIdx,
-                IsOrdered: false
+                IsOrdered: false,
+                HasTomorrowBeenOrdered: false
             };
         };
         EmployeeMenuDefinition.prototype.getDefaultPlaceLabel = function () {
@@ -594,7 +595,7 @@ var MyMenu;
         };
         return EmployeeMenuDefinition;
     })(WeekStorage);
-    MyMenu.EmployeeMenuDefinition = EmployeeMenuDefinition;    
+    MyMenu.EmployeeMenuDefinition = EmployeeMenuDefinition;
     var MenuDefinition = (function (_super) {
         __extends(MenuDefinition, _super);
         function MenuDefinition(data) {
@@ -752,5 +753,5 @@ var MyMenu;
         };
         return MenuDefinition;
     })(WeekStorage);
-    MyMenu.MenuDefinition = MenuDefinition;    
+    MyMenu.MenuDefinition = MenuDefinition;
 })(MyMenu || (MyMenu = {}));

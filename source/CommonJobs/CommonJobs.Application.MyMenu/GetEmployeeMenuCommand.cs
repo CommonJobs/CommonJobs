@@ -47,13 +47,22 @@ namespace CommonJobs.Application.MyMenu
 
             var menuDefinition = ExecuteCommand(new GetMenuDefinitionCommand(employeeMenu.MenuId));
 
-            var lastOrder = RavenSession.Load<MenuOrder>(MenuOrder.GenerateId(employeeMenu.MenuId, menuDefinition.LastOrderDate));
-            if (lastOrder != null)
-            {
-                lastOrder.IsOrdered = true;
-            }
+            var today = DateTime.Now.Date;
+            var tomorrow = today.AddDays(1);
+            var todayOrderId = MenuOrder.GenerateId(employeeMenu.MenuId, today);
 
-            return EmployeeMenuDTO.Create(employee, menuDefinition, employeeMenu, lastOrder);
+            var todayOrder = RavenSession.Load<MenuOrder>(todayOrderId);
+
+            // IS THIS NECESSARY? The orders are created with IsOrdered = true
+            //if (todayOrder != null)
+            //{
+            //    todayOrder.IsOrdered = true;
+            //}
+
+            // If the last order generated is from tomorrow, then we should tell the user
+            var hasTomorrowBeenOrdered = (menuDefinition.LastGeneratedOrderDate.Date == tomorrow);
+
+            return EmployeeMenuDTO.Create(employee, menuDefinition, employeeMenu, todayOrder, hasTomorrowBeenOrdered);
         }
 
         private static EmployeeMenu CreateDefaultEmployeeMenu(string username, string menuId)
