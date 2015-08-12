@@ -9,15 +9,20 @@
         <h4>
             <span data-bind="text: $root.EmployeeName"></span> - <span data-bind="text: moment(Date).format('dddd, D [de] MMMM YYYY')"></span> (Semana <span data-bind="text: WeekIdx + 1"></span>)
         </h4>
-                
+
         <!-- ko ifnot: IsOrdered -->
         <span class="badge badge-success">
             El pedido aún no fue realizado. Puede modificarse editando el <em><span data-bind="text: moment(Date).format('dddd')"></span> de la Semana <span data-bind="text: WeekIdx + 1"></span></em> o el <em>día específico</em>.
         </span>
         <!-- /ko -->
-        <!-- ko if: IsOrdered -->
+        <!-- ko if: IsOrdered && !HasTomorrowBeenOrdered -->
         <span class="badge badge-warning">
             El pedido ya fue realizado y no puede ser modificado. Si no fue de su agrado, recuerde actualizar el menú semanal (<em>Semana <span data-bind="text: WeekIdx + 1"></span> / <span data-bind="text: moment(Date).format('dddd')"></span></em>).
+        </span>
+        <!-- /ko -->
+        <!-- ko if: IsOrdered && HasTomorrowBeenOrdered -->
+        <span class="badge badge-warning">
+            Los pedidos de hoy y de mañana ya fueron realizados y no pueden ser modificados. Si no son de su agrado, recuerde actualizar el menú semanal (<em>Semana <span data-bind="text: WeekIdx + 1"></span> / <span data-bind="text: moment(Date).format('dddd')"></span></em>).
         </span>
         <!-- /ko -->
 
@@ -39,7 +44,7 @@
             <dd data-bind="text: $data"></dd>
             <!-- /ko -->
         </dl>
-        
+
         <!-- ko ifnot: IsOrdered -->
         <div class="alert alert-info">
             <strong>Coming soon!</strong> Si aún no se ha hecho el pedido, se podrá modificar el menú del día directamente desde aquí.
@@ -64,9 +69,9 @@
                 <div class="control-group">
                     <label class="control-label" for="defaultPlace">Lugar por defecto:</label>
                     <div class="controls">
-                        <select id="defaultPlace" data-bind="options: menu.Places, 
-                                        optionsText: 'Text', optionsValue: 'Key', 
-                                        value: DefaultPlaceKey, 
+                        <select id="defaultPlace" data-bind="options: menu.Places,
+                                        optionsText: 'Text', optionsValue: 'Key',
+                                        value: DefaultPlaceKey,
                                         optionsCaption: 'Seleccione...'">
                         </select>
                     </div>
@@ -136,22 +141,22 @@
                 <div class="control-group">
                     <label class="control-label">Menú</label>
                     <div class="controls">
-                        <select class="span2" data-bind="options: $root.menu.Options, 
-                                        optionsText: 'Text', optionsValue: 'Key', 
-                                        value: OptionKey, 
+                        <select class="span2" data-bind="options: $root.menu.Options,
+                                        optionsText: 'Text', optionsValue: 'Key',
+                                        value: OptionKey,
                                         optionsCaption: 'El menú de siempre'">
                         </select>
                         <input class="span6" type="text" readonly="readonly" data-bind="value: $root.getDayWeekOptionOverrideInfo(Date, OptionKey)" />
                     </div>
-                    
+
                 </div>
 
                 <div class="control-group">
                     <label class="control-label">Lugar</label>
                     <div class="controls">
-                        <select class="span2" data-bind="options: $root.menu.Places, 
-                                        optionsText: 'Text', optionsValue: 'Key', 
-                                        value: PlaceKey, 
+                        <select class="span2" data-bind="options: $root.menu.Places,
+                                        optionsText: 'Text', optionsValue: 'Key',
+                                        value: PlaceKey,
                                         optionsCaption: 'El lugar de siempre'">
                         </select>
                         <input class="span6" type="text" readonly="readonly" data-bind="value: $root.getDayWeekPlaceOverrideInfo(Date, PlaceKey)" />
@@ -199,9 +204,9 @@
                     </div>
                     <!-- ko if: $root.getMenuChoice($parent.Key, $data)() -->
                     <div class="span3">
-                        <select data-bind="options: $root.menu.Places, 
-                            optionsText: 'Text', optionsValue: 'Key', 
-                            value: $root.getPlaceChoice($parent.Key, $data), 
+                        <select data-bind="options: $root.menu.Places,
+                            optionsText: 'Text', optionsValue: 'Key',
+                            value: $root.getPlaceChoice($parent.Key, $data),
                             optionsCaption: $root.getDefaultPlaceLabel()">
                         </select>
                     </div>
@@ -212,6 +217,6 @@
         </div>
         <!-- /ko -->
 
-        
+
     </div>
 </div>

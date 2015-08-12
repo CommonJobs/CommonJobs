@@ -17,9 +17,11 @@ var MyMenu;
             this.orderDate = moment();
             this.isToday = false;
             this.isOrdered = false;
+            this.hasTomorrowBeenOrdered = false;
             this.isProcessButtonVisible = ko.observable(false);
             var order = viewData.order;
             this.isOrdered = order.IsOrdered;
+            this.hasTomorrowBeenOrdered = order.HasTomorrowBeenOrdered
             this.orderDate = moment(order.Date);
             this.isToday = order.Date == viewData.now;
             this.placeSummaries = _.sortBy(_.map(order.PlacesByKey, function (placeName, placeKey) {
@@ -88,15 +90,15 @@ var MyMenu;
                         {
                             sExtends: "print",
                             sButtonText: "Imprimir"
-                        }, 
+                        },
                         {
                             sExtends: "copy",
                             sButtonText: "Copiar"
-                        }, 
+                        },
                         {
                             sExtends: "pdf",
                             sButtonText: "PDF"
-                        }, 
+                        },
                         {
                             sExtends: "csv",
                             sButtonText: "Excel"
@@ -110,5 +112,5 @@ var MyMenu;
         };
         return OrderPage;
     })(Utilities.HasCallbacks);
-    MyMenu.OrderPage = OrderPage;    
+    MyMenu.OrderPage = OrderPage;
 })(MyMenu || (MyMenu = {}));

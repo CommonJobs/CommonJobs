@@ -15,10 +15,10 @@ module MyMenu {
     });
 
     export interface IPlaceSummary {
-        placeKey: string; 
-        placeName: string; 
+        placeKey: string;
+        placeName: string;
         optionSummaries: IOptionSumary[];
-    }   
+    }
 
     export interface IOptionSumary {
         optionKey: string;
@@ -28,8 +28,8 @@ module MyMenu {
     }
 
     export interface IDetailItemData {
-        placeKey: string; 
-        placeName: string; 
+        placeKey: string;
+        placeName: string;
         optionKey: string;
         optionName: string;
         food: string;
@@ -51,6 +51,7 @@ module MyMenu {
         QuantityByOptionByPlace: any; //public Dictionary<string, Dictionary<string, int>>
         DetailByUserName: any; //public Dictionary<string, MenuOrderDetailItem>
         IsOrdered: bool;
+        HasTomorrowBeenOrdered: bool;
     }
 
     export class OrderPage extends Utilities.HasCallbacks {
@@ -58,11 +59,12 @@ module MyMenu {
         orderDate: moment.Moment = moment();
         isToday: bool = false;
         isOrdered: bool = false;
+        hasTomorrowBeenOrdered: bool = false;
         isProcessButtonVisible: knockout.koObservableBool = ko.observable(false);
 
         placeSummaries: IPlaceSummary[];
         detail: IDetailItemData[];
-        
+
         toggleProcessButton() {
             this.isProcessButtonVisible(!this.isProcessButtonVisible());
         }
@@ -72,6 +74,7 @@ module MyMenu {
             //TODO: create interface
             var order: IOrderData = viewData.order;
             this.isOrdered = order.IsOrdered;
+            this.hasTomorrowBeenOrdered = order.HasTomorrowBeenOrdered;
             this.orderDate = moment(order.Date);
             this.isToday = order.Date == viewData.now;
 

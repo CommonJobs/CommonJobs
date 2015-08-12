@@ -16,9 +16,12 @@ namespace CommonJobs.Application.MyMenu
 
         public String UserName { get; set; }
 
-        public GetEmployeeMenuCommand(string userName)
+        public DateTime MenuDate { get; set; }
+
+        public GetEmployeeMenuCommand(string userName, DateTime date)
         {
             this.UserName = userName;
+            this.MenuDate = date;
         }
 
         public override EmployeeMenuDTO ExecuteWithResult()
@@ -47,13 +50,16 @@ namespace CommonJobs.Application.MyMenu
 
             var menuDefinition = ExecuteCommand(new GetMenuDefinitionCommand(employeeMenu.MenuId));
 
-            var lastOrder = RavenSession.Load<MenuOrder>(MenuOrder.GenerateId(employeeMenu.MenuId, menuDefinition.LastOrderDate));
-            if (lastOrder != null)
-            {
-                lastOrder.IsOrdered = true;
-            }
+            var today = MenuDate.Date;
+            var tomorrow = today.AddDays(1);
+            var todayOrderId = MenuOrder.GenerateId(employeeMenu.MenuId, today);
 
-            return EmployeeMenuDTO.Create(employee, menuDefinition, employeeMenu, lastOrder);
+            var todayOrder = RavenSession.Load<MenuOrder>(todayOrderId);
+
+            // If the last order generated is from tomorrow, then we should tell the user
+            var hasTomorrowBeenOrdered = (menuDefinition.LastGeneratedOrderDate.Date >= tomorrow);
+
+            return EmployeeMenuDTO.Create(employee, menuDefinition, employeeMenu, todayOrder, hasTomorrowBeenOrdered);
         }
 
         private static EmployeeMenu CreateDefaultEmployeeMenu(string username, string menuId)
