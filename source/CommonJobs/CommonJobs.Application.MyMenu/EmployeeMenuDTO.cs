@@ -29,14 +29,14 @@ namespace CommonJobs.Application.MyMenu
                 var detail = todayOrder.DetailByUserName[employee.UserName];
                 result.LastOrder = new EmployeeMenuOrderDTO()
                 {
-                    Date = menuDefinition.LastOrderDate,
+                    Date = todayOrder.Date,
                     Option = detail.OptionKey == null ? null : todayOrder.OptionsByKey[detail.OptionKey],
                     Place = detail.PlaceKey == null ? null : todayOrder.PlacesByKey[detail.PlaceKey],
                     Comment = detail.Comment,
                     Food = detail.OptionKey == null ? null : todayOrder.FoodsByOption[detail.OptionKey],
                     WeekIdx = todayOrder.WeekIdx,
                     DayIdx = todayOrder.DayIdx,
-                    IsOrdered = true,
+                    IsOrdered = todayOrder.IsOrdered,
                     HasTomorrowBeenOrdered = hasTomorrowBeenOrdered
                 };
             }
@@ -44,14 +44,14 @@ namespace CommonJobs.Application.MyMenu
             {
                 result.LastOrder = new EmployeeMenuOrderDTO()
                 {
-                    Date = menuDefinition.LastOrderDate,
+                    Date = todayOrder.Date,
                     Option = null,
                     Place = null,
                     Comment = "// El usuario no existía al momento de hacer el pedido //",
                     Food = null,
                     WeekIdx = todayOrder.WeekIdx,
                     DayIdx = todayOrder.DayIdx,
-                    IsOrdered = true,
+                    IsOrdered = todayOrder.IsOrdered,
                     HasTomorrowBeenOrdered = hasTomorrowBeenOrdered
                 };
             }
