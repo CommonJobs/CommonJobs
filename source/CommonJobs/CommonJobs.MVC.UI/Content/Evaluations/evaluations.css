@@ -465,19 +465,27 @@ h1 {
 thead th.selected .icon.arrow {
   background-image: url(../Images/Evaluations/3.png);
 }
-
 /* line 7, ../../sass/Evaluations/_generate-evaluation.scss */
 tr.evaluation-generated td {
   color: #b2b2b2;
 }
-
-/* line 9, ../../sass/Evaluations/_dashboard.scss */
+/* line 8, ../../sass/Evaluations/_generate-evaluation.scss */
+.generate-evaluation tr .evaluation-owner-field.invalid {
+  border-color: #EE6048 !important;
+  border-style: double;
+  color: #EE6048;
+}
+/* line 12, ../../sass/Evaluations/_generate-evaluation.scss */
+.generate-evaluation .footer {
+  float: right;
+}
+/* line 14, ../../sass/Evaluations/_dashboard.scss */
 .dashboard.recursos-humanos .header {
   display: inline-block;
   border-bottom: 1px solid #ccc;
   width: 100%;
 }
-/* line 14, ../../sass/Evaluations/_dashboard.scss */
+/* line 17, ../../sass/Evaluations/_dashboard.scss */
 .dashboard.recursos-humanos .header h2 {
   color: #444;
   margin: 0;

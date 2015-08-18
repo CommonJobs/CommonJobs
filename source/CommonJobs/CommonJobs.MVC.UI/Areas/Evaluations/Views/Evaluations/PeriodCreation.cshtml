@@ -34,7 +34,7 @@
                 <td data-bind="text: seniority"></td>
                 <td>
                     <span data-bind="visible: period, text:responsible"></span>
-                    <input class="evaluation-owner-field" data-bind="visible: !period, value: responsible" autocomplete="off"/>
+                    <input class="evaluation-owner-field" data-bind="visible: !period, value: responsible, css: { invalid: !isValid()}" autocomplete="off" />
                 </td>
             </tr>
         </tbody>
@@ -47,10 +47,11 @@
 
 <div id="evaluations-generated-confirm" class="modal content-pop-up clearfix">
     <div class="modal-header">
-        <h3 class="modal-title">EVALUACIONES GENERADAS!</h3>
+        <h3 id="title" class="modal-title"></h3>
     </div>
-    <p id="textCount"></p>
-    <div class="model-footer">      
-        <button class="confirm">OK</button>
+    <p id="text"></p>
+    <div class="model-footer">
+        <button class="back" id="button-back">VOLVER</button>
+        <button class="confirm" id="button-confirm">OK</button>
     </div>
 </div>
