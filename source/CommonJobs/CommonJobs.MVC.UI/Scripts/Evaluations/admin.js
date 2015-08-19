@@ -40,8 +40,8 @@
         }
     }
 
-    PeriodCreation.prototype.isInvalid = function () {
-        return _.some(this.items(), function (e) { return !e.isValid() });
+    PeriodCreation.prototype.isValid = function () {
+        return _.every(this.items(), function (e) { return e.isValid(); });
     }
 
     var Employee = function (data) {
@@ -97,7 +97,7 @@
     $('#generate-evaluation-button').on('click', function () {
         var model = viewmodel.toJs();
         var modelFiltered = { Employees: _.filter(model.Employees, function (e) { return e.ResponsibleId && !e.Period; }) };
-        if (!viewmodel.isInvalid()) {
+        if (viewmodel.isValid()) {
             $.ajax("/Evaluations/api/GenerateEvalutions/" + evaluationPeriod + "/", {
                 type: "POST",
                 dataType: 'json',
@@ -105,12 +105,11 @@
                 data: JSON.stringify(modelFiltered),
                 complete: function (response) {
                     var modalContainer = $('#evaluations-generated-confirm');
-                    var title = "EVALUACIONES GENERADAS"
-                    modalContainer.find('#title').text(title);
+                    modalContainer.find('.modal-title').text("EVALUACIONES GENERADAS");
                     var countText = (response.responseText == '1') ? "Se ha generado 1 evaluación correctamente" : "Se han generado " + response.responseText + " evaluaciones correctamente";
-                    modalContainer.find('#text').text(countText);
-                    $('#button-back').hide();
-                    $('#button-confirm').show();
+                    modalContainer.find('.modal-text').text(countText);
+                    modalContainer.find('.back').hide();
+                    modalContainer.find('.confirm').show();
                     modalContainer.modal('show');
                 },
                 error: function () {
@@ -119,12 +118,11 @@
             });
         } else {
             var modalContainer = $('#evaluations-generated-confirm');
-            var title = "EVALUACIONES NO GENERADAS"
-            modalContainer.find('#title').text(title);
+            modalContainer.find('.modal-title').text("EVALUACIONES NO GENERADAS");
             var text = "No se puedieron generar las evaluaciones, datos incorrectos!";
-            modalContainer.find('#text').text(text);
-            $('#button-back').show();
-            $('#button-confirm').hide();
+            modalContainer.find('.modal-text').text(text);
+            modalContainer.find('.back').show();
+            modalContainer.find('.confirm').hide();
             modalContainer.modal('show');
         }
     });
@@ -133,11 +131,11 @@
     ko.applyBindings(viewmodel);
     var modalContainer = $('#evaluations-generated-confirm');
     modalContainer.modal({ show: false });
-    modalContainer.find('#button-confirm').on('click', function () {
+    modalContainer.find('.confirm').on('click', function () {
         modalContainer.modal('hide');
         getEmployeesToGenerateEvalution();
     });
-    modalContainer.find('#button-back').on('click', function () {
+    modalContainer.find('.back').on('click', function () {
         modalContainer.modal('hide');
     });
 });
