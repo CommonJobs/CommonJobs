@@ -35,7 +35,6 @@ namespace CommonJobs.Mvc.UI.Controllers
                 if (user != null && user.ValidatePassword(model.Password))
                 {
                     FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
-                    Session[SessionRolesKey] = user.Roles ?? new string[0];
 
                     if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
                         && !returnUrl.StartsWith("//") && !returnUrl.StartsWith("/\\"))
@@ -62,7 +61,6 @@ namespace CommonJobs.Mvc.UI.Controllers
 
         public ActionResult LogOff()
         {
-            Session.Remove(SessionRolesKey);
             FormsAuthentication.SignOut();
 
             return RedirectToAction("Index", "Home");

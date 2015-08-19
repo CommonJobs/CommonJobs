@@ -20,7 +20,6 @@ namespace CommonJobs.Mvc.UI.Controllers
     {
         private static Logger log = LogManager.GetCurrentClassLogger();
         private const string EmailSuffix = "@makingsense.com";
-        public const string SessionRolesKey = "CommonJobs/Roles";
         private const string OAuthUrl = "https://accounts.google.com/";
         private const string ApiUrl = "https://www.googleapis.com/";
 
@@ -61,7 +60,6 @@ namespace CommonJobs.Mvc.UI.Controllers
 
             FormsAuthentication.SetAuthCookie(username, true);
 
-            Session[SessionRolesKey] = new string[0];
             var user = RavenSession.Load<User>("Users/" + username);
 
             log.Debug("User {0} found: {1}", username, user != null);
@@ -69,7 +67,6 @@ namespace CommonJobs.Mvc.UI.Controllers
             if (user != null)
             {
                 log.Dump(LogLevel.Debug, user, "RavenDB User");
-                Session[SessionRolesKey] = user.Roles ?? new string[0];
             }
 
             if (!string.IsNullOrWhiteSpace(returnUrl) && Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")

@@ -134,7 +134,7 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
                 return HttpNotFound();
             }
 
-            var isManager = IsEmployeeManager();
+            var isManager = IsEmployeeManager(username);
             var isLoggedUserEvaluator = IsEvaluator(loggedUser, username, evaluation.ResponsibleId, evaluation.Evaluators);
             var isLoggedUserEvaluated = loggedUser == username;
 
@@ -151,9 +151,9 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
             return View("Calification");
         }
 
-        private bool IsEmployeeManager()
+        private bool IsEmployeeManager(string username)
         {
-            var sessionRoles = (string[])HttpContext.Session[CommonJobs.Mvc.UI.Controllers.AccountController.SessionRolesKey] ?? new string[] { };
+            var sessionRoles = ExecuteCommand(new GetLoggedUserRoles(username));
             var required = new List<string>() { "EmployeeManagers" };
             return sessionRoles.Intersect(required).Any();
         }

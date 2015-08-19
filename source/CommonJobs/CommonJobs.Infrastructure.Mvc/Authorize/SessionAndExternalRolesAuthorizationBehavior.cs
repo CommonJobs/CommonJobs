@@ -35,14 +35,8 @@ namespace CommonJobs.Infrastructure.Mvc.Authorize
             if (String.IsNullOrEmpty(authorizeAttribute.Roles))
                 return true;
 
-            var sessionRoles = httpContext.Session[SessionRolesKey] as string[];
+            var sessionRoles = GetRoles(httpContext.User.Identity.Name);
 
-            if (sessionRoles == null)
-            {
-                sessionRoles = GetRoles(httpContext.User.Identity.Name);
-                httpContext.Session[SessionRolesKey] = sessionRoles;
-            }
-                            
             var required = authorizeAttribute.Roles.ToRoleList();
             return sessionRoles.Intersect(required).Any();
         }
