@@ -97,43 +97,35 @@
         } else {
             showEvaluationGenerationResult(false);
         }
-
-        function postEvaluationsForGeneration(callbacks) {
-            var model = viewmodel.toJs();
-            var modelFiltered = { Employees: _.filter(model.Employees, function (e) { return e.ResponsibleId && !e.Period; }) };
-            $.ajax("/Evaluations/api/GenerateEvalutions/" + evaluationPeriod + "/", {
-                type: "POST",
-                dataType: 'json',
-                contentType: 'application/json; charset=utf-8',
-                data: JSON.stringify(modelFiltered),
-                complete: function (response) {
-                    var result = { amountGenerated: parseInt(response.responseText) }
-                    if (typeof callbacks.onSuccess === 'function') { callbacks.onSuccess(result); }
-                }
-            });
-            error = callbacks.onError;
-        };
-
-        function showEvaluationGenerationResult(wereGenerated, amountGenerated) {
-            if (wereGenerated) {
-                var modalContainer = $('#evaluations-generated-confirm');
-                modalContainer.find('.modal-title').text("EVALUACIONES GENERADAS");
-                var countText = (amountGenerated == '1') ? "Se ha generado 1 evaluación correctamente" : "Se han generado " + amountGenerated + " evaluaciones correctamente";
-                modalContainer.find('.modal-text').text(countText);
-                modalContainer.find('.back').hide();
-                modalContainer.find('.confirm').show();
-                modalContainer.modal('show');
-            } else {
-                var modalContainer = $('#evaluations-generated-confirm');
-                modalContainer.find('.modal-title').text("EVALUACIONES NO GENERADAS");
-                var text = "No se puedieron generar las evaluaciones, datos incorrectos!";
-                modalContainer.find('.modal-text').text(text);
-                modalContainer.find('.back').show();
-                modalContainer.find('.confirm').hide();
-                modalContainer.modal('show');
-            }
-        }
     });
+
+    function postEvaluationsForGeneration(callbacks) {
+        var model = viewmodel.toJs();
+        var modelFiltered = { Employees: _.filter(model.Employees, function (e) { return e.ResponsibleId && !e.Period; }) };
+        $.ajax("/Evaluations/api/GenerateEvalutions/" + evaluationPeriod + "/", {
+            type: "POST",
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(modelFiltered),
+            complete: function (response) {
+                var result = { amountGenerated: parseInt(response.responseText) };
+                if (typeof callbacks.onSuccess === 'function') { callbacks.onSuccess(result); }
+            },
+            error: callbacks.onError
+        });
+    };
+
+    function showEvaluationGenerationResult(wereGenerated, amountGenerated) {
+        var modalContainer = $('.modal');
+        modalContainer.find('.modal-title').text(wereGenerated ? "Evaluaciones generadas" : "Evaluaciones no generadas");
+        var text = wereGenerated ? amountGenerated == '1' 
+            ? "Se ha generado 1 evaluación correctamente" : "Se han generado " + amountGenerated + " evaluaciones correctamente"
+            : "No se pudieron generar las evaluaciones, datos incorrectos!";
+        modalContainer.find('.modal-text').text(text);
+        modalContainer.find('.back').toggle(!wereGenerated); 
+        modalContainer.find('.confirm').toggle(wereGenerated);
+        modalContainer.modal('show');
+    }
 
     function getEmployeesToGenerateEvalution() {
         $.getJSON("/Evaluations/api/getEmployeesToGenerateEvalution/" + evaluationPeriod + "/", function (model) {
