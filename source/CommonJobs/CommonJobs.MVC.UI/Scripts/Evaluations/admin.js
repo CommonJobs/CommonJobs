@@ -139,7 +139,7 @@
 
     getEmployeesToGenerateEvalution();
     ko.applyBindings(viewmodel);
-    var modalContainer = $('#evaluations-generated-confirm');
+    var modalContainer = $('.modal');
     modalContainer.modal({ show: false });
     modalContainer.find('.confirm').on('click', function () {
         modalContainer.modal('hide');
