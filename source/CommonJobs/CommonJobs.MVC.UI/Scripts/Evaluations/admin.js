@@ -40,6 +40,10 @@
         }
     }
 
+    PeriodCreation.prototype.isValid = function () {
+        return _.every(this.items(), function (e) { return e.isValid(); });
+    }
+
     var Employee = function (data) {
         this.id = '';
         this.userName = '';
@@ -48,6 +52,7 @@
         this.currentPosition = '';
         this.seniority = '';
         this.period = '';
+        this.isValid = ko.observable('');
         if (data) {
             this.fromJs(data);
         }
@@ -61,6 +66,9 @@
         this.currentPosition = data.CurrentPosition;
         this.seniority = data.Seniority || '';
         this.period = data.Period;
+        this.isValid = function ()  {
+            return this.responsible() != this.userName;
+        }
     }
 
     Employee.prototype.toJs = function () {
@@ -70,11 +78,54 @@
             CurrentPosition: this.currentPosition,
             Seniority: this.seniority,
             FullName: this.fullName,
-            Period: this.period
+            Period: this.period,
+            IsValid: this.isValid()
         };
     }
-
     var viewmodel = new PeriodCreation();
+
+    $('#generate-evaluation-button').on('click', function () {
+        if (viewmodel.isValid()) {
+            postEvaluationsForGeneration({
+                onSuccess: function (result) {
+                    showEvaluationGenerationResult(true, result.amountGenerated);
+                },
+                onError: function () {
+                    alert('Fallo interno. Por favor recargue la página.');
+                }
+            });
+        } else {
+            showEvaluationGenerationResult(false);
+        }
+    });
+
+    function postEvaluationsForGeneration(callbacks) {
+        var model = viewmodel.toJs();
+        var modelFiltered = { Employees: _.filter(model.Employees, function (e) { return e.ResponsibleId && !e.Period; }) };
+        $.ajax("/Evaluations/api/GenerateEvalutions/" + evaluationPeriod + "/", {
+            type: "POST",
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(modelFiltered),
+            complete: function (response) {
+                var result = { amountGenerated: parseInt(response.responseText) };
+                if (typeof callbacks.onSuccess === 'function') { callbacks.onSuccess(result); }
+            },
+            error: callbacks.onError
+        });
+    };
+
+    function showEvaluationGenerationResult(wereGenerated, amountGenerated) {
+        var modalContainer = $('.modal');
+        modalContainer.find('.modal-title').text(wereGenerated ? "Evaluaciones generadas" : "Evaluaciones no generadas");
+        var text = wereGenerated ? amountGenerated == '1' 
+            ? "Se ha generado 1 evaluación correctamente" : "Se han generado " + amountGenerated + " evaluaciones correctamente"
+            : "No se pudieron generar las evaluaciones, datos incorrectos!";
+        modalContainer.find('.modal-text').text(text);
+        modalContainer.find('.back').toggle(!wereGenerated); 
+        modalContainer.find('.confirm').toggle(wereGenerated);
+        modalContainer.modal('show');
+    }
 
     function getEmployeesToGenerateEvalution() {
         $.getJSON("/Evaluations/api/getEmployeesToGenerateEvalution/" + evaluationPeriod + "/", function (model) {
@@ -86,32 +137,15 @@
         });
     }
 
-    $('#generate-evaluation-button').on('click', function () {
-        var model = viewmodel.toJs();
-        var modelFiltered = { Employees: _.filter(model.Employees, function (e) { return e.ResponsibleId && !e.Period; }) };
-        $.ajax("/Evaluations/api/GenerateEvalutions/" + evaluationPeriod + "/", {
-            type: "POST",
-            dataType: 'json',
-            contentType: 'application/json; charset=utf-8',
-            data: JSON.stringify(modelFiltered),
-            complete: function (response) {
-                var modalContainer = $('#evaluations-generated-confirm');
-                var countText = (response.responseText == '1') ? "Se ha generado 1 evaluación correctamente" : "Se han generado " + response.responseText + " evaluaciones correctamente";
-                modalContainer.find('#textCount').text(countText);
-                modalContainer.modal('show');
-            },
-            error: function () {
-                alert('Fallo interno. Por favor recargue la página.');
-            }
-        });
-    });
-
     getEmployeesToGenerateEvalution();
     ko.applyBindings(viewmodel);
-    var modalContainer = $('#evaluations-generated-confirm');
+    var modalContainer = $('.modal');
     modalContainer.modal({ show: false });
     modalContainer.find('.confirm').on('click', function () {
         modalContainer.modal('hide');
         getEmployeesToGenerateEvalution();
+    });
+    modalContainer.find('.back').on('click', function () {
+        modalContainer.modal('hide');
     });
 });
