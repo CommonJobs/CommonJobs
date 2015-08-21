@@ -12,7 +12,6 @@ namespace CommonJobs.Mvc.UI.Controllers
 {
     public class AccountController : CommonJobsController
     {
-        public const string SessionRolesKey = "CommonJobs/Roles";
         //
         // GET: /Account/LogOn
 

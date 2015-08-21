@@ -20,7 +20,7 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations.Controllers
         {
             //TODO: remove hardcoded "CS\\"
             //TODO: move to an AuthorizeAttribute or something more elegant
-            if (User != null && User.Identity != null && User.Identity.Name != null)
+            if (User != null && User.Identity != null && User.Identity.IsAuthenticated && User.Identity.Name != null)
             {
                 var user = User.Identity.Name;
                 if (user.StartsWith("CS\\"))

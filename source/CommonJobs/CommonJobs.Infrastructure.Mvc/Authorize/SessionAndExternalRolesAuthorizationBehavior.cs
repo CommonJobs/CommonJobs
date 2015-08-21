@@ -7,12 +7,10 @@ namespace CommonJobs.Infrastructure.Mvc.Authorize
 {
     public class SessionAndExternalRolesAuthorizationBehavior : IAuthorizationBehavior
     {
-        public readonly string SessionRolesKey;
         private readonly Func<string, string[]> GetRoles;
 
-        public SessionAndExternalRolesAuthorizationBehavior(string sessionRolesKey, Func<string, string[]> getRoles)
+        public SessionAndExternalRolesAuthorizationBehavior(Func<string, string[]> getRoles)
         {
-            SessionRolesKey = sessionRolesKey;
             GetRoles = getRoles;
         }
 
