@@ -56,9 +56,25 @@ namespace CommonJobs.Mvc.UI.Controllers
                 return RedirectToAction("Error", new { returnUrl = returnUrl, error = "Only emails ended with " + EmailSuffix + " are allowed" });
             }
 
-            var username = email.Substring(0, email.Length - EmailSuffix.Length);
+            var username = email.Substring(0, email.Length - EmailSuffix.Length);            
 
-            FormsAuthentication.SetAuthCookie(username, true);
+            FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(
+            1,
+            username,
+            DateTime.Now,
+            DateTime.Now.AddDays(2),
+            true,
+            "",
+            FormsAuthentication.FormsCookiePath);
+
+            string encTicket = FormsAuthentication.Encrypt(ticket);
+            var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encTicket)
+            {
+                // setting the Expires property to the same value in the future
+                // as the forms authentication ticket validity
+                Expires = ticket.Expiration
+            };
+            Response.Cookies.Add(cookie);
 
             var user = RavenSession.Load<User>("Users/" + username);
 

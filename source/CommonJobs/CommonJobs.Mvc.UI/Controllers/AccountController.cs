@@ -32,8 +32,24 @@ namespace CommonJobs.Mvc.UI.Controllers
                 var user = RavenSession.Load<User>("Users/" + model.UserName);
 
                 if (user != null && user.ValidatePassword(model.Password))
-                {
-                    FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
+                {                    
+                    FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(
+                    1,
+                    model.UserName,
+                    DateTime.Now,
+                    DateTime.Now.AddDays(2),
+                    model.RememberMe,
+                    "",
+                    FormsAuthentication.FormsCookiePath);
+
+                    string encTicket = FormsAuthentication.Encrypt(ticket);
+                    var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encTicket)
+                    {
+                        // setting the Expires property to the same value in the future
+                        // as the forms authentication ticket validity
+                        Expires = ticket.Expiration
+                    };
+                    Response.Cookies.Add(cookie);
 
                     if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
                         && !returnUrl.StartsWith("//") && !returnUrl.StartsWith("/\\"))
