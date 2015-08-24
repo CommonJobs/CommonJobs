@@ -8,10 +8,12 @@ namespace CommonJobs.Infrastructure.Mvc.Authorize
     public class SessionRolesAuthorizationBehavior : IAuthorizationBehavior
     {
         public readonly string SessionRolesKey;
+        private readonly Func<string, string[]> GetRoles;
 
-        public SessionRolesAuthorizationBehavior(string sessionRolesKey)
+        public SessionRolesAuthorizationBehavior(string sessionRolesKey, Func<string, string[]> getRoles)
         {
             SessionRolesKey = sessionRolesKey;
+            GetRoles = getRoles;
         }
 
         public IEnumerable<string> AdGroupsToAppRoles(IEnumerable<string> groups)
@@ -32,7 +34,8 @@ namespace CommonJobs.Infrastructure.Mvc.Authorize
             if (String.IsNullOrEmpty(authorizeAttribute.Roles))
                 return true;
 
-            var sessionRoles = (string[])httpContext.Session[SessionRolesKey] ?? new string[] { };
+            var sessionRoles = GetRoles(httpContext.User.Identity.Name);
+
             var required = authorizeAttribute.Roles.ToRoleList();
             return sessionRoles.Intersect(required).Any();
         }

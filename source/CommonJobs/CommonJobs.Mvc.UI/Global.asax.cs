@@ -77,7 +77,7 @@ namespace CommonJobs.Mvc.UI
 
 
             CommonJobsAuthorizeAttribute.AuthorizationBehavior = new MixedAuthorizationBehavior(
-                new SessionAndExternalRolesAuthorizationBehavior(CommonJobs.Mvc.UI.Controllers.AccountController.SessionRolesKey, userName =>
+                new SessionAndExternalRolesAuthorizationBehavior(userName =>
                 {
                     using (var session = RavenSessionManager.DocumentStore.OpenSession())
                     {

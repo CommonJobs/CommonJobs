@@ -20,7 +20,6 @@ namespace CommonJobs.Mvc.UI.Controllers
     {
         private static Logger log = LogManager.GetCurrentClassLogger();
         private const string EmailSuffix = "@makingsense.com";
-        public const string SessionRolesKey = "CommonJobs/Roles";
         private const string OAuthUrl = "https://accounts.google.com/";
         private const string ApiUrl = "https://www.googleapis.com/";
 
@@ -57,11 +56,26 @@ namespace CommonJobs.Mvc.UI.Controllers
                 return RedirectToAction("Error", new { returnUrl = returnUrl, error = "Only emails ended with " + EmailSuffix + " are allowed" });
             }
 
-            var username = email.Substring(0, email.Length - EmailSuffix.Length);
+            var username = email.Substring(0, email.Length - EmailSuffix.Length);            
 
-            FormsAuthentication.SetAuthCookie(username, true);
+            FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(
+            1,
+            username,
+            DateTime.Now,
+            DateTime.Now.AddDays(2),
+            true,
+            "",
+            FormsAuthentication.FormsCookiePath);
 
-            Session[SessionRolesKey] = new string[0];
+            string encTicket = FormsAuthentication.Encrypt(ticket);
+            var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encTicket)
+            {
+                // setting the Expires property to the same value in the future
+                // as the forms authentication ticket validity
+                Expires = ticket.Expiration
+            };
+            Response.Cookies.Add(cookie);
+
             var user = RavenSession.Load<User>("Users/" + username);
 
             log.Debug("User {0} found: {1}", username, user != null);
@@ -69,7 +83,6 @@ namespace CommonJobs.Mvc.UI.Controllers
             if (user != null)
             {
                 log.Dump(LogLevel.Debug, user, "RavenDB User");
-                Session[SessionRolesKey] = user.Roles ?? new string[0];
             }
 
             if (!string.IsNullOrWhiteSpace(returnUrl) && Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
