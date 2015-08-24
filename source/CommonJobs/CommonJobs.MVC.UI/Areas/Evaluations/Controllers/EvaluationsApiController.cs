@@ -20,7 +20,7 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations.Controllers
         {
             //TODO: remove hardcoded "CS\\"
             //TODO: move to an AuthorizeAttribute or something more elegant
-            if (User != null && User.Identity != null && User.Identity.Name != null)
+            if (User != null && User.Identity != null && User.Identity.IsAuthenticated && User.Identity.Name != null)
             {
                 var user = User.Identity.Name;
                 if (user.StartsWith("CS\\"))
@@ -88,7 +88,8 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations.Controllers
         [AcceptVerbs(HttpVerbs.Get)]
         public JsonNetResult GetEvaluation(string username, string period)
         {
-            var sessionRoles = (string[])HttpContext.Session[CommonJobs.Mvc.UI.Controllers.AccountController.SessionRolesKey] ?? new string[] { };
+            var sessionRoles = ExecuteCommand(new GetLoggedUserRoles(username));
+
             var required = new List<string>() { "EmployeeManagers" };
             var isManager = sessionRoles.Intersect(required).Any();
 
