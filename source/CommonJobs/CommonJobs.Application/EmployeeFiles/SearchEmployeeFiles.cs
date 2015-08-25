@@ -5,6 +5,7 @@ using System.Text;
 using CommonJobs.Domain;
 using CommonJobs.Infrastructure.RavenDb;
 using Raven.Client.Linq;
+using Raven.Client;
 
 namespace CommonJobs.Application.EmployeeFiles
 {
@@ -27,7 +28,8 @@ namespace CommonJobs.Application.EmployeeFiles
                 .Statistics(out stats)
                 .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite())
                 .Where(x => x.TerminationDate == null)
-                .AsProjection<EmployeeFileSearchResult>()
+                //.AsProjection<EmployeeFileSearchResult>()
+                .ProjectFromIndexFieldsInto<EmployeeFileSearchResult>()
                 .OrderBy(x => x.LastName).ThenBy(x => x.FirstName)
                 .ApplyPagination(Parameters);
 

@@ -26,13 +26,13 @@ namespace CommonJobs.Migrations
             { "TechnicalInterviewNote", ApplicantEventType.DefaultTechnicalInterview }
         };
 
-        
+
         public override void Up()
         {
             ForAllApplicants(result =>
             {
                 var patchs = new List<PatchRequest>();
-                if (result["Notes"].Type == Newtonsoft.Json.Linq.JTokenType.Array)
+                if ((Newtonsoft.Json.Linq.JTokenType)result["Notes"].Type == Newtonsoft.Json.Linq.JTokenType.Array)
                 {
                     var position = 0;
                     foreach (var note in result["Notes"].Values())
@@ -87,11 +87,11 @@ namespace CommonJobs.Migrations
         public override void Down()
         {
             var eventTypeToNoteTypeMap = noteTypeToEventTypeMap.ToDictionary(x => x.Value, x => x.Key);
-            
+
             ForAllApplicants(result =>
             {
                 var patchs = new List<PatchRequest>();
-                if (result["Notes"].Type == Newtonsoft.Json.Linq.JTokenType.Array)
+                if ((Newtonsoft.Json.Linq.JTokenType)result["Notes"].Type == Newtonsoft.Json.Linq.JTokenType.Array)
                 {
                     var position = 0;
                     foreach (var note in result["Notes"].Values())

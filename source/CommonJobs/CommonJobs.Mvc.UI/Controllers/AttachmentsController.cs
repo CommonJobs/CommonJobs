@@ -18,6 +18,7 @@ using CommonJobs.Application.AttachmentSearching;
 using System.Text.RegularExpressions;
 using CommonJobs.Mvc.UI.Infrastructure;
 using CommonJobs.Utilities;
+using Raven.Abstractions.Data;
 
 namespace CommonJobs.Mvc.UI.Controllers
 {
@@ -28,7 +29,7 @@ namespace CommonJobs.Mvc.UI.Controllers
         [HttpGet]
         public ActionResult Get(string id, bool returnName = true)
         {
-            var attachment = RavenSession.Load<Attachment>(id);
+            var attachment = RavenSession.Load<CommonJobs.Domain.Attachment>(id);
             if (attachment == null)
                 return HttpNotFound();
 
@@ -39,14 +40,14 @@ namespace CommonJobs.Mvc.UI.Controllers
             if (returnName)
                 return File(stream, attachment.ContentType, attachment.FileName);
             else
-                return File(stream, attachment.ContentType);                
+                return File(stream, attachment.ContentType);
         }
 
         [CommonJobsAuthorize(Roles = "Users,ApplicantManagers,EmployeeManagers")]
         public ActionResult CropImageAttachment(string id, int x, int y, int width, int height)
         {
             // get image
-            var attachment = RavenSession.Load<Attachment>(id);
+            var attachment = RavenSession.Load<CommonJobs.Domain.Attachment>(id);
             if (attachment == null)
                 return HttpNotFound();
 
@@ -63,7 +64,7 @@ namespace CommonJobs.Mvc.UI.Controllers
             var destImage = new Bitmap(destArea.Width, destArea.Height);
             var gfx = Graphics.FromImage(destImage);
             gfx.DrawImage(image, destArea, srcArea, GraphicsUnit.Pixel);
-            
+
             // save it
             var relatedEntity = RavenSession.Load<object>(attachment.RelatedEntityId);
             if (relatedEntity == null)
@@ -98,7 +99,7 @@ namespace CommonJobs.Mvc.UI.Controllers
         public ActionResult CleanAttachmentIndexInformation()
         {
             //TODO: revisar si funciona ilimitados documentos
-            RavenSession.Advanced.DatabaseCommands.UpdateByIndex(
+            RavenSessionManager.DocumentStore.DatabaseCommands.UpdateByIndex(
                 "Attachments/ByContentExtractorConfigurationHash",
                 new RavenData.IndexQuery() { Query = "ContentExtractorConfigurationHash:*" },
                 new[] {
@@ -115,7 +116,10 @@ namespace CommonJobs.Mvc.UI.Controllers
                         Value = RavenJValue.Null
                     }
                 },
-                allowStale: false);
+                new BulkOperationOptions()
+                {
+                    AllowStale = false
+                });
 
             return Json(new { ok = true });
         }
@@ -126,7 +130,7 @@ namespace CommonJobs.Mvc.UI.Controllers
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
-            Attachment[] attachments = Query(new GetNotIndexedAttachments(quantity));
+            CommonJobs.Domain.Attachment[] attachments = Query(new GetNotIndexedAttachments(quantity));
             //TODO: indexar cada uno
             foreach (var attachment in attachments)
                 ExecuteCommand(new IndexAttachment(attachment));

@@ -10,6 +10,7 @@ using CommonJobs.Application.Indexes;
 using System.Linq.Expressions;
 using CommonJobs.Utilities;
 using CommonJobs.Application.EmployeeSearching;
+using Raven.Client;
 
 namespace CommonJobs.Application.EmployeeAbsences
 {
@@ -39,7 +40,7 @@ namespace CommonJobs.Application.EmployeeAbsences
 
             if (From.HasValue)
                 query1 = query1.Where(x => x.TerminationDate >= From.Value);
-                
+
             if (!string.IsNullOrWhiteSpace(Parameters.Term))
             {
                 query1 = query1.Where(x => x.FullName1.StartsWith(Parameters.Term)
@@ -85,7 +86,7 @@ namespace CommonJobs.Application.EmployeeAbsences
 
             var results = employees
                 .Select(x => new AbsencesSearchResult(
-                    x, 
+                    x,
                     x.Absences.Where(filterAbsencesTo).Where(filterAbsencesFrom).ToList(),
                     x.Vacations.Where(filterVacationsTo).Where(filterVacationsFrom).ToList()))
                 .ToArray();

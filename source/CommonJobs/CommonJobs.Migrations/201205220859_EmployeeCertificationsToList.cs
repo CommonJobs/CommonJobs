@@ -36,7 +36,7 @@ namespace CommonJobs.Migrations
                 foreach (var result in results.Results)
                 {
                     var value = result["Certifications"];
-                    if (value != null && value.Type == Newtonsoft.Json.Linq.JTokenType.String)
+                    if (value != null && (Newtonsoft.Json.Linq.JTokenType)value.Type == Newtonsoft.Json.Linq.JTokenType.String)
                     {
                         var str = value.ToString();
                         var list = str.Split(new[] { ';' }).Select(x => global::Raven.Json.Linq.RavenJObject.FromObject(new { Description = x.Trim() })).ToList();
@@ -86,7 +86,7 @@ namespace CommonJobs.Migrations
                 foreach (var result in results.Results)
                 {
                     var value = result["Certifications"];
-                    if (value != null && value.Type == Newtonsoft.Json.Linq.JTokenType.Array)
+                    if (value != null && (Newtonsoft.Json.Linq.JTokenType)value.Type == Newtonsoft.Json.Linq.JTokenType.Array)
                     {
 
                         var values = value.Values().Select(x => x.Value<string>("Description"));

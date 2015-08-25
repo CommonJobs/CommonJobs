@@ -12,6 +12,7 @@ using CommonJobs.Infrastructure.Mvc.Authorize;
 using Raven.Client.Listeners;
 using CommonJobs.Infrastructure.RavenDb.Schedule;
 using NLog;
+using CommonJobs.Domain;
 
 namespace CommonJobs.Mvc.UI
 {
@@ -81,7 +82,7 @@ namespace CommonJobs.Mvc.UI
                 {
                     using (var session = RavenSessionManager.DocumentStore.OpenSession())
                     {
-                        var user = session.Query<CommonJobs.Domain.User>().Where(u => u.UserName == userName).FirstOrDefault();
+                        var user = session.Query<User>().Where(u => u.UserName == userName).FirstOrDefault();
                         return user == null || user.Roles == null ? new string[0] : user.Roles;
                     }
                 }),

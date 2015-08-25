@@ -40,13 +40,14 @@ namespace CommonJobs.Mvc.UI.Controllers
                 Skipped = searchParameters.Skip,
                 TotalResults = query.Stats.TotalResults
             });
-        } 
+        }
 
         // GET: /Applicants/QuickSearchAutocomplete?terms=Mar
         public JsonResult QuickSearchAutocomplete(string term)
         {
             const int maxResults = 20;
-            var list = RavenSession.Advanced.DatabaseCommands
+            //TODO: Validate this!!!
+            var list = RavenSessionManager.DocumentStore.DatabaseCommands
                 .GetTerms("Applicant/QuickSearch", "ByTerm", term, maxResults)
                 .Where(x => x.StartsWith(term));
             return Json(list, JsonRequestBehavior.AllowGet);
@@ -84,7 +85,7 @@ namespace CommonJobs.Mvc.UI.Controllers
                     .Select(x => ExecuteCommand(new SaveAttachment(applicant, x.Key, x.Value)))
                     .ToArray();
 
-                var notes = attachments.Select(x => new NoteWithAttachment() 
+                var notes = attachments.Select(x => new NoteWithAttachment()
                     {
                         Attachment = x,
                         Note = "QuickAttachment!",
@@ -121,7 +122,7 @@ namespace CommonJobs.Mvc.UI.Controllers
         }
 
         [SharedEntityAlternativeAuthorization]
-        public ActionResult Edit(string id, string sharedCode = null) 
+        public ActionResult Edit(string id, string sharedCode = null)
         {
             var applicant = RavenSession.Load<Applicant>(id);
             if (applicant == null)
@@ -139,7 +140,7 @@ namespace CommonJobs.Mvc.UI.Controllers
         }
 
         [SharedEntityAlternativeAuthorization]
-        public JsonNetResult Get(string id, string sharedCode = null) 
+        public JsonNetResult Get(string id, string sharedCode = null)
         {
             var applicant = RavenSession.Load<Applicant>(id);
             return Json(GetApplicantJsonWithModifiedDate(applicant));

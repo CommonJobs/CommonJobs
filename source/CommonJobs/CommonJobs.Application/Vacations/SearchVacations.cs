@@ -10,6 +10,7 @@ using CommonJobs.Application.Indexes;
 using System.Linq.Expressions;
 using CommonJobs.Utilities;
 using CommonJobs.Application.EmployeeSearching;
+using Raven.Client;
 
 namespace CommonJobs.Application.Vacations
 {

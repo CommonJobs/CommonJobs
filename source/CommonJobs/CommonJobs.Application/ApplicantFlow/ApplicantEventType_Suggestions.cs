@@ -45,8 +45,8 @@ namespace CommonJobs.Application.ApplicantFlow
                 });
 
             Reduce = docs => from doc in docs
-                             group doc by new 
-                             { 
+                             group doc by new
+                             {
                                  doc.Slug
                              } into g
                              select new
@@ -58,7 +58,8 @@ namespace CommonJobs.Application.ApplicantFlow
                                  Predefined = g.Any(x => x.Predefined)
                              };
 
-            TransformResults = (db, results) => results.Where(x => !string.IsNullOrWhiteSpace(x.Text)).Select(x => x);
+            //TODO TRANSFORM: Review this
+            //TransformResults = (db, results) => results.Where(x => !string.IsNullOrWhiteSpace(x.Text)).Select(x => x);
 
             Index(x => x.Slug, FieldIndexing.NotAnalyzed);
             Index(x => x.Text, FieldIndexing.Analyzed);

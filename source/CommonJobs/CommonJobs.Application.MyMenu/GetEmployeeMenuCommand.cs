@@ -3,6 +3,7 @@ using CommonJobs.Domain;
 using CommonJobs.Domain.MyMenu;
 using CommonJobs.Infrastructure.RavenDb;
 using NLog;
+using Raven.Client;
 using Raven.Client.Linq;
 using System;
 using System.Collections.Generic;

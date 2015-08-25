@@ -55,14 +55,14 @@ namespace CommonJobs.Mvc.UI.Controllers
                 Skipped = searchParameters.Skip,
                 TotalResults = query.Stats.TotalResults
             });
-        } 
-        
+        }
+
         //
         // GET: /Employees/QuickSearchAutocomplete?terms=Mar
         public JsonResult QuickSearchAutocomplete(string term)
         {
             const int maxResults = 20;
-            var list = RavenSession.Advanced.DatabaseCommands
+            var list = RavenSessionManager.DocumentStore.DatabaseCommands
                 .GetTerms("Employee/QuickSearch", "ByTerm", term, maxResults)
                 .Where(x => x.StartsWith(term));
             return Json(list, JsonRequestBehavior.AllowGet);
@@ -71,7 +71,7 @@ namespace CommonJobs.Mvc.UI.Controllers
         public ActionResult Create(string name)
         {
             var newEmployee = CreateEmployee(name);
-            return RedirectToAction("Edit", new { id = newEmployee.Id });  
+            return RedirectToAction("Edit", new { id = newEmployee.Id });
         }
 
         private Employee CreateEmployee(string name)
@@ -168,12 +168,12 @@ namespace CommonJobs.Mvc.UI.Controllers
             AttachmentSlot[] slotsToShow = Query(new AttachmentSlotsQuery<Employee>());
 
             ScriptManager.RegisterGlobalJavascript(
-                "ViewData", 
-                new { 
+                "ViewData",
+                new {
                     employee = employee,
                     attachmentSlots = slotsToShow,
                     technicalSkillLevels = TechnicalSkillLevelExtensions.GetLevelNames()
-                }, 
+                },
                 500);
             return View(employee);
         }
@@ -228,15 +228,15 @@ namespace CommonJobs.Mvc.UI.Controllers
             var applicant = RavenSession.Load<Applicant>(applicantId);
             if (applicant == null)
                 return HttpNotFound();
-            
+
             var employee = applicant.Hire(DateTime.Now);
             RavenSession.Store(employee);
 
-            return Json(new 
-            { 
-                success = true, 
-                applicantId = applicantId, 
-                employeeId = employee.Id 
+            return Json(new
+            {
+                success = true,
+                applicantId = applicantId,
+                employeeId = employee.Id
             });
         }
     }

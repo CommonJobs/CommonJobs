@@ -6,6 +6,7 @@ using System.Text;
 using CommonJobs.Domain;
 using CommonJobs.Infrastructure.RavenDb;
 using Raven.Client.Linq;
+using Raven.Client;
 
 namespace CommonJobs.Application.JobSearchSearching
 {

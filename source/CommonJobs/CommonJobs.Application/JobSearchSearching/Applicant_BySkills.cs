@@ -33,7 +33,7 @@ namespace CommonJobs.Application.JobSearchSearching
                                     TechnicalSkills = new object[] { skill },
                                     Total = skill.Weight
                                 };
-            
+
             Reduce = doc => doc
                 .GroupBy(x => x.Id)
                 .Select(g => new {

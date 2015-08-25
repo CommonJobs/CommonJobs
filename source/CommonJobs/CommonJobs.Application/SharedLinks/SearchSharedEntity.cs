@@ -9,6 +9,7 @@ using CommonJobs.ContentExtraction;
 using CommonJobs.Application.Indexes;
 using System.Linq.Expressions;
 using CommonJobs.Utilities;
+using Raven.Client;
 
 namespace CommonJobs.Application.SharedLinks
 {
@@ -32,7 +33,7 @@ namespace CommonJobs.Application.SharedLinks
                 .Statistics(out stats)
                 .Where(x => x.ExpirationDate > DateTime.Now)
                 .Where(x => x.SharedCode == SharedCode);
-            
+
             if (EntityId != null)
                 query = query.Where(x => x.EntityId == EntityId);
 
