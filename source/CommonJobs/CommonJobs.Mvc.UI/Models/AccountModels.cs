@@ -23,7 +23,7 @@ namespace CommonJobs.Mvc.UI.Controllers
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirmar nueva contraseña")]
-        [Compare("NewPassword", ErrorMessage = "La nueva contraseña y la confirmación no coinciden.")]
+        [System.ComponentModel.DataAnnotations.Compare("NewPassword", ErrorMessage = "La nueva contraseña y la confirmación no coinciden.")]
         public string ConfirmPassword { get; set; }
     }
 
