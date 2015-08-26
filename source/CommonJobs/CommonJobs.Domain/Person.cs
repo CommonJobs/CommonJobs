@@ -121,9 +121,9 @@ namespace CommonJobs.Domain
         //Only in detailed view
         public string Skills { get; set; }
 
-        public virtual List<SlotWithAttachment> AllAttachmentReferences
+        public virtual SlotWithAttachment[] AllAttachmentReferences
         {
-            get { return SlotWithAttachment.GenerateFromImage(Photo).ToList(); }
+            get { return SlotWithAttachment.GenerateFromImage(Photo).ToArray(); }
         }
     }
 }

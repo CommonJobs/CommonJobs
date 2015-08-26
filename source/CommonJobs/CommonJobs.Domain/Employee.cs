@@ -160,14 +160,14 @@ namespace CommonJobs.Domain
         [DataType(DataType.Date)]
         public DateTime? EuropeanPassportExpiration { get; set; }
 
-        public override List<SlotWithAttachment> AllAttachmentReferences
+        public override SlotWithAttachment[] AllAttachmentReferences
         {
             get
             {
                 return base.AllAttachmentReferences
                     .Union(SlotWithAttachment.GenerateFromNotes(Notes))
                     .Union(AttachmentsBySlot.EmptyIfNull().Where(x => x.Attachment != null))
-                    .ToList();
+                    .ToArray();
             }
         }
 

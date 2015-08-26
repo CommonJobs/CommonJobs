@@ -41,9 +41,9 @@ namespace CommonJobs.Domain
             });
         }
 
-        public override List<SlotWithAttachment> AllAttachmentReferences
+        public override SlotWithAttachment[] AllAttachmentReferences
         {
-            get { return base.AllAttachmentReferences.Union(SlotWithAttachment.GenerateFromNotes(Notes)).ToList(); }
+            get { return base.AllAttachmentReferences.Union(SlotWithAttachment.GenerateFromNotes(Notes)).ToArray(); }
         }
 
         //TODO: automatically remove expired links
