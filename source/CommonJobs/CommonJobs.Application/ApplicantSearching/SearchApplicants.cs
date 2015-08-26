@@ -39,7 +39,7 @@ namespace CommonJobs.Application.ApplicantSearching
             query = Parameters.Apply(query);
 
             //var result = query.AsProjection<ApplicantSearchResult>().ToArray();
-            var result = query.ProjectFromIndexFieldsInto<ApplicantSearchResult>().ToArray();
+            var result = query.As<ApplicantSearchResult>().ToArray();
             Stats = stats;
             return result;
         }

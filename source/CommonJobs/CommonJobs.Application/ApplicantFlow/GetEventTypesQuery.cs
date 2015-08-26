@@ -27,7 +27,7 @@ namespace CommonJobs.Application.ApplicantFlow
                 .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite());
 
             var results = query
-                .ProjectFromIndexFieldsInto<EventType>()
+                .As<EventType>()
                 .ToArray();
 
             return results;

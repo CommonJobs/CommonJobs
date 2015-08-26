@@ -89,8 +89,8 @@ namespace CommonJobs.Application.EmployeeSearching
             if (Parameters.Take > 0)
                 query = query.Take(Parameters.Take);
 
-            //var result = query.AsProjection<EmployeeSearchResult>().ToArray();
-            var result = query.ProjectFromIndexFieldsInto<EmployeeSearchResult>().ToArray();
+            var result = query.As<EmployeeSearchResult>().ToArray();
+
             Stats = stats;
             return result;
         }

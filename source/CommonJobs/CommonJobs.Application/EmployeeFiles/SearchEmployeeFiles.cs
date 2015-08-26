@@ -29,7 +29,7 @@ namespace CommonJobs.Application.EmployeeFiles
                 .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite())
                 .Where(x => x.TerminationDate == null)
                 //.AsProjection<EmployeeFileSearchResult>()
-                .ProjectFromIndexFieldsInto<EmployeeFileSearchResult>()
+                .As<EmployeeFileSearchResult>()
                 .OrderBy(x => x.LastName).ThenBy(x => x.FirstName)
                 .ApplyPagination(Parameters);
 

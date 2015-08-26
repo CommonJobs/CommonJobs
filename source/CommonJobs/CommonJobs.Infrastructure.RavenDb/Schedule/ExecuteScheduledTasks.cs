@@ -43,7 +43,7 @@ namespace CommonJobs.Infrastructure.RavenDb.Schedule
         }
 
         private static System.Threading.Timer timer;
-        public static void StartPeriodicTasks(IDocumentStore documentStore, int dueMinutes = 0, int periodMinutes = 4)
+        public static void StartPeriodicTasks(IDocumentStore documentStore, int dueMinutes = 1, int periodMinutes = 4)
         {
             if (timer == null)
             {
