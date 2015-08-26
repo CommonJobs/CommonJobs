@@ -42,7 +42,7 @@ namespace CommonJobs.Domain
 
         public string FullName
         {
-            get { 
+            get {
                 var separator = String.IsNullOrWhiteSpace(FirstName) || String.IsNullOrWhiteSpace(LastName) ? "" : ", ";
                 return string.Join(separator, LastName, FirstName);
             }
@@ -60,7 +60,7 @@ namespace CommonJobs.Domain
         }
 
         private string _id;
-        public string Id 
+        public string Id
         {
             get { return _id; }
             set
@@ -121,9 +121,9 @@ namespace CommonJobs.Domain
         //Only in detailed view
         public string Skills { get; set; }
 
-        public virtual IEnumerable<SlotWithAttachment> AllAttachmentReferences
+        public virtual List<SlotWithAttachment> AllAttachmentReferences
         {
-            get { return SlotWithAttachment.GenerateFromImage(Photo); }
+            get { return SlotWithAttachment.GenerateFromImage(Photo).ToList(); }
         }
     }
 }

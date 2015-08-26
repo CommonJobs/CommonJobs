@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Raven.Client;
-using Newtonsoft.Json;
+using Raven.Imports.Newtonsoft.Json;
 
 namespace CommonJobs.Infrastructure.RavenDb
 {
