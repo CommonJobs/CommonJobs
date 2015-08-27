@@ -6,6 +6,7 @@ using CommonJobs.Domain;
 using CommonJobs.Infrastructure.RavenDb;
 using Raven.Client.Linq;
 using Raven.Client;
+using CommonJobs.Application.EmployeeSearching;
 
 namespace CommonJobs.Application.EmployeeFiles
 {
@@ -24,18 +25,19 @@ namespace CommonJobs.Application.EmployeeFiles
             RavenQueryStatistics stats;
 
             var query = RavenSession
-                .Query<Employee>()
+                .Query<Employee_QuickSearch.Projection, Employee_QuickSearch>()
+                .Where(x => x.IsEmployee);
+
+            var rs = query
                 .Statistics(out stats)
                 .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite())
-                .Where(x => x.TerminationDate == null)
-                //.AsProjection<EmployeeFileSearchResult>()
-                .As<EmployeeFileSearchResult>()
                 .OrderBy(x => x.LastName).ThenBy(x => x.FirstName)
-                .ApplyPagination(Parameters);
+                .ApplyPagination(Parameters)
+                .As<EmployeeFileSearchResult>()
+                .ToArray();
 
-            var result = query.ToArray();
             Stats = stats;
-            return result;
+            return rs;
         }
     }
 }
