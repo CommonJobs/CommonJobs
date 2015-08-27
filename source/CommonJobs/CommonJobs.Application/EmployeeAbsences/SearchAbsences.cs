@@ -47,13 +47,15 @@ namespace CommonJobs.Application.EmployeeAbsences
                     || x.FullName2.StartsWith(Parameters.Term));
             }
 
-            var ids = query1
+            var rs = query1
                 .Statistics(out stats)
                 .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite())
                 .OrderBy(x => x.LastName).ThenBy(x => x.FirstName)
                 .ApplyPagination(Parameters)
-                .Select(x => x.Id)
+                .As<EmployeeSearchResult>()
                 .ToArray();
+
+            var ids = rs.Select(x => x.Id).ToArray();
 
             var employees = RavenSession.Load<Employee>(ids);
 
