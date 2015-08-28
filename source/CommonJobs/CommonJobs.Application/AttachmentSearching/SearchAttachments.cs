@@ -42,7 +42,6 @@ namespace CommonJobs.Application.AttachmentSearching
                 query = query.Search(x => x.FullText, fullTextTerm, escapeQueryOptions: EscapeQueryOptions.AllowPostfixWildcard);
             }
 
-
             if (!Parameters.IncludeFilesWithoutText)
             {
                 //Hack porque
@@ -63,10 +62,8 @@ namespace CommonJobs.Application.AttachmentSearching
                 query = query.Search(x => x.IsOrphan, false.ToString(), options: SearchOptions.And | SearchOptions.Not);
             }
 
-            var aux = query
-                .ApplyPagination(Parameters)
-                //Projection in order to do not bring PlainContent (big field)
-                .Select(x => new
+            var qArray = query.ApplyPagination(Parameters).ToArray();
+            var aux = qArray.Select(x => new
                 {
                     x.AttachmentId,
                     x.ContentType,
@@ -74,8 +71,7 @@ namespace CommonJobs.Application.AttachmentSearching
                     x.RelatedEntityId,
                     x.IsOrphan,
                     x.PartialText
-                })
-                .ToArray();
+                });
 
             var results = aux
                 .Select(x => new AttachmentSearchResult()
