@@ -89,6 +89,16 @@
             Subscribe to all bulk insert operation changes that belong to a operation with given Id.
             </summary>
         </member>
+        <member name="M:Raven.Client.Changes.IDatabaseChanges.ForAllDataSubscriptions">
+            <summary>
+            Subscribe to changes for all data subscriptions.
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Changes.IDatabaseChanges.ForDataSubscription(System.Int64)">
+            <summary>
+            Subscribe to changes for a specified data subscription.
+            </summary>
+        </member>
         <member name="M:Raven.Client.Connection.AdminRequestCreator.GetDatabaseNamesAsync(System.Int32,System.Int32,System.Threading.CancellationToken)">
             <summary>
             Gets the list of databases from the server asynchronously
@@ -196,6 +206,7 @@
                 if set then maximum number of parallel indexing tasks will be set to this
                 value.
             </param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.Connection.Async.IAsyncAdminDatabaseCommands.StopIndexingAsync(System.Threading.CancellationToken)">
             <summary>
@@ -207,6 +218,7 @@
                 Sends an async command to compact a database. During the compaction the specified database will be offline.
             </summary>
             <param name="databaseName">name of a database to compact</param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.Connection.Async.IAsyncGlobalAdminDatabaseCommands.CreateDatabaseAsync(Raven.Abstractions.Data.DatabaseDocument,System.Threading.CancellationToken)">
             <summary>
@@ -223,6 +235,7 @@
             </summary>
             <param name="databaseName">name of a database to delete</param>
             <param name="hardDelete">should all data be removed (data files, indexing files, etc.). Default: false</param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.Connection.Async.IAsyncGlobalAdminDatabaseCommands.EnsureDatabaseExistsAsync(System.String,System.Boolean,System.Threading.CancellationToken)">
             <summary>
@@ -256,6 +269,7 @@
             </param>
             <param name="incremental">indicates if backup is incremental</param>
             <param name="databaseName">name of a database that will be backed up</param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.Connection.Async.IAsyncGlobalAdminDatabaseCommands.StartRestoreAsync(Raven.Abstractions.Data.DatabaseRestoreRequest,System.Threading.CancellationToken)">
             <summary>
@@ -526,6 +540,11 @@
             It releases a subscriptions by forcing a connected client to drop.
             </summary>
         </member>
+        <member name="E:Raven.Client.Document.ILowLevelBulkInsertOperation.Report">
+            <summary>
+                Report on the progress of the operation
+            </summary>
+        </member>
         <member name="M:Raven.Client.Document.IReliableSubscriptions.Create``1(Raven.Abstractions.Data.SubscriptionCriteria{``0},System.String)">
             <summary>
             It creates a data subscription in a database. The subscription will expose all documents that match the specified subscription criteria for a given type.
@@ -582,14 +601,24 @@
             <param name="replicas">The min number of replicas that must have the value before we can return (or the number of destinations, if higher)</param>
             <returns>Task which will have the number of nodes that the caught up to the specified etag</returns>
         </member>
-        <member name="P:Raven.Client.Document.Subscription`1.IsErrored">
+        <member name="P:Raven.Client.Document.Subscription`1.IsErroredBecauseOfSubscriber">
             <summary>
-            It indicates if the subscription is in errored state.
+            It indicates if the subscription is in errored state because one of subscribers threw an exception.
             </summary>
         </member>
-        <member name="P:Raven.Client.Document.Subscription`1.IsClosed">
+        <member name="P:Raven.Client.Document.Subscription`1.LastSubscriberException">
             <summary>
-            It determines if the subscription is closed.
+            The last exception thrown by one of subscribers.
+            </summary>
+        </member>
+        <member name="P:Raven.Client.Document.Subscription`1.SubscriptionConnectionException">
+            <summary>
+            The last subscription connection exception.
+            </summary>
+        </member>
+        <member name="P:Raven.Client.Document.Subscription`1.IsConnectionClosed">
+            <summary>
+            It determines if the subscription connection is closed.
             </summary>
         </member>
         <member name="M:Raven.Client.FileSystem.IAbstractFilesQuery`1.OpenSubclause">
@@ -1057,6 +1086,11 @@
         <member name="T:Raven.Client.FileSystem.Connection.FilesReplicationInformer">
             <summary>
             Replication and failover management on the client side
+            </summary>
+        </member>
+        <member name="M:Raven.Client.FileSystem.Connection.IFilesReplicationInformer.UpdateReplicationInformationIfNeeded(Raven.Client.FileSystem.IAsyncFilesCommands)">
+            <summary>
+            Updates replication information if needed
             </summary>
         </member>
         <member name="M:Raven.Client.FileSystem.Connection.FilesReplicationInformer.RefreshReplicationInformation(Raven.Client.FileSystem.IAsyncFilesCommands)">
@@ -1719,6 +1753,12 @@
             Whether UseOptimisticConcurrency is set to true by default for all opened sessions
             </summary>
         </member>
+        <member name="P:Raven.Client.FileSystem.FilesConvention.ReplicationInformerFactory">
+            <summary>
+            This is called to provide replication behavior for the client. You can customize 
+            this to inject your own replication / failover logic.
+            </summary>
+        </member>
         <member name="T:Raven.Client.FileSystem.IFilesStore">
             <summary>
             Interface for managing access to RavenFS and open sessions.
@@ -1947,9 +1987,419 @@
              Selects the shard ids appropriate for the specified data.
              </summary><returns>Return a list of shards ids that will be search. Returning null means search all shards.</returns>
         </member>
+        <member name="T:Raven.Client.Indexes.AbstractIndexCreationTask">
+            <summary>
+            Base class for creating indexes
+            </summary>
+            <remarks>
+            The naming convention is that underscores in the inherited class names are replaced by slashed
+            For example: Posts_ByName will be saved to Posts/ByName
+            </remarks>
+        </member>
+        <member name="M:Raven.Client.Indexes.AbstractCommonApiForIndexesAndTransformers.Recurse``2(``0,System.Func{``0,``1})">
+            <summary>
+            Allows to use lambdas recursively
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Indexes.AbstractCommonApiForIndexesAndTransformers.Recurse``2(``0,System.Func{``0,System.Collections.Generic.IEnumerable{``1}})">
+            <summary>
+            Allows to use lambdas recursively
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Indexes.AbstractCommonApiForIndexesAndTransformers.Recurse``2(``0,System.Func{``0,System.Collections.Generic.ICollection{``1}})">
+            <summary>
+            Allows to use lambdas recursively
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Indexes.AbstractCommonApiForIndexesAndTransformers.Recurse``2(``0,System.Func{``0,System.Collections.Generic.ISet{``1}})">
+            <summary>
+            Allows to use lambdas recursively
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Indexes.AbstractCommonApiForIndexesAndTransformers.Recurse``2(``0,System.Func{``0,System.Collections.Generic.HashSet{``1}})">
+            <summary>
+            Allows to use lambdas recursively
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Indexes.AbstractCommonApiForIndexesAndTransformers.Recurse``2(``0,System.Func{``0,System.Collections.Generic.SortedSet{``1}})">
+            <summary>
+            Allows to use lambdas recursively
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Indexes.AbstractCommonApiForIndexesAndTransformers.LoadDocument``1(System.String)">
+            <summary>
+            Loads the specifed document during the indexing process
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Indexes.AbstractCommonApiForIndexesAndTransformers.LoadDocument``1(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Loads the specifed document during the indexing process
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Indexes.AbstractCommonApiForIndexesAndTransformers.Recurse``2(``0,System.Func{``0,System.Collections.Generic.IList{``1}})">
+            <summary>
+            Allows to use lambdas recursively
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Indexes.AbstractCommonApiForIndexesAndTransformers.Recurse``2(``0,System.Func{``0,``1[]})">
+            <summary>
+            Allows to use lambdas recursively
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Indexes.AbstractCommonApiForIndexesAndTransformers.Recurse``2(``0,System.Func{``0,System.Collections.Generic.List{``1}})">
+            <summary>
+            Allows to use lambdas recursively
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Indexes.AbstractCommonApiForIndexesAndTransformers.MetadataFor(System.Object)">
+            <summary>
+            Allow to get to the metadata of the document
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Indexes.AbstractCommonApiForIndexesAndTransformers.AsDocument(System.Object)">
+            <summary>
+            Allow to access an entity as a document
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Indexes.AbstractIndexCreationTask.CreateIndexDefinition">
+            <summary>
+            Creates the index definition.
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Indexes.AbstractIndexCreationTask.CreateField(System.String,System.Object,System.Boolean,System.Boolean)">
+            <summary>
+            Provide a way to dynamically index values with runtime known values
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Indexes.AbstractIndexCreationTask.CreateField(System.String,System.Object)">
+            <summary>
+            Provide a way to dynamically index values with runtime known values
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Indexes.AbstractIndexCreationTask.SpatialGenerate(System.Nullable{System.Double},System.Nullable{System.Double})">
+            <summary>
+            Generates a spatial field in the index, generating a Point from the provided lat/lng coordinates
+            </summary>
+            <param name="lat">Latitude</param>
+            <param name="lng">Longitude</param>
+            <returns></returns>
+        </member>
+        <member name="M:Raven.Client.Indexes.AbstractIndexCreationTask.SpatialClustering(System.String,System.Nullable{System.Double},System.Nullable{System.Double})">
+            <summary>
+            Generate field with values that can be used for spatial clustering on the lat/lng coordinates
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Indexes.AbstractIndexCreationTask.SpatialClustering(System.String,System.Nullable{System.Double},System.Nullable{System.Double},System.Int32,System.Int32)">
+            <summary>
+            Generate field with values that can be used for spatial clustering on the lat/lng coordinates
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Indexes.AbstractIndexCreationTask.SpatialGenerate(System.String,System.Nullable{System.Double},System.Nullable{System.Double})">
+            <summary>
+            Generates a spatial field in the index, generating a Point from the provided lat/lng coordinates
+            </summary>
+            <param name="fieldName">The field name, will be used for querying</param>
+            <param name="lat">Latitude</param>
+            <param name="lng">Longitude</param>
+            <returns></returns>
+        </member>
+        <member name="M:Raven.Client.Indexes.AbstractIndexCreationTask.SpatialGenerate(System.String,System.String)">
+            <summary>
+            Generates a spatial field in the index, generating a Point from the provided lat/lng coordinates
+            </summary>
+            <param name="fieldName">The field name, will be used for querying</param>
+            <param name="shapeWKT">The shape representation in the WKT format</param>
+            <returns></returns>
+        </member>
+        <member name="M:Raven.Client.Indexes.AbstractIndexCreationTask.SpatialGenerate(System.String,System.String,Raven.Abstractions.Indexing.SpatialSearchStrategy)">
+            <summary>
+            Generates a spatial field in the index, generating a Point from the provided lat/lng coordinates
+            </summary>
+            <param name="fieldName">The field name, will be used for querying</param>
+            <param name="shapeWKT">The shape representation in the WKT format</param>
+            <param name="strategy">The spatial strategy to use</param>
+            <returns></returns>
+        </member>
+        <member name="M:Raven.Client.Indexes.AbstractIndexCreationTask.SpatialGenerate(System.String,System.String,Raven.Abstractions.Indexing.SpatialSearchStrategy,System.Int32)">
+            <summary>
+            Generates a spatial field in the index, generating a Point from the provided lat/lng coordinates
+            </summary>
+            <param name="fieldName">The field name, will be used for querying</param>
+            <param name="shapeWKT">The shape representation in the WKT format</param>
+            <param name="strategy">The spatial strategy to use</param>
+            <param name="maxTreeLevel">Maximum number of levels to be used in the PrefixTree, controls the precision of shape representation.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Raven.Client.Indexes.AbstractIndexCreationTask.LoadAttachmentForIndexing(System.String)">
+            <summary>
+            Loads the specifed attachment content during the indexing process
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Indexes.AbstractIndexCreationTask.SideBySideExecute(Raven.Client.IDocumentStore,Raven.Abstractions.Data.Etag,System.Nullable{System.DateTime})">
+            <summary>
+            Executes the index creation against the specified document store in side-by-side mode.
+            </summary>
+            <param name="store"></param>
+        </member>
+        <member name="M:Raven.Client.Indexes.AbstractIndexCreationTask.Execute(Raven.Client.IDocumentStore)">
+            <summary>
+            Executes the index creation against the specified document store.
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Indexes.AbstractIndexCreationTask.SideBySideExecute(Raven.Client.Connection.IDatabaseCommands,Raven.Client.Document.DocumentConvention,Raven.Abstractions.Data.Etag,System.Nullable{System.DateTime})">
+            <summary>
+            Executes the index creation using in side-by-side mode.
+            </summary>
+            <param name="databaseCommands"></param>
+            <param name="documentConvention"></param>
+        </member>
+        <member name="M:Raven.Client.Indexes.AbstractIndexCreationTask.Execute(Raven.Client.Connection.IDatabaseCommands,Raven.Client.Document.DocumentConvention)">
+            <summary>
+            Executes the index creation against the specified document database using the specified conventions
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Indexes.AbstractIndexCreationTask.SideBySideExecuteAsync(Raven.Client.IDocumentStore,Raven.Abstractions.Data.Etag,System.Nullable{System.DateTime})">
+            <summary>
+            Executes the index creation against the specified document store in side-by-side mode.
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Indexes.AbstractIndexCreationTask.ExecuteAsync(Raven.Client.IDocumentStore)">
+            <summary>
+            Executes the index creation against the specified document store.
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Indexes.AbstractIndexCreationTask.ExecuteAsync(Raven.Client.Connection.Async.IAsyncDatabaseCommands,Raven.Client.Document.DocumentConvention,System.Threading.CancellationToken)">
+            <summary>
+            Executes the index creation against the specified document store.
+            </summary>
+        </member>
+        <member name="P:Raven.Client.Indexes.AbstractIndexCreationTask.IsMapReduce">
+            <summary>
+            Gets a value indicating whether this instance is map reduce index definition
+            </summary>
+            <value>
+            	<c>true</c> if this instance is map reduce; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:Raven.Client.Indexes.AbstractIndexCreationTask.IndexName">
+            <summary>
+            Generates index name from type name replacing all _ with /
+            <para>e.g.</para>
+            <para>if our type is <code>'Orders_Totals'</code> then index name would be <code>'Orders/Totals'</code></para>
+            </summary>
+        </member>
+        <member name="P:Raven.Client.Indexes.AbstractIndexCreationTask.Conventions">
+            <summary>
+            Gets or sets the conventions that should be used when index definition is created.
+            </summary>
+        </member>
+        <member name="P:Raven.Client.Indexes.AbstractIndexCreationTask.Priority">
+            <summary>
+             index can have a priority that controls how much power of the indexing process it is allowed to consume. index priority can be forced by the user.
+             There are four available values that you can set: Normal, Idle, Disabled, Abandoned
+            <para>Default value: null means that the priority of the index is Normal.</para>
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Indexes.AbstractIndexCreationTask.SpatialIndex.Generate(System.String,System.Nullable{System.Double},System.Nullable{System.Double})">
+            <summary>
+            Generates a spatial field in the index, generating a Point from the provided lat/lng coordinates
+            </summary>
+            <param name="fieldName">The field name, will be used for querying</param>
+            <param name="lat">Latitude</param>
+            <param name="lng">Longitude</param>
+        </member>
+        <member name="M:Raven.Client.Indexes.AbstractIndexCreationTask.SpatialIndex.Generate(System.Nullable{System.Double},System.Nullable{System.Double})">
+            <summary>
+            Generates a spatial field in the index, generating a Point from the provided lat/lng coordinates
+            </summary>
+            <param name="lat">Latitude</param>
+            <param name="lng">Longitude</param>
+        </member>
+        <member name="T:Raven.Client.Indexes.AbstractIndexCreationTask`2">
+            <summary>
+            Base class for creating indexes
+            </summary>
+        </member>
+        <member name="T:Raven.Client.Indexes.AbstractGenericIndexCreationTask`1">
+            <summary>
+            Abstract class used to provide infrastructure service for actual creation tasks
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Indexes.AbstractGenericIndexCreationTask`1.#ctor">
+            <summary>
+            Create a new instance
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Indexes.AbstractGenericIndexCreationTask`1.Index(System.Linq.Expressions.Expression{System.Func{`0,System.Object}},Raven.Abstractions.Indexing.FieldIndexing)">
+            <summary>
+            Register a field to be indexed
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Indexes.AbstractGenericIndexCreationTask`1.Index(System.String,Raven.Abstractions.Indexing.FieldIndexing)">
+            <summary>
+            Register a field to be indexed
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Indexes.AbstractGenericIndexCreationTask`1.Spatial(System.Linq.Expressions.Expression{System.Func{`0,System.Object}},System.Func{Raven.Abstractions.Indexing.SpatialOptionsFactory,Raven.Abstractions.Indexing.SpatialOptions})">
+            <summary>
+            Register a field to be spatially indexed
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Indexes.AbstractGenericIndexCreationTask`1.Spatial(System.String,System.Func{Raven.Abstractions.Indexing.SpatialOptionsFactory,Raven.Abstractions.Indexing.SpatialOptions})">
+            <summary>
+            Register a field to be spatially indexed
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Indexes.AbstractGenericIndexCreationTask`1.Store(System.Linq.Expressions.Expression{System.Func{`0,System.Object}},Raven.Abstractions.Indexing.FieldStorage)">
+            <summary>
+            Register a field to be stored
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Indexes.AbstractGenericIndexCreationTask`1.Store(System.String,Raven.Abstractions.Indexing.FieldStorage)">
+            <summary>
+            Register a field to be stored
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Indexes.AbstractGenericIndexCreationTask`1.Analyze(System.Linq.Expressions.Expression{System.Func{`0,System.Object}},System.String)">
+            <summary>
+            Register a field to be analyzed
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Indexes.AbstractGenericIndexCreationTask`1.Analyze(System.String,System.String)">
+            <summary>
+            Register a field to be analyzed
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Indexes.AbstractGenericIndexCreationTask`1.TermVector(System.Linq.Expressions.Expression{System.Func{`0,System.Object}},Raven.Abstractions.Indexing.FieldTermVector)">
+            <summary>
+            Register a field to have term vectors
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Indexes.AbstractGenericIndexCreationTask`1.TermVector(System.String,Raven.Abstractions.Indexing.FieldTermVector)">
+            <summary>
+            Register a field to have term vectors
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Indexes.AbstractGenericIndexCreationTask`1.Sort(System.Linq.Expressions.Expression{System.Func{`0,System.Object}},Raven.Abstractions.Indexing.SortOptions)">
+            <summary>
+            Register a field to be sorted
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Indexes.AbstractGenericIndexCreationTask`1.Sort(System.String,Raven.Abstractions.Indexing.SortOptions)">
+            <summary>
+            Register a field to be sorted
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Indexes.AbstractGenericIndexCreationTask`1.Suggestion(System.Linq.Expressions.Expression{System.Func{`0,System.Object}},Raven.Abstractions.Indexing.SuggestionOptions)">
+            <summary>
+            Register a field to be sorted
+            </summary>
+        </member>
+        <member name="P:Raven.Client.Indexes.AbstractGenericIndexCreationTask`1.Reduce">
+            <summary>
+            The reduce definition
+            </summary>
+        </member>
+        <member name="P:Raven.Client.Indexes.AbstractGenericIndexCreationTask`1.Stores">
+            <summary>
+            Index storage options
+            </summary>
+        </member>
+        <member name="P:Raven.Client.Indexes.AbstractGenericIndexCreationTask`1.StoresStrings">
+            <summary>
+            Index storage options
+            </summary>
+        </member>
+        <member name="P:Raven.Client.Indexes.AbstractGenericIndexCreationTask`1.IndexSortOptions">
+            <summary>
+            Index sort options
+            </summary>
+        </member>
+        <member name="P:Raven.Client.Indexes.AbstractGenericIndexCreationTask`1.IndexSortOptionsStrings">
+            <summary>
+            Index sort options
+            </summary>
+        </member>
+        <member name="P:Raven.Client.Indexes.AbstractGenericIndexCreationTask`1.IndexSuggestions">
+            <summary>
+            Index suggest options
+            </summary>
+        </member>
+        <member name="P:Raven.Client.Indexes.AbstractGenericIndexCreationTask`1.Analyzers">
+            <summary>
+            Index sort options
+            </summary>
+        </member>
+        <member name="P:Raven.Client.Indexes.AbstractGenericIndexCreationTask`1.AnalyzersStrings">
+            <summary>
+            Index sort options
+            </summary>
+        </member>
+        <member name="P:Raven.Client.Indexes.AbstractGenericIndexCreationTask`1.TermVectors">
+            <summary>
+            Index term vector options
+            </summary>		
+        </member>
+        <member name="P:Raven.Client.Indexes.AbstractGenericIndexCreationTask`1.TermVectorsStrings">
+            <summary>
+            Index term vector options
+            </summary>		
+        </member>
+        <member name="P:Raven.Client.Indexes.AbstractGenericIndexCreationTask`1.SpatialIndexes">
+            <summary>
+            Spatial index options
+            </summary>
+        </member>
+        <member name="P:Raven.Client.Indexes.AbstractGenericIndexCreationTask`1.SpatialIndexesStrings">
+            <summary>
+            Spatial index options
+            </summary>
+        </member>
+        <member name="P:Raven.Client.Indexes.AbstractGenericIndexCreationTask`1.Indexes">
+            <summary>
+            Indexing options
+            </summary>
+        </member>
+        <member name="P:Raven.Client.Indexes.AbstractGenericIndexCreationTask`1.IndexesStrings">
+            <summary>
+            Indexing options
+            </summary>
+        </member>
+        <member name="P:Raven.Client.Indexes.AbstractGenericIndexCreationTask`1.DisableInMemoryIndexing">
+            <summary>
+            Prevent index from being kept in memory. Default: false
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Indexes.AbstractIndexCreationTask`2.CreateIndexDefinition">
+            <summary>
+            Creates the index definition.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Raven.Client.Indexes.AbstractIndexCreationTask`2.MaxIndexOutputsPerDocument">
+            <summary>
+            Index specific setting that limits the number of map outputs that an index is allowed to create for a one source document. If a map operation applied to
+            the one document produces more outputs than this number then an index definition will be considered as a suspicious, the indexing of this document 
+            will be skipped and the appropriate error message will be added to the indexing errors.
+            <para>Default value: null means that the global value from Raven configuration will be taken to detect if number of outputs was exceeded.</para>
+            </summary>
+        </member>
+        <member name="P:Raven.Client.Indexes.AbstractIndexCreationTask`2.IsMapReduce">
+            <summary>
+            Gets a value indicating whether this instance is map reduce index definition
+            </summary>
+            <value>
+            	<c>true</c> if this instance is map reduce; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:Raven.Client.Indexes.AbstractIndexCreationTask`2.Map">
+            <summary>
+            The map definition
+            </summary>
+        </member>
         <member name="P:Raven.Client.Util.HttpClientCache.MaxIdleTime">
             <summary>
-            The maximum idle time to keep a connection in the cache
+            The maximum idle time to keep a connection in the cache (in milliseconds)
             </summary>
         </member>
         <member name="T:Raven.Client.Indexes.RavenMethodAttribute">
@@ -1958,17 +2408,17 @@
             the invocation to a regular method call so it can be understood by the server.
             </summary>
         </member>
-        <member name="T:Raven.Client.FileSystem.ExceptionExtensions">
+        <member name="T:Raven.Client.FileSystem.Extensions.ExceptionExtensions">
             <summary>
                 Extension methods to handle common scenarios
             </summary>
         </member>
-        <member name="M:Raven.Client.FileSystem.ExceptionExtensions.ToPropertyPath(System.Linq.Expressions.LambdaExpression,System.Char,System.Char)">
+        <member name="M:Raven.Client.FileSystem.Extensions.ExceptionExtensions.ToPropertyPath(System.Linq.Expressions.LambdaExpression,System.Char,System.Char)">
             <summary>
              Turn an expression like x=&lt; x.User.Name to "User.Name"
             </summary>
         </member>
-        <member name="M:Raven.Client.FileSystem.ExceptionExtensions.SimplifyError(System.Exception)">
+        <member name="M:Raven.Client.FileSystem.Extensions.ExceptionExtensions.SimplifyError(System.Exception)">
             <summary>
                 Extracts a portion of an exception for a user friendly display
             </summary>
@@ -2215,71 +2665,6 @@
             For example: Posts_ByName will be saved to Posts/ByName
             </remarks>
         </member>
-        <member name="M:Raven.Client.Indexes.AbstractCommonApiForIndexesAndTransformers.Recurse``2(``0,System.Func{``0,``1})">
-            <summary>
-            Allows to use lambdas recursively
-            </summary>
-        </member>
-        <member name="M:Raven.Client.Indexes.AbstractCommonApiForIndexesAndTransformers.Recurse``2(``0,System.Func{``0,System.Collections.Generic.IEnumerable{``1}})">
-            <summary>
-            Allows to use lambdas recursively
-            </summary>
-        </member>
-        <member name="M:Raven.Client.Indexes.AbstractCommonApiForIndexesAndTransformers.Recurse``2(``0,System.Func{``0,System.Collections.Generic.ICollection{``1}})">
-            <summary>
-            Allows to use lambdas recursively
-            </summary>
-        </member>
-        <member name="M:Raven.Client.Indexes.AbstractCommonApiForIndexesAndTransformers.Recurse``2(``0,System.Func{``0,System.Collections.Generic.ISet{``1}})">
-            <summary>
-            Allows to use lambdas recursively
-            </summary>
-        </member>
-        <member name="M:Raven.Client.Indexes.AbstractCommonApiForIndexesAndTransformers.Recurse``2(``0,System.Func{``0,System.Collections.Generic.HashSet{``1}})">
-            <summary>
-            Allows to use lambdas recursively
-            </summary>
-        </member>
-        <member name="M:Raven.Client.Indexes.AbstractCommonApiForIndexesAndTransformers.Recurse``2(``0,System.Func{``0,System.Collections.Generic.SortedSet{``1}})">
-            <summary>
-            Allows to use lambdas recursively
-            </summary>
-        </member>
-        <member name="M:Raven.Client.Indexes.AbstractCommonApiForIndexesAndTransformers.LoadDocument``1(System.String)">
-            <summary>
-            Loads the specifed document during the indexing process
-            </summary>
-        </member>
-        <member name="M:Raven.Client.Indexes.AbstractCommonApiForIndexesAndTransformers.LoadDocument``1(System.Collections.Generic.IEnumerable{System.String})">
-            <summary>
-            Loads the specifed document during the indexing process
-            </summary>
-        </member>
-        <member name="M:Raven.Client.Indexes.AbstractCommonApiForIndexesAndTransformers.Recurse``2(``0,System.Func{``0,System.Collections.Generic.IList{``1}})">
-            <summary>
-            Allows to use lambdas recursively
-            </summary>
-        </member>
-        <member name="M:Raven.Client.Indexes.AbstractCommonApiForIndexesAndTransformers.Recurse``2(``0,System.Func{``0,``1[]})">
-            <summary>
-            Allows to use lambdas recursively
-            </summary>
-        </member>
-        <member name="M:Raven.Client.Indexes.AbstractCommonApiForIndexesAndTransformers.Recurse``2(``0,System.Func{``0,System.Collections.Generic.List{``1}})">
-            <summary>
-            Allows to use lambdas recursively
-            </summary>
-        </member>
-        <member name="M:Raven.Client.Indexes.AbstractCommonApiForIndexesAndTransformers.MetadataFor(System.Object)">
-            <summary>
-            Allow to get to the metadata of the document
-            </summary>
-        </member>
-        <member name="M:Raven.Client.Indexes.AbstractCommonApiForIndexesAndTransformers.AsDocument(System.Object)">
-            <summary>
-            Allow to access an entity as a document
-            </summary>
-        </member>
         <member name="M:Raven.Client.Indexes.AbstractTransformerCreationTask.Parameter(System.String)">
             <summary>
             Returns value of a transformer parameter for specified key
@@ -2389,24 +2774,27 @@
             </summary>
             <param name="key">Id of the document to patch</param>
             <param name="patches">Array of patch requests</param>
+            <param name="commands">The low level database commands interface.</param>
         </member>
         <member name="T:Raven.Client.Connection.Async.IAsyncDatabaseCommands">
             <summary>
                 An async database command operations
             </summary>
         </member>
-        <member name="M:Raven.Client.Connection.Async.IAsyncDatabaseCommands.BatchAsync(Raven.Abstractions.Commands.ICommandData[],System.Threading.CancellationToken)">
+        <member name="M:Raven.Client.Connection.Async.IAsyncDatabaseCommands.BatchAsync(System.Collections.Generic.IEnumerable{Raven.Abstractions.Commands.ICommandData},System.Threading.CancellationToken)">
             <summary>
                 Sends multiple operations in a single request, reducing the number of remote calls and allowing several operations
                 to share same transaction
             </summary>
             <param name="commandDatas">Commands to process</param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.Connection.Async.IAsyncDatabaseCommands.CommitAsync(System.String,System.Threading.CancellationToken)">
             <summary>
                 Commits the specified tx id
             </summary>
             <param name="txId">transaction identifier</param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.Connection.Async.IAsyncDatabaseCommands.CreateRequest(System.String,System.String,System.Boolean,System.Boolean,System.Nullable{System.TimeSpan})">
             <summary>
@@ -2419,6 +2807,7 @@
             </summary>
             <param name="key">key of a document to be deleted</param>
             <param name="etag">current document etag, used for concurrency checks (null to skip check)</param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.Connection.Async.IAsyncDatabaseCommands.DeleteAttachmentAsync(System.String,Raven.Abstractions.Data.Etag,System.Threading.CancellationToken)">
             <summary>
@@ -2426,6 +2815,7 @@
             </summary>
             <param name="key">key of an attachment to delete</param>
             <param name="etag">current attachment etag, used for concurrency checks (null to skip check)</param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.Connection.Async.IAsyncDatabaseCommands.DeleteByIndexAsync(System.String,Raven.Abstractions.Data.IndexQuery,Raven.Abstractions.Data.BulkOperationOptions,System.Threading.CancellationToken)">
             <summary>
@@ -2434,18 +2824,21 @@
             <param name="indexName">name of an index to perform a query on</param>
             <param name="queryToDelete">Tquery that will be performed</param>
             <param name="options">various operation options e.g. AllowStale or MaxOpsPerSec</param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.Connection.Async.IAsyncDatabaseCommands.DeleteIndexAsync(System.String,System.Threading.CancellationToken)">
             <summary>
                 Deletes the specified index
             </summary>
             <param name="name">name of an index to delete</param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.Connection.Async.IAsyncDatabaseCommands.DeleteTransformerAsync(System.String,System.Threading.CancellationToken)">
             <summary>
                 Deletes the specified transformer
             </summary>
             <param name="name">name of a transformer to delete</param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.Connection.Async.IAsyncDatabaseCommands.DisableAllCaching">
             <summary>
@@ -2474,6 +2867,7 @@
                 Retrieve a single document for a specified key.
             </summary>
             <param name="key">key of the document you want to retrieve</param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.Connection.Async.IAsyncDatabaseCommands.GetAsync(System.String[],System.String[],System.String,System.Collections.Generic.Dictionary{System.String,Raven.Json.Linq.RavenJToken},System.Boolean,System.Threading.CancellationToken)">
             <summary>
@@ -2488,12 +2882,14 @@
             <param name="transformer">name of a transformer that should be used to transform the results</param>
             <param name="transformerParameters">parameters that will be passed to transformer</param>
             <param name="metadataOnly">specifies if only document metadata should be returned</param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.Connection.Async.IAsyncDatabaseCommands.GetAttachmentAsync(System.String,System.Threading.CancellationToken)">
             <summary>
                 Downloads a single attachment.
             </summary>
             <param name="key">key of the attachment you want to download</param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.Connection.Async.IAsyncDatabaseCommands.GetAttachmentHeadersStartingWithAsync(System.String,System.Int32,System.Int32,System.Threading.CancellationToken)">
             <summary>
@@ -2502,6 +2898,7 @@
             <param name="idPrefix">prefix for which attachments should be returned</param>
             <param name="start">number of attachments that should be skipped</param>
             <param name="pageSize">maximum number of attachments that will be returned</param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.Connection.Async.IAsyncDatabaseCommands.GetAttachmentsAsync(System.Int32,Raven.Abstractions.Data.Etag,System.Int32,System.Threading.CancellationToken)">
             <summary>
@@ -2510,6 +2907,7 @@
             <param name="start">indicates how many attachments should be skipped</param>
             <param name="startEtag">ETag from which to start</param>
             <param name="pageSize">maximum number of attachments that will be downloaded</param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.Connection.Async.IAsyncDatabaseCommands.GetBulkInsertOperation(Raven.Abstractions.Data.BulkInsertOptions,Raven.Client.Changes.IDatabaseChanges)">
             <summary>
@@ -2526,6 +2924,7 @@
             <remarks>
                 This is primarily useful for administration of a database
             </remarks>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.Connection.Async.IAsyncDatabaseCommands.GetDocumentsAsync(Raven.Abstractions.Data.Etag,System.Int32,System.Boolean,System.Threading.CancellationToken)">
             <summary>
@@ -2537,6 +2936,7 @@
             <remarks>
                 This is primarily useful for administration of a database
             </remarks>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.Connection.Async.IAsyncDatabaseCommands.GetFacetsAsync(System.String,Raven.Abstractions.Data.IndexQuery,System.String,System.Int32,System.Nullable{System.Int32},System.Threading.CancellationToken)">
             <summary>
@@ -2550,6 +2950,7 @@
                 maximum number of results that will be retrieved. Default: null. If set, overrides
                 Facet.MaxResults
             </param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.Connection.Async.IAsyncDatabaseCommands.GetFacetsAsync(System.String,Raven.Abstractions.Data.IndexQuery,System.Collections.Generic.List{Raven.Abstractions.Data.Facet},System.Int32,System.Nullable{System.Int32},System.Threading.CancellationToken)">
             <summary>
@@ -2563,17 +2964,20 @@
                 maximum number of results that will be retrieved. Default: null. If set, overrides
                 Facet.MaxResults
             </param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.Connection.Async.IAsyncDatabaseCommands.GetIndexAsync(System.String,System.Threading.CancellationToken)">
             <summary>
                 Retrieves an index definition from a database.
             </summary>
             <param name="name">name of an index</param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.Connection.Async.IAsyncDatabaseCommands.GetIndexMergeSuggestionsAsync(System.Threading.CancellationToken)">
             <summary>
                 Retrieves all suggestions for an index merging
             </summary>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.Connection.Async.IAsyncDatabaseCommands.GetIndexNamesAsync(System.Int32,System.Int32,System.Threading.CancellationToken)">
             <summary>
@@ -2581,6 +2985,7 @@
             </summary>
             <param name="start">number of index names that should be skipped</param>
             <param name="pageSize">maximum number of index names that will be retrieved</param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.Connection.Async.IAsyncDatabaseCommands.GetIndexesAsync(System.Int32,System.Int32,System.Threading.CancellationToken)">
             <summary>
@@ -2588,6 +2993,7 @@
             </summary>
             <param name="start">number of indexes that should be skipped</param>
             <param name="pageSize">maximum number of indexes that will be retrieved</param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.Connection.Async.IAsyncDatabaseCommands.GetLicenseStatusAsync(System.Threading.CancellationToken)">
             <summary>
@@ -2604,6 +3010,7 @@
                 Sends a multiple faceted queries in a single request and calculates the facet results for each of them
             </summary>
             <param name="facetedQueries">List of the faceted queries that will be executed on the server-side</param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.Connection.Async.IAsyncDatabaseCommands.GetStatisticsAsync(System.Threading.CancellationToken)">
             <summary>
@@ -2620,12 +3027,14 @@
             <param name="field">index field</param>
             <param name="fromValue">starting point for a query, used for paging</param>
             <param name="pageSize">maximum number of terms that will be returned</param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.Connection.Async.IAsyncDatabaseCommands.GetTransformerAsync(System.String,System.Threading.CancellationToken)">
             <summary>
                 Gets the transformer definition for the specified name
             </summary>
             <param name="name">transformer name</param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.Connection.Async.IAsyncDatabaseCommands.GetTransformersAsync(System.Int32,System.Int32,System.Threading.CancellationToken)">
             <summary>
@@ -2633,6 +3042,14 @@
             </summary>
             <param name="start">number of transformers that should be skipped</param>
             <param name="pageSize">maximum number of transformers that will be retrieved</param>
+            <param name="token">The cancellation token.</param>
+        </member>
+        <member name="M:Raven.Client.Connection.Async.IAsyncDatabaseCommands.SetTransformerLockAsync(System.String,Raven.Abstractions.Indexing.TransformerLockMode,System.Threading.CancellationToken)">
+            <summary>
+            Sets the transformer's lock mode
+            </summary>
+            <param name="name">The name of the transformer</param>
+            <param name="lockMode">The lock mode to be set</param>
         </member>
         <member name="M:Raven.Client.Connection.Async.IAsyncDatabaseCommands.HeadAsync(System.String,System.Threading.CancellationToken)">
             <summary>
@@ -2641,6 +3058,7 @@
                 <para>The document metadata for the specified document, or <c>null</c> if the document does not exist</para>
             </summary>
             <param name="key">key of a document to get metadata for</param>
+            <param name="token">The cancellation token.</param>
             <returns>The document metadata for the specified document, or null if the document does not exist</returns>
         </member>
         <member name="M:Raven.Client.Connection.Async.IAsyncDatabaseCommands.HeadAttachmentAsync(System.String,System.Threading.CancellationToken)">
@@ -2648,6 +3066,7 @@
                 Download attachment metadata for a single attachment.
             </summary>
             <param name="key">key of the attachment you want to download metadata for</param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.Connection.Async.IAsyncDatabaseCommands.IndexHasChangedAsync(System.String,Raven.Abstractions.Indexing.IndexDefinition,System.Threading.CancellationToken)">
             <summary>
@@ -2667,12 +3086,14 @@
             </summary>
             <param name="name">name of an index to check</param>
             <param name="indexDef">index definition</param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.Connection.Async.IAsyncDatabaseCommands.MoreLikeThisAsync(Raven.Abstractions.Data.MoreLikeThisQuery,System.Threading.CancellationToken)">
             <summary>
                 Return a list of documents that based on the MoreLikeThisQuery.
             </summary>
             <param name="query">more like this query definition that will be executed</param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.Connection.Async.IAsyncDatabaseCommands.MultiGetAsync(Raven.Abstractions.Data.GetRequest[],System.Threading.CancellationToken)">
             <summary>
@@ -2690,6 +3111,7 @@
             </summary>
             <param name="key">Id of the document to patch</param>
             <param name="patches">Array of patch requests</param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.Connection.Async.IAsyncDatabaseCommands.PatchAsync(System.String,Raven.Abstractions.Data.PatchRequest[],System.Boolean,System.Threading.CancellationToken)">
             <summary>
@@ -2701,6 +3123,7 @@
                 true if the patch request should ignore a missing document, false to throw
                 DocumentDoesNotExistException
             </param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.Connection.Async.IAsyncDatabaseCommands.PatchAsync(System.String,Raven.Abstractions.Data.ScriptedPatchRequest,System.Threading.CancellationToken)">
             <summary>
@@ -2708,6 +3131,7 @@
             </summary>
             <param name="key">Id of the document to patch</param>
             <param name="patch">The patch request to use (using JavaScript)</param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.Connection.Async.IAsyncDatabaseCommands.PatchAsync(System.String,Raven.Abstractions.Data.ScriptedPatchRequest,System.Boolean,System.Threading.CancellationToken)">
             <summary>
@@ -2719,6 +3143,7 @@
                 true if the patch request should ignore a missing document, false to throw
                 DocumentDoesNotExistException
             </param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.Connection.Async.IAsyncDatabaseCommands.PatchAsync(System.String,Raven.Abstractions.Data.PatchRequest[],Raven.Abstractions.Data.Etag,System.Threading.CancellationToken)">
             <summary>
@@ -2727,6 +3152,7 @@
             <param name="key">Id of the document to patch</param>
             <param name="patches">Array of patch requests</param>
             <param name="etag">Require specific Etag [null to ignore]</param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.Connection.Async.IAsyncDatabaseCommands.PatchAsync(System.String,Raven.Abstractions.Data.PatchRequest[],Raven.Abstractions.Data.PatchRequest[],Raven.Json.Linq.RavenJObject,System.Threading.CancellationToken)">
             <summary>
@@ -2736,6 +3162,7 @@
             <param name="patchesToExisting">Array of patch requests to apply to an existing document</param>
             <param name="patchesToDefault">Array of patch requests to apply to a default document when the document is missing</param>
             <param name="defaultMetadata">The metadata for the default document when the document is missing</param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.Connection.Async.IAsyncDatabaseCommands.PatchAsync(System.String,Raven.Abstractions.Data.ScriptedPatchRequest,Raven.Abstractions.Data.Etag,System.Threading.CancellationToken)">
             <summary>
@@ -2744,6 +3171,7 @@
             <param name="key">Id of the document to patch</param>
             <param name="patch">The patch request to use (using JavaScript)</param>
             <param name="etag">Require specific Etag [null to ignore]</param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.Connection.Async.IAsyncDatabaseCommands.PatchAsync(System.String,Raven.Abstractions.Data.ScriptedPatchRequest,Raven.Abstractions.Data.ScriptedPatchRequest,Raven.Json.Linq.RavenJObject,System.Threading.CancellationToken)">
             <summary>
@@ -2756,6 +3184,7 @@
                 missing
             </param>
             <param name="defaultMetadata">The metadata for the default document when the document is missing</param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.Connection.Async.IAsyncDatabaseCommands.PrepareTransactionAsync(System.String,System.Nullable{System.Guid},System.Byte[],System.Threading.CancellationToken)">
             <summary>
@@ -2773,6 +3202,7 @@
             <param name="etag">current document etag, used for concurrency checks (null to skip check)</param>
             <param name="document">document data</param>
             <param name="metadata">document metadata</param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.Connection.Async.IAsyncDatabaseCommands.PutAttachmentAsync(System.String,Raven.Abstractions.Data.Etag,System.IO.Stream,Raven.Json.Linq.RavenJObject,System.Threading.CancellationToken)">
             <summary>
@@ -2782,6 +3212,7 @@
             <param name="etag">current attachment etag, used for concurrency checks (null to skip check)</param>
             <param name="data">attachment data</param>
             <param name="metadata">attachment metadata</param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.Connection.Async.IAsyncDatabaseCommands.PutIndexAsync(System.String,Raven.Abstractions.Indexing.IndexDefinition,System.Threading.CancellationToken)">
             <summary>
@@ -2789,6 +3220,23 @@
             </summary>
             <param name="name">name of an index</param>
             <param name="indexDef">definition of an index</param>
+            <param name="token">The cancellation token.</param>
+        </member>
+        <member name="M:Raven.Client.Connection.Async.IAsyncDatabaseCommands.PutIndexesAsync(Raven.Abstractions.Data.IndexToAdd[],System.Threading.CancellationToken)">
+            <summary>
+                Creates multiple indexes with the specified name, using given index definitions and priorities
+            </summary>
+            <param name="indexesToAdd">indexes to add</param>
+            <param name="token">The cancellation token.</param>
+        </member>
+        <member name="M:Raven.Client.Connection.Async.IAsyncDatabaseCommands.PutSideBySideIndexesAsync(Raven.Abstractions.Data.IndexToAdd[],Raven.Abstractions.Data.Etag,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+            <summary>
+                Creates multiple side by side indexes with the specified name, using given index definitions and priorities
+            </summary>
+            <param name="indexesToAdd">indexes to add</param>
+            <param name="minimumEtagBeforeReplace">minimum index etag before replace</param>
+            <param name="replaceTimeUtc">replace time in utc</param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.Connection.Async.IAsyncDatabaseCommands.PutIndexAsync(System.String,Raven.Abstractions.Indexing.IndexDefinition,System.Boolean,System.Threading.CancellationToken)">
             <summary>
@@ -2797,6 +3245,7 @@
             <param name="name">name of an index</param>
             <param name="indexDef">definition of an index</param>
             <param name="overwrite">if set to <c>true</c> [overwrite].</param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.Connection.Async.IAsyncDatabaseCommands.PutIndexAsync``2(System.String,Raven.Client.Indexes.IndexDefinitionBuilder{``0,``1},System.Threading.CancellationToken)">
             <summary>
@@ -2807,6 +3256,7 @@
             <typeparam name="TReduceResult">Type of reduce result</typeparam>
             <param name="name">name of an index</param>
             <param name="indexDef">definition of an index</param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.Connection.Async.IAsyncDatabaseCommands.PutIndexAsync``2(System.String,Raven.Client.Indexes.IndexDefinitionBuilder{``0,``1},System.Boolean,System.Threading.CancellationToken)">
             <summary>
@@ -2818,6 +3268,7 @@
             <param name="name">name of an index</param>
             <param name="indexDef">definition of an index</param>
             <param name="overwrite">if set to <c>true</c> [overwrite].</param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.Connection.Async.IAsyncDatabaseCommands.PutTransformerAsync(System.String,Raven.Abstractions.Indexing.TransformerDefinition,System.Threading.CancellationToken)">
             <summary>
@@ -2825,6 +3276,7 @@
             </summary>
             <param name="name">name of a transformer</param>
             <param name="transformerDefinition">definition of a transformer</param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.Connection.Async.IAsyncDatabaseCommands.QueryAsync(System.String,Raven.Abstractions.Data.IndexQuery,System.String[],System.Boolean,System.Boolean,System.Threading.CancellationToken)">
             <summary>
@@ -2838,18 +3290,21 @@
             </param>
             <param name="metadataOnly">true if returned documents should include only metadata without a document body.</param>
             <param name="indexEntriesOnly">true if query results should contain only index entries.</param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.Connection.Async.IAsyncDatabaseCommands.ResetIndexAsync(System.String,System.Threading.CancellationToken)">
             <summary>
                 Removes all indexing data from a server for a given index so the indexation can start from scratch for that index.
             </summary>
             <param name="name">name of an index to reset</param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.Connection.Async.IAsyncDatabaseCommands.RollbackAsync(System.String,System.Threading.CancellationToken)">
             <summary>
                 Rollbacks the specified tx id
             </summary>
             <param name="txId">transaction identifier</param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.Connection.Async.IAsyncDatabaseCommands.SeedIdentityForAsync(System.String,System.Int64,System.Threading.CancellationToken)">
             <summary>
@@ -2879,6 +3334,7 @@
                 skip document fetching until given key is found and return documents after that key (default:
                 null)
             </param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.Connection.Async.IAsyncDatabaseCommands.StreamDocsAsync(Raven.Abstractions.Data.Etag,System.String,System.String,System.Int32,System.Int32,System.String,Raven.Client.RavenPagingInformation,System.String,System.Threading.CancellationToken)">
             <summary>
@@ -2902,6 +3358,7 @@
                 skip document fetching until given key is found and return documents after that key (default:
                 null)
             </param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.Connection.Async.IAsyncDatabaseCommands.StreamQueryAsync(System.String,Raven.Abstractions.Data.IndexQuery,Raven.Abstractions.Extensions.Reference{Raven.Abstractions.Data.QueryHeaderInformation},System.Threading.CancellationToken)">
             <summary>
@@ -2911,6 +3368,7 @@
             <param name="index">name of an index to query</param>
             <param name="query">query definition containing all information required to query a specified index</param>
             <param name="queryHeaderInfo">information about performed query</param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.Connection.Async.IAsyncDatabaseCommands.SuggestAsync(System.String,Raven.Abstractions.Data.SuggestionQuery,System.Threading.CancellationToken)">
             <summary>
@@ -2921,6 +3379,7 @@
                 suggestion query definition containing all information required to query a specified
                 index
             </param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.Connection.Async.IAsyncDatabaseCommands.UpdateAttachmentMetadataAsync(System.String,Raven.Abstractions.Data.Etag,Raven.Json.Linq.RavenJObject,System.Threading.CancellationToken)">
             <summary>
@@ -2929,6 +3388,7 @@
             <param name="key">key under which attachment is stored</param>
             <param name="etag">current attachment etag, used for concurrency checks (null to skip check)</param>
             <param name="metadata">attachment metadata</param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.Connection.Async.IAsyncDatabaseCommands.UpdateByIndexAsync(System.String,Raven.Abstractions.Data.IndexQuery,Raven.Abstractions.Data.ScriptedPatchRequest,Raven.Abstractions.Data.BulkOperationOptions,System.Threading.CancellationToken)">
             <summary>
@@ -2938,6 +3398,7 @@
             <param name="queryToUpdate">query that will be performed</param>
             <param name="patch">JavaScript patch that will be executed on query results</param>
             <param name="options">various operation options e.g. AllowStale or MaxOpsPerSec</param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.Connection.Async.IAsyncDatabaseCommands.UpdateByIndexAsync(System.String,Raven.Abstractions.Data.IndexQuery,Raven.Abstractions.Data.PatchRequest[],Raven.Abstractions.Data.BulkOperationOptions,System.Threading.CancellationToken)">
             <summary>
@@ -2947,6 +3408,7 @@
             <param name="queryToUpdate">query that will be performed</param>
             <param name="patchRequests">array of patches that will be executed on a query results</param>
             <param name="options">various operation options e.g. AllowStale or MaxOpsPerSec</param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.Connection.Async.IAsyncDatabaseCommands.UrlFor(System.String)">
             <summary>
@@ -3385,6 +3847,13 @@
             <param name="start">number of transformers that should be skipped</param>
             <param name="pageSize">maximum number of transformers that will be retrieved</param>
         </member>
+        <member name="M:Raven.Client.Connection.IDatabaseCommands.SetTransformerLock(System.String,Raven.Abstractions.Indexing.TransformerLockMode)">
+            <summary>
+            Sets the transformer's lock mode
+            </summary>
+            <param name="name">The name of the transformer</param>
+            <param name="lockMode">The lock mode to be set</param>
+        </member>
         <member name="M:Raven.Client.Connection.IDatabaseCommands.Head(System.String)">
             <summary>
                 Retrieves the document metadata for the specified document key.
@@ -3540,6 +4009,18 @@
             </summary>
             <param name="name">name of an index</param>
             <param name="indexDef">definition of an index</param>
+        </member>
+        <member name="M:Raven.Client.Connection.IDatabaseCommands.PutIndexes(Raven.Abstractions.Data.IndexToAdd[])">
+            <summary>
+                 Creates multiple indexes with the specified name, using given index definitions and priorities
+            </summary>
+            <param name="indexesToAdd">indexes to add</param>
+        </member>
+        <member name="M:Raven.Client.Connection.IDatabaseCommands.PutSideBySideIndexes(Raven.Abstractions.Data.IndexToAdd[],Raven.Abstractions.Data.Etag,System.Nullable{System.DateTime})">
+            <summary>
+                 Creates multiple side by side indexes with the specified name, using given index definitions and priorities
+            </summary>
+            <param name="indexesToAdd">indexes to add</param>
         </member>
         <member name="M:Raven.Client.Connection.IDatabaseCommands.PutIndex(System.String,Raven.Abstractions.Indexing.IndexDefinition,System.Boolean)">
             <summary>
@@ -6062,7 +6543,7 @@
                 <para>However, when used to query map/reduce indexes, it does NOT guarantee that the document that this</para>
                 <para>etag belong to is actually considered for the results. </para>
                 <para>What it does it guarantee that the document has been mapped, but not that the mapped values has been reduced. </para>
-                <para>Since map/reduce queries, by their nature,vtend to be far less susceptible to issues with staleness, this is </para>
+                <para>Since map/reduce queries, by their nature, tend to be far less susceptible to issues with staleness, this is </para>
                 <para>considered to be an acceptable tradeoff.</para>
                 <para>If you need absolute no staleness with a map/reduce index, you will need to ensure synchronized clocks and </para>
                 <para>use the Cutoff date option, instead.</para>
@@ -7012,11 +7493,6 @@
             All the listeners for this session
             </summary>
         </member>
-        <member name="E:Raven.Client.Document.ILowLevelBulkInsertOperation.Report">
-            <summary>
-                Report on the progress of the operation
-            </summary>
-        </member>
         <member name="T:Raven.Client.FieldHighlightings">
             <summary>
                 Query highlightings for the documents.
@@ -7097,12 +7573,14 @@
                 Loads the specified entity with the specified id.
             </summary>
             <param name="id">Identifier of a entity that will be loaded.</param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.IAsyncDocumentSession.LoadAsync``1(System.Collections.Generic.IEnumerable{System.String},System.Threading.CancellationToken)">
             <summary>
                 Loads the specified entities with the specified ids.
             </summary>
             <param name="ids">Enumerable of Ids that should be loaded</param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.IAsyncDocumentSession.LoadAsync``1(System.ValueType,System.Threading.CancellationToken)">
             <summary>
@@ -7114,6 +7592,8 @@
                 <para>LoadAsync&lt;Post&gt;("posts/1");</para>
                 <para>Or whatever your conventions specify.</para>
             </summary>
+            <param name="id">The id of the document to load.</param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.IAsyncDocumentSession.LoadAsync``1(System.Threading.CancellationToken,System.ValueType[])">
             <summary>
@@ -7125,6 +7605,8 @@
                 <para>LoadAsync&lt;Post&gt;("posts/1", "posts/2", "posts/3");</para>
                 <para>Or whatever your conventions specify.</para>
             </summary>
+            <param name="token">The cancellation token.</param>
+            <param name="ids">The ids of the documents to load.</param>
         </member>
         <member name="M:Raven.Client.IAsyncDocumentSession.LoadAsync``1(System.Collections.Generic.IEnumerable{System.ValueType},System.Threading.CancellationToken)">
             <summary>
@@ -7138,6 +7620,8 @@
                 <para>LoadAsync&lt;Post&gt;("posts/1", "posts/2", "posts/3");</para>
                 <para>Or whatever your conventions specify.</para>
             </remarks>
+            <param name="token">The cancellation token.</param>
+            <param name="ids">The ids of the documents to load.</param>
         </member>
         <member name="M:Raven.Client.IAsyncDocumentSession.LoadAsync``2(System.String,System.Action{Raven.Client.ILoadConfiguration},System.Threading.CancellationToken)">
             <summary>
@@ -7147,6 +7631,7 @@
             <typeparam name="TResult">The results shape to return after the load operation</typeparam>
             <param name="id">Id of a document to load</param>
             <param name="configure">additional configuration options for operation e.g. AddTransformerParameter</param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.IAsyncDocumentSession.LoadAsync``2(System.Collections.Generic.IEnumerable{System.String},System.Action{Raven.Client.ILoadConfiguration},System.Threading.CancellationToken)">
             <summary>
@@ -7154,6 +7639,7 @@
             </summary>
             <param name="ids">Enumerable of ids of documents to load</param>
             <param name="configure">additional configuration options for operation e.g. AddTransformerParameter</param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.IAsyncDocumentSession.LoadAsync``1(System.String,System.String,System.Action{Raven.Client.ILoadConfiguration},System.Threading.CancellationToken)">
             <summary>
@@ -7163,6 +7649,7 @@
             <param name="id">Id of a document to load</param>
             <param name="transformer">The transformer to use in this load operation</param>
             <param name="configure">additional configuration options for operation e.g. AddTransformerParameter</param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.IAsyncDocumentSession.LoadAsync``1(System.Collections.Generic.IEnumerable{System.String},System.String,System.Action{Raven.Client.ILoadConfiguration},System.Threading.CancellationToken)">
             <summary>
@@ -7172,6 +7659,7 @@
             <param name="ids">Enumerable of ids of documents to load</param>
             <param name="transformer">The transformer to use in this load operation</param>
             <param name="configure">additional configuration options for operation e.g. AddTransformerParameter</param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.IAsyncDocumentSession.LoadAsync``1(System.String,System.Type,System.Action{Raven.Client.ILoadConfiguration},System.Threading.CancellationToken)">
             <summary>
@@ -7181,6 +7669,7 @@
             <param name="id">Id of a entity to load</param>
             <param name="transformerType">The transformer to use in this load operation</param>
             <param name="configure">additional configuration options for operation e.g. AddTransformerParameter</param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.IAsyncDocumentSession.LoadAsync``1(System.Collections.Generic.IEnumerable{System.String},System.Type,System.Action{Raven.Client.ILoadConfiguration},System.Threading.CancellationToken)">
             <summary>
@@ -7190,6 +7679,7 @@
             <param name="ids">Enumerable of ids of documents to load</param>
             <param name="transformerType">The transformer to use in this load operation</param>
             <param name="configure">additional configuration options for operation e.g. AddTransformerParameter</param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.IAsyncDocumentSession.Query``1(System.String,System.Boolean)">
             <summary>
@@ -7229,6 +7719,7 @@
                 <para>Forces concurrency check if the Id is not available during extraction.</para>
             </summary>
             <param name="entity">entity to store.</param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.IAsyncDocumentSession.StoreAsync(System.Object,Raven.Abstractions.Data.Etag,System.String,System.Threading.CancellationToken)">
             <summary>
@@ -7240,7 +7731,8 @@
                 Stores the specified dynamic entity, under the specified id.
             </summary>
             <param name="entity">entity to store.</param>
-            <param name="id">Id to store this entity under. If other entity exists with the same id it will be overridden.</param>
+            <param name="id">Id to store this entity under. If other entity exists with the same id it will be overwritten.</param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="P:Raven.Client.IAsyncDocumentSession.Advanced">
             <summary>
@@ -7273,24 +7765,30 @@
                 Loads the specified entities with the specified ids.
             </summary>
             <param name="ids">Enumerable of Ids that should be loaded</param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.Document.Batches.IAsyncLazySessionOperations.LoadAsync``1(System.Collections.Generic.IEnumerable{System.String},System.Action{``0[]},System.Threading.CancellationToken)">
             <summary>
                 Loads the specified entities with the specified ids and a function to call when it is evaluated.
             </summary>
             <param name="ids">Enumerable of Ids that should be loaded</param>
+            <param name="token">The cancellation token.</param>
+            <param name="onEval">Action to be executed on evaluation.</param>
         </member>
         <member name="M:Raven.Client.Document.Batches.IAsyncLazySessionOperations.LoadAsync``1(System.String,System.Threading.CancellationToken)">
             <summary>
                 Loads the specified entity with the specified id.
             </summary>
             <param name="id">Identifier of a entity that will be loaded.</param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.Document.Batches.IAsyncLazySessionOperations.LoadAsync``1(System.String,System.Action{``0},System.Threading.CancellationToken)">
             <summary>
                 Loads the specified entity with the specified id and a function to call when it is evaluated.
             </summary>
             <param name="id">Identifier of a entity that will be loaded.</param>
+            <param name="onEval">Action to be called on evalution.</param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.Document.Batches.IAsyncLazySessionOperations.LoadAsync``1(System.ValueType,System.Threading.CancellationToken)">
             <summary>
@@ -7355,6 +7853,8 @@
             <typeparam name="TResult">The results shape to return after the load operation</typeparam>
             <param name="id">Id of a document to load</param>
             <param name="configure">additional configuration options for operation e.g. AddTransformerParameter</param>
+            <param name="onEval">Action to be called on evalution.</param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.Document.Batches.IAsyncLazySessionOperations.LoadAsync``1(System.String,System.Type,System.Action{Raven.Client.ILoadConfiguration},System.Action{``0},System.Threading.CancellationToken)">
             <summary>
@@ -7364,6 +7864,8 @@
             <param name="id">Id of a entity to load</param>
             <param name="transformerType">The transformer to use in this load operation</param>
             <param name="configure">additional configuration options for operation e.g. AddTransformerParameter</param>
+            <param name="token">The cancellation token.</param>
+            <param name="onEval">Action to be executed on evaluation.</param>
         </member>
         <member name="M:Raven.Client.Document.Batches.IAsyncLazySessionOperations.LoadStartingWithAsync``1(System.String,System.String,System.Int32,System.Int32,System.String,Raven.Client.RavenPagingInformation,System.String,System.Threading.CancellationToken)">
             <summary>
@@ -7385,6 +7887,7 @@
                 skip document fetching until given key is found and return documents after that key (default:
                 null)
             </param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.Document.Batches.IAsyncEagerSessionOperations.ExecuteAllPendingLazyOperationsAsync(System.Threading.CancellationToken)">
             <summary>
@@ -7847,6 +8350,7 @@
             <param name="key">The key.</param>
             <param name="document">The document.</param>
             <param name="metadata">The metadata.</param>
+            <param name="noTracking">Entity tracking is enabled if true, disabled otherwise.</param>
             <returns></returns>
         </member>
         <member name="M:Raven.Client.Document.InMemoryDocumentSessionOperations.ConvertToEntity(System.Type,System.String,Raven.Json.Linq.RavenJObject,Raven.Json.Linq.RavenJObject)">
@@ -7948,7 +8452,7 @@
             </summary>
             <param name="entity">The entity.</param>
             <param name="documentMetadata">The document metadata.</param>
-            <returns></returns>
+            <param name="changes">The dictionary of changes.</param>
         </member>
         <member name="M:Raven.Client.Document.InMemoryDocumentSessionOperations.Evict``1(``0)">
             <summary>
@@ -8350,6 +8854,12 @@
                 Dynamically query RavenDB using Lucene syntax
             </summary>
         </member>
+        <member name="M:Raven.Client.IAsyncAdvancedSessionOperations.MultiFacetedSearchAsync(Raven.Abstractions.Data.FacetQuery[])">
+            <summary>
+                Sends a multiple faceted queries in a single request and calculates the facet results for each of them
+            </summary>
+            <param name="queries">Array of the faceted queries that will be executed on the server-side</param>
+        </member>
         <member name="M:Raven.Client.IAsyncAdvancedSessionOperations.GetDocumentUrl(System.Object)">
             <summary>
                 Returns full document url for a given entity
@@ -8376,6 +8886,7 @@
                 skip document fetching until given key is found and return documents after that key (default:
                 null)
             </param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.IAsyncAdvancedSessionOperations.LoadStartingWithAsync``2(System.String,System.String,System.Int32,System.Int32,System.String,Raven.Client.RavenPagingInformation,System.Action{Raven.Client.ILoadConfiguration},System.String,System.Threading.CancellationToken)">
             <summary>
@@ -8398,12 +8909,14 @@
                 skip document fetching until given key is found and return documents after that key (default:
                 null)
             </param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.IAsyncAdvancedSessionOperations.RefreshAsync``1(``0,System.Threading.CancellationToken)">
             <summary>
                 Updates entity with latest changes from server
             </summary>
             <param name="entity">Instance of an entity that will be refreshed</param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.IAsyncAdvancedSessionOperations.Store(System.Object,Raven.Abstractions.Data.Etag)">
             <summary>
@@ -8437,6 +8950,7 @@
                 <para>Does NOT track the entities in the session, and will not includes changes there when SaveChanges() is called</para>
             </summary>
             <param name="query">Query to stream results for</param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.IAsyncAdvancedSessionOperations.StreamAsync``1(System.Linq.IQueryable{``0},System.Threading.CancellationToken)">
             <summary>
@@ -8445,6 +8959,7 @@
                 <para>Does NOT track the entities in the session, and will not includes changes there when SaveChanges() is called</para>
             </summary>
             <param name="query">Query to stream results for</param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.IAsyncAdvancedSessionOperations.StreamAsync``1(Raven.Client.IAsyncDocumentQuery{``0},Raven.Abstractions.Extensions.Reference{Raven.Abstractions.Data.QueryHeaderInformation},System.Threading.CancellationToken)">
             <summary>
@@ -8454,6 +8969,7 @@
             </summary>
             <param name="query">Query to stream results for</param>
             <param name="queryHeaderInformation">Information about performed query</param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.IAsyncAdvancedSessionOperations.StreamAsync``1(System.Linq.IQueryable{``0},Raven.Abstractions.Extensions.Reference{Raven.Abstractions.Data.QueryHeaderInformation},System.Threading.CancellationToken)">
             <summary>
@@ -8463,6 +8979,7 @@
             </summary>
             <param name="query">Query to stream results for</param>
             <param name="queryHeaderInformation">Information about performed query</param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.IAsyncAdvancedSessionOperations.StreamAsync``1(Raven.Abstractions.Data.Etag,System.Int32,System.Int32,Raven.Client.RavenPagingInformation,System.Threading.CancellationToken)">
             <summary>
@@ -8473,6 +8990,7 @@
             <param name="start">number of documents that should be skipped</param>
             <param name="pageSize">maximum number of documents that will be retrieved</param>
             <param name="pagingInformation">used to perform rapid pagination on a server side</param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.IAsyncAdvancedSessionOperations.StreamAsync``1(System.String,System.String,System.Int32,System.Int32,Raven.Client.RavenPagingInformation,System.String,System.Threading.CancellationToken)">
             <summary>
@@ -8491,6 +9009,7 @@
                 skip document fetching until given key is found and return documents after that key (default:
                 null)
             </param>
+            <param name="token">The cancellation token.</param>
         </member>
         <member name="M:Raven.Client.IAsyncAdvancedSessionOperations.GetMetadataForAsync``1(``0)">
             <summary>
@@ -8557,6 +9076,8 @@
             <summary>
             Loads the specified ids.
             </summary>
+            <param name="token">The cancellation token.</param>
+            <param name="ids">The ids of the documents to load.</param>
         </member>
         <member name="M:Raven.Client.Document.Async.AsyncDocumentSession.Raven#Client#Document#Batches#IAsyncLazySessionOperations#LoadAsync``1(System.String,System.Threading.CancellationToken)">
             <summary>
@@ -8564,6 +9085,7 @@
             </summary>
             <typeparam name="T"></typeparam>
             <param name="id">The id.</param>
+            <param name="token">The cancellation token.</param>
             <returns></returns>
         </member>
         <member name="M:Raven.Client.Document.Async.AsyncDocumentSession.LoadAsync``1(System.Collections.Generic.IEnumerable{System.String},System.Action{``0[]},System.Threading.CancellationToken)">
@@ -8729,9 +9251,15 @@
             Begins the async load operation
             </summary>
             <param name="id">The id.</param>
+            <param name="token">The canecllation token.</param>
             <returns></returns>
         </member>
         <member name="M:Raven.Client.Document.Async.AsyncDocumentSession.LoadAsyncInternal``1(System.String[],System.Collections.Generic.KeyValuePair{System.String,System.Type}[],System.Threading.CancellationToken)">
+            <summary>
+            Begins the async multi load operation
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Document.Async.AsyncDocumentSession.LoadAsyncInternal``1(System.String[],System.Threading.CancellationToken)">
             <summary>
             Begins the async multi load operation
             </summary>
@@ -8827,6 +9355,14 @@
             <summary>
             Begin a load while including the specified path 
             </summary>
+            <param name="path">The path.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Raven.Client.Document.IAsyncLoaderWithInclude`1.Include``1(System.Linq.Expressions.Expression{System.Func{`0,System.Object}})">
+            <summary>
+            Begin a load while including the specified path
+            </summary>
+            <typeparam name="TResult"></typeparam>
             <param name="path">The path.</param>
             <returns></returns>
         </member>
@@ -9371,6 +9907,7 @@
                 Loads the specified entities with the specified ids and a function to call when it is evaluated
             </summary>
             <param name="ids">Enumerable of Ids that should be loaded</param>
+            <param name="onEval">Action to be executed on evaluation.</param>
         </member>
         <member name="M:Raven.Client.Document.Batches.ILazySessionOperations.Load``1(System.String)">
             <summary>
@@ -9383,6 +9920,7 @@
                 Loads the specified entity with the specified id and a function to call when it is evaluated
             </summary>
             <param name="id">Identifier of a entity that will be loaded.</param>
+            <param name="onEval">Action to be executed on evaluation.</param>
         </member>
         <member name="M:Raven.Client.Document.Batches.ILazySessionOperations.Load``1(System.ValueType)">
             <summary>
@@ -9447,6 +9985,7 @@
             <typeparam name="TResult">The results shape to return after the load operation</typeparam>
             <param name="id">Id of a document to load</param>
             <param name="configure">additional configuration options for operation e.g. AddTransformerParameter</param>
+            <param name="onEval">Action to be executed on evaluation.</param>
         </member>
         <member name="M:Raven.Client.Document.Batches.ILazySessionOperations.Load``1(System.String,System.Type,System.Action{Raven.Client.ILoadConfiguration},System.Action{``0})">
             <summary>
@@ -9456,6 +9995,7 @@
             <param name="id">Id of a entity to load</param>
             <param name="transformerType">The transformer to use in this load operation</param>
             <param name="configure">additional configuration options for operation e.g. AddTransformerParameter</param>
+            <param name="onEval">Action to be executed on evaluation.</param>
         </member>
         <member name="M:Raven.Client.Document.Batches.ILazySessionOperations.Load``2(System.Collections.Generic.IEnumerable{System.String},System.Action{Raven.Client.ILoadConfiguration},System.Action{``1})">
             <summary>
@@ -9465,6 +10005,7 @@
             <typeparam name="TResult">The results shape to return after the load operation</typeparam>
             <param name="ids">Enumerable of ids of documents to load</param>
             <param name="configure">additional configuration options for operation e.g. AddTransformerParameter</param>
+            <param name="onEval">Action to be executed on evaluation.</param>
         </member>
         <member name="M:Raven.Client.Document.Batches.ILazySessionOperations.Load``1(System.Collections.Generic.IEnumerable{System.String},System.Type,System.Action{Raven.Client.ILoadConfiguration},System.Action{``0})">
             <summary>
@@ -9474,6 +10015,7 @@
             <param name="ids">Enumerable of ids of documents to load</param>
             <param name="transformerType">The transformer to use in this load operation</param>
             <param name="configure">additional configuration options for operation e.g. AddTransformerParameter</param>
+            <param name="onEval">Action to be executed on evaluation.</param>
         </member>
         <member name="M:Raven.Client.Document.Batches.ILazySessionOperations.LoadStartingWith``1(System.String,System.String,System.Int32,System.Int32,System.String,Raven.Client.RavenPagingInformation,System.String)">
             <summary>
@@ -9818,6 +10360,8 @@
             Generates the document key.
             </summary>
             <param name="entity">The entity.</param>
+            <param name="dbName">Name of the database</param>
+            <param name="databaseCommands">Low level database commands.</param>
             <returns></returns>
         </member>
         <member name="M:Raven.Client.Document.DocumentConvention.RegisterIdConvention``1(System.Func{System.String,Raven.Client.Connection.IDatabaseCommands,``0,System.String})">
@@ -10026,7 +10570,7 @@
         <member name="P:Raven.Client.Document.DocumentConvention.IndexAndTransformerReplicationMode">
             <summary>
             How index and transformer updates should be handled in replicated setup.
-            Defaults to <see cref="!:Document.IndexAndTransformerReplicationMode.All"/>.
+            Defaults to <see cref="T:Raven.Client.Document.IndexAndTransformerReplicationMode"/>.
             </summary>
         </member>
         <member name="P:Raven.Client.Document.DocumentConvention.PreserveDocumentPropertiesNotFoundOnModel">
@@ -10897,7 +11441,7 @@
                 Stores the specified dynamic entity, under the specified id.
             </summary>
             <param name="entity">entity to store.</param>
-            <param name="id">Id to store this entity under. If other entity exists with the same id it will be overridden.</param>
+            <param name="id">Id to store this entity under. If other entity exists with the same id it will be overwritten.</param>
         </member>
         <member name="P:Raven.Client.IDocumentSession.Advanced">
             <summary>
@@ -11595,6 +12139,7 @@
             </summary>
             <param name="convention">The convention.</param>
             <param name="entity">The entity.</param>
+            <param name="databaseCommands">Low level database commands.</param>
             <returns></returns>
         </member>
         <member name="M:Raven.Client.Document.HiLoKeyGenerator.NextId(Raven.Client.Connection.IDatabaseCommands)">
@@ -11755,6 +12300,24 @@
             
             Or whatever your conventions specify.
             </remarks>
+        </member>
+        <member name="M:Raven.Client.Document.ILoaderWithInclude`1.Load``2(System.String,System.Action{Raven.Client.ILoadConfiguration})">
+            <summary>
+            Loads the specified id with a specific transformer.
+            </summary>
+            <typeparam name="TTransformer"></typeparam>
+            <typeparam name="TResult"></typeparam>
+            <param name="id">The id.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Raven.Client.Document.ILoaderWithInclude`1.Load``2(System.Collections.Generic.IEnumerable{System.String},System.Action{Raven.Client.ILoadConfiguration})">
+            <summary>
+            Loads the specified ids with a specific transformer.
+            </summary>
+            <typeparam name="TTransformer"></typeparam>
+            <typeparam name="TResult"></typeparam>
+            <param name="ids">The id.</param>
+            <returns></returns>
         </member>
         <member name="T:Raven.Client.Document.DocumentSessionListeners">
             <summary>
@@ -11934,6 +12497,7 @@
             </summary>
             <param name="conventions">The conventions.</param>
             <param name="entity">The entity.</param>
+            <param name="databaseCommands">Low level database commands.</param>
             <returns></returns>
         </member>
         <member name="T:Raven.Client.Document.RavenClientEnlistment">
@@ -12193,6 +12757,7 @@
              Returns database url (system or non-system) based on system or non-system DB url.
             </summary>
             <param name="url"></param>
+            <param name="database">The database name.</param>
             <returns></returns>
         </member>
         <member name="T:Raven.Client.Extensions.MultiTenancyExtensions">
@@ -12207,326 +12772,6 @@
              <remarks>
              This operation happens _outside_ of any transaction
              </remarks>
-        </member>
-        <member name="M:Raven.Client.Extensions.TaskExtensions2.WaitUnwrap(System.Threading.Tasks.Task)">
-            <summary>
-            Waits on a task and if it throws, it unwrapped the inner exception from the AggregateException
-            await keyword uses same mechanism.
-            </summary>
-            <param name="task"></param>
-        </member>
-        <member name="T:Raven.Client.Indexes.AbstractGenericIndexCreationTask`1">
-            <summary>
-            Abstract class used to provide infrastructure service for actual creation tasks
-            </summary>
-        </member>
-        <member name="T:Raven.Client.Indexes.AbstractIndexCreationTask">
-            <summary>
-            Base class for creating indexes
-            </summary>
-            <remarks>
-            The naming convention is that underscores in the inherited class names are replaced by slashed
-            For example: Posts_ByName will be saved to Posts/ByName
-            </remarks>
-        </member>
-        <member name="M:Raven.Client.Indexes.AbstractIndexCreationTask.CreateIndexDefinition">
-            <summary>
-            Creates the index definition.
-            </summary>
-        </member>
-        <member name="M:Raven.Client.Indexes.AbstractIndexCreationTask.CreateField(System.String,System.Object,System.Boolean,System.Boolean)">
-            <summary>
-            Provide a way to dynamically index values with runtime known values
-            </summary>
-        </member>
-        <member name="M:Raven.Client.Indexes.AbstractIndexCreationTask.CreateField(System.String,System.Object)">
-            <summary>
-            Provide a way to dynamically index values with runtime known values
-            </summary>
-        </member>
-        <member name="M:Raven.Client.Indexes.AbstractIndexCreationTask.SpatialGenerate(System.Nullable{System.Double},System.Nullable{System.Double})">
-            <summary>
-            Generates a spatial field in the index, generating a Point from the provided lat/lng coordinates
-            </summary>
-            <param name="lat">Latitude</param>
-            <param name="lng">Longitude</param>
-            <returns></returns>
-        </member>
-        <member name="M:Raven.Client.Indexes.AbstractIndexCreationTask.SpatialClustering(System.String,System.Nullable{System.Double},System.Nullable{System.Double})">
-            <summary>
-            Generate field with values that can be used for spatial clustering on the lat/lng coordinates
-            </summary>
-        </member>
-        <member name="M:Raven.Client.Indexes.AbstractIndexCreationTask.SpatialClustering(System.String,System.Nullable{System.Double},System.Nullable{System.Double},System.Int32,System.Int32)">
-            <summary>
-            Generate field with values that can be used for spatial clustering on the lat/lng coordinates
-            </summary>
-        </member>
-        <member name="M:Raven.Client.Indexes.AbstractIndexCreationTask.SpatialGenerate(System.String,System.Nullable{System.Double},System.Nullable{System.Double})">
-            <summary>
-            Generates a spatial field in the index, generating a Point from the provided lat/lng coordinates
-            </summary>
-            <param name="fieldName">The field name, will be used for querying</param>
-            <param name="lat">Latitude</param>
-            <param name="lng">Longitude</param>
-            <returns></returns>
-        </member>
-        <member name="M:Raven.Client.Indexes.AbstractIndexCreationTask.SpatialGenerate(System.String,System.String)">
-            <summary>
-            Generates a spatial field in the index, generating a Point from the provided lat/lng coordinates
-            </summary>
-            <param name="fieldName">The field name, will be used for querying</param>
-            <param name="shapeWKT">The shape representation in the WKT format</param>
-            <returns></returns>
-        </member>
-        <member name="M:Raven.Client.Indexes.AbstractIndexCreationTask.SpatialGenerate(System.String,System.String,Raven.Abstractions.Indexing.SpatialSearchStrategy)">
-            <summary>
-            Generates a spatial field in the index, generating a Point from the provided lat/lng coordinates
-            </summary>
-            <param name="fieldName">The field name, will be used for querying</param>
-            <param name="shapeWKT">The shape representation in the WKT format</param>
-            <param name="strategy">The spatial strategy to use</param>
-            <returns></returns>
-        </member>
-        <member name="M:Raven.Client.Indexes.AbstractIndexCreationTask.SpatialGenerate(System.String,System.String,Raven.Abstractions.Indexing.SpatialSearchStrategy,System.Int32)">
-            <summary>
-            Generates a spatial field in the index, generating a Point from the provided lat/lng coordinates
-            </summary>
-            <param name="fieldName">The field name, will be used for querying</param>
-            <param name="shapeWKT">The shape representation in the WKT format</param>
-            <param name="strategy">The spatial strategy to use</param>
-            <param name="maxTreeLevel">Maximum number of levels to be used in the PrefixTree, controls the precision of shape representation.</param>
-            <returns></returns>
-        </member>
-        <member name="M:Raven.Client.Indexes.AbstractIndexCreationTask.LoadAttachmentForIndexing(System.String)">
-            <summary>
-            Loads the specifed attachment content during the indexing process
-            </summary>
-        </member>
-        <member name="M:Raven.Client.Indexes.AbstractIndexCreationTask.SideBySideExecute(Raven.Client.IDocumentStore,Raven.Abstractions.Data.Etag,System.Nullable{System.DateTime})">
-            <summary>
-            Executes the index creation against the specified document store in side-by-side mode.
-            </summary>
-            <param name="store"></param>
-        </member>
-        <member name="M:Raven.Client.Indexes.AbstractIndexCreationTask.Execute(Raven.Client.IDocumentStore)">
-            <summary>
-            Executes the index creation against the specified document store.
-            </summary>
-        </member>
-        <member name="M:Raven.Client.Indexes.AbstractIndexCreationTask.SideBySideExecute(Raven.Client.Connection.IDatabaseCommands,Raven.Client.Document.DocumentConvention,Raven.Abstractions.Data.Etag,System.Nullable{System.DateTime})">
-            <summary>
-            Executes the index creation using in side-by-side mode.
-            </summary>
-            <param name="databaseCommands"></param>
-            <param name="documentConvention"></param>
-        </member>
-        <member name="M:Raven.Client.Indexes.AbstractIndexCreationTask.Execute(Raven.Client.Connection.IDatabaseCommands,Raven.Client.Document.DocumentConvention)">
-            <summary>
-            Executes the index creation against the specified document database using the specified conventions
-            </summary>
-        </member>
-        <member name="M:Raven.Client.Indexes.AbstractIndexCreationTask.SideBySideExecuteAsync(Raven.Client.IDocumentStore,Raven.Abstractions.Data.Etag,System.Nullable{System.DateTime})">
-            <summary>
-            Executes the index creation against the specified document store in side-by-side mode.
-            </summary>
-        </member>
-        <member name="M:Raven.Client.Indexes.AbstractIndexCreationTask.ExecuteAsync(Raven.Client.IDocumentStore)">
-            <summary>
-            Executes the index creation against the specified document store.
-            </summary>
-        </member>
-        <member name="M:Raven.Client.Indexes.AbstractIndexCreationTask.ExecuteAsync(Raven.Client.Connection.Async.IAsyncDatabaseCommands,Raven.Client.Document.DocumentConvention,System.Threading.CancellationToken)">
-            <summary>
-            Executes the index creation against the specified document store.
-            </summary>
-        </member>
-        <member name="P:Raven.Client.Indexes.AbstractIndexCreationTask.IsMapReduce">
-            <summary>
-            Gets a value indicating whether this instance is map reduce index definition
-            </summary>
-            <value>
-            	<c>true</c> if this instance is map reduce; otherwise, <c>false</c>.
-            </value>
-        </member>
-        <member name="P:Raven.Client.Indexes.AbstractIndexCreationTask.IndexName">
-            <summary>
-            Generates index name from type name replacing all _ with /
-            <para>e.g.</para>
-            <para>if our type is <code>'Orders_Totals'</code> then index name would be <code>'Orders/Totals'</code></para>
-            </summary>
-        </member>
-        <member name="P:Raven.Client.Indexes.AbstractIndexCreationTask.Conventions">
-            <summary>
-            Gets or sets the conventions that should be used when index definition is created.
-            </summary>
-        </member>
-        <member name="P:Raven.Client.Indexes.AbstractIndexCreationTask.Priority">
-            <summary>
-             index can have a priority that controls how much power of the indexing process it is allowed to consume. index priority can be forced by the user.
-             There are four available values that you can set: Normal, Idle, Disabled, Abandoned
-            <para>Default value: null means that the priority of the index is Normal.</para>
-            </summary>
-        </member>
-        <member name="M:Raven.Client.Indexes.AbstractIndexCreationTask.SpatialIndex.Generate(System.String,System.Nullable{System.Double},System.Nullable{System.Double})">
-            <summary>
-            Generates a spatial field in the index, generating a Point from the provided lat/lng coordinates
-            </summary>
-            <param name="fieldName">The field name, will be used for querying</param>
-            <param name="lat">Latitude</param>
-            <param name="lng">Longitude</param>
-        </member>
-        <member name="M:Raven.Client.Indexes.AbstractIndexCreationTask.SpatialIndex.Generate(System.Nullable{System.Double},System.Nullable{System.Double})">
-            <summary>
-            Generates a spatial field in the index, generating a Point from the provided lat/lng coordinates
-            </summary>
-            <param name="lat">Latitude</param>
-            <param name="lng">Longitude</param>
-        </member>
-        <member name="M:Raven.Client.Indexes.AbstractGenericIndexCreationTask`1.#ctor">
-            <summary>
-            Create a new instance
-            </summary>
-        </member>
-        <member name="M:Raven.Client.Indexes.AbstractGenericIndexCreationTask`1.Index(System.Linq.Expressions.Expression{System.Func{`0,System.Object}},Raven.Abstractions.Indexing.FieldIndexing)">
-            <summary>
-            Register a field to be indexed
-            </summary>
-        </member>
-        <member name="M:Raven.Client.Indexes.AbstractGenericIndexCreationTask`1.Index(System.String,Raven.Abstractions.Indexing.FieldIndexing)">
-            <summary>
-            Register a field to be indexed
-            </summary>
-        </member>
-        <member name="M:Raven.Client.Indexes.AbstractGenericIndexCreationTask`1.Spatial(System.Linq.Expressions.Expression{System.Func{`0,System.Object}},System.Func{Raven.Abstractions.Indexing.SpatialOptionsFactory,Raven.Abstractions.Indexing.SpatialOptions})">
-            <summary>
-            Register a field to be spatially indexed
-            </summary>
-        </member>
-        <member name="M:Raven.Client.Indexes.AbstractGenericIndexCreationTask`1.Spatial(System.String,System.Func{Raven.Abstractions.Indexing.SpatialOptionsFactory,Raven.Abstractions.Indexing.SpatialOptions})">
-            <summary>
-            Register a field to be spatially indexed
-            </summary>
-        </member>
-        <member name="M:Raven.Client.Indexes.AbstractGenericIndexCreationTask`1.Store(System.Linq.Expressions.Expression{System.Func{`0,System.Object}},Raven.Abstractions.Indexing.FieldStorage)">
-            <summary>
-            Register a field to be stored
-            </summary>
-        </member>
-        <member name="M:Raven.Client.Indexes.AbstractGenericIndexCreationTask`1.Store(System.String,Raven.Abstractions.Indexing.FieldStorage)">
-            <summary>
-            Register a field to be stored
-            </summary>
-        </member>
-        <member name="M:Raven.Client.Indexes.AbstractGenericIndexCreationTask`1.Analyze(System.Linq.Expressions.Expression{System.Func{`0,System.Object}},System.String)">
-            <summary>
-            Register a field to be analyzed
-            </summary>
-        </member>
-        <member name="M:Raven.Client.Indexes.AbstractGenericIndexCreationTask`1.Analyze(System.String,System.String)">
-            <summary>
-            Register a field to be analyzed
-            </summary>
-        </member>
-        <member name="M:Raven.Client.Indexes.AbstractGenericIndexCreationTask`1.TermVector(System.Linq.Expressions.Expression{System.Func{`0,System.Object}},Raven.Abstractions.Indexing.FieldTermVector)">
-            <summary>
-            Register a field to have term vectors
-            </summary>
-        </member>
-        <member name="M:Raven.Client.Indexes.AbstractGenericIndexCreationTask`1.TermVector(System.String,Raven.Abstractions.Indexing.FieldTermVector)">
-            <summary>
-            Register a field to have term vectors
-            </summary>
-        </member>
-        <member name="M:Raven.Client.Indexes.AbstractGenericIndexCreationTask`1.Sort(System.Linq.Expressions.Expression{System.Func{`0,System.Object}},Raven.Abstractions.Indexing.SortOptions)">
-            <summary>
-            Register a field to be sorted
-            </summary>
-        </member>
-        <member name="M:Raven.Client.Indexes.AbstractGenericIndexCreationTask`1.Sort(System.String,Raven.Abstractions.Indexing.SortOptions)">
-            <summary>
-            Register a field to be sorted
-            </summary>
-        </member>
-        <member name="M:Raven.Client.Indexes.AbstractGenericIndexCreationTask`1.Suggestion(System.Linq.Expressions.Expression{System.Func{`0,System.Object}},Raven.Abstractions.Indexing.SuggestionOptions)">
-            <summary>
-            Register a field to be sorted
-            </summary>
-        </member>
-        <member name="P:Raven.Client.Indexes.AbstractGenericIndexCreationTask`1.Reduce">
-            <summary>
-            The reduce definition
-            </summary>
-        </member>
-        <member name="P:Raven.Client.Indexes.AbstractGenericIndexCreationTask`1.Stores">
-            <summary>
-            Index storage options
-            </summary>
-        </member>
-        <member name="P:Raven.Client.Indexes.AbstractGenericIndexCreationTask`1.StoresStrings">
-            <summary>
-            Index storage options
-            </summary>
-        </member>
-        <member name="P:Raven.Client.Indexes.AbstractGenericIndexCreationTask`1.IndexSortOptions">
-            <summary>
-            Index sort options
-            </summary>
-        </member>
-        <member name="P:Raven.Client.Indexes.AbstractGenericIndexCreationTask`1.IndexSortOptionsStrings">
-            <summary>
-            Index sort options
-            </summary>
-        </member>
-        <member name="P:Raven.Client.Indexes.AbstractGenericIndexCreationTask`1.IndexSuggestions">
-            <summary>
-            Index suggest options
-            </summary>
-        </member>
-        <member name="P:Raven.Client.Indexes.AbstractGenericIndexCreationTask`1.Analyzers">
-            <summary>
-            Index sort options
-            </summary>
-        </member>
-        <member name="P:Raven.Client.Indexes.AbstractGenericIndexCreationTask`1.AnalyzersStrings">
-            <summary>
-            Index sort options
-            </summary>
-        </member>
-        <member name="P:Raven.Client.Indexes.AbstractGenericIndexCreationTask`1.TermVectors">
-            <summary>
-            Index term vector options
-            </summary>		
-        </member>
-        <member name="P:Raven.Client.Indexes.AbstractGenericIndexCreationTask`1.TermVectorsStrings">
-            <summary>
-            Index term vector options
-            </summary>		
-        </member>
-        <member name="P:Raven.Client.Indexes.AbstractGenericIndexCreationTask`1.SpatialIndexes">
-            <summary>
-            Spatial index options
-            </summary>
-        </member>
-        <member name="P:Raven.Client.Indexes.AbstractGenericIndexCreationTask`1.SpatialIndexesStrings">
-            <summary>
-            Spatial index options
-            </summary>
-        </member>
-        <member name="P:Raven.Client.Indexes.AbstractGenericIndexCreationTask`1.Indexes">
-            <summary>
-            Indexing options
-            </summary>
-        </member>
-        <member name="P:Raven.Client.Indexes.AbstractGenericIndexCreationTask`1.IndexesStrings">
-            <summary>
-            Indexing options
-            </summary>
-        </member>
-        <member name="P:Raven.Client.Indexes.AbstractGenericIndexCreationTask`1.DisableInMemoryIndexing">
-            <summary>
-            Prevent index from being kept in memory. Default: false
-            </summary>
         </member>
         <member name="T:Raven.Client.Indexes.AbstractMultiMapIndexCreationTask`1">
             <summary>
@@ -12794,38 +13039,6 @@
         <member name="T:Raven.Client.Indexes.AbstractIndexCreationTask`1">
             <summary>
             Base class for creating indexes
-            </summary>
-        </member>
-        <member name="T:Raven.Client.Indexes.AbstractIndexCreationTask`2">
-            <summary>
-            Base class for creating indexes
-            </summary>
-        </member>
-        <member name="M:Raven.Client.Indexes.AbstractIndexCreationTask`2.CreateIndexDefinition">
-            <summary>
-            Creates the index definition.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="P:Raven.Client.Indexes.AbstractIndexCreationTask`2.MaxIndexOutputsPerDocument">
-            <summary>
-            Index specific setting that limits the number of map outputs that an index is allowed to create for a one source document. If a map operation applied to
-            the one document produces more outputs than this number then an index definition will be considered as a suspicious, the indexing of this document 
-            will be skipped and the appropriate error message will be added to the indexing errors.
-            <para>Default value: null means that the global value from Raven configuration will be taken to detect if number of outputs was exceeded.</para>
-            </summary>
-        </member>
-        <member name="P:Raven.Client.Indexes.AbstractIndexCreationTask`2.IsMapReduce">
-            <summary>
-            Gets a value indicating whether this instance is map reduce index definition
-            </summary>
-            <value>
-            	<c>true</c> if this instance is map reduce; otherwise, <c>false</c>.
-            </value>
-        </member>
-        <member name="P:Raven.Client.Indexes.AbstractIndexCreationTask`2.Map">
-            <summary>
-            The map definition
             </summary>
         </member>
         <member name="T:Raven.Client.Indexes.ExpressionOperatorPrecedence">
@@ -13331,7 +13544,7 @@
             This class provides a way to define a strongly typed index on the client.
             </summary>
         </member>
-        <member name="M:Raven.Client.Indexes.IndexDefinitionBuilder`2.#ctor">
+        <member name="M:Raven.Client.Indexes.IndexDefinitionBuilder`2.#ctor(System.String)">
             <summary>
             Initializes a new instance of the <see cref="T:Raven.Client.Indexes.IndexDefinitionBuilder`2"/> class.
             </summary>
@@ -13666,6 +13879,7 @@
             <param name="facetSetupDoc">Name of the FacetSetup document</param>
             <param name="start">Start index for paging</param>
             <param name="pageSize">Paging PageSize. If set, overrides Facet.MaxResults</param>
+            <param name="queryable">The queryable interface for the function to be applied to</param>
         </member>
         <member name="M:Raven.Client.LinqExtensions.ToFacetQuery``1(System.Linq.IQueryable{``0},System.String,System.Int32,System.Nullable{System.Int32})">
             <summary>
@@ -13674,6 +13888,7 @@
             <param name="facetSetupDoc">Name of the FacetSetup document</param>
             <param name="start">Start index for paging</param>
             <param name="pageSize">>Paging PageSize. If set, overrides Facet.MaxResults</param>
+             <param name="queryable">The queryable interface for the function to be applied to</param>
         </member>
         <member name="M:Raven.Client.LinqExtensions.ToFacets``1(System.Linq.IQueryable{``0},System.Collections.Generic.IEnumerable{Raven.Abstractions.Data.Facet},System.Int32,System.Nullable{System.Int32})">
             <summary>
@@ -13682,6 +13897,7 @@
             <param name="facets">List of facets</param>
             <param name="start">Start index for paging</param>
             <param name="pageSize">Paging PageSize. If set, overrides Facet.MaxResults</param>
+             <param name="queryable">The queryable interface for the function to be applied to</param>
         </member>
         <member name="M:Raven.Client.LinqExtensions.ToFacetQuery``1(System.Linq.IQueryable{``0},System.Collections.Generic.IEnumerable{Raven.Abstractions.Data.Facet},System.Int32,System.Nullable{System.Int32})">
             <summary>
@@ -13690,6 +13906,7 @@
             <param name="facets">List of facets</param>
             <param name="start">Start index for paging</param>
             <param name="pageSize">Paging PageSize. If set, overrides Facet.MaxResults</param>
+             <param name="queryable">The queryable interface for the function to be applied to</param>
         </member>
         <member name="M:Raven.Client.LinqExtensions.ToFacets``1(Raven.Client.IDocumentQuery{``0},System.String,System.Int32,System.Nullable{System.Int32})">
             <summary>
@@ -13698,6 +13915,7 @@
             <param name="facetSetupDoc">Name of the FacetSetup document</param>
             <param name="start">Start index for paging</param>
             <param name="pageSize">Paging PageSize. If set, overrides Facet.MaxResults</param>
+            <param name="query">The document query interface for the function to be applied to</param>
         </member>
         <member name="M:Raven.Client.LinqExtensions.ToFacets``1(Raven.Client.IDocumentQuery{``0},System.Collections.Generic.IEnumerable{Raven.Abstractions.Data.Facet},System.Int32,System.Nullable{System.Int32})">
             <summary>
@@ -13706,6 +13924,7 @@
             <param name="facets">List of facets</param>
             <param name="start">Start index for paging</param>
             <param name="pageSize">Paging PageSize. If set, overrides Facet.MaxResults</param>
+            <param name="query">The document query interface for the function to be applied to</param>
         </member>
         <member name="M:Raven.Client.LinqExtensions.ToFacetsLazy``1(System.Linq.IQueryable{``0},System.String,System.Int32,System.Nullable{System.Int32})">
             <summary>
@@ -13714,6 +13933,7 @@
             <param name="facetSetupDoc">Name of the FacetSetup document</param>
             <param name="start">Start index for paging</param>
             <param name="pageSize">Paging PageSize. If set, overrides Facet.MaxResults</param>
+            <param name="queryable">The queryable interface for the function to be applied to</param>
         </member>
         <member name="M:Raven.Client.LinqExtensions.ToFacetsLazyAsync``1(System.Linq.IQueryable{``0},System.String,System.Int32,System.Nullable{System.Int32})">
             <summary>
@@ -13722,6 +13942,7 @@
             <param name="facetSetupDoc">Name of the FacetSetup document</param>
             <param name="start">Start index for paging</param>
             <param name="pageSize">Paging PageSize. If set, overrides Facet.MaxResults</param>
+            <param name="queryable">The queryable interface for the function to be applied to</param>
         </member>
         <member name="M:Raven.Client.LinqExtensions.ToFacetsLazy``1(System.Linq.IQueryable{``0},System.Collections.Generic.IEnumerable{Raven.Abstractions.Data.Facet},System.Int32,System.Nullable{System.Int32})">
             <summary>
@@ -13735,6 +13956,7 @@
             <param name="facetSetupDoc">Name of the FacetSetup document</param>
             <param name="start">Start index for paging</param>
             <param name="pageSize">Paging PageSize. If set, overrides Facet.MaxResults</param>
+            <param name="query">The document query interface for the function to be applied to</param>
         </member>
         <member name="M:Raven.Client.LinqExtensions.ToFacetsLazy``1(Raven.Client.IDocumentQuery{``0},System.Collections.Generic.IEnumerable{Raven.Abstractions.Data.Facet},System.Int32,System.Nullable{System.Int32})">
             <summary>
@@ -13743,6 +13965,7 @@
             <param name="facets">List of facets</param>
             <param name="start">Start index for paging</param>
             <param name="pageSize">Paging PageSize. If set, overrides Facet.MaxResults</param>
+            <param name="query">The document query interface for the function to be applied to</param>
         </member>
         <member name="M:Raven.Client.LinqExtensions.ToFacetsAsync``1(System.Linq.IQueryable{``0},System.String,System.Int32,System.Nullable{System.Int32},System.Threading.CancellationToken)">
             <summary>
@@ -13751,6 +13974,8 @@
             <param name="facetSetupDoc">Name of the FacetSetup document</param>
             <param name="start">Start index for paging</param>
             <param name="pageSize">Paging PageSize. If set, overrides Facet.MaxResults</param>
+            <param name="queryable">The queryable interface for the function to be applied to</param>
+            <param name="token">The cancellation token</param>
         </member>
         <member name="M:Raven.Client.LinqExtensions.ToFacetsAsync``1(System.Linq.IQueryable{``0},System.Collections.Generic.IEnumerable{Raven.Abstractions.Data.Facet},System.Int32,System.Nullable{System.Int32},System.Threading.CancellationToken)">
             <summary>
@@ -13759,6 +13984,8 @@
             <param name="facets">List of facets</param>
             <param name="start">Start index for paging</param>
             <param name="pageSize">Paging PageSize. If set, overrides Facet.MaxResults</param>
+            <param name="queryable">The queryable interface for the function to be applied to</param>
+            <param name="token">The cancellation token</param>
         </member>
         <member name="M:Raven.Client.LinqExtensions.ToFacetsAsync``1(Raven.Client.IAsyncDocumentQuery{``0},System.String,System.Int32,System.Nullable{System.Int32},System.Threading.CancellationToken)">
             <summary>
@@ -13767,6 +13994,8 @@
             <param name="facetSetupDoc">Name of the FacetSetup document</param>
             <param name="start">Start index for paging</param>
             <param name="pageSize">Paging PageSize. If set, overrides Facet.MaxResults</param>
+            <param name="queryable">The queryable interface for the function to be applied to</param>
+            <param name="token">The cancellation token</param>
         </member>
         <member name="M:Raven.Client.LinqExtensions.ToFacetsAsync``1(Raven.Client.IAsyncDocumentQuery{``0},System.Collections.Generic.IEnumerable{Raven.Abstractions.Data.Facet},System.Int32,System.Nullable{System.Int32},System.Threading.CancellationToken)">
             <summary>
@@ -13775,6 +14004,8 @@
             <param name="facets">List of facets</param>
             <param name="start">Start index for paging</param>
             <param name="pageSize">Paging PageSize. If set, overrides Facet.MaxResults</param>
+            <param name="queryable">The queryable interface for the function to be applied to</param>
+            <param name="token">The cancellation token</param>
         </member>
         <member name="M:Raven.Client.LinqExtensions.As``1(System.Linq.IQueryable)">
             <summary>
@@ -13877,6 +14108,7 @@
             <param name="source">
             The <see cref="T:Raven.Client.Linq.IRavenQueryable`1"/> that contains the elements to be counted.
             </param>
+            <param name="token">The cancellation token.</param>
             
             <returns>
             true if the source sequence contains any elements; otherwise, false.
@@ -13903,6 +14135,8 @@
             A function to test each element for a condition.
             </param>
             
+            <param name="token">The cancellation token.</param>
+            
             <returns>
             true if any elements in the source sequence pass the test in the specified
             predicate; otherwise, false.
@@ -13924,6 +14158,7 @@
             <param name="source">
             The <see cref="T:Raven.Client.Linq.IRavenQueryable`1"/> that contains the elements to be counted.
             </param>
+            <param name="token">The cancellation token.</param>
             
             <returns>
             The number of elements in the input sequence.
@@ -13954,6 +14189,8 @@
             A function to test each element for a condition.
             </param>
             
+            <param name="token">The cancellation token.</param>
+            
             <returns>
             The number of elements in the sequence that satisfies the condition in
             the predicate function.
@@ -13979,6 +14216,7 @@
             <param name="source">
             The <see cref="T:Raven.Client.Linq.IRavenQueryable`1"/> to return the first element of.
             </param>
+            <param name="token">The cancellation token.</param>
             
             <returns>
             The first element in source.
@@ -14009,6 +14247,7 @@
             <param name="predicate">
             A function to test each element for a condition.
             </param>
+            <param name="token">The cancellation token.</param>
             
             <returns>
             The first element in source.
@@ -14036,6 +14275,7 @@
             <param name="source">
             The <see cref="T:Raven.Client.Linq.IRavenQueryable`1"/> to return the first element of.
             </param>
+            <param name="token">The cancellation token.</param>
             
             <returns>
             default(TSource) if source is empty; otherwise,
@@ -14067,6 +14307,7 @@
             <param name="predicate">
             A function to test each element for a condition.
             </param>
+            <param name="token">The cancellation token.</param>
             
             <returns>
             default(TSource) if source is empty or
@@ -14096,6 +14337,7 @@
             <param name="source">
             The <see cref="T:Raven.Client.Linq.IRavenQueryable`1"/> to return the single element of.
             </param>
+            <param name="token">The cancellation token.</param>
             
             <returns>
             The single element of the input sequence.
@@ -14127,6 +14369,7 @@
             <param name="predicate">
             A function to test each element for a condition.
             </param>
+            <param name="token">The cancellation token.</param>
             
             <returns>
             The single element of the input sequence that satisfies the condition in predicate.
@@ -14156,6 +14399,7 @@
             <param name="source">
             The <see cref="T:Raven.Client.Linq.IRavenQueryable`1"/> to return the first element of.
             </param>
+            <param name="token">The cancellation token.</param>
             
             <returns>
             The single element of the input sequence, or default(TSource)
@@ -14189,6 +14433,8 @@
             <param name="predicate">
             A function to test each element for a condition.
             </param>
+            
+            <param name="token">The cancellation token.</param>
             
             <returns>
             The single element of the input sequence that satisfies the condition in predicate,
@@ -14637,13 +14883,18 @@
             Saves all the changes to the Raven server.
             </summary>
         </member>
+        <member name="M:Raven.Client.Shard.AsyncShardedDocumentSession.GetJsonDocumentAsync(System.String)">
+            <summary>
+            Get the json document by key from the store
+            </summary>
+        </member>
         <member name="T:Raven.Client.Shard.IShardResolutionStrategy">
             <summary>
             Implementers of this interface provide a way to decide which shards will be queried
             for a specified operation
             </summary>
         </member>
-        <member name="M:Raven.Client.Shard.IShardResolutionStrategy.GenerateShardIdFor(System.Object,Raven.Client.ITransactionalDocumentSession)">
+        <member name="M:Raven.Client.Shard.IShardResolutionStrategy.GenerateShardIdFor(System.Object,System.Object)">
             <summary>
              Generate a shard id for the specified entity
              </summary>
@@ -14963,7 +15214,7 @@
             <param name="operation">The operation.</param>
             <returns></returns>
         </member>
-        <member name="M:Raven.Client.Shard.DefaultShardResolutionStrategy.GenerateShardIdFor(System.Object,Raven.Client.ITransactionalDocumentSession)">
+        <member name="M:Raven.Client.Shard.DefaultShardResolutionStrategy.GenerateShardIdFor(System.Object,System.Object)">
             <summary>
              Generate a shard id for the specified entity
              </summary>
