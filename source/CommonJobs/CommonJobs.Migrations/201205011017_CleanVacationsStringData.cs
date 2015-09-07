@@ -10,8 +10,6 @@ using CommonJobs.Domain;
 
 namespace CommonJobs.Migrations
 {
-    //TODO: Validate this cast => (Newtonsoft.Json.Linq.JTokenType)
-
     [Migration("201205011017", "Clean vacations string data")]
     public class CleanVacationsStringData : Migration
     {

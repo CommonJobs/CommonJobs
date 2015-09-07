@@ -21,7 +21,6 @@ namespace CommonJobs.Migrations
         {
             var filePath = Path.Combine(Path.GetDirectoryName(Path.GetDirectoryName(new Uri(GetType().Assembly.CodeBase).LocalPath)), "Import201212010811.json");
             var serializer = new Newtonsoft.Json.JsonSerializer();
-            //TODO: VALIDATE THIS
             var placeByUserName = serializer.Deserialize <Dictionary<string, string>>(new Newtonsoft.Json.JsonTextReader(new StreamReader(filePath)));
             using (var session = DocumentStore.OpenSession())
             {

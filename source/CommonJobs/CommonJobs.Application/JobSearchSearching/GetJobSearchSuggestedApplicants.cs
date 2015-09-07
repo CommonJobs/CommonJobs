@@ -35,7 +35,6 @@ namespace CommonJobs.Application.JobSearchSearching
                 .Statistics(out stats)
                 .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite());
 
-            //var result = query.AsProjection<SuggestedApplicantsResult>().ToArray();
             var result = query.As<SuggestedApplicantsResult>().ToArray();
             Stats = stats;
             return result;

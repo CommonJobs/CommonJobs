@@ -37,7 +37,6 @@ namespace CommonJobs.Migrations
             DocumentStore.DatabaseCommands.UpdateByIndex("Raven/DocumentsByEntityName",
                                                          new IndexQuery {  },
                                                          patchs.ToArray(),
-                                                         //TODO: VALIDATE THIS
                                                          new BulkOperationOptions()
                                                          {
                                                              AllowStale = true

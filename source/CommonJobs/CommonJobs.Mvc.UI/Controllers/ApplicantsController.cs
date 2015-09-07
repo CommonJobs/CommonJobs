@@ -46,7 +46,6 @@ namespace CommonJobs.Mvc.UI.Controllers
         public JsonResult QuickSearchAutocomplete(string term)
         {
             const int maxResults = 20;
-            //TODO: Validate this!!!
             var list = RavenSessionManager.DocumentStore.DatabaseCommands
                 .GetTerms("Applicant/QuickSearch", "ByTerm", term, maxResults)
                 .Where(x => x.StartsWith(term));
