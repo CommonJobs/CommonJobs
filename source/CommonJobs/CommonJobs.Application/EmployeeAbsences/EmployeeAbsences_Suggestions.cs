@@ -50,9 +50,6 @@ namespace CommonJobs.Application.EmployeeAbsences
                                  Predefined = g.Any(x => x.Predefined)
                              };
 
-            //TODO TRANSFORM: Review this
-            //TransformResults = (db, results) => results.Where(x => !string.IsNullOrWhiteSpace(x.Text)).Select(x => x);
-
             Index(x => x.Text, FieldIndexing.Analyzed);
         }
     }
