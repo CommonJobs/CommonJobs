@@ -51,6 +51,7 @@ namespace CommonJobs.Application.EmployeeAbsences
                              };
 
             Index(x => x.Text, FieldIndexing.Analyzed);
+            Suggestion(x => x.Text);
         }
     }
 }

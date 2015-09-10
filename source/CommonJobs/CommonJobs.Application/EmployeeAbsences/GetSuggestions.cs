@@ -26,19 +26,44 @@ namespace CommonJobs.Application.EmployeeAbsences
         {
             RavenQueryStatistics stats;
 
-            var q = RavenSession.Query<EmployeeAbsences_Suggestions.Projection, EmployeeAbsences_Suggestions>()
+            var query = RavenSession.Query<EmployeeAbsences_Suggestions.Projection, EmployeeAbsences_Suggestions>()
                 .Statistics(out stats)
                 .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite())
                 .Search(x => x.Text, Term.TrimEnd('*', '?') + "*", escapeQueryOptions: EscapeQueryOptions.AllowPostfixWildcard)
                 .OrderByDescending(x => x.Predefined).ThenBy(x => x.Text)
-                //.Select(FieldSelector)
-                //.As<string>()
                 .Distinct()
-                .Take(MaxSuggestions * 2); //Padding porque no puedo filtrar los vacíos antes
+                .Take(MaxSuggestions);
 
-            var query = q.ToList();
+            var results = query
+                .ToList()
+                .Select(x => x.Text)
+                .Where(x => !string.IsNullOrWhiteSpace(x))
+                .Take(MaxSuggestions)
+                .ToList();
 
-            var results = query.Select(x => x.Text).ToList();
+            if (results.Count < MaxSuggestions)
+            {
+                var suggestionTerms = query.Suggest().Suggestions.Where(x => x != Term).ToArray();
+
+                if (suggestionTerms.Length > 0)
+                {
+                    var extraQuery = RavenSession.Query<EmployeeAbsences_Suggestions.Projection, EmployeeAbsences_Suggestions>()
+                        .Search(x => x.Text, string.Join(" ", suggestionTerms))
+                        .OrderByDescending(x => x.Predefined).ThenBy(x => x.Text)
+                        .Distinct()
+                        .Take(MaxSuggestions - results.Count);
+
+                    var extraResults = extraQuery
+                        .ToList()
+                        .Select(x => x.Text)
+                        .Where(x => !string.IsNullOrWhiteSpace(x))
+                        .Where(x => !results.Contains(x))
+                        .Take(MaxSuggestions - results.Count)
+                        .ToList();
+
+                    results.AddRange(extraResults);
+                }
+            }
 
             return results;
         }

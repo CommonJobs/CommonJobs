@@ -60,6 +60,7 @@ namespace CommonJobs.Application.ApplicantFlow
 
             Index(x => x.Slug, FieldIndexing.NotAnalyzed);
             Index(x => x.Text, FieldIndexing.Analyzed);
+            Suggestion(x => x.Text);
         }
     }
 }
