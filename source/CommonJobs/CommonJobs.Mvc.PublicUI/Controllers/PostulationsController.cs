@@ -11,7 +11,7 @@ using CommonJobs.Infrastructure.Mvc;
 using CommonJobs.Infrastructure.RavenDb;
 using NLog;
 using CommonJobs.Utilities;
-using CommonJobs.Application.Suggestions;
+using CommonJobs.Application.Suggest;
 
 namespace CommonJobs.Mvc.PublicUI.Controllers
 {
@@ -29,7 +29,7 @@ namespace CommonJobs.Mvc.PublicUI.Controllers
             var internalFileName = Guid.NewGuid().ToString();
             var temporalFullName = Path.Combine(temporalFolderPath, internalFileName);
             file.SaveAs(temporalFullName);
-            return new TemporalFileReference() 
+            return new TemporalFileReference()
             {
                 OriginalFileName = Path.GetFileName(file.FileName),
                 InternalFileName = internalFileName
@@ -121,7 +121,7 @@ namespace CommonJobs.Mvc.PublicUI.Controllers
 
         public ActionResult TechnicalSkillSuggestions(string term, int maxSuggestions = 8)
         {
-            var results = Query(new GetSuggestions(x => x.TechnicalSkillName, term, maxSuggestions));
+            var results = Query(new GetTechnicalSkillSuggestions(term, maxSuggestions));
             return Json(results.Select(x => new { id = x, label = x }));
         }
 
@@ -144,7 +144,7 @@ namespace CommonJobs.Mvc.PublicUI.Controllers
 
             if (curriculumFile == null)
                 ModelState.AddModelError("curriculumFile", "Requerido");
-            
+
             if (ModelState.IsValid)
             {
                 try

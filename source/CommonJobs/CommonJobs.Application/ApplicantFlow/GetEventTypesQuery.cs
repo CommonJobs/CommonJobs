@@ -4,7 +4,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using CommonJobs.Domain;
-using CommonJobs.Application.Persons;
 using CommonJobs.Infrastructure.RavenDb;
 using Raven.Client.Linq;
 using System.Text.RegularExpressions;
