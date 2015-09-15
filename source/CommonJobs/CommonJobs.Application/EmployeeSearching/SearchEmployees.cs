@@ -11,6 +11,7 @@ using System.Linq.Expressions;
 using CommonJobs.Utilities;
 using System.Globalization;
 using System.Threading;
+using Raven.Client;
 
 namespace CommonJobs.Application.EmployeeSearching
 {
@@ -88,7 +89,8 @@ namespace CommonJobs.Application.EmployeeSearching
             if (Parameters.Take > 0)
                 query = query.Take(Parameters.Take);
 
-            var result = query.AsProjection<EmployeeSearchResult>().ToArray();
+            var result = query.As<EmployeeSearchResult>().ToArray();
+
             Stats = stats;
             return result;
         }

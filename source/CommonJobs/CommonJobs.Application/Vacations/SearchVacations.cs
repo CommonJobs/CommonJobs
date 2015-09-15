@@ -10,6 +10,7 @@ using CommonJobs.Application.Indexes;
 using System.Linq.Expressions;
 using CommonJobs.Utilities;
 using CommonJobs.Application.EmployeeSearching;
+using Raven.Client;
 
 namespace CommonJobs.Application.Vacations
 {
@@ -37,13 +38,15 @@ namespace CommonJobs.Application.Vacations
                     || x.FullName2.StartsWith(Parameters.Term));
             }
 
-            var ids = query1
+            var rs = query1
                 .Statistics(out stats)
                 .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite())
                 .OrderBy(x => x.LastName).ThenBy(x => x.FirstName)
                 .ApplyPagination(Parameters)
-                .Select(x => x.Id)
+                .As<EmployeeSearchResult>()
                 .ToArray();
+
+            var ids = rs.Select(x => x.Id).ToArray();
 
             var employees = RavenSession.Load<Employee>(ids);
             var results = employees.Select(x => new VacationsSearchResult()

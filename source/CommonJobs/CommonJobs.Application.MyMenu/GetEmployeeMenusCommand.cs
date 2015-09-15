@@ -1,5 +1,6 @@
 ﻿using CommonJobs.Domain.MyMenu;
 using CommonJobs.Infrastructure.RavenDb;
+using Raven.Client;
 using Raven.Client.Linq;
 using System;
 using System.Collections.Generic;

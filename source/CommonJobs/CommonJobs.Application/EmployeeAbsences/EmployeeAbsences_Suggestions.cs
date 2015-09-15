@@ -39,8 +39,8 @@ namespace CommonJobs.Application.EmployeeAbsences
                 });
 
             Reduce = docs => from doc in docs
-                             group doc by new 
-                             { 
+                             group doc by new
+                             {
                                  doc.Text
                              } into g
                              select new
@@ -50,9 +50,8 @@ namespace CommonJobs.Application.EmployeeAbsences
                                  Predefined = g.Any(x => x.Predefined)
                              };
 
-            TransformResults = (db, results) => results.Where(x => !string.IsNullOrWhiteSpace(x.Text)).Select(x => x);
-
             Index(x => x.Text, FieldIndexing.Analyzed);
+            Suggestion(x => x.Text);
         }
     }
 }

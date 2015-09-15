@@ -2,6 +2,7 @@
 using CommonJobs.Application.Evaluations;
 using CommonJobs.Domain.Evaluations;
 using CommonJobs.Infrastructure.RavenDb;
+using Raven.Client;
 using Raven.Client.Linq;
 using System;
 using System.Collections.Generic;

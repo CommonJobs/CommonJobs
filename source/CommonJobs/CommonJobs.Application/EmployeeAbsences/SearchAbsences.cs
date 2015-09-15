@@ -10,6 +10,7 @@ using CommonJobs.Application.Indexes;
 using System.Linq.Expressions;
 using CommonJobs.Utilities;
 using CommonJobs.Application.EmployeeSearching;
+using Raven.Client;
 
 namespace CommonJobs.Application.EmployeeAbsences
 {
@@ -39,20 +40,22 @@ namespace CommonJobs.Application.EmployeeAbsences
 
             if (From.HasValue)
                 query1 = query1.Where(x => x.TerminationDate >= From.Value);
-                
+
             if (!string.IsNullOrWhiteSpace(Parameters.Term))
             {
                 query1 = query1.Where(x => x.FullName1.StartsWith(Parameters.Term)
                     || x.FullName2.StartsWith(Parameters.Term));
             }
 
-            var ids = query1
+            var rs = query1
                 .Statistics(out stats)
                 .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite())
                 .OrderBy(x => x.LastName).ThenBy(x => x.FirstName)
                 .ApplyPagination(Parameters)
-                .Select(x => x.Id)
+                .As<EmployeeSearchResult>()
                 .ToArray();
+
+            var ids = rs.Select(x => x.Id).ToArray();
 
             var employees = RavenSession.Load<Employee>(ids);
 
@@ -85,7 +88,7 @@ namespace CommonJobs.Application.EmployeeAbsences
 
             var results = employees
                 .Select(x => new AbsencesSearchResult(
-                    x, 
+                    x,
                     x.Absences.Where(filterAbsencesTo).Where(filterAbsencesFrom).ToList(),
                     x.Vacations.Where(filterVacationsTo).Where(filterVacationsFrom).ToList()))
                 .ToArray();

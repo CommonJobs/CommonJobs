@@ -45,3 +45,7 @@ StylesBase.css
 source/CommonJobs/packages/**
 
 source/CommonJobs/packages/**/*
+source/CommonJobs/Libs/RavenDB/Server/Databases/Default/
+source/CommonJobs/Libs/RavenDB/Server/Databases/System/
+source/CommonJobs/Libs/RavenDB/Server/Databases/Test/
+source/CommonJobs/Libs/RavenDB/Server/CompiledIndexCache/

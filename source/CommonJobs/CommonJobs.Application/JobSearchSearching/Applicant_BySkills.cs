@@ -22,7 +22,7 @@ namespace CommonJobs.Application.JobSearchSearching
         public Applicant_BySkills()
         {
             Map = applicants => from applicant in applicants
-                                where !applicant.IsHired
+                                where applicant.IsHired == false
                                 from skill in applicant.TechnicalSkills
                                 select new
                                 {
@@ -33,7 +33,7 @@ namespace CommonJobs.Application.JobSearchSearching
                                     TechnicalSkills = new object[] { skill },
                                     Total = skill.Weight
                                 };
-            
+
             Reduce = doc => doc
                 .GroupBy(x => x.Id)
                 .Select(g => new {

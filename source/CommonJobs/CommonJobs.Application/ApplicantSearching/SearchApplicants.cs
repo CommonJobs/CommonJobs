@@ -9,6 +9,7 @@ using CommonJobs.ContentExtraction;
 using CommonJobs.Application.Indexes;
 using System.Linq.Expressions;
 using CommonJobs.Utilities;
+using Raven.Client;
 
 namespace CommonJobs.Application.ApplicantSearching
 {
@@ -16,7 +17,7 @@ namespace CommonJobs.Application.ApplicantSearching
     {
         public RavenQueryStatistics Stats { get; set; }
         ApplicantSearchParameters Parameters { get; set; }
-        
+
         public SearchApplicants(ApplicantSearchParameters parameters)
         {
             Parameters = parameters;
@@ -37,7 +38,7 @@ namespace CommonJobs.Application.ApplicantSearching
 
             query = Parameters.Apply(query);
 
-            var result = query.AsProjection<ApplicantSearchResult>().ToArray();
+            var result = query.As<ApplicantSearchResult>().ToArray();
             Stats = stats;
             return result;
         }

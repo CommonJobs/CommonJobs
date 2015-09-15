@@ -1,4 +1,4 @@
-The Raven Datbase is making use of the following OSS projects:
+﻿The Raven Database is making use of the following OSS projects:
 
 * ManagedEsent project (http://codeplex.com/ManagedEsent) and is used under the MS PL license: http://managedesent.codeplex.com/license
 * ICSharpCode.NRefactory from the SharpDevelop project (http://sharpdevelop.net) and is used under the MIT X11 license: https://github.com/icsharpcode/NRefactory/blob/735cb8595e642bfb3afabc7bd0750b73c5c0ec18/doc/license.txt
@@ -10,7 +10,8 @@ The Raven Datbase is making use of the following OSS projects:
 * Rhino.Mocks (https://github.com/hibernating-rhinos/rhino-mocks/) under the BSD license: https://github.com/hibernating-rhinos/rhino-licensing/blob/master/license.txt
 * Lucene.NET, SpellChecker.NET, Spatial.NET - (http://incubator.apache.org/lucene.net/) under the apache license: https://svn.apache.org/repos/asf/incubator/lucene.net/trunk/LICENSE.txt
 * xUnit (http://xunit.codeplex.com) under the MS PL license: http://xunit.codeplex.com/license
-* Caliburn.Micro (http://caliburnmicro.codeplex.com/) - under the MIT license: http://caliburnmicro.codeplex.com/license
 * Castle Project (http://www.castleproject.org/) under the Apache license: http://www.apache.org/licenses/LICENSE-2.0.html
 * BouncyCastle.Crypto ( http://www.bouncycastle.org/csharp/) under the MIT X11 license http://www.bouncycastle.org/csharp/licence.html
-* FsLinqFixed (https://github.com/robertpi/FsLinqFixed) under the Apache license (https://raw.github.com/robertpi/FsLinqFixed/master/License.html)
+* Jint - (https://github.com/sebastienros/jint) under the BSD 2 license (https://github.com/sebastienros/jint/blob/master/LICENSE.txt)
+* Mono - (https://github.com/jbevain/cecil/ and https://github.com/mono) under the MIT license: http://www.mono-project.com/Licensing
+* lodash.js / underscore.js - (http://lodash.com) under the MIT license http://lodash.com/license

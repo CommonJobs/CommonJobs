@@ -12,7 +12,7 @@ namespace CommonJobs.Domain
         public DateTime Date { get; set; }
         public AttachmentReference Attachment { get; set; }
 
-        public static IEnumerable<SlotWithAttachment> GenerateFromNotes(IEnumerable<NoteWithAttachment> notes)
+        public static SlotWithAttachment[] GenerateFromNotes(List<NoteWithAttachment> notes)
         {
             return notes
                 .EmptyIfNull()
@@ -22,7 +22,8 @@ namespace CommonJobs.Domain
                     Attachment = x.Attachment,
                     Date = x.RegisterDate,
                     SlotId = "__NOTE__"
-                });
+                })
+                .ToArray();
         }
 
         public static IEnumerable<SlotWithAttachment> GenerateFromImage(ImageAttachment image)

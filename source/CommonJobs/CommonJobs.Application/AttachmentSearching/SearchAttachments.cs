@@ -7,6 +7,7 @@ using Raven.Client.Linq;
 using CommonJobs.Domain;
 using System.Linq.Expressions;
 using CommonJobs.Utilities;
+using Raven.Client;
 
 namespace CommonJobs.Application.AttachmentSearching
 {
@@ -40,11 +41,10 @@ namespace CommonJobs.Application.AttachmentSearching
                 var fullTextTerm = term.Trim(new[] { '*', '?' }) + '*';
                 query = query.Search(x => x.FullText, fullTextTerm, escapeQueryOptions: EscapeQueryOptions.AllowPostfixWildcard);
             }
-            
 
             if (!Parameters.IncludeFilesWithoutText)
             {
-                //Hack porque 
+                //Hack porque
                 //  ravenQuery = ravenQuery.Search(x => x.HasText, true.ToString(), options: SearchOptions.And);
                 //debería generar
                 //  FileNameWithoutSpaces:<<*english.pdf*>> AND HasText:<<True>>
@@ -52,7 +52,7 @@ namespace CommonJobs.Application.AttachmentSearching
                 //  FileNameWithoutSpaces:<<*english.pdf*>> HasText:<<True>>
                 query = query.Search(x => x.HasText, false.ToString(), options: SearchOptions.And | SearchOptions.Not);
             }
-    
+
             if (Parameters.Orphans == OrphansMode.NoOrphans)
             {
                 query = query.Search(x => x.IsOrphan, true.ToString(), options: SearchOptions.And | SearchOptions.Not);
@@ -62,10 +62,8 @@ namespace CommonJobs.Application.AttachmentSearching
                 query = query.Search(x => x.IsOrphan, false.ToString(), options: SearchOptions.And | SearchOptions.Not);
             }
 
-            var aux = query
-                .ApplyPagination(Parameters)
-                //Projection in order to do not bring PlainContent (big field)
-                .Select(x => new
+            var qArray = query.ApplyPagination(Parameters).ToArray();
+            var aux = qArray.Select(x => new
                 {
                     x.AttachmentId,
                     x.ContentType,
@@ -73,8 +71,7 @@ namespace CommonJobs.Application.AttachmentSearching
                     x.RelatedEntityId,
                     x.IsOrphan,
                     x.PartialText
-                })
-                .ToArray();
+                });
 
             var results = aux
                 .Select(x => new AttachmentSearchResult()
@@ -87,7 +84,7 @@ namespace CommonJobs.Application.AttachmentSearching
                     RelatedEntity = x.IsOrphan || string.IsNullOrEmpty(x.RelatedEntityId) ? null : RavenSession.Load<Person>(x.RelatedEntityId)
                 })
                 .ToArray();
-                
+
             Stats = stats;
             return results;
         }

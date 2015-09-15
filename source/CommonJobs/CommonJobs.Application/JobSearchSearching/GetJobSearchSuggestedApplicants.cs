@@ -1,5 +1,6 @@
 ﻿using CommonJobs.Domain;
 using CommonJobs.Infrastructure.RavenDb;
+using Raven.Client;
 using Raven.Client.Linq;
 using System;
 using System.Collections.Generic;
@@ -25,7 +26,7 @@ namespace CommonJobs.Application.JobSearchSearching
             var query = RavenSession
                 .Query<Applicant_BySkills.Projection, Applicant_BySkills>();
 
-            if (RequiredTechnicalSkills != null) 
+            if (RequiredTechnicalSkills != null)
                 foreach (var rts in RequiredTechnicalSkills)
                     query = query.Where(a => a.Searcheables.StartsWith(rts.Searcheable));
 
@@ -34,7 +35,7 @@ namespace CommonJobs.Application.JobSearchSearching
                 .Statistics(out stats)
                 .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite());
 
-            var result = query.AsProjection<SuggestedApplicantsResult>().ToArray();
+            var result = query.As<SuggestedApplicantsResult>().ToArray();
             Stats = stats;
             return result;
         }

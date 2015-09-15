@@ -26,40 +26,40 @@ namespace CommonJobs.Migrations
             ForAllEmployees(result =>
             {
                 var value = result["Vacations"];
-                if (value != null && (value.Type == Newtonsoft.Json.Linq.JTokenType.String || value.Type == Newtonsoft.Json.Linq.JTokenType.Null))
+                if (value != null && ((Newtonsoft.Json.Linq.JTokenType)value.Type == Newtonsoft.Json.Linq.JTokenType.String || (Newtonsoft.Json.Linq.JTokenType)value.Type == Newtonsoft.Json.Linq.JTokenType.Null))
                 {
                     var patchs = new List<PatchRequest>() {
-                        new PatchRequest() 
+                        new PatchRequest()
                         {
                             Type = PatchCommandType.Unset,
                             Name = "Vacations"
                         },
-                        new PatchRequest() 
-                        { 
-                            Type = PatchCommandType.Modify, 
-                            Name = "@metadata", 
-                            Value = new RavenJObject(), 
-                            Nested = new [] 
-                            { 
-                                new PatchRequest() 
-                                { 
-                                    Type = PatchCommandType.Set, 
-                                    Name = UpBackupKey, 
-                                    Value = value, 
+                        new PatchRequest()
+                        {
+                            Type = PatchCommandType.Modify,
+                            Name = "@metadata",
+                            Value = new RavenJObject(),
+                            Nested = new []
+                            {
+                                new PatchRequest()
+                                {
+                                    Type = PatchCommandType.Set,
+                                    Name = UpBackupKey,
+                                    Value = value,
                                 },
                                 new PatchRequest()
                                 {
                                     Type = PatchCommandType.Unset,
                                     Name = DownBackupKey,
                                 }
-                            } 
+                            }
                         }
                     };
 
                     var metadata = result["@metadata"] as RavenJObject;
                     RavenJToken newData;
 
-                    if (metadata == null || !metadata.TryGetValue(DownBackupKey, out newData) || newData == null || newData.Type != Newtonsoft.Json.Linq.JTokenType.Array)
+                    if (metadata == null || !metadata.TryGetValue(DownBackupKey, out newData) || newData == null || (Newtonsoft.Json.Linq.JTokenType)newData.Type != Newtonsoft.Json.Linq.JTokenType.Array)
                         newData = new global::Raven.Json.Linq.RavenJArray();
 
                     patchs.Add(new PatchRequest()
@@ -81,33 +81,33 @@ namespace CommonJobs.Migrations
             ForAllEmployees(result =>
             {
                 var value = result["Vacations"];
-                if (value == null || value.Type != Newtonsoft.Json.Linq.JTokenType.String)
+                if (value == null || (Newtonsoft.Json.Linq.JTokenType)value.Type != Newtonsoft.Json.Linq.JTokenType.String)
                 {
                     var patchs = new List<PatchRequest>() {
-                        new PatchRequest() 
+                        new PatchRequest()
                         {
                             Type = PatchCommandType.Unset,
                             Name = "Vacations"
                         },
-                        new PatchRequest() 
-                        { 
-                            Type = PatchCommandType.Modify, 
-                            Name = "@metadata", 
-                            Value = new RavenJObject(), 
-                            Nested = new [] 
-                            { 
-                                new PatchRequest() 
-                                { 
-                                    Type = PatchCommandType.Set, 
-                                    Name = DownBackupKey, 
-                                    Value = value, 
+                        new PatchRequest()
+                        {
+                            Type = PatchCommandType.Modify,
+                            Name = "@metadata",
+                            Value = new RavenJObject(),
+                            Nested = new []
+                            {
+                                new PatchRequest()
+                                {
+                                    Type = PatchCommandType.Set,
+                                    Name = DownBackupKey,
+                                    Value = value,
                                 },
                                 new PatchRequest()
                                 {
                                     Type = PatchCommandType.Unset,
                                     Name = UpBackupKey,
                                 }
-                            } 
+                            }
                         }
                     };
 

@@ -7,6 +7,7 @@ using CommonJobs.Infrastructure.RavenDb;
 using NLog;
 using Raven.Client.Linq;
 using CommonJobs.Utilities;
+using Raven.Client;
 
 namespace CommonJobs.Application.AttachmentSlots
 {
@@ -19,9 +20,9 @@ namespace CommonJobs.Application.AttachmentSlots
         /* NOTE:
              * Esto no funcionaba:
              *      .Where(x => x.RelatedEntityType == typeof(Employee))
-             * porque Newtonsoft Json serializa el tipo con el nombre largo ("CommonJobs.Domain.Employee, CommonJobs.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null") 
+             * porque Newtonsoft Json serializa el tipo con el nombre largo ("CommonJobs.Domain.Employee, CommonJobs.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null")
              * y RavenDB busca por el corto (CommonJobs.Domain.Employee)
-             * 
+             *
              * Otra opción sería buscar por prefijo del id (http://mattwarren.org/2012/07/12/fun-with-ravendb-documents-keys/)
              * */
         public override AttachmentSlot[] Execute()

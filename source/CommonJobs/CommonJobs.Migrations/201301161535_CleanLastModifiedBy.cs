@@ -18,16 +18,16 @@ namespace CommonJobs.Migrations
         public override void Up()
         {
             var patchs = new List<PatchRequest>() {
-                new PatchRequest() 
-                { 
-                    Type = PatchCommandType.Modify, 
-                    Name = "@metadata", 
-                    Value = new RavenJObject(), 
+                new PatchRequest()
+                {
+                    Type = PatchCommandType.Modify,
+                    Name = "@metadata",
+                    Value = new RavenJObject(),
                     Nested = new []
-                    { 
-                        new PatchRequest() 
-                        { 
-                            Type = PatchCommandType.Unset, 
+                    {
+                        new PatchRequest()
+                        {
+                            Type = PatchCommandType.Unset,
                             Name = "Last-Modified-By"
                         }
                     }
@@ -36,8 +36,11 @@ namespace CommonJobs.Migrations
 
             DocumentStore.DatabaseCommands.UpdateByIndex("Raven/DocumentsByEntityName",
                                                          new IndexQuery {  },
-                                                         patchs.ToArray(), 
-                                                         allowStale: true);
+                                                         patchs.ToArray(),
+                                                         new BulkOperationOptions()
+                                                         {
+                                                             AllowStale = true
+                                                         });
 
         }
 

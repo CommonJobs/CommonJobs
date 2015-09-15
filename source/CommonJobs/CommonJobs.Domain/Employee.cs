@@ -42,7 +42,7 @@ namespace CommonJobs.Domain
 
         [Display(Name = "Rem. Inicial")]
         [DataType(DataType.Currency)]
-        public Decimal InitialSalary 
+        public Decimal InitialSalary
         {
             get
             {
@@ -51,12 +51,12 @@ namespace CommonJobs.Domain
                     .OrderBy(x => x.RealDate)
                     .Select(x => (decimal?)x.Salary)
                     .FirstOrDefault() ?? 0;
-            } 
+            }
         }
 
         [Display(Name = "Rem.Actual")]
         [DataType(DataType.Currency)]
-        public Decimal CurrentSalary 
+        public Decimal CurrentSalary
         {
             get
             {
@@ -65,7 +65,7 @@ namespace CommonJobs.Domain
                     .OrderByDescending(x => x.RealDate)
                     .Select(x => (decimal?)x.Salary)
                     .FirstOrDefault() ?? 0;
-            } 
+            }
         }
 
         [Display(Name = "Horario")]
@@ -75,13 +75,13 @@ namespace CommonJobs.Domain
         [Display(Name = "Carga horaria")]
         //Only in detailed view
         public decimal? WorkingHours { get; set; }
-        
+
         [Display(Name = "Legajo")]
         public string FileId { get; set; }
-        
+
         [Display(Name = "Almuerzo")]
         public bool Lunch { get; set; }
-        
+
         [Display(Name = "Número de Cuenta")]
         public string BankAccount { get; set; }
 
@@ -96,7 +96,7 @@ namespace CommonJobs.Domain
 
         [Display(Name = "CUIL")]
         public string Cuil { get; set; }
-        
+
         [Display(Name = "Obra Social")]
         public string HealthInsurance { get; set; }
 
@@ -159,14 +159,15 @@ namespace CommonJobs.Domain
         [Display(Name = "Vencimiento del pasaporte europeo")]
         [DataType(DataType.Date)]
         public DateTime? EuropeanPassportExpiration { get; set; }
-        
-        public override IEnumerable<SlotWithAttachment> AllAttachmentReferences
+
+        public override SlotWithAttachment[] AllAttachmentReferences
         {
-            get 
-            { 
+            get
+            {
                 return base.AllAttachmentReferences
                     .Union(SlotWithAttachment.GenerateFromNotes(Notes))
-                    .Union(AttachmentsBySlot.EmptyIfNull().Where(x => x.Attachment != null)); 
+                    .Union(AttachmentsBySlot.EmptyIfNull().Where(x => x.Attachment != null))
+                    .ToArray();
             }
         }
 

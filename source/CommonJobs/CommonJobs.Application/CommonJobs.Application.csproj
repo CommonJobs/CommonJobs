@@ -44,21 +44,16 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=4.0.8.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Libs\RavenDB\Client\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="NLog">
       <HintPath>..\packages\NLog.2.0.0.2000\lib\net40\NLog.dll</HintPath>
     </Reference>
-    <Reference Include="Raven.Abstractions">
-      <HintPath>..\Libs\RavenDB\Client\Raven.Abstractions.dll</HintPath>
+    <Reference Include="Raven.Abstractions, Version=3.0.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\RavenDB.Client.3.0.3785\lib\net45\Raven.Abstractions.dll</HintPath>
     </Reference>
-    <Reference Include="Raven.Client.Debug">
-      <HintPath>..\Libs\RavenDB\Client\Raven.Client.Debug.dll</HintPath>
-    </Reference>
-    <Reference Include="Raven.Client.Lightweight">
-      <HintPath>..\Libs\RavenDB\Client\Raven.Client.Lightweight.dll</HintPath>
+    <Reference Include="Raven.Client.Lightweight, Version=3.0.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\RavenDB.Client.3.0.3785\lib\net45\Raven.Client.Lightweight.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
@@ -104,8 +99,40 @@
     <Compile Include="JobSearchSearching\JobSearchSearchParameters.cs" />
     <Compile Include="JobSearchSearching\SearchJobSearches.cs" />
     <Compile Include="JobSearchSearching\SuggestedApplicantsResult.cs" />
-    <Compile Include="Suggest\Persons_Suggestions.cs" />
-    <Compile Include="Suggest\GetSuggestions.cs" />
+    <Compile Include="Suggest\GetTechnicalSkillSuggestions.cs" />
+    <Compile Include="Suggest\GetCompanyNameSuggestions.cs" />
+    <Compile Include="Suggest\GetUserNameSuggestions.cs" />
+    <Compile Include="Suggest\GetSkillSuggestions.cs" />
+    <Compile Include="Suggest\TechnicalSkill_Suggestions.cs" />
+    <Compile Include="Suggest\CompanyName_Suggestions.cs" />
+    <Compile Include="Suggest\UserName_Suggestions.cs" />
+    <Compile Include="Suggest\Skill_Suggestions.cs" />
+    <Compile Include="Suggest\GetProjectSuggestions.cs" />
+    <Compile Include="Suggest\GetAgreementSuggestions.cs" />
+    <Compile Include="Suggest\GetPositionSuggestions.cs" />
+    <Compile Include="Suggest\GetPlatformSuggestions.cs" />
+    <Compile Include="Suggest\Project_Suggestions.cs" />
+    <Compile Include="Suggest\Agreement_Suggestions.cs" />
+    <Compile Include="Suggest\Position_Suggestions.cs" />
+    <Compile Include="Suggest\Platform_Suggestions.cs" />
+    <Compile Include="Suggest\College_Suggestions.cs" />
+    <Compile Include="Suggest\EmailDomain_Suggestions.cs" />
+    <Compile Include="Suggest\BankBranch_Suggestions.cs" />
+    <Compile Include="Suggest\GetBankBranchSuggestions.cs" />
+    <Compile Include="Suggest\GetSenioritySuggestions.cs" />
+    <Compile Include="Suggest\GetHealthInsuranceSuggestions.cs" />
+    <Compile Include="Suggest\GetBankNameSuggestions.cs" />
+    <Compile Include="Suggest\HealthInsurance_Suggestions.cs" />
+    <Compile Include="Suggest\Seniority_Suggestions.cs" />
+    <Compile Include="Suggest\BankName_Suggestions.cs" />
+    <Compile Include="Suggest\Email_Suggestions.cs" />
+    <Compile Include="Suggest\Degree_Suggestions.cs" />
+    <Compile Include="Suggest\English_Suggestions.cs" />
+    <Compile Include="Suggest\GetCollegeSuggestions.cs" />
+    <Compile Include="Suggest\GetEmailDomainSuggestions.cs" />
+    <Compile Include="Suggest\GetEmailSuggestions.cs" />
+    <Compile Include="Suggest\GetDegreeSuggestions.cs" />
+    <Compile Include="Suggest\GetEnglishSuggestions.cs" />
     <Compile Include="Vacations\CalculateVacations.cs" />
     <Compile Include="SharedLinks\SearchSharedEntity.cs" />
     <Compile Include="AttachmentIndexing\Attachments_ByContentExtractorConfigurationHash.cs" />
