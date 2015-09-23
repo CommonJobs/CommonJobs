@@ -5,7 +5,7 @@
 }
 
 <!DOCTYPE html>
-<html class="bootstrap-scope">
+<html>
     <head>
         <meta charset="utf-8" />
         <title>@ViewBag.Title</title>
@@ -49,9 +49,9 @@
             </div>
             <nav class="nav__main">
                 <div class="suit-wrapper">
-                    <a href="@Url.Content("~/Evaluations/Create/" + ViewBag.Period)" class="page--is-active" title="Administración de períodos">Administración de Períodos</a>
-                    <a href="@Url.Content("~/Evaluations/" + ViewBag.Period)" title="Evaluaciones">Evaluaciones</a>
-                    <a href="@Url.Content("~/Evaluations/report")" title="Historial de Evaluaciones">Historial de Evaluaciones</a>
+                    <a href="@Url.Content("~/Evaluations/Create/" + ViewBag.Period)" @if (ViewBag.Active == "Create") { <text> class="page--is-active" </text> } title="Administración de períodos">Administración de Períodos</a>
+                    <a href="@Url.Content("~/Evaluations/" + ViewBag.Period)" @if (ViewBag.Active == "Evaluation") { <text> class="page--is-active" </text>  } title="Evaluaciones">Evaluaciones</a>
+                    <a href="@Url.Content("~/Evaluations/report")" @if (ViewBag.Active == "Report") { <text> class="page--is-active" </text>  } title="Historial de Evaluaciones">Historial de Evaluaciones</a>
                 </div>
             </nav>
         </header>

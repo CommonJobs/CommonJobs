@@ -50,6 +50,7 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
         public ActionResult PeriodCreation(string period){
             ViewBag.Period = period;
             ViewBag.IsPeriodCreation = true;
+            ViewBag.Active = "Create";
             return View();
         }
 
@@ -60,6 +61,7 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
             //TODO: delete this line and bring the period dynamically
             ViewBag.Period = "2015-06";
             ViewBag.IsReportDashboard = true;
+            ViewBag.Active = "Report";
             return View();
         }
 
@@ -101,6 +103,7 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
             ViewBag.Period = period;
             ViewBag.hasAutoCalification = isEvaluated;
             ViewBag.IsDashboard = true;
+            ViewBag.Active = "Evaluation";
             return View();
         }
 
