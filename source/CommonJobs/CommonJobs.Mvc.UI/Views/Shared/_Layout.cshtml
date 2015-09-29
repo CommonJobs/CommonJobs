@@ -30,12 +30,14 @@
     ScriptManager.RegisterJs(Url.Content("~/Content/EditCommon/Suggest.js"), priority: 900);
 }
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
     <meta charset="utf-8" />
     <title>@ViewBag.Title</title>
     @Html.RenderScriptManagerEntries(ScriptManager)
     <link rel="shortcut icon" href="@Url.Content("~/Content/Images/favicon.ico")" />
+    <script src="//use.typekit.net/fij5tcy.js"></script>
+    <script>try { Typekit.load({ async: true }); } catch (e) { }</script>
 </head>
 <body>
     <header class="header__main">
@@ -45,13 +47,21 @@
                     <img src="/Content/Images/Evaluations/header_logo.png" alt="CommonJobs">
                 </a>
                 <nav class="header__sub">
-                    <span class="header__user">
-                        @User.Identity.Name
-                        @if (User.Identity.AuthenticationType == "Forms")
-                        {
-                            <text>[<a href="@Url.Content("~/Account/LogOff")">LogOff</a>]</text>
-                        }
-                    </span>
+                    @if (Request.IsAuthenticated && User != null && User.Identity != null && User.Identity.Name != null)
+                    {
+                        <span class="header__user">
+                            @User.Identity.Name
+                            @if (User.Identity.AuthenticationType == "Forms")
+                            {
+                                <text>[<a href="@Url.Content("~/Account/LogOff")">LogOff</a>]</text>
+                            }
+                        </span>
+                    }
+                    else
+                    {
+                        //TODO: show link to logon page when AuthenticationType == "Forms"
+                    }
+                    @Html.Partial("EnvironmentBanner")
                 </nav>
             </div>
         </div>

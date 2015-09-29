@@ -1,16 +1,18 @@
 ﻿@using CommonJobs.Infrastructure.Mvc.SecurityTrimming
 @using CommonJobs.Mvc.UI.HtmlHelpers
 @{
-    ScriptManager.RegisterCss(Url.Content("~/Content/mymenu.css"), priority: 900);
+    ScriptManager.RegisterCss(Url.Content("~/Content/evaluations.css"), priority: 900);
 }
 
 <!DOCTYPE html>
-<html>
+<html lang="es">
     <head>
         <meta charset="utf-8" />
         <title>@ViewBag.Title</title>
         @Html.RenderScriptManagerEntries(ScriptManager)
         <link rel="shortcut icon" href="@Url.Content("~/Content/Images/favicon.ico")" />
+        <script src="//use.typekit.net/fij5tcy.js"></script>
+        <script>try { Typekit.load({ async: true }); } catch (e) { }</script>
     </head>
     <body>
         <header class="header__main">
@@ -49,9 +51,9 @@
             </div>
             <nav class="nav__main">
                 <div class="suit-wrapper">
-                    <a href="@Url.Content("~/Evaluations/Create/" + ViewBag.Period)" @if (ViewBag.Active == "Create") { <text> class="page--is-active" </text> } title="Administración de períodos">Administración de Períodos</a>
-                    <a href="@Url.Content("~/Evaluations/" + ViewBag.Period)" @if (ViewBag.Active == "Evaluation") { <text> class="page--is-active" </text>  } title="Evaluaciones">Evaluaciones</a>
-                    <a href="@Url.Content("~/Evaluations/report")" @if (ViewBag.Active == "Report") { <text> class="page--is-active" </text>  } title="Historial de Evaluaciones">Historial de Evaluaciones</a>
+                    <a href="@Url.Content("~/Evaluations/Create/" + ViewBag.Period)" @if (ViewBag.ActiveSection == "PeriodCreation"){ <text> class="page--is-active" </text> } title="Administración de períodos">Administración de Períodos</a>
+                    <a href="@Url.Content("~/Evaluations/" + ViewBag.Period)" @if (ViewBag.ActiveSection == "PeriodEvaluation") { <text> class="page--is-active" </text>  } title="Evaluaciones">Evaluaciones</a>
+                    <a href="@Url.Content("~/Evaluations/report")" @if (ViewBag.ActiveSection == "ReportDashboard") { <text> class="page--is-active" </text>  } title="Historial de Evaluaciones">Historial de Evaluaciones</a>
                 </div>
             </nav>
         </header>
