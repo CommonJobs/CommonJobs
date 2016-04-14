@@ -101,8 +101,11 @@
 
     function postEvaluationsForGeneration(callbacks) {
         var model = viewmodel.toJs();
-        var modelFiltered = { Employees: _.filter(model.Employees, function (e) { return e.ResponsibleId && !e.Period; }) };
-        $.ajax("/Evaluations/api/GenerateEvalutions/" + evaluationPeriod + "/", {
+        var modelFiltered = {
+            Employees: _.filter(model.Employees, function (e) { return e.ResponsibleId && !e.Period; }),
+            Period: evaluationPeriod
+        };
+        $.ajax("/Evaluations/api/GenerateEvalutions/", {
             type: "POST",
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',

@@ -315,7 +315,7 @@
 
     function getDashboardEvaluations(period) {
         viewmodel.isLoading(true);
-        var ajax = $.getJSON("/Evaluations/api/getDashboardEvaluations/"+period, function (model) {
+        var ajax = $.getJSON("/Evaluations/api/getDashboardEvaluations/" + period, function (model) {
             viewmodel.fromJS(model);
             viewmodel.defaultSort();
 

@@ -44,9 +44,9 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations.Controllers
 
         [AcceptVerbs(HttpVerbs.Post)]
         [CommonJobsAuthorize(Roles = "EmployeeManagers")]
-        public JsonNetResult GenerateEvalutions(string period, PeriodCreation model)
+        public JsonNetResult GenerateEvalutions(PeriodCreation model)
         {
-            ExecuteCommand(new GenerateEvaluationsCommand(model.Employees, period));
+            ExecuteCommand(new GenerateEvaluationsCommand(model.Employees, model.Period));
             return Json(model.Employees.Count);
         }
 
