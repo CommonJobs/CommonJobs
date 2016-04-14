@@ -66,15 +66,15 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations.Controllers
         [AcceptVerbs(HttpVerbs.Get)]
         public JsonNetResult GetDashboardEvaluations(string period) {
             PeriodEvaluation periodEvaluation = new PeriodEvaluation();
-            periodEvaluation.Evaluations = ExecuteCommand(new GetEvaluatorEmployeesCommand(DetectUser()));
+            periodEvaluation.Evaluations = ExecuteCommand(new GetEvaluatorEmployeesCommand(DetectUser(), period));
             return Json(periodEvaluation);
         }
 
         [AcceptVerbs(HttpVerbs.Get)]
-        public JsonNetResult GetCalificatorsForEvaluation(string username)
+        public JsonNetResult GetCalificatorsForEvaluation(string username, string period)
         {
             PeriodEvaluation periodEvaluation = new PeriodEvaluation();
-            periodEvaluation.Evaluations = ExecuteCommand(new GetEvaluatorEmployeesCommand(username));
+            periodEvaluation.Evaluations = ExecuteCommand(new GetEvaluatorEmployeesCommand(username, period));
             return Json(periodEvaluation);
         }
 
