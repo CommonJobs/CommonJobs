@@ -100,6 +100,14 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
             ViewBag.Period = period;
             ViewBag.hasAutoCalification = isEvaluated;
             ViewBag.IsDashboard = true;
+
+            ScriptManager.RegisterGlobalJavascript(
+                "ViewData",
+                new
+                {
+                    period = period,
+                },
+                500);
             return View();
         }
 

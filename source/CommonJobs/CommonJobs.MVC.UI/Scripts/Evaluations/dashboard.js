@@ -150,7 +150,8 @@
         { title: 'Empleado', sortable: true, sortPropertyName: 'fullName', defaultPropertyName: 'fullName', asc: true, activeSort: ko.observable(false) },
         { title: 'Puesto', sortable: true, sortPropertyName: 'currentPosition', defaultPropertyName: 'fullName', asc: true, activeSort: ko.observable(false) },
         { title: 'Seniority', sortable: true, sortPropertyName: 'seniority', defaultPropertyName: 'fullName', asc: true, activeSort: ko.observable(false) },
-        { title: 'Evaluadores', sortable: false},
+        { title: 'Período', sortable: true, sortPropertyName: 'period', defaultPropertyName: 'fullName', asc: true, activeSort: ko.observable(false) },
+        { title: 'Evaluadores', sortable: false },
         { title: 'Estado', sortable: true, sortPropertyName: 'state', defaultPropertyName: 'actionSortPosition', asc: true, activeSort: ko.observable(false) },
         { title: 'Acción', sortable: true, sortPropertyName: 'actionSortPosition', defaultPropertyName: 'state', asc: true, activeSort: ko.observable(false) },
         { title: '', sortable: false }
@@ -207,7 +208,7 @@
         this.fullName = data.FullName;
         this.userName = data.UserName;
         this.period = data.Period;
-        this.currentPosition= data.CurrentPosition || '';
+        this.currentPosition = data.CurrentPosition || '';
         this.seniority = data.Seniority || '';
         this.evaluators(data.Evaluators);
         this.evaluatorsString = ko.computed(function () {
@@ -231,7 +232,7 @@
                 contentType: 'application/json; charset=utf-8',
                 data: JSON.stringify({ evaluationId: this.id }),
                 success: function (response) {
-                    getDashboardEvaluations();
+                    getDashboardEvaluations(window.ViewData.period);
                 },
                 error: function () {
                     alert('Fallo interno. Por favor recargue la página.');
@@ -308,13 +309,13 @@
 
     var viewmodel = new Dashboard();
 
-    getDashboardEvaluations();
+    getDashboardEvaluations(window.ViewData.period);
     ko.applyBindings(viewmodel);
     commonSuggest($('.content-modal .search'), 'UserName');
 
-    function getDashboardEvaluations() {
+    function getDashboardEvaluations(period) {
         viewmodel.isLoading(true);
-        var ajax = $.getJSON("/Evaluations/api/getDashboardEvaluations/", function (model) {
+        var ajax = $.getJSON("/Evaluations/api/getDashboardEvaluations/" + period, function (model) {
             viewmodel.fromJS(model);
             viewmodel.defaultSort();
 

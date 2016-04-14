@@ -91,7 +91,7 @@ namespace CommonJobs.Application.EvalForm.EmployeeSearching
                     FullName = (string)null,
                     CurrentPosition = (string)null,
                     Seniority = (string)null,
-                    Period = (string)null,
+                    Period = calification.Period,
                     TemplateId = (string)null,
                     Evaluators = (calification.Owner != CalificationType.Auto && calification.Owner != CalificationType.Company && calification.Owner != CalificationType.Responsible)
                         ? new [] { calification.EvaluatorEmployee }
@@ -109,15 +109,15 @@ namespace CommonJobs.Application.EvalForm.EmployeeSearching
 
             Reduce = docs =>
                 from doc in docs
-                group doc by doc.UserName into g
+                group doc by new { doc.UserName, doc.Period } into g
                 select new
                 {
                     Id = g.Where(x => x.Id != null).Select(x => x.Id).FirstOrDefault(),
-                    UserName = g.Key,
+                    UserName = g.Key.UserName,
                     FullName = g.Where(x => x.FullName != null).Select(x => x.FullName).FirstOrDefault(),
                     CurrentPosition = g.Where(x => x.CurrentPosition != null).Select(x => x.CurrentPosition).FirstOrDefault(),
                     Seniority = g.Where(x => x.Seniority != null).Select(x => x.Seniority).FirstOrDefault(),
-                    Period = g.Where(x => x.Period != null).Select(x => x.Period).FirstOrDefault(),
+                    Period = g.Key.Period,
                     TemplateId = g.Where(x => x.TemplateId != null).Select(x => x.TemplateId).FirstOrDefault(),
                     Evaluators = g.SelectMany(x => x.Evaluators).Where(x => x != null).ToArray(),
                     ResponsibleId = g.Where(x => x.ResponsibleId != null).Select(x => x.ResponsibleId).FirstOrDefault(),

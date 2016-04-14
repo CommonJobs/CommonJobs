@@ -11,10 +11,12 @@ namespace CommonJobs.Application.Evaluations
     public class GenerateEvaluationsCommand : Command
     {
         private List<EmployeeEvaluationDTO> _employeesEvaluations { get; set; }
+        private string _period { get; set; }
 
-        public GenerateEvaluationsCommand(List<EmployeeEvaluationDTO> employeesEvaluations)
+        public GenerateEvaluationsCommand(List<EmployeeEvaluationDTO> employeesEvaluations, string period)
         {
             _employeesEvaluations = employeesEvaluations;
+            _period = period;
         }
 
         public override void Execute()
@@ -24,7 +26,7 @@ namespace CommonJobs.Application.Evaluations
                 EmployeeEvaluation employeeEvaluation = new EmployeeEvaluation();
 
                 //Both Period and TemplateId will be fixed for this release
-                employeeEvaluation.Period = "2015-06";
+                employeeEvaluation.Period = _period;
                 employeeEvaluation.TemplateId = Template.DefaultTemplateId;
                 //---
                 employeeEvaluation.UserName = e.UserName;

@@ -12,5 +12,7 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations.Models
         }
         public List<EmployeeEvaluationDTO> Employees { get; set; }
 
+        public string Period { get; set; }
+
     }
 }

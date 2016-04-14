@@ -39,8 +39,9 @@
                     <span data-bind="if: isResponsible"><span class="top-tip rol" data-tips="Responsable">R</span></span>
                 </td>
                 <td data-bind="text: fullName"></td>
-                <td data-bind="text: currentPosition"></td>      
+                <td data-bind="text: currentPosition"></td>
                 <td data-bind="text: seniority"></td>
+                <td data-bind="text: period"></td>
                 <td class="calificators-column">
                     <span data-bind="if: isCalificatorsEditable() && evaluatorsAmount() > 0">
                         <a class="calification-links edit top-tip" data-bind="click: showCalificatorsManager, attr: { 'data-tips': evaluatorsString()}">
