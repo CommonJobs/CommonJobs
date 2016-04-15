@@ -116,5 +116,21 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations.Controllers
             ExecuteCommand(new StartDevolutionCommand(evaluationId, DetectUser()));
             return Json("OK");
         }
+
+        [AcceptVerbs(HttpVerbs.Delete)]
+        [CommonJobsAuthorize(Roles = "EvaluationManagers")]
+        public JsonNetResult DeleteEmployeeEvalution(string period, string userName)
+        {
+            ExecuteCommand(new DeleteEvaluationCommand(period, userName));
+            return Json("OK");
+        }
+
+        [AcceptVerbs(HttpVerbs.Delete)]
+        [CommonJobsAuthorize(Roles = "EvaluationManagers")]
+        public JsonNetResult DeletePeriod(string period)
+        {
+            ExecuteCommand(new DeleteEvaluationCommand(period));
+            return Json("OK");
+        }
     }
 }
