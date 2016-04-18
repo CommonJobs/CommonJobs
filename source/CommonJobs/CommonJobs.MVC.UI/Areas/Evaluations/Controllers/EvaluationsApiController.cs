@@ -117,7 +117,7 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations.Controllers
             return Json("OK");
         }
 
-        [AcceptVerbs(HttpVerbs.Delete)]
+        [AcceptVerbs(HttpVerbs.Post)]
         [CommonJobsAuthorize(Roles = "EvaluationManagers")]
         public JsonNetResult DeleteEmployeeEvalution(string period, string userName)
         {
@@ -125,7 +125,7 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations.Controllers
             return Json("OK");
         }
 
-        [AcceptVerbs(HttpVerbs.Delete)]
+        [AcceptVerbs(HttpVerbs.Post)]
         [CommonJobsAuthorize(Roles = "EvaluationManagers")]
         public JsonNetResult DeletePeriod(string period)
         {
