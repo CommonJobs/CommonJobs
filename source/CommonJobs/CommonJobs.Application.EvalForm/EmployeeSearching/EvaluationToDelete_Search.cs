@@ -8,15 +8,8 @@ using System.Threading.Tasks;
 
 namespace CommonJobs.Application.EvalForm.EmployeeSearching
 {
-    class EvaluationToDelete_Search : AbstractMultiMapIndexCreationTask<EvaluationToDelete_Search.Projection>
+    class EvaluationToDelete_Search : AbstractMultiMapIndexCreationTask
     {
-        public class Projection
-        {
-            public string Id { get; set; }
-            public string UserName { get; set; }
-            public string Period { get; set; }
-        }
-
         public EvaluationToDelete_Search()
         {
             AddMap<EmployeeEvaluation>(evaluations =>

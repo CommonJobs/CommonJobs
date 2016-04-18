@@ -26,7 +26,7 @@ namespace CommonJobs.Application.EvalForm.Commands
         {
             var indexQuery = new IndexQuery
             {
-                Query = " Period:" + Escape(_period)
+                Query = "Period:" + Escape(_period)
             };
             if (_userName != null)
             {

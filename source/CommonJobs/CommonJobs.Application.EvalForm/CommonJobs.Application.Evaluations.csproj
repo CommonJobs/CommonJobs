@@ -83,6 +83,7 @@
     <Compile Include="Commands\GetEmployeesForEvaluationCommand.cs" />
     <Compile Include="Commands\GetEvaluationTemplateCommand.cs" />
     <Compile Include="EmployeeSearching\EvaluationToDelete_Search.cs" />
+    <Compile Include="Extensions\DatabaseCommandsExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Commands\UpdateTemplateCommand.cs" />
   </ItemGroup>
