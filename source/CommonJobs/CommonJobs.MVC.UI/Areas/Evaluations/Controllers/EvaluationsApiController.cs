@@ -132,5 +132,13 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations.Controllers
             ExecuteCommand(new DeleteEvaluationCommand(period));
             return Json("OK");
         }
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        [CommonJobsAuthorize(Roles = "EvaluationManagers")]
+        public JsonNetResult ChangeResponsable (string evaluatedUser, string period, string newResponsible)
+        {
+            ExecuteCommand(new ChangeResponsibleCommand(evaluatedUser, period, newResponsible));
+            return Json("OK");
+        }
     }
 }
