@@ -15,7 +15,7 @@ using CommonJobs.Domain.Evaluations;
 using CommonJobs.Mvc.UI.Areas.Evaluations.Models;
 using CommonJobs.Application.Evaluations;
 using CommonJobs.Application.EvalForm.Commands;
-using CommonJobs.Application.EvalForm.EmployeeSearching;
+using CommonJobs.Application.EvalForm.Indexes;
 using System.Web.Routing;
 using Raven.Client;
 

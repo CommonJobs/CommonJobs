@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CommonJobs.Application.EvalForm.EmployeeSearching
+namespace CommonJobs.Application.EvalForm.Indexes
 {
     class EvaluationToDelete_Search : AbstractMultiMapIndexCreationTask
     {

@@ -77,13 +77,13 @@
     <Compile Include="Dtos\EvaluatorsUpdateDto.cs" />
     <Compile Include="Dtos\UpdateCalificationDto.cs" />
     <Compile Include="Dtos\UpdateEvaluationDto.cs" />
-    <Compile Include="EmployeeSearching\EmployeeToEvaluate_Search.cs" />
-    <Compile Include="EmployeeSearching\Employee_Search.cs" />
+    <Compile Include="Indexes\EmployeeToEvaluate_Search.cs" />
+    <Compile Include="Indexes\Employee_Search.cs" />
     <Compile Include="Commands\GenerateCalificationCommand.cs" />
     <Compile Include="Commands\GenerateEvaluationsCommand.cs" />
     <Compile Include="Commands\GetEmployeesForEvaluationCommand.cs" />
     <Compile Include="Commands\GetEvaluationTemplateCommand.cs" />
-    <Compile Include="EmployeeSearching\EvaluationToDelete_Search.cs" />
+    <Compile Include="Indexes\EvaluationToDelete_Search.cs" />
     <Compile Include="Extensions\DatabaseCommandsExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Commands\UpdateTemplateCommand.cs" />
