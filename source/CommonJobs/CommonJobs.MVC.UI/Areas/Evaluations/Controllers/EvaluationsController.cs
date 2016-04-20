@@ -47,7 +47,8 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
 
         [AcceptVerbs(HttpVerbs.Get)]
         [CommonJobsAuthorize(Roles = "EmployeeManagers")]
-        public ActionResult PeriodCreation(string period){
+        public ActionResult PeriodCreation(string period)
+        {
             ViewBag.Period = period;
             return View();
         }
