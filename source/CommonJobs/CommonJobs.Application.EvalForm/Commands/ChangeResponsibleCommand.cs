@@ -40,18 +40,26 @@ namespace CommonJobs.Application.EvalForm.Commands
                  .Query<Employee_Search.Projection, Employee_Search>()
                  .Where(x => x.IsActive && x.UserName == _newResponsibleName).FirstOrDefault();
 
+            
             if (newResponsible == null)
             {
                 throw new ApplicationException(string.Format("Error: Empleado inexistente: {0}.", _newResponsibleName));
             }
 
-            // If the new responsible is the same as the old one, cancel the operation.
-            if (evaluation.ResponsibleId == newResponsible.UserName)
+            // Check that new responsible is not the evaluated employee
+            if (evaluation.UserName == newResponsible.UserName )
+            {
+                throw new ApplicationException(string.Format("Error: {0} no puede ser responsable de su propia evaluación.", _newResponsibleName));
+            }
+
+                // If the new responsible is the same as the old one, cancel the operation.
+                if (evaluation.ResponsibleId == newResponsible.UserName)
             {
                 throw new ApplicationException(string.Format("Error: {0} es actualmente el responsable de esta evaluación.", newResponsible.UserName));
             }
 
-            // The only moment when a user cant change an evaluation responsible, is when the evaluation is complete and closed
+            // The only moment when a user cant change an evaluation responsible,
+            // is when the evaluation is complete and closed
             if (evaluation.Finished)
             {
                 throw new ApplicationException(string.Format("Error: Esta evaluación ya está cerrada. No se puede modificar el responsable."));
