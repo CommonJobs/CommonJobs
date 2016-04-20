@@ -28,7 +28,10 @@ namespace CommonJobs.Application.EvalForm.Commands
             IQueryable<EmployeeToEvaluate_Search.Projection> query = RavenSession
                 .Query<EmployeeToEvaluate_Search.Projection, EmployeeToEvaluate_Search>()
                 .Statistics(out stats)
-                .Where(e => (e.Period == _period) && (e.ResponsibleId == _loggedUser || e.Evaluators.Any(ev => ev == _loggedUser)));
+                .Where(e => (e.Period == _period)
+                && (e.UserName == _loggedUser
+                || e.ResponsibleId == _loggedUser
+                || e.Evaluators.Any(ev => ev == _loggedUser)));
 
             var employeesProjection = query.ToList();
 

@@ -68,8 +68,6 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
         {
             //1. Check if period exists by querying Evaluations collection.
             //2. Check if the current user has to evaluate someone
-            //2.a. If not, redirect to /Evaluations/{period}/{username}
-            //2.b. If so, fetch the users to evaluate
 
             var loggedUser = DetectUser();
 
@@ -87,16 +85,6 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
             }
 
             var isEvaluated = evaluation.Any(p => p.UserName == loggedUser);
-            var isEvaluator = evaluation.Any(p => p.ResponsibleId == loggedUser || (p.Evaluators != null && p.Evaluators.Contains(loggedUser)));
-
-            if (!isEvaluator)
-            {
-                if (isEvaluated)
-                {
-                    return RedirectToAction("Calification", new RouteValueDictionary(
-                        new { controller = "Evaluations", action = "Calification", period = period, username = loggedUser } ));
-                }
-            }
             ViewBag.Period = period;
             ViewBag.hasAutoCalification = isEvaluated;
             ViewBag.IsDashboard = true;
