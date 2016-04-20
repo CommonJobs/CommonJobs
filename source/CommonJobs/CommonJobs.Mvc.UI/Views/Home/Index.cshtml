@@ -16,7 +16,7 @@
     @MenuItem(logedIn, "Legajos", Url.Content("~/Content/Home/files.png"), "Index", "EmployeeFiles")
     @MenuItem(logedIn, "Archivos", Url.Content("~/Content/Home/attach.png"), "Index", "Attachments")
     @MenuItem(logedIn, "MyMenu", Url.Content("~/Content/Home/mymenu.png"), "Index", "MyMenu")
-    @MenuLinkItem("Evaluaciones", Url.Content("~/Content/Home/calification.png"), Url.Action("2015-06/", "Evaluations"), false)
+    @MenuLinkItem("Evaluaciones", Url.Content("~/Content/Home/calification.png"), Url.Action( "Index" , "Evaluations"), false)
 
     @MenuItem(logedIn, "Postulantes", Url.Content("~/Content/Home/applicant.png"), "Index", "Applicants")
     @MenuItem(logedIn, "Vacaciones", Url.Content("~/Content/Home/vacation.png"), "Index", "Vacations")
@@ -25,8 +25,8 @@
 
     <h3>O infórmese sobre el proyecto <em>CommonJobs</em>:</h3>
 
-    @MenuLinkItem("Documentación", Url.Content("~/Content/Home/documentation.png"), "http://commonjobs.makingsense.com/documentation", true) 
-    @MenuLinkItem("Manual de usuario", Url.Content("~/Content/Home/manual.png"), "http://commonjobs.makingsense.com/documentation/docs/manual-de-usuario/introduccion", true) 
+    @MenuLinkItem("Documentación", Url.Content("~/Content/Home/documentation.png"), "http://commonjobs.makingsense.com/documentation", true)
+    @MenuLinkItem("Manual de usuario", Url.Content("~/Content/Home/manual.png"), "http://commonjobs.makingsense.com/documentation/docs/manual-de-usuario/introduccion", true)
     @MenuLinkItem("Código fuente", Url.Content("~/Content/Home/sourcecode.png"), "https://github.com/CommonJobs/CommonJobs", true)
 
     <div class="footer">
@@ -55,13 +55,13 @@
     </div>
 }
 
-@helper MenuItem(bool logedIn, string label, string imageUrl, string action, string controller, bool isLarge = false) 
+@helper MenuItem(bool logedIn, string label, string imageUrl, string action, string controller, bool isLarge = false)
 {
     if (!logedIn || Html.HasPermission(action, controller))
     {
         @MenuLinkItem(label, imageUrl, Url.Action(action, controller), isLarge)
     }
-    else 
+    else
     {
         @MenuDisabledItem(label, imageUrl, isLarge)
     }

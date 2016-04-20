@@ -33,6 +33,12 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
             );
 
             context.MapRoute(
+                "Evaluations_index",
+                "Evaluations/Index",
+                new { controller = "Evaluations", action = "Index" }
+                );
+
+            context.MapRoute(
                 "Evaluations_period",
                 "Evaluations/{period}",
                 new { controller = "Evaluations", action = "PeriodEvaluation" }

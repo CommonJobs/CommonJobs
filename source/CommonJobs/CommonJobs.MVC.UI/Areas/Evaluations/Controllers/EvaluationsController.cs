@@ -160,6 +160,21 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
             return View("Calification");
         }
 
+        public ActionResult Index()
+        {
+            var loggedUser = DetectUser();
+            RavenQueryStatistics stats;
+            var query = RavenSession
+                 .Query<Period_Serch.Projection, Period_Serch>()
+                 .Statistics(out stats)
+                 .Where(e => (e.UserName == loggedUser))
+                 .OrderByDescending(e => e.Period);
+
+            var userLastPeriod = query.ToList().Select(e => e.Period).FirstOrDefault();
+
+            return RedirectToAction("PeriodEvaluation", "Evaluations", new { period = userLastPeriod });
+        }
+
         private bool IsEmployeeManager(string username)
         {
             var sessionRoles = ExecuteCommand(new GetLoggedUserRoles(username));
