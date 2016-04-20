@@ -12,22 +12,22 @@ namespace CommonJobs.Application.EvalForm.Commands
     public class ChangeResponsibleCommand : Command
     {
 
-        public string _evaluatedUser { get; set; }
+        public string _evaluatedUserName { get; set; }
 
         public string _period { get; set; }
 
-        public string _newResponsible { get; set; }
+        public string _newResponsibleName { get; set; }
 
-        public ChangeResponsibleCommand (string evaluatedUser, string period, string  newResponsible)
+        public ChangeResponsibleCommand(string evaluatedUserName, string period, string newResponsibleName)
         {
-            _evaluatedUser = evaluatedUser;
+            _evaluatedUserName = evaluatedUserName;
             _period = period;
-            _newResponsible = newResponsible;
+            _newResponsibleName = newResponsibleName;
         }
 
         public override void Execute()
         {
-            var evaluationId = EmployeeEvaluation.GenerateEvaluationId(_period, _evaluatedUser);
+            var evaluationId = EmployeeEvaluation.GenerateEvaluationId(_period, _evaluatedUserName);
             var evaluation = RavenSession.Load<EmployeeEvaluation>(evaluationId);
 
             if (evaluation == null)
@@ -35,48 +35,62 @@ namespace CommonJobs.Application.EvalForm.Commands
                 throw new ApplicationException(string.Format("Error: Evaluación inexistente: {0}.", evaluationId));
             }
 
-            // Check that the new responsable exist
-            var responsible = RavenSession
+            // Check that the new responsible exist
+            var newResponsible = RavenSession
                  .Query<Employee_Search.Projection, Employee_Search>()
-                 .Where(x => x.IsActive && x.UserName == _newResponsible).FirstOrDefault();
+                 .Where(x => x.IsActive && x.UserName == _newResponsibleName).FirstOrDefault();
 
-            if (responsible == null)
+            if (newResponsible == null)
             {
-                throw new ApplicationException(string.Format("Error: Empleado inexistente: {0}.", _newResponsible));
+                throw new ApplicationException(string.Format("Error: Empleado inexistente: {0}.", _newResponsibleName));
+            }
+
+            // If the new responsible is the same as the old one, cancel the operation.
+            if (evaluation.ResponsibleId == newResponsible.UserName)
+            {
+                throw new ApplicationException(string.Format("Error: {0} es actualmente el responsable de esta evaluación.", newResponsible.UserName));
             }
 
             // The only moment when a user cant change an evaluation responsible, is when the evaluation is complete and closed
             if (evaluation.Finished)
             {
-                throw new ApplicationException(string.Format("Error: This evaluation is closed. Responsible can't be changed."));
+                throw new ApplicationException(string.Format("Error: Esta evaluación ya está cerrada. No se puede modificar el responsable."));
             }
 
-            // Load the responsable calification
-            var responsibleCalification = RavenSession.Advanced.LoadStartingWith<EvaluationCalification>(evaluationId + "/").Where(x=>x.Owner==CalificationType.Responsible).FirstOrDefault();
+            // Load evaluation califications
+            var evaluationCalifications = RavenSession.Advanced.LoadStartingWith<EvaluationCalification>(evaluationId + "/").ToList();
 
-            // If the old responsible has already made a calification,
-            // change it to an evaluator calification and create a new responsible one
-            if (responsibleCalification.Califications!=null)
+            var oldResponsibleCalification = evaluationCalifications.Where(x => x.Owner == CalificationType.Responsible).FirstOrDefault();
+
+            // Change the old responsible califications to an "Evaluator" calification type
+            oldResponsibleCalification.Owner = CalificationType.Evaluator;
+
+            // If the new responsible is an evaluator, make its calification as "Responsible" type
+            var newResponsibleCalification = evaluationCalifications
+                .Where(x => x.Owner == CalificationType.Evaluator && x.EvaluatorEmployee == newResponsible.UserName)
+                .FirstOrDefault();
+
+            if (newResponsibleCalification != null)
             {
-                responsibleCalification.Owner = CalificationType.Evaluator;
+                newResponsibleCalification.Owner = CalificationType.Responsible;
+            }
+            // if not, create a new "Responsible" calification
+            else
+            {
                 var newCalification = new EvaluationCalification
                 {
                     Owner = CalificationType.Responsible,
                     Period = evaluation.Period,
                     EvaluationId = evaluation.Id,
                     EvaluatedEmployee = evaluation.UserName,
-                    EvaluatorEmployee = responsible.UserName,
+                    EvaluatorEmployee = newResponsible.UserName,
                     TemplateId = "Template/Default"
                 };
                 RavenSession.Store(newCalification);
             }
-            else
-            {
-                responsibleCalification.EvaluatorEmployee = responsible.UserName;
-            }
 
-            // Update responsable in the evaluation
-            evaluation.ResponsibleId = responsible.Id;
+            // Update responsible in the evaluation
+            evaluation.ResponsibleId = newResponsible.Id;
 
             RavenSession.SaveChanges();
         }
