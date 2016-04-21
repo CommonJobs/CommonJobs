@@ -85,6 +85,16 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
                 return new HttpStatusCodeResult(403, "Access Denied");
             }
 
+            var userPeriods = RavenSession
+                .Query<Period_Serch.Projection, Period_Serch>()
+                .Statistics(out stats)
+                .Where(e => (e.UserName == loggedUser))
+                .OrderByDescending(e => e.Period)
+                .ToList();
+
+            var selectList = userPeriods.Select(x => new SelectListItem { Text = x.Period, Value = x.Period, Selected = x.Period == period });
+            ViewBag.UserPeriods = selectList;
+
             var isEvaluated = evaluation.Any(p => p.UserName == loggedUser);
             ViewBag.Period = period;
             ViewBag.hasAutoCalification = isEvaluated;
@@ -141,9 +151,12 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
                 return new HttpStatusCodeResult(403, "Access Denied");
             }
 
+
+
             ViewBag.IsUserEvaluator = isLoggedUserEvaluator;
 
             ViewBag.Period = period;
+
             ViewBag.UserName = username;
             ViewBag.IsCalification = true;
             return View("Calification");

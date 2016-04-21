@@ -312,6 +312,9 @@
     getDashboardEvaluations(window.ViewData.period);
     ko.applyBindings(viewmodel);
     commonSuggest($('.content-modal .search'), 'UserName');
+    $("#selectedPeriod").change(function () {
+        window.location = "/Evaluations/" + this.value;
+    })
 
     function getDashboardEvaluations(period) {
         viewmodel.isLoading(true);

@@ -17,69 +17,81 @@
 }
 
 <div class="content-evaluation dashboard responsible">
-    <h2 class="title">Responsable y/o Evaluador de las siguientes evaluaciones</h2>
-    <table class="table">
-        <thead>
-            <tr data-bind="foreach: headers">
-                <!-- ko if: sortable -->
-                <th data-bind="attr: { class: 'col-' + ($index()+1) }, click: $parent.sort, css: { selected: activeSort}">
-                    <i class="icon arrow"></i>
-                    <span data-bind="text: title"></span>
-                </th>
-                <!-- /ko -->
-                <!-- ko if: !sortable -->
-                <th data-bind="attr: { class: 'col-' + ($index()+1) }"><span data-bind="text: title"></span></th>
-                <!-- /ko -->
-            </tr>
-        </thead>
-        <tbody data-bind="foreach: items">
-            <tr>
-                <td>
-                    <span data-bind="if: !isResponsible"><span class="top-tip rol" data-tips="Evaluador">E</span></span>
-                    <span data-bind="if: isResponsible"><span class="top-tip rol" data-tips="Responsable">R</span></span>
-                </td>
-                <td data-bind="text: fullName"></td>
-                <td data-bind="text: currentPosition"></td>
-                <td data-bind="text: seniority"></td>
-                <td data-bind="text: period"></td>
-                <td class="calificators-column">
-                    <span data-bind="if: isCalificatorsEditable() && evaluatorsAmount() > 0">
-                        <a class="calification-links edit top-tip" data-bind="click: showCalificatorsManager, attr: { 'data-tips': evaluatorsString()}">
-                            <i class="icon edit"></i>
-                            <span data-bind="text: evaluatorsTextLink()"></span>
-                        </a>
-                    </span>
-                    <span data-bind="if: isCalificatorsEditable() && !evaluatorsAmount()"><a class="calification-links add" data-bind="click: showCalificatorsManager"><i class="icon add"></i>Agregar</a></span>
-                    <span data-bind="if: !isCalificatorsEditable() && evaluatorsTextLink()">
-                        <span class="top-tip" data-bind="text: evaluatorsTextLink(), attr: { 'data-tips': evaluatorsString()}"></span>
-                    </span>
-                </td>
-                <td><span class="state-doc" data-bind="text: stateName, attr: { 'class': stateClasses }"></span></td>
-                <td><a class="link-responsable top-tip" data-bind="attr: {'data-tips': calificationActionTooltip(), href: calificationUrl}"><i data-bind="attr: { class: calificationActionClass() }"></i><span data-bind="text: calificationActionText()"></span></a></td>
-                <td><span data-bind="if: state() == 4 && isResponsible"><button class="button-evaluations feedback-start" data-bind="click: startDevolutionUrl">Iniciar Devolución</button></span></td>
-            </tr>
-        </tbody>
-    </table>
+  <div id="container" style="overflow: hidden">
+    <div style="float: left">
+      <h2 class="title">Evaluaciones pendientes</h2>
+    </div>
+    <div class="content-selector-block">
+      <div class="content-selector-label">
+        <p>Período<p>
+      </div>
+      <div class="content-selector-dropdown">
+        @Html.DropDownList("selectedPeriod", (IEnumerable<SelectListItem>)ViewBag.UserPeriods)
+      </div>
+    </div>
+  </div>
+  <table class="table">
+    <thead>
+      <tr data-bind="foreach: headers">
+        <!-- ko if: sortable -->
+        <th data-bind="attr: { class: 'col-' + ($index()+1) }, click: $parent.sort, css: { selected: activeSort}">
+          <i class="icon arrow"></i>
+          <span data-bind="text: title"></span>
+        </th>
+        <!-- /ko -->
+        <!-- ko if: !sortable -->
+        <th data-bind="attr: { class: 'col-' + ($index()+1) }"><span data-bind="text: title"></span></th>
+        <!-- /ko -->
+      </tr>
+    </thead>
+    <tbody data-bind="foreach: items">
+      <tr>
+        <td>
+          <span data-bind="if: !isResponsible"><span class="top-tip rol" data-tips="Evaluador">E</span></span>
+          <span data-bind="if: isResponsible"><span class="top-tip rol" data-tips="Responsable">R</span></span>
+        </td>
+        <td data-bind="text: fullName"></td>
+        <td data-bind="text: currentPosition"></td>
+        <td data-bind="text: seniority"></td>
+        <td data-bind="text: period"></td>
+        <td class="calificators-column">
+          <span data-bind="if: isCalificatorsEditable() && evaluatorsAmount() > 0">
+            <a class="calification-links edit top-tip" data-bind="click: showCalificatorsManager, attr: { 'data-tips': evaluatorsString()}">
+              <i class="icon edit"></i>
+              <span data-bind="text: evaluatorsTextLink()"></span>
+            </a>
+          </span>
+          <span data-bind="if: isCalificatorsEditable() && !evaluatorsAmount()"><a class="calification-links add" data-bind="click: showCalificatorsManager"><i class="icon add"></i>Agregar</a></span>
+          <span data-bind="if: !isCalificatorsEditable() && evaluatorsTextLink()">
+            <span class="top-tip" data-bind="text: evaluatorsTextLink(), attr: { 'data-tips': evaluatorsString()}"></span>
+          </span>
+        </td>
+        <td><span class="state-doc" data-bind="text: stateName, attr: { 'class': stateClasses }"></span></td>
+        <td><a class="link-responsable top-tip" data-bind="attr: {'data-tips': calificationActionTooltip(), href: calificationUrl}"><i data-bind="attr: { class: calificationActionClass() }"></i><span data-bind="text: calificationActionText()"></span></a></td>
+        <td><span data-bind="if: state() == 4 && isResponsible"><button class="button-evaluations feedback-start" data-bind="click: startDevolutionUrl">Iniciar Devolución</button></span></td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 
 
 <div class="content-modal clearfix">
-    <div class="modal-title">
-        <h4 data-bind="text: calificatorsManagerModel.title"></h4>
-    </div>
-    <div class="search-container">
-        <input type="text" class="search" autocomplete="off" data-bind="value: calificatorsManagerModel.newCalificator, event: {keypress: calificatorsManagerModel.onEnter}"/>
-        <button class="add-calificator-btn" data-bind="click: calificatorsManagerModel.addCalificator"></button>
-    </div>
-    <div class="content-add-calificadores">
-        <ul data-bind="foreach: calificatorsManagerModel.activeCalificators">
-            <li><span data-bind="text: userName"></span> <a data-bind="click: $parent.calificatorsManagerModel.removeCalificator"><i class="icon delete"></i></a></li>
-        </ul>
-    </div>
-    <a class="cancelar" data-bind="click: calificatorsManagerModel.close">Cancelar</a>
-    <button class="guardar"data-bind="enable: calificatorsManagerModel.saveButtonEnable, click: calificatorsManagerModel.save">Guardar</button>
+  <div class="modal-title">
+    <h4 data-bind="text: calificatorsManagerModel.title"></h4>
+  </div>
+  <div class="search-container">
+    <input type="text" class="search" autocomplete="off" data-bind="value: calificatorsManagerModel.newCalificator, event: {keypress: calificatorsManagerModel.onEnter}" />
+    <button class="add-calificator-btn" data-bind="click: calificatorsManagerModel.addCalificator"></button>
+  </div>
+  <div class="content-add-calificadores">
+    <ul data-bind="foreach: calificatorsManagerModel.activeCalificators">
+      <li><span data-bind="text: userName"></span> <a data-bind="click: $parent.calificatorsManagerModel.removeCalificator"><i class="icon delete"></i></a></li>
+    </ul>
+  </div>
+  <a class="cancelar" data-bind="click: calificatorsManagerModel.close">Cancelar</a>
+  <button class="guardar" data-bind="enable: calificatorsManagerModel.saveButtonEnable, click: calificatorsManagerModel.save">Guardar</button>
 </div>
 
 <div id="loader-id" class="loader-container" data-bind="visible: isLoading()">
-    <div class="loader"></div>
+  <div class="loader"></div>
 </div>
