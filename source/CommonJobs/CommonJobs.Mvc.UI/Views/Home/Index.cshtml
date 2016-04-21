@@ -7,16 +7,16 @@
 
 <div class="bootstrap-scope">
 
-<h2>¡Bienvenido a CommonJobs!</h2>
+  <h2>¡Bienvenido a CommonJobs!</h2>
 
-<div class="menuContainer">
+  <div class="menuContainer">
     <h3>Elija una sección del sistema:</h3>
 
     @MenuItem(logedIn, "Empleados", Url.Content("~/Content/Home/employees.png"), "Index", "Employees")
     @MenuItem(logedIn, "Legajos", Url.Content("~/Content/Home/files.png"), "Index", "EmployeeFiles")
     @MenuItem(logedIn, "Archivos", Url.Content("~/Content/Home/attach.png"), "Index", "Attachments")
     @MenuItem(logedIn, "MyMenu", Url.Content("~/Content/Home/mymenu.png"), "Index", "MyMenu")
-    @MenuLinkItem("Evaluaciones", Url.Content("~/Content/Home/calification.png"), Url.Action( "Index" , "Evaluations"), false)
+    @MenuItem(logedIn, "Evaluaciones", Url.Content("~/Content/Home/calification.png"), "Index", "Evaluations")
 
     @MenuItem(logedIn, "Postulantes", Url.Content("~/Content/Home/applicant.png"), "Index", "Applicants")
     @MenuItem(logedIn, "Vacaciones", Url.Content("~/Content/Home/vacation.png"), "Index", "Vacations")
@@ -30,39 +30,39 @@
     @MenuLinkItem("Código fuente", Url.Content("~/Content/Home/sourcecode.png"), "https://github.com/CommonJobs/CommonJobs", true)
 
     <div class="footer">
-        <br />
-        <hr/>
-        <strong>CommonJobs</strong> es un desarrollo <em>OpenSource</em> realizado en ratos libres. Cualquier mejora es bienvenida, descargá el <a href="https://github.com/CommonJobs/CommonJobs">código fuente de GitHub</a> y hacé tu <em>Pull Request</em>.
-        <br />
+      <br />
+      <hr />
+      <strong>CommonJobs</strong> es un desarrollo <em>OpenSource</em> realizado en ratos libres. Cualquier mejora es bienvenida, descargá el <a href="https://github.com/CommonJobs/CommonJobs">código fuente de GitHub</a> y hacé tu <em>Pull Request</em>.
+      <br />
     </div>
 
-</div>
+  </div>
 </div>
 
 @helper MenuLinkItem(string label, string imageUrl, string linkTo, bool isLarge = false)
 {
     <a class="menuItem @(isLarge ? "large" : string.Empty)" href="@linkTo">
-        <img src="@imageUrl" alt="@label" />
-        <p>@label</p>
+      <img src="@imageUrl" alt="@label" />
+      <p>@label</p>
     </a>
 }
 
 @helper MenuDisabledItem(string label, string imageUrl, bool isLarge = false)
 {
     <div class="disabled menuItem @(isLarge ? "large" : string.Empty)">
-        <img src="@imageUrl" alt="@label" />
-        <p>@label</p>
+      <img src="@imageUrl" alt="@label" />
+      <p>@label</p>
     </div>
 }
 
 @helper MenuItem(bool logedIn, string label, string imageUrl, string action, string controller, bool isLarge = false)
 {
-    if (!logedIn || Html.HasPermission(action, controller))
-    {
+if (!logedIn || Html.HasPermission(action, controller))
+{
         @MenuLinkItem(label, imageUrl, Url.Action(action, controller), isLarge)
-    }
-    else
-    {
+}
+else
+{
         @MenuDisabledItem(label, imageUrl, isLarge)
-    }
+}
 }
