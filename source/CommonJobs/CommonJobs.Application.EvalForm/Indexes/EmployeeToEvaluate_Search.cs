@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace CommonJobs.Application.EvalForm.EmployeeSearching
+namespace CommonJobs.Application.EvalForm.Indexes
 {
 
     public class EmployeeToEvaluate_Search : AbstractMultiMapIndexCreationTask<EmployeeToEvaluate_Search.Projection>

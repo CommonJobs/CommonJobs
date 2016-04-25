@@ -1,9 +1,9 @@
 /**
- * 
- * Define mixins, functions, 
- * animations, placeholders, 
+ *
+ * Define mixins, functions,
+ * animations, placeholders,
  * helper classes.
- * 
+ *
 **/
 /*
  * Absolute positioning elements.
@@ -28,8 +28,8 @@
  */
 /* line 76, ../../sass/Evaluations/_mixins.scss */
 .element-hidden {
-  display: none !important;
-  visibility: hidden;
+    display: none !important;
+    visibility: hidden;
 }
 
 /*
@@ -37,14 +37,14 @@
  */
 /* line 85, ../../sass/Evaluations/_mixins.scss */
 .visually-hidden {
-  border: 0;
-  clip: rect(0 0 0 0);
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-  padding: 0;
-  position: absolute;
-  width: 1px;
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
 }
 
 /*
@@ -52,7 +52,7 @@
  */
 /* line 100, ../../sass/Evaluations/_mixins.scss */
 .element-invisible {
-  visibility: hidden;
+    visibility: hidden;
 }
 
 /*
@@ -60,7 +60,7 @@
  */
 /* line 108, ../../sass/Evaluations/_mixins.scss */
 .element-visible {
-  display: block;
+    display: block;
 }
 
 /*
@@ -68,7 +68,7 @@
  */
 /* line 116, ../../sass/Evaluations/_mixins.scss */
 .element-visible-inline {
-  display: inline-block !important;
+    display: inline-block !important;
 }
 
 /*
@@ -76,7 +76,7 @@
  */
 /* line 124, ../../sass/Evaluations/_mixins.scss */
 .pull-left {
-  float: left;
+    float: left;
 }
 
 /*
@@ -84,7 +84,7 @@
  */
 /* line 132, ../../sass/Evaluations/_mixins.scss */
 .pull-right {
-  float: right;
+    float: right;
 }
 
 /*
@@ -92,19 +92,19 @@
  */
 /* line 140, ../../sass/Evaluations/_mixins.scss */
 .clearfix, .evaluation .top-evaluation, .evaluation .footer-evaluation {
-  zoom: 1;
+    zoom: 1;
 }
-/* line 142, ../../sass/Evaluations/_mixins.scss */
-.clearfix:before, .evaluation .top-evaluation:before, .evaluation .footer-evaluation:before, .clearfix:after, .evaluation .top-evaluation:after, .evaluation .footer-evaluation:after {
-  content: "\0020";
-  display: block;
-  height: 0;
-  overflow: hidden;
-}
-/* line 148, ../../sass/Evaluations/_mixins.scss */
-.clearfix:after, .evaluation .top-evaluation:after, .evaluation .footer-evaluation:after {
-  clear: both;
-}
+    /* line 142, ../../sass/Evaluations/_mixins.scss */
+    .clearfix:before, .evaluation .top-evaluation:before, .evaluation .footer-evaluation:before, .clearfix:after, .evaluation .top-evaluation:after, .evaluation .footer-evaluation:after {
+        content: "\0020";
+        display: block;
+        height: 0;
+        overflow: hidden;
+    }
+    /* line 148, ../../sass/Evaluations/_mixins.scss */
+    .clearfix:after, .evaluation .top-evaluation:after, .evaluation .footer-evaluation:after {
+        clear: both;
+    }
 
 /**
  * CSS3 Tips
@@ -118,1185 +118,1204 @@
  */
 /* line 11, ../../sass/Evaluations/_tooltip.scss */
 [data-tips] {
-  position: relative;
-  text-decoration: none;
-  /* Top tips */
+    position: relative;
+    text-decoration: none;
+    /* Top tips */
 }
-/* line 15, ../../sass/Evaluations/_tooltip.scss */
-[data-tips].wrap-text {
-  display: inline-block;
-  width: 100%;
-}
-/* line 20, ../../sass/Evaluations/_tooltip.scss */
-[data-tips]:after, [data-tips]:before {
-  position: absolute;
-  z-index: 100;
-  opacity: 0;
-}
-/* line 27, ../../sass/Evaluations/_tooltip.scss */
-[data-tips]:after {
-  content: attr(data-tips);
-  line-height: 20px;
-  padding: 5px 10px;
-  font-size: 12px;
-  text-align: center;
-  color: #fff;
-  background: #222;
-  border-radius: 5px;
-  text-shadow: 0 0 5px #000;
-  -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-  -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  white-space: nowrap;
-}
-/* line 42, ../../sass/Evaluations/_tooltip.scss */
-[data-tips].wrap-text:after {
-  white-space: normal;
-  text-align: left;
-}
-/* line 47, ../../sass/Evaluations/_tooltip.scss */
-[data-tips]:before {
-  content: "";
-  width: 0;
-  height: 0;
-  border-width: 6px;
-  border-style: solid;
-}
-/* line 55, ../../sass/Evaluations/_tooltip.scss */
-[data-tips]:hover:after, [data-tips]:hover:before {
-  opacity: 1;
-}
-/* line 61, ../../sass/Evaluations/_tooltip.scss */
-[data-tips].top-tip:after, [data-tips].top-tip:before {
-  bottom: 0%;
-  left: -9999px;
-  margin-bottom: 12px;
-  -moz-transition: bottom 0.25s ease-in-out;
-  -o-transition: bottom 0.25s ease-in-out;
-  -webkit-transition: bottom 0.25s ease-in-out;
-  transition: bottom 0.25s ease-in-out;
-  -moz-transition: opacity 0.25s ease-in-out;
-  -o-transition: opacity 0.25s ease-in-out;
-  -webkit-transition: opacity 0.25s ease-in-out;
-  transition: opacity 0.25s ease-in-out;
-}
-/* line 70, ../../sass/Evaluations/_tooltip.scss */
-[data-tips].top-tip:before {
-  border-color: #222 transparent transparent transparent;
-  margin-bottom: 0;
-}
-/* line 75, ../../sass/Evaluations/_tooltip.scss */
-[data-tips].top-tip:hover:after, [data-tips].top-tip:hover:before {
-  bottom: 100%;
-  left: 0;
-}
-/* line 81, ../../sass/Evaluations/_tooltip.scss */
-[data-tips].top-tip:hover:before {
-  left: 15px;
-}
+    /* line 15, ../../sass/Evaluations/_tooltip.scss */
+    [data-tips].wrap-text {
+        display: inline-block;
+        width: 100%;
+    }
+    /* line 20, ../../sass/Evaluations/_tooltip.scss */
+    [data-tips]:after, [data-tips]:before {
+        position: absolute;
+        z-index: 100;
+        opacity: 0;
+    }
+    /* line 27, ../../sass/Evaluations/_tooltip.scss */
+    [data-tips]:after {
+        content: attr(data-tips);
+        line-height: 20px;
+        padding: 5px 10px;
+        font-size: 12px;
+        text-align: center;
+        color: #fff;
+        background: #222;
+        border-radius: 5px;
+        text-shadow: 0 0 5px #000;
+        -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        white-space: nowrap;
+    }
+    /* line 42, ../../sass/Evaluations/_tooltip.scss */
+    [data-tips].wrap-text:after {
+        white-space: normal;
+        text-align: left;
+    }
+    /* line 47, ../../sass/Evaluations/_tooltip.scss */
+    [data-tips]:before {
+        content: "";
+        width: 0;
+        height: 0;
+        border-width: 6px;
+        border-style: solid;
+    }
+    /* line 55, ../../sass/Evaluations/_tooltip.scss */
+    [data-tips]:hover:after, [data-tips]:hover:before {
+        opacity: 1;
+    }
+    /* line 61, ../../sass/Evaluations/_tooltip.scss */
+    [data-tips].top-tip:after, [data-tips].top-tip:before {
+        bottom: 0%;
+        left: -9999px;
+        margin-bottom: 12px;
+        -moz-transition: bottom 0.25s ease-in-out;
+        -o-transition: bottom 0.25s ease-in-out;
+        -webkit-transition: bottom 0.25s ease-in-out;
+        transition: bottom 0.25s ease-in-out;
+        -moz-transition: opacity 0.25s ease-in-out;
+        -o-transition: opacity 0.25s ease-in-out;
+        -webkit-transition: opacity 0.25s ease-in-out;
+        transition: opacity 0.25s ease-in-out;
+    }
+    /* line 70, ../../sass/Evaluations/_tooltip.scss */
+    [data-tips].top-tip:before {
+        border-color: #222 transparent transparent transparent;
+        margin-bottom: 0;
+    }
+    /* line 75, ../../sass/Evaluations/_tooltip.scss */
+    [data-tips].top-tip:hover:after, [data-tips].top-tip:hover:before {
+        bottom: 100%;
+        left: 0;
+    }
+    /* line 81, ../../sass/Evaluations/_tooltip.scss */
+    [data-tips].top-tip:hover:before {
+        left: 15px;
+    }
 
 /* line 7, ../../sass/Evaluations/_base.scss */
 html, body {
-  margin: 0;
-  padding: 0;
+    margin: 0;
+    padding: 0;
 }
 
 /* line 12, ../../sass/Evaluations/_base.scss */
 body {
-  font: 16px Helvetica, Helvetica Neue;
+    font: 16px Helvetica, Helvetica Neue;
 }
 
 /* line 16, ../../sass/Evaluations/_base.scss */
 * {
-  box-sizing: border-box;
-  outline: none;
+    box-sizing: border-box;
+    outline: none;
 }
 
 /* line 21, ../../sass/Evaluations/_base.scss */
 textarea {
-  resize: none;
+    resize: none;
 }
 
 /* line 25, ../../sass/Evaluations/_base.scss */
 .navbar-inner {
-  height: 90px;
-  line-height: 90px;
+    height: 90px;
+    line-height: 90px;
 }
-/* line 29, ../../sass/Evaluations/_base.scss */
-.navbar-inner .brand {
-  padding: 0 !important;
-}
-/* line 33, ../../sass/Evaluations/_base.scss */
-.navbar-inner h1 {
-  padding: 0 !important;
-}
-/* line 37, ../../sass/Evaluations/_base.scss */
-.navbar-inner .breadcrum {
-  float: left;
-  margin-left: 60px;
-}
-/* line 41, ../../sass/Evaluations/_base.scss */
-.navbar-inner .breadcrum a {
-  color: #FFF;
-}
-/* line 46, ../../sass/Evaluations/_base.scss */
-.navbar-inner .pull-right {
-  margin-top: 20px;
-}
-/* line 49, ../../sass/Evaluations/_base.scss */
-.navbar-inner .pull-right .btn {
-  margin-top: 0;
-  padding: 10px 15px;
-  color: #FFF !important;
-}
-/* line 55, ../../sass/Evaluations/_base.scss */
-.navbar-inner .pull-right .btn:hover {
-  background-color: #0044cc !important;
-  color: #FFF !important;
-  display: inline-block !important;
-}
-/* line 61, ../../sass/Evaluations/_base.scss */
-.navbar-inner .pull-right .btn:disabled {
-  background-color: #e6e6e6 !important;
-}
-/* line 65, ../../sass/Evaluations/_base.scss */
-.navbar-inner .pull-right small {
-  padding: 10px 0;
-  display: inline-block;
-}
+    /* line 29, ../../sass/Evaluations/_base.scss */
+    .navbar-inner .brand {
+        padding: 0 !important;
+    }
+    /* line 33, ../../sass/Evaluations/_base.scss */
+    .navbar-inner h1 {
+        padding: 0 !important;
+    }
+    /* line 37, ../../sass/Evaluations/_base.scss */
+    .navbar-inner .breadcrum {
+        float: left;
+        margin-left: 60px;
+    }
+        /* line 41, ../../sass/Evaluations/_base.scss */
+        .navbar-inner .breadcrum a {
+            color: #FFF;
+        }
+    /* line 46, ../../sass/Evaluations/_base.scss */
+    .navbar-inner .pull-right {
+        margin-top: 20px;
+    }
+        /* line 49, ../../sass/Evaluations/_base.scss */
+        .navbar-inner .pull-right .btn {
+            margin-top: 0;
+            padding: 10px 15px;
+            color: #FFF !important;
+        }
+            /* line 55, ../../sass/Evaluations/_base.scss */
+            .navbar-inner .pull-right .btn:hover {
+                background-color: #0044cc !important;
+                color: #FFF !important;
+                display: inline-block !important;
+            }
+            /* line 61, ../../sass/Evaluations/_base.scss */
+            .navbar-inner .pull-right .btn:disabled {
+                background-color: #e6e6e6 !important;
+            }
+        /* line 65, ../../sass/Evaluations/_base.scss */
+        .navbar-inner .pull-right small {
+            padding: 10px 0;
+            display: inline-block;
+        }
 
 /* line 72, ../../sass/Evaluations/_base.scss */
 button:disabled {
-  background: #CCC !important;
+    background: #CCC !important;
 }
 
 /* line 76, ../../sass/Evaluations/_base.scss */
 .primary-btn {
-  text-transform: uppercase;
+    text-transform: uppercase;
 }
 
 /* line 80, ../../sass/Evaluations/_base.scss */
 h1 {
-  margin: 0;
-  padding-left: 50px;
+    margin: 0;
+    padding-left: 50px;
 }
 
 /* line 86, ../../sass/Evaluations/_base.scss */
 .content-evaluation {
-  min-width: 1024px;
-  width: 100%;
-  padding: 90px 50px 0;
+    min-width: 1024px;
+    width: 100%;
+    padding: 90px 50px 0;
 }
-/* line 91, ../../sass/Evaluations/_base.scss */
-.content-evaluation li {
-  list-style: none;
-  padding-left: 20px;
-}
-/* line 96, ../../sass/Evaluations/_base.scss */
-.content-evaluation .table {
-  border-spacing: 0;
-  width: 100%;
-  margin-bottom: 20px;
-  font-size: 14px;
-}
-/* line 103, ../../sass/Evaluations/_base.scss */
-.content-evaluation .title-evaluations {
-  background-color: #FFFFFF;
-  color: #444;
-  width: 100%;
-  margin: 0;
-  height: 60px;
-  line-height: 60px;
-  border-bottom: 1px solid #ccc;
-  font-weight: 100;
-}
-/* line 114, ../../sass/Evaluations/_base.scss */
-.content-evaluation tr:nth-child(odd) {
-  background-color: #FFFFFF;
-}
-/* line 118, ../../sass/Evaluations/_base.scss */
-.content-evaluation tr:nth-child(even) {
-  background-color: #F2F4F5;
-}
-/* line 122, ../../sass/Evaluations/_base.scss */
-.content-evaluation tr {
-  height: 45px;
-}
-/* line 126, ../../sass/Evaluations/_base.scss */
-.content-evaluation th, .content-evaluation td {
-  text-align: left;
-  color: #777;
-  padding: 0 10px !important;
-  vertical-align: middle !important;
-}
-/* line 133, ../../sass/Evaluations/_base.scss */
-.content-evaluation th {
-  background-color: #FFFFFF;
-  padding: 10px;
-  border-top: 1px solid #CCC;
-  border-bottom: 1px solid #CCC;
-}
-/* line 139, ../../sass/Evaluations/_base.scss */
-.content-evaluation th.selected {
-  color: #000000;
-}
-/* line 144, ../../sass/Evaluations/_base.scss */
-.content-evaluation .selected {
-  color: #000000;
-}
-/* line 148, ../../sass/Evaluations/_base.scss */
-.content-evaluation .button-evaluations {
-  padding: 15px;
-  color: white;
-  border-radius: 5px;
-  border: none;
-  background-color: #4499F4;
-  float: right;
-  cursor: pointer;
-}
-/* line 157, ../../sass/Evaluations/_base.scss */
-.content-evaluation .button-evaluations:disabled {
-  background-color: #ccc;
-}
-/* line 162, ../../sass/Evaluations/_base.scss */
-.content-evaluation input {
-  width: 100%;
-}
+    /* line 91, ../../sass/Evaluations/_base.scss */
+    .content-evaluation li {
+        list-style: none;
+        padding-left: 20px;
+    }
+    /* line 96, ../../sass/Evaluations/_base.scss */
+    .content-evaluation .table {
+        border-spacing: 0;
+        width: 100%;
+        margin-bottom: 20px;
+        font-size: 14px;
+    }
+    /* line 103, ../../sass/Evaluations/_base.scss */
+    .content-evaluation .title-evaluations {
+        background-color: #FFFFFF;
+        color: #444;
+        width: 100%;
+        margin: 0;
+        height: 60px;
+        line-height: 60px;
+        border-bottom: 1px solid #ccc;
+        font-weight: 100;
+    }
+    /* line 114, ../../sass/Evaluations/_base.scss */
+    .content-evaluation tr:nth-child(odd) {
+        background-color: #FFFFFF;
+    }
+    /* line 118, ../../sass/Evaluations/_base.scss */
+    .content-evaluation tr:nth-child(even) {
+        background-color: #F2F4F5;
+    }
+    /* line 122, ../../sass/Evaluations/_base.scss */
+    .content-evaluation tr {
+        height: 45px;
+    }
+    /* line 126, ../../sass/Evaluations/_base.scss */
+    .content-evaluation th, .content-evaluation td {
+        text-align: left;
+        color: #777;
+        padding: 0 10px !important;
+        vertical-align: middle !important;
+    }
+    /* line 133, ../../sass/Evaluations/_base.scss */
+    .content-evaluation th {
+        background-color: #FFFFFF;
+        padding: 10px;
+        border-top: 1px solid #CCC;
+        border-bottom: 1px solid #CCC;
+    }
+        /* line 139, ../../sass/Evaluations/_base.scss */
+        .content-evaluation th.selected {
+            color: #000000;
+        }
+    /* line 144, ../../sass/Evaluations/_base.scss */
+    .content-evaluation .selected {
+        color: #000000;
+    }
+    /* line 148, ../../sass/Evaluations/_base.scss */
+    .content-evaluation .button-evaluations {
+        padding: 15px;
+        color: white;
+        border-radius: 5px;
+        border: none;
+        background-color: #4499F4;
+        float: right;
+        cursor: pointer;
+    }
+        /* line 157, ../../sass/Evaluations/_base.scss */
+        .content-evaluation .button-evaluations:disabled {
+            background-color: #ccc;
+        }
+    /* line 162, ../../sass/Evaluations/_base.scss */
+    .content-evaluation input {
+        width: 100%;
+    }
 
 /* line 167, ../../sass/Evaluations/_base.scss */
 .icon {
-  padding-left: 20px;
-  padding-right: 5px;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
+    padding-left: 20px;
+    padding-right: 5px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
 }
-/* line 174, ../../sass/Evaluations/_base.scss */
-.icon.arrow {
-  background-image: url(../Images/Evaluations/2.png);
-  margin-left: -10px;
-}
-/* line 178, ../../sass/Evaluations/_base.scss */
-.icon.arrow.selected {
-  background-image: url(../Images/Evaluations/3.png);
-  margin-left: -10px;
-}
-/* line 182, ../../sass/Evaluations/_base.scss */
-.icon.add {
-  background-image: url(../Images/Evaluations/1-02.png);
-}
-/* line 186, ../../sass/Evaluations/_base.scss */
-.icon.edit {
-  background-image: url(../Images/Evaluations/6-02.png);
-}
-/* line 190, ../../sass/Evaluations/_base.scss */
-.icon.user {
-  background-image: url(../Images/Evaluations/3-02.png);
-}
-/* line 194, ../../sass/Evaluations/_base.scss */
-.icon.empresa {
-  background-image: url(../Images/Evaluations/7-02.png);
-}
-/* line 198, ../../sass/Evaluations/_base.scss */
-.icon.view {
-  background-image: url(../Images/Evaluations/4-02.png);
-}
+    /* line 174, ../../sass/Evaluations/_base.scss */
+    .icon.arrow {
+        background-image: url(../Images/Evaluations/2.png);
+        margin-left: -10px;
+    }
+        /* line 178, ../../sass/Evaluations/_base.scss */
+        .icon.arrow.selected {
+            background-image: url(../Images/Evaluations/3.png);
+            margin-left: -10px;
+        }
+    /* line 182, ../../sass/Evaluations/_base.scss */
+    .icon.add {
+        background-image: url(../Images/Evaluations/1-02.png);
+    }
+    /* line 186, ../../sass/Evaluations/_base.scss */
+    .icon.edit {
+        background-image: url(../Images/Evaluations/6-02.png);
+    }
+    /* line 190, ../../sass/Evaluations/_base.scss */
+    .icon.user {
+        background-image: url(../Images/Evaluations/3-02.png);
+    }
+    /* line 194, ../../sass/Evaluations/_base.scss */
+    .icon.empresa {
+        background-image: url(../Images/Evaluations/7-02.png);
+    }
+    /* line 198, ../../sass/Evaluations/_base.scss */
+    .icon.view {
+        background-image: url(../Images/Evaluations/4-02.png);
+    }
 
 /* line 1, ../../sass/Evaluations/_pop-up.scss */
 .content-pop-up {
-  width: 480px;
-  border: 1px solid #D9D9D9;
-  padding: 30px 40px;
-  border-radius: 5px;
-  display: none;
+    width: 480px;
+    border: 1px solid #D9D9D9;
+    padding: 30px 40px;
+    border-radius: 5px;
+    display: none;
 }
 
-/* line 9, ../../sass/Evaluations/_pop-up.scss */
-.content-pop-up .modal-header {
-  padding: 0px;
-}
+    /* line 9, ../../sass/Evaluations/_pop-up.scss */
+    .content-pop-up .modal-header {
+        padding: 0px;
+    }
 
-/* line 13, ../../sass/Evaluations/_pop-up.scss */
-.content-pop-up button.close {
-  float: right;
-  position: relative;
-  background-color: transparent;
-  border: none;
-  zoom: 2;
-}
+    /* line 13, ../../sass/Evaluations/_pop-up.scss */
+    .content-pop-up button.close {
+        float: right;
+        position: relative;
+        background-color: transparent;
+        border: none;
+        zoom: 2;
+    }
 
-/* line 21, ../../sass/Evaluations/_pop-up.scss */
-.content-pop-up .modal-title {
-  padding: 5px;
-  height: auto;
-  color: #444;
-  font-size: 16px;
-}
+    /* line 21, ../../sass/Evaluations/_pop-up.scss */
+    .content-pop-up .modal-title {
+        padding: 5px;
+        height: auto;
+        color: #444;
+        font-size: 16px;
+    }
 
-/* line 28, ../../sass/Evaluations/_pop-up.scss */
-.content-pop-up p {
-  color: #666;
-  padding: 15px 0px;
-  margin: 0;
-}
+    /* line 28, ../../sass/Evaluations/_pop-up.scss */
+    .content-pop-up p {
+        color: #666;
+        padding: 15px 0px;
+        margin: 0;
+    }
 
 /* line 34, ../../sass/Evaluations/_pop-up.scss */
 .model-footer button {
-  position: relative;
-  padding: 10px;
-  background-color: #4499F4;
-  color: white;
-  border-radius: 5px;
-  border: none;
+    position: relative;
+    padding: 10px;
+    background-color: #4499F4;
+    color: white;
+    border-radius: 5px;
+    border: none;
 }
 
 /* line 43, ../../sass/Evaluations/_pop-up.scss */
 .model-footer button {
-  float: left;
-  padding: 5px 25px;
-  height: 40px;
-  margin-right: 10px;
+    float: left;
+    padding: 5px 25px;
+    height: 40px;
+    margin-right: 10px;
 }
 
 /* line 3, ../../sass/Evaluations/_generate-evaluation.scss */
 thead th.selected .icon.arrow {
-  background-image: url(../Images/Evaluations/3.png);
+    background-image: url(../Images/Evaluations/3.png);
 }
 /* line 7, ../../sass/Evaluations/_generate-evaluation.scss */
 tr.evaluation-generated td {
-  color: #b2b2b2;
+    color: #b2b2b2;
 }
 /* line 8, ../../sass/Evaluations/_generate-evaluation.scss */
 .generate-evaluation tr .evaluation-owner-field.invalid {
-  border-color: #EE6048 !important;
-  border-style: double;
-  color: #EE6048;
+    border-color: #EE6048 !important;
+    border-style: double;
+    color: #EE6048;
 }
 /* line 12, ../../sass/Evaluations/_generate-evaluation.scss */
 .generate-evaluation .footer {
-  float: right;
+    float: right;
 }
 /* line 14, ../../sass/Evaluations/_dashboard.scss */
 .dashboard.recursos-humanos .header {
-  display: inline-block;
-  border-bottom: 1px solid #ccc;
-  width: 100%;
+    display: inline-block;
+    border-bottom: 1px solid #ccc;
+    width: 100%;
 }
-/* line 17, ../../sass/Evaluations/_dashboard.scss */
-.dashboard.recursos-humanos .header h2 {
-  color: #444;
-  margin: 0;
-  height: 60px;
-  line-height: 60px;
-  font-size: 26px;
-  float: left;
-}
-/* line 22, ../../sass/Evaluations/_dashboard.scss */
-.dashboard.recursos-humanos .header h2.header--human-resources {
-  float: right;
-}
+    /* line 17, ../../sass/Evaluations/_dashboard.scss */
+    .dashboard.recursos-humanos .header h2 {
+        color: #444;
+        margin: 0;
+        height: 60px;
+        line-height: 60px;
+        font-size: 26px;
+        float: left;
+    }
+        /* line 22, ../../sass/Evaluations/_dashboard.scss */
+        .dashboard.recursos-humanos .header h2.header--human-resources {
+            float: right;
+        }
 /* line 28, ../../sass/Evaluations/_dashboard.scss */
 .dashboard.recursos-humanos table td:first-child {
-  text-align: center;
+    text-align: center;
 }
 /* line 37, ../../sass/Evaluations/_dashboard.scss */
 .dashboard table td {
-  position: relative;
+    position: relative;
 }
 /* line 42, ../../sass/Evaluations/_dashboard.scss */
 .dashboard table th.col-1 {
-  width: 60px;
+    width: 60px;
 }
 /* line 45, ../../sass/Evaluations/_dashboard.scss */
 .dashboard table th.col-2, .dashboard table th.col-3, .dashboard table th.col-4 {
-  width: auto;
+    width: auto;
 }
 /* line 50, ../../sass/Evaluations/_dashboard.scss */
 .dashboard table th.col-5 {
-  width: 150px;
+    width: 150px;
 }
 /* line 53, ../../sass/Evaluations/_dashboard.scss */
 .dashboard table th.col-6 {
-  width: 220px;
+    width: 220px;
 }
 /* line 56, ../../sass/Evaluations/_dashboard.scss */
 .dashboard table th.col-7 {
-  width: 150px;
+    width: 150px;
 }
 /* line 59, ../../sass/Evaluations/_dashboard.scss */
 .dashboard table th.col-8 {
-  width: 110px;
+    width: 110px;
 }
 /* line 62, ../../sass/Evaluations/_dashboard.scss */
 .dashboard table th.selected .icon.arrow {
-  background-image: url(../Images/Evaluations/3.png);
+    background-image: url(../Images/Evaluations/3.png);
 }
 /* line 67, ../../sass/Evaluations/_dashboard.scss */
 .dashboard .rol {
-  padding-left: 17px;
+    padding-left: 17px;
 }
 /* line 71, ../../sass/Evaluations/_dashboard.scss */
 .dashboard a {
-  text-decoration: none;
-  color: inherit;
-  cursor: pointer;
-  padding-left: 3px;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    padding-left: 3px;
 }
-/* line 77, ../../sass/Evaluations/_dashboard.scss */
-.dashboard a .calification-links.disable {
-  color: #777;
-}
-/* line 81, ../../sass/Evaluations/_dashboard.scss */
-.dashboard a .link-responsable {
-  padding: 10px;
-  text-decoration: underline;
-}
+    /* line 77, ../../sass/Evaluations/_dashboard.scss */
+    .dashboard a .calification-links.disable {
+        color: #777;
+    }
+    /* line 81, ../../sass/Evaluations/_dashboard.scss */
+    .dashboard a .link-responsable {
+        padding: 10px;
+        text-decoration: underline;
+    }
 /* line 88, ../../sass/Evaluations/_dashboard.scss */
 .dashboard .button-evaluations.feedback-start {
-  float: none;
-  padding: 0;
-  font-size: 12px;
-  height: 34px;
-  line-height: 12px;
-  width: 90px;
-  margin: 0;
+    float: none;
+    padding: 0;
+    font-size: 12px;
+    height: 34px;
+    line-height: 12px;
+    width: 90px;
+    margin: 0;
 }
 /* line 99, ../../sass/Evaluations/_dashboard.scss */
 .dashboard .state-doc {
-  display: inline-block;
-  padding-left: 15px;
+    display: inline-block;
+    padding-left: 15px;
 }
-/* line 103, ../../sass/Evaluations/_dashboard.scss */
-.dashboard .state-doc:before {
-  /* For a round bullet */
-  content: '\2022';
-  display: block;
-  position: relative;
-  max-width: 0;
-  max-height: 0;
-  left: -15px;
-  font-size: 34px;
-  line-height: 20px;
-}
-/* line 116, ../../sass/Evaluations/_dashboard.scss */
-.dashboard .state-doc.state-0:before, .dashboard .state-doc.state-5:before {
-  color: #6DC32E;
-}
-/* line 122, ../../sass/Evaluations/_dashboard.scss */
-.dashboard .state-doc.state-1:before {
-  color: #E94830;
-}
-/* line 128, ../../sass/Evaluations/_dashboard.scss */
-.dashboard .state-doc.state-2:before, .dashboard .state-doc.state-3:before {
-  color: #F7EC4D;
-}
-/* line 134, ../../sass/Evaluations/_dashboard.scss */
-.dashboard .state-doc.state-4:before {
-  color: #419BF7;
-}
-/* line 140, ../../sass/Evaluations/_dashboard.scss */
-.dashboard .state-doc.state-6:before {
-  color: #888;
-}
+    /* line 103, ../../sass/Evaluations/_dashboard.scss */
+    .dashboard .state-doc:before {
+        /* For a round bullet */
+        content: '\2022';
+        display: block;
+        position: relative;
+        max-width: 0;
+        max-height: 0;
+        left: -15px;
+        font-size: 34px;
+        line-height: 20px;
+    }
+    /* line 116, ../../sass/Evaluations/_dashboard.scss */
+    .dashboard .state-doc.state-0:before, .dashboard .state-doc.state-5:before {
+        color: #6DC32E;
+    }
+    /* line 122, ../../sass/Evaluations/_dashboard.scss */
+    .dashboard .state-doc.state-1:before {
+        color: #E94830;
+    }
+    /* line 128, ../../sass/Evaluations/_dashboard.scss */
+    .dashboard .state-doc.state-2:before, .dashboard .state-doc.state-3:before {
+        color: #F7EC4D;
+    }
+    /* line 134, ../../sass/Evaluations/_dashboard.scss */
+    .dashboard .state-doc.state-4:before {
+        color: #419BF7;
+    }
+    /* line 140, ../../sass/Evaluations/_dashboard.scss */
+    .dashboard .state-doc.state-6:before {
+        color: #888;
+    }
 
 /* line 1, ../../sass/Evaluations/_add-calificator.scss */
 .content-modal {
-  background: #FFF;
-  width: 280px;
-  border: 1px solid #D9D9D9;
-  padding: 20px;
-  border-radius: 5px;
-  font-size: 12px;
-  display: none;
-  left: -60px;
-  top: 45px;
-  position: absolute;
-  z-index: 9;
+    background: #FFF;
+    width: 280px;
+    border: 1px solid #D9D9D9;
+    padding: 20px;
+    border-radius: 5px;
+    font-size: 12px;
+    display: none;
+    left: -60px;
+    top: 45px;
+    position: absolute;
+    z-index: 9;
 }
-/* line 14, ../../sass/Evaluations/_add-calificator.scss */
-.content-modal .modal-title {
-  position: relative;
-  height: 22px;
-  border-bottom: 1px solid #D9D9D9;
+    /* line 14, ../../sass/Evaluations/_add-calificator.scss */
+    .content-modal .modal-title {
+        position: relative;
+        height: 22px;
+        border-bottom: 1px solid #D9D9D9;
+    }
+        /* line 20, ../../sass/Evaluations/_add-calificator.scss */
+        .content-modal .modal-title h4 {
+            color: #7F7F7F;
+            width: auto;
+            float: left;
+            padding: 0;
+            margin: 0;
+            font-size: 14px;
+        }
+    /* line 29, ../../sass/Evaluations/_add-calificator.scss */
+    .content-modal .icon.delete {
+        background-image: url(../Images/Evaluations/2-02.png);
+        background-size: 16px;
+        float: right;
+        padding: 9px;
+    }
+    /* line 36, ../../sass/Evaluations/_add-calificator.scss */
+    .content-modal .search-container {
+        position: relative;
+        width: 100%;
+        margin: 15px 0px;
+        height: 40px;
+    }
+        /* line 42, ../../sass/Evaluations/_add-calificator.scss */
+        .content-modal .search-container .search {
+            height: 40px;
+            background-color: #ECECFB;
+            border: solid 1px #CCC;
+            color: #777;
+            padding: 0 5px;
+        }
+        /* line 50, ../../sass/Evaluations/_add-calificator.scss */
+        .content-modal .search-container .add-calificator-btn {
+            background-color: transparent;
+            background-image: url(../Images/Evaluations/1-02.png);
+            background-repeat: no-repeat;
+            background-position: 0;
+            background-size: 14px;
+            border: none;
+            width: 15px;
+            height: 15px;
+            display: inline-block;
+            right: 10px;
+            top: 12px;
+            position: absolute;
+            z-index: 2;
+            cursor: pointer;
+        }
+    /* line 68, ../../sass/Evaluations/_add-calificator.scss */
+    .content-modal .content-add-calificadores {
+        max-height: 135px;
+        padding: 0;
+        margin-bottom: 10px;
+        overflow-y: auto;
+    }
+        /* line 75, ../../sass/Evaluations/_add-calificator.scss */
+        .content-modal .content-add-calificadores ul {
+            padding: 0;
+            margin: 0;
+        }
+        /* line 80, ../../sass/Evaluations/_add-calificator.scss */
+        .content-modal .content-add-calificadores li {
+            padding: 0px;
+            color: #777777;
+            border-bottom: 1px solid #D9D9D9;
+            padding-bottom: 5px;
+            padding-top: 15px;
+            height: 45px;
+        }
+    /* line 89, ../../sass/Evaluations/_add-calificator.scss */
+    .content-modal .cancelar {
+        float: left;
+        padding: 5px 0px;
+        text-decoration: underline;
+        color: #777777;
+        cursor: pointer;
+        height: 30px;
+        line-height: 30px;
+        display: inline-block;
+    }
+    /* line 100, ../../sass/Evaluations/_add-calificator.scss */
+    .content-modal .guardar {
+        float: right;
+        background-color: #4499F4;
+        border: none;
+        color: #FFF;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 14px;
+        height: 35px;
+        line-height: 35px;
+        width: 100px;
+        text-align: center;
+    }
+
+.content-selector-block {
+    float: right;
 }
-/* line 20, ../../sass/Evaluations/_add-calificator.scss */
-.content-modal .modal-title h4 {
-  color: #7F7F7F;
-  width: auto;
-  float: left;
-  padding: 0;
-  margin: 0;
-  font-size: 14px;
+
+.content-selector-label {
+    float: left;
+    margin-top: 16px;
+    padding-top: 5px;
+    padding-right: 20px;
 }
-/* line 29, ../../sass/Evaluations/_add-calificator.scss */
-.content-modal .icon.delete {
-  background-image: url(../Images/Evaluations/2-02.png);
-  background-size: 16px;
-  float: right;
-  padding: 9px;
-}
-/* line 36, ../../sass/Evaluations/_add-calificator.scss */
-.content-modal .search-container {
-  position: relative;
-  width: 100%;
-  margin: 15px 0px;
-  height: 40px;
-}
-/* line 42, ../../sass/Evaluations/_add-calificator.scss */
-.content-modal .search-container .search {
-  height: 40px;
-  background-color: #ECECFB;
-  border: solid 1px #CCC;
-  color: #777;
-  padding: 0 5px;
-}
-/* line 50, ../../sass/Evaluations/_add-calificator.scss */
-.content-modal .search-container .add-calificator-btn {
-  background-color: transparent;
-  background-image: url(../Images/Evaluations/1-02.png);
-  background-repeat: no-repeat;
-  background-position: 0;
-  background-size: 14px;
-  border: none;
-  width: 15px;
-  height: 15px;
-  display: inline-block;
-  right: 10px;
-  top: 12px;
-  position: absolute;
-  z-index: 2;
-  cursor: pointer;
-}
-/* line 68, ../../sass/Evaluations/_add-calificator.scss */
-.content-modal .content-add-calificadores {
-  max-height: 135px;
-  padding: 0;
-  margin-bottom: 10px;
-  overflow-y: auto;
-}
-/* line 75, ../../sass/Evaluations/_add-calificator.scss */
-.content-modal .content-add-calificadores ul {
-  padding: 0;
-  margin: 0;
-}
-/* line 80, ../../sass/Evaluations/_add-calificator.scss */
-.content-modal .content-add-calificadores li {
-  padding: 0px;
-  color: #777777;
-  border-bottom: 1px solid #D9D9D9;
-  padding-bottom: 5px;
-  padding-top: 15px;
-  height: 45px;
-}
-/* line 89, ../../sass/Evaluations/_add-calificator.scss */
-.content-modal .cancelar {
-  float: left;
-  padding: 5px 0px;
-  text-decoration: underline;
-  color: #777777;
-  cursor: pointer;
-  height: 30px;
-  line-height: 30px;
-  display: inline-block;
-}
-/* line 100, ../../sass/Evaluations/_add-calificator.scss */
-.content-modal .guardar {
-  float: right;
-  background-color: #4499F4;
-  border: none;
-  color: #FFF;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 14px;
-  height: 35px;
-  line-height: 35px;
-  width: 100px;
-  text-align: center;
+
+.content-selector-dropdown {
+    float: left;
+    margin-top: 16px;
 }
 
 /* line 5, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .title-evaluations {
-  margin: 20px 0;
-  font-size: 26px;
+    margin: 20px 0;
+    font-size: 26px;
 }
-/* line 9, ../../sass/Evaluations/_evaluation.scss */
-.evaluation .title-evaluations strong {
-  color: #444;
-}
+    /* line 9, ../../sass/Evaluations/_evaluation.scss */
+    .evaluation .title-evaluations strong {
+        color: #444;
+    }
 /* line 14, ../../sass/Evaluations/_evaluation.scss */
 .evaluation th, .evaluation td {
-  border: none;
-  text-align: center;
+    border: none;
+    text-align: center;
 }
 /* line 19, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .top-evaluation {
-  position: relative;
-  margin: 20px 0;
+    position: relative;
+    margin: 20px 0;
 }
-/* line 24, ../../sass/Evaluations/_evaluation.scss */
-.evaluation .top-evaluation h4 {
-  border-bottom: 1px solid #ccc;
-  margin-top: 0;
-  font-size: 20px;
-  width: 300px;
-  padding-bottom: 10px;
-}
-/* line 32, ../../sass/Evaluations/_evaluation.scss */
-.evaluation .top-evaluation .top-left {
-  width: 60%;
-  float: left;
-  padding: 10px;
-}
-/* line 37, ../../sass/Evaluations/_evaluation.scss */
-.evaluation .top-evaluation .top-left .personal-info-container {
-  margin: 0 0 30px 0;
-  padding: 0;
-  list-style: none;
-}
-/* line 42, ../../sass/Evaluations/_evaluation.scss */
-.evaluation .top-evaluation .top-left .personal-info-container li {
-  margin: 0;
-  padding: 0;
-  height: 40px;
-  float: right;
-  font-size: 18px;
-  color: #878787;
-  width: -moz-calc(100% / 2);
-  width: -webkit-calc(100% / 2);
-  width: calc(100% / 2);
-}
-/* line 51, ../../sass/Evaluations/_evaluation.scss */
-.evaluation .top-evaluation .top-left .personal-info-container li:nth-child(odd) {
-  float: left;
-}
-/* line 54, ../../sass/Evaluations/_evaluation.scss */
-.evaluation .top-evaluation .top-left .personal-info-container li:nth-child(odd) .item {
-  width: 85px;
-}
-/* line 59, ../../sass/Evaluations/_evaluation.scss */
-.evaluation .top-evaluation .top-left .personal-info-container li .item {
-  width: 120px;
-  display: inline-block;
-  float: left;
-  color: #878787;
-}
-/* line 66, ../../sass/Evaluations/_evaluation.scss */
-.evaluation .top-evaluation .top-left .personal-info-container li .item-info {
-  color: #444;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: inline-block;
-  position: relative;
-  width: -moz-calc(100% - 120px);
-  width: -webkit-calc(100% - 120px);
-  width: calc(100% - 120px);
-}
-/* line 76, ../../sass/Evaluations/_evaluation.scss */
-.evaluation .top-evaluation .top-left .personal-info-container li .editable-projects {
-  width: 245px;
-  height: 30px;
-  float: left;
-  margin: -5px 0 0 -5px;
-}
-/* line 82, ../../sass/Evaluations/_evaluation.scss */
-.evaluation .top-evaluation .top-left .personal-info-container li .editable-projects input {
-  box-shadow: none;
-  border: solid 1px #FFF;
-  padding: 0 5px;
-  color: #444;
-  font-size: 18px;
-  height: 30px;
-  width: 215px;
-  float: left;
-}
-/* line 47, ../../sass/Evaluations/_mixins.scss */
-.evaluation .top-evaluation .top-left .personal-info-container li .editable-projects input.placeholder {
-  font: 14px Helvetica, Helvetica Neue;
-  font-style: italic;
-  color: #999;
-}
-/* line 48, ../../sass/Evaluations/_mixins.scss */
-.evaluation .top-evaluation .top-left .personal-info-container li .editable-projects input:-moz-placeholder {
-  font: 14px Helvetica, Helvetica Neue;
-  font-style: italic;
-  color: #999;
-}
-/* line 49, ../../sass/Evaluations/_mixins.scss */
-.evaluation .top-evaluation .top-left .personal-info-container li .editable-projects input::-moz-placeholder {
-  font: 14px Helvetica, Helvetica Neue;
-  font-style: italic;
-  color: #999;
-}
-/* line 50, ../../sass/Evaluations/_mixins.scss */
-.evaluation .top-evaluation .top-left .personal-info-container li .editable-projects input:-ms-input-placeholder {
-  font: 14px Helvetica, Helvetica Neue;
-  font-style: italic;
-  color: #999;
-}
-/* line 51, ../../sass/Evaluations/_mixins.scss */
-.evaluation .top-evaluation .top-left .personal-info-container li .editable-projects input::-webkit-input-placeholder {
-  font: 14px Helvetica, Helvetica Neue;
-  font-style: italic;
-  color: #999;
-}
-/* line 98, ../../sass/Evaluations/_evaluation.scss */
-.evaluation .top-evaluation .top-left .personal-info-container li .editable-projects .pencil {
-  background: #DDD url(../Images/Evaluations/12-01.png) no-repeat center center;
-  border: none;
-  border-top-right-radius: 3px;
-  border-bottom-right-radius: 3px;
-  height: 30px;
-  width: 30px;
-  float: right;
-  display: none;
-}
-/* line 114, ../../sass/Evaluations/_evaluation.scss */
-.evaluation .top-evaluation .top-left .personal-info-container li .editable-projects.edition-enabled input, .evaluation .top-evaluation .top-left .personal-info-container li .editable-projects:hover input {
-  border: solid 1px #DDD;
-  border-radius: 3px;
-}
-/* line 120, ../../sass/Evaluations/_evaluation.scss */
-.evaluation .top-evaluation .top-left .personal-info-container li .editable-projects.edition-enabled.edition input, .evaluation .top-evaluation .top-left .personal-info-container li .editable-projects.edition:hover input {
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-}
-/* line 125, ../../sass/Evaluations/_evaluation.scss */
-.evaluation .top-evaluation .top-left .personal-info-container li .editable-projects.edition-enabled.edition .pencil, .evaluation .top-evaluation .top-left .personal-info-container li .editable-projects.edition:hover .pencil {
-  display: block;
-}
-/* line 134, ../../sass/Evaluations/_evaluation.scss */
-.evaluation .top-evaluation .top-left .metrics-container {
-  font-size: 18px;
-  color: #444;
-  line-height: 30px;
-}
-/* line 139, ../../sass/Evaluations/_evaluation.scss */
-.evaluation .top-evaluation .top-left .metrics-container span {
-  font-size: 20px;
-}
-/* line 144, ../../sass/Evaluations/_evaluation.scss */
-.evaluation .top-evaluation .top-left .explanatory-text {
-  margin-top: 30px;
-}
-/* line 149, ../../sass/Evaluations/_evaluation.scss */
-.evaluation .top-evaluation .top-right {
-  width: 40%;
-  float: right;
-  padding: 10px;
-}
-/* line 155, ../../sass/Evaluations/_evaluation.scss */
-.evaluation .top-evaluation .comments-container {
-  border: solid 1px #DDD;
-  border-radius: 5px;
-  width: 100%;
-  height: 260px;
-  overflow-x: hidden;
-  overflow-y: auto;
-  margin-bottom: 20px;
-  padding: 5px;
-  color: #444;
-  font-size: 14px;
-}
-/* line 167, ../../sass/Evaluations/_evaluation.scss */
-.evaluation .top-evaluation .comments-container.comments-company-container {
-  height: 140px;
-}
-/* line 171, ../../sass/Evaluations/_evaluation.scss */
-.evaluation .top-evaluation .comments-container .title {
-  color: #000;
-  font-size: 16px;
-  font-weight: bold;
-  text-decoration: underline;
-}
-/* line 178, ../../sass/Evaluations/_evaluation.scss */
-.evaluation .top-evaluation .comments-container .content-editable {
-  border: none;
-  box-shadow: none;
-  float: left;
-  min-height: 50px;
-  width: 100%;
-}
-/* line 185, ../../sass/Evaluations/_evaluation.scss */
-.evaluation .top-evaluation .comments-container .content-editable.big-comment {
-  height: -moz-calc(100% - 2px);
-  height: -webkit-calc(100% - 2px);
-  height: calc(100% - 2px);
-  margin-bottom: 0;
-}
-/* line 190, ../../sass/Evaluations/_evaluation.scss */
-.evaluation .top-evaluation .comments-container .content-editable:disabled {
-  background: transparent !important;
-  cursor: default;
-}
+    /* line 24, ../../sass/Evaluations/_evaluation.scss */
+    .evaluation .top-evaluation h4 {
+        border-bottom: 1px solid #ccc;
+        margin-top: 0;
+        font-size: 20px;
+        width: 300px;
+        padding-bottom: 10px;
+    }
+    /* line 32, ../../sass/Evaluations/_evaluation.scss */
+    .evaluation .top-evaluation .top-left {
+        width: 60%;
+        float: left;
+        padding: 10px;
+    }
+        /* line 37, ../../sass/Evaluations/_evaluation.scss */
+        .evaluation .top-evaluation .top-left .personal-info-container {
+            margin: 0 0 30px 0;
+            padding: 0;
+            list-style: none;
+        }
+            /* line 42, ../../sass/Evaluations/_evaluation.scss */
+            .evaluation .top-evaluation .top-left .personal-info-container li {
+                margin: 0;
+                padding: 0;
+                height: 40px;
+                float: right;
+                font-size: 18px;
+                color: #878787;
+                width: -moz-calc(100% / 2);
+                width: -webkit-calc(100% / 2);
+                width: calc(100% / 2);
+            }
+                /* line 51, ../../sass/Evaluations/_evaluation.scss */
+                .evaluation .top-evaluation .top-left .personal-info-container li:nth-child(odd) {
+                    float: left;
+                }
+                    /* line 54, ../../sass/Evaluations/_evaluation.scss */
+                    .evaluation .top-evaluation .top-left .personal-info-container li:nth-child(odd) .item {
+                        width: 85px;
+                    }
+                /* line 59, ../../sass/Evaluations/_evaluation.scss */
+                .evaluation .top-evaluation .top-left .personal-info-container li .item {
+                    width: 120px;
+                    display: inline-block;
+                    float: left;
+                    color: #878787;
+                }
+                /* line 66, ../../sass/Evaluations/_evaluation.scss */
+                .evaluation .top-evaluation .top-left .personal-info-container li .item-info {
+                    color: #444;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    display: inline-block;
+                    position: relative;
+                    width: -moz-calc(100% - 120px);
+                    width: -webkit-calc(100% - 120px);
+                    width: calc(100% - 120px);
+                }
+                /* line 76, ../../sass/Evaluations/_evaluation.scss */
+                .evaluation .top-evaluation .top-left .personal-info-container li .editable-projects {
+                    width: 245px;
+                    height: 30px;
+                    float: left;
+                    margin: -5px 0 0 -5px;
+                }
+                    /* line 82, ../../sass/Evaluations/_evaluation.scss */
+                    .evaluation .top-evaluation .top-left .personal-info-container li .editable-projects input {
+                        box-shadow: none;
+                        border: solid 1px #FFF;
+                        padding: 0 5px;
+                        color: #444;
+                        font-size: 18px;
+                        height: 30px;
+                        width: 215px;
+                        float: left;
+                    }
+                        /* line 47, ../../sass/Evaluations/_mixins.scss */
+                        .evaluation .top-evaluation .top-left .personal-info-container li .editable-projects input.placeholder {
+                            font: 14px Helvetica, Helvetica Neue;
+                            font-style: italic;
+                            color: #999;
+                        }
+                        /* line 48, ../../sass/Evaluations/_mixins.scss */
+                        .evaluation .top-evaluation .top-left .personal-info-container li .editable-projects input:-moz-placeholder {
+                            font: 14px Helvetica, Helvetica Neue;
+                            font-style: italic;
+                            color: #999;
+                        }
+                        /* line 49, ../../sass/Evaluations/_mixins.scss */
+                        .evaluation .top-evaluation .top-left .personal-info-container li .editable-projects input::-moz-placeholder {
+                            font: 14px Helvetica, Helvetica Neue;
+                            font-style: italic;
+                            color: #999;
+                        }
+                        /* line 50, ../../sass/Evaluations/_mixins.scss */
+                        .evaluation .top-evaluation .top-left .personal-info-container li .editable-projects input:-ms-input-placeholder {
+                            font: 14px Helvetica, Helvetica Neue;
+                            font-style: italic;
+                            color: #999;
+                        }
+                        /* line 51, ../../sass/Evaluations/_mixins.scss */
+                        .evaluation .top-evaluation .top-left .personal-info-container li .editable-projects input::-webkit-input-placeholder {
+                            font: 14px Helvetica, Helvetica Neue;
+                            font-style: italic;
+                            color: #999;
+                        }
+                    /* line 98, ../../sass/Evaluations/_evaluation.scss */
+                    .evaluation .top-evaluation .top-left .personal-info-container li .editable-projects .pencil {
+                        background: #DDD url(../Images/Evaluations/12-01.png) no-repeat center center;
+                        border: none;
+                        border-top-right-radius: 3px;
+                        border-bottom-right-radius: 3px;
+                        height: 30px;
+                        width: 30px;
+                        float: right;
+                        display: none;
+                    }
+                    /* line 114, ../../sass/Evaluations/_evaluation.scss */
+                    .evaluation .top-evaluation .top-left .personal-info-container li .editable-projects.edition-enabled input, .evaluation .top-evaluation .top-left .personal-info-container li .editable-projects:hover input {
+                        border: solid 1px #DDD;
+                        border-radius: 3px;
+                    }
+                    /* line 120, ../../sass/Evaluations/_evaluation.scss */
+                    .evaluation .top-evaluation .top-left .personal-info-container li .editable-projects.edition-enabled.edition input, .evaluation .top-evaluation .top-left .personal-info-container li .editable-projects.edition:hover input {
+                        border-top-right-radius: 0;
+                        border-bottom-right-radius: 0;
+                    }
+                    /* line 125, ../../sass/Evaluations/_evaluation.scss */
+                    .evaluation .top-evaluation .top-left .personal-info-container li .editable-projects.edition-enabled.edition .pencil, .evaluation .top-evaluation .top-left .personal-info-container li .editable-projects.edition:hover .pencil {
+                        display: block;
+                    }
+        /* line 134, ../../sass/Evaluations/_evaluation.scss */
+        .evaluation .top-evaluation .top-left .metrics-container {
+            font-size: 18px;
+            color: #444;
+            line-height: 30px;
+        }
+            /* line 139, ../../sass/Evaluations/_evaluation.scss */
+            .evaluation .top-evaluation .top-left .metrics-container span {
+                font-size: 20px;
+            }
+        /* line 144, ../../sass/Evaluations/_evaluation.scss */
+        .evaluation .top-evaluation .top-left .explanatory-text {
+            margin-top: 30px;
+        }
+    /* line 149, ../../sass/Evaluations/_evaluation.scss */
+    .evaluation .top-evaluation .top-right {
+        width: 40%;
+        float: right;
+        padding: 10px;
+    }
+    /* line 155, ../../sass/Evaluations/_evaluation.scss */
+    .evaluation .top-evaluation .comments-container {
+        border: solid 1px #DDD;
+        border-radius: 5px;
+        width: 100%;
+        height: 260px;
+        overflow-x: hidden;
+        overflow-y: auto;
+        margin-bottom: 20px;
+        padding: 5px;
+        color: #444;
+        font-size: 14px;
+    }
+        /* line 167, ../../sass/Evaluations/_evaluation.scss */
+        .evaluation .top-evaluation .comments-container.comments-company-container {
+            height: 140px;
+        }
+        /* line 171, ../../sass/Evaluations/_evaluation.scss */
+        .evaluation .top-evaluation .comments-container .title {
+            color: #000;
+            font-size: 16px;
+            font-weight: bold;
+            text-decoration: underline;
+        }
+        /* line 178, ../../sass/Evaluations/_evaluation.scss */
+        .evaluation .top-evaluation .comments-container .content-editable {
+            border: none;
+            box-shadow: none;
+            float: left;
+            min-height: 50px;
+            width: 100%;
+        }
+            /* line 185, ../../sass/Evaluations/_evaluation.scss */
+            .evaluation .top-evaluation .comments-container .content-editable.big-comment {
+                height: -moz-calc(100% - 2px);
+                height: -webkit-calc(100% - 2px);
+                height: calc(100% - 2px);
+                margin-bottom: 0;
+            }
+            /* line 190, ../../sass/Evaluations/_evaluation.scss */
+            .evaluation .top-evaluation .comments-container .content-editable:disabled {
+                background: transparent !important;
+                cursor: default;
+            }
 /* line 198, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .explanatory-text {
-  font-size: 14px;
-  color: #878787;
-  font-style: italic;
+    font-size: 14px;
+    color: #878787;
+    font-style: italic;
 }
 /* line 207, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .calification-items th, .evaluation .calification-items td {
-  font-weight: normal;
-  width: 100px;
-  max-width: 100px;
-  text-align: center;
+    font-weight: normal;
+    width: 100px;
+    max-width: 100px;
+    text-align: center;
 }
-/* line 214, ../../sass/Evaluations/_evaluation.scss */
-.evaluation .calification-items th:first-child,
-.evaluation .calification-items td:first-child {
-  text-align: left;
-  padding-left: 40px !important;
-}
+    /* line 214, ../../sass/Evaluations/_evaluation.scss */
+    .evaluation .calification-items th:first-child,
+    .evaluation .calification-items td:first-child {
+        text-align: left;
+        padding-left: 40px !important;
+    }
 /* line 222, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .calification-items.table-2-columns th:first-child,
 .evaluation .calification-items.table-2-columns td:first-child {
-  width: -moz-calc(100% - (1 * 100px));
-  width: -webkit-calc(100% - (1 * 100px));
-  width: calc(100% - (1 * 100px));
+    width: -moz-calc(100% - (1 * 100px));
+    width: -webkit-calc(100% - (1 * 100px));
+    width: calc(100% - (1 * 100px));
 }
 /* line 222, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .calification-items.table-3-columns th:first-child,
 .evaluation .calification-items.table-3-columns td:first-child {
-  width: -moz-calc(100% - (2 * 100px));
-  width: -webkit-calc(100% - (2 * 100px));
-  width: calc(100% - (2 * 100px));
+    width: -moz-calc(100% - (2 * 100px));
+    width: -webkit-calc(100% - (2 * 100px));
+    width: calc(100% - (2 * 100px));
 }
 /* line 222, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .calification-items.table-4-columns th:first-child,
 .evaluation .calification-items.table-4-columns td:first-child {
-  width: -moz-calc(100% - (3 * 100px));
-  width: -webkit-calc(100% - (3 * 100px));
-  width: calc(100% - (3 * 100px));
+    width: -moz-calc(100% - (3 * 100px));
+    width: -webkit-calc(100% - (3 * 100px));
+    width: calc(100% - (3 * 100px));
 }
 /* line 222, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .calification-items.table-5-columns th:first-child,
 .evaluation .calification-items.table-5-columns td:first-child {
-  width: -moz-calc(100% - (4 * 100px));
-  width: -webkit-calc(100% - (4 * 100px));
-  width: calc(100% - (4 * 100px));
+    width: -moz-calc(100% - (4 * 100px));
+    width: -webkit-calc(100% - (4 * 100px));
+    width: calc(100% - (4 * 100px));
 }
 /* line 222, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .calification-items.table-6-columns th:first-child,
 .evaluation .calification-items.table-6-columns td:first-child {
-  width: -moz-calc(100% - (5 * 100px));
-  width: -webkit-calc(100% - (5 * 100px));
-  width: calc(100% - (5 * 100px));
+    width: -moz-calc(100% - (5 * 100px));
+    width: -webkit-calc(100% - (5 * 100px));
+    width: calc(100% - (5 * 100px));
 }
 /* line 222, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .calification-items.table-7-columns th:first-child,
 .evaluation .calification-items.table-7-columns td:first-child {
-  width: -moz-calc(100% - (6 * 100px));
-  width: -webkit-calc(100% - (6 * 100px));
-  width: calc(100% - (6 * 100px));
+    width: -moz-calc(100% - (6 * 100px));
+    width: -webkit-calc(100% - (6 * 100px));
+    width: calc(100% - (6 * 100px));
 }
 /* line 222, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .calification-items.table-8-columns th:first-child,
 .evaluation .calification-items.table-8-columns td:first-child {
-  width: -moz-calc(100% - (7 * 100px));
-  width: -webkit-calc(100% - (7 * 100px));
-  width: calc(100% - (7 * 100px));
+    width: -moz-calc(100% - (7 * 100px));
+    width: -webkit-calc(100% - (7 * 100px));
+    width: calc(100% - (7 * 100px));
 }
 /* line 222, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .calification-items.table-9-columns th:first-child,
 .evaluation .calification-items.table-9-columns td:first-child {
-  width: -moz-calc(100% - (8 * 100px));
-  width: -webkit-calc(100% - (8 * 100px));
-  width: calc(100% - (8 * 100px));
+    width: -moz-calc(100% - (8 * 100px));
+    width: -webkit-calc(100% - (8 * 100px));
+    width: calc(100% - (8 * 100px));
 }
 /* line 222, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .calification-items.table-10-columns th:first-child,
 .evaluation .calification-items.table-10-columns td:first-child {
-  width: -moz-calc(100% - (9 * 100px));
-  width: -webkit-calc(100% - (9 * 100px));
-  width: calc(100% - (9 * 100px));
+    width: -moz-calc(100% - (9 * 100px));
+    width: -webkit-calc(100% - (9 * 100px));
+    width: calc(100% - (9 * 100px));
 }
 /* line 222, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .calification-items.table-11-columns th:first-child,
 .evaluation .calification-items.table-11-columns td:first-child {
-  width: -moz-calc(100% - (10 * 100px));
-  width: -webkit-calc(100% - (10 * 100px));
-  width: calc(100% - (10 * 100px));
+    width: -moz-calc(100% - (10 * 100px));
+    width: -webkit-calc(100% - (10 * 100px));
+    width: calc(100% - (10 * 100px));
 }
 /* line 222, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .calification-items.table-12-columns th:first-child,
 .evaluation .calification-items.table-12-columns td:first-child {
-  width: -moz-calc(100% - (11 * 100px));
-  width: -webkit-calc(100% - (11 * 100px));
-  width: calc(100% - (11 * 100px));
+    width: -moz-calc(100% - (11 * 100px));
+    width: -webkit-calc(100% - (11 * 100px));
+    width: calc(100% - (11 * 100px));
 }
 /* line 222, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .calification-items.table-13-columns th:first-child,
 .evaluation .calification-items.table-13-columns td:first-child {
-  width: -moz-calc(100% - (12 * 100px));
-  width: -webkit-calc(100% - (12 * 100px));
-  width: calc(100% - (12 * 100px));
+    width: -moz-calc(100% - (12 * 100px));
+    width: -webkit-calc(100% - (12 * 100px));
+    width: calc(100% - (12 * 100px));
 }
 /* line 222, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .calification-items.table-14-columns th:first-child,
 .evaluation .calification-items.table-14-columns td:first-child {
-  width: -moz-calc(100% - (13 * 100px));
-  width: -webkit-calc(100% - (13 * 100px));
-  width: calc(100% - (13 * 100px));
+    width: -moz-calc(100% - (13 * 100px));
+    width: -webkit-calc(100% - (13 * 100px));
+    width: calc(100% - (13 * 100px));
 }
 /* line 222, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .calification-items.table-15-columns th:first-child,
 .evaluation .calification-items.table-15-columns td:first-child {
-  width: -moz-calc(100% - (14 * 100px));
-  width: -webkit-calc(100% - (14 * 100px));
-  width: calc(100% - (14 * 100px));
+    width: -moz-calc(100% - (14 * 100px));
+    width: -webkit-calc(100% - (14 * 100px));
+    width: calc(100% - (14 * 100px));
 }
 /* line 229, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .calification-items .calificators {
-  position: relative;
-  border-top: none;
-  border-right: 1px solid #DDD;
-  background-color: #AAAAAA;
-  color: white;
-  font-size: 17px;
-  height: 70px;
-  vertical-align: middle;
+    position: relative;
+    border-top: none;
+    border-right: 1px solid #DDD;
+    background-color: #AAAAAA;
+    color: white;
+    font-size: 17px;
+    height: 70px;
+    vertical-align: middle;
 }
-/* line 239, ../../sass/Evaluations/_evaluation.scss */
-.evaluation .calification-items .calificators:last-child {
-  border-right: none;
-}
-/* line 243, ../../sass/Evaluations/_evaluation.scss */
-.evaluation .calification-items .calificators h1 {
-  font-size: 34px;
-  padding: 0;
-  font-weight: normal;
-  text-transform: uppercase;
-}
-/* line 249, ../../sass/Evaluations/_evaluation.scss */
-.evaluation .calification-items .calificators .icon {
-  background-image: url(../Images/Evaluations/11-02.png);
-  position: absolute;
-  width: 21px;
-  height: 21px;
-  right: 5px;
-  top: 5px;
-  cursor: pointer;
-}
-/* line 258, ../../sass/Evaluations/_evaluation.scss */
-.evaluation .calification-items .calificators .icon.top-tip:hover:after {
-  left: -20px;
-}
-/* line 261, ../../sass/Evaluations/_evaluation.scss */
-.evaluation .calification-items .calificators .icon.top-tip:hover:before {
-  left: 5px;
-}
-/* line 265, ../../sass/Evaluations/_evaluation.scss */
-.evaluation .calification-items .calificators .icon:after {
-  content: 'Ocultar';
-}
-/* line 269, ../../sass/Evaluations/_evaluation.scss */
-.evaluation .calification-items .calificators .icon.hide-column {
-  background-image: url(../Images/Evaluations/10-02.png);
-}
-/* line 272, ../../sass/Evaluations/_evaluation.scss */
-.evaluation .calification-items .calificators .icon.hide-column:after {
-  content: "Mostrar";
-}
+    /* line 239, ../../sass/Evaluations/_evaluation.scss */
+    .evaluation .calification-items .calificators:last-child {
+        border-right: none;
+    }
+    /* line 243, ../../sass/Evaluations/_evaluation.scss */
+    .evaluation .calification-items .calificators h1 {
+        font-size: 34px;
+        padding: 0;
+        font-weight: normal;
+        text-transform: uppercase;
+    }
+    /* line 249, ../../sass/Evaluations/_evaluation.scss */
+    .evaluation .calification-items .calificators .icon {
+        background-image: url(../Images/Evaluations/11-02.png);
+        position: absolute;
+        width: 21px;
+        height: 21px;
+        right: 5px;
+        top: 5px;
+        cursor: pointer;
+    }
+        /* line 258, ../../sass/Evaluations/_evaluation.scss */
+        .evaluation .calification-items .calificators .icon.top-tip:hover:after {
+            left: -20px;
+        }
+        /* line 261, ../../sass/Evaluations/_evaluation.scss */
+        .evaluation .calification-items .calificators .icon.top-tip:hover:before {
+            left: 5px;
+        }
+        /* line 265, ../../sass/Evaluations/_evaluation.scss */
+        .evaluation .calification-items .calificators .icon:after {
+            content: 'Ocultar';
+        }
+        /* line 269, ../../sass/Evaluations/_evaluation.scss */
+        .evaluation .calification-items .calificators .icon.hide-column {
+            background-image: url(../Images/Evaluations/10-02.png);
+        }
+            /* line 272, ../../sass/Evaluations/_evaluation.scss */
+            .evaluation .calification-items .calificators .icon.hide-column:after {
+                content: "Mostrar";
+            }
 /* line 279, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .calification-items .title-evaluation {
-  background-color: #888888;
-  color: white;
-  border-right: 1px solid #DDD;
-  font-size: 34px;
-  height: 80px;
-  text-transform: uppercase;
-  border-top: none;
+    background-color: #888888;
+    color: white;
+    border-right: 1px solid #DDD;
+    font-size: 34px;
+    height: 80px;
+    text-transform: uppercase;
+    border-top: none;
 }
-/* line 288, ../../sass/Evaluations/_evaluation.scss */
-.evaluation .calification-items .title-evaluation:last-child {
-  border-right: none;
-}
+    /* line 288, ../../sass/Evaluations/_evaluation.scss */
+    .evaluation .calification-items .title-evaluation:last-child {
+        border-right: none;
+    }
 /* line 294, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .calification-items tbody .sub-title-evaluation {
-  background-color: #656565;
-  color: white !important;
-  font-size: 30px;
-  height: 70px;
-  text-transform: uppercase;
-  border-top: none;
+    background-color: #656565;
+    color: white !important;
+    font-size: 30px;
+    height: 70px;
+    text-transform: uppercase;
+    border-top: none;
 }
-/* line 302, ../../sass/Evaluations/_evaluation.scss */
-.evaluation .calification-items tbody .sub-title-evaluation:first-child {
-  font-size: 26px;
-}
+    /* line 302, ../../sass/Evaluations/_evaluation.scss */
+    .evaluation .calification-items tbody .sub-title-evaluation:first-child {
+        font-size: 26px;
+    }
 /* line 307, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .calification-items tbody .icon.info {
-  background: url(../Images/Evaluations/information.png) no-repeat center center;
-  height: 16px;
-  width: 16px;
-  margin-left: 5px;
+    background: url(../Images/Evaluations/information.png) no-repeat center center;
+    height: 16px;
+    width: 16px;
+    margin-left: 5px;
 }
 /* line 315, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .calification-items tbody tr {
-  height: 50px;
-  background-color: #FFF;
-  color: #666;
+    height: 50px;
+    background-color: #FFF;
+    color: #666;
 }
-/* line 320, ../../sass/Evaluations/_evaluation.scss */
-.evaluation .calification-items tbody tr.row-selected {
-  background-color: #EDF0F1;
-}
-/* line 323, ../../sass/Evaluations/_evaluation.scss */
-.evaluation .calification-items tbody tr.row-selected td span {
-  color: #000;
-}
-/* line 327, ../../sass/Evaluations/_evaluation.scss */
-.evaluation .calification-items tbody tr.row-selected .icon.info {
-  background: url(../Images/Evaluations/information-black.png) no-repeat center center;
-  height: 16px;
-  width: 16px;
-  margin-left: 5px;
-}
-/* line 334, ../../sass/Evaluations/_evaluation.scss */
-.evaluation .calification-items tbody tr.row-selected .calification-input {
-  border: 1px solid #439CFD;
-}
-/* line 339, ../../sass/Evaluations/_evaluation.scss */
-.evaluation .calification-items tbody tr td {
-  font-size: 20px;
-  border-bottom: 1px solid #DDD;
-  border-right: 1px solid #DDD;
-}
-/* line 344, ../../sass/Evaluations/_evaluation.scss */
-.evaluation .calification-items tbody tr td:first-child {
-  font-size: 16px;
-}
-/* line 348, ../../sass/Evaluations/_evaluation.scss */
-.evaluation .calification-items tbody tr td:last-child {
-  border-right: none;
-}
-/* line 353, ../../sass/Evaluations/_evaluation.scss */
-.evaluation .calification-items tbody tr .calification-input {
-  border: solid 1px #BBB;
-  width: 50px;
-  height: 25px;
-  border-radius: 4px;
-  font-size: 16px;
-  padding: 0 5px;
-  text-align: center;
-}
-/* line 362, ../../sass/Evaluations/_evaluation.scss */
-.evaluation .calification-items tbody tr .calification-input.invalid {
-  border-color: #EE6048 !important;
-}
-/* line 367, ../../sass/Evaluations/_evaluation.scss */
-.evaluation .calification-items tbody tr .exceeds-expectations {
-  background: #CEE9AC;
-}
-/* line 371, ../../sass/Evaluations/_evaluation.scss */
-.evaluation .calification-items tbody tr .poor {
-  background: #FDF7C5;
-}
+    /* line 320, ../../sass/Evaluations/_evaluation.scss */
+    .evaluation .calification-items tbody tr.row-selected {
+        background-color: #EDF0F1;
+    }
+        /* line 323, ../../sass/Evaluations/_evaluation.scss */
+        .evaluation .calification-items tbody tr.row-selected td span {
+            color: #000;
+        }
+        /* line 327, ../../sass/Evaluations/_evaluation.scss */
+        .evaluation .calification-items tbody tr.row-selected .icon.info {
+            background: url(../Images/Evaluations/information-black.png) no-repeat center center;
+            height: 16px;
+            width: 16px;
+            margin-left: 5px;
+        }
+        /* line 334, ../../sass/Evaluations/_evaluation.scss */
+        .evaluation .calification-items tbody tr.row-selected .calification-input {
+            border: 1px solid #439CFD;
+        }
+    /* line 339, ../../sass/Evaluations/_evaluation.scss */
+    .evaluation .calification-items tbody tr td {
+        font-size: 20px;
+        border-bottom: 1px solid #DDD;
+        border-right: 1px solid #DDD;
+    }
+        /* line 344, ../../sass/Evaluations/_evaluation.scss */
+        .evaluation .calification-items tbody tr td:first-child {
+            font-size: 16px;
+        }
+        /* line 348, ../../sass/Evaluations/_evaluation.scss */
+        .evaluation .calification-items tbody tr td:last-child {
+            border-right: none;
+        }
+    /* line 353, ../../sass/Evaluations/_evaluation.scss */
+    .evaluation .calification-items tbody tr .calification-input {
+        border: solid 1px #BBB;
+        width: 50px;
+        height: 25px;
+        border-radius: 4px;
+        font-size: 16px;
+        padding: 0 5px;
+        text-align: center;
+    }
+        /* line 362, ../../sass/Evaluations/_evaluation.scss */
+        .evaluation .calification-items tbody tr .calification-input.invalid {
+            border-color: #EE6048 !important;
+        }
+    /* line 367, ../../sass/Evaluations/_evaluation.scss */
+    .evaluation .calification-items tbody tr .exceeds-expectations {
+        background: #CEE9AC;
+    }
+    /* line 371, ../../sass/Evaluations/_evaluation.scss */
+    .evaluation .calification-items tbody tr .poor {
+        background: #FDF7C5;
+    }
 /* line 378, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .footer-evaluation {
-  margin: 35px 0;
+    margin: 35px 0;
 }
-/* line 382, ../../sass/Evaluations/_evaluation.scss */
-.evaluation .footer-evaluation .finish-btn {
-  border-radius: 8px;
-  width: 315px;
-  height: 70px;
-  float: right;
-  margin-left: 25px;
-  font-size: 20px;
-}
-/* line 391, ../../sass/Evaluations/_evaluation.scss */
-.evaluation .footer-evaluation .explanatory-text {
-  float: right;
-  font-size: 16px;
-  margin-top: 25px;
-}
+    /* line 382, ../../sass/Evaluations/_evaluation.scss */
+    .evaluation .footer-evaluation .finish-btn {
+        border-radius: 8px;
+        width: 315px;
+        height: 70px;
+        float: right;
+        margin-left: 25px;
+        font-size: 20px;
+    }
+    /* line 391, ../../sass/Evaluations/_evaluation.scss */
+    .evaluation .footer-evaluation .explanatory-text {
+        float: right;
+        font-size: 16px;
+        margin-top: 25px;
+    }
 
 /*Loader*/
 /* line 2, ../../sass/Evaluations/_loader.scss */
 .loader-container {
-  background-color: black;
-  width: 100%;
-  height: 100%;
-  opacity: 0.5;
-  top: 0;
-  position: fixed;
-  right: 0;
-  left: 0;
+    background-color: black;
+    width: 100%;
+    height: 100%;
+    opacity: 0.5;
+    top: 0;
+    position: fixed;
+    right: 0;
+    left: 0;
 }
 
 /* line 12, ../../sass/Evaluations/_loader.scss */
 .loader {
-  font-size: 10px;
-  margin: 50px auto;
-  text-indent: -9999em;
-  width: 11em;
-  height: 11em;
-  border-radius: 50%;
-  background: #ffffff;
-  position: absolute;
-  top: 30%;
-  background: -moz-linear-gradient(left, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
-  background: -webkit-linear-gradient(left, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
-  background: -o-linear-gradient(left, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
-  background: -ms-linear-gradient(left, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
-  background: linear-gradient(to right, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
-  position: relative;
-  -webkit-animation: load3 1.4s infinite linear;
-  animation: load3 1.4s infinite linear;
-  -webkit-transform: translateZ(0);
-  -ms-transform: translateZ(0);
-  transform: translateZ(0);
+    font-size: 10px;
+    margin: 50px auto;
+    text-indent: -9999em;
+    width: 11em;
+    height: 11em;
+    border-radius: 50%;
+    background: #ffffff;
+    position: absolute;
+    top: 30%;
+    background: -moz-linear-gradient(left, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
+    background: -webkit-linear-gradient(left, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
+    background: -o-linear-gradient(left, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
+    background: -ms-linear-gradient(left, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
+    background: linear-gradient(to right, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
+    position: relative;
+    -webkit-animation: load3 1.4s infinite linear;
+    animation: load3 1.4s infinite linear;
+    -webkit-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    transform: translateZ(0);
 }
 
-/* line 34, ../../sass/Evaluations/_loader.scss */
-.loader:before {
-  width: 50%;
-  height: 50%;
-  background: #ffffff;
-  border-radius: 100% 0 0 0;
-  position: absolute;
-  top: 0;
-  left: 0;
-  content: '';
-}
+    /* line 34, ../../sass/Evaluations/_loader.scss */
+    .loader:before {
+        width: 50%;
+        height: 50%;
+        background: #ffffff;
+        border-radius: 100% 0 0 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        content: '';
+    }
 
-/* line 44, ../../sass/Evaluations/_loader.scss */
-.loader:after {
-  background: #000000;
-  width: 75%;
-  height: 75%;
-  border-radius: 50%;
-  content: '';
-  margin: auto;
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-}
+    /* line 44, ../../sass/Evaluations/_loader.scss */
+    .loader:after {
+        background: #000000;
+        width: 75%;
+        height: 75%;
+        border-radius: 50%;
+        content: '';
+        margin: auto;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+    }
 
 @-webkit-keyframes load3 {
-  0% {
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-  100% {
-    -webkit-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
 }
+
 @keyframes load3 {
-  0% {
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-  100% {
-    -webkit-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
 }

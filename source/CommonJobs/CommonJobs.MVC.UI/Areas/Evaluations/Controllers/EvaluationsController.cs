@@ -15,7 +15,7 @@ using CommonJobs.Domain.Evaluations;
 using CommonJobs.Mvc.UI.Areas.Evaluations.Models;
 using CommonJobs.Application.Evaluations;
 using CommonJobs.Application.EvalForm.Commands;
-using CommonJobs.Application.EvalForm.EmployeeSearching;
+using CommonJobs.Application.EvalForm.Indexes;
 using System.Web.Routing;
 using Raven.Client;
 
@@ -47,7 +47,8 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
 
         [AcceptVerbs(HttpVerbs.Get)]
         [CommonJobsAuthorize(Roles = "EmployeeManagers")]
-        public ActionResult PeriodCreation(string period){
+        public ActionResult PeriodCreation(string period)
+        {
             ViewBag.Period = period;
             return View();
         }
@@ -68,8 +69,6 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
         {
             //1. Check if period exists by querying Evaluations collection.
             //2. Check if the current user has to evaluate someone
-            //2.a. If not, redirect to /Evaluations/{period}/{username}
-            //2.b. If so, fetch the users to evaluate
 
             var loggedUser = DetectUser();
 
@@ -86,17 +85,16 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
                 return new HttpStatusCodeResult(403, "Access Denied");
             }
 
-            var isEvaluated = evaluation.Any(p => p.UserName == loggedUser);
-            var isEvaluator = evaluation.Any(p => p.ResponsibleId == loggedUser || (p.Evaluators != null && p.Evaluators.Contains(loggedUser)));
-
-            if (!isEvaluator)
+            var urlHelper = new UrlHelper(Request.RequestContext);
+            var selectList = GetPeriods().Select(x => new SelectListItem
             {
-                if (isEvaluated)
-                {
-                    return RedirectToAction("Calification", new RouteValueDictionary(
-                        new { controller = "Evaluations", action = "Calification", period = period, username = loggedUser } ));
-                }
-            }
+                Text = x.Period,
+                Value = urlHelper.Action(period),
+                Selected = x.Period == period
+            });
+            ViewBag.UserPeriods = selectList;
+
+            var isEvaluated = evaluation.Any(p => p.UserName == loggedUser);
             ViewBag.Period = period;
             ViewBag.hasAutoCalification = isEvaluated;
             ViewBag.IsDashboard = true;
@@ -152,12 +150,22 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
                 return new HttpStatusCodeResult(403, "Access Denied");
             }
 
+
+
             ViewBag.IsUserEvaluator = isLoggedUserEvaluator;
 
             ViewBag.Period = period;
+
             ViewBag.UserName = username;
             ViewBag.IsCalification = true;
             return View("Calification");
+        }
+
+        public ActionResult Index()
+        {
+            var userLastPeriod = GetPeriods().Select(e => e.Period).FirstOrDefault();
+
+            return RedirectToAction("PeriodEvaluation", "Evaluations", new { period = userLastPeriod });
         }
 
         private bool IsEmployeeManager(string username)
@@ -170,6 +178,15 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
         private bool IsEvaluator(string loggedUser, string evaluatedUser, string responsibleId, string[] evaluators)
         {
             return responsibleId == loggedUser || (evaluators != null && evaluators.Contains(loggedUser));
+        }
+
+        private List<Period_Serch.Projection> GetPeriods()
+        {
+            return RavenSession
+                  .Query<Period_Serch.Projection, Period_Serch>()
+                  .Where(e => (e.UserName == DetectUser()))
+                  .OrderByDescending(e => e.Period)
+                  .ToList();
         }
     }
 }
