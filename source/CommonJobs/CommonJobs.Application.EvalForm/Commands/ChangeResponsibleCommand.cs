@@ -40,7 +40,7 @@ namespace CommonJobs.Application.EvalForm.Commands
                  .Query<Employee_Search.Projection, Employee_Search>()
                  .Where(x => x.IsActive && x.UserName == _newResponsibleName).FirstOrDefault();
 
-            
+
             if (newResponsible == null)
             {
                 throw new ApplicationException(string.Format("Error: Empleado inexistente: {0}.", _newResponsibleName));
@@ -98,7 +98,7 @@ namespace CommonJobs.Application.EvalForm.Commands
             }
 
             // Update responsible in the evaluation
-            evaluation.ResponsibleId = newResponsible.Id;
+            evaluation.ResponsibleId = newResponsible.UserName;
 
             RavenSession.SaveChanges();
         }
