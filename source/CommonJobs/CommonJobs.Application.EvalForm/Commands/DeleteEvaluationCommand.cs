@@ -24,6 +24,10 @@ namespace CommonJobs.Application.EvalForm.Commands
 
         public override bool ExecuteWithResult()
         {
+            if (IsClosedPeriod(_period))
+            {
+                throw new ApplicationException(string.Format("Error: El período {0} ya a finalizado. Las evaluaciones de este período no pueden ser eliminadas", _period));
+            }
             var indexQuery = new IndexQuery
             {
                 Query = "Period:" + Escape(_period)
@@ -45,6 +49,12 @@ namespace CommonJobs.Application.EvalForm.Commands
         public static string Escape(string value)
         {
             return "\"" + value.Replace("\\", "\\\\").Replace("\"", "\\\"") + "\"";
+        }
+
+        private bool IsClosedPeriod(string period)
+        {
+            // TODO: Remove hardcoding and find a way to determinate if a period is closed/finalized
+            return period == "2015-06";
         }
     }
 }
