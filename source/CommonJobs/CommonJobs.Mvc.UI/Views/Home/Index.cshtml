@@ -16,7 +16,7 @@
     @MenuItem(logedIn, "Legajos", Url.Content("~/Content/Home/files.png"), "Index", "EmployeeFiles")
     @MenuItem(logedIn, "Archivos", Url.Content("~/Content/Home/attach.png"), "Index", "Attachments")
     @MenuItem(logedIn, "MyMenu", Url.Content("~/Content/Home/mymenu.png"), "Index", "MyMenu")
-    @MenuItem(logedIn, "Evaluaciones", Url.Content("~/Content/Home/calification.png"), "Index", "Evaluations")
+    @MenuLinkItem( "Evaluaciones", Url.Content("~/Content/Home/calification.png"), Url.Action(null, "Evaluations"))
 
     @MenuItem(logedIn, "Postulantes", Url.Content("~/Content/Home/applicant.png"), "Index", "Applicants")
     @MenuItem(logedIn, "Vacaciones", Url.Content("~/Content/Home/vacation.png"), "Index", "Vacations")

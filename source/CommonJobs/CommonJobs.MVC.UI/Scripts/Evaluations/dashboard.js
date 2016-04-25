@@ -313,7 +313,7 @@
     ko.applyBindings(viewmodel);
     commonSuggest($('.content-modal .search'), 'UserName');
     $("#selectedPeriod").change(function () {
-        window.location = "/Evaluations/" + this.value;
+        window.location = this.value;
     })
 
     function getDashboardEvaluations(period) {

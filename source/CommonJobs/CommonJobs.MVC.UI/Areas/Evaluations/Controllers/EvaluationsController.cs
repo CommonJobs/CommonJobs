@@ -85,14 +85,13 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
                 return new HttpStatusCodeResult(403, "Access Denied");
             }
 
-            var userPeriods = RavenSession
-                .Query<Period_Serch.Projection, Period_Serch>()
-                .Statistics(out stats)
-                .Where(e => (e.UserName == loggedUser))
-                .OrderByDescending(e => e.Period)
-                .ToList();
-
-            var selectList = userPeriods.Select(x => new SelectListItem { Text = x.Period, Value = x.Period, Selected = x.Period == period });
+            var urlHelper = new UrlHelper(Request.RequestContext);
+            var selectList = GetPeriods().Select(x => new SelectListItem
+            {
+                Text = x.Period,
+                Value = urlHelper.Action(period),
+                Selected = x.Period == period
+            });
             ViewBag.UserPeriods = selectList;
 
             var isEvaluated = evaluation.Any(p => p.UserName == loggedUser);
@@ -164,15 +163,7 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
 
         public ActionResult Index()
         {
-            var loggedUser = DetectUser();
-            RavenQueryStatistics stats;
-            var query = RavenSession
-                 .Query<Period_Serch.Projection, Period_Serch>()
-                 .Statistics(out stats)
-                 .Where(e => (e.UserName == loggedUser))
-                 .OrderByDescending(e => e.Period);
-
-            var userLastPeriod = query.ToList().Select(e => e.Period).FirstOrDefault();
+            var userLastPeriod = GetPeriods().Select(e => e.Period).FirstOrDefault();
 
             return RedirectToAction("PeriodEvaluation", "Evaluations", new { period = userLastPeriod });
         }
@@ -187,6 +178,15 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
         private bool IsEvaluator(string loggedUser, string evaluatedUser, string responsibleId, string[] evaluators)
         {
             return responsibleId == loggedUser || (evaluators != null && evaluators.Contains(loggedUser));
+        }
+
+        private List<Period_Serch.Projection> GetPeriods()
+        {
+            return RavenSession
+                  .Query<Period_Serch.Projection, Period_Serch>()
+                  .Where(e => (e.UserName == DetectUser()))
+                  .OrderByDescending(e => e.Period)
+                  .ToList();
         }
     }
 }
