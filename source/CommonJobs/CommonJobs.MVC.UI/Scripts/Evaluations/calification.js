@@ -124,7 +124,7 @@
             }
         }
     }
-       
+
 
     EvaluationViewModel.prototype.fromJs = function (data) {
         var self = this;
@@ -169,10 +169,10 @@
         }
 
         this.isEvaluationEditable(!this.evaluation.finished &&
-             (this.evaluation.readyForDevolution && this.userView == 3) || 
+             (this.evaluation.readyForDevolution && this.userView == 3) ||
              (_.some(this.califications, function (calification) {
-                return calification.owner == self.userView && !calification.finished;
-            }) && !this.evaluation.readyForDevolution)
+                 return calification.owner == self.userView && !calification.finished;
+             }) && !this.evaluation.readyForDevolution)
         );
 
         var userLoggedCalifiction = _.find(self.califications, function (calification) {
@@ -209,7 +209,7 @@
                 return comment.comments();
             })
             .value();
-            this.generalComment(comments); 
+            this.generalComment(comments);
         }
 
         var groupNames = {};
@@ -237,6 +237,22 @@
             return valuesByKey;
         });
 
+        var commentsByKeyCollection = _.map(data.Califications, function (calification) {
+            var commentsByKey = {
+                commentRow: {
+                    calificationId: calification.Id,
+                    evaluatorEmployee: calification.EvaluatorEmployee,
+                    owner: calification.Owner
+                }
+            };
+            if (calification.Califications)
+                for (var calif in calification.Califications) {
+                    var cal = calification.Califications[calif];
+                    commentsByKey[cal.Key] = cal.Comment;
+                }
+            return commentsByKey
+        });
+
         if (this.hasAverageColumn) {
             this.averageCalificationId = "average_column";
             var averageCalificationsColumn = {
@@ -252,7 +268,7 @@
             this.califications.splice(1, 0, averageCalificationsColumn);
         }
         var itemNumber = 0;
-        this.groups =_.chain(data.Template.Items)
+        this.groups = _.chain(data.Template.Items)
             .groupBy(function (item) {
                 return item.GroupKey;
             })
@@ -289,9 +305,25 @@
                                     return valueItem.value() === "" || (valueItem.value() >= 1 && valueItem.value() <= 4);
                                 })
                                 self.isDirty.register(valueItem.value);
+                                valueItem.showComments = false
                                 return valueItem;
-                            })
+                            }),
+                            comments: _.map(commentsByKeyCollection, function (commentsByKey) {
+                                var commentItem = {
+                                    calificationId: commentsByKey.commentRow.calificationId,
+                                    value: ko.observable(commentsByKey[item.Key]),
+                                    evaluatorEmployee: commentsByKey.commentRow.evaluatorEmployee
+                                };
+                                commentItem.HasComment = ko.computed(function () {
+                                    return commentItem.value() != null;
+                                });
+
+                                return commentItem;
+                            }),
+                            showComments: ko.observable(false),
+                            
                         };
+
                         if (self.hasAverageColumn) {
                             var averageValue = {
                                 calificationId: self.averageCalificationId,
@@ -311,7 +343,7 @@
                                             total += value;
                                         }
                                     }
-                                    if(total){
+                                    if (total) {
                                         return parseFloat((total / count).toFixed(1));
                                     }
                                     return 0;
@@ -326,15 +358,20 @@
                             valuesByItem.values.splice(1, 0, averageValue);
 
                             if (self.isCompanyCalificationsEmpty) {
-                                    var companyCalification = _.find(valuesByItem.values, function (calification) {
-                                        return calification.owner == 3;
-                                    });
+                                var companyCalification = _.find(valuesByItem.values, function (calification) {
+                                    return calification.owner == 3;
+                                });
 
                                 if (companyCalification) {
                                     companyCalification.value(averageValue.value());
                                 }
                             }
                         }
+                        valuesByItem.hasComments = ko.computed(function () {
+                            return valuesByItem.comments.find(function (comment) {
+                                return comment.HasComment() == true;
+                            });
+                        });
                         return valuesByItem;
                     })
                 }
@@ -410,8 +447,8 @@
                 })
                 .map(function (calification) {
                     var calificationItems = _.chain(self.groups)
-                        .map(function(group) {
-                            var itemsList = _.map(group.items, function(item) {
+                        .map(function (group) {
+                            var itemsList = _.map(group.items, function (item) {
                                 var ownerValue = _.find(item.values, function (element) {
                                     return element.owner == calification.owner;
                                 });
@@ -423,7 +460,7 @@
                                 }
                                 return;
                             });
-                            return _.filter(itemsList, function (item) { return item});
+                            return _.filter(itemsList, function (item) { return item });
                         })
                         .flatten()
                         .value();
@@ -513,7 +550,7 @@
             } else {
                 $('#evaluations-generated-confirm').modal('hide');
             }
-        },this);
+        }, this);
     };
 
     ModalViewModel.prototype.showInvalidModal = function () {

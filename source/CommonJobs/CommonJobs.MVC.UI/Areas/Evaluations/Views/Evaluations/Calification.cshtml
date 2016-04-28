@@ -18,123 +18,147 @@
 }
 
 <div id="evaluation-view" class="content-evaluation evaluation">
-    <div data-bind="if: userView == 0"><h2 class="title-evaluations">AutoEvaluación de <strong data-bind="text: evaluation.fullName"></strong></h2></div>
-    <div data-bind="if: userView == 1 || userView == 2 "><h2 class="title-evaluations">Evaluación de <strong data-bind="text: userLogged"></strong> a <strong data-bind="text: evaluation.fullName"></strong></h2></div>
-    <div data-bind="if: userView == 3 "><h2 class="title-evaluations">Evaluación de <strong>Making Sense</strong> a <strong data-bind="text: evaluation.fullName"></strong></h2></div>
-    <div class="top-evaluation">
-        <div class="top-left">
-            <h4>Información Personal</h4>
-            <ul class="personal-info-container clearfix">
-                <li><span class="item">Puesto:</span><span class="item-info" data-bind="text: evaluation.currentPosition"></span></li>
-                <li><span class="item">Evaluadores:</span><span class="top-tip" data-bind="if: evaluation.evaluators, attr: { 'data-tips': evaluation.evaluators }"><span class="item-info" data-bind="text: evaluation.evaluators"></span></span><span class="item-info" data-bind="if: !evaluation.evaluators">-</span></li>
-                <li><span class="item">Seniority:</span><span class="item-info" data-bind="text: evaluation.seniority"></span></li>
-                <li><span class="item">Responsable:</span><span class="item-info" data-bind="text: evaluation.responsibleId"></span></li>
-                <li><span class="item">Período:</span><span class="item-info" data-bind="text: evaluation.period"></span></li>
-                <li>
-                    <span class="item">Proyectos:</span>
-                    <!--ko if: isEvaluationEditable() && (userView == 1 || userView == 3) -->
-                    <div class="editable-projects" data-bind="css: { edition: evaluation.project(), 'top-tip': evaluation.project()}, attr: {'data-tips': evaluation.project()}">
-                        <input type="text" placeholder="Agregá los proyectos" data-bind="value: evaluation.project, event: {keyup: evaluation.onKeyUpProject, focusin: evaluation.onFocusInProject, blur: evaluation.onBlurProject}" /><span class="pencil"></span>
-                    </div>
-                    <!-- /ko -->
-                    <!--ko if: !isEvaluationEditable() || (userView != 1 && userView != 3) -->
-                    <span class="top-tip" data-bind="if: evaluation.project(), attr: { 'data-tips': evaluation.project()}"><span class="item-info" data-bind="text: evaluation.project()"></span></span>
-                    <!-- /ko -->
-                </li>
-            </ul>
-            <h4>Métricas de Evaluación</h4>
-            <div class="metrics-container">
-                <span>1</span> No Alcanza las Expectativas - <span>2</span> Necesita Mejorar<br />
-                <span>3</span> Cumple con Expectativas - <span>4</span> Excede las Expectativas
-            </div>
-            <p class="explanatory-text">*Si no tenés conocimientos para calificar algún campo dejalo vacío</p>
-        </div>
-        <!--ko if: userView == 3 || evaluation.readyForDevolution -->
-        <div class="top-right">
-            <h4>Comentarios Generales</h4>
-            <div class="comments-container">
-                <div class="title">Fortalezas </div><textarea class="content-editable" data-bind="value: evaluation.strengthsComment, enable: isEvaluationEditable()"></textarea>
-                <div class="title">Aspectos a mejorar </div><textarea class="content-editable" data-bind="value: evaluation.improveComment, enable: isEvaluationEditable()"></textarea>
-                <div class="title">Plan de acción </div><textarea class="content-editable" data-bind="value: evaluation.actionPlanComment, enable: isEvaluationEditable()"></textarea>
-            </div>
-        </div>
-        <h4>Comentarios de la Evaluación</h4>
-        <div class="comments-container comments-company-container">
-            <textarea class="content-editable big-comment" data-bind="value: generalComment, enable: isEvaluationEditable()"></textarea>
-        </div>
-        <h4>Comentarios del Evaluado</h4>
-        <div class="comments-container comments-company-container">
-            <textarea class="content-editable big-comment" data-bind="value: evaluatedComment, enable: evaluation.readyForDevolution && !evaluation.finished && userView == 3"></textarea>
-        </div>
+  <div data-bind="if: userView == 0"><h2 class="title-evaluations">AutoEvaluación de <strong data-bind="text: evaluation.fullName"></strong></h2></div>
+  <div data-bind="if: userView == 1 || userView == 2 "><h2 class="title-evaluations">Evaluación de <strong data-bind="text: userLogged"></strong> a <strong data-bind="text: evaluation.fullName"></strong></h2></div>
+  <div data-bind="if: userView == 3 "><h2 class="title-evaluations">Evaluación de <strong>Making Sense</strong> a <strong data-bind="text: evaluation.fullName"></strong></h2></div>
+  <div class="top-evaluation">
+    <div class="top-left">
+      <h4>Información Personal</h4>
+      <ul class="personal-info-container clearfix">
+        <li><span class="item">Puesto:</span><span class="item-info" data-bind="text: evaluation.currentPosition"></span></li>
+        <li><span class="item">Evaluadores:</span><span class="top-tip" data-bind="if: evaluation.evaluators, attr: { 'data-tips': evaluation.evaluators }"><span class="item-info" data-bind="text: evaluation.evaluators"></span></span><span class="item-info" data-bind="if: !evaluation.evaluators">-</span></li>
+        <li><span class="item">Seniority:</span><span class="item-info" data-bind="text: evaluation.seniority"></span></li>
+        <li><span class="item">Responsable:</span><span class="item-info" data-bind="text: evaluation.responsibleId"></span></li>
+        <li><span class="item">Período:</span><span class="item-info" data-bind="text: evaluation.period"></span></li>
+        <li>
+          <span class="item">Proyectos:</span>
+          <!--ko if: isEvaluationEditable() && (userView == 1 || userView == 3) -->
+          <div class="editable-projects" data-bind="css: { edition: evaluation.project(), 'top-tip': evaluation.project()}, attr: {'data-tips': evaluation.project()}">
+            <input type="text" placeholder="Agregá los proyectos" data-bind="value: evaluation.project, event: {keyup: evaluation.onKeyUpProject, focusin: evaluation.onFocusInProject, blur: evaluation.onBlurProject}" /><span class="pencil"></span>
+          </div>
+          <!-- /ko -->
+          <!--ko if: !isEvaluationEditable() || (userView != 1 && userView != 3) -->
+          <span class="top-tip" data-bind="if: evaluation.project(), attr: { 'data-tips': evaluation.project()}"><span class="item-info" data-bind="text: evaluation.project()"></span></span>
+          <!-- /ko -->
+        </li>
+      </ul>
+      <h4>Métricas de Evaluación</h4>
+      <div class="metrics-container">
+        <span>1</span> No Alcanza las Expectativas - <span>2</span> Necesita Mejorar<br />
+        <span>3</span> Cumple con Expectativas - <span>4</span> Excede las Expectativas
+      </div>
+      <p class="explanatory-text">*Si no tenés conocimientos para calificar algún campo dejalo vacío</p>
+    </div>
+    <!--ko if: userView == 3 || evaluation.readyForDevolution -->
+    <div class="top-right">
+      <h4>Comentarios Generales</h4>
+      <div class="comments-container">
+        <div class="title">Fortalezas </div><textarea class="content-editable" data-bind="value: evaluation.strengthsComment, enable: isEvaluationEditable()"></textarea>
+        <div class="title">Aspectos a mejorar </div><textarea class="content-editable" data-bind="value: evaluation.improveComment, enable: isEvaluationEditable()"></textarea>
+        <div class="title">Plan de acción </div><textarea class="content-editable" data-bind="value: evaluation.actionPlanComment, enable: isEvaluationEditable()"></textarea>
+      </div>
+    </div>
+    <h4>Comentarios de la Evaluación</h4>
+    <div class="comments-container comments-company-container">
+      <textarea class="content-editable big-comment" data-bind="value: generalComment, enable: isEvaluationEditable()"></textarea>
+    </div>
+    <h4>Comentarios del Evaluado</h4>
+    <div class="comments-container comments-company-container">
+      <textarea class="content-editable big-comment" data-bind="value: evaluatedComment, enable: evaluation.readyForDevolution && !evaluation.finished && userView == 3"></textarea>
+    </div>
+    <!-- /ko -->
+    <!--ko if: userView != 3 && !evaluation.readyForDevolution -->
+    <div class="top-right">
+      <h4>Comentarios Generales</h4>
+      <div class="comments-container">
+        <textarea class="content-editable big-comment" data-bind="value: generalComment, enable: isEvaluationEditable()"></textarea>
+      </div>
+    </div>
+    <!-- /ko -->
+  </div>
+  <table data-bind="attr: {class: numberOfColumns}, css: {table: true, 'calification-items': true}">
+    <thead id="header-fixed">
+      <tr>
+        <th class="calificators"><h1>Evaluadores</h1></th>
+        <!-- ko foreach: califications -->
+        <th class="calificators">
+          <span data-bind="if: hasShowIcon"><i data-tips="" data-bind="css: { icon: true, 'top-tip': true, 'hide-column': !show()}, click: $root.toggleVisibilityColumn"></i></span>
+          <span data-bind="text: evaluatorEmployee.replace('_company', 'Empresa')"></span>
+        </th>
         <!-- /ko -->
-        <!--ko if: userView != 3 && !evaluation.readyForDevolution -->
-        <div class="top-right">
-            <h4>Comentarios Generales</h4>
-            <div class="comments-container">
-                <textarea class="content-editable big-comment" data-bind="value: generalComment, enable: isEvaluationEditable()"></textarea>
-            </div>
-        </div>
+        <th class="calificators">
+          <p>BUTTON HERE</p>
+        </th>
+      </tr>
+      <tr>
+        <th class="title-evaluation">Calificación Final</th>
+        <!-- ko foreach: calificationsAverages -->
+        <th class="title-evaluation"><span data-bind="visible: show(), text: value || '-'"></span></th>
         <!-- /ko -->
-    </div>
-    <table data-bind="attr: {class: numberOfColumns}, css: {table: true, 'calification-items': true}">
-        <thead id="header-fixed">
-            <tr>
-                <th class="calificators"><h1>Evaluadores</h1></th>
-                <!-- ko foreach: califications -->
-                <th class="calificators">
-                    <span data-bind="if: hasShowIcon"><i data-tips="" data-bind="css: { icon: true, 'top-tip': true, 'hide-column': !show()}, click: $root.toggleVisibilityColumn"></i></span>
-                    <span data-bind="text: evaluatorEmployee.replace('_company', 'Empresa')"></span>
-                </th>
-                <!-- /ko -->
-            </tr>
-            <tr>
-                <th class="title-evaluation">Calificación Final</th>
-                <!-- ko foreach: calificationsAverages -->
-                <th class="title-evaluation"><span data-bind="visible: show(), text: value || '-'"></span></th>
-                <!-- /ko -->
-            </tr>
-        </thead>
-        <tbody data-bind="foreach: groups">
-            <tr>
-                <td class="sub-title-evaluation"><span data-bind="text: name"></span></td>
-                <!-- ko foreach: averages -->
-                <td class="sub-title-evaluation"><span data-bind="visible: show(), text: value || '-'"></span></td>
-                <!-- /ko -->
-            </tr>
-            <!-- ko foreach: items -->
-            <tr data-bind="css : {'row-selected' : isRowSelected()}">
-                <td><span data-bind="attr:{'data-tips': description}" class="top-tip rol wrap-text"><span data-bind="text: text"></span><i class="icon info"></i></span></td>
-                <!-- ko foreach: values -->
-                <td data-bind="css: { 'exceeds-expectations': showValue() && value() > 3 && value() <= 4 , 'poor': showValue() && value() < 3 && value() >= 1}">
-                    <span data-bind="if: !editable"><span data-bind="text: value, visible: showValue()"></span></span>
-                    <span data-bind="if: editable == true"><input class="calification-input" data-bind="value: value, css: { invalid: !isValid()}, event: { focusin: onFocus, blur: onBlur} " /></span>
-                </td>
-                <!-- /ko -->
-            </tr>
-            <!-- /ko -->
-        </tbody>
-    </table>
-    <div class="footer-evaluation" data-bind="if: isEvaluationEditable()">
-        <button class="button-evaluations primary-btn finish-btn" data-bind="click: onFinish">Finalizar</button>
-        <p class="explanatory-text">Recuerda que una vez finalizada tu evaluación no podrás volver a editarla.</p>
-    </div>
-    <div id="loader-id" class="loader-container" data-bind="visible: isLoading()">
-        <div class="loader"></div>
-    </div>
-    <script type="text/javascript">
-        var calificationPeriod = "@ViewBag.Period";
-        var calificationUserName = "@ViewBag.UserName";
-    </script>
+        <th class="title-evaluation"></th>
+      </tr>
+    </thead>
+    <tbody data-bind="foreach: groups">
+      <tr>
+        <td class="sub-title-evaluation"><span data-bind="text: name"></span></td>
+        <!-- ko foreach: averages -->
+        <td class="sub-title-evaluation"><span data-bind="visible: show(), text: value || '-'"></span></td>
+        <!-- /ko -->
+        <td class="sub-title-evaluation"></td>
+      </tr>
+      <!-- ko foreach: items -->
+      <tr data-bind="css : {'row-selected' : isRowSelected()}">
+        <td><span data-bind="attr:{'data-tips': description}" class="top-tip rol wrap-text"><span data-bind="text: text"></span><i class="icon info"></i></span></td>
+        <!-- ko foreach: values -->
+        <td data-bind="css: { 'exceeds-expectations': showValue() && value() > 3 && value() <= 4 , 'poor': showValue() && value() < 3 && value() >= 1}">
+          <span data-bind="if: !editable"><span data-bind="text: value, visible: showValue()"></span></span>
+          <span data-bind="if: editable == true"><input class="calification-input" data-bind="value: value, css: { invalid: !isValid()}, event: { focusin: onFocus, blur: onBlur} " /></span>
+        </td>
+        <!-- /ko -->
+        <td>
+          <div data-bind="visible: hasComments ">
+            <input class="cmn-toggle-round" type="checkbox" data-bind="checked: showComments, attr: { id: key}" />
+            <label data-bind="attr: { for: key}"></label>
+          </div>
+        </td>
+      </tr>
+      <tr class="comment-toggle" data-bind="visible: showComments">
+        <td>
+          <!-- ko foreach: comments -->
+          <div style="overflow: hidden" data-bind="visible: HasComment">
+            <div>
+              <div style="float:left"><span data-bind="text: evaluatorEmployee"></span></div>
+              <div style="float:left"><p>:</p></div>
+            </div>
+            <div style="float:left"><span data-bind="text: value"></span></div>
+          </div>
+          <!-- /ko -->
+        </td>
+      </tr>
+      <!-- /ko -->
+    </tbody>
+  </table>
+  <div class="footer-evaluation" data-bind="if: isEvaluationEditable()">
+    <button class="button-evaluations primary-btn finish-btn" data-bind="click: onFinish">Finalizar</button>
+    <p class="explanatory-text">Recuerda que una vez finalizada tu evaluación no podrás volver a editarla.</p>
+  </div>
+  <div id="loader-id" class="loader-container" data-bind="visible: isLoading()">
+    <div class="loader"></div>
+  </div>
+  <script type="text/javascript">
+      var calificationPeriod = "@ViewBag.Period";
+      var calificationUserName = "@ViewBag.UserName";
+  </script>
 </div>
 
 <div id="evaluations-generated-confirm" class="modal content-pop-up clearfix">
-    <div class="modal-header">
-        <h3 class="modal-title" id="title" data-bind="text: title()"></h3>
-    </div>
-    <p id="text" data-bind="text: text()"></p>
-    <div class="model-footer">
-        <button class="back" id="button-back" data-bind="click: backAction, text: buttonBackText()"></button>
-        <button class="confirm" id="button-confirm" data-bind="visible: isConfirmButtonVisible(), click: confirmAction, text: buttonConfirmText()"></button>
-        <button class="finish" id="button-finish" data-bind="visible: isFinalButtonVisible(), click: finalAction, text: buttonFinalText()"></button>
-    </div>
+  <div class="modal-header">
+    <h3 class="modal-title" id="title" data-bind="text: title()"></h3>
+  </div>
+  <p id="text" data-bind="text: text()"></p>
+  <div class="model-footer">
+    <button class="back" id="button-back" data-bind="click: backAction, text: buttonBackText()"></button>
+    <button class="confirm" id="button-confirm" data-bind="visible: isConfirmButtonVisible(), click: confirmAction, text: buttonConfirmText()"></button>
+    <button class="finish" id="button-finish" data-bind="visible: isFinalButtonVisible(), click: finalAction, text: buttonFinalText()"></button>
+  </div>
 </div>
