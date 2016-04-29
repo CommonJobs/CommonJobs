@@ -369,7 +369,7 @@
                         }
                         valuesByItem.hasComments = ko.computed(function () {
                             return valuesByItem.comments.find(function (comment) {
-                                return comment.HasComment() == true;
+                                return !!comment.HasComment();
                             });
                         });
                         return valuesByItem;
