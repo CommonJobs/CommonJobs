@@ -1176,6 +1176,10 @@ tr.evaluation-generated td {
         .evaluation .calification-items tbody tr.row-selected .calification-input {
             border: 1px solid #439CFD;
         }
+
+    .evaluation .calification-items tbody tr.comments-section {
+        background-color: #F1F1F1;
+    }
     /* line 339, ../../sass/Evaluations/_evaluation.scss */
     .evaluation .calification-items tbody tr td {
         font-size: 20px;
@@ -1320,6 +1324,21 @@ tr.evaluation-generated td {
     }
 }
 
+.comments-section-container {
+    overflow: hidden;
+    margin-left: 40px;
+}
+
+.comment-author {
+    float: left;
+    font-weight: bold;
+}
+
+.comment-text {
+    float: left;
+    margin-left: 20px;
+}
+
 /*toggle button design*/
 input.cmn-toggle-round {
     position: absolute;
@@ -1347,7 +1366,6 @@ input.cmn-toggle-round {
             top: 1px;
             left: 1px;
             bottom: 1px;
-            content: "";
         }
 
         input.cmn-toggle-round + label:before {
@@ -1355,6 +1373,7 @@ input.cmn-toggle-round {
             background-color: #f1f1f1;
             border-radius: 20px;
             transition: background 0.4s;
+            content: "";
         }
 
         input.cmn-toggle-round + label:after {
@@ -1363,6 +1382,7 @@ input.cmn-toggle-round {
             border-radius: 100%;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
             transition: margin 0.4s;
+            content: "\25BC";
         }
 
     input.cmn-toggle-round:checked + label:before {

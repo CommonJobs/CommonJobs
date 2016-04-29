@@ -87,7 +87,7 @@
         </th>
         <!-- /ko -->
         <th class="calificators">
-          <p>BUTTON HERE</p>
+          <p>Mostrar comentarios</p>
         </th>
       </tr>
       <tr>
@@ -122,15 +122,15 @@
           </div>
         </td>
       </tr>
-      <tr class="comment-toggle" data-bind="visible: showComments">
-        <td>
+      <tr class="comments-section" data-bind="visible: showComments">
+        <td colspan="4">
           <!-- ko foreach: comments -->
-          <div style="overflow: hidden" data-bind="visible: HasComment">
+          <div class="comments-section-container" data-bind="visible: HasComment">
             <div>
-              <div style="float:left"><span data-bind="text: evaluatorEmployee"></span></div>
-              <div style="float:left"><p>:</p></div>
+              <div class="comment-author"><span data-bind="text: evaluatorEmployee"></span></div>
+              <div class="comment-author"><p>:</p></div>
             </div>
-            <div style="float:left"><span data-bind="text: value"></span></div>
+            <div class="comment-text"><span data-bind="text: value"></span></div>
           </div>
           <!-- /ko -->
         </td>
