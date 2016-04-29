@@ -245,11 +245,12 @@
                     owner: calification.Owner
                 }
             };
-            if (calification.Califications)
+            if (calification.Califications) {
                 for (var calif in calification.Califications) {
                     var cal = calification.Califications[calif];
                     commentsByKey[cal.Key] = cal.Comment;
                 }
+            }
             return commentsByKey
         });
 
@@ -305,7 +306,6 @@
                                     return valueItem.value() === "" || (valueItem.value() >= 1 && valueItem.value() <= 4);
                                 })
                                 self.isDirty.register(valueItem.value);
-                                valueItem.showComments = false
                                 return valueItem;
                             }),
                             comments: _.map(commentsByKeyCollection, function (commentsByKey) {
