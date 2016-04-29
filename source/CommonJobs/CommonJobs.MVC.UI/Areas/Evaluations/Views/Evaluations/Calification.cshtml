@@ -116,9 +116,10 @@
         </td>
         <!-- /ko -->
         <td>
-          <div data-bind="visible: hasComments ">
-            <input class="cmn-toggle-round" type="checkbox" data-bind="checked: showComments, attr: { id: key}" />
-            <label data-bind="attr: { for: key}"></label>
+          <div data-bind="visible: hasComments " class="comment">
+            <label data-bind="css: { 'checked': showComments()}">
+              <input class="cmn-toggle-round" type="checkbox" data-bind="checked: showComments" />
+            </label>
           </div>
         </td>
       </tr>

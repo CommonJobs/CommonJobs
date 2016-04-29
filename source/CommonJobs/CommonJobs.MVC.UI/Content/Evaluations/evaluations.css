@@ -1346,7 +1346,7 @@ input.cmn-toggle-round {
     visibility: hidden;
 }
 
-    input.cmn-toggle-round + label {
+    .comment label {
         padding: 2px;
         width: 40px;
         height: 20px;
@@ -1359,8 +1359,8 @@ input.cmn-toggle-round {
         user-select: none;
     }
 
-        input.cmn-toggle-round + label:before,
-        input.cmn-toggle-round + label:after {
+        .comment label:before,
+        .comment label:after {
             display: block;
             position: absolute;
             top: 1px;
@@ -1368,7 +1368,7 @@ input.cmn-toggle-round {
             bottom: 1px;
         }
 
-        input.cmn-toggle-round + label:before {
+        .comment label:before {
             right: 1px;
             background-color: #f1f1f1;
             border-radius: 20px;
@@ -1376,7 +1376,7 @@ input.cmn-toggle-round {
             content: "";
         }
 
-        input.cmn-toggle-round + label:after {
+        .comment label:after {
             width: 19px;
             background-color: #fff;
             border-radius: 100%;
@@ -1385,11 +1385,11 @@ input.cmn-toggle-round {
             content: "\25BC";
         }
 
-    input.cmn-toggle-round:checked + label:before {
+    .comment label.checked:before {
         background-color: #8ce196;
     }
 
-    input.cmn-toggle-round:checked + label:after {
+    .comment label.checked:after {
         margin-left: 20px;
     }
 /*END of toggle button design*/
