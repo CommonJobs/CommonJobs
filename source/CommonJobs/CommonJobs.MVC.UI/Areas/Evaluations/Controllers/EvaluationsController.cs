@@ -141,7 +141,7 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
                 return HttpNotFound();
             }
 
-            var isManager = IsEmployeeManager(username);
+            var isManager = IsEmployeeManager(loggedUser);
             var isLoggedUserEvaluator = IsEvaluator(loggedUser, username, evaluation.ResponsibleId, evaluation.Evaluators);
             var isLoggedUserEvaluated = loggedUser == username;
 
