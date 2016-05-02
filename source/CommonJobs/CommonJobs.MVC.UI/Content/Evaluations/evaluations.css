@@ -1176,6 +1176,10 @@ tr.evaluation-generated td {
         .evaluation .calification-items tbody tr.row-selected .calification-input {
             border: 1px solid #439CFD;
         }
+
+    .evaluation .calification-items tbody tr.comments-section {
+        background-color: #F1F1F1;
+    }
     /* line 339, ../../sass/Evaluations/_evaluation.scss */
     .evaluation .calification-items tbody tr td {
         font-size: 20px;
@@ -1319,3 +1323,73 @@ tr.evaluation-generated td {
         transform: rotate(360deg);
     }
 }
+
+.comments-section-container {
+    overflow: hidden;
+    margin-left: 40px;
+}
+
+.comment-author {
+    float: left;
+    font-weight: bold;
+}
+
+.comment-text {
+    float: left;
+    margin-left: 20px;
+}
+
+/*toggle button design*/
+input.cmn-toggle-round {
+    position: absolute;
+    margin-left: -9999px;
+    visibility: hidden;
+}
+
+    .comment label {
+        padding: 2px;
+        width: 40px;
+        height: 20px;
+        background-color: #dddddd;
+        border-radius: 20px;
+        display: block;
+        position: relative;
+        cursor: pointer;
+        outline: none;
+        user-select: none;
+    }
+
+        .comment label:before,
+        .comment label:after {
+            display: block;
+            position: absolute;
+            top: 1px;
+            left: 1px;
+            bottom: 1px;
+        }
+
+        .comment label:before {
+            right: 1px;
+            background-color: #f1f1f1;
+            border-radius: 20px;
+            transition: background 0.4s;
+            content: "";
+        }
+
+        .comment label:after {
+            width: 19px;
+            background-color: #fff;
+            border-radius: 100%;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            transition: margin 0.4s;
+            content: "\25BC";
+        }
+
+    .comment label.checked:before {
+        background-color: #8ce196;
+    }
+
+    .comment label.checked:after {
+        margin-left: 20px;
+    }
+/*END of toggle button design*/
