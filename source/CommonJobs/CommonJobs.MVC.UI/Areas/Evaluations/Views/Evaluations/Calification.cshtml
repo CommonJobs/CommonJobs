@@ -127,11 +127,18 @@
         <td data-bind="attr:{'colspan': $root.columnsAmount}">
           <!-- ko foreach: comments -->
           <div class="comments-section-container" data-bind="visible: HasComment">
-            <div>
-              <div class="comment-author"><span data-bind="text: evaluatorEmployee"></span></div>
-              <div class="comment-author"><p>:</p></div>
+            <span class="comment-author" data-bind="text: evaluatorEmployee"></span><sapn class="comment-author">:</sapn>
+            <span class="comment-text" data-bind="text: value, visible: !isSelfComment || !IsEditingComment()"></span>
+            <div class="comment-text" data-bind="visible: IsEditingComment" style="float:left; width:100%">
+              <textarea data-bind="value: value" rows="5" style="width: 98%; resize: vertical" placeholder="Agrega un comentario"></textarea>
+              <button class="comment-button" type="button" data-bind="click: endEdition" style="">Listo</button>
             </div>
-            <div class="comment-text"><span data-bind="text: value"></span></div>
+            <div class="ck-button-edit" data-bind="visible: isSelfComment &&  !IsEditingComment()" title="Editar">
+              <label>
+                <span><i></i></span>
+                <input type="checkbox" value="+" data-bind="checked: IsEditingComment">
+              </label>
+            </div>
           </div>
           <!-- /ko -->
         </td>

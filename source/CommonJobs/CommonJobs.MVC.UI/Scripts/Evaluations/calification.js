@@ -231,7 +231,7 @@
             if (calification.Califications) {
                 for (var i in calification.Califications) {
                     var cal = calification.Califications[i];
-                    valuesByKey[cal.Key] = parseFloat(cal.Value.toFixed(1));
+                    valuesByKey[cal.Key] = cal.Value && parseFloat(cal.Value.toFixed(1));
                 }
             }
 
@@ -310,19 +310,16 @@
                                 return valueItem;
                             }),
                             comments: _.map(commentsByKeyCollection, function (commentsByKey) {
-                                var commentItem = {
-                                    calificationId: commentsByKey.commentRow.calificationId,
-                                    value: ko.observable(commentsByKey[item.Key]),
-                                    evaluatorEmployee: commentsByKey.commentRow.evaluatorEmployee
-                                };
+                                var commentItem = GetCommentItem(commentsByKey.commentRow.calificationId, commentsByKey[item.Key], commentsByKey.commentRow.evaluatorEmployee, commentsByKey.commentRow.evaluatorEmployee == self.userLogged)
                                 commentItem.HasComment = ko.computed(function () {
                                     return commentItem.value() != null;
                                 });
+                                commentItem.IsEditingComment = ko.observable(false);
+                                self.isDirty.register(commentItem.value);
 
                                 return commentItem;
                             }),
                             showComments: ko.observable(false),
-                            
                         };
 
                         if (self.hasAverageColumn) {
@@ -453,10 +450,15 @@
                                 var ownerValue = _.find(item.values, function (element) {
                                     return element.owner == calification.owner;
                                 });
-                                if (ownerValue && ownerValue.value()) {
+                                var ownerComment = _.find(item.comments, function (element) {
+                                    return element.evaluatorEmployee == calification.evaluatorEmployee;
+                                });
+
+                                if ((ownerValue && ownerValue.value()) || (ownerComment && ownerComment.value())) {
                                     return {
                                         Key: item.key.toString(),
-                                        Value: parseFloat(ownerValue.value())
+                                        Value: parseFloat(ownerValue && ownerValue.value()),
+                                        Comment: ownerComment && ownerComment.value()
                                     }
                                 }
                                 return;
@@ -535,6 +537,24 @@
             $(event.target).blur();
         }
     }
+
+    var GetCommentItem = function (calificationId, comment, evaluatorEmployee, isSelfComment) {
+        var commentItem = {
+            calificationId: calificationId,
+            value: ko.observable(comment),
+            evaluatorEmployee: evaluatorEmployee,
+            isSelfComment: isSelfComment,
+            endEdition: function (data, event) {
+                data.IsEditingComment(false);
+
+            }
+        };
+        commentItem.HasComment = ko.computed(function () {
+            return commentItem.value() != null;
+        });
+        commentItem.IsEditingComment = ko.observable(false);
+        return commentItem;
+    };
 
     var ModalViewModel = function () {
         this.show = ko.observable(false);
