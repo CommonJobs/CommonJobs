@@ -131,7 +131,8 @@
         this.userView = data.UserView;
         this.userLogged = data.UserLogged;
         this.hasAverageColumn = !data.Evaluation.Finished && (this.userView == 1 || this.userView == 3);
-        this.numberOfColumns = "table-" + ((this.hasAverageColumn) ? (data.Califications.length + 2) : (data.Califications.length + 1)) + "-columns";
+        this.columnsAmount = this.hasAverageColumn ? data.Califications.length + 3 : data.Califications.length + 2
+        this.numberOfColumns = "table-" + this.columnsAmount + "-columns";
         var calificationsSorted = data.Califications.sort(sortCalificationColumns);
         this.califications = _.map(calificationsSorted, function (calification) {
             var comment = ko.observable(calification.Comments);

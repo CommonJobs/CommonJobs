@@ -124,7 +124,7 @@
         </td>
       </tr>
       <tr class="comments-section" data-bind="visible: showComments">
-        <td colspan="4">
+        <td data-bind="attr:{'colspan': $root.columnsAmount}">
           <!-- ko foreach: comments -->
           <div class="comments-section-container" data-bind="visible: HasComment">
             <div>
