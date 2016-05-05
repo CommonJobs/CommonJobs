@@ -287,12 +287,11 @@
                             description: item.Description,
                             isRowSelected: rowSelected,
                             addSelfComment: function (data, event) {
-                                _.find(this.comments, function (selfComment) {
-                                    if (selfComment.evaluatorEmployee == self.userLogged) {
-                                        selfComment.value("");
-                                        selfComment.IsEditingComment(true);
-                                    }
+                                var selfComment = _.find(this.comments, function (comment) {
+                                    return comment.evaluatorEmployee == self.userLogged
                                 });
+                                selfComment.value("");
+                                selfComment.IsEditingComment(true);
                             },
                             values: _.map(valuesByKeyCollection, function (valuesByKey) {
                                 var valueItem = {
@@ -319,9 +318,7 @@
                             }),
                             comments: _.map(commentsByKeyCollection, function (commentsByKey) {
                                 var commentItem = GetCommentItem(commentsByKey.commentRow.calificationId, commentsByKey[item.Key], commentsByKey.commentRow.evaluatorEmployee, commentsByKey.commentRow.evaluatorEmployee == self.userLogged)
-                                commentItem.HasComment = ko.computed(function () {
-                                    return commentItem.value() != null;
-                                });
+
                                 commentItem.IsEditingComment = ko.observable(false);
                                 self.isDirty.register(commentItem.value);
 
@@ -373,9 +370,9 @@
                                 }
                             }
                         }
-                        valuesByItem.hasComments = ko.computed(function () {
-                            return valuesByItem.comments.find(function (comment) {
-                                return !!comment.HasComment() && !!comment.isSelfComment;
+                        valuesByItem.hasSelfComments = ko.computed(function () {
+                            return _.some(valuesByItem.comments, function (comment) {
+                                return comment.HasComment() && comment.isSelfComment;
                             });
                         });
                         return valuesByItem;
@@ -554,7 +551,9 @@
             isSelfComment: isSelfComment,
             endEdition: function (data, event) {
                 data.IsEditingComment(false);
-
+                if (data.value() == "") {
+                    data.value(null)
+                }
             }
         };
         commentItem.HasComment = ko.computed(function () {
