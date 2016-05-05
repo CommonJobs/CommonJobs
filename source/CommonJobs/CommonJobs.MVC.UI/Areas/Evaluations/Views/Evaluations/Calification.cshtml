@@ -116,7 +116,7 @@
         </td>
         <!-- /ko -->
         <td>
-          <div data-bind="visible: hasComments " class="comment">
+          <div class="comment">
             <label data-bind="css: { 'checked': showComments()}">
               <input class="cmn-toggle-round" type="checkbox" data-bind="checked: showComments" />
             </label>
@@ -141,6 +141,9 @@
             </div>
           </div>
           <!-- /ko -->
+          <div data-bind="visible: !hasComments()">
+            <button class="comment-button" data-bind="click: addSelfComment" style="margin-left:20px">Agrega tu comentario</button>
+          </div>
         </td>
       </tr>
       <!-- /ko -->

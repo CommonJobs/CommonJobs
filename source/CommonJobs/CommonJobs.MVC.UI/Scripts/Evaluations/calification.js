@@ -286,6 +286,14 @@
                             text: itemNumber + " - " + item.Text,
                             description: item.Description,
                             isRowSelected: rowSelected,
+                            addSelfComment: function (data, event) {
+                                _.find(this.comments, function (selfComment) {
+                                    if (selfComment.evaluatorEmployee == self.userLogged) {
+                                        selfComment.value("");
+                                        selfComment.IsEditingComment(true);
+                                    }
+                                });
+                            },
                             values: _.map(valuesByKeyCollection, function (valuesByKey) {
                                 var valueItem = {
                                     calificationId: valuesByKey.calificationColumn.calificationId,
@@ -367,7 +375,7 @@
                         }
                         valuesByItem.hasComments = ko.computed(function () {
                             return valuesByItem.comments.find(function (comment) {
-                                return !!comment.HasComment();
+                                return !!comment.HasComment() && !!comment.isSelfComment;
                             });
                         });
                         return valuesByItem;
