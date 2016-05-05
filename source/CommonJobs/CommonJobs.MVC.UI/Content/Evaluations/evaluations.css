@@ -1339,6 +1339,20 @@ tr.evaluation-generated td {
     margin-left: 20px;
 }
 
+    .comment-text.edition-content {
+        padding-right: 50px;
+        width: 100%;
+    }
+
+        .comment-text.edition-content textarea {
+            width: 100%;
+            resize: vertical;
+        }
+
+.comment-add-container {
+    margin-left: 60px;
+}
+
 .comment-button {
     padding: 8px;
     color: white;
@@ -1347,14 +1361,14 @@ tr.evaluation-generated td {
     background-color: #4499F4;
     float: left;
     cursor: pointer;
-    margin:5px 0px !important;
+    margin: 5px 0px !important;
 }
 
 /*toggle button design*/
 input.cmn-toggle-round {
     position: absolute;
-    margin-left: -9999px;
-    visibility: hidden;
+    left: -9999px;
+    /*visibility: hidden;*/
 }
 
 .comment label {
@@ -1438,7 +1452,7 @@ input.cmn-toggle-round {
 
         .ck-button-edit label input {
             position: absolute;
-            top: -9999px;
-            visibility: hidden;
+            left: -9999px;
+            /*visibility: hidden;*/
         }
 /*END of Edit toggle button design*/
