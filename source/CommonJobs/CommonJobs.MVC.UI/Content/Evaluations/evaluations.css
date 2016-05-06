@@ -497,6 +497,7 @@ tr.evaluation-generated td {
         /* line 22, ../../sass/Evaluations/_dashboard.scss */
         .dashboard.recursos-humanos .header h2.header--human-resources {
             float: right;
+            margin-left:60px;
         }
 /* line 28, ../../sass/Evaluations/_dashboard.scss */
 .dashboard.recursos-humanos table td:first-child {

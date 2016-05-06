@@ -82,8 +82,11 @@
 
     var viewmodel = new ReportDashboard();
 
-    getReportDashboard();
+    getReportDashboard(window.ViewData.period);
     ko.applyBindings(viewmodel);
+    $("#selectedPeriod").change(function () {
+        window.location = this.value;
+    })
 
     function getReportDashboard(period) {
         viewmodel.isLoading(true);
