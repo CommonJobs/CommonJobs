@@ -57,11 +57,10 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
         [CommonJobsAuthorize(Roles = "EmployeeManagers")]
         public ActionResult ReportDashboard(string period)
         {
-            var urlHelper = new UrlHelper(Request.RequestContext);
             var selectList = GetReportPeriods().Select(x=>x.Period).Distinct().Select(x => new SelectListItem
             {
                 Text = x,
-                Value = urlHelper.Action(period),
+                Value = Url.Action(period),
                 Selected = x == period
             });
 
@@ -110,11 +109,10 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
                 return new HttpStatusCodeResult(403, "Access Denied");
             }
 
-            var urlHelper = new UrlHelper(Request.RequestContext);
             var selectList = GetPeriods().Select(x => new SelectListItem
             {
                 Text = x.Period,
-                Value = urlHelper.Action(period),
+                Value = Url.Action(period),
                 Selected = x.Period == period
             });
             ViewBag.UserPeriods = selectList;
