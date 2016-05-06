@@ -116,7 +116,7 @@
         </td>
         <!-- /ko -->
         <td>
-          <div data-bind="visible: hasComments " class="comment">
+          <div class="comment">
             <label data-bind="css: { 'checked': showComments()}">
               <input class="cmn-toggle-round" type="checkbox" data-bind="checked: showComments" />
             </label>
@@ -124,16 +124,26 @@
         </td>
       </tr>
       <tr class="comments-section" data-bind="visible: showComments">
-        <td colspan="4">
+        <td data-bind="attr:{'colspan': $root.columnsAmount}">
           <!-- ko foreach: comments -->
-          <div class="comments-section-container" data-bind="visible: HasComment">
-            <div>
-              <div class="comment-author"><span data-bind="text: evaluatorEmployee"></span></div>
-              <div class="comment-author"><p>:</p></div>
+          <div class="comments-section-container" data-bind="visible: HasComment()">
+            <span class="comment-author" data-bind="text: evaluatorEmployee"></span><sapn class="comment-author">:</sapn>
+            <span class="comment-text" data-bind="text: value, visible: !isSelfComment || !IsEditingComment()"></span>
+            <div class="comment-text edition-content" data-bind="visible: IsEditingComment">
+              <textarea data-bind="value: value" rows="5" placeholder="Agrega un comentario"></textarea>
+              <button class="comment-button" type="button" data-bind="click: endEdition" style="">Listo</button>
             </div>
-            <div class="comment-text"><span data-bind="text: value"></span></div>
+            <div class="ck-button-edit" data-bind="visible: isSelfComment &&  !IsEditingComment()" title="Editar">
+              <label>
+                <span><i></i></span>
+                <input type="checkbox" value="+" data-bind="checked: IsEditingComment">
+              </label>
+            </div>
           </div>
           <!-- /ko -->
+          <div class="comment-add-container" data-bind="visible: !hasSelfComments()">
+            <button class="comment-button" data-bind="click: addSelfComment">Agrega tu comentario</button>
+          </div>
         </td>
       </tr>
       <!-- /ko -->

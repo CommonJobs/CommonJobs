@@ -1339,51 +1339,76 @@ tr.evaluation-generated td {
     margin-left: 20px;
 }
 
+    .comment-text.edition-content {
+        padding-right: 50px;
+        width: 100%;
+    }
+
+        .comment-text.edition-content textarea {
+            width: 100%;
+            resize: vertical;
+        }
+
+.comment-add-container {
+    margin-left: 60px;
+}
+
+.comment-button {
+    padding: 8px;
+    color: white;
+    border-radius: 5px;
+    border: none;
+    background-color: #4499F4;
+    float: left;
+    cursor: pointer;
+    margin: 5px 0px !important;
+}
+
 /*toggle button design*/
 input.cmn-toggle-round {
     position: absolute;
-    margin-left: -9999px;
-    visibility: hidden;
+    left: -9999px;
+    /*visibility: hidden;*/
 }
 
-    .comment label {
-        padding: 2px;
-        width: 40px;
-        height: 20px;
-        background-color: #dddddd;
-        border-radius: 20px;
+.comment label {
+    padding: 2px;
+    width: 40px;
+    height: 20px;
+    background-color: #dddddd;
+    border-radius: 20px;
+    display: block;
+    position: relative;
+    cursor: pointer;
+    outline: none;
+    user-select: none;
+}
+
+    .comment label:before,
+    .comment label:after {
         display: block;
-        position: relative;
-        cursor: pointer;
-        outline: none;
-        user-select: none;
+        position: absolute;
+        top: 1px;
+        left: 1px;
+        bottom: 1px;
     }
 
-        .comment label:before,
-        .comment label:after {
-            display: block;
-            position: absolute;
-            top: 1px;
-            left: 1px;
-            bottom: 1px;
-        }
+    .comment label:before {
+        right: 1px;
+        background-color: #f1f1f1;
+        border-radius: 20px;
+        transition: background 0.4s;
+        content: "";
+    }
 
-        .comment label:before {
-            right: 1px;
-            background-color: #f1f1f1;
-            border-radius: 20px;
-            transition: background 0.4s;
-            content: "";
-        }
-
-        .comment label:after {
-            width: 19px;
-            background-color: #fff;
-            border-radius: 100%;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-            transition: margin 0.4s;
-            content: "\25BC";
-        }
+    .comment label:after {
+        width: 19px;
+        background-color: #fff;
+        border-radius: 100%;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        transition: margin 0.4s;
+        content: "\25BC";
+    }
 
     .comment label.checked:before {
         background-color: #8ce196;
@@ -1393,3 +1418,41 @@ input.cmn-toggle-round {
         margin-left: 20px;
     }
 /*END of toggle button design*/
+
+/*Edit toggle button design*/
+.ck-button-edit {
+    border-radius: 5px;
+    border: 1px solid #D0D0D0;
+    position: relative;
+    float: left;
+    margin: 5px 20px;
+}
+
+    .ck-button-edit label {
+        width: 20px;
+        height: 20px;
+        position: relative;
+        cursor: pointer;
+        outline: none;
+        margin: 0;
+        padding: 0px 1px;
+    }
+
+        .ck-button-edit label span i {
+            background-image: url(../Images/Evaluations/edit.png);
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            padding-left: 22px;
+        }
+
+            .ck-button-edit label span i:hover {
+                background-image: url(../Images/Evaluations/edit-hover.png);
+            }
+
+        .ck-button-edit label input {
+            position: absolute;
+            left: -9999px;
+            /*visibility: hidden;*/
+        }
+/*END of Edit toggle button design*/

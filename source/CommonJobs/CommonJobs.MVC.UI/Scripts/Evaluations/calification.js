@@ -131,7 +131,8 @@
         this.userView = data.UserView;
         this.userLogged = data.UserLogged;
         this.hasAverageColumn = !data.Evaluation.Finished && (this.userView == 1 || this.userView == 3);
-        this.numberOfColumns = "table-" + ((this.hasAverageColumn) ? (data.Califications.length + 2) : (data.Califications.length + 1)) + "-columns";
+        this.columnsAmount = this.hasAverageColumn ? data.Califications.length + 3 : data.Califications.length + 2
+        this.numberOfColumns = "table-" + this.columnsAmount + "-columns";
         var calificationsSorted = data.Califications.sort(sortCalificationColumns);
         this.califications = _.map(calificationsSorted, function (calification) {
             var comment = ko.observable(calification.Comments);
@@ -230,7 +231,7 @@
             if (calification.Califications) {
                 for (var i in calification.Califications) {
                     var cal = calification.Califications[i];
-                    valuesByKey[cal.Key] = parseFloat(cal.Value.toFixed(1));
+                    valuesByKey[cal.Key] = cal.Value && parseFloat(cal.Value.toFixed(1));
                 }
             }
 
@@ -285,6 +286,13 @@
                             text: itemNumber + " - " + item.Text,
                             description: item.Description,
                             isRowSelected: rowSelected,
+                            addSelfComment: function (data, event) {
+                                var selfComment = _.find(this.comments, function (comment) {
+                                    return comment.evaluatorEmployee == self.userLogged
+                                });
+                                selfComment.value("");
+                                selfComment.IsEditingComment(true);
+                            },
                             values: _.map(valuesByKeyCollection, function (valuesByKey) {
                                 var valueItem = {
                                     calificationId: valuesByKey.calificationColumn.calificationId,
@@ -309,19 +317,14 @@
                                 return valueItem;
                             }),
                             comments: _.map(commentsByKeyCollection, function (commentsByKey) {
-                                var commentItem = {
-                                    calificationId: commentsByKey.commentRow.calificationId,
-                                    value: ko.observable(commentsByKey[item.Key]),
-                                    evaluatorEmployee: commentsByKey.commentRow.evaluatorEmployee
-                                };
-                                commentItem.HasComment = ko.computed(function () {
-                                    return commentItem.value() != null;
-                                });
+                                var commentItem = GetCommentItem(commentsByKey.commentRow.calificationId, commentsByKey[item.Key], commentsByKey.commentRow.evaluatorEmployee, commentsByKey.commentRow.evaluatorEmployee == self.userLogged)
+
+                                commentItem.IsEditingComment = ko.observable(false);
+                                self.isDirty.register(commentItem.value);
 
                                 return commentItem;
                             }),
                             showComments: ko.observable(false),
-                            
                         };
 
                         if (self.hasAverageColumn) {
@@ -367,9 +370,9 @@
                                 }
                             }
                         }
-                        valuesByItem.hasComments = ko.computed(function () {
-                            return valuesByItem.comments.find(function (comment) {
-                                return !!comment.HasComment();
+                        valuesByItem.hasSelfComments = ko.computed(function () {
+                            return _.some(valuesByItem.comments, function (comment) {
+                                return comment.HasComment() && comment.isSelfComment;
                             });
                         });
                         return valuesByItem;
@@ -452,10 +455,15 @@
                                 var ownerValue = _.find(item.values, function (element) {
                                     return element.owner == calification.owner;
                                 });
-                                if (ownerValue && ownerValue.value()) {
+                                var ownerComment = _.find(item.comments, function (element) {
+                                    return element.evaluatorEmployee == calification.evaluatorEmployee;
+                                });
+
+                                if ((ownerValue && ownerValue.value()) || (ownerComment && ownerComment.value())) {
                                     return {
                                         Key: item.key.toString(),
-                                        Value: parseFloat(ownerValue.value())
+                                        Value: parseFloat(ownerValue && ownerValue.value()),
+                                        Comment: ownerComment && ownerComment.value()
                                     }
                                 }
                                 return;
@@ -534,6 +542,26 @@
             $(event.target).blur();
         }
     }
+
+    var GetCommentItem = function (calificationId, comment, evaluatorEmployee, isSelfComment) {
+        var commentItem = {
+            calificationId: calificationId,
+            value: ko.observable(comment),
+            evaluatorEmployee: evaluatorEmployee,
+            isSelfComment: isSelfComment,
+            endEdition: function (data, event) {
+                data.IsEditingComment(false);
+                if (data.value() == "") {
+                    data.value(null)
+                }
+            }
+        };
+        commentItem.HasComment = ko.computed(function () {
+            return commentItem.value() != null;
+        });
+        commentItem.IsEditingComment = ko.observable(false);
+        return commentItem;
+    };
 
     var ModalViewModel = function () {
         this.show = ko.observable(false);

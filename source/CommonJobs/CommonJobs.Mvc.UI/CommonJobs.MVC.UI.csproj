@@ -152,6 +152,8 @@
     <Content Include="Content\Images\Evaluations\10-02.png" />
     <Content Include="Content\Images\Evaluations\11-02.png" />
     <Content Include="Content\Images\Evaluations\12-01.png" />
+    <Content Include="Content\Images\Evaluations\edit-hover.png" />
+    <Content Include="Content\Images\Evaluations\edit.png" />
     <Content Include="Content\Images\Evaluations\2-02.png" />
     <Content Include="Content\Images\Evaluations\2.png" />
     <Content Include="Content\Images\Evaluations\3-02.png" />
