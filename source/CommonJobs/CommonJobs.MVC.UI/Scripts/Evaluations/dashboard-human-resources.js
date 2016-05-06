@@ -85,9 +85,9 @@
     getReportDashboard();
     ko.applyBindings(viewmodel);
 
-    function getReportDashboard() {
+    function getReportDashboard(period) {
         viewmodel.isLoading(true);
-        var ajax = $.getJSON("/Evaluations/api/GetDashboardEvaluationsForEmployeeManagers/" + employeePeriod + "/", function (model) {
+        var ajax = $.getJSON("/Evaluations/api/GetDashboardEvaluationsForEmployeeManagers/" + period + "/", function (model) {
             viewmodel.fromJS(model);
             viewmodel.defaultSort();
 

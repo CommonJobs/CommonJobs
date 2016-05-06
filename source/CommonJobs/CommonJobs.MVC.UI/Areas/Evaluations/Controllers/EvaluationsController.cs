@@ -57,10 +57,35 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
         [CommonJobsAuthorize(Roles = "EmployeeManagers")]
         public ActionResult ReportDashboard(string period)
         {
-            //TODO: delete this line and bring the period dynamically
+            var urlHelper = new UrlHelper(Request.RequestContext);
+            var selectList = GetReportPeriods().Select(x=>x.Period).Distinct().Select(x => new SelectListItem
+            {
+                Text = x,
+                Value = urlHelper.Action(period),
+                Selected = x == period
+            });
+
             ViewBag.Period = period;
             ViewBag.IsReportDashboard = true;
+            ViewBag.ReportPeriods = selectList;
+
+            ScriptManager.RegisterGlobalJavascript(
+               "ViewData",
+               new
+               {
+                   period = period,
+               },
+               500);
             return View();
+        }
+
+        [AcceptVerbs(HttpVerbs.Get)]
+        [CommonJobsAuthorize(Roles = "EmployeeManagers")]
+        public ActionResult ReportDashboardIndex()
+        {
+            var lastPeriod = GetReportPeriods().Select(e => e.Period).FirstOrDefault();
+
+            return RedirectToAction("ReportDashboard", "Evaluations", new { period = lastPeriod });
         }
 
         [AcceptVerbs(HttpVerbs.Get)]
@@ -187,6 +212,14 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
                   .Where(e => (e.UserName == DetectUser()))
                   .OrderByDescending(e => e.Period)
                   .ToList();
+        }
+
+        private List<Period_Serch.Projection> GetReportPeriods()
+        {
+            return RavenSession
+                .Query<Period_Serch.Projection, Period_Serch>()
+                .OrderByDescending(e => e.Period)
+                .ToList();
         }
     }
 }
