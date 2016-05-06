@@ -19,6 +19,15 @@
     <div class="header">
         <h2>Historial de Evaluaciones</h2>
         <h2 class="header--human-resources">HR Dashboard</h2>
+        <div class="content-selector-block">
+            <div class="content-selector-label">
+                <p>Período<p>
+            </div>
+            <div class="content-selector-dropdown">
+                @Html.DropDownList("selectedPeriod", (IEnumerable<SelectListItem>)ViewBag.ReportPeriods)
+            </div>
+        </div>
+
     </div>
     <table class="table">
         <thead>

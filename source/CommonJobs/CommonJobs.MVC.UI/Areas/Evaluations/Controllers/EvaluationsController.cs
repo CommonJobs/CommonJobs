@@ -55,12 +55,36 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
 
         [AcceptVerbs(HttpVerbs.Get)]
         [CommonJobsAuthorize(Roles = "EmployeeManagers")]
-        public ActionResult ReportDashboard()
+        public ActionResult ReportDashboard(string period)
         {
-            //TODO: delete this line and bring the period dynamically
-            ViewBag.Period = "2015-06";
+            var selectList = GetReportPeriods().Select(x=>x.Period).Distinct().Select(x => new SelectListItem
+            {
+                Text = x,
+                Value = Url.Action(period),
+                Selected = x == period
+            });
+
+            ViewBag.Period = period;
             ViewBag.IsReportDashboard = true;
+            ViewBag.ReportPeriods = selectList;
+
+            ScriptManager.RegisterGlobalJavascript(
+               "ViewData",
+               new
+               {
+                   period = period,
+               },
+               500);
             return View();
+        }
+
+        [AcceptVerbs(HttpVerbs.Get)]
+        [CommonJobsAuthorize(Roles = "EmployeeManagers")]
+        public ActionResult ReportDashboardIndex()
+        {
+            var lastPeriod = GetReportPeriods().Select(e => e.Period).FirstOrDefault();
+
+            return RedirectToAction("ReportDashboard", "Evaluations", new { period = lastPeriod });
         }
 
         [AcceptVerbs(HttpVerbs.Get)]
@@ -85,11 +109,10 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
                 return new HttpStatusCodeResult(403, "Access Denied");
             }
 
-            var urlHelper = new UrlHelper(Request.RequestContext);
             var selectList = GetPeriods().Select(x => new SelectListItem
             {
                 Text = x.Period,
-                Value = urlHelper.Action(period),
+                Value = Url.Action(period),
                 Selected = x.Period == period
             });
             ViewBag.UserPeriods = selectList;
@@ -187,6 +210,14 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
                   .Where(e => (e.UserName == DetectUser()))
                   .OrderByDescending(e => e.Period)
                   .ToList();
+        }
+
+        private List<Period_Serch.Projection> GetReportPeriods()
+        {
+            return RavenSession
+                .Query<Period_Serch.Projection, Period_Serch>()
+                .OrderByDescending(e => e.Period)
+                .ToList();
         }
     }
 }
