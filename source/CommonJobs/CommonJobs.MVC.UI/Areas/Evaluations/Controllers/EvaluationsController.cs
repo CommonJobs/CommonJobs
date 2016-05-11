@@ -18,6 +18,7 @@ using CommonJobs.Application.EvalForm.Commands;
 using CommonJobs.Application.EvalForm.Indexes;
 using System.Web.Routing;
 using Raven.Client;
+using static CommonJobs.Application.EvalForm.Helper.RevertEvaluationActionsHelper;
 
 namespace CommonJobs.Mvc.UI.Areas.Evaluations
 {
@@ -173,8 +174,6 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
                 return new HttpStatusCodeResult(403, "Access Denied");
             }
 
-
-
             ViewBag.IsUserEvaluator = isLoggedUserEvaluator;
 
             ViewBag.Period = period;
@@ -182,6 +181,16 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
             ViewBag.UserName = username;
             ViewBag.IsCalification = true;
             return View("Calification");
+        }
+
+        [AcceptVerbs(HttpVerbs.Get)]
+        [CommonJobsAuthorize(Roles = "EmployeeManagers")]
+        public IEnumerable<RevertAction> GetPosibleActions(string period, string userName)
+        {
+            var evaluationId = EmployeeEvaluation.GenerateEvaluationId(period, userName);
+            var evaluation = RavenSession.Load<EmployeeEvaluation>(evaluationId);
+            var califications = RavenSession.Advanced.LoadStartingWith<EvaluationCalification>(evaluationId+"/").ToList();
+            return GetPosibleRevertActions(evaluation, califications);
         }
 
         public ActionResult Index()
