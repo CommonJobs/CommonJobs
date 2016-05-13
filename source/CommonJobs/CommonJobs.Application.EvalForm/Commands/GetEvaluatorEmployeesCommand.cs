@@ -58,8 +58,8 @@ namespace CommonJobs.Application.EvalForm.Commands
                         e.CompanyEvaluationDone,
                         e.ResponsibleEvaluationDone,
                         e.AutoEvaluationDone,
-                        e.EvaluatorEvaluationDone)
-                        .Select(x => new PosibleRevertActions { ActionName = RevertEvaluationActionsHelper.MapRevertActionName(x), ActionValue = x.ToString() })
+                        e.AnyEvaluatorEvaluationDone)
+                        .Select(x => new PosibleRevertActions { ActionName = x.GetDescription(), ActionValue = x.ToString() })
                         .ToList()
                 };
             }).ToList();

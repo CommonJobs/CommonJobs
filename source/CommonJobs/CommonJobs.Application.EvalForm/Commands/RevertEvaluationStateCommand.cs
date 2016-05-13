@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using static CommonJobs.Application.EvalForm.Helper.RevertEvaluationActionsHelper;
+using CommonJobs.Application.EvalForm.Helper;
 
 namespace CommonJobs.Application.EvalForm.Commands
 {
@@ -13,13 +13,13 @@ namespace CommonJobs.Application.EvalForm.Commands
     {
         private string _evaluatedEmployee;
         private string _period;
-        private RevertAction _action;
+        private string _action;
 
         public RevertEvaluationStateCommand(string period, string evaluatedEmployee, string action)
         {
             _period = period;
             _evaluatedEmployee = evaluatedEmployee;
-            _action = MapToAction(action);
+            _action = action;
         }
 
         public override void Execute()
@@ -31,22 +31,22 @@ namespace CommonJobs.Application.EvalForm.Commands
             var isCompanyEvalFinished = califications.Any(x => x.Owner == CalificationType.Company && x.Finished);
             var isAutoEvalFinished = califications.Any(x => x.Owner == CalificationType.Auto && x.Finished);
             var isEvaluatorEvalFinished = califications.Any(x => x.Owner == CalificationType.Evaluator && x.Finished);
+            var action = RevertEvaluationActionsHelper.TryParse(_action);
 
-            var possibleActions = GetPosibleRevertActions(
+            if (!RevertEvaluationActionsHelper.FindPosibleRevertAction(
                 evaluation.Finished,
                 evaluation.ReadyForDevolution,
                 isCompanyEvalFinished,
                 isResponsibleEvalFinished,
                 isAutoEvalFinished,
-                isEvaluatorEvalFinished);
-
-            if (!possibleActions.Contains(_action))
+                isEvaluatorEvalFinished,
+                action))
             {
                 throw new ApplicationException("Action not allowed");
             }
             var calificationsByType = califications.ToLookup(x => x.Owner);
 
-            switch (_action)
+            switch (action)
             {
                 case RevertAction.ReopenForDevolution:
                     evaluation.Finished = false;
@@ -75,19 +75,6 @@ namespace CommonJobs.Application.EvalForm.Commands
                         calification.Finished = false;
                     }
                     break;
-            }
-        }
-
-        private RevertAction MapToAction(string action)
-        {
-            RevertAction enumAction;
-            if (Enum.TryParse(action, true, out enumAction))
-            {
-                return enumAction;
-            }
-            else
-            {
-                throw new ApplicationException("Invalid action");
             }
         }
     }

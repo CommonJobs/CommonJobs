@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using static CommonJobs.Application.EvalForm.Helper.RevertEvaluationActionsHelper;
+using CommonJobs.Application.EvalForm.Helper;
 
 namespace CommonJobs.Mvc.UI.Areas.Evaluations.Controllers
 {
@@ -151,32 +151,6 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations.Controllers
         {
             ExecuteCommand(new RevertEvaluationStateCommand(period, username, operation));
             return Json("OK");
-        }
-
-        [AcceptVerbs(HttpVerbs.Get)]
-        [CommonJobsAuthorize(Roles = "EmployeeManagers")]
-        public JsonNetResult GetPosibleActions(string period, string userName)
-        {
-            var evaluationId = EmployeeEvaluation.GenerateEvaluationId(period, userName);
-            var evaluation = RavenSession.Load<EmployeeEvaluation>(evaluationId);
-            var califications = RavenSession.Advanced.LoadStartingWith<EvaluationCalification>(evaluationId + "/").ToList();
-            var isResponsibleEvalFinished = califications.Any(x => x.Owner == CalificationType.Responsible && x.Finished);
-            var isCompanyEvalFinished = califications.Any(x => x.Owner == CalificationType.Company && x.Finished);
-            var isAutoEvalFinished = califications.Any(x => x.Owner == CalificationType.Auto && x.Finished);
-            var isEvaluatorEvalFinished = califications.Any(x => x.Owner == CalificationType.Evaluator && x.Finished);
-            var actions = GetPosibleRevertActions(
-                evaluation.Finished, 
-                evaluation.ReadyForDevolution,
-                isCompanyEvalFinished,
-                isResponsibleEvalFinished,
-                isAutoEvalFinished,
-                isEvaluatorEvalFinished);
-            var result = actions.Select(x => new
-            {
-                actionName = MapRevertActionName(x),
-                actionValue = x.ToString()
-            });
-            return Json(result);
         }
     }
 }

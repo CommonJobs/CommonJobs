@@ -18,7 +18,6 @@ using CommonJobs.Application.EvalForm.Commands;
 using CommonJobs.Application.EvalForm.Indexes;
 using System.Web.Routing;
 using Raven.Client;
-using static CommonJobs.Application.EvalForm.Helper.RevertEvaluationActionsHelper;
 
 namespace CommonJobs.Mvc.UI.Areas.Evaluations
 {

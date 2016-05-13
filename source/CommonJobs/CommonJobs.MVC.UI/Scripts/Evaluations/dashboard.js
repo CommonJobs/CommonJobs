@@ -126,7 +126,6 @@
             var ajax = $.ajax("/Evaluations/api/RevertEvaluationState/" + self.evaluation.period + "/" + self.evaluation.userName + "?operation=" + data.ActionValue, {
                 type: "POST",
                 success: function (data) {
-                    viewmodel.isLoading(false);
                     window.location.reload()
                 },
                 error: function (data) {
@@ -375,13 +374,4 @@
             alert('Fallo interno. Por favor recargue la página.');
         });
     }
-
-    function getPosibleRevertActions(period, username) {
-        viewmodel.isLoading(true);
-        var ajax = $.ajax("/Evaluations/api/GetPosibleActions/" + period + "/" + username, {
-            type: "GET",
-            contentType: 'application/json; charset=utf-8'
-        });
-        viewmodel.isLoading(false);
-    };
 });
