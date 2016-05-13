@@ -66,14 +66,21 @@
             <span class="top-tip" data-bind="text: evaluatorsTextLink(), attr: { 'data-tips': evaluatorsString()}"></span>
           </span>
         </td>
-        <td><span class="state-doc" data-bind="text: stateName, attr: { 'class': stateClasses }"></span></td>
+        <td class="state-column">
+          <span data-bind="if: isResponsible && hasPosibleActions()">
+            <a class="state-doc" data-bind="text: stateName, attr: { 'class': stateClasses }, click: showStateManager"></a>
+          </span>
+          <span data-bind="if: !isResponsible || !hasPosibleActions()">
+            <span class="state-doc" data-bind="text: stateName, attr: { 'class': stateClasses }">
+            </span>
+          </span>
+        </td>
         <td><a class="link-responsable top-tip" data-bind="attr: {'data-tips': calificationActionTooltip(), href: calificationUrl}"><i data-bind="attr: { class: calificationActionClass() }"></i><span data-bind="text: calificationActionText()"></span></a></td>
         <td><span data-bind="if: state() == 4 && isResponsible"><button class="button-evaluations feedback-start" data-bind="click: startDevolutionUrl">Iniciar Devolución</button></span></td>
       </tr>
     </tbody>
   </table>
 </div>
-
 
 <div class="content-modal clearfix">
   <div class="modal-title">
@@ -90,6 +97,16 @@
   </div>
   <a class="cancelar" data-bind="click: calificatorsManagerModel.close">Cancelar</a>
   <button class="guardar" data-bind="enable: calificatorsManagerModel.saveButtonEnable, click: calificatorsManagerModel.save">Guardar</button>
+</div>
+
+<div class="state-content-modal clearfix">
+  <div class="modal-title">
+    <h4>Available revert actions</h4>
+  </div>
+  <div class="actions-container" data-bind="foreach: stateManagerModel.posibleActions">
+    <button class="blue-button" data-bind="text: ActionName, click: $parent.stateManagerModel.revertEvaluationState"></button>
+  </div>
+  <a class="cancelar" data-bind="click: stateManagerModel.close">Cancelar</a>
 </div>
 
 <div id="loader-id" class="loader-container" data-bind="visible: isLoading()">

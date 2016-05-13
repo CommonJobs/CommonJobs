@@ -109,6 +109,39 @@
         });
     }
 
+    var StateManagerModel = function (data) {
+        var self = this;
+        this.evaluation = '';
+        this.posibleActions = ko.observableArray();
+        if (data) {
+            this.fromJs(data);
+        };
+        this.close = function () {
+            $('.content-evaluation').append($('.state-content-modal'));
+            $('.state-content-modal').hide();
+        };
+        this.revertEvaluationState = function (data) {
+            self.close;
+            viewmodel.isLoading(true);
+            var ajax = $.ajax("/Evaluations/api/RevertEvaluationState/" + self.evaluation.period + "/" + self.evaluation.userName + "?operation=" + data.ActionValue, {
+                type: "POST",
+                success: function (data) {
+                    viewmodel.isLoading(false);
+                    window.location.reload()
+                },
+                error: function (data) {
+                    viewmodel.isLoading(false);
+                }
+            });
+            
+        };
+    };
+
+    StateManagerModel.prototype.fromJs = function (data) {
+        this.evaluation = data.evaluation;
+        this.posibleActions(data.evaluation.posibleRevertActions.$values);
+    }
+
     var Calificator = function (data) {
         this.userName = '';
         this.action = ko.observable();
@@ -196,6 +229,7 @@
         this.state = ko.observable('');
         this.currentState = '';
         this.evaluators = ko.observableArray();
+        this.posibleRevertActions = ko.observableArray();
         if (data) {
             this.fromJs(data);
         }
@@ -281,6 +315,10 @@
         }, this);
         this.state(data.State);
         this.stateName = evaluationStates[this.state()];
+        this.posibleRevertActions = data.PosibleRevertActions;
+        this.hasPosibleActions = ko.computed(function () {
+            return data.PosibleRevertActions.$values.length > 0;
+        });
         this.stateClasses = "state-doc state-" + this.state();
         this.isCalificatorsEditable = ko.computed(function () {
             return this.isResponsible && this.state() != 6;
@@ -290,6 +328,13 @@
             var popupContainer = $(event.target).parents('.calificators-column');
             popupContainer.append($('.content-modal'));
             $('.content-modal').show();
+            return true;
+        }
+        this.showStateManager = function (data, event) {
+            viewmodel.stateManagerModel.fromJs({ evaluation: this });
+            var popupContainer = $(event.target).parents('.state-column')
+            popupContainer.append($('.state-content-modal'));
+            $('.state-content-modal').show();
             return true;
         }
     }
@@ -330,4 +375,13 @@
             alert('Fallo interno. Por favor recargue la página.');
         });
     }
+
+    function getPosibleRevertActions(period, username) {
+        viewmodel.isLoading(true);
+        var ajax = $.ajax("/Evaluations/api/GetPosibleActions/" + period + "/" + username, {
+            type: "GET",
+            contentType: 'application/json; charset=utf-8'
+        });
+        viewmodel.isLoading(false);
+    };
 });
