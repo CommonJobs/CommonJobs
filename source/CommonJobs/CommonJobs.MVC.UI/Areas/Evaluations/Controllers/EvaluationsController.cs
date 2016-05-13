@@ -183,16 +183,6 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
             return View("Calification");
         }
 
-        [AcceptVerbs(HttpVerbs.Get)]
-        [CommonJobsAuthorize(Roles = "EmployeeManagers")]
-        public IEnumerable<RevertAction> GetPosibleActions(string period, string userName)
-        {
-            var evaluationId = EmployeeEvaluation.GenerateEvaluationId(period, userName);
-            var evaluation = RavenSession.Load<EmployeeEvaluation>(evaluationId);
-            var califications = RavenSession.Advanced.LoadStartingWith<EvaluationCalification>(evaluationId+"/").ToList();
-            return GetPosibleRevertActions(evaluation, califications);
-        }
-
         public ActionResult Index()
         {
             var userLastPeriod = GetPeriods().Select(e => e.Period).FirstOrDefault();

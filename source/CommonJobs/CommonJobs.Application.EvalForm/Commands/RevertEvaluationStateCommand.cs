@@ -27,8 +27,19 @@ namespace CommonJobs.Application.EvalForm.Commands
             var evaluationId = EmployeeEvaluation.GenerateEvaluationId(_period, _evaluatedEmployee);
             var evaluation = RavenSession.Load<EmployeeEvaluation>(evaluationId);
             var califications = RavenSession.Advanced.LoadStartingWith<EvaluationCalification>(evaluationId + "/").ToList();
+            var isResponsibleEvalFinished = califications.Any(x => x.Owner == CalificationType.Responsible && x.Finished);
+            var isCompanyEvalFinished = califications.Any(x => x.Owner == CalificationType.Company && x.Finished);
+            var isAutoEvalFinished = califications.Any(x => x.Owner == CalificationType.Auto && x.Finished);
+            var isEvaluatorEvalFinished = califications.Any(x => x.Owner == CalificationType.Evaluator && x.Finished);
 
-            var possibleActions = GetPosibleRevertActions(evaluation, califications);
+            var possibleActions = GetPosibleRevertActions(
+                evaluation.Finished,
+                evaluation.ReadyForDevolution,
+                isCompanyEvalFinished,
+                isResponsibleEvalFinished,
+                isAutoEvalFinished,
+                isEvaluatorEvalFinished);
+
             if (!possibleActions.Contains(_action))
             {
                 throw new ApplicationException("Action not allowed");

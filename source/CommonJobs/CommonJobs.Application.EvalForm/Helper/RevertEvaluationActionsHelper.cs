@@ -20,50 +20,71 @@ namespace CommonJobs.Application.EvalForm.Helper
             ReopenAutoEvaluation
         }
 
-        public static IEnumerable<RevertAction> GetPosibleRevertActions(EmployeeEvaluation evaluation, IEnumerable<EvaluationCalification> califications)
+        public static string MapRevertActionName(RevertAction action)
         {
-            var calificationsByType = califications.ToLookup(x => x.Owner);
-            if (evaluation.Finished)
+            switch (action)
+            {
+                case RevertAction.ReopenForDevolution:
+                    return "Reabrir para devolución";
+                case RevertAction.CancelDevolution:
+                    return "Suspender devolución";
+                case RevertAction.ReopenEvalCompany:
+                    return "Reabrir Eval Empresa";
+                case RevertAction.ReopenEvalResponsible:
+                    return "Reabrir Eval Responsable";
+                case RevertAction.ReopenEvalEvaluators:
+                    return "Reabrir Eval Evaluadores";
+                case RevertAction.ReopenAutoEvaluation:
+                    return "Reabrir Auto-evaluación";
+            }
+            return null;
+        }
+
+        public static IEnumerable<RevertAction> GetPosibleRevertActions(
+            bool isFinished, 
+            bool isReadyForDevolution, 
+            bool isCompanyEvalFinished, 
+            bool isResponsibleEvalFinished, 
+            bool isAutoEvalFinished, 
+            bool isEvaluatorEvalFinished)
+        {
+            if (isFinished)
             {
                 yield return RevertAction.ReopenForDevolution;
             }
 
-            if (evaluation.ReadyForDevolution)
+            if (isReadyForDevolution)
             {
                 yield return RevertAction.CancelDevolution;
             }
 
-            if (!evaluation.Finished
-                && !evaluation.ReadyForDevolution
+            if (!isFinished
+                && !isReadyForDevolution
                 // TODO: verify if it is possible to have a null on calificationsByType[CalificationType.Company]
-                && calificationsByType[CalificationType.Company] != null
-                && calificationsByType[CalificationType.Company].Any(x => x.Finished))
+                && isCompanyEvalFinished)
             {
                 yield return RevertAction.ReopenEvalCompany;
             }
 
-            if (!evaluation.Finished
-               && !evaluation.ReadyForDevolution
-               && calificationsByType[CalificationType.Auto].First().Finished)
+            if (!isFinished
+               && !isReadyForDevolution
+               && isAutoEvalFinished)
             {
                 yield return RevertAction.ReopenAutoEvaluation;
             }
 
-            if (!evaluation.Finished
-               && !evaluation.ReadyForDevolution
-               && calificationsByType[CalificationType.Company] != null
-               && calificationsByType[CalificationType.Company].All(x => !x.Finished)
-               && calificationsByType[CalificationType.Responsible] != null
-               && calificationsByType[CalificationType.Responsible].Any(x => x.Finished))
+            if (!isFinished
+               && !isReadyForDevolution
+               && !isCompanyEvalFinished
+               && isResponsibleEvalFinished)
             {
                 yield return RevertAction.ReopenEvalResponsible;
             }
 
-            if (!evaluation.Finished
-               && !evaluation.ReadyForDevolution
-                && (calificationsByType[CalificationType.Company] == null || calificationsByType[CalificationType.Company].All(x => !x.Finished))
-               && calificationsByType[CalificationType.Evaluator] != null
-               && calificationsByType[CalificationType.Evaluator].Any(x => x.Finished))
+            if (!isFinished
+               && !isReadyForDevolution
+               && !isCompanyEvalFinished
+               && isEvaluatorEvalFinished)
             {
                 yield return RevertAction.ReopenEvalEvaluators;
             }
