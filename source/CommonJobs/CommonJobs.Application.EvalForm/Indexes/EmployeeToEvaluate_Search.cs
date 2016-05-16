@@ -128,7 +128,7 @@ namespace CommonJobs.Application.EvalForm.Indexes
                     AutoEvaluationDone = g.Any(x => x.AutoEvaluationDone),
                     ResponsibleEvaluationDone = g.Any(x => x.ResponsibleEvaluationDone),
                     CompanyEvaluationDone = g.Any(x => x.CompanyEvaluationDone),
-                    EvaluatorEvaluationDone = g.Any(x => x.AnyEvaluatorEvaluationDone),
+                    AnyEvaluatorEvaluationDone = g.Any(x => x.AnyEvaluatorEvaluationDone),
                     OpenToDevolution = g.Any(x => x.OpenToDevolution),
                     Finished = g.Any(x => x.Finished),
                     CalificationsState = g.SelectMany(x => x.CalificationsState).Where(x => x != null).ToArray(),
