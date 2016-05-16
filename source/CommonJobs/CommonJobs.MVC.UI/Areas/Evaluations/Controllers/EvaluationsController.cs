@@ -201,19 +201,19 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
             return responsibleId == loggedUser || (evaluators != null && evaluators.Contains(loggedUser));
         }
 
-        private List<Period_Serch.Projection> GetPeriods()
+        private List<Period_Search.Projection> GetPeriods()
         {
             return RavenSession
-                  .Query<Period_Serch.Projection, Period_Serch>()
+                  .Query<Period_Search.Projection, Period_Search>()
                   .Where(e => (e.UserName == DetectUser()))
                   .OrderByDescending(e => e.Period)
                   .ToList();
         }
 
-        private List<Period_Serch.Projection> GetReportPeriods()
+        private List<Period_Search.Projection> GetReportPeriods()
         {
             return RavenSession
-                .Query<Period_Serch.Projection, Period_Serch>()
+                .Query<Period_Search.Projection, Period_Search>()
                 .OrderByDescending(e => e.Period)
                 .ToList();
         }
