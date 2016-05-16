@@ -138,7 +138,7 @@
 
     StateManagerModel.prototype.fromJs = function (data) {
         this.evaluation = data.evaluation;
-        this.posibleActions(data.evaluation.posibleRevertActions.$values);
+        this.posibleActions(data.evaluation.posibleRevertActions);
     }
 
     var Calificator = function (data) {
@@ -174,6 +174,7 @@
         var self = this;
         this.items = ko.observableArray();
         this.calificatorsManagerModel = new CalificatorsManager();
+        this.stateManagerModel = new StateManagerModel();
         if (data) {
             this.fromJS(data);
         }
@@ -316,7 +317,7 @@
         this.stateName = evaluationStates[this.state()];
         this.posibleRevertActions = data.PosibleRevertActions;
         this.hasPosibleActions = ko.computed(function () {
-            return data.PosibleRevertActions.$values.length > 0;
+            return data.PosibleRevertActions.length > 0;
         });
         this.stateClasses = "state-doc state-" + this.state();
         this.isCalificatorsEditable = ko.computed(function () {
