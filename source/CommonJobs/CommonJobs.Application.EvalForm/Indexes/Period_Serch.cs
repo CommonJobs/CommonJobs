@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CommonJobs.Application.EvalForm.Indexes
 {
-    public class Period_Serch : AbstractMultiMapIndexCreationTask<Period_Serch.Projection>
+    public class Period_Search : AbstractMultiMapIndexCreationTask<Period_Search.Projection>
     {
         public class Projection
         {
@@ -16,7 +16,7 @@ namespace CommonJobs.Application.EvalForm.Indexes
             public string Period { get; set; }
         }
 
-        public Period_Serch()
+        public Period_Search()
         {
             AddMap<EvaluationCalification>(califications =>
                 from calification in califications
