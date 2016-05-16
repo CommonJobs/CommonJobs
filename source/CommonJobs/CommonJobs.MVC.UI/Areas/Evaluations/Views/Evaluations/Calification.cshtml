@@ -131,7 +131,7 @@
             <span class="comment-text" data-bind="text: value, visible: !isSelfComment || !IsEditingComment()"></span>
             <div class="comment-text edition-content" data-bind="visible: IsEditingComment">
               <textarea data-bind="value: value" rows="5" placeholder="Agrega un comentario"></textarea>
-              <button class="comment-button" type="button" data-bind="click: endEdition" style="">Listo</button>
+              <button class="blue-button left" type="button" data-bind="click: endEdition" style="">Listo</button>
             </div>
             <div class="ck-button-edit" data-bind="visible: isSelfComment &&  !IsEditingComment()" title="Editar">
               <label>
@@ -142,7 +142,7 @@
           </div>
           <!-- /ko -->
           <div class="comment-add-container" data-bind="visible: !hasSelfComments()">
-            <button class="comment-button" data-bind="click: addSelfComment">Agrega tu comentario</button>
+            <button class="blue-button left" data-bind="click: addSelfComment">Agrega tu comentario</button>
           </div>
         </td>
       </tr>

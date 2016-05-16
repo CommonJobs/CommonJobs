@@ -31,6 +31,8 @@ namespace CommonJobs.Application.EvalForm
 
         public bool IsEditable { get; set; }
 
+        public List<PosibleRevertActions> PosibleRevertActions { get; set; }
+
         public static EvaluationState GetEvaluationState(bool autoEvaluationDone, bool responsibleEvaluationDone, bool companyEvaluationDone, bool openToDevolution, bool finished)
         {
             if (finished) return EvaluationState.Finished;
@@ -49,6 +51,13 @@ namespace CommonJobs.Application.EvalForm
 
             return EvaluationState.InProgress;
         }
+    }
+
+    public class PosibleRevertActions
+    {
+        public string ActionName { get; set; }
+
+        public string ActionValue { get; set; }
     }
 
     public enum EvaluationState

@@ -33,6 +33,7 @@ namespace CommonJobs.Application.EvalForm.Indexes
             public bool AutoEvaluationDone { get; set; }
             public bool ResponsibleEvaluationDone { get; set; }
             public bool CompanyEvaluationDone { get; set; }
+            public bool AnyEvaluatorEvaluationDone { get; set; }
             public bool OpenToDevolution { get; set; }
             public bool Finished { get; set; }
             public List<CalificationState> CalificationsState { get; set; }
@@ -56,6 +57,7 @@ namespace CommonJobs.Application.EvalForm.Indexes
                     AutoEvaluationDone = false,
                     ResponsibleEvaluationDone = false,
                     CompanyEvaluationDone = false,
+                    AnyEvaluatorEvaluationDone = false,
                     OpenToDevolution = false,
                     Finished = false,
                     CalificationsState = new dynamic[0]
@@ -77,6 +79,7 @@ namespace CommonJobs.Application.EvalForm.Indexes
                     AutoEvaluationDone = false,
                     ResponsibleEvaluationDone = false,
                     CompanyEvaluationDone = false,
+                    AnyEvaluatorEvaluationDone = false,
                     OpenToDevolution = evaluation.ReadyForDevolution,
                     Finished = evaluation.Finished,
                     CalificationsState = new dynamic[0]
@@ -100,6 +103,7 @@ namespace CommonJobs.Application.EvalForm.Indexes
                     AutoEvaluationDone = calification.Owner == CalificationType.Auto && calification.Finished,
                     ResponsibleEvaluationDone = calification.Owner == CalificationType.Responsible && calification.Finished,
                     CompanyEvaluationDone = calification.Owner == CalificationType.Company && calification.Finished,
+                    AnyEvaluatorEvaluationDone = calification.Owner == CalificationType.Evaluator && calification.Finished,
                     OpenToDevolution = false,
                     Finished = false,
                     CalificationsState = (calification.Owner != CalificationType.Auto && calification.Owner != CalificationType.Company && calification.Owner != CalificationType.Responsible)
@@ -124,6 +128,7 @@ namespace CommonJobs.Application.EvalForm.Indexes
                     AutoEvaluationDone = g.Any(x => x.AutoEvaluationDone),
                     ResponsibleEvaluationDone = g.Any(x => x.ResponsibleEvaluationDone),
                     CompanyEvaluationDone = g.Any(x => x.CompanyEvaluationDone),
+                    AnyEvaluatorEvaluationDone = g.Any(x => x.AnyEvaluatorEvaluationDone),
                     OpenToDevolution = g.Any(x => x.OpenToDevolution),
                     Finished = g.Any(x => x.Finished),
                     CalificationsState = g.SelectMany(x => x.CalificationsState).Where(x => x != null).ToArray(),

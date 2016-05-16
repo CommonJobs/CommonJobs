@@ -497,7 +497,7 @@ tr.evaluation-generated td {
         /* line 22, ../../sass/Evaluations/_dashboard.scss */
         .dashboard.recursos-humanos .header h2.header--human-resources {
             float: right;
-            margin-left:60px;
+            margin-left: 60px;
         }
 /* line 28, ../../sass/Evaluations/_dashboard.scss */
 .dashboard.recursos-humanos table td:first-child {
@@ -601,6 +601,47 @@ tr.evaluation-generated td {
     /* line 140, ../../sass/Evaluations/_dashboard.scss */
     .dashboard .state-doc.state-6:before {
         color: #888;
+    }
+
+.state-content-modal {
+    background: #FFF;
+    width: 280px;
+    border: 1px solid #D9D9D9;
+    padding: 20px;
+    border-radius: 5px;
+    font-size: 12px;
+    display: none;
+    left: -60px;
+    top: 45px;
+    position: absolute;
+    z-index: 9;
+}
+
+    .state-content-modal .modal-title {
+        position: relative;
+        border-bottom: 1px solid #D9D9D9;
+    }
+
+        .state-content-modal .modal-title h4 {
+            color: #7F7F7F;
+            margin: 0;
+            font-size: 14px;
+        }
+
+    .state-content-modal .actions-container {
+        border-bottom: 1px solid #D9D9D9;
+        padding-bottom: 15px;
+        margin: 15px 0px;
+    }
+
+        .state-content-modal .actions-container button {
+            font-size: 12px !important;
+        }
+
+    .state-content-modal .cancelar {
+        text-decoration: underline;
+        color: #777777;
+        cursor: pointer;
     }
 
 /* line 1, ../../sass/Evaluations/_add-calificator.scss */
@@ -1354,16 +1395,19 @@ tr.evaluation-generated td {
     margin-left: 60px;
 }
 
-.comment-button {
+.blue-button {
     padding: 8px;
     color: white;
     border-radius: 5px;
     border: none;
     background-color: #4499F4;
-    float: left;
     cursor: pointer;
     margin: 5px 0px !important;
 }
+
+    .blue-button .left {
+        float: left;
+    }
 
 /*toggle button design*/
 input.cmn-toggle-round {

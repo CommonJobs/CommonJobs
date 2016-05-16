@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using CommonJobs.Application.EvalForm.Helper;
 
 namespace CommonJobs.Mvc.UI.Areas.Evaluations.Controllers
 {
@@ -64,7 +65,8 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Get)]
-        public JsonNetResult GetDashboardEvaluations(string period) {
+        public JsonNetResult GetDashboardEvaluations(string period)
+        {
             PeriodEvaluation periodEvaluation = new PeriodEvaluation();
             periodEvaluation.Evaluations = ExecuteCommand(new GetEvaluatorEmployeesCommand(DetectUser(), period));
             return Json(periodEvaluation);
@@ -137,9 +139,17 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations.Controllers
 
         [AcceptVerbs(HttpVerbs.Post)]
         [CommonJobsAuthorize(Roles = "EvaluationManagers")]
-        public JsonNetResult ChangeResponsible (string evaluatedUserName, string period, string newResponsibleName)
+        public JsonNetResult ChangeResponsible(string evaluatedUserName, string period, string newResponsibleName)
         {
             ExecuteCommand(new ChangeResponsibleCommand(evaluatedUserName, period, newResponsibleName));
+            return Json("OK");
+        }
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        [CommonJobsAuthorize(Roles = "EmployeeManagers")]
+        public JsonNetResult RevertEvaluationState(string period, string username, string operation)
+        {
+            ExecuteCommand(new RevertEvaluationStateCommand(period, username, operation));
             return Json("OK");
         }
     }

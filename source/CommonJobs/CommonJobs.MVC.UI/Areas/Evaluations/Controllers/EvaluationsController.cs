@@ -173,8 +173,6 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
                 return new HttpStatusCodeResult(403, "Access Denied");
             }
 
-
-
             ViewBag.IsUserEvaluator = isLoggedUserEvaluator;
 
             ViewBag.Period = period;

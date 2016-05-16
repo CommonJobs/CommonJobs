@@ -1,5 +1,5 @@
 ﻿using CommonJobs.Application.EvalForm.Indexes;
-using CommonJobs.Application.Evaluations;
+using CommonJobs.Application.EvalForm.Helper;
 using CommonJobs.Domain.Evaluations;
 using CommonJobs.Infrastructure.RavenDb;
 using Raven.Client;
@@ -37,6 +37,7 @@ namespace CommonJobs.Application.EvalForm.Commands
 
             var employeesForResponsible = employeesProjection.Select(e =>
             {
+                var califications = RavenSession.Advanced.LoadStartingWith<EvaluationCalification>(e.Id + "/").ToList();
                 return new EmployeeEvaluationDTO()
                 {
                     IsResponsible = e.ResponsibleId == _loggedUser,
@@ -50,7 +51,16 @@ namespace CommonJobs.Application.EvalForm.Commands
                     State = EmployeeEvaluationDTO.GetEvaluationState(e.AutoEvaluationDone, e.ResponsibleEvaluationDone, e.CompanyEvaluationDone, e.OpenToDevolution, e.Finished),
                     Id = e.Id,
                     TemplateId = e.TemplateId,
-                    IsEditable = getEvaluationEditable(e)
+                    IsEditable = getEvaluationEditable(e),
+                    PosibleRevertActions = RevertEvaluationActionsHelper.GetPosibleRevertActions(
+                        e.Finished,
+                        e.OpenToDevolution,
+                        e.CompanyEvaluationDone,
+                        e.ResponsibleEvaluationDone,
+                        e.AutoEvaluationDone,
+                        e.AnyEvaluatorEvaluationDone)
+                        .Select(x => new PosibleRevertActions { ActionName = x.GetDescription(), ActionValue = x.ToString() })
+                        .ToList()
                 };
             }).ToList();
 

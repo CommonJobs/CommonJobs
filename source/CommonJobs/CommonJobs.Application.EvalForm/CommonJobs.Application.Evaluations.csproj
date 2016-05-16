@@ -77,6 +77,8 @@
     <Compile Include="Dtos\EvaluatorsUpdateDto.cs" />
     <Compile Include="Dtos\UpdateCalificationDto.cs" />
     <Compile Include="Dtos\UpdateEvaluationDto.cs" />
+    <Compile Include="Commands\RevertEvaluationStateCommand.cs" />
+    <Compile Include="Helper\RevertEvaluationActionsHelper.cs" />
     <Compile Include="Indexes\EmployeeToEvaluate_Search.cs" />
     <Compile Include="Indexes\Employee_Search.cs" />
     <Compile Include="Commands\GenerateCalificationCommand.cs" />
