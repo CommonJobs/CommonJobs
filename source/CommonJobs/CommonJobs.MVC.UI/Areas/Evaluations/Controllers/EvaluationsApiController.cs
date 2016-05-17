@@ -139,9 +139,9 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations.Controllers
 
         [AcceptVerbs(HttpVerbs.Post)]
         [CommonJobsAuthorize(Roles = "EvaluationManagers")]
-        public JsonNetResult ChangeResponsible(string evaluatedUserName, string period, string newResponsibleName)
+        public JsonNetResult ChangeResponsible(string period, string username, string newResponsibleName)
         {
-            ExecuteCommand(new ChangeResponsibleCommand(evaluatedUserName, period, newResponsibleName));
+            ExecuteCommand(new ChangeResponsibleCommand(username, period, newResponsibleName));
             return Json("OK");
         }
 
