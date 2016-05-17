@@ -151,8 +151,12 @@
   </table>
   <div class="footer-evaluation" data-bind="if: isEvaluationEditable()">
     <button class="button-evaluations primary-btn finish-btn" data-bind="click: onFinish">
-      <span data-bind="if: isResposibleCalificating()"> finalizar e iniciar evaluación empresa </span>
-      <span data-bind="if: !isResposibleCalificating()"> finalizar</span>
+      <!-- ko if: isResposibleCalificating -->
+      Finalizar e iniciar evaluación empresa
+      <!-- /ko -->
+      <!-- ko if: !isResposibleCalificating -->
+      finalizar
+      <!-- /ko -->
     </button>
     <p class="explanatory-text">Recuerda que una vez finalizada tu evaluación no podrás volver a editarla.</p>
   </div>
