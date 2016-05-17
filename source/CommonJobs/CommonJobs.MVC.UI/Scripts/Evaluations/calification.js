@@ -153,6 +153,10 @@
             }
         });
 
+        this.isResposibleCalificating = _.some(self.califications, function (califications) {
+            return califications.owner == 1 && !califications.finished && califications.evaluatorEmployee == data.UserLogged
+        });
+
         this.evaluation.fromJs(data.Evaluation);
 
         if (this.evaluation.readyForDevolution && this.userView == 3) {
