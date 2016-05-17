@@ -32,6 +32,7 @@
         this.groups = [];
         this.isEvaluationEditable = ko.observable(false);
         this.isLoading = ko.observable(false);
+        this.isResposibleCalificating = ko.observable(false);
     }
 
     EvaluationViewModel.prototype.load = function () {
@@ -151,6 +152,15 @@
                 show: ko.observable(show),
                 hasShowIcon: hasShowIcon
             }
+        });
+
+        this.isResposibleCalificating = ko.computed(function () {
+            if (data.UserLogged == data.Evaluation.ResponsibleId) {
+                return !_.some(self.califications, function (califications) {
+                    return califications.owner == 1 && califications.finished
+                });
+            }
+            return false;
         });
 
         this.evaluation.fromJs(data.Evaluation);
