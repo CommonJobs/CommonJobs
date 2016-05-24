@@ -548,7 +548,7 @@
                 }
             }
         };
-        commentItem.Show = ko.computed(function () {
+        commentItem.IsCalificationShown = ko.computed(function () {
             return viewmodel.califications.find(function (calification) {
                 return calification.id == calificationId
             }).show;
