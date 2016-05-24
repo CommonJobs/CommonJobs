@@ -58,13 +58,25 @@
         <div class="title">Plan de acción </div><textarea class="content-editable" data-bind="value: evaluation.actionPlanComment, enable: isEvaluationEditable()"></textarea>
       </div>
     </div>
-    <h4>Comentarios de la Evaluación</h4>
+    <h4>Comentarios de la Empresa</h4>
     <div class="comments-container comments-company-container">
       <textarea class="content-editable big-comment" data-bind="value: generalComment, enable: isEvaluationEditable()"></textarea>
     </div>
-    <h4>Comentarios del Evaluado</h4>
-    <div class="comments-container comments-company-container">
-      <textarea class="content-editable big-comment" data-bind="value: evaluatedComment, enable: evaluation.readyForDevolution && !evaluation.finished && userView == 3"></textarea>
+    <div class="evaluation-comments">
+      <h4>Comentarios de la Evaluación</h4>
+      <div>
+        <!-- ko foreach: califications-->
+        <div data-bind="if: show() && (owner < 2 ||(owner == 2 && comments))">
+          <span class="comment-label" data-bind="text: evaluatorEmployee"></span>:
+          <!-- ko ifnot: evaluatorEmployee == $parent.userLogged && (($parent.evaluation.readyForDevolution && owner == 0) || (!$parent.evaluation.readyForDevolution)) -->
+          <span data-bind="text: comments"></span>
+          <!-- /ko -->
+          <!-- ko if: evaluatorEmployee == $parent.userLogged && (($parent.evaluation.readyForDevolution && owner == 0) || (!$parent.evaluation.readyForDevolution)) -->
+          <textarea data-bind="value: comments"></textarea>
+          <!-- /ko -->
+        </div>
+        <!-- /ko -->
+      </div>
     </div>
     <!-- /ko -->
     <!--ko if: userView != 3 && !evaluation.readyForDevolution -->

@@ -193,18 +193,6 @@
 
         this.generalComment = (userLoggedCalifiction) ? userLoggedCalifiction.comments : ko.observable('');
 
-        if (!this.generalComment() && this.userView == 3) {
-            var comments = _.chain(self.califications)
-            .filter(function (calification) {
-                return (calification.owner == 1 || calification.owner == 2) && calification.comments() != null;
-            })
-            .map(function (comment) {
-                return comment.evaluatorEmployee + ": " + comment.comments();
-            })
-            .value();
-            this.generalComment(comments.join("\n\n"));
-        }
-
         if (this.evaluation.readyForDevolution && this.userView == 2) {
             var comments = _.chain(self.califications)
             .filter(function (calification) {

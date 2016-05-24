@@ -996,6 +996,40 @@ tr.evaluation-generated td {
     color: #878787;
     font-style: italic;
 }
+
+.evaluation .evaluation-comments {
+    margin-top: 40px;
+}
+
+    .evaluation .evaluation-comments h4 {
+        border-bottom: 1px solid #ccc;
+        margin-top: 0;
+        font-size: 20px;
+        width: 300px;
+        padding-bottom: 10px;
+    }
+
+    .evaluation .evaluation-comments div {
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    .evaluation .evaluation-comments textarea {
+        display: block;
+        width: 100%;
+    }
+
+    .evaluation .evaluation-comments .comment-label {
+        font-weight: bold;
+    }
+
+    .evaluation .evaluation-comments
+    /* line 198, ../../sass/Evaluations/_evaluation.scss */
+    .evaluation .explanatory-text {
+        font-size: 14px;
+        color: #878787;
+        font-style: italic;
+    }
 /* line 207, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .calification-items th, .evaluation .calification-items td {
     font-weight: normal;
