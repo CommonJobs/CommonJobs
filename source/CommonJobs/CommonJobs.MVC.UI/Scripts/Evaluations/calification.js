@@ -548,6 +548,11 @@
                 }
             }
         };
+        commentItem.IsCalificationShown = ko.computed(function () {
+            return viewmodel.califications.find(function (calification) {
+                return calification.id == calificationId
+            }).show;
+        });
         commentItem.HasComment = ko.computed(function () {
             return commentItem.value() != null;
         });
