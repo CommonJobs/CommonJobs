@@ -35,7 +35,9 @@ namespace CommonJobs.Application.EvalForm.Dtos
 
         public List<string> Evaluators { get; set; }
 
-        public static CalificationsEvaluationDto Create(EmployeeEvaluation evaluation, List<string> evaluators, string currentPosition, string seniority)
+        public bool IsCompanyEvaluationDone { get; set; }
+
+        public static CalificationsEvaluationDto Create(EmployeeEvaluation evaluation, List<string> evaluators, string currentPosition, string seniority, bool companyEvaluationDone)
         {
             return new CalificationsEvaluationDto()
             {
@@ -53,7 +55,8 @@ namespace CommonJobs.Application.EvalForm.Dtos
                 StrengthsComment = evaluation.StrengthsComment,
                 ToImproveComment = evaluation.ToImproveComment,
                 ActionPlanComment = evaluation.ActionPlanComment,
-                Evaluators = evaluators
+                Evaluators = evaluators,
+                IsCompanyEvaluationDone = companyEvaluationDone
             };
         }
     }

@@ -118,10 +118,10 @@
             if (this.evaluation.readyForDevolution) {
                 return this.userView == 3 && (calification.calificationColumn.owner == 3 || calification.calificationColumn.owner == 0);
             } else {
-                return (((this.userLogged == calification.calificationColumn.evaluatorEmployee)
-                || (this.userView == 3 && calification.calificationColumn.evaluatorEmployee == "_company"))
-                && !calification.calificationColumn.finished)
-            }
+                return (!calification.calificationColumn.finished
+                   && ((this.userLogged == calification.calificationColumn.evaluatorEmployee && this.isCompanyEvaluationDone)
+                       || (this.userView == 3 && calification.calificationColumn.evaluatorEmployee == "_company")
+                    ))}
         }
     }
 
@@ -177,7 +177,7 @@
              (this.evaluation.readyForDevolution && this.userView == 3) ||
              (_.some(this.califications, function (calification) {
                  return calification.owner == self.userView && !calification.finished;
-             }) && !this.evaluation.readyForDevolution)
+             }) && (!this.evaluation.readyForDevolution && !this.isCompanyEvaluationDone))
         );
 
         var userLoggedCalifiction = _.find(self.califications, function (calification) {
@@ -493,6 +493,7 @@
         this.strengthsComment = ko.observable('');
         this.improveComment = ko.observable('');
         this.actionPlanComment = ko.observable('');
+        this.isCompanyEvaluationDone = false;
         if (data) {
             this.fromJs(data);
         }
@@ -512,6 +513,7 @@
         this.strengthsComment(data.StrengthsComment);
         this.improveComment(data.ToImproveComment);
         this.actionPlanComment(data.ActionPlanComment);
+        this.isCompanyEvaluationDone = data.IsCompanyEvaluationDone;
         this.evaluators = data.Evaluators.join(', ');
         viewmodel.isDirty.register(this.project);
         viewmodel.isDirty.register(this.strengthsComment);
