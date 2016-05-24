@@ -138,7 +138,7 @@
       <tr class="comments-section" data-bind="visible: showComments">
         <td data-bind="attr:{'colspan': $root.columnsAmount}">
           <!-- ko foreach: comments -->
-          <div class="comments-section-container" data-bind="visible: HasComment()">
+          <div class="comments-section-container" data-bind="visible: HasComment() && Show()">
             <span class="comment-author" data-bind="text: evaluatorEmployee"></span><sapn class="comment-author">:</sapn>
             <span class="comment-text" data-bind="text: value, visible: !isSelfComment || !IsEditingComment()"></span>
             <div class="comment-text edition-content" data-bind="visible: IsEditingComment">
