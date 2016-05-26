@@ -49,8 +49,9 @@ namespace CommonJobs.Application.EvalForm.Commands
             var califications = RavenSession.Advanced.LoadStartingWith<EvaluationCalification>(evId + "/").ToList();
 
             var evaluators = califications.Where(c => c.Owner == CalificationType.Evaluator).Select(c => c.EvaluatorEmployee).ToList();
+            var companyEvaluationDone = califications.Any(c => c.Owner == CalificationType.Company && c.Finished);
 
-            var evaluationDto = CalificationsEvaluationDto.Create(evaluation, evaluators, evaluation.CurrentPosition ?? employee.CurrentPosition, evaluation.Seniority ?? employee.Seniority);
+            var evaluationDto = CalificationsEvaluationDto.Create(evaluation, evaluators, evaluation.CurrentPosition ?? employee.CurrentPosition, evaluation.Seniority ?? employee.Seniority, companyEvaluationDone);
 
             if (!CanViewEvaluation(evaluationDto, califications))
             {
@@ -95,7 +96,7 @@ namespace CommonJobs.Application.EvalForm.Commands
                 View = UserView.Evaluation,
                 Evaluation = evaluationDto,
                 Califications = califications.Where(c =>
-                    _loggedUser == c.EvaluatorEmployee || c.Owner == CalificationType.Auto || (evaluationDto.ReadyForDevolution && c.Owner == CalificationType.Company)
+                    _loggedUser == c.EvaluatorEmployee || c.Owner == CalificationType.Auto || (evaluationDto.DevolutionInProgress && c.Owner == CalificationType.Company)
                     ).ToList()
             };
         }
@@ -112,7 +113,7 @@ namespace CommonJobs.Application.EvalForm.Commands
 
         private CalificationsDto GetAutoEvaluation(CalificationsEvaluationDto evaluationDto, List<EvaluationCalification> califications)
         {
-            if (evaluationDto.ReadyForDevolution)
+            if (evaluationDto.DevolutionInProgress)
             {
                 return new CalificationsDto()
                 {

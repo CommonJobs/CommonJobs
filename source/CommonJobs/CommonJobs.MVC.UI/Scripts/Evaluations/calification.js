@@ -114,17 +114,32 @@
     }
 
     EvaluationViewModel.prototype.isValueEditable = function (calification) {
-        if (!this.evaluation.finished) {
-            if (this.evaluation.readyForDevolution) {
-                return this.userView == 3 && (calification.calificationColumn.owner == 3 || calification.calificationColumn.owner == 0);
-            } else {
-                return (((this.userLogged == calification.calificationColumn.evaluatorEmployee)
-                || (this.userView == 3 && calification.calificationColumn.evaluatorEmployee == "_company"))
-                && !calification.calificationColumn.finished)
-            }
+        var isCompanyView = this.userView == 3;
+        var isCompanyColumn = calification.calificationColumn.owner == 3;
+        var isAutoEvaluationColumn = calification.calificationColumn.owner == 0;
+        var isCalificationOwnerLogged = this.userLogged == calification.calificationColumn.evaluatorEmployee;
+        var isCalificationFinished = calification.calificationColumn.finished;
+
+        // Responsible editing Company califications when devolution in progress
+        if (!this.evaluation.finished && this.evaluation.devolutionInProgress && isCompanyView && isCompanyColumn) {
+            return true;
+        }
+        // Evaluated Employee editing its AutoEvaluation when devolution in progress
+        else if (!this.evaluation.finished && this.evaluation.devolutionInProgress && isCompanyView && isAutoEvaluationColumn) {
+            return true;
+        }
+        // Cafication Owner editing its calification while Company calification not finished
+        else if (!this.evaluation.finished && !this.evaluation.devolutionInProgress && !isCalificationFinished && isCalificationOwnerLogged && !this.isCompanyEvaluationDone) {
+            return true;
+        }
+        // Responsible editing Company califications
+        else if (!this.evaluation.finished && !this.evaluation.devolutionInProgress && !isCalificationFinished && isCompanyView && isCompanyColumn) {
+            return true;
+        }
+        else {
+            return false;
         }
     }
-
 
     EvaluationViewModel.prototype.fromJs = function (data) {
         var self = this;
@@ -159,7 +174,7 @@
 
         this.evaluation.fromJs(data.Evaluation);
 
-        if (this.evaluation.readyForDevolution && this.userView == 3) {
+        if (this.evaluation.devolutionInProgress && this.userView == 3) {
             this.hasAverageColumn = false;
             _.chain(self.califications)
             .map(function (calification) {
@@ -174,15 +189,15 @@
         }
 
         this.isEvaluationEditable(!this.evaluation.finished &&
-             (this.evaluation.readyForDevolution && this.userView == 3) ||
+             (this.evaluation.devolutionInProgress && this.userView == 3) ||
              (_.some(this.califications, function (calification) {
                  return calification.owner == self.userView && !calification.finished;
-             }) && !this.evaluation.readyForDevolution)
+             }) && (!this.evaluation.devolutionInProgress && !this.isCompanyEvaluationDone))
         );
 
         var userLoggedCalifiction = _.find(self.califications, function (calification) {
-            return (calification.owner == 3 && (self.userView == 3 || (self.userView == 0 && self.evaluation.readyForDevolution)))
-                || (self.userView != 3 && !(self.userView == 0 && self.evaluation.readyForDevolution) && calification.evaluatorEmployee == self.userLogged);
+            return (calification.owner == 3 && (self.userView == 3 || (self.userView == 0 && self.evaluation.devolutionInProgress)))
+                || (self.userView != 3 && !(self.userView == 0 && self.evaluation.devolutionInProgress) && calification.evaluatorEmployee == self.userLogged);
         })
 
         var userLoggedEvaluated = _.find(self.califications, function (calification) {
@@ -193,7 +208,7 @@
 
         this.generalComment = (userLoggedCalifiction) ? userLoggedCalifiction.comments : ko.observable('');
 
-        if (this.evaluation.readyForDevolution && this.userView == 2) {
+        if (this.evaluation.devolutionInProgress && this.userView == 2) {
             var comments = _.chain(self.califications)
             .filter(function (calification) {
                 return calification.owner == 3 && calification.comments() != null;
@@ -438,7 +453,7 @@
             ActionPlan: this.evaluation.actionPlanComment(),
             Califications: _.chain(self.califications)
                 .filter(function (calification) {
-                    return calification.owner == self.userView || (self.evaluation.readyForDevolution && calification.owner == 0);
+                    return calification.owner == self.userView || (self.evaluation.devolutionInProgress && calification.owner == 0);
                 })
                 .map(function (calification) {
                     var calificationItems = _.chain(self.groups)
@@ -488,11 +503,12 @@
         this.period = '';
         this.evaluators = '';
         this.finished = false;
-        this.readyForDevolution = false;
+        this.devolutionInProgress = false;
         this.project = ko.observable('');
         this.strengthsComment = ko.observable('');
         this.improveComment = ko.observable('');
         this.actionPlanComment = ko.observable('');
+        this.isCompanyEvaluationDone = false;
         if (data) {
             this.fromJs(data);
         }
@@ -507,11 +523,12 @@
         this.seniority = data.Seniority;
         this.period = data.Period;
         this.finished = data.Finished;
-        this.readyForDevolution = data.ReadyForDevolution;
+        this.devolutionInProgress = data.DevolutionInProgress;
         this.project(data.Project);
         this.strengthsComment(data.StrengthsComment);
         this.improveComment(data.ToImproveComment);
         this.actionPlanComment(data.ActionPlanComment);
+        this.isCompanyEvaluationDone = data.IsCompanyEvaluationDone;
         this.evaluators = data.Evaluators.join(', ');
         viewmodel.isDirty.register(this.project);
         viewmodel.isDirty.register(this.strengthsComment);
@@ -616,7 +633,7 @@
 
     ModalViewModel.prototype.finalAction = function () {
         this.show(false);
-        if (viewmodel.evaluation.readyForDevolution) {
+        if (viewmodel.evaluation.devolutionInProgress) {
             viewmodel.evaluationFinished = true;
         } else {
             viewmodel.calificationFinished = true;

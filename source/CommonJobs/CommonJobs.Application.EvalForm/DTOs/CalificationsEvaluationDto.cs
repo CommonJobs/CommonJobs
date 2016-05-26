@@ -23,7 +23,7 @@ namespace CommonJobs.Application.EvalForm.Dtos
 
         public string Period { get; set; }
 
-        public bool ReadyForDevolution { get; set; }
+        public bool DevolutionInProgress { get; set; }
 
         public bool Finished { get; set; }
 
@@ -35,7 +35,9 @@ namespace CommonJobs.Application.EvalForm.Dtos
 
         public List<string> Evaluators { get; set; }
 
-        public static CalificationsEvaluationDto Create(EmployeeEvaluation evaluation, List<string> evaluators, string currentPosition, string seniority)
+        public bool IsCompanyEvaluationDone { get; set; }
+
+        public static CalificationsEvaluationDto Create(EmployeeEvaluation evaluation, List<string> evaluators, string currentPosition, string seniority, bool companyEvaluationDone)
         {
             return new CalificationsEvaluationDto()
             {
@@ -48,12 +50,13 @@ namespace CommonJobs.Application.EvalForm.Dtos
                 ResponsibleId = evaluation.ResponsibleId,
                 TemplateId = evaluation.TemplateId,
                 Period = evaluation.Period,
-                ReadyForDevolution = evaluation.ReadyForDevolution,
+                DevolutionInProgress = evaluation.ReadyForDevolution,
                 Finished = evaluation.Finished,
                 StrengthsComment = evaluation.StrengthsComment,
                 ToImproveComment = evaluation.ToImproveComment,
                 ActionPlanComment = evaluation.ActionPlanComment,
-                Evaluators = evaluators
+                Evaluators = evaluators,
+                IsCompanyEvaluationDone = companyEvaluationDone
             };
         }
     }
