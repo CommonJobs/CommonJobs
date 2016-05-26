@@ -29,7 +29,7 @@ namespace CommonJobs.Application.EvalForm.Helper
     {
         public static IEnumerable<RevertAction> GetPosibleRevertActions(
             bool isFinished,
-            bool isReadyForDevolution,
+            bool isDevolutionInProgress,
             bool isCompanyEvalFinished,
             bool isResponsibleEvalFinished,
             bool isAutoEvalFinished,
@@ -40,27 +40,27 @@ namespace CommonJobs.Application.EvalForm.Helper
                 yield return RevertAction.ReopenForDevolution;
             }
 
-            if (isReadyForDevolution)
+            if (isDevolutionInProgress)
             {
                 yield return RevertAction.CancelDevolution;
             }
 
             if (!isFinished
-                && !isReadyForDevolution
+                && !isDevolutionInProgress
                 && isCompanyEvalFinished)
             {
                 yield return RevertAction.ReopenEvalCompany;
             }
 
             if (!isFinished
-               && !isReadyForDevolution
+               && !isDevolutionInProgress
                && isAutoEvalFinished)
             {
                 yield return RevertAction.ReopenAutoEvaluation;
             }
 
             if (!isFinished
-               && !isReadyForDevolution
+               && !isDevolutionInProgress
                && !isCompanyEvalFinished
                && isResponsibleEvalFinished)
             {
@@ -68,7 +68,7 @@ namespace CommonJobs.Application.EvalForm.Helper
             }
 
             if (!isFinished
-               && !isReadyForDevolution
+               && !isDevolutionInProgress
                && !isCompanyEvalFinished
                && isEvaluatorEvalFinished)
             {
@@ -78,10 +78,10 @@ namespace CommonJobs.Application.EvalForm.Helper
 
         public static bool FindPosibleRevertAction(
             bool finished,
-            bool readyForDevolution, 
-            bool isCompanyEvalFinished, 
-            bool isResponsibleEvalFinished, 
-            bool isAutoEvalFinished, 
+            bool readyForDevolution,
+            bool isCompanyEvalFinished,
+            bool isResponsibleEvalFinished,
+            bool isAutoEvalFinished,
             bool isEvaluatorEvalFinished,
             RevertAction action)
         {

@@ -49,7 +49,7 @@
       </div>
       <p class="explanatory-text">*Si no tenés conocimientos para calificar algún campo dejalo vacío</p>
     </div>
-    <!--ko if: userView == 3 || evaluation.readyForDevolution -->
+    <!--ko if: userView == 3 || evaluation.devolutionInProgress -->
     <div class="top-right">
       <h4>Comentarios Generales</h4>
       <div class="comments-container">
@@ -68,10 +68,10 @@
         <!-- ko foreach: califications-->
         <div data-bind="if: show() && (owner < 2 ||(owner == 2 && comments))">
           <span class="comment-label" data-bind="text: evaluatorEmployee"></span>:
-          <!-- ko ifnot: evaluatorEmployee == $parent.userLogged && (($parent.evaluation.readyForDevolution && owner == 0) || (!$parent.evaluation.readyForDevolution)) -->
+          <!-- ko ifnot: evaluatorEmployee == $parent.userLogged && (($parent.evaluation.devolutionInProgress && owner == 0) || (!$parent.evaluation.devolutionInProgress)) -->
           <span data-bind="text: comments"></span>
           <!-- /ko -->
-          <!-- ko if: evaluatorEmployee == $parent.userLogged && (($parent.evaluation.readyForDevolution && owner == 0) || (!$parent.evaluation.readyForDevolution)) -->
+          <!-- ko if: evaluatorEmployee == $parent.userLogged && (($parent.evaluation.devolutionInProgress && owner == 0) || (!$parent.evaluation.devolutionInProgress)) -->
           <textarea data-bind="value: comments"></textarea>
           <!-- /ko -->
         </div>
@@ -79,7 +79,7 @@
       </div>
     </div>
     <!-- /ko -->
-    <!--ko if: userView != 3 && !evaluation.readyForDevolution -->
+    <!--ko if: userView != 3 && !evaluation.devolutionInProgress -->
     <div class="top-right">
       <h4>Comentarios Generales</h4>
       <div class="comments-container">
