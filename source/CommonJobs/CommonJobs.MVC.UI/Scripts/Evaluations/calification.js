@@ -114,17 +114,32 @@
     }
 
     EvaluationViewModel.prototype.isValueEditable = function (calification) {
-        if (!this.evaluation.finished) {
-            if (this.evaluation.readyForDevolution) {
-                return this.userView == 3 && (calification.calificationColumn.owner == 3 || calification.calificationColumn.owner == 0);
-            } else {
-                return (!calification.calificationColumn.finished
-                   && ((this.userLogged == calification.calificationColumn.evaluatorEmployee && this.isCompanyEvaluationDone)
-                       || (this.userView == 3 && calification.calificationColumn.evaluatorEmployee == "_company")
-                    ))}
+        var isCompanyView = this.userView == 3;
+        var isCompanyColumn = calification.calificationColumn.owner == 3;
+        var isAutoEvaluationColumn = calification.calificationColumn.owner == 0;
+        var isCalificationOwnerLogged = this.userLogged == calification.calificationColumn.evaluatorEmployee;
+        var isCalificationFinished = calification.calificationColumn.finished;
+
+        // Responsible editing Company califications when devolution in progress
+        if (!this.evaluation.finished && this.evaluation.readyForDevolution && isCompanyView && isCompanyColumn) {
+            return true;
+        }
+        // Evaluated Employee editing its AutoEvaluation when devolution in progress
+        else if (!this.evaluation.finished && this.evaluation.readyForDevolution && isCompanyView && isAutoEvaluationColumn) {
+            return true;
+        }
+        // Cafication Owner editing its calification while Company calification not finished
+        else if (!this.evaluation.finished && !this.evaluation.readyForDevolution && !isCalificationFinished && isCalificationOwnerLogged && !this.isCompanyEvaluationDone) {
+            return true;
+        }
+        // Responsible editing Company califications
+        else if (!this.evaluation.finished && !this.evaluation.readyForDevolution && !isCalificationFinished && isCompanyView && isCompanyColumn) {
+            return true;
+        }
+        else {
+            return false;
         }
     }
-
 
     EvaluationViewModel.prototype.fromJs = function (data) {
         var self = this;
