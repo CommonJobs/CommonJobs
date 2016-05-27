@@ -113,12 +113,12 @@
 
     }
 
-    EvaluationViewModel.prototype.isValueEditable = function (calification) {
+    EvaluationViewModel.prototype.isValueEditable = function (itemByKey) {
         var isCompanyView = this.userView == 3;
-        var isCompanyColumn = calification.calificationColumn.owner == 3;
-        var isAutoEvaluationColumn = calification.calificationColumn.owner == 0;
-        var isCalificationOwnerLogged = this.userLogged == calification.calificationColumn.evaluatorEmployee;
-        var isCalificationFinished = calification.calificationColumn.finished;
+        var isCompanyColumn = itemByKey.calificationColumn.owner == 3;
+        var isAutoEvaluationColumn = itemByKey.calificationColumn.owner == 0;
+        var isCalificationOwnerLogged = this.userLogged == itemByKey.calificationColumn.evaluatorEmployee;
+        var isCalificationFinished = itemByKey.calificationColumn.finished;
 
         // Responsible editing Company califications when devolution in progress
         if (!this.evaluation.finished && this.evaluation.devolutionInProgress && isCompanyView && isCompanyColumn) {
@@ -383,7 +383,7 @@
                                 }
                             }
                         }
-                        valuesByItem.hasComments = ko.computed(function () {
+                        valuesByItem.hasCommentsToShow = ko.computed(function () {
                             return _.some(valuesByItem.comments, function (comment) {
                                 return comment.HasComment() && comment.IsCalificationShown();
                             });
@@ -393,10 +393,6 @@
                                 return comment.HasComment() && comment.isSelfComment;
                             });
                         });
-                        valuesByItem.areCommentsEditable = ko.computed(function () {
-                            return viewmodel.isEvaluationEditable();
-                        });
-
                         return valuesByItem;
                     })
                 }
