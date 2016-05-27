@@ -128,7 +128,7 @@
         </td>
         <!-- /ko -->
         <td>
-          <div class="comment">
+          <div class="comment" data-bind="if: hasCommentsToShow()  || $root.isEvaluationEditable()">
             <label data-bind="css: { 'checked': showComments()}">
               <input class="cmn-toggle-round" type="checkbox" data-bind="checked: showComments" />
             </label>
@@ -145,7 +145,7 @@
               <textarea data-bind="value: value" rows="5" placeholder="Agrega un comentario"></textarea>
               <button class="blue-button left" type="button" data-bind="click: endEdition" style="">Listo</button>
             </div>
-            <div class="ck-button-edit" data-bind="visible: isSelfComment &&  !IsEditingComment()" title="Editar">
+            <div class="ck-button-edit" data-bind="if: isEditable, visible: isSelfComment &&  !IsEditingComment()" title="Editar">
               <label>
                 <span><i></i></span>
                 <input type="checkbox" value="+" data-bind="checked: IsEditingComment">
@@ -153,7 +153,7 @@
             </div>
           </div>
           <!-- /ko -->
-          <div class="comment-add-container" data-bind="visible: !hasSelfComments()">
+          <div class="comment-add-container" data-bind="if: $root.isEvaluationEditable, visible: !hasSelfComments()">
             <button class="blue-button left" data-bind="click: addSelfComment">Agrega tu comentario</button>
           </div>
         </td>

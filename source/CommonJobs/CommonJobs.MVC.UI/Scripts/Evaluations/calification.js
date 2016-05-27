@@ -113,12 +113,12 @@
 
     }
 
-    EvaluationViewModel.prototype.isValueEditable = function (calification) {
+    EvaluationViewModel.prototype.isValueEditable = function (itemByKey) {
         var isCompanyView = this.userView == 3;
-        var isCompanyColumn = calification.calificationColumn.owner == 3;
-        var isAutoEvaluationColumn = calification.calificationColumn.owner == 0;
-        var isCalificationOwnerLogged = this.userLogged == calification.calificationColumn.evaluatorEmployee;
-        var isCalificationFinished = calification.calificationColumn.finished;
+        var isCompanyColumn = itemByKey.calificationColumn.owner == 3;
+        var isAutoEvaluationColumn = itemByKey.calificationColumn.owner == 0;
+        var isCalificationOwnerLogged = this.userLogged == itemByKey.calificationColumn.evaluatorEmployee;
+        var isCalificationFinished = itemByKey.calificationColumn.finished;
 
         // Responsible editing Company califications when devolution in progress
         if (!this.evaluation.finished && this.evaluation.devolutionInProgress && isCompanyView && isCompanyColumn) {
@@ -247,9 +247,10 @@
 
         var commentsByKeyCollection = _.map(data.Califications, function (calification) {
             var commentsByKey = {
-                commentRow: {
+                calificationColumn: {
                     calificationId: calification.Id,
                     evaluatorEmployee: calification.EvaluatorEmployee,
+                    finished: calification.Finished,
                     owner: calification.Owner
                 }
             };
@@ -324,9 +325,14 @@
                                 return valueItem;
                             }),
                             comments: _.map(commentsByKeyCollection, function (commentsByKey) {
-                                var commentItem = GetCommentItem(commentsByKey.commentRow.calificationId, commentsByKey[item.Key], commentsByKey.commentRow.evaluatorEmployee, commentsByKey.commentRow.evaluatorEmployee == self.userLogged)
+                                var commentItem = GetCommentItem(
+                                    commentsByKey.calificationColumn.calificationId,
+                                    commentsByKey[item.Key],
+                                    commentsByKey.calificationColumn.evaluatorEmployee,
+                                    commentsByKey.calificationColumn.evaluatorEmployee == self.userLogged)
 
                                 commentItem.IsEditingComment = ko.observable(false);
+                                commentItem.isEditable = self.isValueEditable(commentsByKey);
                                 self.isDirty.register(commentItem.value);
 
                                 return commentItem;
@@ -377,6 +383,11 @@
                                 }
                             }
                         }
+                        valuesByItem.hasCommentsToShow = ko.computed(function () {
+                            return _.some(valuesByItem.comments, function (comment) {
+                                return comment.HasComment() && comment.IsCalificationShown();
+                            });
+                        });
                         valuesByItem.hasSelfComments = ko.computed(function () {
                             return _.some(valuesByItem.comments, function (comment) {
                                 return comment.HasComment() && comment.isSelfComment;
@@ -566,9 +577,10 @@
             }
         };
         commentItem.IsCalificationShown = ko.computed(function () {
-            return viewmodel.califications.find(function (calification) {
-                return calification.id == calificationId
-            }).show;
+            var calification = _.find(viewmodel.califications, function (calification) {
+                return calification.id == calificationId;
+            });
+            return calification.show();
         });
         commentItem.HasComment = ko.computed(function () {
             return commentItem.value() != null;
