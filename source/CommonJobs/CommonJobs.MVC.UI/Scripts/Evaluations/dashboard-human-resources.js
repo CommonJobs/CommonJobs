@@ -20,6 +20,7 @@
             this.headers[0].activeSort(false);
             this.sort(this.headers[0]);
         }
+        this.responsibleManagerModel = new ResponsibleManager();
         this.isLoading = ko.observable(false);
     }
 
@@ -36,8 +37,9 @@
     var EvaluationReport = function (data) {
         this.id = '';
         this.isResponsible = false;
+        this.isEvaluationManager = false;
         this.isEditable = false;
-        this.responsibleId = '';
+        this.responsibleId = ko.observable('');
         this.fullName = '';
         this.userName = '';
         this.period = '';
@@ -53,17 +55,25 @@
     EvaluationReport.prototype.fromJs = function (data) {
         this.id = data.Id;
         this.isResponsible = data.IsResponsible;
+        this.isEvaluationManager = window.ViewData.isEvaluationManager;
         this.isEditable = data.IsEditable;
-        this.responsibleId = data.ResponsibleId;
+        this.responsibleId(data.ResponsibleId);
         this.fullName = data.FullName;
         this.userName = data.UserName;
         this.period = data.Period;
-        this.currentPosition= data.CurrentPosition || '';
+        this.currentPosition = data.CurrentPosition || '';
         this.seniority = data.Seniority || '';
         this.state(data.State);
         this.stateName = evaluationStates[this.state()];
         this.stateClasses = "state-doc state-" + this.state();
         this.calificationUrl = urlGenerator.action(this.period + "/" + this.userName + "/", "Evaluations");
+        this.showResponsibleManager = function (data, event) {
+            viewmodel.responsibleManagerModel.fromJs({ evaluation: this });
+            var popupContainer = $(event.target).parents('.responsible-column');
+            popupContainer.append($('.content-modal'));
+            $('.content-modal').show();
+            return true;
+        }
     }
 
     EvaluationReport.prototype.toJs = function () {
@@ -80,10 +90,59 @@
         };
     }
 
+    var ResponsibleManager = function (data) {
+        var self = this;
+        this.evaluation = '';
+        this.responsibles = ko.observableArray();
+        this.newResponsible = ko.observable('');
+        this.saveButtonEnable = ko.observable(false);
+        if (data) {
+            this.fromJs(data);
+        };
+        this.onEnter = function (d, e) {
+            if (e.keyCode === 13) {
+                self.saveButtonEnable(true);
+            }
+            return true;
+        };
+        this.close = function () {
+            $('.content-evaluation').append($('.content-modal'));
+            $('.content-modal').hide();
+            self.saveButtonEnable(false);
+        };
+        this.save = function () {
+            this.responsibleManagerModel.close();
+            this.responsibleManagerModel.saveButtonEnable(false);
+            viewmodel.isLoading(true);
+            $.post("/Evaluations/api/ChangeResponsible/", {
+                period: self.evaluation.period,
+                username: self.evaluation.userName,
+                newResponsibleName: self.newResponsible()
+            })
+            .success(function () {
+                self.evaluation.responsibleId(self.newResponsible());
+            })
+            .fail(function () {
+                alert('Fallo interno. Por favor recargue la página.');
+            })
+            .always(function () {
+                viewmodel.isLoading(false);
+                self.newResponsible('');
+            });
+        };
+    }
+
+    ResponsibleManager.prototype.fromJs = function (data) {
+        var self = this;
+        this.evaluation = data.evaluation;
+        this.responsibleId = data.responsibleId
+    }
+
     var viewmodel = new ReportDashboard();
 
     getReportDashboard(window.ViewData.period);
     ko.applyBindings(viewmodel);
+    commonSuggest($('.content-modal .search'), 'UserName');
     $("#selectedPeriod").change(function () {
         window.location = this.value;
     })

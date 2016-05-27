@@ -57,7 +57,7 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
         [CommonJobsAuthorize(Roles = "EmployeeManagers")]
         public ActionResult ReportDashboard(string period)
         {
-            var selectList = GetReportPeriods().Select(x=>x.Period).Distinct().Select(x => new SelectListItem
+            var selectList = GetReportPeriods().Select(x => x.Period).Distinct().Select(x => new SelectListItem
             {
                 Text = x,
                 Value = Url.Action(period),
@@ -73,6 +73,7 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
                new
                {
                    period = period,
+                   isEvaluationManager = IsEvaluationManager(DetectUser())
                },
                500);
             return View();
@@ -191,8 +192,18 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
 
         private bool IsEmployeeManager(string username)
         {
+            return CheckRole(username, "EmployeeManagers");
+        }
+
+        private bool IsEvaluationManager(string username)
+        {
+            return CheckRole(username, "EvaluationManagers");
+        }
+
+        private bool CheckRole(string username, string role)
+        {
             var sessionRoles = ExecuteCommand(new GetLoggedUserRoles(username));
-            var required = new List<string>() { "EmployeeManagers" };
+            var required = new List<string>() { role };
             return sessionRoles.Intersect(required).Any();
         }
 

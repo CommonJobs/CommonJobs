@@ -16,50 +16,72 @@
 }
 
 <div class="content-evaluation dashboard recursos-humanos">
-    <div class="header">
-        <h2>Historial de Evaluaciones</h2>
-        <h2 class="header--human-resources">HR Dashboard</h2>
-        <div class="content-selector-block">
-            <div class="content-selector-label">
-                <p>Período<p>
-            </div>
-            <div class="content-selector-dropdown">
-                @Html.DropDownList("selectedPeriod", (IEnumerable<SelectListItem>)ViewBag.ReportPeriods)
-            </div>
-        </div>
+  <div class="header">
+    <h2>Historial de Evaluaciones</h2>
+    <h2 class="header--human-resources">HR Dashboard</h2>
+    <div class="content-selector-block">
+      <div class="content-selector-label">
+        <p>Período<p>
+      </div>
+      <div class="content-selector-dropdown">
+        @Html.DropDownList("selectedPeriod", (IEnumerable<SelectListItem>)ViewBag.ReportPeriods)
+      </div>
     </div>
-    <table class="table">
-        <thead>
-            <tr data-bind="foreach: headers">
-                <!-- ko if: sortable -->
-                <th data-bind="attr: { class: 'col-' + ($index()+1) }, click: $parent.sort, css: { selected: activeSort}">
-                    <i class="icon arrow"></i>
-                    <span data-bind="text: title"></span>
-                </th>
-                <!-- /ko -->
-                <!-- ko if: !sortable -->
-                <th data-bind="attr: { class: 'col-' + ($index()+1) }"><span data-bind="text: title"></span></th>
-                <!-- /ko -->
-            </tr>
-        </thead>
-        <tbody data-bind="foreach: items">
-            <tr>
-                <td data-bind="text: period"></td>
-                <td data-bind="text: fullName"></td>
-                <td data-bind="text: currentPosition"></td>
-                <td data-bind="text: seniority"></td>
-                <td data-bind="text: responsibleId"></td>
-                <td><span class="state-doc" data-bind="text: stateName, attr: { 'class': stateClasses }"></span></td>
-                <td><a class="link-responsable top-tip" data-bind="if: state() == 6, attr: {href: calificationUrl}" data-tips="Ver Evaluación"><i class="icon view"></i><span>Ver Evaluación</span></a></td>
-            </tr>
-        </tbody>
-    </table>
-    <script type="text/javascript">
-        var employeePeriod = "@ViewBag.Period";
-    </script>
+  </div>
+  <table class="table">
+    <thead>
+      <tr data-bind="foreach: headers">
+        <!-- ko if: sortable -->
+        <th data-bind="attr: { class: 'col-' + ($index()+1) }, click: $parent.sort, css: { selected: activeSort}">
+          <i class="icon arrow"></i>
+          <span data-bind="text: title"></span>
+        </th>
+        <!-- /ko -->
+        <!-- ko if: !sortable -->
+        <th data-bind="attr: { class: 'col-' + ($index()+1) }"><span data-bind="text: title"></span></th>
+        <!-- /ko -->
+      </tr>
+    </thead>
+    <tbody data-bind="foreach: items">
+      <tr>
+        <td data-bind="text: period"></td>
+        <td data-bind="text: fullName"></td>
+        <td data-bind="text: currentPosition"></td>
+        <td data-bind="text: seniority"></td>
+        <td class="responsible-column">
+          <span data-bind="if: isEvaluationManager">
+            <a class="calification-links edit top-tip" data-bind="click: showResponsibleManager">
+              <i class="icon edit"></i>
+              <span data-bind="text: responsibleId()"></span>
+            </a>
+          </span>
+          <!-- ko ifnot: isEvaluationManager -->
+          </span><span data-bind="text: responsibleId"></span>
+          <!-- /ko -->
+        <td>
+
+          <span class="state-doc" data-bind="text: stateName, attr: { 'class': stateClasses }"></span>
+        </td>
+        <td><a class="link-responsable top-tip" data-bind="if: state() == 6, attr: {href: calificationUrl}" data-tips="Ver Evaluación"><i class="icon view"></i><span>Ver Evaluación</span></a></td>
+      </tr>
+    </tbody>
+  </table>
+  <script type="text/javascript">
+      var employeePeriod = "@ViewBag.Period";
+  </script>
 </div>
 
+<div class="content-modal clearfix">
+  <div class="modal-title">
+    <h4>Cambiar Responsable</h4>
+  </div>
+  <div class="search-container">
+    <input type="text" class="search" autocomplete="off" data-bind="value: responsibleManagerModel.newResponsible, event: {keypress: responsibleManagerModel.onEnter}" />
+  </div>
+  <a class="cancelar" data-bind="click: responsibleManagerModel.close">Cancelar</a>
+  <button class="guardar" data-bind="enable: responsibleManagerModel.saveButtonEnable, click: responsibleManagerModel.save">Guardar</button>
+</div>
 
 <div id="loader-id" class="loader-container" data-bind="visible: isLoading()">
-    <div class="loader"></div>
+  <div class="loader"></div>
 </div>
