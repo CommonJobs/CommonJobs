@@ -58,10 +58,7 @@
           <!-- ko ifnot: isEvaluationManager -->
           </span><span data-bind="text: responsibleId"></span>
           <!-- /ko -->
-        <td>
-
-          <span class="state-doc" data-bind="text: stateName, attr: { 'class': stateClasses }"></span>
-        </td>
+        <td><span class="state-doc" data-bind="text: stateName, attr: { 'class': stateClasses }"></span></td>
         <td><a class="link-responsable top-tip" data-bind="if: state() == 6, attr: {href: calificationUrl}" data-tips="Ver Evaluación"><i class="icon view"></i><span>Ver Evaluación</span></a></td>
       </tr>
     </tbody>
