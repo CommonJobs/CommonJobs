@@ -99,12 +99,6 @@
         if (data) {
             this.fromJs(data);
         };
-        this.onEnter = function (d, e) {
-            if (e.keyCode === 13) {
-                self.saveButtonEnable(true);
-            }
-            return true;
-        };
         this.close = function () {
             $('.content-evaluation').append($('.content-modal'));
             $('.content-modal').hide();
