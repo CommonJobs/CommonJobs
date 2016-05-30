@@ -54,10 +54,10 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
         }
 
         [AcceptVerbs(HttpVerbs.Get)]
-        [CommonJobsAuthorize(Roles = "EmployeeManagers")]
+        [CommonJobsAuthorize(Roles = "EmployeeManagers,EvaluationManagers")]
         public ActionResult ReportDashboard(string period)
         {
-            var selectList = GetReportPeriods().Select(x=>x.Period).Distinct().Select(x => new SelectListItem
+            var selectList = GetReportPeriods().Select(x => x.Period).Distinct().Select(x => new SelectListItem
             {
                 Text = x,
                 Value = Url.Action(period),
@@ -73,13 +73,14 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
                new
                {
                    period = period,
+                   isEvaluationManager = IsEvaluationManager(DetectUser())
                },
                500);
             return View();
         }
 
         [AcceptVerbs(HttpVerbs.Get)]
-        [CommonJobsAuthorize(Roles = "EmployeeManagers")]
+        [CommonJobsAuthorize(Roles="EmployeeManagers,EvaluationManagers")]
         public ActionResult ReportDashboardIndex()
         {
             var lastPeriod = GetReportPeriods().Select(e => e.Period).FirstOrDefault();
@@ -191,9 +192,18 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
 
         private bool IsEmployeeManager(string username)
         {
+            return CheckRole(username, "EmployeeManagers");
+        }
+
+        private bool IsEvaluationManager(string username)
+        {
+            return CheckRole(username, "EvaluationManagers");
+        }
+
+        private bool CheckRole(string username, params string [] role)
+        {
             var sessionRoles = ExecuteCommand(new GetLoggedUserRoles(username));
-            var required = new List<string>() { "EmployeeManagers" };
-            return sessionRoles.Intersect(required).Any();
+            return sessionRoles.Intersect(role).Any();
         }
 
         private bool IsEvaluator(string loggedUser, string evaluatedUser, string responsibleId, string[] evaluators)
