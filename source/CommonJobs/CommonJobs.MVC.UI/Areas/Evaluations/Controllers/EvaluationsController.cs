@@ -54,7 +54,7 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
         }
 
         [AcceptVerbs(HttpVerbs.Get)]
-        [CommonJobsAuthorize(Roles = "EmployeeManagers")]
+        [CommonJobsAuthorize(Roles = "EmployeeManagers,EvaluationManagers")]
         public ActionResult ReportDashboard(string period)
         {
             var selectList = GetReportPeriods().Select(x => x.Period).Distinct().Select(x => new SelectListItem
@@ -80,7 +80,7 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
         }
 
         [AcceptVerbs(HttpVerbs.Get)]
-        [CommonJobsAuthorize(Roles = "EmployeeManagers")]
+        [CommonJobsAuthorize(Roles="EmployeeManagers,EvaluationManagers")]
         public ActionResult ReportDashboardIndex()
         {
             var lastPeriod = GetReportPeriods().Select(e => e.Period).FirstOrDefault();
