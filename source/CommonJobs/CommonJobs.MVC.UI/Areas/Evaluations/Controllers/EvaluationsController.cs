@@ -200,11 +200,10 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
             return CheckRole(username, "EvaluationManagers");
         }
 
-        private bool CheckRole(string username, string role)
+        private bool CheckRole(string username, params string [] role)
         {
             var sessionRoles = ExecuteCommand(new GetLoggedUserRoles(username));
-            var required = new List<string>() { role };
-            return sessionRoles.Intersect(required).Any();
+            return sessionRoles.Intersect(role).Any();
         }
 
         private bool IsEvaluator(string loggedUser, string evaluatedUser, string responsibleId, string[] evaluators)
