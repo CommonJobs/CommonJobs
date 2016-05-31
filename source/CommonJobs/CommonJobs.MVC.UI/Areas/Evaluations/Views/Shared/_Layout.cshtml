@@ -46,7 +46,7 @@
             {
                 <li>
                   <a class="btn btn-primary" href="@Url.Content("~/Evaluations/" + ViewBag.Period + "/" + User.Identity.Name)">
-                    @if (ViewBag.isEvaluationRedyForDevolution)
+                    @if (ViewBag.isAutoEvaluationOpenForDevolution)
                     {
                         <span>Ver Evaluación</span>
                     }
