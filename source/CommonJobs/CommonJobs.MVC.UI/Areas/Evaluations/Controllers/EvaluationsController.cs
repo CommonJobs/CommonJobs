@@ -121,6 +121,7 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
             var isEvaluated = evaluation.Any(p => p.UserName == loggedUser);
             ViewBag.Period = period;
             ViewBag.hasAutoCalification = isEvaluated;
+            ViewBag.isEvaluationRedyForDevolution = evaluation.Any(e => e.UserName == loggedUser && e.OpenToDevolution);
             ViewBag.IsDashboard = true;
 
             ScriptManager.RegisterGlobalJavascript(
