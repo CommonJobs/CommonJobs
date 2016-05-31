@@ -7,70 +7,82 @@
 <!DOCTYPE html>
 <html class="bootstrap-scope">
 <head>
-    <meta charset="utf-8" />
-    <title>@ViewBag.Title</title>
-    @Html.RenderScriptManagerEntries(ScriptManager)
-    <link rel="shortcut icon" href="@Url.Content("~/Content/Images/favicon.ico")" />
+  <meta charset="utf-8" />
+  <title>@ViewBag.Title</title>
+  @Html.RenderScriptManagerEntries(ScriptManager)
+  <link rel="shortcut icon" href="@Url.Content("~/Content/Images/favicon.ico")" />
 </head>
 <body>
-    <div id="header-evaluation" class="navbar navbar-inverse navbar-fixed-top ">
-        <div class="navbar-inner">
-            <a class="brand" href="@Url.Content("~")">CommonJobs</a>
-            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>    
-            @if (ViewBag.IsUserEvaluator != null && ViewBag.IsUserEvaluator)
+  <div id="header-evaluation" class="navbar navbar-inverse navbar-fixed-top ">
+    <div class="navbar-inner">
+      <a class="brand" href="@Url.Content("~")">CommonJobs</a>
+      <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      @if (ViewBag.IsUserEvaluator != null && ViewBag.IsUserEvaluator)
             {
-                <div class="breadcrum"><a href="@Url.Content("~/Evaluations/" + ViewBag.Period)" >Dashboard</a> > Evaluación</div>        
-            }
-            else if (ViewBag.IsDashboard != null && ViewBag.IsDashboard) 
-            { 
-                <div class="breadcrum">Dashboard</div>
-            }
-            else if (ViewBag.IsReportDashboard != null && ViewBag.IsReportDashboard)
+          <div class="breadcrum"><a href="@Url.Content("~/Evaluations/" + ViewBag.Period)">Dashboard</a> > Evaluación</div>
+      }
+      else if (ViewBag.IsDashboard != null && ViewBag.IsDashboard)
+      {
+          <div class="breadcrum">Dashboard</div>
+      }
+      else if (ViewBag.IsReportDashboard != null && ViewBag.IsReportDashboard)
+      {
+          <div class="breadcrum">HR Dashboard</div>
+      }
+      <div class="pull-right">
+        <form class="form-inline" id="persistenceForm">
+          <ul class="nav nav-right">
+            @if (ViewBag.IsCalification != null && ViewBag.IsCalification)
             {
-                <div class="breadcrum">HR Dashboard</div>
-            }
-            <div class="pull-right">
-                <form class="form-inline" id="persistenceForm">
-                    <ul class="nav nav-right">
-                        @if (ViewBag.IsCalification != null && ViewBag.IsCalification)
-                        {
                         <!--ko if: isEvaluationEditable -->
-                        <li><button class="btn btn-primary" disabled="disabled" data-bind="click: onSave, enable: isDirty()">Guardar</button></li>
+                <li><button class="btn btn-primary" disabled="disabled" data-bind="click: onSave, enable: isDirty()">Guardar</button></li>
                         <!--/ko -->
-                        }
-                        @if (ViewBag.hasAutoCalification != null && ViewBag.hasAutoCalification)
-                        {
-                        <li><a class="btn btn-primary" href="@Url.Content("~/Evaluations/" + ViewBag.Period + "/" + User.Identity.Name)" >AutoEvaluación</a></li>
-                        }
-                        <li>@Html.DocumentationLink("Ayuda")</li>
-                        @if (Request.IsAuthenticated && User != null && User.Identity != null && User.Identity.Name != null) 
-				        {
-                            @*//TODO: We need improve the navigation bar styles. So, I removed these inline styles in this moment*@
-                            <li class="username">
-                                <small>@User.Identity.Name
-                                @if (User.Identity.AuthenticationType == "Forms")
-                                {
-                                    <text>[<a href="@Url.Content("~/Account/LogOff")">LogOff</a>]</text>
-                                }
-                                </small>
-                            </li>
-				        }
-                    </ul>
-                </form>
-            </div>
-        </div>
+            }
+            @if (ViewBag.hasAutoCalification != null && ViewBag.hasAutoCalification)
+            {
+                <li>
+                  <a class="btn btn-primary" href="@Url.Content("~/Evaluations/" + ViewBag.Period + "/" + User.Identity.Name)">
+                    @if (ViewBag.isAutoEvaluationOpenForDevolution)
+                    {
+                        <span>Ver Evaluación</span>
+                    }
+                    else
+                    {
+                        <span>AutoEvaluación</span>
+                    }
+                  </a>
+                </li>
+            }
+            <li>@Html.DocumentationLink("Ayuda")</li>
+            @if (Request.IsAuthenticated && User != null && User.Identity != null && User.Identity.Name != null)
+            {
+                @*//TODO: We need improve the navigation bar styles. So, I removed these inline styles in this moment*@
+                <li class="username">
+                  <small>
+                    @User.Identity.Name
+                    @if (User.Identity.AuthenticationType == "Forms")
+                    {
+                        <text>[<a href="@Url.Content("~/Account/LogOff")">LogOff</a>]</text>
+                    }
+                  </small>
+                </li>
+            }
+          </ul>
+        </form>
+      </div>
     </div>
-    <div class="body-container">
-        @RenderBody()
+  </div>
+  <div class="body-container">
+    @RenderBody()
+  </div>
+  <footer>
+    <div class="container">
+      <p><strong>Evaluations</strong> es un desarrollo <em>OpenSource</em> realizado en ratos libres. Cualquier mejora es bienvenida, descargá el <a href="https://github.com/CommonJobs/CommonJobs">código fuente de GitHub</a> y hacé tu <em>Pull Request</em>.</p>
     </div>
-    <footer>
-        <div class="container">
-            <p><strong>Evaluations</strong> es un desarrollo <em>OpenSource</em> realizado en ratos libres. Cualquier mejora es bienvenida, descargá el <a href="https://github.com/CommonJobs/CommonJobs">código fuente de GitHub</a> y hacé tu <em>Pull Request</em>.</p>
-        </div>
-    </footer>
+  </footer>
 </body>
 </html>
