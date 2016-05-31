@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CommonJobs.Application.EvalForm.Helper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -32,25 +33,6 @@ namespace CommonJobs.Application.EvalForm
         public bool IsEditable { get; set; }
 
         public List<PosibleRevertActions> PosibleRevertActions { get; set; }
-
-        public static EvaluationState GetEvaluationState(bool autoEvaluationDone, bool responsibleEvaluationDone, bool companyEvaluationDone, bool openToDevolution, bool finished)
-        {
-            if (finished) return EvaluationState.Finished;
-
-            if (openToDevolution) return EvaluationState.OpenForDevolution;
-
-            if (autoEvaluationDone && responsibleEvaluationDone && companyEvaluationDone) return EvaluationState.ReadyForDevolution;
-
-            if (responsibleEvaluationDone && companyEvaluationDone) return EvaluationState.WaitingAuto;
-
-            if (autoEvaluationDone && responsibleEvaluationDone) return EvaluationState.WaitingCompany;
-
-            if (responsibleEvaluationDone) return EvaluationState.WaitingAuto;
-
-            if (autoEvaluationDone) return EvaluationState.WaitingResponsible;
-
-            return EvaluationState.InProgress;
-        }
     }
 
     public class PosibleRevertActions
@@ -58,16 +40,5 @@ namespace CommonJobs.Application.EvalForm
         public string ActionName { get; set; }
 
         public string ActionValue { get; set; }
-    }
-
-    public enum EvaluationState
-    {
-        InProgress,
-        WaitingAuto,
-        WaitingResponsible,
-        WaitingCompany,
-        ReadyForDevolution,
-        OpenForDevolution,
-        Finished
     }
 }

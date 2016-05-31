@@ -1,4 +1,5 @@
-﻿using CommonJobs.Application.EvalForm.Indexes;
+﻿using CommonJobs.Application.EvalForm.Helper;
+using CommonJobs.Application.EvalForm.Indexes;
 using CommonJobs.Infrastructure.RavenDb;
 using Raven.Client.Linq;
 using System;
@@ -44,7 +45,7 @@ namespace CommonJobs.Application.EvalForm.Commands
                     CurrentPosition = e.CurrentPosition,
                     Seniority = e.Seniority,
                     Evaluators = e.Evaluators != null ? e.Evaluators.ToList() : new List<string>(),
-                    State = EmployeeEvaluationDTO.GetEvaluationState(e.AutoEvaluationDone, e.ResponsibleEvaluationDone, e.CompanyEvaluationDone, e.OpenToDevolution, e.Finished),
+                    State = EvaluationStateHelper.GetEvaluationState(e.AutoEvaluationDone, e.ResponsibleEvaluationDone, e.CompanyEvaluationDone, e.OpenToDevolution, e.Finished),
                     Id = e.Id,
                     TemplateId = e.TemplateId
                 };
