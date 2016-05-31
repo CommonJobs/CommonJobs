@@ -1,4 +1,6 @@
 ﻿$(document).ready(function () {
+    var evaluationStates = ['En curso', 'Esperando Eval Empleado', 'Esperando Eval Responsable', 'Esperando Eval Empresa', 'Lista para devolución', 'Abierta para devolución', 'Finalizada'];
+
     var viewmodel;
     var modalViewModel;
     var layoutViewModel;
@@ -520,6 +522,7 @@
         this.improveComment = ko.observable('');
         this.actionPlanComment = ko.observable('');
         this.isCompanyEvaluationDone = false;
+        this.state = '';
         if (data) {
             this.fromJs(data);
         }
@@ -540,6 +543,7 @@
         this.improveComment(data.ToImproveComment);
         this.actionPlanComment(data.ActionPlanComment);
         this.isCompanyEvaluationDone = data.IsCompanyEvaluationDone;
+        this.state = evaluationStates[data.State];
         this.evaluators = data.Evaluators.join(', ');
         viewmodel.isDirty.register(this.project);
         viewmodel.isDirty.register(this.strengthsComment);

@@ -1,4 +1,5 @@
-﻿using CommonJobs.Domain.Evaluations;
+﻿using CommonJobs.Application.EvalForm.Helper;
+using CommonJobs.Domain.Evaluations;
 using System.Collections.Generic;
 
 namespace CommonJobs.Application.EvalForm.Dtos
@@ -37,7 +38,9 @@ namespace CommonJobs.Application.EvalForm.Dtos
 
         public bool IsCompanyEvaluationDone { get; set; }
 
-        public static CalificationsEvaluationDto Create(EmployeeEvaluation evaluation, List<string> evaluators, string currentPosition, string seniority, bool companyEvaluationDone)
+        public EvaluationState State { get; set; }
+
+        public static CalificationsEvaluationDto Create(EmployeeEvaluation evaluation, List<string> evaluators, string currentPosition, string seniority, bool companyEvaluationDone, EvaluationState state)
         {
             return new CalificationsEvaluationDto()
             {
@@ -56,7 +59,8 @@ namespace CommonJobs.Application.EvalForm.Dtos
                 ToImproveComment = evaluation.ToImproveComment,
                 ActionPlanComment = evaluation.ActionPlanComment,
                 Evaluators = evaluators,
-                IsCompanyEvaluationDone = companyEvaluationDone
+                IsCompanyEvaluationDone = companyEvaluationDone,
+                State = state
             };
         }
     }

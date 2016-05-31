@@ -48,7 +48,7 @@ namespace CommonJobs.Application.EvalForm.Commands
                     CurrentPosition = e.CurrentPosition,
                     Seniority = e.Seniority,
                     Evaluators = e.Evaluators != null ? e.Evaluators.ToList() : new List<string>(),
-                    State = EmployeeEvaluationDTO.GetEvaluationState(e.AutoEvaluationDone, e.ResponsibleEvaluationDone, e.CompanyEvaluationDone, e.OpenToDevolution, e.Finished),
+                    State = EvaluationStateHelper.GetEvaluationState(e.AutoEvaluationDone, e.ResponsibleEvaluationDone, e.CompanyEvaluationDone, e.OpenToDevolution, e.Finished),
                     Id = e.Id,
                     TemplateId = e.TemplateId,
                     IsEditable = getEvaluationEditable(e),

@@ -1,4 +1,5 @@
 ﻿using CommonJobs.Application.EvalForm.Dtos;
+using CommonJobs.Application.EvalForm.Helper;
 using CommonJobs.Application.EvalForm.Indexes;
 using CommonJobs.Application.Evaluations.EmployeeSearching;
 using CommonJobs.Domain.Evaluations;
@@ -49,9 +50,12 @@ namespace CommonJobs.Application.EvalForm.Commands
             var califications = RavenSession.Advanced.LoadStartingWith<EvaluationCalification>(evId + "/").ToList();
 
             var evaluators = califications.Where(c => c.Owner == CalificationType.Evaluator).Select(c => c.EvaluatorEmployee).ToList();
+            var autoEvaluationDone = califications.Any(c => c.Owner == CalificationType.Auto && c.Finished);
+            var responsibleEvaluationDone = califications.Any(c => c.Owner == CalificationType.Responsible && c.Finished);
             var companyEvaluationDone = califications.Any(c => c.Owner == CalificationType.Company && c.Finished);
+            var state = EvaluationStateHelper.GetEvaluationState(autoEvaluationDone, responsibleEvaluationDone, companyEvaluationDone, evaluation.ReadyForDevolution, evaluation.Finished);
 
-            var evaluationDto = CalificationsEvaluationDto.Create(evaluation, evaluators, evaluation.CurrentPosition ?? employee.CurrentPosition, evaluation.Seniority ?? employee.Seniority, companyEvaluationDone);
+            var evaluationDto = CalificationsEvaluationDto.Create(evaluation, evaluators, evaluation.CurrentPosition ?? employee.CurrentPosition, evaluation.Seniority ?? employee.Seniority, companyEvaluationDone, state);
 
             if (!CanViewEvaluation(evaluationDto, califications))
             {
