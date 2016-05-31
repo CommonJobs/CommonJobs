@@ -612,6 +612,7 @@
     }
 
     var GetCommentItem = function (calificationId, comment, evaluatorEmployee, isSelfComment) {
+        var markdown = new MarkdownDeep.Markdown();
         var commentItem = {
             calificationId: calificationId,
             value: ko.observable(comment),
@@ -624,6 +625,13 @@
                 }
             }
         };
+        commentItem.valueHtml = ko.computed(function () {
+            var commentHtml = null;
+            if (commentItem.value()) {
+                commentHtml = markdown.Transform(commentItem.value());
+            }
+            return commentHtml
+        }),
         commentItem.IsCalificationShown = ko.computed(function () {
             var calification = _.find(viewmodel.califications, function (calification) {
                 return calification.id == calificationId;

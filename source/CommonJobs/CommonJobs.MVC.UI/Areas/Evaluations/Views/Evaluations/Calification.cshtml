@@ -17,6 +17,8 @@
     ScriptManager.RegisterJs(Url.Content("~/Scripts/Evaluations/calification.js"));
     ScriptManager.RegisterJs(Url.Content("~/Scripts/Evaluations/auto-expandable-value.js"));
     ScriptManager.RegisterJs(Url.Content("~/Scripts/Evaluations/tri-state.js"));
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/MarkdownDeepLib.min.js"));
+
 }
 
 <div id="evaluation-view" class="content-evaluation evaluation">
@@ -147,7 +149,7 @@
           <!-- ko foreach: comments -->
           <div class="comments-section-container" data-bind="visible: HasComment() && IsCalificationShown()">
             <span class="comment-author" data-bind="text: evaluatorEmployee"></span><sapn class="comment-author">:</sapn>
-            <span class="comment-text" data-bind="text: value, visible: !isSelfComment || !IsEditingComment()"></span>
+            <div class="comment-text markdown-content " data-bind="html: valueHtml, visible: !isSelfComment || !IsEditingComment()"></div>
             <div class="comment-text edition-content" data-bind="visible: IsEditingComment">
               <textarea data-bind="value: value" rows="5" placeholder="Agrega un comentario"></textarea>
               <button class="blue-button left" type="button" data-bind="click: endEdition" style="">Listo</button>
