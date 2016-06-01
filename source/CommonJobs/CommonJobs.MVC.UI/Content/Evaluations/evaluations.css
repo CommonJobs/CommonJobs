@@ -1551,8 +1551,6 @@ input.cmn-toggle-round {
 .markdown-content {
     padding-left: 10px;
     padding-right: 10px;
-    border-left: 2px solid lightgray;
-    margin-top: 10px;
 }
 
     .markdown-content h1 {

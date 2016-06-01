@@ -167,22 +167,39 @@
         this.numberOfColumns = "table-" + this.columnsAmount + "-columns";
         var calificationsSorted = data.Califications.sort(sortCalificationColumns);
         this.califications = _.map(calificationsSorted, function (calification) {
-            var comment = ko.observable(calification.Comments);
-            self.isDirty.register(comment);
             if (calification.Owner == 3 && (!calification.Califications || !calification.Califications.length)) {
                 self.isCompanyCalificationsEmpty = true;
             }
             var show = self.userView == 0 || (self.userView != 0 && calification.Owner != 0);
             var hasShowIcon = calification.Finished || (calification.EvaluatorEmployee != self.userLogged && calification.Owner != self.userView);
-            return {
+            var isCommentEtidtable = calification.EvaluatorEmployee == self.userLogged && viewmodel.isEvaluationEditable();
+
+            var markdown = new MarkdownDeep.Markdown();
+
+            var commentItem = {
                 id: calification.Id,
                 owner: calification.Owner,
                 evaluatorEmployee: calification.EvaluatorEmployee,
-                comments: comment,
+                comments: ko.observable(calification.Comments),
                 finished: calification.Finished,
                 show: ko.observable(show),
-                hasShowIcon: hasShowIcon
-            }
+                hasShowIcon: hasShowIcon,
+                isCommentEtidtable: isCommentEtidtable
+            };
+            commentItem.commentHtml = ko.computed(function () {
+                var commHtml = null;
+                if (commentItem.comments()) {
+                    commHtml = markdown.Transform(commentItem.comments());
+                }
+                return commHtml
+            });
+            commentItem.endEdition = function (data, event) {
+                data.isEditingComment(false);
+            };
+
+            commentItem.isEditingComment = ko.observable(false);
+            self.isDirty.register(commentItem.comments);
+            return commentItem;
         });
 
         this.isResposibleCalificating = _.some(self.califications, function (califications) {

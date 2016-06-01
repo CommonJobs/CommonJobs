@@ -71,14 +71,21 @@
       <h4>Comentarios de la Evaluación</h4>
       <div>
         <!-- ko foreach: califications-->
-        <div data-bind="if: show() && (owner < 2 ||(owner == 2 && comments))">
-          <span class="comment-label" data-bind="text: evaluatorEmployee"></span>:
-          <!-- ko ifnot: evaluatorEmployee == $parent.userLogged && (($parent.evaluation.devolutionInProgress && owner == 0) || (!$parent.evaluation.devolutionInProgress)) -->
-          <span data-bind="text: comments"></span>
+        <div class="comments-section-container" data-bind="if: show() && (owner < 2 ||(owner == 2 && comments))">
+          <!-- ko if: !!comments() -->
+          <span class="comment-author" data-bind="text: evaluatorEmployee"></span><sapn class="comment-author">:</sapn>
+          <div class="comment-text markdown-content " data-bind="html: commentHtml(), visible: !isEditingComment()"></div>
           <!-- /ko -->
-          <!-- ko if: evaluatorEmployee == $parent.userLogged && (($parent.evaluation.devolutionInProgress && owner == 0) || (!$parent.evaluation.devolutionInProgress)) -->
-          <textarea data-bind="value: comments"></textarea>
-          <!-- /ko -->
+          <div class="comment-text edition-content" data-bind="visible: isEditingComment">
+            <textarea data-bind="value: comments"></textarea>
+            <button class="blue-button left" type="button" data-bind="click: endEdition" style="">Listo</button>
+          </div>
+          <div class="ck-button-edit" data-bind="visible: isCommentEtidtable && !isEditingComment()" title="Editar">
+            <label>
+              <span><i></i></span>
+              <input type="checkbox" value="+" data-bind="checked: isEditingComment">
+            </label>
+          </div>
         </div>
         <!-- /ko -->
       </div>
