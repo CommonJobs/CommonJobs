@@ -943,6 +943,16 @@ tr.evaluation-generated td {
         float: right;
         padding: 10px;
     }
+
+        .evaluation .top-evaluation .top-right .top-right-title {
+            overflow:hidden;
+        }
+
+            .evaluation .top-evaluation .top-right .top-right-title h4 {
+                float: left;
+                width: inherit;
+            }
+
     /* line 155, ../../sass/Evaluations/_evaluation.scss */
     .evaluation .top-evaluation .comments-container {
         border: solid 1px #DDD;
@@ -951,7 +961,6 @@ tr.evaluation-generated td {
         height: 260px;
         overflow-x: hidden;
         overflow-y: auto;
-        margin-bottom: 20px;
         padding: 5px;
         color: #444;
         font-size: 14px;

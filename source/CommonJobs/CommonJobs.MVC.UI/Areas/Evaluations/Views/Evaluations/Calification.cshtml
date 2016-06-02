@@ -93,10 +93,21 @@
     <!-- /ko -->
     <!--ko if: userView != 3 && !evaluation.devolutionInProgress -->
     <div class="top-right">
-      <h4>Comentarios Generales</h4>
-      <div class="comments-container">
+      <div class="top-right-title">
+        <h4>Comentarios Generales</h4>
+        <div class="ck-button-edit" data-bind="if: isEvaluationEditable(), visible:!isEditingGeneralComment()" title="Editar">
+          <label>
+            <span><i></i></span>
+            <input type="checkbox" value="+" data-bind="checked: isEditingGeneralComment">
+          </label>
+        </div>
+      </div>
+      <br />
+      <div data-bind="html: generalCommentHtml(), visible: !isEditingGeneralComment()"></div>
+      <div class="comments-container" data-bind="visible: isEditingGeneralComment()">
         <textarea class="content-editable big-comment" data-bind="value: generalComment, enable: isEvaluationEditable()"></textarea>
       </div>
+      <button class="blue-button left" type="button" data-bind="click: endEdition, visible: isEditingGeneralComment()" style="">Listo</button>
     </div>
     <!-- /ko -->
   </div>

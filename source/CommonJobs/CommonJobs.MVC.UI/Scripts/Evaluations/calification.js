@@ -240,8 +240,20 @@
 
         this.evaluatedComment = (userLoggedEvaluated) ? userLoggedEvaluated.comments : ko.observable('');
 
-        this.generalComment = (userLoggedCalifiction) ? userLoggedCalifiction.comments : ko.observable('');
-
+        this.generalComment = ko.observable(userLoggedCalifiction.comments());
+        this.isEditingGeneralComment = ko.observable(false);
+        this.endEdition = function (data, event) {
+            this.isEditingGeneralComment(false);
+            self.isDirty(this.generalComment);
+        }
+        this.generalCommentHtml = ko.computed(function () {
+            var commentHtml = null;
+            var markdown = new MarkdownDeep.Markdown();
+            if (viewmodel.generalComment()) {
+                commentHtml = markdown.Transform(viewmodel.generalComment())
+            }
+            return commentHtml;
+        });
         if (this.evaluation.devolutionInProgress && this.userView == 2) {
             var comments = _.chain(self.califications)
             .filter(function (calification) {
