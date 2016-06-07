@@ -62,7 +62,7 @@
         <div class="comments-section-container" data-bind="if: show() && (owner < 2 ||(owner == 2 && comments))">
           <!-- ko if: !!comments() -->
           <span class="comment-author" data-bind="text: evaluatorEmployee"></span><sapn class="comment-author">:</sapn>
-          <div class="comment-text markdown-content" data-bind="html: commentHtml(), visible: !isEditingComment()"></div>
+          <div class="comment-text markdown-content" data-bind="markdownHtml: comments, visible: !isEditingComment()"></div>
           <!-- /ko -->
           <div class="comment-text edition-content" data-bind="visible: isEditingComment">
             <textarea data-bind="value: comments"></textarea>
@@ -136,7 +136,7 @@
           <!-- ko foreach: comments -->
           <div class="comments-section-container" data-bind="visible: HasComment() && IsCalificationShown()">
             <span class="comment-author" data-bind="text: evaluatorEmployee"></span><sapn class="comment-author">:</sapn>
-            <div class="comment-text markdown-content " data-bind="html: valueHtml, visible: !isSelfComment || !IsEditingComment()"></div>
+            <div class="comment-text markdown-content " data-bind="markdownHtml: value, visible: !isSelfComment || !IsEditingComment()"></div>
             <div class="comment-text edition-content" data-bind="visible: IsEditingComment">
               <textarea data-bind="value: value" rows="5" placeholder="Agrega un comentario"></textarea>
               <button class="blue-button left" type="button" data-bind="click: endEdition" style="">Listo</button>

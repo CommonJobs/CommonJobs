@@ -186,13 +186,6 @@
                 hasShowIcon: hasShowIcon,
                 isCommentEtidtable: isCommentEtidtable
             };
-            commentItem.commentHtml = ko.computed(function () {
-                var commHtml = null;
-                if (commentItem.comments()) {
-                    commHtml = markdown.Transform(commentItem.comments());
-                }
-                return commHtml
-            });
             commentItem.endEdition = function (data, event) {
                 data.isEditingComment(false);
             };
@@ -246,14 +239,6 @@
             this.isEditingGeneralComment(false);
             self.isDirty(this.generalComment);
         };
-        this.generalCommentHtml = ko.computed(function () {
-            var commentHtml = null;
-            var markdown = new MarkdownDeep.Markdown();
-            if (viewmodel.generalComment()) {
-                commentHtml = markdown.Transform(viewmodel.generalComment())
-            }
-            return commentHtml;
-        });
         if (this.evaluation.devolutionInProgress && this.userView == 2) {
             var comments = _.chain(self.califications)
             .filter(function (calification) {
@@ -660,13 +645,6 @@
                 }
             }
         };
-        commentItem.valueHtml = ko.computed(function () {
-            var commentHtml = null;
-            if (commentItem.value()) {
-                commentHtml = markdown.Transform(commentItem.value());
-            }
-            return commentHtml
-        }),
         commentItem.IsCalificationShown = ko.computed(function () {
             var calification = _.find(viewmodel.califications, function (calification) {
                 return calification.id == calificationId;
