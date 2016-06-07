@@ -937,6 +937,18 @@ tr.evaluation-generated td {
         .evaluation .top-evaluation .top-left .explanatory-text {
             margin-top: 30px;
         }
+
+    .evaluation .top-evaluation .company-comment-section {
+        clear: both;
+    }
+
+        .evaluation .top-evaluation .company-comment-section h4 {
+            float: left;
+        }
+
+        .evaluation .top-evaluation .company-comment-section .ck-button-edit {
+            margin: 0px;
+        }
     /* line 149, ../../sass/Evaluations/_evaluation.scss */
     .evaluation .top-evaluation .top-right {
         width: 40%;
@@ -944,8 +956,17 @@ tr.evaluation-generated td {
         padding: 10px;
     }
 
+        .evaluation .top-evaluation .top-right .title {
+            clear: both;
+            margin: 20px 0px;
+        }
+
+            .evaluation .top-evaluation .top-right .title span {
+                float: left;
+            }
+
         .evaluation .top-evaluation .top-right .top-right-title {
-            overflow:hidden;
+            overflow: hidden;
         }
 
             .evaluation .top-evaluation .top-right .top-right-title h4 {
@@ -958,7 +979,6 @@ tr.evaluation-generated td {
         border: solid 1px #DDD;
         border-radius: 5px;
         width: 100%;
-        height: 260px;
         overflow-x: hidden;
         overflow-y: auto;
         padding: 5px;
@@ -976,26 +996,31 @@ tr.evaluation-generated td {
             font-weight: bold;
             text-decoration: underline;
         }
-        /* line 178, ../../sass/Evaluations/_evaluation.scss */
-        .evaluation .top-evaluation .comments-container .content-editable {
-            border: none;
-            box-shadow: none;
-            float: left;
-            min-height: 50px;
+    /* line 178, ../../sass/Evaluations/_evaluation.scss */
+    .evaluation .top-evaluation .content-editable {
+        border: none;
+        box-shadow: none;
+        min-height: 50px;
+        width: 100%;
+        clear: both;
+    }
+
+        .evaluation .top-evaluation .content-editable textarea {
             width: 100%;
         }
-            /* line 185, ../../sass/Evaluations/_evaluation.scss */
-            .evaluation .top-evaluation .comments-container .content-editable.big-comment {
-                height: -moz-calc(100% - 2px);
-                height: -webkit-calc(100% - 2px);
-                height: calc(100% - 2px);
-                margin-bottom: 0;
-            }
-            /* line 190, ../../sass/Evaluations/_evaluation.scss */
-            .evaluation .top-evaluation .comments-container .content-editable:disabled {
-                background: transparent !important;
-                cursor: default;
-            }
+
+    /* line 185, ../../sass/Evaluations/_evaluation.scss */
+    .evaluation .top-evaluation .comments-container .content-editable.big-comment {
+        height: -moz-calc(100% - 2px);
+        height: -webkit-calc(100% - 2px);
+        height: calc(100% - 2px);
+        margin-bottom: 0;
+    }
+    /* line 190, ../../sass/Evaluations/_evaluation.scss */
+    .evaluation .top-evaluation .comments-container .content-editable:disabled {
+        background: transparent !important;
+        cursor: default;
+    }
 /* line 198, ../../sass/Evaluations/_evaluation.scss */
 .evaluation .explanatory-text {
     font-size: 14px;
@@ -1558,6 +1583,7 @@ input.cmn-toggle-round {
 
 /*Markdown styles */
 .markdown-content {
+    clear: both;
     padding-left: 10px;
     padding-right: 10px;
 }

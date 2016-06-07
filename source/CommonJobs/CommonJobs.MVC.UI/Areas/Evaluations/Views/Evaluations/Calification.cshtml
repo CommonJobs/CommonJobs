@@ -18,6 +18,7 @@
     ScriptManager.RegisterJs(Url.Content("~/Scripts/Evaluations/auto-expandable-value.js"));
     ScriptManager.RegisterJs(Url.Content("~/Scripts/Evaluations/tri-state.js"));
     ScriptManager.RegisterJs(Url.Content("~/Scripts/MarkdownDeepLib.min.js"));
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/Evaluations/markdown-markdownHtml.js"));
 
 }
 
@@ -41,40 +42,27 @@
           <div class="editable-projects" data-bind="css: { edition: evaluation.project(), 'top-tip': evaluation.project()}, attr: {'data-tips': evaluation.project()}">
             <textarea type="text" id="projects" placeholder="Agregá los proyectos" data-bind="autoExpandableValue: evaluation.project, valueUpdate: 'input', event: {keyup: evaluation.onKeyUpProject, focusin: evaluation.onFocusInProject, blur: evaluation.onBlurProject}"></textarea><span class="pencil"></span>
           </div>
-          <!-- /ko -->
-          <!--ko if: !isEvaluationEditable() || (userView != 1 && userView != 3) -->
-          <span class="top-tip" data-bind="if: evaluation.project(), attr: { 'data-tips': evaluation.project()}"><span class="item-info" data-bind="text: evaluation.project()"></span></span>
-          <!-- /ko -->
-        </li>
-      </ul>
-      <h4>Métricas de Evaluación</h4>
-      <div class="metrics-container">
-        <span>1</span> No Alcanza las Expectativas - <span>2</span> Necesita Mejorar<br />
-        <span>3</span> Cumple con Expectativas - <span>4</span> Excede las Expectativas
+          <button class="blue-button left" type="button" data-bind="click: endEdition, visible: isEditingGeneralComment()" style="">Listo</button>
+        </div>
+        <!-- /ko -->
       </div>
-      <p class="explanatory-text">*Si no tenés conocimientos para calificar algún campo dejalo vacío</p>
     </div>
     <!--ko if: userView == 3 || evaluation.devolutionInProgress -->
-    <div class="top-right">
-      <h4>Comentarios Generales</h4>
-      <div class="comments-container">
-        <div class="title">Fortalezas </div><textarea class="content-editable" data-bind="value: evaluation.strengthsComment, enable: isEvaluationEditable()"></textarea>
-        <div class="title">Aspectos a mejorar </div><textarea class="content-editable" data-bind="value: evaluation.improveComment, enable: isEvaluationEditable()"></textarea>
-        <div class="title">Plan de acción </div><textarea class="content-editable" data-bind="value: evaluation.actionPlanComment, enable: isEvaluationEditable()"></textarea>
       </div>
     </div>
-    <h4>Comentarios de la Empresa</h4>
-    <div class="comments-container comments-company-container">
+    <div class="markdown-content" data-bind="markdownHtml: generalComment, visible:!isEditingGeneralComment() "></div>
+    <div class="comments-container comments-company-container" data-bind="visible: isEditingGeneralComment()">
       <textarea class="content-editable big-comment" data-bind="value: generalComment, enable: isEvaluationEditable()"></textarea>
     </div>
+    <button class="blue-button left" type="button" data-bind="click: endEdition, visible: isEditingGeneralComment()" style="">Listo</button>
     <div class="evaluation-comments">
       <h4>Comentarios de la Evaluación</h4>
-      <div>
+      <div calss="evaluation-comments-section">
         <!-- ko foreach: califications-->
         <div class="comments-section-container" data-bind="if: show() && (owner < 2 ||(owner == 2 && comments))">
           <!-- ko if: !!comments() -->
           <span class="comment-author" data-bind="text: evaluatorEmployee"></span><sapn class="comment-author">:</sapn>
-          <div class="comment-text markdown-content " data-bind="html: commentHtml(), visible: !isEditingComment()"></div>
+          <div class="comment-text markdown-content" data-bind="html: commentHtml(), visible: !isEditingComment()"></div>
           <!-- /ko -->
           <div class="comment-text edition-content" data-bind="visible: isEditingComment">
             <textarea data-bind="value: comments"></textarea>
@@ -89,25 +77,6 @@
         </div>
         <!-- /ko -->
       </div>
-    </div>
-    <!-- /ko -->
-    <!--ko if: userView != 3 && !evaluation.devolutionInProgress -->
-    <div class="top-right">
-      <div class="top-right-title">
-        <h4>Comentarios Generales</h4>
-        <div class="ck-button-edit" data-bind="if: isEvaluationEditable(), visible:!isEditingGeneralComment()" title="Editar">
-          <label>
-            <span><i></i></span>
-            <input type="checkbox" value="+" data-bind="checked: isEditingGeneralComment">
-          </label>
-        </div>
-      </div>
-      <br />
-      <div data-bind="html: generalCommentHtml(), visible: !isEditingGeneralComment()"></div>
-      <div class="comments-container" data-bind="visible: isEditingGeneralComment()">
-        <textarea class="content-editable big-comment" data-bind="value: generalComment, enable: isEvaluationEditable()"></textarea>
-      </div>
-      <button class="blue-button left" type="button" data-bind="click: endEdition, visible: isEditingGeneralComment()" style="">Listo</button>
     </div>
     <!-- /ko -->
   </div>

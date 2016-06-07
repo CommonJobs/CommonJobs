@@ -232,20 +232,20 @@
         var userLoggedCalifiction = _.find(self.califications, function (calification) {
             return (calification.owner == 3 && (self.userView == 3 || (self.userView == 0 && self.evaluation.devolutionInProgress)))
                 || (self.userView != 3 && !(self.userView == 0 && self.evaluation.devolutionInProgress) && calification.evaluatorEmployee == self.userLogged);
-        })
+        });
 
         var userLoggedEvaluated = _.find(self.califications, function (calification) {
             return calification.owner == 0;
-        })
+        });
 
         this.evaluatedComment = (userLoggedEvaluated) ? userLoggedEvaluated.comments : ko.observable('');
 
-        this.generalComment = ko.observable(userLoggedCalifiction.comments());
+        this.generalComment = userLoggedCalifiction.comments;
         this.isEditingGeneralComment = ko.observable(false);
         this.endEdition = function (data, event) {
             this.isEditingGeneralComment(false);
             self.isDirty(this.generalComment);
-        }
+        };
         this.generalCommentHtml = ko.computed(function () {
             var commentHtml = null;
             var markdown = new MarkdownDeep.Markdown();
@@ -618,6 +618,12 @@
         this.isCompanyEvaluationDone = data.IsCompanyEvaluationDone;
         this.state = evaluationStates[data.State];
         this.evaluators = data.Evaluators.join(', ');
+        this.isEditingImproveComment = ko.observable(false);
+        this.isEditingActionPlanComment = ko.observable(false);
+        this.isEditingStrengthsComment = ko.observable(false);
+        this.endEdition = function (flag) {
+            flag(false);
+        }
         viewmodel.isDirty.register(this.project);
         viewmodel.isDirty.register(this.strengthsComment);
         viewmodel.isDirty.register(this.improveComment);
