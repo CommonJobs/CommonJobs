@@ -57,7 +57,7 @@
     <button class="blue-button left" type="button" data-bind="click: endEdition, visible: isEditingGeneralComment()" style="">Listo</button>
     <div class="evaluation-comments">
       <h4>Comentarios de la Evaluación</h4>
-      <div calss="evaluation-comments-section">
+      <div class="evaluation-comments-section">
         <!-- ko foreach: califications-->
         <div class="comments-section-container" data-bind="if: show() && (owner < 2 ||(owner == 2 && comments))">
           <!-- ko if: !!comments() -->
@@ -68,7 +68,7 @@
             <textarea data-bind="value: comments"></textarea>
             <button class="blue-button left" type="button" data-bind="click: endEdition" style="">Listo</button>
           </div>
-          <div class="ck-button-edit" data-bind="visible: isCommentEtidtable && !isEditingComment()" title="Editar">
+          <div class="ck-button-edit" data-bind="visible: isCommentEditable && !isEditingComment()" title="Editar">
             <label>
               <span><i></i></span>
               <input type="checkbox" value="+" data-bind="checked: isEditingComment">

@@ -172,10 +172,7 @@
             }
             var show = self.userView == 0 || (self.userView != 0 && calification.Owner != 0);
             var hasShowIcon = calification.Finished || (calification.EvaluatorEmployee != self.userLogged && calification.Owner != self.userView);
-            var isCommentEtidtable = calification.EvaluatorEmployee == self.userLogged && viewmodel.isEvaluationEditable();
-
-            var markdown = new MarkdownDeep.Markdown();
-
+            var isCommentEditable= calification.EvaluatorEmployee == self.userLogged && viewmodel.isEvaluationEditable();
             var commentItem = {
                 id: calification.Id,
                 owner: calification.Owner,
@@ -184,7 +181,7 @@
                 finished: calification.Finished,
                 show: ko.observable(show),
                 hasShowIcon: hasShowIcon,
-                isCommentEtidtable: isCommentEtidtable
+                isCommentEditable: isCommentEditable
             };
             commentItem.endEdition = function (data, event) {
                 data.isEditingComment(false);
@@ -632,7 +629,6 @@
     }
 
     var GetCommentItem = function (calificationId, comment, evaluatorEmployee, isSelfComment) {
-        var markdown = new MarkdownDeep.Markdown();
         var commentItem = {
             calificationId: calificationId,
             value: ko.observable(comment),
