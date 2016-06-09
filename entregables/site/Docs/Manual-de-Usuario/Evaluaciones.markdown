@@ -30,29 +30,35 @@ Se puede usar “medio punto” cuando es necesario, por ejemplo 2.5 indicaría 
 
 ## Herramienta para Autoevaluación ##
 
-En forma semestral, cada evaluado recibirá instrucciones de entrar a la herramienta Commonjobs para comenzar el proceso de autoevaluación.  En la home de Commonjobs se accede seleccionando la opción “Evaluaciones”.  Esto los llevará a una pantalla con los datos del evaluado y los campos que deberá completar para auto-evaluarse.  Las áreas del formulario son las siguientes:
+En forma semestral, cada evaluado recibirá instrucciones de entrar a la herramienta Commonjobs para comenzar el proceso de autoevaluación.  En la home de Commonjobs se accede seleccionando la opción “Evaluaciones”.  Esto los llevará a una pantalla donde figuran las evaluaciones en las que el usuario tiene participación (tanto como evaluado o como evaluador). Seleccionando "Ver Evaluación" llevará al usuario a ver la evaluación con los datos del evaluado y los campos que deberá completar para auto-evaluarse.  Las áreas del formulario son las siguientes:
 
 ### Información Profesional ###
 
-- **Puesto**: es el puesto o rol dentro de la empresa, como desarrollador, QA, analista de marketing.
+- **Puesto**: Es el puesto o rol dentro de la empresa, como desarrollador, QA, analista de marketing.
 
-- **Seniority**: la categoría dentro del puesto, como junior, semi senior, senior, etc.  Se muestra lo formal según la categoría de recursos humanos, pues pudo haber desempeñado otro rol en un proyecto particular.
+- **Seniority**: La categoría dentro del puesto, como junior, semi senior, senior, etc.  Se muestra lo formal según la categoría de recursos humanos, pues pudo haber desempeñado otro rol en un proyecto particular.
 
-- **Evaluadores**: son las personas asignadas para evaluar ya que han trabajado con el evaluado y tienen un rol de líder, project manager o responsable de área (puede estar en blanco o incompleta la lista, si el responsable aún no los asignó).
+- **Evaluadores**: Son las personas asignadas para evaluar ya que han trabajado con el evaluado y tienen un rol de líder, project manager o responsable de área (puede estar en blanco o incompleta la lista, si el responsable aún no los asignó).
 
 - **Responsable**: Es la persona responsable por el proceso de evaluación del evaluado, el responsable de evaluar, de acordar la reunión de feedback y de obtener el resultado final.  Por lo general es el responsable del área del puesto o el project manager con el que más trabajó en el último período.
 
-- **Período**: es el período que se está evaluando y se representa con el mes-año en que termina el período (por ejemplo 06/2015 es para el primer semestre).
+- **Período**: Es el período que se está evaluando y se representa con el mes-año en que termina el período (por ejemplo 06/2015 es para el primer semestre).
 
 - **Proyecto**: Muestra el área al que pertenece o el/los proyectos en los que participó y por los que se lo evalúa (puede estar vacío en caso que el responsable aún no lo completó).
 
-### Comentarios Personales ###
+- **Estado**: Muestra el estado actual de la evaluación. Los estados de una evaluaciín pueden ser vistos en [Herramienta para Responsables y Evaluadores](#Herramienta_para_Responsables_y_Evaluadores).
 
-Es un campo de texto libre para que tanto el evaluado como los evaluadores puedan realizar cualquier comentario o aclaración que crean conveniente dejar asentado.
+### Comentarios de la Empresa ###
+
+Contiene los comentarios generales que deja la empresa respecto a la evaluación con conceptos que desea dejar en claros o asentados. Puede ser editado por el RESPONSABLE durante el proceso de Evaluación de la Empresa
+
+### Comentarios de la Evaluación ###
+
+Contiene los Comentarios Generales que hayan realizado los participante de esta evaluación, tanto evaluado, evaluadores o responsable.
 
 ### Calificación de Conceptos ###
 
-A continuación se deben ir completando los puntajes para cada concepto.  Se puede “Guardar” la evaluación en forma parcial sin cambiar el estado.  Una vez finalizada, se presiona el botón de “Finalizar” para dar por terminada la misma.
+A continuación se deben ir completando los puntajes para cada concepto.  También se puede agregar comentarios en cada concepto para aclarar o asentar algún detalle.  Se puede “Guardar” la evaluación en forma parcial sin cambiar el estado.  Una vez finalizada, se presiona el botón de “Finalizar” para dar por terminada la misma.
 
 NOTA: se puede guardar cuantas veces sea necesario, pero una vez que se “Finaliza” no se podrá volver a editar (solo en el momento de la devolución y por parte del Responsable).
 
@@ -130,7 +136,7 @@ Se obtiene una calificación final como promedio de todas las calificaciones rea
 
 El administrador de Recursos Humanos (con rol "EmployeeManagers") accede a la pantalla de Nómina y completa la columna de “Responsable” para cada empleado a ser evaluado.  Al presionar el botón de “Generar Evaluaciones” se generan los formularios para cada empleado y las evaluaciones quedan en estado “En Curso”.
 
-Una vez generadas, ya no se puede cambiar el responsable desde esta pantalla.  No es necesario completar todos los responsables sino que se pueden ir generando las evaluaciones en forma incremental.
+Una vez generadas, un usuario Administrador de Evaluaciones (con rol "EvaluationMannagers") será el unico capaz de modificar el responsable de las evaluaciones.  No es necesario completar todos los responsables sino que se pueden ir generando las evaluaciones en forma incremental.
 
 De manera opcional, cada Responsable podrá notificar a cada evaluado que debe iniciar su autoevaluación enviándole un link directo al formulario, que se construye de la siguiente manera:
 http://commonjobs.makingsense.com/Evaluations/2015-06/napellido (donde "2015-06" es el período y "napellido" el usuario a evaluar).
@@ -140,6 +146,8 @@ http://commonjobs.makingsense.com/Evaluations/2015-06/napellido (donde "2015-06"
 Se accede desde el menú principal de CommonJobs, opción "Evaluaciones”.  Ahora los responsables de realizar evaluaciones y los asignados como evaluadores, ven en el Dashboard de CommonJobs la lista de evaluados asignados, donde se muestra para cada uno: si es Responsable o Evaluador (R o E), los datos de cada evaluado (nombre, puesto y seniority), los evaluadores agregados con un botón para agregar más, y por último el estado de cada evaluación y la acciones que puede realizar con cada una según el estado.
 
 El responsable puede agregar evaluadores para cada evaluado seleccionando el Botón de “Agregar” o el ícono con el lápiz de la columna Evaluadores.  Se puede agregar la cantidad deseada (no se recomienda más de 5 para no abrumar al evaluado) y de cualquier rol o seniority.  El Responsable se debe hacer cargo de revisar que las completen y hacer seguimiento manual ya que el estado de las evaluaciones NO cambia si los Evaluadores las han terminado o no.
+
+El responsable puede, además, retroceder el estado de las evaluaciones en caso de error o confusión de parte de los intervinientes, para poder modificar o enmendar alguna de las calificaciones o comentarios. Para eso, el responsable tiene que selecciona el estado actual de la evaluación y se desplegará una ventana con las alternativas disponibles para retroceder la evaluación; luego selecciona una de las alternativas para confirmar y retroceder el estado de la evaluación.
 
 #### Estados y Acciones Posibles ####
 
@@ -178,6 +186,7 @@ Aquí se muestra la lista de conceptos para calificar con varias columnas.
 - Autoevaluación: La primer columna es la calificación del propio evaluado.  Por defecto está oculta pero se puede visualizar.
 - Promedio: contiene el promedio por cada concepto de cada Evaluador y Responsable que completó la evaluación.
 - Una columna más por cada Evaluador y la última para el Responsable, que por defecto se muestran pero se pueden ocultar.
+- Mostrar comentarios: Contiene un botón que muestra u oculta los comentarios de los conceptos a calificar (en los casos que tengan comentarios).
 
 Cada uno completa la columna que le corresponde.  Se puede “Guardar” la evaluación en forma parcial sin cambiar el estado.  Una vez finalizada, se presiona el botón de “Finalizar” para dar por terminada la misma.
 
@@ -189,7 +198,7 @@ La descripción de cada uno está en la sección ["Significado de cada Concepto"
 
 Una vez que el responsable hizo la evaluación, ya se encuentra disponible la opción de Evaluar como Empresa.  Se recomienda que antes de hacerla, se verifique que estén terminadas las de los evaluadores y la autoevaluación.
 
-En esta etapa, en base al feedback obtenido de todos los evaluadores (tanto por los puntajes como los comentarios que se muestran bajo el encabezado del formulario), se elaboran y completan los siguientes campos:
+En esta etapa, en base al feedback obtenido de todos los evaluadores (tanto por los puntajes como los comentarios que se muestran bajo el encabezado del formulario o en los conceptos a calificar), se elaboran y completan los siguientes campos:
 
 - **Fortalezas**: lo que más se destaca de la persona como favorable.  Típicamente estaría relacionado a los aspectos calificados con mayor puntaje.
 
@@ -207,7 +216,7 @@ Una vez que se han hecho todas las evaluaciones (como mínimo: la auto-evaluaci�
 
 El responsable coordina una reunión con el evaluado y los evaluadores que cree conveniente.  También pueden participar personas que no hayan trabajado en forma directa con el evaluado pero que estén interesadas en su plan de acción y crecimiento, por ejemplo por ser el responsable de un área.  
 
-NOTA: El espíritu de la charla debe centrarse en la actitud de aprendizaje contínuo y ser lo más exacta y ejemplificada posible.  De haber incumplimiento de expectativas, explicar claramente el por qué, dar ejemplos de hechos observables (no opiniones al respecto) y explicar el efecto negativo que tuvo o puede tener y/o el efecto positivo que tendría de hacerlo de otra forma.  No se deben hacer críticas sobre aspectos de la personalidad o comentarios despectivos ya que es una evaluación de aspectos profesionales desde el punto de vista de diferentes personas con diferentes formas de pensar.
+NOTA: El espíritu de la charla debe centrarse en la actitud de aprendizaje continuo y ser lo más exacta y ejemplificada posible.  De haber incumplimiento de expectativas, explicar claramente el por qué, dar ejemplos de hechos observables (no opiniones al respecto) y explicar el efecto negativo que tuvo o puede tener y/o el efecto positivo que tendría de hacerlo de otra forma.  No se deben hacer críticas sobre aspectos de la personalidad o comentarios despectivos ya que es una evaluación de aspectos profesionales desde el punto de vista de diferentes personas con diferentes formas de pensar.
 
 *Ejemplo de feedback positivo: “Considero(amos) que excediste las expectativas en Comunicación ya que me resulta muy fácil entender tus explicaciones cuando hay un problema, pero además recuerdo claramente cuando hubo necesidad de obtener el feedback de otra área de la empresa,  que no solo enviaste un mail muy claro, a las personas adecuadas y explicando la necesidad, sino que al no tener respuesta inmediata, te acercaste a hablar con ellos y luego de consensuar la solución, enviaste otro mail con el detalle para que quede claro”*
 
