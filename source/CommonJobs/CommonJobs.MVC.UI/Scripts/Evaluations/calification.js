@@ -76,7 +76,7 @@
         return _.some(this.groups, function (group) {
             return _.some(group.items, function (item) {
                 return _.some(item.values, function (value) {
-                    return value.editable && (value.value() % 1) % 5 != 0;
+                    return value.editable && ((value.value() % 1) * 10) % 5 != 0;
                 });
             });
         });
