@@ -72,6 +72,16 @@
         });
     }
 
+    EvaluationViewModel.prototype.hasDecimalDifferentThanFive = function () {
+        return _.some(this.groups, function (group) {
+            return _.some(group.items, function (item) {
+                return _.some(item.values, function (value) {
+                    return value.editable && ((value.value() % 1) * 10) % 5 != 0;
+                });
+            });
+        });
+    }
+
     EvaluationViewModel.prototype.onSave = function () {
         var self = this;
         if (this.calificationFinished || this.evaluationFinished || this.isValid()) {
@@ -105,8 +115,13 @@
     }
 
     EvaluationViewModel.prototype.onFinish = function () {
+        var isCompanyCalification = this.userView == 3 && _.any(this.califications, function (calification) {
+            return calification.owner == 3 && !calification.finished;
+        });
         if (!this.isValid()) {
             modalViewModel.showInvalidModal();
+        } else if (isCompanyCalification && this.hasDecimalDifferentThanFive()) {
+            modalViewModel.showWarningModal();
         } else if (this.hasEmptyValues()) {
             modalViewModel.showConfirmationModal();
         } else {
@@ -601,6 +616,7 @@
         this.buttonConfirmText = ko.observable('');
         this.buttonFinalText = ko.observable('');
         this.isConfirmButtonVisible = ko.observable(false);
+        this.isWarningConfirmButtonVisible = ko.observable(false);
         this.isFinalButtonVisible = ko.observable(false);
         this.showModal = ko.computed(function () {
             if (this.show()) {
@@ -617,6 +633,7 @@
         this.buttonBackText("Volver");
         this.show(true);
         this.isConfirmButtonVisible(false);
+        this.isWarningConfirmButtonVisible(false);
         this.isFinalButtonVisible(false);
     }
 
@@ -627,6 +644,18 @@
         this.buttonConfirmText("Confirmar");
         this.show(true);
         this.isConfirmButtonVisible(true);
+        this.isWarningConfirmButtonVisible(false);
+        this.isFinalButtonVisible(false);
+    }
+
+    ModalViewModel.prototype.showWarningModal = function () {
+        this.title("Finalizar evaluación");
+        this.text("La evaluación contiene valor decimal distinto de 5 ¿Desea finalizar la evaluación de todas formas?");
+        this.buttonBackText("Cancelar");
+        this.buttonConfirmText("Confirmar");
+        this.show(true);
+        this.isConfirmButtonVisible(false);
+        this.isWarningConfirmButtonVisible(true);
         this.isFinalButtonVisible(false);
     }
 
@@ -637,6 +666,7 @@
         this.buttonFinalText("Finalizar");
         this.show(true);
         this.isConfirmButtonVisible(false);
+        this.isWarningConfirmButtonVisible(false);
         this.isFinalButtonVisible(true);
     }
 
@@ -645,6 +675,15 @@
     }
     ModalViewModel.prototype.confirmAction = function () {
         this.showFinishModal();
+    }
+
+    ModalViewModel.prototype.warningConfirmAction = function () {
+        if (viewmodel.hasEmptyValues()) {
+            this.showConfirmationModal();
+        }
+        else {
+            this.showFinishModal();
+        }
     }
 
     ModalViewModel.prototype.finalAction = function () {
