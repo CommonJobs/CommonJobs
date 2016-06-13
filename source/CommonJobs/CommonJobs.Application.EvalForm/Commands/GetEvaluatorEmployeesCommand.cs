@@ -37,7 +37,6 @@ namespace CommonJobs.Application.EvalForm.Commands
 
             var employeesForResponsible = employeesProjection.Select(e =>
             {
-                var califications = RavenSession.Advanced.LoadStartingWith<EvaluationCalification>(e.Id + "/").ToList();
                 return new EmployeeEvaluationDTO()
                 {
                     IsResponsible = e.ResponsibleId == _loggedUser,
