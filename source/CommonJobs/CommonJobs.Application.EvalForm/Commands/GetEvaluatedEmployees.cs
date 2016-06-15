@@ -39,7 +39,7 @@ namespace CommonJobs.Application.EvalForm.Commands
             var employee = RavenSession
                 .Query<Employee, EmployeeByUserName_Search>()
                 .Where(x => x.UserName.In(employeUserNames))
-                .ToDictionary(k => k.UserName, v => v);
+                .ToDictionary(k => k.UserName);
 
             var employeesForResponsible = employeesProjection.Select(e =>
             {
