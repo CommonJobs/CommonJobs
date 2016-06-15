@@ -1,6 +1,5 @@
 ﻿using CommonJobs.Application.EvalForm.Indexes;
 using CommonJobs.Application.EvalForm.Helper;
-using CommonJobs.Domain.Evaluations;
 using CommonJobs.Infrastructure.RavenDb;
 using Raven.Client;
 using Raven.Client.Linq;
@@ -8,6 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using CommonJobs.Application.EmployeeSearching;
+using CommonJobs.Domain;
 
 namespace CommonJobs.Application.EvalForm.Commands
 {
@@ -34,7 +35,11 @@ namespace CommonJobs.Application.EvalForm.Commands
                 || e.Evaluators.Any(ev => ev == _loggedUser)));
 
             var employeesProjection = query.ToList();
-
+            var employeUserNames = employeesProjection.Select(e => e.UserName);
+            var employee = RavenSession
+                .Query<Employee, EmployeeByUserName_Search>()
+                .Where(x => x.UserName.In(employeUserNames))
+                .ToDictionary(k => k.UserName, v => v);
             var employeesForResponsible = employeesProjection.Select(e =>
             {
                 return new EmployeeEvaluationDTO()
@@ -44,8 +49,8 @@ namespace CommonJobs.Application.EvalForm.Commands
                     FullName = e.FullName,
                     UserName = e.UserName,
                     Period = e.Period,
-                    CurrentPosition = e.CurrentPosition,
-                    Seniority = e.Seniority,
+                    CurrentPosition = employee[e.UserName].CurrentPosition,
+                    Seniority = employee[e.UserName].Seniority,
                     Evaluators = e.Evaluators != null ? e.Evaluators.ToList() : new List<string>(),
                     State = EvaluationStateHelper.GetEvaluationState(e.AutoEvaluationDone, e.ResponsibleEvaluationDone, e.CompanyEvaluationDone, e.OpenToDevolution, e.Finished),
                     Id = e.Id,
