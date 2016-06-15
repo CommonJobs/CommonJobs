@@ -35,49 +35,8 @@ namespace CommonJobs.Application.EvalForm.Commands
                 || e.Evaluators.Any(ev => ev == _loggedUser)));
 
             var employeesProjection = query.ToList();
-            var employeUserNames = employeesProjection.Select(e => e.UserName);
-            var employee = RavenSession
-                .Query<Employee, EmployeeByUserName_Search>()
-                .Where(x => x.UserName.In(employeUserNames))
-                .ToDictionary(k => k.UserName);
-            var employeesForResponsible = employeesProjection.Select(e =>
-            {
-                return new EmployeeEvaluationDTO()
-                {
-                    IsResponsible = e.ResponsibleId == _loggedUser,
-                    ResponsibleId = e.ResponsibleId,
-                    FullName = e.FullName,
-                    UserName = e.UserName,
-                    Period = e.Period,
-                    CurrentPosition = employee[e.UserName].CurrentPosition,
-                    Seniority = employee[e.UserName].Seniority,
-                    Evaluators = e.Evaluators != null ? e.Evaluators.ToList() : new List<string>(),
-                    State = EvaluationStateHelper.GetEvaluationState(e.AutoEvaluationDone, e.ResponsibleEvaluationDone, e.CompanyEvaluationDone, e.OpenToDevolution, e.Finished),
-                    Id = e.Id,
-                    TemplateId = e.TemplateId,
-                    IsEditable = getEvaluationEditable(e),
-                    PosibleRevertActions = RevertEvaluationActionsHelper.GetPosibleRevertActions(
-                        e.Finished,
-                        e.OpenToDevolution,
-                        e.CompanyEvaluationDone,
-                        e.ResponsibleEvaluationDone,
-                        e.AutoEvaluationDone,
-                        e.AnyEvaluatorEvaluationDone)
-                        .Select(x => new PosibleRevertActions { ActionName = x.GetDescription(), ActionValue = x.ToString() })
-                        .ToList()
-                };
-            }).ToList();
-
-            return employeesForResponsible;
-        }
-
-        private bool getEvaluationEditable(EmployeeToEvaluate_Search.Projection projection)
-        {
-            if (projection.ResponsibleId == _loggedUser)
-            {
-                return !projection.Finished;
-            }
-            return projection.CalificationsState.Any(e => e.UserName == _loggedUser && !e.Finished);
+            var mapper = new EmployeeEvaluationHelper(RavenSession, _loggedUser);
+            return mapper.MapEmployeeEvaluation(employeesProjection);
         }
     }
 }

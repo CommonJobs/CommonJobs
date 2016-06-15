@@ -35,30 +35,8 @@ namespace CommonJobs.Application.EvalForm.Commands
             }
 
             var employeesProjection = query.ToList();
-            var employeUserNames = employeesProjection.Select(e => e.UserName);
-            var employee = RavenSession
-                .Query<Employee, EmployeeByUserName_Search>()
-                .Where(x => x.UserName.In(employeUserNames))
-                .ToDictionary(k => k.UserName);
-
-            var employeesForResponsible = employeesProjection.Select(e =>
-            {
-                return new EmployeeEvaluationDTO()
-                {
-                    ResponsibleId = e.ResponsibleId,
-                    FullName = e.FullName,
-                    UserName = e.UserName,
-                    Period = e.Period,
-                    CurrentPosition = employee[e.UserName].CurrentPosition,
-                    Seniority = employee[e.UserName].Seniority,
-                    Evaluators = e.Evaluators != null ? e.Evaluators.ToList() : new List<string>(),
-                    State = EvaluationStateHelper.GetEvaluationState(e.AutoEvaluationDone, e.ResponsibleEvaluationDone, e.CompanyEvaluationDone, e.OpenToDevolution, e.Finished),
-                    Id = e.Id,
-                    TemplateId = e.TemplateId
-                };
-            }).ToList();
-
-            return employeesForResponsible;
+            var mapper = new EmployeeEvaluationHelper(RavenSession, null);
+            return mapper.MapEmployeeEvaluation(employeesProjection);
         }
     }
 }
