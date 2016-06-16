@@ -844,7 +844,6 @@ tr.evaluation-generated td {
                 /* line 66, ../../sass/Evaluations/_evaluation.scss */
                 .evaluation .top-evaluation .top-left .personal-info-container li .item-info {
                     color: #444;
-                    white-space: nowrap;
                     overflow: hidden;
                     text-overflow: ellipsis;
                     display: inline-block;
