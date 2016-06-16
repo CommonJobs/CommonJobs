@@ -20,13 +20,12 @@ namespace CommonJobs.Application.EvalForm.Helper
         {
             _ravenSession = ravenSession;
             _loggedUser = loggedUser;
-
         }
 
         public List<EmployeeEvaluationDTO> MapEmployeeEvaluation(List<EmployeeToEvaluate_Search.Projection> employeesProjection)
         {
             var employeUserNames = employeesProjection.Select(e => e.UserName);
-            var employee = _ravenSession
+            var employeeByUsername = _ravenSession
                 .Query<Employee, EmployeeByUserName_Search>()
                 .Where(x => x.UserName.In(employeUserNames))
                 .ToDictionary(k => k.UserName);
@@ -39,8 +38,8 @@ namespace CommonJobs.Application.EvalForm.Helper
                      FullName = e.FullName,
                      UserName = e.UserName,
                      Period = e.Period,
-                     CurrentPosition = employee[e.UserName].CurrentPosition,
-                     Seniority = employee[e.UserName].Seniority,
+                     CurrentPosition = employeeByUsername[e.UserName].CurrentPosition,
+                     Seniority = employeeByUsername[e.UserName].Seniority,
                      Evaluators = e.Evaluators != null ? e.Evaluators.ToList() : new List<string>(),
                      State = EvaluationStateHelper.GetEvaluationState(e.AutoEvaluationDone, e.ResponsibleEvaluationDone, e.CompanyEvaluationDone, e.OpenToDevolution, e.Finished),
                      Id = e.Id,
