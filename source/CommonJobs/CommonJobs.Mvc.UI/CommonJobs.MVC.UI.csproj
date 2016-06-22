@@ -278,7 +278,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\DataTables\dataTables.bootstrap.js" />
-    <Content Include="Scripts\Evaluations\height-updater.js" />
+    <Content Include="Scripts\Evaluations\auto-expandable-value.js" />
     <Content Include="Scripts\jquery-scrolltofixed-min.js" />
     <Content Include="Scripts\jquery-scrolltofixed.js" />
     <Content Include="Scripts\knockout.activity.js" />

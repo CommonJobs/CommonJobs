@@ -15,7 +15,7 @@
     ScriptManager.RegisterJs(Url.Content("~/Scripts/jquery-scrolltofixed.js"), priority: 900);
     ScriptManager.RegisterJs(Url.Content("~/Scripts/Evaluations/common.js"));
     ScriptManager.RegisterJs(Url.Content("~/Scripts/Evaluations/calification.js"));
-    ScriptManager.RegisterJs(Url.Content("~/Scripts/Evaluations/height-updater.js"));
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/Evaluations/auto-expandable-value.js"));
 }
 
 <div id="evaluation-view" class="content-evaluation evaluation">
@@ -36,7 +36,7 @@
           <span class="item">Proyectos:</span>
           <!--ko if: isEvaluationEditable() && (userView == 1 || userView == 3) -->
           <div class="editable-projects" data-bind="css: { edition: evaluation.project(), 'top-tip': evaluation.project()}, attr: {'data-tips': evaluation.project()}">
-            <textarea type="text" id="projects" placeholder="Agregá los proyectos" data-bind="value: evaluation.project, heightUpdater: evaluation.project, valueUpdate: 'input', event: {keyup: evaluation.onKeyUpProject, focusin: evaluation.onFocusInProject, blur: evaluation.onBlurProject}" ></textarea><span class="pencil"></span>
+            <textarea type="text" id="projects" placeholder="Agregá los proyectos" data-bind="autoExpandableValue: evaluation.project, valueUpdate: 'input', event: {keyup: evaluation.onKeyUpProject, focusin: evaluation.onFocusInProject, blur: evaluation.onBlurProject}" ></textarea><span class="pencil"></span>
           </div>
           <!-- /ko -->
           <!--ko if: !isEvaluationEditable() || (userView != 1 && userView != 3) -->
