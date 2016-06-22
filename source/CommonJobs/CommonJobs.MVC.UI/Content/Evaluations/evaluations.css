@@ -818,7 +818,7 @@ tr.evaluation-generated td {
             .evaluation .top-evaluation .top-left .personal-info-container li {
                 margin: 0;
                 padding: 0;
-                height: 40px;
+                min-height: 40px;
                 float: right;
                 font-size: 18px;
                 color: #878787;
@@ -854,48 +854,46 @@ tr.evaluation-generated td {
                 }
                 /* line 76, ../../sass/Evaluations/_evaluation.scss */
                 .evaluation .top-evaluation .top-left .personal-info-container li .editable-projects {
-                    width: 245px;
-                    height: 30px;
                     float: left;
-                    margin: -5px 0 0 -5px;
                 }
                     /* line 82, ../../sass/Evaluations/_evaluation.scss */
-                    .evaluation .top-evaluation .top-left .personal-info-container li .editable-projects input {
+                    .evaluation .top-evaluation .top-left .personal-info-container li .editable-projects textarea {
                         box-shadow: none;
                         border: solid 1px #FFF;
                         padding: 0 5px;
                         color: #444;
                         font-size: 18px;
-                        height: 30px;
-                        width: 215px;
+                        height: auto;
+                        width: 400px;
+                        overflow: hidden;
                         float: left;
                     }
                         /* line 47, ../../sass/Evaluations/_mixins.scss */
-                        .evaluation .top-evaluation .top-left .personal-info-container li .editable-projects input.placeholder {
+                        .evaluation .top-evaluation .top-left .personal-info-container li .editable-projects textarea.placeholder {
                             font: 14px Helvetica, Helvetica Neue;
                             font-style: italic;
                             color: #999;
                         }
                         /* line 48, ../../sass/Evaluations/_mixins.scss */
-                        .evaluation .top-evaluation .top-left .personal-info-container li .editable-projects input:-moz-placeholder {
+                        .evaluation .top-evaluation .top-left .personal-info-container li .editable-projects textarea:-moz-placeholder {
                             font: 14px Helvetica, Helvetica Neue;
                             font-style: italic;
                             color: #999;
                         }
                         /* line 49, ../../sass/Evaluations/_mixins.scss */
-                        .evaluation .top-evaluation .top-left .personal-info-container li .editable-projects input::-moz-placeholder {
+                        .evaluation .top-evaluation .top-left .personal-info-container li .editable-projects textarea::-moz-placeholder {
                             font: 14px Helvetica, Helvetica Neue;
                             font-style: italic;
                             color: #999;
                         }
                         /* line 50, ../../sass/Evaluations/_mixins.scss */
-                        .evaluation .top-evaluation .top-left .personal-info-container li .editable-projects input:-ms-input-placeholder {
+                        .evaluation .top-evaluation .top-left .personal-info-container li .editable-projects textarea:-ms-input-placeholder {
                             font: 14px Helvetica, Helvetica Neue;
                             font-style: italic;
                             color: #999;
                         }
                         /* line 51, ../../sass/Evaluations/_mixins.scss */
-                        .evaluation .top-evaluation .top-left .personal-info-container li .editable-projects input::-webkit-input-placeholder {
+                        .evaluation .top-evaluation .top-left .personal-info-container li .editable-projects textarea::-webkit-input-placeholder {
                             font: 14px Helvetica, Helvetica Neue;
                             font-style: italic;
                             color: #999;
