@@ -713,6 +713,12 @@
     };
 
     layoutViewModel = new LayoutViewModel();
+    window.onbeforeunload = function () {
+        if (viewmodel.isDirty()) {
+            return 'Tienes cambios sin guardar. Si continúas, los cambios se perderán. ¿Deseas continuar?';
+        }
+    }
+
     ko.applyBindings(layoutViewModel, document.getElementById('header-evaluation'));
 
 });
