@@ -701,6 +701,11 @@
 
     viewmodel = new EvaluationViewModel();
     viewmodel.load();
+    window.onbeforeunload = function () {
+        if (viewmodel.isDirty()) {
+            return 'Tienes cambios sin guardar. Si continúas, los cambios se perderán. ¿Deseas continuar?';
+        }
+    }
 
     var LayoutViewModel = function () {
         this.isEvaluationEditable = viewmodel.isEvaluationEditable;
