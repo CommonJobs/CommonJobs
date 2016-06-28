@@ -1444,7 +1444,6 @@ tr.evaluation-generated td {
 input.cmn-toggle-round {
     position: absolute;
     left: -9999px;
-    /*visibility: hidden;*/
 }
 
 .comment label {
@@ -1483,6 +1482,7 @@ input.cmn-toggle-round {
         border-radius: 100%;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
         transition: margin 0.4s;
+        color: #777777;
         content: "\25BC";
     }
 
@@ -1496,6 +1496,16 @@ input.cmn-toggle-round {
 
     .comment label.colored:after {
         background-color: #4CE75F;
+        color: #fff;
+    }
+
+    .comment label.indeterminate:before {
+        background-color: dimgray;
+    }
+
+    .comment label.indeterminate:after {
+        margin-left: 10px;
+        background-color: slategray;
         color: #fff;
     }
 /*END of toggle button design*/
