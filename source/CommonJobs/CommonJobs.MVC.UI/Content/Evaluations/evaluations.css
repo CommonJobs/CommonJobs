@@ -1493,6 +1493,11 @@ input.cmn-toggle-round {
     .comment label.checked:after {
         margin-left: 20px;
     }
+
+    .comment label.colored:after {
+        background-color: #4CE75F;
+        color: #fff;
+    }
 /*END of toggle button design*/
 
 /*Edit toggle button design*/

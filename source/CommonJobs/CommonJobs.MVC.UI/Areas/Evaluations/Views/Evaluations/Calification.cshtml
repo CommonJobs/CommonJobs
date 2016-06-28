@@ -131,7 +131,7 @@
         <!-- /ko -->
         <td>
           <div class="comment" data-bind="if: hasCommentsToShow()  || $root.isEvaluationEditable()">
-            <label data-bind="css: { 'checked': showComments()}">
+            <label data-bind="css: { 'checked': showComments(), 'colored': hasCommentsToShow()}">
               <input class="cmn-toggle-round" type="checkbox" data-bind="checked: showComments" />
             </label>
           </div>
