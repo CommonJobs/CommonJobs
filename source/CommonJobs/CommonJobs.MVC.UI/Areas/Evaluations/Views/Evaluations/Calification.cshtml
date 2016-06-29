@@ -43,18 +43,87 @@
             <textarea type="text" id="projects" placeholder="Agregá los proyectos" data-bind="autoExpandableValue: evaluation.project, valueUpdate: 'input', event: {keyup: evaluation.onKeyUpProject, focusin: evaluation.onFocusInProject, blur: evaluation.onBlurProject}"></textarea><span class="pencil"></span>
           </div>
           <button class="blue-button left" type="button" data-bind="click: endEdition, visible: isEditingGeneralComment()" style="">Listo</button>
-        </div>
-        <!-- /ko -->
+          <!-- /ko -->
+          <!--ko if: !isEvaluationEditable() || (userView != 1 && userView != 3) -->
+          <span class="top-tip" data-bind="if: evaluation.project(), attr: { 'data-tips': evaluation.project()}"><span class="item-info" data-bind="text: evaluation.project()"></span></span>
+          <!-- /ko -->
+        </li>
+      </ul>
+      <h4>Métricas de Evaluación</h4>
+      <div class="metrics-container">
+        <span>1</span> No Alcanza las Expectativas - <span>2</span> Necesita Mejorar<br />
+        <span>3</span> Cumple con Expectativas - <span>4</span> Excede las Expectativas
       </div>
+      <p class="explanatory-text">*Si no tenés conocimientos para calificar algún campo dejalo vacío</p>
+    </div>
+    <div class="top-right">
+      <!-- ko if: userView == 3 || evaluation.devolutionInProgress -->
+      <div>
+        <h4>Comentarios Generales</h4>
+        <div class="title">
+          <span>Fortalezas</span>
+          <div class="ck-button-edit" data-bind="if: isEvaluationEditable(), visible:!evaluation.isEditingStrengthsComment()" title="Editar">
+            <label>
+              <span><i></i></span>
+              <input type="checkbox" value="+" data-bind="checked: evaluation.isEditingStrengthsComment">
+            </label>
+          </div>
+        </div>
+        <div class="comments-container markdown-content" data-bind="markdownHtml:evaluation.strengthsComment, visible: !evaluation.isEditingStrengthsComment() && evaluation.strengthsComment()"></div>
+        <div class="content-editable" data-bind="visible: evaluation.isEditingStrengthsComment">
+          <textarea data-bind="value: evaluation.strengthsComment"></textarea>
+          <button class="blue-button left" type="button" data-bind="click: evaluation.endEdition.bind($data, evaluation.isEditingStrengthsComment)" style="">Listo</button>
+        </div>
+        <div class="title">
+          <span>Aspectos a mejorar</span>
+          <div class="ck-button-edit" data-bind="if: isEvaluationEditable(), visible: !evaluation.isEditingImproveComment()" title="Editar">
+            <label>
+              <span><i></i></span>
+              <input type="checkbox" value="+" data-bind="checked: evaluation.isEditingImproveComment">
+            </label>
+          </div>
+        </div>
+        <div class="comments-container markdown-content" data-bind="markdownHtml: evaluation.improveComment, visible: !evaluation.isEditingImproveComment() && evaluation.improveComment()"></div>
+        <div class="content-editable" data-bind="visible: evaluation.isEditingImproveComment">
+          <textarea data-bind="value: evaluation.improveComment"></textarea>
+          <button class="blue-button left" type="button" data-bind="click: evaluation.endEdition.bind($data, evaluation.isEditingImproveComment)" style="">Listo</button>
+        </div>
+        <div class="title">
+          <span>Plan de acción </span>
+          <div class="ck-button-edit" data-bind="if: isEvaluationEditable(), visible: !evaluation.isEditingActionPlanComment()" title="Editar">
+            <label>
+              <span><i></i></span>
+              <input type="checkbox" value="+" data-bind="checked: evaluation.isEditingActionPlanComment">
+            </label>
+          </div>
+        </div>
+        <div class="comments-container markdown-content" data-bind="markdownHtml:evaluation.actionPlanComment, visible: !evaluation.isEditingActionPlanComment() && evaluation.actionPlanComment()"></div>
+        <div class="content-editable" data-bind="visible: evaluation.isEditingActionPlanComment">
+          <textarea data-bind="value: evaluation.actionPlanComment"></textarea>
+          <button class="blue-button left" type="button" data-bind="click: evaluation.endEdition.bind($data, evaluation.isEditingActionPlanComment)" style="">Listo</button>
+        </div>
+      </div>
+      <!-- /ko -->
+      <!-- ko ifnot: userView == 3 || evaluation.devolutionInProgress -->
+      <div>
+        <div class="top-right-title">
+          <h4>Comentarios Generales</h4>
+          <div class="ck-button-edit" data-bind="if: isEvaluationEditable(), visible:!isEditingGeneralComment()" title="Editar">
+            <label>
+              <span><i></i></span>
+              <input type="checkbox" value="+" data-bind="checked: isEditingGeneralComment">
+            </label>
+          </div>
+        </div>
+        <div class="markdown-content" data-bind="markdownHtml: generalComment, visible: !isEditingGeneralComment()"></div>
+        <div class="comments-container" data-bind="visible: isEditingGeneralComment()">
+          <textarea class="content-editable big-comment" data-bind="value: generalComment, enable: isEvaluationEditable()"></textarea>
+        </div>
+        <button class="blue-button left" type="button" data-bind="click: endEdition, visible: isEditingGeneralComment()" style="">Listo</button>
+      </div>
+      <!-- /ko -->
     </div>
     <!--ko if: userView == 3 || evaluation.devolutionInProgress -->
-      </div>
-    </div>
-    <div class="markdown-content" data-bind="markdownHtml: generalComment, visible:!isEditingGeneralComment() "></div>
-    <div class="comments-container comments-company-container" data-bind="visible: isEditingGeneralComment()">
-      <textarea class="content-editable big-comment" data-bind="value: generalComment, enable: isEvaluationEditable()"></textarea>
-    </div>
-    <button class="blue-button left" type="button" data-bind="click: endEdition, visible: isEditingGeneralComment()" style="">Listo</button>
     <div class="evaluation-comments">
       <h4>Comentarios de la Evaluación</h4>
       <div class="evaluation-comments-section">
