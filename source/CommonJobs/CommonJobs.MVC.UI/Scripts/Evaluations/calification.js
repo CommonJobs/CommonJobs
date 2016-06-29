@@ -473,11 +473,11 @@
                 if (_.every(group.items, function (item) { return item.showComments(); })) {
                     return true;
                 }
-                else if (_.some(group.items, function (item) { return item.showComments(); })) {
-                    return null;
+                else if (_.every(group.items, function (item) { return !item.showComments(); })) {
+                    return false;
                 }
                 else {
-                    return false;
+                    return null;
                 }
             });
             if (_.every(groupsItemsShowComments, function (itemsShowComments) { return itemsShowComments; })) {
