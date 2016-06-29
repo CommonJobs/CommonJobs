@@ -16,6 +16,7 @@
     ScriptManager.RegisterJs(Url.Content("~/Scripts/Evaluations/common.js"));
     ScriptManager.RegisterJs(Url.Content("~/Scripts/Evaluations/calification.js"));
     ScriptManager.RegisterJs(Url.Content("~/Scripts/Evaluations/auto-expandable-value.js"));
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/Evaluations/tri-state.js"));
 }
 
 <div id="evaluation-view" class="content-evaluation evaluation">
@@ -36,7 +37,7 @@
           <span class="item">Proyectos:</span>
           <!--ko if: isEvaluationEditable() && (userView == 1 || userView == 3) -->
           <div class="editable-projects" data-bind="css: { edition: evaluation.project(), 'top-tip': evaluation.project()}, attr: {'data-tips': evaluation.project()}">
-            <textarea type="text" id="projects" placeholder="Agregá los proyectos" data-bind="autoExpandableValue: evaluation.project, valueUpdate: 'input', event: {keyup: evaluation.onKeyUpProject, focusin: evaluation.onFocusInProject, blur: evaluation.onBlurProject}" ></textarea><span class="pencil"></span>
+            <textarea type="text" id="projects" placeholder="Agregá los proyectos" data-bind="autoExpandableValue: evaluation.project, valueUpdate: 'input', event: {keyup: evaluation.onKeyUpProject, focusin: evaluation.onFocusInProject, blur: evaluation.onBlurProject}"></textarea><span class="pencil"></span>
           </div>
           <!-- /ko -->
           <!--ko if: !isEvaluationEditable() || (userView != 1 && userView != 3) -->
@@ -109,7 +110,11 @@
         <!-- ko foreach: calificationsAverages -->
         <th class="title-evaluation"><span data-bind="visible: show(), text: value || '-'"></span></th>
         <!-- /ko -->
-        <th class="title-evaluation"></th>
+        <th class="title-evaluation comment">
+          <label data-bind="triState:showCalificationsComments, click: toggleAllComments">
+            <input class="cmn-toggle-round" type="checkbox" />
+          </label>
+        </th>
       </tr>
     </thead>
     <tbody data-bind="foreach: groups">
@@ -131,7 +136,7 @@
         <!-- /ko -->
         <td>
           <div class="comment" data-bind="if: hasCommentsToShow()  || $root.isEvaluationEditable()">
-            <label data-bind="css: { 'checked': showComments()}">
+            <label data-bind="css: { 'checked': showComments(), 'colored': hasCommentsToShow()}">
               <input class="cmn-toggle-round" type="checkbox" data-bind="checked: showComments" />
             </label>
           </div>

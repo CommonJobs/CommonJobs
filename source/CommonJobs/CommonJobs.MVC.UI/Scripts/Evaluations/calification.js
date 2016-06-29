@@ -467,6 +467,27 @@
                 };
             });
         });
+
+        this.showCalificationsComments = ko.computed(function () {
+            var groupsItemsShowComments = _.map(self.groups, function (group) {
+                if (_.every(group.items, function (item) { return item.showComments(); })) {
+                    return true;
+                }
+                else if (_.every(group.items, function (item) { return !item.showComments(); })) {
+                    return false;
+                }
+                else {
+                    return null;
+                }
+            });
+            if (_.every(groupsItemsShowComments, function (itemsShowComments) { return itemsShowComments; })) {
+                return true;
+            }
+            else if (_.every(groupsItemsShowComments, function (itemsShowComments) { return itemsShowComments === false; })) {
+                return false;
+            }
+            else return null;
+        })
     };
 
     EvaluationViewModel.prototype.toDto = function (data) {
@@ -517,6 +538,14 @@
         }
     }
 
+    EvaluationViewModel.prototype.toggleAllComments = function (data, event) {
+        var toggleAllTo = viewmodel.showCalificationsComments() === null ? false : !viewmodel.showCalificationsComments();
+        _.each(data.groups, function (group) {
+            _.each(group.items, function (item) {
+                item.showComments (toggleAllTo);
+            })
+        })
+    }
     EvaluationViewModel.prototype.toggleVisibilityColumn = function (data, event) {
         data.show(!data.show());
     }
