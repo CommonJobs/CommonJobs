@@ -128,7 +128,8 @@
       <h4>Comentarios de la Evaluación</h4>
       <div class="evaluation-comments-section">
         <!-- ko foreach: califications-->
-        <div class="comments-section-container" data-bind="if: show() && (owner < 2 ||(owner == 2 && comments))">
+        <!-- ko if: show() && (owner <= 2) && !!comments() -->
+        <div class="comments-section-container">
           <!-- ko if: !!comments() -->
           <span class="comment-author" data-bind="text: evaluatorEmployee"></span><sapn class="comment-author">:</sapn>
           <div class="comment-text markdown-content" data-bind="markdownHtml: comments, visible: !isEditingComment()"></div>
@@ -144,6 +145,7 @@
             </label>
           </div>
         </div>
+        <!-- /ko -->
         <!-- /ko -->
       </div>
     </div>
@@ -200,20 +202,20 @@
           </div>
         </td>
       </tr>
-      <tr class="comments-section" data-bind="visible: showComments">
+      <tr class="comments-section" data-bind="visible: showComments() && ( hasCommentsToShow() || $root.isEvaluationEditable())">
         <td data-bind="attr:{'colspan': $root.columnsAmount}">
           <!-- ko foreach: comments -->
           <div class="comments-section-container" data-bind="visible: HasComment() && IsCalificationShown()">
             <span class="comment-author" data-bind="text: evaluatorEmployee"></span><sapn class="comment-author">:</sapn>
-            <div class="comment-text markdown-content " data-bind="markdownHtml: value, visible: !isSelfComment || !IsEditingComment()"></div>
-            <div class="comment-text edition-content" data-bind="visible: IsEditingComment">
+            <div class="comment-text markdown-content " data-bind="markdownHtml: value, visible: !isSelfComment || !isEditingComment()"></div>
+            <div class="comment-text edition-content" data-bind="visible: isEditingComment">
               <textarea data-bind="value: value" rows="5" placeholder="Agrega un comentario"></textarea>
               <button class="blue-button left" type="button" data-bind="click: endEdition" style="">Listo</button>
             </div>
-            <div class="ck-button-edit" data-bind="if: isEditable, visible: isSelfComment &&  !IsEditingComment()" title="Editar">
+            <div class="ck-button-edit" data-bind="if: isEditable, visible: isSelfComment &&  !isEditingComment()" title="Editar">
               <label>
                 <span><i></i></span>
-                <input type="checkbox" value="+" data-bind="checked: IsEditingComment">
+                <input type="checkbox" value="+" data-bind="checked: isEditingComment">
               </label>
             </div>
           </div>

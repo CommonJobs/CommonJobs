@@ -172,7 +172,7 @@
             }
             var show = self.userView == 0 || (self.userView != 0 && calification.Owner != 0);
             var hasShowIcon = calification.Finished || (calification.EvaluatorEmployee != self.userLogged && calification.Owner != self.userView);
-            var isCommentEditable= calification.EvaluatorEmployee == self.userLogged && viewmodel.isEvaluationEditable();
+            var isCommentEditable = calification.EvaluatorEmployee == self.userLogged && viewmodel.isEvaluationEditable();
             var commentItem = {
                 id: calification.Id,
                 owner: calification.Owner,
@@ -327,7 +327,7 @@
                                     return comment.evaluatorEmployee == self.userLogged
                                 });
                                 selfComment.value("");
-                                selfComment.IsEditingComment(true);
+                                selfComment.isEditingComment(true);
                             },
                             values: _.map(valuesByKeyCollection, function (valuesByKey) {
                                 var valueItem = {
@@ -359,7 +359,7 @@
                                     commentsByKey.calificationColumn.evaluatorEmployee,
                                     commentsByKey.calificationColumn.evaluatorEmployee == self.userLogged)
 
-                                commentItem.IsEditingComment = ko.observable(false);
+                                commentItem.isEditingComment = ko.observable(false);
                                 commentItem.isEditable = self.isValueEditable(commentsByKey);
                                 self.isDirty.register(commentItem.value);
 
@@ -553,7 +553,7 @@
         var toggleAllTo = viewmodel.showCalificationsComments() === null ? false : !viewmodel.showCalificationsComments();
         _.each(data.groups, function (group) {
             _.each(group.items, function (item) {
-                item.showComments (toggleAllTo);
+                item.showComments(toggleAllTo);
             })
         })
     }
@@ -634,8 +634,9 @@
             value: ko.observable(comment),
             evaluatorEmployee: evaluatorEmployee,
             isSelfComment: isSelfComment,
+            isEditingComment: ko.observable(false),
             endEdition: function (data, event) {
-                data.IsEditingComment(false);
+                data.isEditingComment(false);
                 if (data.value() == "") {
                     data.value(null)
                 }
@@ -650,7 +651,6 @@
         commentItem.HasComment = ko.computed(function () {
             return commentItem.value() != null;
         });
-        commentItem.IsEditingComment = ko.observable(false);
         return commentItem;
     };
 
