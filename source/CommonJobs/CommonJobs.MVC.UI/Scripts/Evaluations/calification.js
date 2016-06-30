@@ -181,13 +181,13 @@
                 finished: calification.Finished,
                 show: ko.observable(show),
                 hasShowIcon: hasShowIcon,
-                isCommentEditable: isCommentEditable
+                isCommentEditable: isCommentEditable,
+                isEditingComment: ko.observable(false)
             };
             commentItem.endEdition = function (data, event) {
                 data.isEditingComment(false);
             };
 
-            commentItem.isEditingComment = ko.observable(false);
             self.isDirty.register(commentItem.comments);
             return commentItem;
         });
