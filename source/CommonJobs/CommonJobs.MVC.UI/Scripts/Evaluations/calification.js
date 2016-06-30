@@ -167,22 +167,29 @@
         this.numberOfColumns = "table-" + this.columnsAmount + "-columns";
         var calificationsSorted = data.Califications.sort(sortCalificationColumns);
         this.califications = _.map(calificationsSorted, function (calification) {
-            var comment = ko.observable(calification.Comments);
-            self.isDirty.register(comment);
             if (calification.Owner == 3 && (!calification.Califications || !calification.Califications.length)) {
                 self.isCompanyCalificationsEmpty = true;
             }
             var show = self.userView == 0 || (self.userView != 0 && calification.Owner != 0);
             var hasShowIcon = calification.Finished || (calification.EvaluatorEmployee != self.userLogged && calification.Owner != self.userView);
-            return {
+            var isCommentEditable = calification.EvaluatorEmployee == self.userLogged && viewmodel.isEvaluationEditable();
+            var commentItem = {
                 id: calification.Id,
                 owner: calification.Owner,
                 evaluatorEmployee: calification.EvaluatorEmployee,
-                comments: comment,
+                comments: ko.observable(calification.Comments),
                 finished: calification.Finished,
                 show: ko.observable(show),
-                hasShowIcon: hasShowIcon
-            }
+                hasShowIcon: hasShowIcon,
+                isCommentEditable: isCommentEditable,
+                isEditingComment: ko.observable(false)
+            };
+            commentItem.endEdition = function (data, event) {
+                data.isEditingComment(false);
+            };
+
+            self.isDirty.register(commentItem.comments);
+            return commentItem;
         });
 
         this.isResposibleCalificating = _.some(self.califications, function (califications) {
@@ -215,16 +222,20 @@
         var userLoggedCalifiction = _.find(self.califications, function (calification) {
             return (calification.owner == 3 && (self.userView == 3 || (self.userView == 0 && self.evaluation.devolutionInProgress)))
                 || (self.userView != 3 && !(self.userView == 0 && self.evaluation.devolutionInProgress) && calification.evaluatorEmployee == self.userLogged);
-        })
+        });
 
         var userLoggedEvaluated = _.find(self.califications, function (calification) {
             return calification.owner == 0;
-        })
+        });
 
         this.evaluatedComment = (userLoggedEvaluated) ? userLoggedEvaluated.comments : ko.observable('');
 
-        this.generalComment = (userLoggedCalifiction) ? userLoggedCalifiction.comments : ko.observable('');
-
+        this.generalComment = userLoggedCalifiction.comments;
+        this.isEditingGeneralComment = ko.observable(false);
+        this.endEdition = function (data, event) {
+            this.isEditingGeneralComment(false);
+            self.isDirty(this.generalComment);
+        };
         if (this.evaluation.devolutionInProgress && this.userView == 2) {
             var comments = _.chain(self.califications)
             .filter(function (calification) {
@@ -316,7 +327,7 @@
                                     return comment.evaluatorEmployee == self.userLogged
                                 });
                                 selfComment.value("");
-                                selfComment.IsEditingComment(true);
+                                selfComment.isEditingComment(true);
                             },
                             values: _.map(valuesByKeyCollection, function (valuesByKey) {
                                 var valueItem = {
@@ -348,7 +359,7 @@
                                     commentsByKey.calificationColumn.evaluatorEmployee,
                                     commentsByKey.calificationColumn.evaluatorEmployee == self.userLogged)
 
-                                commentItem.IsEditingComment = ko.observable(false);
+                                commentItem.isEditingComment = ko.observable(false);
                                 commentItem.isEditable = self.isValueEditable(commentsByKey);
                                 self.isDirty.register(commentItem.value);
 
@@ -542,7 +553,7 @@
         var toggleAllTo = viewmodel.showCalificationsComments() === null ? false : !viewmodel.showCalificationsComments();
         _.each(data.groups, function (group) {
             _.each(group.items, function (item) {
-                item.showComments (toggleAllTo);
+                item.showComments(toggleAllTo);
             })
         })
     }
@@ -589,6 +600,12 @@
         this.isCompanyEvaluationDone = data.IsCompanyEvaluationDone;
         this.state = evaluationStates[data.State];
         this.evaluators = data.Evaluators.join(', ');
+        this.isEditingImproveComment = ko.observable(false);
+        this.isEditingActionPlanComment = ko.observable(false);
+        this.isEditingStrengthsComment = ko.observable(false);
+        this.endEdition = function (flag) {
+            flag(false);
+        }
         viewmodel.isDirty.register(this.project);
         viewmodel.isDirty.register(this.strengthsComment);
         viewmodel.isDirty.register(this.improveComment);
@@ -617,8 +634,9 @@
             value: ko.observable(comment),
             evaluatorEmployee: evaluatorEmployee,
             isSelfComment: isSelfComment,
+            isEditingComment: ko.observable(false),
             endEdition: function (data, event) {
-                data.IsEditingComment(false);
+                data.isEditingComment(false);
                 if (data.value() == "") {
                     data.value(null)
                 }
@@ -633,7 +651,6 @@
         commentItem.HasComment = ko.computed(function () {
             return commentItem.value() != null;
         });
-        commentItem.IsEditingComment = ko.observable(false);
         return commentItem;
     };
 
