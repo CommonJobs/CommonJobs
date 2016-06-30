@@ -990,12 +990,16 @@ tr.evaluation-generated td {
             height: 140px;
         }
         /* line 171, ../../sass/Evaluations/_evaluation.scss */
-        .evaluation .top-evaluation .comments-container .title {
+        .evaluation .top-evaluation .title {
             color: #000;
             font-size: 16px;
             font-weight: bold;
-            text-decoration: underline;
         }
+
+            .evaluation .top-evaluation .title span {
+                text-decoration: underline;
+            }
+
     /* line 178, ../../sass/Evaluations/_evaluation.scss */
     .evaluation .top-evaluation .content-editable {
         border: none;
