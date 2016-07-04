@@ -1,4 +1,5 @@
 ﻿using CommonJobs.Application.EvalForm.Helper;
+using CommonJobs.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,6 +34,8 @@ namespace CommonJobs.Application.EvalForm
         public bool IsEditable { get; set; }
 
         public List<PosibleRevertActions> PosibleRevertActions { get; set; }
+
+        public SharedLinkList SharedLinks { get; set; }
     }
 
     public class PosibleRevertActions

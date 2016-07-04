@@ -12,6 +12,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using CommonJobs.Application.EvalForm.Helper;
+using CommonJobs.Mvc.UI.Infrastructure;
 
 namespace CommonJobs.Mvc.UI.Areas.Evaluations.Controllers
 {
@@ -52,6 +53,7 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Get)]
+        [SharedEntityAlternativeAuthorization]
         public JsonNetResult GetDashboardEvaluationsForEmployeeManagers(string period)
         {
             PeriodEvaluation periodEvaluation = new PeriodEvaluation();

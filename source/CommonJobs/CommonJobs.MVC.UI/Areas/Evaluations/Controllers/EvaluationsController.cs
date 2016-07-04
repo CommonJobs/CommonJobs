@@ -54,6 +54,7 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
         }
 
         [AcceptVerbs(HttpVerbs.Get)]
+        [SharedEntityAlternativeAuthorization ]
         [CommonJobsAuthorize(Roles = "EmployeeManagers,EvaluationManagers")]
         public ActionResult ReportDashboard(string period)
         {
