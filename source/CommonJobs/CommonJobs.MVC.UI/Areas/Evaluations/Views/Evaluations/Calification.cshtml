@@ -117,7 +117,7 @@
         </div>
         <div class="markdown-content" data-bind="markdownHtml: generalComment, visible: !isEditingGeneralComment()"></div>
         <div class="comments-container" data-bind="visible: isEditingGeneralComment()">
-          <textarea class="content-editable big-comment" data-bind="value: generalComment, enable: isEvaluationEditable()"></textarea>
+          <textarea class="content-editable big-comment" data-bind="autoExpandableValue: generalComment, valueUpdate: 'input', enable: isEvaluationEditable()"></textarea>
         </div>
         <button class="blue-button left" type="button" data-bind="click: endEdition, visible: isEditingGeneralComment()" style="">Listo</button>
       </div>
