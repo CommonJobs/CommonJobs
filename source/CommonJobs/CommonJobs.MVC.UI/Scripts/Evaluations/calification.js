@@ -220,7 +220,7 @@
         );
 
         var userLoggedCalifiction = _.find(self.califications, function (calification) {
-            return (calification.owner == 3 && (self.userView == 3 || (self.userView == 0 && self.evaluation.devolutionInProgress)))
+            return (calification.owner == 3 && (self.userView == 3 || (self.userView == 0 && self.evaluation.devolutionInProgress) || (self.evaluation.finished)))
                 || (self.userView != 3 && !(self.userView == 0 && self.evaluation.devolutionInProgress) && calification.evaluatorEmployee == self.userLogged);
         });
 
