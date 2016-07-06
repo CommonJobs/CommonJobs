@@ -11,6 +11,7 @@
         { title: 'Empleado', sortable: true, sortPropertyName: 'fullName', defaultPropertyName: 'fullName', asc: true, activeSort: ko.observable(false) },
         { title: 'Puesto', sortable: true, sortPropertyName: 'currentPosition', defaultPropertyName: 'fullName', asc: true, activeSort: ko.observable(false) },
         { title: 'Seniority', sortable: true, sortPropertyName: 'seniority', defaultPropertyName: 'fullName', asc: true, activeSort: ko.observable(false) },
+        { title: 'Links', sortable: false, defaultPropertyName: 'fullName'},
         { title: 'Responsable', sortable: true, sortPropertyName: 'responsibleId', defaultPropertyName: 'fullName', asc: true, activeSort: ko.observable(false) },
         { title: 'Estado', sortable: true, sortPropertyName: 'state', defaultPropertyName: 'fullName', asc: true, activeSort: ko.observable(false) },
         { title: '', sortable: false }
@@ -47,6 +48,7 @@
         this.seniority = '';
         this.state = ko.observable('');
         this.currentState = '';
+        this.sharedLinks = [];
         if (data) {
             this.fromJs(data);
         }
@@ -65,6 +67,13 @@
         this.seniority = data.Seniority || '';
         this.state(data.State);
         this.stateName = evaluationStates[this.state()];
+        this.sharedLinks = _.map(data.SharedLinks, function (sharedLink) {
+            return {
+                link: urlGenerator.sharedAction(this.period + "/" + this.userName + "/", "Evaluations", null, sharedLink.SharedCode),
+                friendlyName: sharedLink.FriendlyName,
+                expirationDate: sharedLink.ExpirationDate
+            }
+        })
         this.stateClasses = "state-doc state-" + this.state();
         this.calificationUrl = urlGenerator.action(this.period + "/" + this.userName + "/", "Evaluations");
         this.showResponsibleManager = function (data, event) {
