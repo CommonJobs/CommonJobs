@@ -53,7 +53,8 @@ namespace CommonJobs.Application.EvalForm.Helper
                          e.AutoEvaluationDone,
                          e.AnyEvaluatorEvaluationDone)
                          .Select(x => new PosibleRevertActions { ActionName = x.GetDescription(), ActionValue = x.ToString() })
-                         .ToList()
+                         .ToList(),
+                     SharedLinks = e.SharedLinks
                  };
              }).ToList();
         }
