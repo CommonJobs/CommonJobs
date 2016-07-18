@@ -154,5 +154,29 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations.Controllers
             ExecuteCommand(new RevertEvaluationStateCommand(period, username, operation));
             return Json("OK");
         }
+
+        [AcceptVerbs (HttpVerbs.Post)]
+        [CommonJobsAuthorize (Roles = "EmployeeManagers")]
+        public JsonNetResult CreateEvaluationSharedLink(string period, string username)
+        {
+            var newSharedLink = ExecuteCommand(new CreateEvaluationSharedLink(period, username));
+            return Json(newSharedLink);
+        }
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        [CommonJobsAuthorize(Roles = "EmployeeManagers")]
+        public JsonNetResult UpdateEvaluationSharedLink(string period, string username, SharedLink sharedLink)
+        {
+            ExecuteCommand(new UpdateEvaluationSharedLink(period, username, sharedLink));
+            return Json(null);
+        }
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        [CommonJobsAuthorize(Roles = "EmployeeManagers")]
+        public JsonNetResult DeleteEvaluationSharedLink(string period, string username, SharedLink sharedLink)
+        {
+            ExecuteCommand(new DeleteEvaluationSharedLink(period, username, sharedLink));
+            return Json("OK");
+        }
     }
 }
