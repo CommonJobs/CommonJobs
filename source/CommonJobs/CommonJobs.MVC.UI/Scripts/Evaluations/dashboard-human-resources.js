@@ -70,16 +70,9 @@
         this.state(data.State);
         this.stateName = evaluationStates[this.state()];
         this.sharedLinks(_.map(data.SharedLinks, function (sharedLink) {
-            return {
-                link: urlGenerator.sharedAction(self.Period + "/" + self.UserName, "Evaluations", null, sharedLink.SharedCode),
-                period: self.Period,
-                userName: self.UserName,
-                sharedCode: sharedLink.SharedCode,
-                friendlyName: ko.observable(sharedLink.FriendlyName),
-                expirationDate: ko.observable(sharedLink.ExpirationDate),
-                edittingFriendlyName: ko.observable(false)
-            }
-        }));
+            return new SharedLink(sharedLink, data.Period, data.UserName);
+        }
+        ));
         this.stateClasses = "state-doc state-" + this.state();
         this.calificationUrl = urlGenerator.action(this.period + "/" + this.userName + "/", "Evaluations");
         this.showResponsibleManager = function (data, event) {
@@ -108,15 +101,7 @@
     EvaluationReport.prototype.createLink = function (data, event) {
         $.post("/Evaluations/api/CreateEvaluationSharedLink/" + this.period + "/" + this.userName)
         .success(function (sharedLink) {
-            var newSharedLink = {
-                link: urlGenerator.sharedAction(this.period + "/" + this.userName, "Evaluations", null, sharedLink.SharedCode),
-                period: this.period,
-                userName: this.userName,
-                friendlyName: ko.observable(sharedLink.FriendlyName),
-                sharedCode: sharedLink.SharedCode,
-                expirationDate: ko.observable(new Date(sharedLink.ExpirationDate).toLocaleDateString()),
-                edittingFriendlyName: ko.observable(false)
-            };
+            var newSharedLink = new SharedLink(sharedLink, data.period, data.userName);
             data.sharedLinks.push(newSharedLink);
         })
         .fail(function () {
@@ -124,14 +109,56 @@
         });
     }
 
-    EvaluationReport.prototype.updateSharedLink = function (data, event) {
+    EvaluationReport.prototype.toogle = function (data, event) {
+        var toogleValue = data.edittingFriendlyName();
+        data.edittingFriendlyName(!toogleValue);
+    }
+
+    var SharedLink = function (data, period, userName) {
+        this.link = "";
+        this.period = "";
+        this.userName = "";
+        this.sharedCode = "";
+        this.friendlyName = ko.observable("");
+        this.expirationDate = ko.observable(new Date);
+        this.edittingFriendlyName = ko.observable(false);
+        if (data && period && userName) {
+            this.fromJs(data, period, userName);
+        }
+    }
+
+    SharedLink.prototype.fromJs = function (data, period, userName) {
+        this.link = urlGenerator.sharedAction(period + "/" + userName, "Evaluations", null, data.SharedCode);
+        this.period = period;
+        this.userName = userName;
+        this.sharedCode = data.SharedCode;
+        this.friendlyName(data.FriendlyName);
+        this.expirationDate(data.ExpirationDate);
+    };
+
+    SharedLink.prototype.toDto = function () {
+        return {
+            period: this.period,
+            userName: this.userName,
+            sharedLink: {
+                FriendlyName: this.friendlyName(),
+                SharedCode: this.sharedCode,
+                ExpirationDate: this.expirationDate()
+            }
+        }
+    }
+
+    SharedLink.prototype.openLink = function (data, event) {
+        window.location = this.link;
+    }
+
+    SharedLink.prototype.updateSharedLink = function (data, event) {
         viewmodel.isLoading(true);
-        var updatedSharedLink = sharedLinkToDto(data)
         $.ajax("/Evaluations/api/UpdateEvaluationSharedLink/", {
-            type:"POST",
+            type: "POST",
             dataType: "text",
             contentType: "application/json; charset=utf-8",
-            data: JSON.stringify(updatedSharedLink)
+            data: JSON.stringify(data.toDto())
         })
         .success(function () {
             data.edittingFriendlyName(false);
@@ -216,18 +243,6 @@
     $("#selectedPeriod").change(function () {
         window.location = this.value;
     })
-
-    function sharedLinkToDto(updatedSharedLink) {
-        return {
-            period: updatedSharedLink.period,
-            userName: updatedSharedLink.userName,
-            sharedLink: {
-                FriendlyName: updatedSharedLink.friendlyName(),
-                SharedCode: updatedSharedLink.sharedCode,
-                ExpirationDate: updatedSharedLink.expirationDate()
-            }
-        }
-    }
 
     function getReportDashboard(period) {
         viewmodel.isLoading(true);
