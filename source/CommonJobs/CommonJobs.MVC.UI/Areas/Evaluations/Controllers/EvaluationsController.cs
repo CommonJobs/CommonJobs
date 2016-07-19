@@ -54,7 +54,6 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
         }
 
         [AcceptVerbs(HttpVerbs.Get)]
-        [SharedEntityAlternativeAuthorization ]
         [CommonJobsAuthorize(Roles = "EmployeeManagers,EvaluationManagers")]
         public ActionResult ReportDashboard(string period)
         {
@@ -81,7 +80,7 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
         }
 
         [AcceptVerbs(HttpVerbs.Get)]
-        [CommonJobsAuthorize(Roles="EmployeeManagers,EvaluationManagers")]
+        [CommonJobsAuthorize(Roles = "EmployeeManagers,EvaluationManagers")]
         public ActionResult ReportDashboardIndex()
         {
             var lastPeriod = GetReportPeriods().Select(e => e.Period).FirstOrDefault();
@@ -136,7 +135,7 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
         }
 
         [AcceptVerbs(HttpVerbs.Get)]
-        public ActionResult Calification(string period, string username)
+        public ActionResult Calification(string period, string username, string sharedCode = null)
         {
             //1. If user is self
             //1.a. Check if it needs to be evaluated (if not, redirect or error)
@@ -167,11 +166,14 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
                 return HttpNotFound();
             }
 
+            var hasValidSharedCode = evaluation.SharedLinks != null ?
+                evaluation.SharedLinks.Any(x => x.SharedCode == sharedCode && x.ExpirationDate >= DateTime.UtcNow) :
+                false;
             var isManager = IsEmployeeManager(loggedUser);
             var isLoggedUserEvaluator = IsEvaluator(loggedUser, username, evaluation.ResponsibleId, evaluation.Evaluators);
             var isLoggedUserEvaluated = loggedUser == username;
 
-            if (!isLoggedUserEvaluated && !isLoggedUserEvaluator && !isManager)
+            if (!isLoggedUserEvaluated && !isLoggedUserEvaluator && !isManager && !hasValidSharedCode)
             {
                 return new HttpStatusCodeResult(403, "Access Denied");
             }
@@ -182,6 +184,10 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
 
             ViewBag.UserName = username;
             ViewBag.IsCalification = true;
+            if (sharedCode!=null)
+            {
+                ViewBag.SharedCode = sharedCode;
+            }
             return View("Calification");
         }
 
@@ -202,7 +208,7 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
             return CheckRole(username, "EvaluationManagers");
         }
 
-        private bool CheckRole(string username, params string [] role)
+        private bool CheckRole(string username, params string[] role)
         {
             var sessionRoles = ExecuteCommand(new GetLoggedUserRoles(username));
             return sessionRoles.Intersect(role).Any();

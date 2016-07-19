@@ -38,7 +38,11 @@
 
     EvaluationViewModel.prototype.load = function () {
         viewmodel.isLoading(true);
-        $.getJSON("/Evaluations/api/getEvaluation/" + calificationPeriod + "/" + calificationUserName + "/", function (model) {
+        var url = calificationSharedCode ?
+            "/Evaluations/api/getEvaluation/" + calificationPeriod + "/" + calificationUserName + "/" + calificationSharedCode + "/" :
+            "/Evaluations/api/getEvaluation/" + calificationPeriod + "/" + calificationUserName + "/";
+
+        $.getJSON(url, function (model) {
             viewmodel.fromJs(model);
             ko.applyBindings(viewmodel, document.getElementById('evaluation-view'));
         })
@@ -220,7 +224,7 @@
         );
 
         var userLoggedCalifiction = _.find(self.califications, function (calification) {
-            return (calification.owner == 3 && (self.userView == 3 || (self.userView == 0 && self.evaluation.devolutionInProgress) || (self.evaluation.finished)))
+            return (calification.owner == 3 && (self.userView == 3 || (self.userView == 0 && self.evaluation.devolutionInProgress) || (self.evaluation.finished) || this.calificationSharedCode))
                 || (self.userView != 3 && !(self.userView == 0 && self.evaluation.devolutionInProgress) && calification.evaluatorEmployee == self.userLogged);
         });
 
@@ -230,7 +234,7 @@
 
         this.evaluatedComment = (userLoggedEvaluated) ? userLoggedEvaluated.comments : ko.observable('');
 
-        this.generalComment = userLoggedCalifiction.comments;
+        this.generalComment = userLoggedCalifiction ? userLoggedCalifiction.comments : ko.observable('');
         this.isEditingGeneralComment = ko.observable(false);
         this.endEdition = function (data, event) {
             this.isEditingGeneralComment(false);
