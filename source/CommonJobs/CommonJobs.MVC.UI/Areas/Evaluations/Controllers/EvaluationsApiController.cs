@@ -177,5 +177,34 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations.Controllers
             ExecuteCommand(new DeleteEvaluationSharedLink(period, username, sharedLink));
             return Json("OK");
         }
+
+
+        [AcceptVerbs(HttpVerbs.Get)]
+        public JsonNetResult GetEmployeeEvaluationHistory(string username)
+        {
+            var loggedUser = DetectUser();
+            var employeeEvaluationHelper = new EmployeeEvaluationHelper(RavenSession, loggedUser);
+            var responsibleOfEvaluationPeriod = employeeEvaluationHelper.GetLastPeriodForResponisble(username);
+            if (responsibleOfEvaluationPeriod == null)
+            {
+                throw new ApplicationException($"Not responsible of {username}'s evaluation in any period");
+            }
+            var evaluationHistory = ExecuteCommand(new GetEmployeeEvaluationHistoryCommand(responsibleOfEvaluationPeriod, username));
+            return Json(evaluationHistory);
+        }
+
+        private string getUserPeviousPeriod(string actualPeriod, string userName)
+        {
+            var periodList = RavenSession
+               .Query<Period_Search.Projection, Period_Search>()
+               .Where(x => x.UserName == userName)
+               .OrderByDescending(e => e.Period)
+               .ToList();
+
+            return periodList
+                .SkipWhile(x => x.Period != actualPeriod)
+                .Take(2)
+                .LastOrDefault().Period;
+        }
     }
 }
