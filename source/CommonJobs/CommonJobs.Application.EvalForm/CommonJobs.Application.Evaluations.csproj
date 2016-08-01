@@ -63,12 +63,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\ChangeResponsibleCommand.cs" />
+    <Compile Include="Commands\CreateEvaluationSharedLink.cs" />
     <Compile Include="Commands\DeleteEvaluationCommand.cs" />
+    <Compile Include="Commands\DeleteEvaluationSharedLink.cs" />
     <Compile Include="Commands\GetEvaluatedEmployees.cs" />
     <Compile Include="Commands\GetEvaluationCalifications.cs" />
     <Compile Include="Commands\GetLoggedUserRoles.cs" />
     <Compile Include="Commands\StartDevolutionCommand.cs" />
     <Compile Include="Commands\UpdateCalificationsCommand.cs" />
+    <Compile Include="Commands\UpdateEvaluationSharedLink.cs" />
     <Compile Include="Commands\UpdateEvaluatorsCommand.cs" />
     <Compile Include="Commands\GetEvaluatorEmployeesCommand.cs" />
     <Compile Include="Dtos\CalificationsDto.cs" />

@@ -366,6 +366,78 @@ h1 {
         width: 100%;
     }
 
+    .content-evaluation .datepicker {
+        width: auto;
+    }
+
+    .content-evaluation .link {
+        display: block;
+        clear: both;
+    }
+
+        .content-evaluation .link a {
+            color: #0088cc;
+            text-decoration: none;
+        }
+
+    .content-evaluation .link-edit input {
+        width: 140px;
+        float: none;
+        display: block;
+    }
+
+    .content-evaluation .link-edit.block {
+        display: inline-block;
+    }
+
+    .content-evaluation .link-btn {
+        margin-right: 3px;
+        border: 0;
+        border-color: rgba(0, 0, 0, 0.15) rgba(0, 0, 0, 0.15) rgba(0, 0, 0, 0.25);
+        display: inline-block;
+        text-align: center;
+        color: #333333;
+        text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
+        background-color: whitesmoke;
+        background-image: linear-gradient(to bottom, white, #e6e6e6);
+        background-repeat: repeat-x;
+        border: 1px solid #bbbbbb;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05);
+        border-radius: 3px;
+    }
+
+        .content-evaluation .link-btn.done {
+            width: auto;
+            position: absolute;
+            margin: 16px 10px;
+        }
+
+        .content-evaluation .link-btn.add {
+            display: block;
+            clear: both;
+        }
+
+        .content-evaluation .link-btn .icon {
+            background-image: url(../Images/glyphicons-halflings.png);
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            line-height: 14px;
+            vertical-align: text-top;
+            background-repeat: no-repeat;
+            margin-top: 1px;
+            background-size: unset;
+            padding-left: 0px;
+        }
+
+            .content-evaluation .link-btn .icon.remove {
+                background-position: -312px 0;
+            }
+
+            .content-evaluation .link-btn .icon.add {
+                background-position: -408px -96px;
+            }
+
 /* line 167, ../../sass/Evaluations/_base.scss */
 .icon {
     padding-left: 20px;
@@ -392,6 +464,11 @@ h1 {
     .icon.edit {
         background-image: url(../Images/Evaluations/6-02.png);
     }
+
+    .icon.edit-btn {
+        background-image: url(../Images/Evaluations/6-02.png);
+        cursor: pointer;
+    }
     /* line 190, ../../sass/Evaluations/_base.scss */
     .icon.user {
         background-image: url(../Images/Evaluations/3-02.png);
@@ -403,6 +480,20 @@ h1 {
     /* line 198, ../../sass/Evaluations/_base.scss */
     .icon.view {
         background-image: url(../Images/Evaluations/4-02.png);
+    }
+
+    .icon.remove {
+        background-image: url(../Images/glyphicons-halflings.png);
+        background-position: -312px 0;
+        display: inline-block;
+        width: 14px;
+        height: 14px;
+        line-height: 14px;
+        vertical-align: text-top;
+        background-repeat: no-repeat;
+        margin-top: 1px;
+        background-size: unset;
+        padding-left: 0px;
     }
 
 /* line 1, ../../sass/Evaluations/_pop-up.scss */
@@ -517,18 +608,23 @@ tr.evaluation-generated td {
 }
 /* line 50, ../../sass/Evaluations/_dashboard.scss */
 .dashboard table th.col-5 {
+    width: 300px;
+}
+
+/* line 50, ../../sass/Evaluations/_dashboard.scss */
+.dashboard table th.col-6 {
     width: 150px;
 }
 /* line 53, ../../sass/Evaluations/_dashboard.scss */
-.dashboard table th.col-6 {
+.dashboard table th.col-7 {
     width: 220px;
 }
 /* line 56, ../../sass/Evaluations/_dashboard.scss */
-.dashboard table th.col-7 {
+.dashboard table th.col-8 {
     width: 150px;
 }
 /* line 59, ../../sass/Evaluations/_dashboard.scss */
-.dashboard table th.col-8 {
+.dashboard table th.col-9 {
     width: 110px;
 }
 /* line 62, ../../sass/Evaluations/_dashboard.scss */
@@ -989,16 +1085,16 @@ tr.evaluation-generated td {
         .evaluation .top-evaluation .comments-container.comments-company-container {
             height: 140px;
         }
-        /* line 171, ../../sass/Evaluations/_evaluation.scss */
-        .evaluation .top-evaluation .title {
-            color: #000;
-            font-size: 16px;
-            font-weight: bold;
-        }
+    /* line 171, ../../sass/Evaluations/_evaluation.scss */
+    .evaluation .top-evaluation .title {
+        color: #000;
+        font-size: 16px;
+        font-weight: bold;
+    }
 
-            .evaluation .top-evaluation .title span {
-                text-decoration: underline;
-            }
+        .evaluation .top-evaluation .title span {
+            text-decoration: underline;
+        }
 
     /* line 178, ../../sass/Evaluations/_evaluation.scss */
     .evaluation .top-evaluation .content-editable {

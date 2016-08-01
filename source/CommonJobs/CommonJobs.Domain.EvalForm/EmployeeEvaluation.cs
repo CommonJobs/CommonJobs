@@ -38,6 +38,8 @@ namespace CommonJobs.Domain.Evaluations
 
         public string ActionPlanComment { get; set; }
 
+        public SharedLinkList SharedLinks { get; set; }
+
         public static string GenerateEvaluationId(string period, string userName)
         {
             return string.Format("Evaluations/{0}/{1}", period, userName);

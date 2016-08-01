@@ -37,6 +37,8 @@ namespace CommonJobs.Application.EvalForm.Indexes
             public bool OpenToDevolution { get; set; }
             public bool Finished { get; set; }
             public List<CalificationState> CalificationsState { get; set; }
+            public SharedLinkList SharedLinks { get; set; }
+
         }
 
         public EmployeeToEvaluate_Search()
@@ -60,7 +62,8 @@ namespace CommonJobs.Application.EvalForm.Indexes
                     AnyEvaluatorEvaluationDone = false,
                     OpenToDevolution = false,
                     Finished = false,
-                    CalificationsState = new dynamic[0]
+                    CalificationsState = new dynamic[0],
+                    SharedLinks = new dynamic[0]
                 });
 
             AddMap<EmployeeEvaluation>(evaluations =>
@@ -82,7 +85,8 @@ namespace CommonJobs.Application.EvalForm.Indexes
                     AnyEvaluatorEvaluationDone = false,
                     OpenToDevolution = evaluation.ReadyForDevolution,
                     Finished = evaluation.Finished,
-                    CalificationsState = new dynamic[0]
+                    CalificationsState = new dynamic[0],
+                    SharedLinks = evaluation.SharedLinks != null ? new [] { evaluation.SharedLinks } : new dynamic[0],
                 });
 
             AddMap<EvaluationCalification>(califications =>
@@ -97,7 +101,7 @@ namespace CommonJobs.Application.EvalForm.Indexes
                     Period = calification.Period,
                     TemplateId = (string)null,
                     Evaluators = (calification.Owner != CalificationType.Auto && calification.Owner != CalificationType.Company && calification.Owner != CalificationType.Responsible)
-                        ? new [] { calification.EvaluatorEmployee }
+                        ? new[] { calification.EvaluatorEmployee }
                         : new dynamic[0],
                     ResponsibleId = (string)null,
                     AutoEvaluationDone = calification.Owner == CalificationType.Auto && calification.Finished,
@@ -109,6 +113,7 @@ namespace CommonJobs.Application.EvalForm.Indexes
                     CalificationsState = (calification.Owner != CalificationType.Auto && calification.Owner != CalificationType.Company && calification.Owner != CalificationType.Responsible)
                         ? new[] { new { UserName = calification.EvaluatorEmployee, Finished = calification.Finished } }
                         : new dynamic[0],
+                    SharedLinks = new dynamic[0]
                 });
 
             Reduce = docs =>
@@ -132,6 +137,7 @@ namespace CommonJobs.Application.EvalForm.Indexes
                     OpenToDevolution = g.Any(x => x.OpenToDevolution),
                     Finished = g.Any(x => x.Finished),
                     CalificationsState = g.SelectMany(x => x.CalificationsState).Where(x => x != null).ToArray(),
+                    SharedLinks = g.SelectMany(x => x.SharedLinks).Where(x => x != null).ToArray()
                 };
 
             Indexes.Add(x => x.Evaluators, FieldIndexing.Analyzed);

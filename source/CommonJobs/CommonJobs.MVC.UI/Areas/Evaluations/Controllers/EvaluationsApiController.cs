@@ -12,6 +12,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using CommonJobs.Application.EvalForm.Helper;
+using CommonJobs.Mvc.UI.Infrastructure;
 
 namespace CommonJobs.Mvc.UI.Areas.Evaluations.Controllers
 {
@@ -52,6 +53,7 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Get)]
+        [SharedEntityAlternativeAuthorization]
         public JsonNetResult GetDashboardEvaluationsForEmployeeManagers(string period)
         {
             PeriodEvaluation periodEvaluation = new PeriodEvaluation();
@@ -88,17 +90,16 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Get)]
-        public JsonNetResult GetEvaluation(string username, string period)
+        public JsonNetResult GetEvaluation(string username, string period, string sharedCode = null)
         {
             var loggedUser = DetectUser();
 
             var sessionRoles = ExecuteCommand(new GetLoggedUserRoles(loggedUser));
-
             var required = new List<string>() { "EmployeeManagers" };
             var isManager = sessionRoles.Intersect(required).Any();
 
             Calification calification = new Calification();
-            CalificationsDto calificationsDTO = ExecuteCommand(new GetEvaluationCalifications(period, username, DetectUser(), isManager));
+            CalificationsDto calificationsDTO = ExecuteCommand(new GetEvaluationCalifications(period, username, DetectUser(), isManager, sharedCode));
             calification.UserView = calificationsDTO.View;
             calification.Evaluation = calificationsDTO.Evaluation;
             calification.Califications = calificationsDTO.Califications;
@@ -150,6 +151,30 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations.Controllers
         public JsonNetResult RevertEvaluationState(string period, string username, string operation)
         {
             ExecuteCommand(new RevertEvaluationStateCommand(period, username, operation));
+            return Json("OK");
+        }
+
+        [AcceptVerbs (HttpVerbs.Post)]
+        [CommonJobsAuthorize (Roles = "EmployeeManagers")]
+        public JsonNetResult CreateEvaluationSharedLink(string period, string username)
+        {
+            var newSharedLink = ExecuteCommand(new CreateEvaluationSharedLink(period, username));
+            return Json(newSharedLink);
+        }
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        [CommonJobsAuthorize(Roles = "EmployeeManagers")]
+        public JsonNetResult UpdateEvaluationSharedLink(string period, string username, SharedLink sharedLink)
+        {
+            ExecuteCommand(new UpdateEvaluationSharedLink(period, username, sharedLink));
+            return Json(null);
+        }
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        [CommonJobsAuthorize(Roles = "EmployeeManagers")]
+        public JsonNetResult DeleteEvaluationSharedLink(string period, string username, SharedLink sharedLink)
+        {
+            ExecuteCommand(new DeleteEvaluationSharedLink(period, username, sharedLink));
             return Json("OK");
         }
     }

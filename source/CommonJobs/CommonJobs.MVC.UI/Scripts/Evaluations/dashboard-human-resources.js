@@ -11,6 +11,7 @@
         { title: 'Empleado', sortable: true, sortPropertyName: 'fullName', defaultPropertyName: 'fullName', asc: true, activeSort: ko.observable(false) },
         { title: 'Puesto', sortable: true, sortPropertyName: 'currentPosition', defaultPropertyName: 'fullName', asc: true, activeSort: ko.observable(false) },
         { title: 'Seniority', sortable: true, sortPropertyName: 'seniority', defaultPropertyName: 'fullName', asc: true, activeSort: ko.observable(false) },
+        { title: 'Links', sortable: false, defaultPropertyName: 'fullName' },
         { title: 'Responsable', sortable: true, sortPropertyName: 'responsibleId', defaultPropertyName: 'fullName', asc: true, activeSort: ko.observable(false) },
         { title: 'Estado', sortable: true, sortPropertyName: 'state', defaultPropertyName: 'fullName', asc: true, activeSort: ko.observable(false) },
         { title: '', sortable: false }
@@ -38,6 +39,7 @@
         this.id = '';
         this.isResponsible = false;
         this.isEvaluationManager = false;
+        this.isEvaluationEditable = ko.observable(true);
         this.isEditable = false;
         this.responsibleId = ko.observable('');
         this.fullName = '';
@@ -47,12 +49,14 @@
         this.seniority = '';
         this.state = ko.observable('');
         this.currentState = '';
+        this.sharedLinks = ko.observableArray();
         if (data) {
             this.fromJs(data);
         }
     }
 
     EvaluationReport.prototype.fromJs = function (data) {
+        var self = data;
         this.id = data.Id;
         this.isResponsible = data.IsResponsible;
         this.isEvaluationManager = window.ViewData.isEvaluationManager;
@@ -65,6 +69,10 @@
         this.seniority = data.Seniority || '';
         this.state(data.State);
         this.stateName = evaluationStates[this.state()];
+        this.sharedLinks(_.map(data.SharedLinks, function (sharedLink) {
+            return new SharedLink(sharedLink, data.Period, data.UserName);
+        }
+        ));
         this.stateClasses = "state-doc state-" + this.state();
         this.calificationUrl = urlGenerator.action(this.period + "/" + this.userName + "/", "Evaluations");
         this.showResponsibleManager = function (data, event) {
@@ -88,6 +96,101 @@
             UserName: this.userName,
             Period: this.period
         };
+    }
+
+    EvaluationReport.prototype.createLink = function (data, event) {
+        $.post("/Evaluations/api/CreateEvaluationSharedLink/" + this.period + "/" + this.userName)
+        .success(function (sharedLink) {
+            var newSharedLink = new SharedLink(sharedLink, data.period, data.userName);
+            data.sharedLinks.push(newSharedLink);
+        })
+        .fail(function () {
+            alert('Fallo interno. Por favor recargue la página.');
+        });
+    }
+
+    EvaluationReport.prototype.toogle = function (data, event) {
+        var toogleValue = data.edittingFriendlyName();
+        data.edittingFriendlyName(!toogleValue);
+    }
+
+    var SharedLink = function (data, period, userName) {
+        this.link = "";
+        this.period = "";
+        this.userName = "";
+        this.sharedCode = "";
+        this.friendlyName = ko.observable("");
+        this.expirationDate = ko.observable(new Date);
+        this.edittingFriendlyName = ko.observable(false);
+        if (data && period && userName) {
+            this.fromJs(data, period, userName);
+        }
+    }
+
+    SharedLink.prototype.fromJs = function (data, period, userName) {
+        this.link = urlGenerator.sharedAction(period + "/" + userName, "Evaluations", null, data.SharedCode);
+        this.period = period;
+        this.userName = userName;
+        this.sharedCode = data.SharedCode;
+        this.friendlyName(data.FriendlyName);
+        this.expirationDate(data.ExpirationDate);
+    };
+
+    SharedLink.prototype.toDto = function () {
+        return {
+            period: this.period,
+            userName: this.userName,
+            sharedLink: {
+                FriendlyName: this.friendlyName(),
+                SharedCode: this.sharedCode,
+                ExpirationDate: this.expirationDate()
+            }
+        }
+    }
+
+    SharedLink.prototype.openLink = function (data, event) {
+        window.location = this.link;
+    }
+
+    SharedLink.prototype.updateSharedLink = function (data, event) {
+        viewmodel.isLoading(true);
+        $.ajax("/Evaluations/api/UpdateEvaluationSharedLink/", {
+            type: "POST",
+            dataType: "text",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(data.toDto())
+        })
+        .success(function () {
+            data.edittingFriendlyName(false);
+        })
+        .fail(function (error, textStatus) {
+            alert('Fallo interno. Por favor recargue la página.');
+        })
+        .always(function () {
+            viewmodel.isLoading(false);
+        });
+    }
+
+    SharedLink.prototype.deleteSharedLink = function (data, event) {
+        viewmodel.isLoading(true);
+        $.ajax("/Evaluations/api/DeleteEvaluationSharedLink/", {
+            type: "POST",
+            dataType: "text",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(data.toDto())
+        })
+        .success(function () {
+            var evaluation = _.find(viewmodel.items(),function (eval) {
+                return eval.userName == data.userName;
+           });
+           evaluation.sharedLinks(_.without(evaluation.sharedLinks(), data));
+        })
+        .fail(function (error, textStatus) {
+            alert('Fallo interno. Por favor recargue la página.');
+        })
+        .always(function () {
+            viewmodel.isLoading(false);
+        });
     }
 
     var ResponsibleManager = function (data) {

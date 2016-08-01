@@ -5,6 +5,7 @@
     ScriptManager.RegisterCss(Url.Content("~/Content/twitter-bootstrap/less/bootstrap.less"), priority: 900);
     ScriptManager.RegisterCss(Url.Content("~/Content/twitter-bootstrap/less/responsive.less"), priority: 900);
     ScriptManager.RegisterCss(Url.Content("~/Content/Evaluations/evaluations.css"));
+    ScriptManager.RegisterCss(Url.Content("~/Content/moment-datepicker/datepicker.css"));
     ScriptManager.RegisterJs(Url.Content("~/Scripts/jquery-1.7.2.min.js"), priority: 900);
     ScriptManager.RegisterJs(Url.Content("~/Scripts/underscore.js"), priority: 900);
     ScriptManager.RegisterJs(Url.Content("~/Content/twitter-bootstrap/js/bootstrap-typeahead.js"), priority: 900);
@@ -13,6 +14,9 @@
     ScriptManager.RegisterJs(Url.Content("~/Scripts/knockout-2.2.0.js"), priority: 900);
     ScriptManager.RegisterJs(Url.Content("~/Scripts/Evaluations/common.js"));
     ScriptManager.RegisterJs(Url.Content("~/Scripts/Evaluations/dashboard-human-resources.js"));
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/moment.js"));
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/moment-datepicker.js"));
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/moment-datepicker-ko.js"));
 }
 
 <div class="content-evaluation dashboard recursos-humanos">
@@ -48,6 +52,34 @@
         <td data-bind="text: fullName"></td>
         <td data-bind="text: currentPosition"></td>
         <td data-bind="text: seniority"></td>
+        <td>
+          <div style="clear:both">
+            <!-- ko foreach: sharedLinks -->
+            <dib class="link">
+              <div data-bind="visible: !edittingFriendlyName()" style="float:left">
+                <button data-bind="click: deleteSharedLink" class="link-btn remove">
+                  <i class="icon remove"></i>
+                </button>
+                <div style="display:inline-block">
+                  <a class="calification-links edit top-tip" data-bind="text: friendlyName, click: openLink"></a>
+                  <span data-bind="text: moment(expirationDate()).format('DD/MM/YYYY')"></span>
+                  <i class="icon edit-btn" data-bind="click: $parent.toogle"></i>
+                </div>
+              </div>
+              <div data-bind="visible: edittingFriendlyName()">
+                <div class="link-edit block">
+                  <input type="text" data-bind="value: friendlyName" />
+                  <input type="date" class="datepicker" data-bind="datepicker: expirationDate, datepickerOptions: { dataType: 'iso', format: 'DD/MM/YYYY'}" />
+                </div>
+                <input data-bind="click: updateSharedLink" type="button" value="Listo" class="link-btn done" />
+              </div>
+            </dib>
+            <!-- /ko -->
+          </div>
+          <button data-bind="click: createLink" class="link-btn add">
+            <i class="icon add"></i>
+          </button>
+        </td>
         <td class="responsible-column">
           <!-- ko if: isEvaluationManager -->
           <span>
@@ -66,7 +98,7 @@
     </tbody>
   </table>
   <script type="text/javascript">
-      var employeePeriod = "@ViewBag.Period";
+    var employeePeriod = "@ViewBag.Period";
   </script>
 </div>
 

@@ -15,6 +15,12 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
         public override void RegisterArea(AreaRegistrationContext context)
         {
             context.MapRoute(
+                "Evaluations_api_default_shared",
+                "Evaluations/api/{action}/{period}/{username}/{sharedCode}",
+                new { controller = "EvaluationsApi", period = UrlParameter.Optional, username = UrlParameter.Optional, sharedCode = UrlParameter.Optional }
+            );
+
+            context.MapRoute(
                 "Evaluations_api_default",
                 "Evaluations/api/{action}/{period}/{username}/",
                 new { controller = "EvaluationsApi", period = UrlParameter.Optional, username = UrlParameter.Optional }
@@ -55,6 +61,11 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
                 "Evaluations/{period}",
                 new { controller = "Evaluations", action = "PeriodEvaluation" }
             );
+            context.MapRoute(
+               "Evaluations_califications_shared",
+               "Evaluations/{period}/{username}/shared/{sharedcode}",
+               new { controller = "Evaluations", action = "Calification", sharedcode = UrlParameter.Optional }
+           );
 
             context.MapRoute(
                 "Evaluations_califications",
