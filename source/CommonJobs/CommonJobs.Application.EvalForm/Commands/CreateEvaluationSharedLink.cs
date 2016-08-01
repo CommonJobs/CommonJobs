@@ -34,22 +34,18 @@ namespace CommonJobs.Application.EvalForm.Commands
                 evaluation.SharedLinks = new SharedLinkList();
             }
             //regular expression for strings that starts with "Link#" and followed only by numbers
-            var regExp = new Regex("^(Link#)+[0-9]*$");
-            var lastDefaultFriendlyName = evaluation.SharedLinks
+            var regExp = new Regex(@"^Link#(\d+)$");
+            var lastLinkNumber = evaluation.SharedLinks
             .Select(x => x.FriendlyName)
-            .Where(x => regExp.IsMatch(x))
-            .OrderBy(x => x, new AlphabeticallyStringComaprer())
+            .Select(x=>regExp.Match(x))
+            .Where(x => x.Success)
+            .Select(x =>int.Parse(x.Groups[1].Value))
+            .OrderBy(x => x)
             .LastOrDefault();
-
-            var linkNumber = 0;
-            if (lastDefaultFriendlyName != null)
-            {
-                int.TryParse(lastDefaultFriendlyName.Replace("Link#", ""), out linkNumber);
-            }
 
             var newSharedLink = new SharedLink()
             {
-                FriendlyName = $"Link#{linkNumber + 1}",
+                FriendlyName = $"Link#{lastLinkNumber + 1}",
                 ExpirationDate = DateTime.Now.AddDays(3).ToUniversalTime(),
                 SharedCode = GenerateSharedCode()
             };

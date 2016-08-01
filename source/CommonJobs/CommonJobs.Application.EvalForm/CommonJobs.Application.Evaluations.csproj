@@ -81,7 +81,6 @@
     <Compile Include="Dtos\UpdateCalificationDto.cs" />
     <Compile Include="Dtos\UpdateEvaluationDto.cs" />
     <Compile Include="Commands\RevertEvaluationStateCommand.cs" />
-    <Compile Include="Helper\AlphabeticallyStringComaprer.cs" />
     <Compile Include="Helper\EmployeeEvaluationHelper.cs" />
     <Compile Include="Helper\EvaluationStateHelper.cs" />
     <Compile Include="Helper\RevertEvaluationActionsHelper.cs" />
