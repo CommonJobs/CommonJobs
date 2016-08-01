@@ -1,0 +1,47 @@
+﻿@model CommonJobs.Mvc.UI.Areas.Evaluations.Models.HistoryDashboard
+@{
+    ViewBag.Title = "Dashboard Historial de evaluaciones de Model.userName";
+    Layout = "~/Areas/Evaluations/Views/Shared/_Layout.cshtml";
+    ScriptManager.RegisterCss(Url.Content("~/Content/twitter-bootstrap/less/bootstrap.less"), priority: 900);
+    ScriptManager.RegisterCss(Url.Content("~/Content/twitter-bootstrap/less/responsive.less"), priority: 900);
+    ScriptManager.RegisterCss(Url.Content("~/Content/Evaluations/evaluations.css"));
+    ScriptManager.RegisterCss(Url.Content("~/Content/moment-datepicker/datepicker.css"));
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/jquery-1.7.2.min.js"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/underscore.js"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Content/twitter-bootstrap/js/bootstrap-typeahead.js"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Content/twitter-bootstrap/js/bootstrap-modal.js"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/url-generator.js"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/knockout-2.2.0.js"), priority: 900);
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/Evaluations/common.js"));
+    ScriptManager.RegisterJs(Url.Content("~/Scripts/Evaluations/dashboard-history.js"));
+}
+
+<div class="content-evaluation dashboard">
+    <div class="header">
+        <h2>Historial de Evaluaciones de <span data-bind="text: fullName"></span></h2>
+    </div>
+    <table class="table">
+        <thead>
+            <tr data-bind="foreach: headers">
+                <!-- ko if: sortable -->
+                <th data-bind="attr: { class: 'col-' + ($index()+1) }, click: $parent.sort, css: { selected: activeSort}">
+                    <i class="icon arrow"></i>
+                    <span data-bind="text: title"></span>
+                </th>
+                <!-- /ko -->
+                <!-- ko if: !sortable -->
+                <th data-bind="attr: { class: 'col-' + ($index()+1) }"><span data-bind="text: title"></span></th>
+                <!-- /ko -->
+            </tr>
+        </thead>
+        <tbody data-bind="foreach: items">
+            <tr>
+                <td data-bind="text: period"></td>
+                <td data-bind="text: evaluators"></td>
+                <td data-bind="text: responsibleId"></td>
+                <td data-bind="text: state"></td>
+                <td data-bind="text: averageCalification"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

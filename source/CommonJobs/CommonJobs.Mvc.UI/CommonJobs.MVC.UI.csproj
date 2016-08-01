@@ -129,6 +129,7 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="CJLogic\CalculateVacations.ts" />
+    <None Include="Areas\Evaluations\Views\Evaluations\HistoryDashboard.cshtml" />
     <Content Include="CJLogic\CalculateVacations.js">
       <DependentUpon>CalculateVacations.ts</DependentUpon>
     </Content>
@@ -167,6 +168,7 @@
     <Content Include="Content\Images\Evaluations\information-black.png" />
     <Content Include="Content\Images\Evaluations\information.png" />
     <Content Include="Scripts\Evaluations\calification.js" />
+    <Content Include="Scripts\Evaluations\dashboard-history.js" />
     <Content Include="Scripts\Evaluations\dashboard-human-resources.js" />
     <Content Include="Scripts\Evaluations\dashboard.js" />
     <Content Include="Scripts\Evaluations\admin.js" />
@@ -214,6 +216,7 @@
     <Compile Include="Areas\Evaluations\Controllers\EvaluationsController.cs" />
     <Compile Include="Areas\Evaluations\EvaluationsAreaRegistration.cs" />
     <Compile Include="Areas\Evaluations\Models\Calification.cs" />
+    <Compile Include="Areas\Evaluations\Models\HistoryDashboard.cs" />
     <Compile Include="Areas\Evaluations\Models\ReportDashboard.cs" />
     <Compile Include="Areas\Evaluations\Models\PeriodCreation.cs" />
     <Compile Include="Areas\Evaluations\Models\PeriodEvaluation.cs" />

@@ -13,6 +13,7 @@ using System.Web;
 using System.Web.Mvc;
 using CommonJobs.Application.EvalForm.Helper;
 using CommonJobs.Mvc.UI.Infrastructure;
+using CommonJobs.Application.EvalForm.Indexes;
 
 namespace CommonJobs.Mvc.UI.Areas.Evaluations.Controllers
 {
@@ -154,8 +155,8 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations.Controllers
             return Json("OK");
         }
 
-        [AcceptVerbs (HttpVerbs.Post)]
-        [CommonJobsAuthorize (Roles = "EmployeeManagers")]
+        [AcceptVerbs(HttpVerbs.Post)]
+        [CommonJobsAuthorize(Roles = "EmployeeManagers")]
         public JsonNetResult CreateEvaluationSharedLink(string period, string username)
         {
             var newSharedLink = ExecuteCommand(new CreateEvaluationSharedLink(period, username));
