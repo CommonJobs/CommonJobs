@@ -41,13 +41,15 @@ namespace CommonJobs.Application.EvalForm.Commands
         {
             var evId = EmployeeEvaluation.GenerateEvaluationId(_period, _evaluatedUser);
             var evaluation = RavenSession.Load<EmployeeEvaluation>(evId);
-
+            var evaluationHelper = new EmployeeEvaluationHelper(RavenSession, _loggedUser);
             if (evaluation == null)
             {
                 throw new ApplicationException(string.Format("Error: Evaluación inexistente: {0}.", evId));
             }
 
-            var hasValidSharedCode = evaluation.SharedLinks == null ? false : evaluation.SharedLinks.Any(x => x.SharedCode == _sharedCode && x.ExpirationDate > DateTime.UtcNow);
+            var isVisitor = (evaluation.SharedLinks == null ? false : evaluation.SharedLinks.Any(x => x.SharedCode == _sharedCode && x.ExpirationDate > DateTime.UtcNow)) //has SharedCode
+                || (string.Compare(evaluationHelper.GetLastPeriodForResponisble(_evaluatedUser), _period) > 0); //is newer Responsible
+
             Employee_Search.Projection employee = RavenSession
                 .Query<Employee_Search.Projection, Employee_Search>()
                 .Where(x => x.IsActive && x.UserName == evaluation.UserName).FirstOrDefault();
@@ -62,7 +64,7 @@ namespace CommonJobs.Application.EvalForm.Commands
 
             var evaluationDto = CalificationsEvaluationDto.Create(evaluation, evaluators, evaluation.CurrentPosition ?? employee.CurrentPosition, evaluation.Seniority ?? employee.Seniority, companyEvaluationDone, state);
 
-            if (!CanViewEvaluation(evaluationDto, califications, hasValidSharedCode))
+            if (!CanViewEvaluation(evaluationDto, califications, isVisitor))
             {
                 throw new ApplicationException(string.Format("Error: Usuario {0} no tiene permiso para ver la evaluación {1}", _loggedUser, evId));
             }
@@ -162,12 +164,12 @@ namespace CommonJobs.Application.EvalForm.Commands
         /// <param name="evaluationDto"></param>
         /// <param name="califications"></param>
         /// <returns></returns>
-        private bool CanViewEvaluation(CalificationsEvaluationDto evaluationDto, List<EvaluationCalification> califications, bool hasValidSharedCode)
+        private bool CanViewEvaluation(CalificationsEvaluationDto evaluationDto, List<EvaluationCalification> califications, bool isVisitor)
         {
             return evaluationDto.Finished && _isEmployeeManager
                 || _loggedUser == evaluationDto.UserName
                 || _loggedUser == evaluationDto.ResponsibleId
-                || hasValidSharedCode
+                || isVisitor
                 || califications.Any(c => c.EvaluatorEmployee == _loggedUser);
         }
     }
