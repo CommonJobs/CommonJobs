@@ -5,7 +5,6 @@
     ScriptManager.RegisterCss(Url.Content("~/Content/twitter-bootstrap/less/bootstrap.less"), priority: 900);
     ScriptManager.RegisterCss(Url.Content("~/Content/twitter-bootstrap/less/responsive.less"), priority: 900);
     ScriptManager.RegisterCss(Url.Content("~/Content/Evaluations/evaluations.css"));
-    ScriptManager.RegisterCss(Url.Content("~/Content/moment-datepicker/datepicker.css"));
     ScriptManager.RegisterJs(Url.Content("~/Scripts/jquery-1.7.2.min.js"), priority: 900);
     ScriptManager.RegisterJs(Url.Content("~/Scripts/underscore.js"), priority: 900);
     ScriptManager.RegisterJs(Url.Content("~/Content/twitter-bootstrap/js/bootstrap-typeahead.js"), priority: 900);
@@ -39,8 +38,11 @@
                 <td data-bind="text: period"></td>
                 <td data-bind="text: evaluators"></td>
                 <td data-bind="text: responsibleId"></td>
-                <td data-bind="text: state"></td>
+                <td data-bind="text: stateName"></td>
                 <td data-bind="text: averageCalification"></td>
+                <td>
+                    <a data-bind="if: state == 6, attr: {href: calificationUrl}"><i class="icon view"></i><span>Ver Evaluación</span></a>
+                </td>
             </tr>
         </tbody>
     </table>
