@@ -13,7 +13,8 @@
             { title: "Evaluadores", sortable: false },
             { title: "Responsable", sortable: true, sortPropertyName: "responsibleId", defaultPropertyName: 'fullName', asc: true, activeSort: ko.observable(false) },
             { title: "Estado", sortable: true, sortPropertyName: "state", defaultPropertyName: 'fullName', asc: true, activeSort: ko.observable(false) },
-            { title: "Promedio total", sortable: false }
+            { title: "Promedio total", sortable: false },
+            { title: "", sortable: false }
         ];
         this.sort = commonSort.bind(this);
         this.defaultSort = function () {
@@ -31,11 +32,14 @@
     };
 
     var EvaluationItem = function (data) {
+        this.userName = "";
         this.period = "";
         this.responsibleId = "";
         this.evaluators = "";
         this.state = "";
+        this.stateName = "";
         this.averageCalification = "";
+        this.calificationUrl = "";
         if (data) {
             this.fromJS(data)
         }
@@ -43,11 +47,14 @@
 
     EvaluationItem.prototype.fromJS = function (data) {
         var self = data;
+        this.userName = data.UserName;
         this.period = data.Period;
         this.responsibleId = data.ResponsibleId;
         this.evaluators = data.Evaluators;
-        this.state = evaluationStates[data.State];
+        this.state = data.State;
+        this.stateName = evaluationStates[data.State];
         this.averageCalification = data.AverageCalification != null ? data.AverageCalification : "-";
+        this.calificationUrl = urlGenerator.action(this.period + "/" + this.userName + "/", "Evaluations");
     }
 
     var viewmodel = new HistoryDashboard();

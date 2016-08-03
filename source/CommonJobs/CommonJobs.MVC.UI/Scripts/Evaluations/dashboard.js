@@ -187,6 +187,7 @@
         { title: 'Evaluadores', sortable: false },
         { title: 'Estado', sortable: true, sortPropertyName: 'state', defaultPropertyName: 'actionSortPosition', asc: true, activeSort: ko.observable(false) },
         { title: 'Acción', sortable: true, sortPropertyName: 'actionSortPosition', defaultPropertyName: 'state', asc: true, activeSort: ko.observable(false) },
+        { title: '', sortable: false },
         { title: '', sortable: false }
         ];
         this.sort = commonSort.bind(this);
@@ -259,6 +260,7 @@
         this.calificationActionClass = ko.observable('');
         this.actionSortPosition = ko.observable('');
         this.calificationUrl = urlGenerator.action(this.period + "/" + this.userName + "/", "Evaluations");
+        this.evaluationsHistory = urlGenerator.action("history" + "/" + this.userName + "/", "Evaluations");
         this.startDevolutionUrl = function () {
             $.ajax(urlGenerator.action("api/StartDevolution", "Evaluations"), {
                 type: "POST",
