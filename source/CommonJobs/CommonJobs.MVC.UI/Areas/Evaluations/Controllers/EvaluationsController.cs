@@ -189,6 +189,8 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
                 return HttpNotFound();
             }
 
+            var evaluationHelper = new EmployeeEvaluationHelper(RavenSession, loggedUser);
+            var isNewerResponsible = string.Compare(evaluationHelper.GetLastPeriodForResponisble(username), period) > 0;
             var hasValidSharedCode = evaluation.SharedLinks != null ?
                 evaluation.SharedLinks.Any(x => x.SharedCode == sharedCode && x.ExpirationDate >= DateTime.UtcNow) :
                 false;
@@ -196,7 +198,7 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
             var isLoggedUserEvaluator = IsEvaluator(loggedUser, username, evaluation.ResponsibleId, evaluation.Evaluators);
             var isLoggedUserEvaluated = loggedUser == username;
 
-            if (!isLoggedUserEvaluated && !isLoggedUserEvaluator && !isManager && !hasValidSharedCode)
+            if (!isLoggedUserEvaluated && !isLoggedUserEvaluator && !isManager && !hasValidSharedCode && !isNewerResponsible)
             {
                 return new HttpStatusCodeResult(403, "Access Denied");
             }
