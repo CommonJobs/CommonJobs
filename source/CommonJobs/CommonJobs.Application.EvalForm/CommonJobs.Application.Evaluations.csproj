@@ -66,6 +66,7 @@
     <Compile Include="Commands\CreateEvaluationSharedLink.cs" />
     <Compile Include="Commands\DeleteEvaluationCommand.cs" />
     <Compile Include="Commands\DeleteEvaluationSharedLink.cs" />
+    <Compile Include="Commands\GetEmployeeEvaluationHistoryCommand.cs" />
     <Compile Include="Commands\GetEvaluatedEmployees.cs" />
     <Compile Include="Commands\GetEvaluationCalifications.cs" />
     <Compile Include="Commands\GetLoggedUserRoles.cs" />
@@ -78,12 +79,14 @@
     <Compile Include="Dtos\CalificationsEvaluationDto.cs" />
     <Compile Include="Dtos\EmployeeEvaluationDto.cs" />
     <Compile Include="Dtos\EvaluatorsUpdateDto.cs" />
+    <Compile Include="Dtos\HistoricalEvaluationDto.cs" />
     <Compile Include="Dtos\UpdateCalificationDto.cs" />
     <Compile Include="Dtos\UpdateEvaluationDto.cs" />
     <Compile Include="Commands\RevertEvaluationStateCommand.cs" />
     <Compile Include="Helper\EmployeeEvaluationHelper.cs" />
     <Compile Include="Helper\EvaluationStateHelper.cs" />
     <Compile Include="Helper\RevertEvaluationActionsHelper.cs" />
+    <Compile Include="Indexes\EmployeeEvaluationHistory_Search.cs" />
     <Compile Include="Indexes\EmployeeToEvaluate_Search.cs" />
     <Compile Include="Indexes\Employee_Search.cs" />
     <Compile Include="Commands\GenerateCalificationCommand.cs" />

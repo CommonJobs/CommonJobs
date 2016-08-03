@@ -18,6 +18,7 @@ using CommonJobs.Application.EvalForm.Commands;
 using CommonJobs.Application.EvalForm.Indexes;
 using System.Web.Routing;
 using Raven.Client;
+using CommonJobs.Application.EvalForm.Helper;
 
 namespace CommonJobs.Mvc.UI.Areas.Evaluations
 {
@@ -86,6 +87,28 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
             var lastPeriod = GetReportPeriods().Select(e => e.Period).FirstOrDefault();
 
             return RedirectToAction("ReportDashboard", "Evaluations", new { period = lastPeriod });
+        }
+
+        [AcceptVerbs(HttpVerbs.Get)]
+        public ActionResult HistoryDashboard(string username)
+        {
+            var loggedUser = DetectUser();
+            var employeeEvaluationHelper = new EmployeeEvaluationHelper(RavenSession, loggedUser);
+            var lastResponiblePeriod = employeeEvaluationHelper.GetLastPeriodForResponisble(username);
+            if (lastResponiblePeriod == null)
+            {
+                return new HttpStatusCodeResult(403, "Access Denied");
+            }
+
+            ScriptManager.RegisterGlobalJavascript(
+                "ViewData",
+                new
+                {
+                    userName = username
+                },
+                500);
+
+            return View();
         }
 
         [AcceptVerbs(HttpVerbs.Get)]
@@ -184,7 +207,7 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
 
             ViewBag.UserName = username;
             ViewBag.IsCalification = true;
-            if (sharedCode!=null)
+            if (sharedCode != null)
             {
                 ViewBag.SharedCode = sharedCode;
             }
@@ -196,6 +219,15 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
             var userLastPeriod = GetPeriods().Select(e => e.Period).FirstOrDefault();
 
             return RedirectToAction("PeriodEvaluation", "Evaluations", new { period = userLastPeriod });
+        }
+
+        public ActionResult GetPreviousEvaluation(string period, string username)
+        {
+            var previousPeriod = GetUserPeriods(username)
+                .SkipWhile(x => x.Period == period)
+                .Take(2)
+                .LastOrDefault();
+            return RedirectToAction("Calification", "Evaluations", new { period = previousPeriod, username = username });
         }
 
         private bool IsEmployeeManager(string username)
@@ -232,6 +264,15 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations
         {
             return RavenSession
                 .Query<Period_Search.Projection, Period_Search>()
+                .OrderByDescending(e => e.Period)
+                .ToList();
+        }
+
+        private List<Period_Search.Projection> GetUserPeriods(string username)
+        {
+            return RavenSession
+                .Query<Period_Search.Projection, Period_Search>()
+                .Where(e => e.UserName == username)
                 .OrderByDescending(e => e.Period)
                 .ToList();
         }

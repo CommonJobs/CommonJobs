@@ -59,6 +59,16 @@ namespace CommonJobs.Application.EvalForm.Helper
              }).ToList();
         }
 
+        public string GetLastPeriodForResponisble(string username)
+        {
+            var evaluation = _ravenSession.
+                Query<EmployeeToEvaluate_Search.Projection, EmployeeToEvaluate_Search>()
+                .Where(x => x.UserName == username && x.ResponsibleId == _loggedUser)
+                .OrderByDescending(x => x.Period)
+                .FirstOrDefault();
+            return evaluation?.Period;
+        }
+
         private bool getEvaluationEditable(EmployeeToEvaluate_Search.Projection projection)
         {
             if (_loggedUser != null)
