@@ -77,6 +77,7 @@
         </td>
         <td><a class="link-responsable top-tip" data-bind="attr: {'data-tips': calificationActionTooltip(), href: calificationUrl}"><i data-bind="attr: { class: calificationActionClass() }"></i><span data-bind="text: calificationActionText()"></span></a></td>
         <td><span data-bind="if: state() == 4 && isResponsible"><button class="button-evaluations feedback-start" data-bind="click: startDevolutionUrl">Iniciar Devolución</button></span></td>
+        <td><a class="link-responsable" data-bind="if: isResponsible, attr:{href: evaluationsHistory}"><i class="icon view"></i><span>Ver historial de evaluaciones</span></a></td>
       </tr>
     </tbody>
   </table>
