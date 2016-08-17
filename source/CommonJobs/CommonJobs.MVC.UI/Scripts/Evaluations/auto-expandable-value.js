@@ -10,7 +10,8 @@
         update: function (element, valueAccessor) {
             ko.bindingHandlers.value.update(element, valueAccessor);
             element.style.height = "1px";
-            element.style.height = 25 + element.scrollHeight + "px";
+            var scrollHeight = element.scrollHeight == 0 ? 28 : element.scrollHeight
+            element.style.height = 25 + scrollHeight + "px";
         }
     };
 })(this.ko)
