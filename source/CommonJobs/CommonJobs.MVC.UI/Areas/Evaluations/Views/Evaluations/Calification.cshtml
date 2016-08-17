@@ -71,7 +71,7 @@
         </div>
         <div class="comments-container markdown-content" data-bind="markdownHtml:evaluation.strengthsComment, visible: !evaluation.isEditingStrengthsComment() && evaluation.strengthsComment()"></div>
         <div class="content-editable" data-bind="visible: evaluation.isEditingStrengthsComment">
-          <textarea data-bind="value: evaluation.strengthsComment"></textarea>
+          <textarea data-bind="autoExpandableValue: evaluation.strengthsComment, valueUpdate: 'input'"></textarea>
           <button class="blue-button left" type="button" data-bind="click: evaluation.endEdition.bind($data, evaluation.isEditingStrengthsComment)" style="">Listo</button>
         </div>
         <div class="title">
@@ -85,7 +85,7 @@
         </div>
         <div class="comments-container markdown-content" data-bind="markdownHtml: evaluation.improveComment, visible: !evaluation.isEditingImproveComment() && evaluation.improveComment()"></div>
         <div class="content-editable" data-bind="visible: evaluation.isEditingImproveComment">
-          <textarea data-bind="value: evaluation.improveComment"></textarea>
+          <textarea data-bind="autoExpandableValue: evaluation.improveComment, valueUpdate: 'input'"></textarea>
           <button class="blue-button left" type="button" data-bind="click: evaluation.endEdition.bind($data, evaluation.isEditingImproveComment)" style="">Listo</button>
         </div>
         <div class="title">
@@ -99,7 +99,7 @@
         </div>
         <div class="comments-container markdown-content" data-bind="markdownHtml:evaluation.actionPlanComment, visible: !evaluation.isEditingActionPlanComment() && evaluation.actionPlanComment()"></div>
         <div class="content-editable" data-bind="visible: evaluation.isEditingActionPlanComment">
-          <textarea data-bind="value: evaluation.actionPlanComment"></textarea>
+          <textarea data-bind="autoExpandableValue: evaluation.actionPlanComment, valueUpdate: 'input'"></textarea>
           <button class="blue-button left" type="button" data-bind="click: evaluation.endEdition.bind($data, evaluation.isEditingActionPlanComment)" style="">Listo</button>
         </div>
       </div>
