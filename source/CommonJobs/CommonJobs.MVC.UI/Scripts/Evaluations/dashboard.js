@@ -268,7 +268,7 @@
                 contentType: 'application/json; charset=utf-8',
                 data: JSON.stringify({ evaluationId: this.id }),
                 success: function (response) {
-                    getDashboardEvaluations(window.ViewData.period);
+                    window.location.reload();
                 },
                 error: function () {
                     alert('Fallo interno. Por favor recargue la página.');
