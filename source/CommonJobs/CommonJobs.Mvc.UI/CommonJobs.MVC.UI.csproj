@@ -129,7 +129,7 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="CJLogic\CalculateVacations.ts" />
-    <None Include="Areas\Evaluations\Views\Evaluations\HistoryDashboard.cshtml" />
+    <Content Include="Areas\Evaluations\Views\Evaluations\HistoryDashboard.cshtml" />
     <Content Include="CJLogic\CalculateVacations.js">
       <DependentUpon>CalculateVacations.ts</DependentUpon>
     </Content>
