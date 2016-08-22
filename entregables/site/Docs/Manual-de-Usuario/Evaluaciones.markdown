@@ -165,6 +165,56 @@ El responsable puede, además, retroceder el estado de las evaluaciones en caso 
 
 - **Finalizada**: Se da por finalizada una vez hecha la devolución y acordado los próximo pasos.  Se cierra la misma y ya solo se puede visualizar.  Se puede "Ver Evaluación".
 
+### Revertir Acciones ###
+
+El responsable de la evaluación podrá a su vez retroceder pasos en la evaluación o revertir acciones, tales como reabrir una evaluación finalizada, cancelar una devolución o reabrir calificaciones.
+Las acciones posibles son las siguientes:
+
+- **Reabrir para devolución**: Quita el estado de Finalizado de una evaluación 
+- **Suspender devolución**: Quita el estado de Abierta para devolución de una evaluación
+- **Reabrir Auto-evaluacion**: Quita el estado de Finalizada a la calificación dada por el Evaluado
+- **Reabrir evaluación Empresa**: Quita el estado de Finalizada a la calificación dada por la Empresa
+- **Reabrir evaluación Responsable**: Quita el estado de Finalizada a la calificación dada por el Responsable
+- **Reabrir evaluaciones Evaluadores**: Quita el estado de Finalizada a las calificaciones dadas por los Evaluadores
+
+Según el estado actual de la evaluación, las reversiones posibles son:
+
+#### Finalizada ####
+
+- Reabrir para devolución 
+
+#### Abierta para devolución #####
+
+- Suspender devolución
+
+#### Lista para devolución ####
+
+- Reabrir Auto-evaluacion
+- Reabrir evaluación Empresa
+ 
+#### Esperando Eval Empresa ####
+
+- Reabrir Auto-evaluacion
+- Reabrir evaluación Responsable
+- Reabrir evaluaciones Evaluadores
+
+#### Esperando Eval Responsable ####
+
+- Reabrir Auto-evaluacion
+- Reabrir evaluaciones Evaluadores
+
+#### Esperando Eval Empleado ####
+- Reabrir evaluación Responsable
+- Reabrir evaluaciones Evaluadores
+
+#### En curso ####
+
+- Reabrir evaluaciones Evaluadores
+
+### Historial de evaluaciones ###
+
+Un responsable de una evaluación tiene además la posibilidad de visualizar las evaluaciones anteriores de la persona que va a evaluar. Para ver este historial simplemente tiene que hacer click en "Ver historial". Se abrirá entonces una lista de evaluaciones anteriores que detallan: El estado en el que quedó la evaluación, evaluadores, responsables, nota general y la posibilidad de abrir el detalle de las calificaciones haciendo clic en "Ver evaluación"
+
 ### Evaluar como Responsable ###
 
 Este sector es tanto para responsables como evaluadores.  Al presionar en “Evaluar” se abre un formulario de evaluación con los mismos sectores de la autoevaluación.  Al principio del mismo se encuentra la Información Profesional, que viene en su mayoría pre-cargado, salvo los siguientes que deben ser ingresado por el Responsable: 
