@@ -168,6 +168,7 @@ El responsable puede, además, retroceder el estado de las evaluaciones en caso 
 ### Revertir Acciones ###
 
 El responsable de la evaluación podrá a su vez retroceder pasos en la evaluación o revertir acciones, tales como reabrir una evaluación finalizada, cancelar una devolución o reabrir calificaciones.
+
 Las acciones posibles son las siguientes:
 
 - **Reabrir para devolución**: Quita el estado de Finalizado de una evaluación 
