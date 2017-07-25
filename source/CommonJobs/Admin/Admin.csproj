@@ -89,6 +89,8 @@
     <None Include="ExportToZoho\ZohoConfiguration.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Compile Include="ExportToZoho\IZohoClient.cs" />
+    <Compile Include="ExportToZoho\ZohoClient.cs" />
     <Compile Include="ExportToZoho\ZohoConfiguration.cs" />
     <Compile Include="Framework.cs" />
     <Compile Include="ExportToZoho\ExportToZohoWorker.cs" />

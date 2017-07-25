@@ -29,7 +29,9 @@ namespace Admin
                 Object // TODO: Remove this line.
                 >(args);
 
-            RegisterWorker<ExportToZoho.ExportToZohoOptions>(result, options => new ExportToZoho.ExportToZohoWorker(consoleOutput));
+            RegisterWorker<ExportToZoho.ExportToZohoOptions>(result, options => new ExportToZoho.ExportToZohoWorker(
+                consoleOutput,
+                cfg => new ExportToZoho.ZohoClient(cfg)));
 
             result.WithParsed<ICliOptions>(options =>
             {

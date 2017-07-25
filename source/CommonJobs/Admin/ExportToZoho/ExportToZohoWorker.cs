@@ -9,17 +9,23 @@ namespace Admin.ExportToZoho
     public class ExportToZohoWorker : ICliWorker<ExportToZohoOptions>
     {
         private readonly IOutputHelper _outputHelper;
+        private readonly Func<ZohoConfiguration, IZohoClient> _zohoClientFactory;
 
         public ExportToZohoWorker(
-            IOutputHelper outputHelper)
+            IOutputHelper outputHelper,
+            Func<ZohoConfiguration, IZohoClient> zohoClientFactory)
         {
             _outputHelper = outputHelper;
+            _zohoClientFactory = zohoClientFactory;
         }
 
-        public Task Run(ExportToZohoOptions options)
+        public async Task Run(ExportToZohoOptions options)
         {
             _outputHelper.DumpObject(options);
-            return Task.CompletedTask;
+            using (var client = _zohoClientFactory(options.ZohoConfiguration))
+            {
+                await client.LoginAsync();
+            }
         }
     }
 }
