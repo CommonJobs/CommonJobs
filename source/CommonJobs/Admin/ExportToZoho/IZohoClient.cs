@@ -6,5 +6,6 @@ namespace Admin.ExportToZoho
     public interface IZohoClient : IDisposable
     {
         Task LoginAsync();
+        Task LoginIfNeedAsync();
     }
 }

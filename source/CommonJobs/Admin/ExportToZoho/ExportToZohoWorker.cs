@@ -24,7 +24,7 @@ namespace Admin.ExportToZoho
             _outputHelper.DumpObject(options);
             using (var client = _zohoClientFactory(options.ZohoConfiguration))
             {
-                await client.LoginAsync();
+                await client.LoginIfNeedAsync();
             }
         }
     }

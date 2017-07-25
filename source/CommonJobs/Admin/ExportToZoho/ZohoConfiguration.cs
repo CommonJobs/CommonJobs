@@ -8,6 +8,7 @@ namespace Admin.ExportToZoho
 {
     public class ZohoConfiguration
     {
+        public string Token { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
         public string LoginUriTemplate { get; set; }

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -13,16 +14,20 @@ namespace Admin.ExportToZoho
     {
         private readonly FlurlClient _http = new FlurlClient();
         private readonly ZohoConfiguration _configuration;
-        private string token = null;
+        private string _token = null;
 
         public ZohoClient(ZohoConfiguration configuration)
         {
             _configuration = configuration;
+            if (!string.IsNullOrEmpty(_configuration.Token))
+            {
+                _token = _configuration.Token;
+            }
         }
 
         public void Dispose()
         {
-            token = null;
+            _token = null;
             _http.Dispose();
         }
 
@@ -40,7 +45,21 @@ namespace Admin.ExportToZoho
             {
                 throw new ApplicationException($"Authentication error. {response}");
             }
-            token = match.Groups[1].Value;
+            _token = match.Groups[1].Value;
+        }
+
+        public async Task LoginIfNeedAsync()
+        {
+            if (_token == null)
+            {
+                await LoginAsync();
+            }
+        }
+
+        private string GetToken([CallerMemberName] string caller = "")
+        {
+            return _token ?? throw new ApplicationException($"Login is required for calling {caller}");
+        }
         }
     }
 }
