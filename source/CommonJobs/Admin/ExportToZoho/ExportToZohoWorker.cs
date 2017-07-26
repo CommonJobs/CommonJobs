@@ -8,15 +8,18 @@ namespace Admin.ExportToZoho
 {
     public class ExportToZohoWorker : ICliWorker<ExportToZohoOptions>
     {
+        private readonly IOutputHelper _outputHelper;
+
         public ExportToZohoWorker(
             IOutputHelper outputHelper)
         {
-
+            _outputHelper = outputHelper;
         }
 
         public Task Run(ExportToZohoOptions options)
         {
-            throw new NotImplementedException();
+            _outputHelper.DumpObject(options);
+            return Task.CompletedTask;
         }
     }
 }
