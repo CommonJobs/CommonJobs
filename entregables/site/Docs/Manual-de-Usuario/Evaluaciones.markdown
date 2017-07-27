@@ -147,11 +147,11 @@ Se accede desde el menú principal de CommonJobs, opción "Evaluaciones”.  Aho
 
 El responsable puede agregar evaluadores para cada evaluado seleccionando el Botón de “Agregar” o el ícono con el lápiz de la columna Evaluadores.  Se puede agregar la cantidad deseada (no se recomienda más de 5 para no abrumar al evaluado) y de cualquier rol o seniority.  El Responsable se debe hacer cargo de revisar que las completen y hacer seguimiento manual ya que el estado de las evaluaciones NO cambia si los Evaluadores las han terminado o no.
 
-El responsable puede, además, retroceder el estado de las evaluaciones en caso de error o confusión de parte de los intervinientes, para poder modificar o enmendar alguna de las calificaciones o comentarios. Para eso, el responsable tiene que selecciona el estado actual de la evaluación y se desplegará una ventana con las alternativas disponibles para retroceder la evaluación; luego selecciona una de las alternativas para confirmar y retroceder el estado de la evaluación.
+El responsable puede, además, retroceder el estado de las evaluaciones en caso de error o confusión de parte de los intervinientes, para poder modificar o enmendar alguna de las calificaciones o comentarios. Para eso, el responsable tiene que seleccionar el estado actual de la evaluación y se desplegará una ventana con las alternativas disponibles para retroceder la evaluación; luego selecciona una de las alternativas para confirmar y retroceder el estado de la evaluación.
 
 #### Estados y Acciones Posibles ####
 
-- **En Curso**: Evaluación generada y lista para evaluar.  Se puede "Evaluar como Responsable".
+- **En Curso**: Evaluación generada y lista para evaluar.  Se puede "Evaluar como Responsable". El evaluado podrá ver unicamente su columna para dejar su autoevaluación, y el evaluador podrá ver la columna del evaluado con los valores que haya agregado (si ha finalizado su autoevaluación) y su columna para agregar las calificaciones que crea correspondientes.
 
 - **Esperando Eval Responsable**: Está esperando la evaluación del responsable y la autoevaluación ya está hecha. Se puede "Evaluar como Responsable".
 
@@ -161,9 +161,12 @@ El responsable puede, además, retroceder el estado de las evaluaciones en caso 
 
 - **Lista para Devolución**: Todas las evaluaciones están terminadas y ahora se puede realizar la devolución al empleado.  Se puede "Ver Evaluación" o "Iniciar Devolución".
 
-- **Abierta para Devolución**: Al presionar en el botón de “Iniciar Devolución” se encuentra disponible para poder editar los campos finales para el cierre de la evaluación.  Se puede "Ver Evaluación".
+- **Abierta para Devolución**: Al presionar en el botón de “Iniciar Devolución” se encuentra disponible para poder editar los campos finales para el cierre de la evaluación.  Se puede "Ver Evaluación". Es en este estado donde tanto Evaluados como Evaluadores pueden ver las calificaciones otorgadas por la empresa.
 
 - **Finalizada**: Se da por finalizada una vez hecha la devolución y acordado los próximo pasos.  Se cierra la misma y ya solo se puede visualizar.  Se puede "Ver Evaluación".
+
+
+**Nota:** Las columnas de calificaciones de la evaluación pueden mostrarse u ocultarse presionando el botón de Mostrar u Ocultar en la esquina superior derecha de cada encabezado de columna
 
 ### Revertir Acciones ###
 
@@ -279,7 +282,7 @@ En el momento de la reunión para dar el feedback, se debe iniciar la devolució
 
 Esto permite acceder nuevamente al formulario donde se hacen visibles y editables las columnas de Autoevaluación y de Empresa.  Además se pueden ver y editar los campos de Fortalezas, Aspectos a Mejorar, Plan de Acción y Comentarios del Evaluado.   Esto es porque en base a la charla se pueden realizar las modificaciones que se crean necesarias, tanto por parte del evaluado como del evaluador.
 
-Una vez que acuerdan que la evaluación está de acuerdo a lo conversado, se da por terminado el proceso.  Al seleccionar el botón de “Finalizar Evaluación” se cierra la misma y ya no se puede modificar.  Desde el Dashboard sigue estando disponible para visualizar.
+Una vez que concuerda que la evaluación está de acuerdo a lo conversado, se da por terminado el proceso.  Al seleccionar el botón de “Finalizar Evaluación” se cierra la misma y ya no se puede modificar.  Desde el Dashboard sigue estando disponible para visualizar.
 
 ### Proceso de Recategorización ###
 
