@@ -1,6 +1,5 @@
-﻿{
+{
+    "token": null,
     "Username": "",
-    "Password": "",
-    "LoginUriTemplate": "https://accounts.zoho.com/apiauthtoken/nb/create?SCOPE=ZohoRecruit/recruitapi&EMAIL_ID={username}&PASSWORD={password}&DISPLAY_NAME=recruit",
-    "GeneralUriTemplate": "https://recruit.zoho.com/recruit/private/xml/{module}/{method}?authtoken={token}&scope=recruitapi&version=2"
+    "Password": ""
 }
