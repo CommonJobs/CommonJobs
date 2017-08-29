@@ -7,5 +7,6 @@ namespace Admin.ExportToZoho
     {
         Task LoginAsync();
         Task LoginIfNeedAsync();
+        Task<string> CreateCandidateAsync(Candidate candidate);
     }
 }

@@ -89,7 +89,11 @@
     <None Include="ExportToZoho\ZohoConfiguration.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Compile Include="ExportToZoho\Candidate.cs" />
     <Compile Include="ExportToZoho\IZohoClient.cs" />
+    <Compile Include="ExportToZoho\ZohoApi\IZohoRequestSerializer.cs" />
+    <Compile Include="ExportToZoho\ZohoApi\ZohoRequestSerializer.cs" />
+    <Compile Include="ExportToZoho\ZohoApi\ZohoResponse.cs" />
     <Compile Include="ExportToZoho\ZohoClient.cs" />
     <Compile Include="ExportToZoho\ZohoConfiguration.cs" />
     <Compile Include="Framework.cs" />
