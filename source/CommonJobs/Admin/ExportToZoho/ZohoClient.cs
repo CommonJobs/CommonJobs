@@ -84,6 +84,24 @@ namespace Admin.ExportToZoho
 
             return result;
         }
+
+        public async Task<ZohoResponse> GetCandidatesAsync(int fromIndex = 0, int toIndex = 20)
+        {
+            var url = new UriTemplate(_configuration.GeneralUriTemplate)
+                .AddParameter("module", "Candidates")
+                .AddParameter("method", "getRecords")
+                .AddParameter("fromIndex", fromIndex)
+                .AddParameter("toIndex", toIndex)
+                .AddParameter("token", GetToken())
+                .Resolve();
+
+            var response = await _http.WithUrl(url)
+                .GetAsync()
+                .ReceiveString();
+
+            var result = ZohoResponse.Parse(response);
+
+            return result;
         }
     }
 }

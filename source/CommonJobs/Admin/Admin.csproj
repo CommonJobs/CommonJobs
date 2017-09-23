@@ -90,6 +90,8 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <Compile Include="ExportToZoho\Candidate.cs" />
+    <Compile Include="ExportToZoho\ListZohoCandidatesOptions.cs" />
+    <Compile Include="ExportToZoho\ListZohoCandidatesWorker.cs" />
     <Compile Include="ExportToZoho\IZohoClient.cs" />
     <Compile Include="ExportToZoho\ZohoApi\IZohoRequestSerializer.cs" />
     <Compile Include="ExportToZoho\ZohoApi\ZohoRequestSerializer.cs" />

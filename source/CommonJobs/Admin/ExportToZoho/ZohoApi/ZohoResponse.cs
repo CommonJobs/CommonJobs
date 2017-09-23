@@ -37,6 +37,7 @@ namespace Admin.ExportToZoho.ZohoApi
     {
         public string Message { get; private set; }
         public RecordDetail[] Details { get; private set; } = new RecordDetail[0];
+        public RowsCollection Candidates { get; private set; }
 
         public static ZohoResult CreateActionResponse(string message, IEnumerable<RecordDetail> details) =>
             new ZohoResult()
@@ -45,11 +46,18 @@ namespace Admin.ExportToZoho.ZohoApi
                 Details = details.ToArray()
             };
 
+        public static ZohoResult CreateGetCandidatesResponse(RowsCollection candidatesData) =>
+            new ZohoResult()
+            {
+                Candidates = candidatesData
+            };
+
         public static ZohoResult Parse(XmlElement xml) =>
             new ZohoResult()
             {
                 Message = xml["message"]?.InnerText,
                 Details = xml.GetElementsByTagName("recorddetail").Cast<XmlElement>().Select(x => new RecordDetail(x)).ToArray(),
+                Candidates = xml["Candidates"] == null ? null : new RowsCollection(xml["Candidates"])
             };
     }
 

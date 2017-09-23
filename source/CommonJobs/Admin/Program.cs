@@ -1,4 +1,4 @@
-﻿using CommandLine;
+using CommandLine;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -17,7 +17,7 @@ namespace Admin
             // Set "_default_" value in VS (Debug -> Relay.Admin.Cli Properties -> Command line arguments)
             // NOTE: This code does not recognize doble quoted strings as command line does, for example spaces inside quoted string
             args = args.Length != 1 || args[0] != "_default_" ? args
-                : @"export-to-zoho --pause"
+                : @"list-zoho-candidates --pause"
                 .Split(' ').Select(x => x.Replace("_!_", " ")).ToArray();
 #endif
 
@@ -32,6 +32,10 @@ namespace Admin
                 >(args);
 
             RegisterWorker<ExportToZoho.ExportToZohoOptions>(result, options => new ExportToZoho.ExportToZohoWorker(
+                consoleOutput,
+                zohoClientFactory));
+
+            RegisterWorker<ExportToZoho.ListZohoCandidatesOptions>(result, options => new ExportToZoho.ListZohoCandidatesWorker(
                 consoleOutput,
                 zohoClientFactory));
 
