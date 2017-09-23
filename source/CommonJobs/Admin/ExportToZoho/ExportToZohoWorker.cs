@@ -25,6 +25,11 @@ namespace Admin.ExportToZoho
             using (var client = _zohoClientFactory(options.ZohoConfiguration))
             {
                 await client.LoginIfNeedAsync();
+                var id = await client.CreateCandidateAsync(new Candidate()
+                {
+                    Email = "test8@test.com",
+                    LastName = "Test"
+                });
             }
         }
     }

@@ -23,15 +23,17 @@ namespace Admin
 
             var consoleOutput = new ConsoleOutputHelper();
 
+            Func<ExportToZoho.ZohoConfiguration, ExportToZoho.IZohoClient> zohoClientFactory = cfg => new ExportToZoho.ZohoClient(cfg, new ExportToZoho.ZohoApi.ZohoRequestSerializer());
+
             // Register here all options types
             var result = Parser.Default.ParseArguments<
                 ExportToZoho.ExportToZohoOptions,
-                Object // TODO: Remove this line.
+                ExportToZoho.ListZohoCandidatesOptions
                 >(args);
 
             RegisterWorker<ExportToZoho.ExportToZohoOptions>(result, options => new ExportToZoho.ExportToZohoWorker(
                 consoleOutput,
-                cfg => new ExportToZoho.ZohoClient(cfg)));
+                zohoClientFactory));
 
             result.WithParsed<ICliOptions>(options =>
             {

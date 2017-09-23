@@ -28,7 +28,7 @@ namespace Admin.ExportToZoho.ZohoApi
         <FL val=""Email"">test8@test.com</FL>
         <FL val=""Perfiles"">QA Manual</FL>
     </row>
-</Candidates>"); ;
+</Candidates>");
 
             var candidate1 = new Candidate()
             {
