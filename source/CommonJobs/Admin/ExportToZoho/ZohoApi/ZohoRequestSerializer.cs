@@ -15,37 +15,29 @@ namespace Admin.ExportToZoho.ZohoApi
         private static XmlDocument CreateCandidatesDocument(IEnumerable<Candidate> candidates)
         {
             var doc = new XmlDocument();
-            doc.AppendChild(CreateCandidatesElement(doc, candidates));
+            var rows = new RowsCollection(MapCandidates(candidates));
+            doc.AppendChild(rows.ToXml(doc, "Candidates"));
             return doc;
         }
 
-        private static XmlElement CreateCandidatesElement(XmlDocument doc, IEnumerable<Candidate> candidates)
+        private static IEnumerable<Row> MapCandidates(IEnumerable<Candidate> candidates)
         {
-            var el = doc.CreateElement("Candidates");
             var rowNo = 0;
             foreach (var candidate in candidates)
             {
-                el.AppendChild(CreateRowElement(doc, ++rowNo, candidate));
+                rowNo++;
+                yield return new Row(rowNo, MapCandidate(candidate));
             }
-            return el;
         }
 
-        private static XmlElement CreateRowElement(XmlDocument doc, int rowNo, Candidate candidate)
+        private static IEnumerable<ZohoField> MapCandidate(Candidate candidate)
         {
-            var el = doc.CreateElement("row");
-            el.SetAttribute("no", rowNo.ToString());
-            el.AppendChild(CreateFieldElement(doc, "Last Name", candidate.LastName));
-            el.AppendChild(CreateFieldElement(doc, "Email", candidate.Email));
-            el.AppendChild(CreateFieldElement(doc, "Perfiles", candidate.Perfiles));
-            return el;
-        }
-
-        private static XmlElement CreateFieldElement(XmlDocument doc, string fieldName, string filedValue)
-        {
-            var el = doc.CreateElement("FL");
-            el.SetAttribute("val", fieldName);
-            el.InnerText = filedValue;
-            return el;
+            return new[]
+            {
+                new ZohoField("Last Name", candidate.LastName ),
+                new ZohoField("Email", candidate.Email ),
+                new ZohoField("Perfiles", candidate.Perfiles )
+            };
         }
     }
 }

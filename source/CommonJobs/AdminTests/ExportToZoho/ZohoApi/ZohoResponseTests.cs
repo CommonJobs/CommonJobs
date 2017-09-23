@@ -46,15 +46,15 @@ namespace Admin.ExportToZoho.ZohoApi
             Assert.AreEqual(2, response.Result.Details.Count());
             var item0 = response.Result.Details[0];
             Assert.IsNotNull(item0);
-            Assert.AreEqual(5, item0.Fields.Count());
+            Assert.AreEqual(5, item0.CountFields());
             Assert.IsTrue(item0.ContainsField("Id"));
             Assert.IsFalse(item0.ContainsField("NOEXISTE"));
-            Assert.AreEqual("384840000000262001", item0.GetFieldValue("Id"));
+            Assert.AreEqual("384840000000262001", item0.GetString("Id"));
             var item1 = response.Result.Details[1];
             Assert.IsNotNull(item1);
-            Assert.AreEqual(5, item1.Fields.Count());
+            Assert.AreEqual(5, item1.CountFields());
             Assert.IsTrue(item1.ContainsField("Id"));
-            Assert.AreEqual("384840000000262002", item1.GetFieldValue("Id"));
+            Assert.AreEqual("384840000000262002", item1.GetString("Id"));
         }
     }
 }
