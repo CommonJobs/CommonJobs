@@ -25,8 +25,26 @@ namespace Admin.ExportToZoho
             using (var client = _zohoClientFactory(options.ZohoConfiguration))
             {
                 await client.LoginIfNeedAsync();
-                var result = await client.GetCandidatesAsync(20, 22);
-                _outputHelper.DumpObject(result);
+                var pageSize = 100;
+                var allResults = new List<ZohoApi.FieldsElement>();
+                var from = 0;
+                while (true)
+                {
+                    var fromIndex = from;
+                    var to = from + pageSize;
+                    _outputHelper.WriteLine($"Asking for candidates ({from} - {to})...");
+                    var response = await client.GetCandidatesAsync(from, to);
+                    if (response.NoData != null)
+                    {
+                        break;
+                    }
+                    var resultCount = response.Result.Candidates.Rows.Length;
+                    _outputHelper.WriteLine($"Done ({resultCount} results)");
+                    allResults.AddRange(response.Result.Candidates.Rows);
+                    from = from + resultCount;
+                }
+                _outputHelper.WriteLine($"All results:");
+                _outputHelper.DumpObject(allResults);
             }
         }
     }

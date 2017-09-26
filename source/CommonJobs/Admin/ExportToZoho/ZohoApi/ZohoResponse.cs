@@ -10,10 +10,16 @@ namespace Admin.ExportToZoho.ZohoApi
     public class ZohoResponse
     {
         public ZohoResult Result { get; }
+        public NoData NoData { get; }
 
         public ZohoResponse(ZohoResult result)
         {
             Result = result;
+        }
+
+        public ZohoResponse(NoData noData)
+        {
+            NoData = noData;
         }
 
         public static ZohoResponse Parse(string xmlSring) =>
@@ -22,8 +28,23 @@ namespace Admin.ExportToZoho.ZohoApi
         public static ZohoResponse Parse(XmlDocument xml) =>
             Parse(xml["response"]);
 
-        public static ZohoResponse Parse(XmlElement xml) =>
-            new ZohoResponse(ZohoResult.Parse(xml["result"]));
+        public static ZohoResponse Parse(XmlElement xml)
+        {
+            var result = xml["result"];
+            var noData = xml["nodata"];
+            if (result != null && noData == null)
+            {
+                return new ZohoResponse(ZohoResult.Parse(result));
+            }
+            else if (result == null && noData != null)
+            {
+                return new ZohoResponse(NoData.Parse(noData));
+            }
+            else
+            {
+                throw new InvalidOperationException("Invalid XML");
+            }
+        }
 
         private static XmlDocument ReadXml(string xmlSring)
         {
@@ -31,6 +52,19 @@ namespace Admin.ExportToZoho.ZohoApi
             xml.LoadXml(xmlSring);
             return xml;
         }
+    }
+
+    public class NoData
+    {
+        public string Message { get; private set; }
+        public int Code { get; private set; }
+
+        public static NoData Parse(XmlElement xml) =>
+            new NoData()
+            {
+                Message = xml["message"]?.InnerText,
+                Code = int.Parse(xml["code"]?.InnerText)
+            };
     }
 
     public class ZohoResult
