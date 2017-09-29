@@ -21,11 +21,13 @@ namespace Admin.ExportToZoho.ZohoApi
     <row no=""1"">
         <FL val=""Last Name"">testing</FL>
         <FL val=""Email"">test7@test.com</FL>
+        <FL val=""Source"">CommonJobs</FL>
         <FL val=""Perfiles"">QA Manual</FL>
     </row>
     <row no=""2"">
         <FL val=""Last Name"">testing</FL>
         <FL val=""Email"">test8@test.com</FL>
+        <FL val=""Source"">CommonJobs</FL>
         <FL val=""Perfiles"">QA Manual</FL>
     </row>
 </Candidates>");

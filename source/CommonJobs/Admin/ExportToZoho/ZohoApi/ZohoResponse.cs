@@ -132,6 +132,14 @@ namespace Admin.ExportToZoho.ZohoApi
         public string GetString(string fieldName) =>
             Fields.Where(x => x.Name == fieldName).Select(x => x.GetString()).FirstOrDefault();
 
+        public int? GetInt(string fieldName) =>
+            Fields.Where(x => x.Name == fieldName).Select(x => (int?)int.Parse(x.GetString())).FirstOrDefault();
+
+        public decimal? GetDecimal(string fieldName) =>
+            Fields.Where(x => x.Name == fieldName).Select(x => (decimal?)decimal.Parse(x.GetString())).FirstOrDefault();
+
+        public bool? GetBoolean(string fieldName) =>
+            Fields.Where(x => x.Name == fieldName).Select(x => (bool?)bool.Parse(x.GetString())).FirstOrDefault();
 
         public virtual XmlElement ToXml(XmlDocument doc, string elementName)
         {

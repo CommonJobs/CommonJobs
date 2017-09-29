@@ -85,7 +85,7 @@ namespace Admin.ExportToZoho
             return result;
         }
 
-        public async Task<ZohoResponse> GetCandidatesAsync(int fromIndex = 0, int toIndex = 20)
+        public async Task<IEnumerable<Candidate>> GetCandidatesAsync(int fromIndex = 0, int toIndex = 20)
         {
             var url = new UriTemplate(_configuration.GeneralUriTemplate)
                 .AddParameter("module", "Candidates")
@@ -95,13 +95,42 @@ namespace Admin.ExportToZoho
                 .AddParameter("token", GetToken())
                 .Resolve();
 
-            var response = await _http.WithUrl(url)
+            var responseBody = await _http.WithUrl(url)
                 .GetAsync()
                 .ReceiveString();
 
-            var result = ZohoResponse.Parse(response);
+            var response = ZohoResponse.Parse(responseBody);
 
-            return result;
+            if (response.NoData != null)
+            {
+                return Enumerable.Empty<Candidate>();
+            }
+
+            return response.Result.Candidates.Rows.Select(MapFieldsToCandidate);
         }
+
+        private static Candidate MapFieldsToCandidate(FieldsElement fieldsElement) =>
+            new Candidate()
+            {
+                FirstName = fieldsElement.GetString("First Name"),
+                LastName = fieldsElement.GetString("Last Name"),
+                Email = fieldsElement.GetString("Email"),
+                Mobile = fieldsElement.GetString("Mobile"),
+                SkypeId = fieldsElement.GetString("Skype ID"),
+                City = fieldsElement.GetString("City"),
+                Country = fieldsElement.GetString("Country"),
+                ExperienceInYears = fieldsElement.GetInt("Experience In Years"),
+                CurrentSalary = fieldsElement.GetDecimal("Current Salary"),
+                ExpectedSalary = fieldsElement.GetDecimal("Expected Salary"),
+                CurrentEmployer = fieldsElement.GetString("Current Employer"),
+                AdditionalInfo = fieldsElement.GetString("Additional Info"),
+                Source = fieldsElement.GetString("Source"),
+                LinkedIn = fieldsElement.GetString("Linkedin"),
+                CandidateStatus = fieldsElement.GetString("Candidate Status"),
+                Perfiles = fieldsElement.GetString("Perfiles"),
+                StackPredominante = fieldsElement.GetString("Stack Predominante"),
+                PersonalWebsite = fieldsElement.GetString("Sitio Web Personal"),
+                IsHotCandidate = fieldsElement.GetBoolean("Is Hot Candidate")
+            };
     }
 }

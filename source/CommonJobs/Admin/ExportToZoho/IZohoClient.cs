@@ -1,5 +1,6 @@
 using Admin.ExportToZoho.ZohoApi;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Admin.ExportToZoho
@@ -9,6 +10,6 @@ namespace Admin.ExportToZoho
         Task LoginAsync();
         Task LoginIfNeedAsync();
         Task<ZohoResponse> CreateCandidateAsync(Candidate candidate);
-        Task<ZohoResponse> GetCandidatesAsync(int fromIndex = 0, int toIndex = 0);
+        Task<IEnumerable<Candidate>> GetCandidatesAsync(int fromIndex = 0, int toIndex = 0);
     }
 }
