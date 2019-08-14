@@ -216,10 +216,13 @@ $(document).ready(function () {
             { name: "SCE", id: 4 }
         ];
 
-        this.translateVaue = function(value) {
+        this.translateVaue = function(value, groupKey) {
             if (isNaN(value) || !(typeof value === "number"))
                 return "";
-            return this.evaluationValues[Math.round(value) - 1].name;
+            if (groupKey === "technicalskills")
+                return this.techSkillsValues[Math.round(value) - 1].name;
+
+            return this.softSkillsValues[Math.round(value) - 1].name;
         };
 
     this.evaluation.fromJs(data.Evaluation);
@@ -279,7 +282,6 @@ $(document).ready(function () {
             var item = data.Template.Groups[i];
             groupNames[item.Key] = item.Value;
         }
-
         var valuesByKeyCollection = _.map(data.Califications, function (calification) {
             var valuesByKey = {
                 calificationColumn: {
@@ -289,7 +291,6 @@ $(document).ready(function () {
                     owner: calification.Owner
                     }
             };
-            debugger;
             if (calification.Califications) {
                 for (var i in calification.Califications) {
                     var cal = calification.Califications[i];
@@ -346,7 +347,6 @@ $(document).ready(function () {
                         var rowSelected = ko.observable(false);
                         var valuesByItem = {
                             key: item.Key,
-                            isHardSkill: groupNames[key] == "technicalskills",
                             text: itemNumber + " - " + item.Text,
                             description: item.Description,
                             isRowSelected: rowSelected,
@@ -365,6 +365,7 @@ $(document).ready(function () {
                                     editable: self.isValueEditable(valuesByKey),
                                     isSelected: rowSelected,
                                     owner: valuesByKey.calificationColumn.owner,
+                                    isTechSkill: item.GroupKey === "technicalskills",
                                     showValue: _.find(self.califications, function (calification) {
                                         return calification.id == valuesByKey.calificationColumn.calificationId;
                                     }).show,
@@ -375,7 +376,7 @@ $(document).ready(function () {
                                         data.isSelected(true);
                                     },
                                     translatedValue: ko.computed(function () {
-                                       return self.translateVaue( valuesByKey[item.Key] || "");
+                                        return self.translateVaue(valuesByKey[item.Key] || "", item.GroupKey);
                                     })
                                 };
                                 valueItem.isValid = ko.computed(function () {
@@ -566,7 +567,8 @@ $(document).ready(function () {
                                         return {
                                             Key: item.key.toString(),
                                             Value: parseFloat(ownerValue && ownerValue.value()),
-                                            Comment: ownerComment && ownerComment.value()
+                                            Comment: ownerComment && ownerComment.value(),
+                                            GroupKey: group.groupKey
                                         };
                                     }
                                     return;

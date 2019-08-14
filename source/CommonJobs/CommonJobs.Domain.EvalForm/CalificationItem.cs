@@ -12,5 +12,7 @@ namespace CommonJobs.Domain.Evaluations
         public decimal? Value { get; set; }
 
         public string Comment { get; set; }
+
+        public string GroupKey { get; set; }
     }
 }
