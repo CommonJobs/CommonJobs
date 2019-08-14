@@ -1404,7 +1404,7 @@ tr.evaluation-generated td {
     /* line 353, ../../sass/Evaluations/_evaluation.scss */
     .evaluation .calification-items tbody tr .calification-input {
         border: solid 1px #BBB;
-        width: 50px;
+        width: 85px;
         height: 25px;
         border-radius: 4px;
         font-size: 16px;
