@@ -1,4 +1,4 @@
-﻿$(document).ready(function () {
+$(document).ready(function () {
     var evaluationStates = ['En curso', 'Esperando Eval Empleado', 'Esperando Eval Responsable', 'Esperando Eval Empresa', 'Lista para devolución', 'Abierta para devolución', 'Finalizada'];
 
     var viewmodel;
@@ -24,7 +24,7 @@
             (a.Owner == 2 && b.Owner == 3))
             return -1;
         return 1;
-    }
+    };
 
     var EvaluationViewModel = function (data) {
         this.userView = '';
@@ -34,7 +34,7 @@
         this.groups = [];
         this.isEvaluationEditable = ko.observable(false);
         this.isLoading = ko.observable(false);
-    }
+    };
 
     EvaluationViewModel.prototype.load = function () {
         viewmodel.isLoading(true);
@@ -52,7 +52,7 @@
         .always(function () {
             viewmodel.isLoading(false);
         });
-    }
+    };
 
     EvaluationViewModel.prototype.isDirty = dirtyFlag();
 
@@ -60,63 +60,67 @@
         return !_.some(this.groups, function (group) {
             return _.some(group.items, function (item) {
                 return _.some(item.values, function (value) {
-                    return value.editable && !value.isValid()
+                    return value.editable && !value.isValid();
                 });
             });
         });
-    }
+    };
 
     EvaluationViewModel.prototype.hasEmptyValues = function () {
         return _.some(this.groups, function (group) {
             return _.some(group.items, function (item) {
                 return _.some(item.values, function (value) {
-                    return value.editable && value.value() === ""
+                    return value.editable && value.value() === "";
                 });
             });
         });
-    }
+    };
 
-    EvaluationViewModel.prototype.hasDecimalDifferentThanFive = function () {
-        return _.some(this.groups, function (group) {
-            return _.some(group.items, function (item) {
-                return _.some(item.values, function (value) {
-                    return value.editable && ((value.value() % 1) * 10) % 5 != 0;
-                });
+    EvaluationViewModel.prototype.hasDecimalDifferentThanFive = function() {
+        return _.some(this.groups,
+            function(group) {
+                return _.some(group.items,
+                    function(item) {
+                        return _.some(item.values,
+                            function(value) {
+                                return value.editable && ((value.value() % 1) * 10) % 5 != 0;
+                            });
+                    });
             });
-        });
-    }
+    };
 
-    EvaluationViewModel.prototype.onSave = function () {
+    EvaluationViewModel.prototype.onSave = function() {
         var self = this;
         if (this.calificationFinished || this.evaluationFinished || this.isValid()) {
             viewmodel.isLoading(true);
             var dto = this.toDto();
-            $.ajax("/Evaluations/api/SaveEvaluationCalifications/", {
-                type: "POST",
-                dataType: 'json',
-                contentType: 'application/json; charset=utf-8',
-                data: JSON.stringify(dto),
-                success: function (response) {
-                    self.isDirty(false);
-                    if (self.calificationFinished || self.evaluationFinished) {
-                        if (self.userView == 0) {
-                            window.location = urlGenerator.action("Index", "Home");
-                        } else {
-                            window.location = urlGenerator.action(calificationPeriod, "Evaluations");
+            $.ajax("/Evaluations/api/SaveEvaluationCalifications/",
+                    {
+                        type: "POST",
+                        dataType: 'json',
+                        contentType: 'application/json; charset=utf-8',
+                        data: JSON.stringify(dto),
+                        success: function(response) {
+                            self.isDirty(false);
+                            if (self.calificationFinished || self.evaluationFinished) {
+                                if (self.userView == 0) {
+                                    window.location = urlGenerator.action("Index", "Home");
+                                } else {
+                                    window.location = urlGenerator.action(calificationPeriod, "Evaluations");
+                                }
+                            }
                         }
-                    }
-                }
-            })
-            .fail(function () {
-                alert('Fallo interno. Por favor recargue la página.');
-            })
-            .always(function () {
-                viewmodel.isLoading(false);
-            });
+                    })
+                .fail(function() {
+                    alert('Fallo interno. Por favor recargue la página.');
+                })
+                .always(function() {
+                    viewmodel.isLoading(false);
+                });
         } else {
             modalViewModel.showInvalidModal();
         }
-    }
+    };
 
     EvaluationViewModel.prototype.onFinish = function () {
         var isCompanyCalification = this.userView == 3 && _.any(this.califications, function (calification) {
@@ -132,7 +136,7 @@
             modalViewModel.showFinishModal();
         }
 
-    }
+    };
 
     EvaluationViewModel.prototype.isValueEditable = function (itemByKey) {
         var isCompanyView = this.userView == 3;
@@ -160,9 +164,9 @@
         else {
             return false;
         }
-    }
+    };
 
-    EvaluationViewModel.prototype.fromJs = function (data) {
+    EvaluationViewModel.prototype.fromJs = function(data) {
         var self = this;
         this.userView = data.UserView;
         this.userLogged = data.UserLogged;
@@ -170,37 +174,55 @@
         this.columnsAmount = this.hasAverageColumn ? data.Califications.length + 3 : data.Califications.length + 2
         this.numberOfColumns = "table-" + this.columnsAmount + "-columns";
         var calificationsSorted = data.Califications.sort(sortCalificationColumns);
-        this.califications = _.map(calificationsSorted, function (calification) {
-            if (calification.Owner == 3 && (!calification.Califications || !calification.Califications.length)) {
-                self.isCompanyCalificationsEmpty = true;
-            }
-            var show = self.userView == 0 || (self.userView != 0 && calification.Owner != 0);
-            var hasShowIcon = calification.Finished || (calification.EvaluatorEmployee != self.userLogged && calification.Owner != self.userView);
-            var isCommentEditable = calification.EvaluatorEmployee == self.userLogged && viewmodel.isEvaluationEditable();
-            var commentItem = {
-                id: calification.Id,
-                owner: calification.Owner,
-                evaluatorEmployee: calification.EvaluatorEmployee,
-                comments: ko.observable(calification.Comments),
-                finished: calification.Finished,
-                show: ko.observable(show),
-                hasShowIcon: hasShowIcon,
-                isCommentEditable: isCommentEditable,
-                isEditingComment: ko.observable(false)
-            };
-            commentItem.endEdition = function (data, event) {
-                data.isEditingComment(false);
-            };
+        this.califications = _.map(calificationsSorted,
+            function(calification) {
+                if (calification.Owner == 3 && (!calification.Califications || !calification.Califications.length)) {
+                    self.isCompanyCalificationsEmpty = true;
+                }
+                var show = self.userView == 0 || (self.userView != 0 && calification.Owner != 0);
+                var hasShowIcon = calification.Finished ||
+                    (calification.EvaluatorEmployee != self.userLogged && calification.Owner != self.userView);
+                var isCommentEditable = calification.EvaluatorEmployee == self.userLogged &&
+                    viewmodel.isEvaluationEditable();
+                var commentItem = {
+                    id: calification.Id,
+                    owner: calification.Owner,
+                    evaluatorEmployee: calification.EvaluatorEmployee,
+                    comments: ko.observable(calification.Comments),
+                    finished: calification.Finished,
+                    show: ko.observable(show),
+                    hasShowIcon: hasShowIcon,
+                    isCommentEditable: isCommentEditable,
+                    isEditingComment: ko.observable(false)
+                };
+                commentItem.endEdition = function(data, event) {
+                    data.isEditingComment(false);
+                };
 
-            self.isDirty.register(commentItem.comments);
-            return commentItem;
-        });
+                self.isDirty.register(commentItem.comments);
+                return commentItem;
+            });
 
-        this.isResposibleCalificating = _.some(self.califications, function (califications) {
-            return califications.owner == 1 && !califications.finished && califications.evaluatorEmployee == data.UserLogged
-        });
+        this.isResposibleCalificating = _.some(self.califications,
+            function(califications) {
+                return califications.owner == 1 &&
+                    !califications.finished &&
+                    califications.evaluatorEmployee == data.UserLogged;
+            });
+        this.evaluationValues = [
+            { name: "NE", id: 1 },
+            { name: "AME", id: 2 },
+            { name: "CE", id: 3 },
+            { name: "SCE", id: 4 }
+        ];
 
-        this.evaluation.fromJs(data.Evaluation);
+        this.translateVaue = function(value) {
+            if (isNaN(value) || !(typeof value === "number"))
+                return "";
+            return this.evaluationValues[Math.round(value) - 1].name;
+        };
+
+    this.evaluation.fromJs(data.Evaluation);
 
         if (this.evaluation.devolutionInProgress && this.userView == 3) {
             this.hasAverageColumn = false;
@@ -265,8 +287,9 @@
                     evaluatorEmployee: calification.EvaluatorEmployee,
                     finished: calification.Finished,
                     owner: calification.Owner
-                }
+                    }
             };
+            debugger;
             if (calification.Califications) {
                 for (var i in calification.Califications) {
                     var cal = calification.Califications[i];
@@ -292,7 +315,7 @@
                     commentsByKey[cal.Key] = cal.Comment;
                 }
             }
-            return commentsByKey
+            return commentsByKey;
         });
 
         if (this.hasAverageColumn) {
@@ -305,7 +328,7 @@
                 finished: false,
                 show: ko.observable(true),
                 hasShowIcon: true
-            }
+            };
 
             this.califications.splice(1, 0, averageCalificationsColumn);
         }
@@ -323,6 +346,7 @@
                         var rowSelected = ko.observable(false);
                         var valuesByItem = {
                             key: item.Key,
+                            isHardSkill: groupNames[key] == "technicalskills",
                             text: itemNumber + " - " + item.Text,
                             description: item.Description,
                             isRowSelected: rowSelected,
@@ -335,8 +359,9 @@
                             },
                             values: _.map(valuesByKeyCollection, function (valuesByKey) {
                                 var valueItem = {
+                                    
                                     calificationId: valuesByKey.calificationColumn.calificationId,
-                                    value: ko.observable(valuesByKey[item.Key] || ""),
+                                    value: ko.observable(valuesByKey[item.Key]),
                                     editable: self.isValueEditable(valuesByKey),
                                     isSelected: rowSelected,
                                     owner: valuesByKey.calificationColumn.owner,
@@ -348,7 +373,10 @@
                                     },
                                     onFocus: function (data, event) {
                                         data.isSelected(true);
-                                    }
+                                    },
+                                    translatedValue: ko.computed(function () {
+                                       return self.translateVaue( valuesByKey[item.Key] || "");
+                                    })
                                 };
                                 valueItem.isValid = ko.computed(function () {
                                     return valueItem.value() === "" || (valueItem.value() >= 1 && valueItem.value() <= 4);
@@ -505,7 +533,7 @@
         })
     };
 
-    EvaluationViewModel.prototype.toDto = function (data) {
+    EvaluationViewModel.prototype.toDto = function(data) {
         var self = this;
         return {
             EvaluationFinished: this.evaluationFinished,
@@ -516,30 +544,34 @@
             Strengths: this.evaluation.strengthsComment(),
             ActionPlan: this.evaluation.actionPlanComment(),
             Califications: _.chain(self.califications)
-                .filter(function (calification) {
-                    return calification.owner == self.userView || (self.evaluation.devolutionInProgress && calification.owner == 0);
+                .filter(function(calification) {
+                    return calification.owner == self.userView ||
+                        (self.evaluation.devolutionInProgress && calification.owner == 0);
                 })
-                .map(function (calification) {
+                .map(function(calification) {
                     var calificationItems = _.chain(self.groups)
-                        .map(function (group) {
-                            var itemsList = _.map(group.items, function (item) {
-                                var ownerValue = _.find(item.values, function (element) {
-                                    return element.owner == calification.owner;
-                                });
-                                var ownerComment = _.find(item.comments, function (element) {
-                                    return element.evaluatorEmployee == calification.evaluatorEmployee;
-                                });
+                        .map(function(group) {
+                            var itemsList = _.map(group.items,
+                                function(item) {
+                                    var ownerValue = _.find(item.values,
+                                        function(element) {
+                                            return element.owner == calification.owner;
+                                        });
+                                    var ownerComment = _.find(item.comments,
+                                        function(element) {
+                                            return element.evaluatorEmployee == calification.evaluatorEmployee;
+                                        });
 
-                                if ((ownerValue && ownerValue.value()) || (ownerComment && ownerComment.value())) {
-                                    return {
-                                        Key: item.key.toString(),
-                                        Value: parseFloat(ownerValue && ownerValue.value()),
-                                        Comment: ownerComment && ownerComment.value()
+                                    if ((ownerValue && ownerValue.value()) || (ownerComment && ownerComment.value())) {
+                                        return {
+                                            Key: item.key.toString(),
+                                            Value: parseFloat(ownerValue && ownerValue.value()),
+                                            Comment: ownerComment && ownerComment.value()
+                                        };
                                     }
-                                }
-                                return;
-                            });
-                            return _.filter(itemsList, function (item) { return item });
+                                    return;
+                                });
+                            return _.filter(itemsList, function(item) { return item });
                         })
                         .flatten()
                         .value();
@@ -547,25 +579,27 @@
                         CalificationId: calification.id,
                         Items: calificationItems,
                         Comments: calification.comments()
-                    }
+                    };
                 })
                 .value()
-        }
-    }
+        };
+    };
 
     EvaluationViewModel.prototype.toggleAllComments = function (data, event) {
         var toggleAllTo = viewmodel.showCalificationsComments() === null ? false : !viewmodel.showCalificationsComments();
-        _.each(data.groups, function (group) {
-            _.each(group.items, function (item) {
-                item.showComments(toggleAllTo);
-            })
-        })
-    }
-    EvaluationViewModel.prototype.toggleVisibilityColumn = function (data, event) {
+        _.each(data.groups,
+            function(group) {
+                _.each(group.items,
+                    function(item) {
+                        item.showComments(toggleAllTo);
+                    });
+            });
+    };
+    EvaluationViewModel.prototype.toggleVisibilityColumn = function(data, event) {
         data.show(!data.show());
-    }
+    };
 
-    var Evaluation = function (data) {
+    var Evaluation = function(data) {
         this.id = '';
         this.userName = '';
         this.responsibleId = '';
@@ -585,9 +619,9 @@
         if (data) {
             this.fromJs(data);
         }
-    }
+    };
 
-    Evaluation.prototype.fromJs = function (data) {
+    Evaluation.prototype.fromJs = function(data) {
         this.id = data.Id;
         this.userName = data.UserName;
         this.responsibleId = data.ResponsibleId;
@@ -607,30 +641,30 @@
         this.isEditingImproveComment = ko.observable(false);
         this.isEditingActionPlanComment = ko.observable(false);
         this.isEditingStrengthsComment = ko.observable(false);
-        this.endEdition = function (flag) {
+        this.endEdition = function(flag) {
             flag(false);
-        }
+        };
         viewmodel.isDirty.register(this.project);
         viewmodel.isDirty.register(this.strengthsComment);
         viewmodel.isDirty.register(this.improveComment);
         viewmodel.isDirty.register(this.actionPlanComment);
-    }
+    };
 
-    Evaluation.prototype.onFocusInProject = function (data, event) {
+    Evaluation.prototype.onFocusInProject = function(data, event) {
         $(event.target).parent().addClass('edition-enabled');
         return true;
-    }
-    Evaluation.prototype.onBlurProject = function (data, event) {
+    };
+    Evaluation.prototype.onBlurProject = function(data, event) {
         $(event.target).parent().removeClass('edition-enabled');
         if (!this.evaluation.project())
             $(event.target).parent().removeAttr('data-tips');
         return true;
-    }
-    Evaluation.prototype.onKeyUpProject = function (data, event) {
+    };
+    Evaluation.prototype.onKeyUpProject = function(data, event) {
         if (event.keyCode === 13) {
             $(event.target).blur();
         }
-    }
+    };
 
     var GetCommentItem = function (calificationId, comment, evaluatorEmployee, isSelfComment) {
         var commentItem = {
@@ -642,7 +676,7 @@
             endEdition: function (data, event) {
                 data.isEditingComment(false);
                 if (data.value() == "") {
-                    data.value(null)
+                    data.value(null);
                 }
             }
         };
@@ -677,7 +711,7 @@
         }, this);
     };
 
-    ModalViewModel.prototype.showInvalidModal = function () {
+    ModalViewModel.prototype.showInvalidModal = function() {
         this.title("Guardar evaluación");
         this.text("No se puede guardar la evaluación porque hay calificaciones INVÁLIDAS");
         this.buttonBackText("Volver");
@@ -685,9 +719,9 @@
         this.isConfirmButtonVisible(false);
         this.isWarningConfirmButtonVisible(false);
         this.isFinalButtonVisible(false);
-    }
+    };
 
-    ModalViewModel.prototype.showConfirmationModal = function () {
+    ModalViewModel.prototype.showConfirmationModal = function() {
         this.title("Finalizar evaluación");
         this.text("¿Desea finalizar la evaluación con calificaciones vacías?");
         this.buttonBackText("Cancelar");
@@ -696,9 +730,9 @@
         this.isConfirmButtonVisible(true);
         this.isWarningConfirmButtonVisible(false);
         this.isFinalButtonVisible(false);
-    }
+    };
 
-    ModalViewModel.prototype.showWarningModal = function () {
+    ModalViewModel.prototype.showWarningModal = function() {
         this.title("Finalizar evaluación");
         this.text("La evaluación contiene valor decimal distinto de 5 ¿Desea finalizar la evaluación de todas formas?");
         this.buttonBackText("Cancelar");
@@ -707,7 +741,7 @@
         this.isConfirmButtonVisible(false);
         this.isWarningConfirmButtonVisible(true);
         this.isFinalButtonVisible(false);
-    }
+    };
 
     ModalViewModel.prototype.showFinishModal = function () {
         this.title("Finalizar evaluación");
@@ -718,25 +752,24 @@
         this.isConfirmButtonVisible(false);
         this.isWarningConfirmButtonVisible(false);
         this.isFinalButtonVisible(true);
-    }
+    };
 
-    ModalViewModel.prototype.backAction = function () {
+    ModalViewModel.prototype.backAction = function() {
         this.show(false);
-    }
-    ModalViewModel.prototype.confirmAction = function () {
+    };
+    ModalViewModel.prototype.confirmAction = function() {
         this.showFinishModal();
-    }
+    };
 
-    ModalViewModel.prototype.warningConfirmAction = function () {
+    ModalViewModel.prototype.warningConfirmAction = function() {
         if (viewmodel.hasEmptyValues()) {
             this.showConfirmationModal();
-        }
-        else {
+        } else {
             this.showFinishModal();
         }
-    }
+    };
 
-    ModalViewModel.prototype.finalAction = function () {
+    ModalViewModel.prototype.finalAction = function() {
         this.show(false);
         if (viewmodel.evaluation.devolutionInProgress) {
             viewmodel.evaluationFinished = true;
@@ -744,22 +777,22 @@
             viewmodel.calificationFinished = true;
         }
         viewmodel.onSave(true);
-    }
+    };
 
     modalViewModel = new ModalViewModel();
     ko.applyBindings(modalViewModel, document.getElementById('evaluations-generated-confirm'));
 
     viewmodel = new EvaluationViewModel();
     viewmodel.load();
-    window.onbeforeunload = function () {
+    window.onbeforeunload = function() {
         if (viewmodel.isDirty()) {
             return 'Tienes cambios sin guardar. Si continúas, los cambios se perderán. ¿Deseas continuar?';
         }
-    }
+    };
 
-    var LayoutViewModel = function () {
+    var LayoutViewModel = function() {
         this.isEvaluationEditable = viewmodel.isEvaluationEditable;
-    }
+    };
 
     LayoutViewModel.prototype.isDirty = viewmodel.isDirty;
 
