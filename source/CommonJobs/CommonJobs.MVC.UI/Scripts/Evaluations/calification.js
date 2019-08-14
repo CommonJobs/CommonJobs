@@ -209,11 +209,16 @@ $(document).ready(function () {
                     !califications.finished &&
                     califications.evaluatorEmployee == data.UserLogged;
             });
-        this.evaluationValues = [
+        this.softSkillsValues = [
             { name: "NE", id: 1 },
             { name: "AME", id: 2 },
             { name: "CE", id: 3 },
             { name: "SCE", id: 4 }
+        ];
+        this.techSkillsValues = [
+            { name: "BAJO", id: 1 },
+            { name: "MEDIO", id: 2 },
+            { name: "ALTO", id: 3 }
         ];
 
         this.translateVaue = function(value, groupKey) {

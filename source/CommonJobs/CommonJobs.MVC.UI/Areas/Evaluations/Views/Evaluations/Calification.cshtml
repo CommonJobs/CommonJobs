@@ -195,16 +195,30 @@
         <!-- ko foreach: values -->
         <td data-bind="css: { 'exceeds-expectations': showValue() && value() > 3 && value() <= 4 , 'poor': showValue() && value() < 3 && value() >= 1}">
           <span data-bind="if: !editable"><span data-bind="text: translatedValue, visible: showValue()"></span></span>
-            <span data-bind="if: editable == true">
-                <select class="calification-input" data-bind="
-                        options: $root.evaluationValues,
+          <span data-bind="if: editable == true">
+              <!-- ko if: isTechSkill -->
+              <select class="calification-input" data-bind="
+                        options: $root.techSkillsValues,
                         optionsText: 'name',
                         optionsValue: 'id',
                         value: value,
                         optionsCaption: 'Choose...',
                         event: { focusin: onFocus, blur: onBlur}">
-                </select>
-            </span>
+
+              </select>
+              <!-- /ko -->
+              <!-- ko ifnot: isTechSkill -->
+              <select class="calification-input" data-bind="
+                        options: $root.softSkillsValues,
+                        optionsText: 'name',
+                        optionsValue: 'id',
+                        value: value,
+                        optionsCaption: 'Choose...',
+                        event: { focusin: onFocus, blur: onBlur}">
+
+              </select>
+              <!-- /ko -->
+          </span>
         </td>
         <!-- /ko -->
         <td>
