@@ -1,4 +1,4 @@
-﻿using CommonJobs.Application.EvalForm;
+using CommonJobs.Application.EvalForm;
 using CommonJobs.Application.EvalForm.Commands;
 using CommonJobs.Application.EvalForm.Dtos;
 using CommonJobs.Application.Evaluations;
@@ -105,7 +105,7 @@ namespace CommonJobs.Mvc.UI.Areas.Evaluations.Controllers
             calification.Evaluation = calificationsDTO.Evaluation;
             calification.Califications = calificationsDTO.Califications;
             calification.UserLogged = DetectUser();
-            calification.Template = ExecuteCommand(new GetEvaluationTemplateCommand());
+            calification.Template = ExecuteCommand(new GetEvaluationTemplateCommand(calificationsDTO.Evaluation.TemplateId));
             return Json(calification);
         }
 

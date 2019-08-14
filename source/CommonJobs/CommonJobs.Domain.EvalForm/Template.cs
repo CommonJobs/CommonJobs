@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,11 +7,8 @@ namespace CommonJobs.Domain.Evaluations
 {
     public class Template
     {
-        public string Id
-        {
-            //TODO: Change this when support for multiple templates is added
-            get { return DefaultTemplateId; }
-        }
+        public string Id { get; set; }
+        
 
         public List<TemplateItem> Items { get; set; }
         public List<KeyValuePair<string, string>> Groups { get; set; }
@@ -23,5 +20,6 @@ namespace CommonJobs.Domain.Evaluations
         }
 
         public const string DefaultTemplateId = "Template/Default";
+        public const string Template2019Test = "Template/2019Test";
     }
 }

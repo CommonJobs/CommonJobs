@@ -1,4 +1,4 @@
-﻿using CommonJobs.Domain.Evaluations;
+using CommonJobs.Domain.Evaluations;
 using CommonJobs.Infrastructure.RavenDb;
 using System;
 using System.Collections.Generic;
@@ -29,6 +29,7 @@ namespace CommonJobs.Application.Evaluations
                 ExecuteCommand(new UpdateTemplateCommand(template));
             }
 
+            template.Id = IdOrDefault;
             return template;
         }
 

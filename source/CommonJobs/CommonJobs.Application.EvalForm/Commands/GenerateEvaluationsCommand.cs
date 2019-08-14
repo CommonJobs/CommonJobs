@@ -1,4 +1,4 @@
-﻿using CommonJobs.Application.EvalForm;
+using CommonJobs.Application.EvalForm;
 using CommonJobs.Domain.Evaluations;
 using CommonJobs.Infrastructure.RavenDb;
 using System;
@@ -27,7 +27,7 @@ namespace CommonJobs.Application.Evaluations
 
                 //Both Period and TemplateId will be fixed for this release
                 employeeEvaluation.Period = _period;
-                employeeEvaluation.TemplateId = Template.DefaultTemplateId;
+                employeeEvaluation.TemplateId = Template.Template2019Test;
                 //---
                 employeeEvaluation.UserName = e.UserName;
                 employeeEvaluation.ResponsibleId = e.ResponsibleId;
