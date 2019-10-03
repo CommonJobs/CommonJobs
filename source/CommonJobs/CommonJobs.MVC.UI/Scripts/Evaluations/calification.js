@@ -211,9 +211,9 @@ $(document).ready(function () {
             });
         this.softSkillsValues = [
             { name: "NE", id: 1 },
-            { name: "AME", id: 2 },
+            { name: "AAE", id: 2 },
             { name: "CE", id: 3 },
-            { name: "SCE", id: 4 }
+            { name: "SE", id: 4 }
         ];
         this.techSkillsValues = [
             { name: "BAJO", id: 1 },
@@ -385,7 +385,7 @@ $(document).ready(function () {
                                     })
                                 };
                                 valueItem.isValid = ko.computed(function () {
-                                    return valueItem.value() === "" || (valueItem.value() >= 1 && valueItem.value() <= 4);
+                                    return (!valueItem.value() || valueItem.value() == "") || (valueItem.value() >= 1 && valueItem.value() <= 4);
                                 })
                                 self.isDirty.register(valueItem.value);
                                 return valueItem;
@@ -434,6 +434,27 @@ $(document).ready(function () {
                                 showValue: _.find(self.califications, function (calification) {
                                     return calification.id == self.averageCalificationId;
                                 }).show,
+                                translatedValue: ko.computed(function() {
+                                    var count, total;
+                                    var values = _.filter(valuesByItem.values, function (value) {
+                                        return value.owner == 1 || value.owner == 2;
+                                    });
+                                    for (var i in values) {
+                                        if (i == 0) {
+                                            count = 0;
+                                            total = 0;
+                                        }
+                                        var value = parseFloat(values[i].value());
+                                        if (value) {
+                                            count++;
+                                            total += value;
+                                        }
+                                    }
+                                    if (total) {
+                                        return self.translateVaue(parseFloat((total / count).toFixed(1)) || "", item.GroupKey);
+                                    }
+                                    return "";
+                                })
                             };
                             averageValue.isValid = true;
 
@@ -470,7 +491,8 @@ $(document).ready(function () {
                                 averages[i] = {
                                     count: 0,
                                     total: 0,
-                                    show: self.califications[i].show
+                                    show: self.califications[i].show,
+                                    groupKey: result.groupKey
                                 };
                             }
                             value = parseFloat(result.items[key].values[i].value());
@@ -481,8 +503,10 @@ $(document).ready(function () {
                         }
                     }
                     return _.map(averages, function (column) {
+                        var average = (column.total) ? parseFloat((column.total / column.count).toFixed(1)) : "";
                         return {
-                            value: (column.total) ? parseFloat((column.total / column.count).toFixed(1)) : 0,
+                            value: average,
+                            translatedValue: self.translateVaue(average, column.groupKey),
                             show: column.show
                         };
                     });

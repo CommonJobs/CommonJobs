@@ -1,4 +1,4 @@
-﻿@model CommonJobs.Mvc.UI.Areas.Evaluations.Models.Calification
+@model CommonJobs.Mvc.UI.Areas.Evaluations.Models.Calification
 @{
     ViewBag.Title = "Califications";
     Layout = "~/Areas/Evaluations/Views/Shared/_Layout.cshtml";
@@ -51,8 +51,8 @@
       </ul>
       <h4>Métricas de Evaluación</h4>
       <div class="metrics-container">
-          <span>NE</span> No alcanza las Expectativas - <span>AME</span> Alcanza Medianamente Expectativas<br />
-          <span>CE</span> Cumple las expectativas - <span>SCE</span> Supera Constantemente las Expectativas
+          <span>NE</span> No alcanza las Expectativas - <span>AAE</span> Alcanza Algunas Expectativas<br />
+          <span>CE</span> Cumple las expectativas - <span>SE</span> Supera las Expectativas
       </div>
       <p class="explanatory-text">*Si no tenés conocimientos para calificar algún campo dejalo vacío</p>
     </div>
@@ -181,10 +181,15 @@
     </thead>
     <tbody data-bind="foreach: groups">
       <tr>
-        <td class="sub-title-evaluation"><span data-bind="text: name"></span></td>
-        <!-- ko foreach: averages -->
           <td class="sub-title-evaluation">
-              @*<span data-bind="visible: show(), text: value || '-'"></span>*@
+              <span data-bind="text: name"></span>
+              <!-- ko if: groupKey == "managementskills" -->
+              <span data-bind="text:' (No completar si no aplica)'"></span>
+              <!-- /ko -->
+      </td>
+    <!-- ko foreach: averages -->
+<td class="sub-title-evaluation">
+              <span data-bind="visible: show(), text: translatedValue || '-'"></span>
           </td>
         <!-- /ko -->
         <td class="sub-title-evaluation"></td>
